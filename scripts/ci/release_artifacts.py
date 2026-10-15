@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 import re
 import xml.etree.ElementTree as ET
+import zipfile
 
 
 def validate_version(version):
@@ -31,6 +32,11 @@ def artifact_names(sha, version):
     if not re.fullmatch(r'[0-9a-f]{40}', sha):
         raise ValueError('Invalid commit SHA')
     validate_version(version)
+    return [f'TitanPlanner-zh-CN.{ext}' for ext in ('zip', 'msi')]
+
+
+def legacy_artifact_names(sha, version):
+    artifact_names(sha, version)  # Keep historical validation as strict as new output.
     return [f'TitanPlanner-zh-CN-v{version}-{sha[:12]}-windows.{ext}' for ext in ('zip', 'msi')]
 
 
@@ -52,7 +58,8 @@ def verify_manifest(root, sha):
     data = json.loads((root/'build-info.json').read_text(encoding='utf-8'))
     version = validate_version(data.get('version'))
     entries = data.get('artifacts', [])
-    if data['commit'] != sha or [e['name'] for e in entries] != artifact_names(sha, version):
+    names = [e['name'] for e in entries]
+    if data['commit'] != sha or names not in (artifact_names(sha, version), legacy_artifact_names(sha, version)):
         raise ValueError('Release must contain exactly the validated ZIP and MSI')
     for e in entries:
         path = root/e['name']
@@ -60,4 +67,11 @@ def verify_manifest(root, sha):
             raise ValueError('Artifact hash/size mismatch: ' + e['name'])
     if (root/'SHA256SUMS').read_text(encoding='ascii') != ''.join(f"{e['sha256']}  {e['name']}\n" for e in entries):
         raise ValueError('Checksum manifest mismatch')
+    # Stable filenames no longer bind the version; check the immutable ZIP metadata.
+    # Old versioned manifests remain readable for existing release artifacts.
+    if names == artifact_names(sha, version):
+        with zipfile.ZipFile(root/names[0]) as archive:
+            info = json.loads(archive.read('BUILD-INFO.json'))
+        if info.get('commit') != sha or info.get('version') != version:
+            raise ValueError('ZIP commit/version mismatch')
     return [root/e['name'] for e in entries]

@@ -1,4 +1,5 @@
 import json
+import zipfile
 from pathlib import Path
 import sys
 import tempfile
@@ -37,7 +38,8 @@ class MsiTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp); sha = 'a'*40
             names = artifact_names(sha, '1.3.83')
-            (root/names[0]).write_bytes(b'zip')
+            with zipfile.ZipFile(root/names[0], 'w') as archive:
+                archive.writestr('BUILD-INFO.json', json.dumps({'commit': sha, 'version': '1.3.83'}))
             with self.assertRaises(FileNotFoundError): write_manifest(root, sha, '1.3.83')
             (root/names[1]).write_bytes(b'msi')
             write_manifest(root, sha, '1.3.83')
