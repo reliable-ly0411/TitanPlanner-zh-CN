@@ -21,6 +21,24 @@ docker run "${docker_args[@]}" ubuntu:22.04 bash -euo pipefail -c '
     mkdir "/tmp/extracted package"
     tar -xzf /packages/MissionPlanner-linux-x86_64.tar.gz -C "/tmp/extracted package"
     cd "/tmp/extracted package/MissionPlanner-linux-x86_64"
+    # Keep diagnostics from this disposable container even when timeout fails.
+    # Mono may write SIGQUIT thread dumps to files instead of standard error.
+    mkdir /tmp/mono-thread-dumps
+    export MONO_DEBUG=thread-dump-dir=/tmp/mono-thread-dumps
+    export MONO_ENV_OPTIONS="--trace=M:MissionPlanner.MainV2:SaveConfig,M:MissionPlanner.Utilities.Settings:Save,M:MissionPlanner.MainV2:OnLoad"
+    diagnostics() {
+        local status=$?
+        trap - EXIT
+        if (( status != 0 )); then
+            echo "Linux runtime test failed with status $status."
+            find /tmp/mono-thread-dumps -maxdepth 1 -type f -print -exec cat {} \; || true
+            if [[ -f "/Mission Planner/MissionPlanner.log" ]]; then
+                tail -n 150 "/Mission Planner/MissionPlanner.log" || true
+            fi
+        fi
+        exit "$status"
+    }
+    trap diagnostics EXIT
     # Ask Mono for thread stacks if startup hangs before forcing termination.
     if [[ -n ${DISPLAY:-} ]]; then
         timeout --signal=QUIT --kill-after=5s 90s ./run.sh --self-test 2>&1 | tee /tmp/smoke.log
