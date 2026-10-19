@@ -142,6 +142,7 @@ namespace MissionPlanner.Utilities
                 GCSViews.FlightData.myhud.skyColor1 = ThemeManager.HudSkyTop;
                 GCSViews.FlightData.myhud.skyColor2 = ThemeManager.HudSkyBot;
                 GCSViews.FlightData.myhud.hudcolor = ThemeManager.HudText;
+                GCSViews.FlightData.myhud.targetHeadingColor = ThemeManager.ButBG;
             }
         }
     }

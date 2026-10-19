@@ -8,7 +8,8 @@ permissions:
 jobs:
   buildAAB:
     name: Build Release AAB
-    runs-on: windows-latest
+    # Xamarin is not available in the Visual Studio 2026 runner image.
+    runs-on: windows-2022
 
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
@@ -99,7 +100,8 @@ jobs:
 
   buildAPK:
     name: Build Release APK
-    runs-on: windows-latest
+    # Xamarin is not available in the Visual Studio 2026 runner image.
+    runs-on: windows-2022
 
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1

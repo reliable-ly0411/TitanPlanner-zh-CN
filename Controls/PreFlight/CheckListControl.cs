@@ -258,7 +258,7 @@ namespace MissionPlanner.Controls.PreFlight
 
         public void Controls_Resize(object sender, EventArgs e)
         {
-            // Guard against empty lists
+            // Resize can run before the first Draw, or with an empty checklist.
             if (groupboxes.Count == 0 || descLabels.Count == 0 || labels.Count == 0 || checkboxes.Count == 0)
                 return;
 

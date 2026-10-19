@@ -1699,7 +1699,42 @@ namespace MissionPlanner.GCSViews
             writeKML();
         }
 
-        internal static void addpolygonmarker(Control src, string tag, double lng, double lat, int alt, Color? color, GMapOverlay overlay)
+        /// <summary>
+        /// The vehicle's loiter radius in metres, from the same parameters the loiter radius box is filled from
+        /// (LOITER_RADIUS, WP_LOITER_RAD, LOITER_RAD), else that box's saved value. The sign only sets the
+        /// loiter direction, so it is dropped.
+        /// </summary>
+        internal static double? LoiterRadiusMeters()
+        {
+            try
+            {
+                var param = MainV2.comPort?.MAV?.param;
+                if (param != null)
+                {
+                    foreach (var name in new[] { "LOITER_RADIUS", "WP_LOITER_RAD", "LOITER_RAD" })
+                    {
+                        if (!param.ContainsKey(name))
+                            continue;
+                        double radius = Math.Abs((double) param[name]);
+                        if (radius > 0)
+                            return radius;
+                    }
+                }
+
+                double saved;
+                if (double.TryParse(Settings.Instance["TXT_loiterrad"], out saved) && saved != 0)
+                    return Math.Abs(saved) / CurrentState.multiplierdist;
+            }
+            catch
+            {
+            }
+
+            return null;
+        }
+
+        /// <param name="radius">Circle radius in metres; defaults to the waypoint radius.</param>
+        internal static void addpolygonmarker(Control src, string tag, double lng, double lat, int alt, Color? color,
+            GMapOverlay overlay, double? radius = null)
         {
             try
             {
@@ -1719,7 +1754,7 @@ namespace MissionPlanner.GCSViews
 
                     try
                     {
-                        mBorders.wprad =
+                        mBorders.wprad = radius ??
                             (Settings.Instance.GetFloat("TXT_WPRad") / CurrentState.multiplierdist);
                     }
                     catch
@@ -1744,7 +1779,7 @@ namespace MissionPlanner.GCSViews
                         mBorders.InnerMarker = m;
                         try
                         {
-                            mBorders.wprad =
+                            mBorders.wprad = radius ??
                                 (Settings.Instance.GetFloat("TXT_WPRad") / CurrentState.multiplierdist);
                         }
                         catch
@@ -1760,6 +1795,9 @@ namespace MissionPlanner.GCSViews
                     if (src.IsHandleCreated)
                         src.BeginInvoke((Action) delegate
                         {
+                            // Another call may have added it while this one was queued.
+                            if (overlay.Markers.Any(a => Equals(a.Tag, tag)))
+                                return;
                             overlay.Markers.Add(m);
                             overlay.Markers.Add(mBorders);
                         });
@@ -1767,6 +1805,50 @@ namespace MissionPlanner.GCSViews
             }
             catch (Exception)
             {
+            }
+        }
+
+        internal const string GuidedModeTag = "Guided Mode";
+
+        /// <summary>The guided target marker or its loiter circle.</summary>
+        internal static bool IsGuidedMarker(GMapMarker marker)
+        {
+            return Equals(marker.Tag, GuidedModeTag) ||
+                   Equals((marker as GMapMarkerRect)?.InnerMarker?.Tag, GuidedModeTag);
+        }
+
+        /// <summary>
+        /// Clears an overlay's markers except the guided target. The maps clear their marker overlays
+        /// periodically to drop stale markers; re-adding the guided target afterwards made it flash, so it is
+        /// kept and <see cref="UpdateGuidedMarker"/> removes it when guided mode ends. Call on the UI thread.
+        /// </summary>
+        internal static void ClearMarkersExceptGuided(GMapOverlay overlay)
+        {
+            var keep = overlay.Markers.Where(IsGuidedMarker).ToList();
+            overlay.Markers.Clear();
+            foreach (var marker in keep)
+                overlay.Markers.Add(marker);
+        }
+
+        /// <summary>
+        /// Shows the guided target, circled at the vehicle's loiter radius, while in guided mode; removes it
+        /// otherwise.
+        /// </summary>
+        internal static void UpdateGuidedMarker(Control src, GMapOverlay overlay)
+        {
+            var mav = MainV2.comPort.MAV;
+            if (mav.cs.mode.ToLower() == "guided" && mav.GuidedMode.x != 0)
+            {
+                addpolygonmarker(src, GuidedModeTag, mav.GuidedMode.y / 1e7, mav.GuidedMode.x / 1e7,
+                    (int) mav.GuidedMode.z, Color.Blue, overlay, LoiterRadiusMeters());
+            }
+            else if (src.IsHandleCreated && overlay.Markers.Any(IsGuidedMarker))
+            {
+                src.BeginInvoke((Action) delegate
+                {
+                    foreach (var marker in overlay.Markers.Where(IsGuidedMarker).ToList())
+                        overlay.Markers.Remove(marker);
+                });
             }
         }
 
@@ -1984,7 +2066,7 @@ namespace MissionPlanner.GCSViews
                 home.id = (ushort) MAVLink.MAV_CMD.WAYPOINT;
                 home.lat = (double.Parse(TXT_homelat.Text));
                 home.lng = (double.Parse(TXT_homelng.Text));
-                home.alt = (float.Parse(TXT_homealt.Text) / CurrentState.multiplierdist); // use saved home
+                home.alt = (float.Parse(TXT_homealt.Text) / CurrentState.multiplieralt); // use saved home
             }
             catch
             {
@@ -2164,7 +2246,7 @@ namespace MissionPlanner.GCSViews
         {
             try
             {
-                MainV2.comPort.setParam((byte) MainV2.comPort.sysidcurrent, (byte) MainV2.comPort.compidcurrent,
+                MainV2.comPort.setParam(MainV2.comPort.sysidcurrent, (byte) MainV2.comPort.compidcurrent,
                     "RALLY_TOTAL", 0);
             }
             catch (Exception ex)
@@ -2183,7 +2265,7 @@ namespace MissionPlanner.GCSViews
 
             try
             {
-                MainV2.comPort.setParam((byte) MainV2.comPort.sysidcurrent, (byte) MainV2.comPort.compidcurrent,
+                MainV2.comPort.setParam(MainV2.comPort.sysidcurrent, (byte) MainV2.comPort.compidcurrent,
                     "FENCE_ENABLE", 0);
             }
             catch
@@ -2194,7 +2276,7 @@ namespace MissionPlanner.GCSViews
 
             try
             {
-                MainV2.comPort.setParam((byte) MainV2.comPort.sysidcurrent, (byte) MainV2.comPort.compidcurrent,
+                MainV2.comPort.setParam(MainV2.comPort.sysidcurrent, (byte) MainV2.comPort.compidcurrent,
                     "FENCE_ACTION", 0);
             }
             catch
@@ -2205,7 +2287,7 @@ namespace MissionPlanner.GCSViews
 
             try
             {
-                MainV2.comPort.setParam((byte) MainV2.comPort.sysidcurrent, (byte) MainV2.comPort.compidcurrent,
+                MainV2.comPort.setParam(MainV2.comPort.sysidcurrent, (byte) MainV2.comPort.compidcurrent,
                     "FENCE_TOTAL", 0);
             }
             catch
@@ -3539,13 +3621,6 @@ namespace MissionPlanner.GCSViews
 
             writeKML();
 
-            BeginInvoke((Action)(() =>
-                Common.MessageShowAgain("New Mission Overlay",
-                    UiText.Translate("Mission Planner now uses an improved mission overlay with styled lines and markers.\n\n") +
-                    UiText.Translate("You can customize colors, line styles, and markers via Map Tool > Edit Style.\n\n") +
-                    UiText.Translate("If you experience any issues, you can switch back via Map Tool > Use Legacy Overlay."))
-            ));
-
             // switch the action and wp table
             if (Settings.Instance["FP_docking"] == "Bottom")
             {
@@ -3853,10 +3928,10 @@ namespace MissionPlanner.GCSViews
             try
             {
                 if (MainV2.comPort.MAV.param.ContainsKey("FENCE_MINALT"))
-                    MainV2.comPort.setParam((byte) MainV2.comPort.sysidcurrent, (byte) MainV2.comPort.compidcurrent,
+                    MainV2.comPort.setParam(MainV2.comPort.sysidcurrent, (byte) MainV2.comPort.compidcurrent,
                         "FENCE_MINALT", minalt);
                 if (MainV2.comPort.MAV.param.ContainsKey("FENCE_MAXALT"))
-                    MainV2.comPort.setParam((byte) MainV2.comPort.sysidcurrent, (byte) MainV2.comPort.compidcurrent,
+                    MainV2.comPort.setParam(MainV2.comPort.sysidcurrent, (byte) MainV2.comPort.compidcurrent,
                         "FENCE_MAXALT", maxalt);
             }
             catch (Exception ex)
@@ -3870,7 +3945,7 @@ namespace MissionPlanner.GCSViews
 
             try
             {
-                MainV2.comPort.setParam((byte) MainV2.comPort.sysidcurrent, (byte) MainV2.comPort.compidcurrent,
+                MainV2.comPort.setParam(MainV2.comPort.sysidcurrent, (byte) MainV2.comPort.compidcurrent,
                     "FENCE_ACTION", 0);
             }
             catch
@@ -3885,7 +3960,7 @@ namespace MissionPlanner.GCSViews
 
             try
             {
-                MainV2.comPort.setParam((byte) MainV2.comPort.sysidcurrent, (byte) MainV2.comPort.compidcurrent,
+                MainV2.comPort.setParam(MainV2.comPort.sysidcurrent, (byte) MainV2.comPort.compidcurrent,
                     "FENCE_TOTAL", pointcount);
             }
             catch
@@ -3910,7 +3985,7 @@ namespace MissionPlanner.GCSViews
 
                 try
                 {
-                    MainV2.comPort.setParam((byte) MainV2.comPort.sysidcurrent, (byte) MainV2.comPort.compidcurrent,
+                    MainV2.comPort.setParam(MainV2.comPort.sysidcurrent, (byte) MainV2.comPort.compidcurrent,
                         "FENCE_ACTION", oldaction);
                 }
                 catch
@@ -5125,46 +5200,84 @@ namespace MissionPlanner.GCSViews
 
             if (!area.IsEmpty)
             {
-                int maxzoom = MainMap.MaxZoom;
-                int minzoom = MainMap.MinZoom;
-                TilePrefetcherMenu tilePrefetcherMenu = new TilePrefetcherMenu(MainMap.MinZoom, MainMap.MaxZoom, area, MainMap.MapProvider);
-
-                if (tilePrefetcherMenu.ShowDialog(this) != DialogResult.OK)
-                {
-                    tilePrefetcherMenu.Dispose();
-                    return;
-                }
-                minzoom = tilePrefetcherMenu.Minimum;
-                maxzoom = tilePrefetcherMenu.Maximum;
-                tilePrefetcherMenu.Dispose();
-
-                for (int i = minzoom; i <= maxzoom; i++)
-                {
-                    try
-                {
-                    TilePrefetcher obj = new TilePrefetcher();
-                    ThemeManager.ApplyThemeTo(obj);
-                    obj.ShowCompleteMessage = false;
-                    obj.Start(area, i, MainMap.MapProvider, 0, 0);
-
-                    if (obj.UserAborted)
-                    {
-                        obj.Dispose();
-                        break;
-                    }
-
-                    obj.Dispose();
-                }
-                    catch
-                    {
-                    }
-                }
+                var mid = area.LocationMiddle;
+                PrefetchAreaForOfflineMaps(area,
+                    string.Format(CultureInfo.InvariantCulture, "Area {0:F4}, {1:F4}", mid.Lat, mid.Lng));
             }
             else
             {
                 CustomMessageBox.Show(UiText.Translate("Select map area holding ALT"), "GMap.NET", MessageBoxButtons.OK,
                     MessageBoxIcon.Exclamation);
             }
+        }
+
+        /// <summary>
+        /// Asks for a zoom range, downloads every tile of the current map source inside area, and records
+        /// the result as an offline map area (listed by <see cref="OfflineMapsForm"/>).
+        /// Returns false if the user cancelled before any zoom level completed.
+        /// </summary>
+        public bool PrefetchAreaForOfflineMaps(RectLatLng area, string name)
+        {
+            int minzoom, maxzoom;
+            using (var menu = new TilePrefetcherMenu(MainMap.MinZoom, MainMap.MaxZoom, area, MainMap.MapProvider))
+            {
+                if (menu.ShowDialog(this) != DialogResult.OK)
+                    return false;
+                minzoom = menu.Minimum;
+                maxzoom = menu.Maximum;
+            }
+
+            // zoom levels are fetched one at a time; an aborted download is still recorded
+            // for the levels that did complete
+            int lastDone = minzoom - 1;
+            for (int i = minzoom; i <= maxzoom; i++)
+            {
+                try
+                {
+                    using (var obj = new TilePrefetcher())
+                    {
+                        ThemeManager.ApplyThemeTo(obj);
+                        obj.ShowCompleteMessage = false;
+                        obj.Start(area, i, MainMap.MapProvider, 0, 0);
+
+                        if (obj.UserAborted)
+                            break;
+                    }
+
+                    lastDone = i;
+                }
+                catch (Exception ex)
+                {
+                    log.Error(ex);
+                }
+            }
+
+            if (lastDone < minzoom)
+                return false;
+
+            OfflineMapRegistry.Add(new OfflineMapRegion
+            {
+                Name = name,
+                Provider = MainMap.MapProvider.Name,
+                Bounds = area,
+                MinZoom = minzoom,
+                MaxZoom = lastDone,
+                Source = "Downloaded"
+            });
+            return true;
+        }
+
+        /// <summary>Outlines area with the map's selection rectangle and zooms the map to fit it.</summary>
+        public void ShowAreaOnMap(RectLatLng area)
+        {
+            MainMap.SelectedArea = area;
+            MainMap.SetZoomToFitRect(area);
+            MainMap.Invalidate();
+        }
+
+        private void BUT_offlinemaps_Click(object sender, EventArgs e)
+        {
+            OfflineMapsForm.ShowFor(this);
         }
 
         public void prefetchWPPathToolStripMenuItem_Click(object sender, EventArgs e)
@@ -6022,7 +6135,7 @@ namespace MissionPlanner.GCSViews
         {
             byte count = 0;
 
-            MainV2.comPort.setParam((byte) MainV2.comPort.sysidcurrent, (byte) MainV2.comPort.compidcurrent,
+            MainV2.comPort.setParam(MainV2.comPort.sysidcurrent, (byte) MainV2.comPort.compidcurrent,
                 "RALLY_TOTAL", rallypointoverlay.Markers.Count);
 
             foreach (GMapMarkerRallyPt pnt in rallypointoverlay.Markers)
@@ -6359,7 +6472,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
 
                     try
                     {
-                        await MainV2.comPort.getHomePositionAsync((byte) MainV2.comPort.sysidcurrent,
+                        await MainV2.comPort.getHomePositionAsync(MainV2.comPort.sysidcurrent,
                             (byte) MainV2.comPort.compidcurrent).ConfigureAwait(false);
                     }
                     catch (Exception ex2)
@@ -6367,7 +6480,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                         log.Error(ex2);
                         try
                         {
-                            MainV2.comPort.getWP((byte) MainV2.comPort.sysidcurrent,
+                            MainV2.comPort.getWP(MainV2.comPort.sysidcurrent,
                                 (byte) MainV2.comPort.compidcurrent, 0);
                         }
                         catch (Exception ex3)
@@ -6437,13 +6550,12 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                         MainV2.comPort.MAV.compid != message.compid)
                         return true;
                     // check this gcs sent it
-                    if (data.target_system != MAVLinkInterface.gcssysid ||
-                        data.target_component != (byte) MAVLink.MAV_COMPONENT.MAV_COMP_ID_MISSIONPLANNER)
+                    if (!message.IsTargetedTo(MAVLinkInterface.gcssysid, (byte)MAVLink.MAV_COMPONENT.MAV_COMP_ID_MISSIONPLANNER))
                         return true;
                     result = ans;
                     Console.WriteLine("MISSION_ACK " + ans + " " + data.ToJSON(Formatting.None));
                     return true;
-                }, (byte)MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent);
+                }, MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent);
 
             var sub2 = MainV2.comPort.SubscribeToPacketType(MAVLink.MAVLINK_MSG_ID.MISSION_REQUEST,
                 message =>
@@ -6454,13 +6566,12 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                         MainV2.comPort.MAV.compid != message.compid)
                         return true;
                     // check this gcs sent it
-                    if (data.target_system != MAVLinkInterface.gcssysid ||
-                        data.target_component != (byte) MAVLink.MAV_COMPONENT.MAV_COMP_ID_MISSIONPLANNER)
+                    if (!message.IsTargetedTo(MAVLinkInterface.gcssysid, (byte)MAVLink.MAV_COMPONENT.MAV_COMP_ID_MISSIONPLANNER))
                         return true;
                     reqno = data.seq;
                     Console.WriteLine("MISSION_REQUEST " + reqno + " " + data.ToJSON(Formatting.None));
                     return true;
-                }, (byte)MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent);
+                }, MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent);
 
             var sub3 = MainV2.comPort.SubscribeToPacketType(MAVLink.MAVLINK_MSG_ID.MISSION_REQUEST_INT,
                 message =>
@@ -6471,13 +6582,12 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                         MainV2.comPort.MAV.compid != message.compid)
                         return true;
                     // check this gcs sent it
-                    if (data.target_system != MAVLinkInterface.gcssysid ||
-                        data.target_component != (byte)MAVLink.MAV_COMPONENT.MAV_COMP_ID_MISSIONPLANNER)
+                    if (!message.IsTargetedTo(MAVLinkInterface.gcssysid, (byte)MAVLink.MAV_COMPONENT.MAV_COMP_ID_MISSIONPLANNER))
                         return true;
                     reqno = data.seq;
                     Console.WriteLine("MISSION_REQUEST_INT " + reqno + " " + data.ToJSON(Formatting.None));
                     return true;
-                }, (byte)MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent);
+                }, MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent);
 
             ((ProgressReporterDialogue) sender).UpdateProgressAndStatus(0, UiText.Translate("Set total wps "));
             MainV2.comPort.setWPTotal(totalwpcountforupload);
@@ -6607,7 +6717,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
 
                 MAVLink.mavlink_mission_item_int_t req = new MAVLink.mavlink_mission_item_int_t();
 
-                req.target_system = MainV2.comPort.MAV.sysid;
+                req.target_system = (byte)(MainV2.comPort.MAV.sysid);
                 req.target_component = MainV2.comPort.MAV.compid;
 
                 req.command = loc.id;
@@ -6652,7 +6762,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
 
             MainV2.comPort.setWPACK();
 
-            _ = MainV2.comPort.getHomePositionAsync((byte) MainV2.comPort.sysidcurrent,
+            _ = MainV2.comPort.getHomePositionAsync(MainV2.comPort.sysidcurrent,
                 (byte) MainV2.comPort.compidcurrent);
 
             commandlist?.ForEach(pnt =>
@@ -6994,7 +7104,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
 
                 // clear every 10 seconds
                 if(DateTime.Now.Second % 10 == 0)
-                    routesoverlay.Markers.Clear();
+                    ClearMarkersExceptGuided(routesoverlay);
 
                 if (MainV2.comPort.MAV.cs.TrackerLocation != MainV2.comPort.MAV.cs.HomeLocation &&
                     MainV2.comPort.MAV.cs.TrackerLocation.Lng != 0)
@@ -7012,12 +7122,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                 if(marker != null)
                     routesoverlay.Markers.Add(marker);
 
-                if (MainV2.comPort.MAV.cs.mode.ToLower() == "guided" && MainV2.comPort.MAV.GuidedMode.x != 0)
-                {
-                    addpolygonmarker(this, "Guided Mode", MainV2.comPort.MAV.GuidedMode.y / 1e7,
-                        MainV2.comPort.MAV.GuidedMode.x / 1e7,
-                        (int) MainV2.comPort.MAV.GuidedMode.z, Color.Blue, routesoverlay);
-                }
+                UpdateGuidedMarker(this, routesoverlay);
             }
             catch (Exception ex)
             {

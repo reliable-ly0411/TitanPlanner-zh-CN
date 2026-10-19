@@ -175,6 +175,8 @@ namespace MissionPlanner
         [MethodImpl(MethodImplOptions.NoInlining)]
         public static void Start(string[] args)
         {
+            // before anything reads Settings: bring settings over from the previous data folder
+            DataFolderMigration.CopySettings();
             HandleTDEditionUpgrade();
             Program.args = args;
             Console.WriteLine(
@@ -199,6 +201,8 @@ namespace MissionPlanner
 
             var t = Type.GetType("Mono.Runtime");
             MONO = (t != null);
+            if (MONO && Settings.isUnix)
+                MonoTableLayoutSettingsConverter.Register();
 
             Directory.SetCurrentDirectory(Settings.GetRunningDirectory());
 
@@ -215,6 +219,7 @@ namespace MissionPlanner
 
             System.Windows.Forms.Application.EnableVisualStyles();
             XmlConfigurator.Configure(LogManager.GetRepository(Assembly.GetCallingAssembly()));
+            DataFolderMigration.StartBackgroundCopy();
             if (Environment.OSVersion.Platform == PlatformID.Unix)
             {
                 var repository = LogManager.GetRepository() as Hierarchy;
@@ -256,7 +261,7 @@ namespace MissionPlanner
                 return;
             }
 
-            name = "Mission Planner - Titan Dynamics Edition";
+            name = "TitanPlanner";
 
             try
             {
@@ -299,7 +304,7 @@ namespace MissionPlanner
                     {
                         ptr = MissionPlanner.Utilities.NativeLibrary.dlopen(file + ".so",
                             MissionPlanner.Utilities.NativeLibrary.RTLD_NOW);
-                        log.Info("Skia Error " + MissionPlanner.Utilities.NativeLibrary.dlerror());
+                        log.Info("Skia Error " + Marshal.PtrToStringAnsi(MissionPlanner.Utilities.NativeLibrary.dlerror()));
                     }
 
                     if (ptr == IntPtr.Zero)

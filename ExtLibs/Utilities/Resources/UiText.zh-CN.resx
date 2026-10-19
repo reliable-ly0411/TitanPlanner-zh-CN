@@ -2887,6 +2887,10 @@ Ctrl+O 从文件加载</value>
     <value>删除文件失败</value>
     <comment>"Failed to delete file"</comment>
   </data>
+  <data name="d4f50856e9920c73cd90c3f99363c312164fc32dfdf501c77618c548baf22710" xml:space="preserve">
+    <value>删除文件夹失败</value>
+    <comment>"Failed to delete folder"</comment>
+  </data>
   <data name="5774dfb04cfa809d1c81f3696992939ed1a050887967cb75d525f8879f006b2d" xml:space="preserve">
     <value>未能检测到上传端口（未知的 VID/PID 或飞控标识）。
 请保持当前界面，断开后重新连接并上传</value>
@@ -7174,6 +7178,10 @@ gps_point：跟踪单个地面点</value>
   <data name="b4a7365740ef880b7e19c7ddba99950365af73b2346a235ba7cd6f1bf5f2c281" xml:space="preserve">
     <value>统计</value>
     <comment>"Stats"</comment>
+  </data>
+  <data name="15b3495efdddb104b432269418c714b0cec508412cff233cfe4ebd5b2c6062b9" xml:space="preserve">
+    <value>性能统计</value>
+    <comment>"Stats for nerds"</comment>
   </data>
   <data name="920e413c7d411b61ef3e8c63b1cb6ad058d5f95f8b481dbafe60248387d8c355" xml:space="preserve">
     <value>状态</value>

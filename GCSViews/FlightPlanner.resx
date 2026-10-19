@@ -751,6 +751,33 @@
   <data name="&gt;&gt;findLoc.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
+  <data name="BUT_offlinemaps.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="BUT_offlinemaps.Location" type="System.Drawing.Point, System.Drawing">
+    <value>961, 9</value>
+  </data>
+  <data name="BUT_offlinemaps.Size" type="System.Drawing.Size, System.Drawing">
+    <value>95, 23</value>
+  </data>
+  <data name="BUT_offlinemaps.TabIndex" type="System.Int32, mscorlib">
+    <value>59</value>
+  </data>
+  <data name="BUT_offlinemaps.Text" xml:space="preserve">
+    <value>Offline Maps</value>
+  </data>
+  <data name="&gt;&gt;BUT_offlinemaps.Name" xml:space="preserve">
+    <value>BUT_offlinemaps</value>
+  </data>
+  <data name="&gt;&gt;BUT_offlinemaps.Type" xml:space="preserve">
+    <value>MissionPlanner.Controls.MyButton, MissionPlanner.Controls, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;BUT_offlinemaps.Parent" xml:space="preserve">
+    <value>panelWaypoints</value>
+  </data>
+  <data name="&gt;&gt;BUT_offlinemaps.ZOrder" xml:space="preserve">
+    <value>18</value>
+  </data>
   <data name="chk_usemavftp.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>

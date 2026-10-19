@@ -109,7 +109,7 @@ namespace MissionPlanner
                 MAV.aptype >= MAVLink.MAV_TYPE.VTOL_DUOROTOR && MAV.aptype <= MAVLink.MAV_TYPE.VTOL_RESERVED5)
             {
                 return new GMapMarkerPlane(
-                    MAV.sysid - 1,
+                    (long)MAV.sysid - 1,
                     portlocation,
                     MAV.cs.yaw,
                     MAV.cs.groundcourse,
@@ -485,6 +485,16 @@ namespace MissionPlanner
         /// <param name="url"></param>
         public static void OpenUrl(string url)
         {
+            // Reachable from the [link;...] markup, whose target can come from the wire.
+            // Process.Start() under ShellExecute resolves far more than http(s).
+            if (url == null ||
+                (!url.StartsWith("http://", StringComparison.OrdinalIgnoreCase) &&
+                 !url.StartsWith("https://", StringComparison.OrdinalIgnoreCase)))
+            {
+                log.Error("OpenUrl: refusing non-http(s) url: " + url);
+                return;
+            }
+
             try
             {
                 Process.Start(url);

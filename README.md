@@ -5,7 +5,7 @@
 ## Mission Planner - Titan Dynamics Edition
 
 <p align="center">
-   <img width="300" height="300" alt="icon" src="https://github.com/user-attachments/assets/b3e67430-0296-4f09-ada2-d01a03e684ae"/><br><br>
+   <img width="300" height="300" alt="icon" src=".github/icon.png"/><br><br>
    A customized fork of <a href="https://github.com/ArduPilot/MissionPlanner">Mission Planner</a> with enhanced UI/UX and ease-of-use improvements
    <br><br>
    <img width="2560" height="1540" alt="image" src="https://github.com/user-attachments/assets/c352a50b-89bf-42c2-a591-75aa20c94a55" /><br><br>
@@ -18,7 +18,7 @@
 
 ## Enhancements
 
-This fork implements every feature we've always yearned for with considerable UI/UX upgrades, a reworked HUD, a real-time 3D map with vehicle rendering (and ADSB), an overhauled parameter editor and tab layout, a Betaflight-style motor setup, USB auto-connect, and dozens of large improvements throughout the app.
+This fork implements every feature we've always yearned for with considerable UI/UX upgrades, a reworked HUD, a real-time 3D map with vehicle rendering (and ADSB), an overhauled parameter editor and tab layout, a Betaflight-style motor setup, USB auto-connect, offline map packs for air-gapped planning, and dozens of large improvements throughout the app.
 
 **See [CHANGES.md](CHANGES.md) for the full list of features and fixes added in this fork.**
 
@@ -51,6 +51,8 @@ sudo apt install mono-complete mono-runtime libmono-system-windows-forms4.0-cil 
 
 mono MissionPlanner.exe
 ```
+
+See [Linux/README.md](Linux/README.md) for the upstream build (`./Linux/build.sh`) and launch (`./Linux/run.sh`) scripts. The prebuilt Linux and macOS downloads that document links to are published by upstream only; this fork ships Windows releases.
 
 ---
 

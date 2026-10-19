@@ -248,6 +248,11 @@ namespace MissionPlanner.Controls
 
         internal bool started = false;
 
+        /// <summary>
+        /// Custom paint events that will be called after the default paint.
+        /// </summary>
+        public event Action<HUD> OnCustomPaint;
+
         static HUD()
         {
             log.Info("Static HUD ctor");
@@ -305,6 +310,10 @@ namespace MissionPlanner.Controls
                         GL.DeleteTexture(texid.gltextureid);
                 }
             }
+
+            foreach (var icon in iconCache.Values)
+                icon.Dispose();
+            iconCache.Clear();
 
             base.Dispose(disposing);
         }
@@ -1039,6 +1048,14 @@ namespace MissionPlanner.Controls
             set { _groundColor2 = value; }
         }
 
+        /// <summary>The target heading marker on the heading tape, set from the theme.</summary>
+        [System.ComponentModel.Browsable(true), System.ComponentModel.Category("Values"), DefaultValue(typeof(Color), "Orange")]
+        public Color targetHeadingColor
+        {
+            get { return _targetHeadingPen.Color; }
+            set { _targetHeadingPen.Color = value; }
+        }
+
         private Color _skyColor1 = Color.Blue;
         private Color _skyColor2 = Color.LightBlue;
         private Color _groundColor1 = Color.FromArgb(0x9b, 0xb8, 0x24);
@@ -1533,6 +1550,25 @@ namespace MissionPlanner.Controls
             drawstring(text, font, fontsize, brush, x, y);
         }
 
+        // HUDT's image getters go through ResourceManager.GetObject, which decodes the PNG resource into a new
+        // Bitmap on every call. The HUD asks for its status icons several times a frame, so each icon is decoded
+        // once per HUD and kept in a copy made by new Bitmap(Image), which renders into a 32bpp ARGB bitmap,
+        // the format DrawImage locks it in
+        private readonly Dictionary<string, Bitmap> iconCache = new Dictionary<string, Bitmap>();
+
+        private Bitmap GetIcon(string name)
+        {
+            Bitmap icon;
+            if (!iconCache.TryGetValue(name, out icon))
+            {
+                using (var loaded = (Image) HUDT.ResourceManager.GetObject(name, HUDT.Culture))
+                    icon = new Bitmap(loaded);
+                iconCache[name] = icon;
+            }
+
+            return icon;
+        }
+
         public void DrawImage(Image img, int x, int y, int width, int height, int textureno = 0)
         {
             if (opengl)
@@ -1983,7 +2019,7 @@ namespace MissionPlanner.Controls
 
         private readonly Pen _blackPen = new Pen(Color.Black, 2);
         private readonly Pen _greenPen = new Pen(Color.Green, 2);
-        private readonly Pen _orangePen = new Pen(Color.Orange, 2);
+        private readonly Pen _targetHeadingPen = new Pen(Color.Orange, 2);
         private readonly Pen _redPen = new Pen(Color.Red, 2);
 
         internal void doPaint()
@@ -2077,7 +2113,7 @@ namespace MissionPlanner.Controls
                 // Reset pens
                 this._blackPen.Width = 2;
                 this._greenPen.Width = 2;
-                this._orangePen.Width = 2;
+                this._targetHeadingPen.Width = 2;
                 this._redPen.Width = 2;
 
                 if (!connected)
@@ -2323,7 +2359,7 @@ namespace MissionPlanner.Controls
 
                     FillRectangle(SlightlyTransparentBrush, rect);
 
-                    this._orangePen.Width = 6;
+                    this._targetHeadingPen.Width = 6;
 
                     // target heading beyond bounds - calculate angular difference normalized to [-180, 180]
                     float headingDiff = _targetheading - _heading;
@@ -2332,16 +2368,16 @@ namespace MissionPlanner.Controls
 
                     if (headingDiff < -60)
                     {
-                        graphicsObject.DrawLine(this._orangePen, headbg.Left + 3, headbg.Bottom, headbg.Left + 3, headbg.Top);
+                        graphicsObject.DrawLine(this._targetHeadingPen, headbg.Left + 3, headbg.Bottom, headbg.Left + 3, headbg.Top);
                     }
                     else if (headingDiff > 60)
                     {
-                        graphicsObject.DrawLine(this._orangePen, headbg.Right - 3, headbg.Bottom, headbg.Right - 3, headbg.Top);
+                        graphicsObject.DrawLine(this._targetHeadingPen, headbg.Right - 3, headbg.Bottom, headbg.Right - 3, headbg.Top);
                     }
                     else
                     {
                         var targetHeadingPos = headbg.Left + 5 + space * (headingDiff + 60);
-                        graphicsObject.DrawLine(this._orangePen, targetHeadingPos - 3, headbg.Bottom, targetHeadingPos - 3, headbg.Top);
+                        graphicsObject.DrawLine(this._targetHeadingPen, targetHeadingPos - 3, headbg.Bottom, targetHeadingPos - 3, headbg.Top);
                     }
 
                     // Draw "H" for home direction if within ±60 degrees and distToHome > 0
@@ -2716,8 +2752,10 @@ namespace MissionPlanner.Controls
                         }
 
 
-                        // ground doesnt appear if we are not in view or below ground level
-                        if (a == Math.Round(groundalt) && groundalt != 0 && ground == false)
+                        // ground doesn't appear if we are not in view or below ground level.
+                        // home is 0 on the relative altitude tape; groundalt (HomeAlt) is the home altitude ASL,
+                        // so it only tells whether home is set
+                        if (a == 0 && groundalt != 0 && ground == false)
                         {
                             graphicsObject.FillRectangle(AltGroundBrush,
                                 new RectangleF(scrollbg.Left, scrollbg.Top - space * (a - start), scrollbg.Width,
@@ -2928,23 +2966,23 @@ namespace MissionPlanner.Controls
                     {
                         textcolor = _redBrush;
                         if (displayicons)
-                            icon = HUDT.batt_red;
+                            icon = GetIcon(nameof(HUDT.batt_red));
                     }
                     else if (lowvoltagealert)
                     {
                         textcolor = _orangeBrush;
                         if (displayicons)
-                            icon = HUDT.batt_yellow;
+                            icon = GetIcon(nameof(HUDT.batt_yellow));
                     }
                     else
                     {
                         textcolor = _whiteBrush;
                         if (displayicons)
                         {
-                            if (_batteryremaining > 75) icon = HUDT.batt_4;
-                            else if (_batteryremaining > 50) icon = HUDT.batt_3;
-                            else if (_batteryremaining > 25) icon = HUDT.batt_2;
-                            else icon = HUDT.batt_1;
+                            if (_batteryremaining > 75) icon = GetIcon(nameof(HUDT.batt_4));
+                            else if (_batteryremaining > 50) icon = GetIcon(nameof(HUDT.batt_3));
+                            else if (_batteryremaining > 25) icon = GetIcon(nameof(HUDT.batt_2));
+                            else icon = GetIcon(nameof(HUDT.batt_1));
                         }
                     }
 
@@ -2980,13 +3018,13 @@ namespace MissionPlanner.Controls
                             // Select icon for battery 2
                             Image icon2;
                             if (_batteryremaining2 > 75)
-                                icon2 = HUDT.batt_4;
+                                icon2 = GetIcon(nameof(HUDT.batt_4));
                             else if (_batteryremaining2 > 50)
-                                icon2 = HUDT.batt_3;
+                                icon2 = GetIcon(nameof(HUDT.batt_3));
                             else if (_batteryremaining2 > 25)
-                                icon2 = HUDT.batt_2;
+                                icon2 = GetIcon(nameof(HUDT.batt_2));
                             else
-                                icon2 = HUDT.batt_1;
+                                icon2 = GetIcon(nameof(HUDT.batt_1));
 
                             DrawImage(icon2, (int)batt2X, this.Height - bottomsize, iconWidth, bottomsize);
                             var text2X = batt2X + iconWidth + 3;
@@ -3035,50 +3073,50 @@ namespace MissionPlanner.Controls
                             gps = (HUDT.GPS0);
                             col = (SolidBrush)Brushes.Red;
                             if (displayicons)
-                                icon = HUDT.nogps_wide;
+                                icon = GetIcon(nameof(HUDT.nogps_wide));
                         }
                         else if (_fix == 1)
                         {
                             gps = (HUDT.GPS1);
                             col = (SolidBrush)Brushes.Red; 
                             if (displayicons)
-                                icon = HUDT.nofix_wide;
+                                icon = GetIcon(nameof(HUDT.nofix_wide));
                         }
                         else if (_fix == 2)
                         {
                             gps = (HUDT.GPS2); 
                             if (displayicons)
-                                icon = HUDT._2dfix_wide;
+                                icon = GetIcon(nameof(HUDT._2dfix_wide));
                         }
                         else if (_fix == 3)
                         {
                             gps = (HUDT.GPS3);
                             if (displayicons)
-                                icon = HUDT._3dfix_wide;
+                                icon = GetIcon(nameof(HUDT._3dfix_wide));
                         }
                         else if (_fix == 4)
                         {
                             gps = (HUDT.GPS4); 
                             if (displayicons)
-                                icon = HUDT._3ddgps_wide;
+                                icon = GetIcon(nameof(HUDT._3ddgps_wide));
                         }
                         else if (_fix == 5)
                         {
                             gps = (HUDT.GPS5); 
                             if (displayicons)
-                                icon = HUDT.rtkfloat_wide;
+                                icon = GetIcon(nameof(HUDT.rtkfloat_wide));
                         }
                         else if (_fix == 6)
                         {
                             gps = (HUDT.GPS6); 
                             if (displayicons)
-                                icon = HUDT.rtkfixed_wide;
+                                icon = GetIcon(nameof(HUDT.rtkfixed_wide));
                         }
                         else
                         {
                             gps = _fix.ToString();
                             if (displayicons)
-                                icon = HUDT.unknown;
+                                icon = GetIcon(nameof(HUDT.unknown));
                         }
 
                         // gps2
@@ -3157,6 +3195,10 @@ namespace MissionPlanner.Controls
                             drawstring(
                                 item.Header + hrs.ToString("00") + ":" + mins.ToString("00") + ":" +
                                 secs.ToString("00"), font, fontsize - 2, _whiteBrush, drawX, height);
+                        }
+                        else if (item.Item.Name == "string")
+                        {
+                            drawstring(item.Header, font, fontsize - 2, _whiteBrush, drawX, height);
                         }
                         else
                         {
@@ -3250,7 +3292,7 @@ namespace MissionPlanner.Controls
                         {
                             if (displayicons)
                             {
-                                DrawImage(HUDT.vibe_red, vibehitzone.X, vibehitzone.Y, vibehitzone.Width, vibehitzone.Height);
+                                DrawImage(GetIcon(nameof(HUDT.vibe_red)), vibehitzone.X, vibehitzone.Y, vibehitzone.Width, vibehitzone.Height);
                             }
                             else
                             {
@@ -3261,7 +3303,7 @@ namespace MissionPlanner.Controls
                         {
                             if (displayicons)
                             {
-                                DrawImage(HUDT.vibe_yellow, vibehitzone.X, vibehitzone.Y, vibehitzone.Width, vibehitzone.Height);
+                                DrawImage(GetIcon(nameof(HUDT.vibe_yellow)), vibehitzone.X, vibehitzone.Y, vibehitzone.Width, vibehitzone.Height);
                             }
                             else
                             {
@@ -3274,7 +3316,7 @@ namespace MissionPlanner.Controls
                     {
                         if (displayicons)
                         {
-                            DrawImage(HUDT.vibe_green, vibehitzone.X, vibehitzone.Y, vibehitzone.Width, vibehitzone.Height);
+                            DrawImage(GetIcon(nameof(HUDT.vibe_green)), vibehitzone.X, vibehitzone.Y, vibehitzone.Width, vibehitzone.Height);
                         }
                         else
                         {
@@ -3313,7 +3355,7 @@ namespace MissionPlanner.Controls
                         {
                             if (displayicons)
                             {
-                                DrawImage(HUDT.ekf_red, ekfhitzone.X, ekfhitzone.Y, ekfhitzone.Width, ekfhitzone.Height);
+                                DrawImage(GetIcon(nameof(HUDT.ekf_red)), ekfhitzone.X, ekfhitzone.Y, ekfhitzone.Width, ekfhitzone.Height);
                             }
                             else
                             {
@@ -3324,7 +3366,7 @@ namespace MissionPlanner.Controls
                         {
                             if (displayicons)
                             {
-                                DrawImage(HUDT.ekf_yellow, ekfhitzone.X, ekfhitzone.Y, ekfhitzone.Width, ekfhitzone.Height);
+                                DrawImage(GetIcon(nameof(HUDT.ekf_yellow)), ekfhitzone.X, ekfhitzone.Y, ekfhitzone.Width, ekfhitzone.Height);
                             }
                             else
                             {
@@ -3336,7 +3378,7 @@ namespace MissionPlanner.Controls
                     {
                         if (displayicons)
                         {
-                            DrawImage(HUDT.ekf_green, ekfhitzone.X, ekfhitzone.Y, ekfhitzone.Width, ekfhitzone.Height);
+                            DrawImage(GetIcon(nameof(HUDT.ekf_green)), ekfhitzone.X, ekfhitzone.Y, ekfhitzone.Width, ekfhitzone.Height);
                         }
                         else
                         {
@@ -3375,6 +3417,8 @@ namespace MissionPlanner.Controls
                     modeBrush = _redBrush;
                 }
                 drawstring(_mode, font, fontsize, _whiteBrush, mode_x, graphicsObject.Height - (fontsize * 1.5f), true);
+
+                OnCustomPaint?.Invoke(this);
 
                 if (DesignMode)
                 {
