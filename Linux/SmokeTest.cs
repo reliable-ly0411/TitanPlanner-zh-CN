@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using MissionPlanner.Controls;
 using MissionPlanner.Controls.PreFlight;
 using System.Windows.Forms;
 using System.Xml.Serialization;
@@ -49,6 +50,10 @@ class LinuxSmokeTest
         Settings.Instance["MainWidth"] = "1200";
         Settings.Instance["MainHeight"] = "900";
         Settings.Instance["AutoConnect"] = "[]";
+        Settings.Instance["language"] = "zh-CN";
+        // Select a map explicitly in this disposable profile so the Chinese
+        // first-run map preference notice does not block the startup test.
+        Settings.Instance["MapType"] = "GoogleSatelliteMap";
         Settings.Instance.Save();
         timer = new Timer { Interval = 10000 };
         timer.Tick += (sender, args) => {
@@ -56,18 +61,30 @@ class LinuxSmokeTest
             try
             {
                 var flightData = MainV2.instance.FlightData;
-                var tabs = (TabControl)flightData.Controls.Find("tabControlactions", true).Single();
-                tabs.SelectedTab = (TabPage)flightData.Controls.Find("tabActions", true).Single();
-                var combo = (ComboBox)flightData.Controls.Find("CMB_action", true).Single();
-                if (!MainV2.instance.Visible || combo.Items.Count == 0)
+                var tabs = (ThemedTabStrip)flightData.Controls.Find("themedTabStrip", true).Single();
+                var actionTab = tabs.TabPages.Single(tab => tab.Name == "tabActions");
+                tabs.SelectedIndex = tabs.TabPages.ToList().IndexOf(actionTab);
+                var actions = (FlightDataActions)flightData.Controls.Find("flightDataActions1", true).Single();
+                var combo = actions.CMB_action;
+                if (!MainV2.instance.Visible || !actions.Visible || tabs.SelectedTab != actionTab || combo.Items.Count == 0)
                     throw new Exception("FlightData did not load its actions.");
-                var table = (TableLayoutPanel)flightData.Controls.Find("tableLayoutPanel1", true).Single();
+                var table = (TableLayoutPanel)actions.Controls.Find("tableSetpoints", true).Single();
                 var modifiers = table.Controls.OfType<MissionPlanner.Controls.ModifyandSet>().ToArray();
                 if (modifiers.Length != 3)
                     throw new Exception("Missing numeric action controls.");
                 foreach (var modify in modifiers)
-                    if (modify.Button.Top != modify.NumericUpDown.Top || modify.Button.Right > modify.Width)
+                {
+                    var button = modify.Button;
+                    var number = modify.NumericUpDown;
+                    // Titan uses different control heights, centered in one row.
+                    // Require alignment, no overlap, and complete visible bounds.
+                    if (Math.Abs((button.Top * 2 + button.Height) - (number.Top * 2 + number.Height)) > 2 ||
+                        button.Width <= 0 || number.Width <= 0 || number.Right > button.Left ||
+                        button.Left < 0 || number.Left < 0 || button.Top < 0 || number.Top < 0 ||
+                        button.Right > modify.ClientSize.Width || number.Right > modify.ClientSize.Width ||
+                        button.Bottom > modify.ClientSize.Height || number.Bottom > modify.ClientSize.Height)
                         throw new Exception("Clipped action control: " + modify.Name);
+                }
                 CheckChecklistResize();
                 // Check the packaged native library and its managed ABI together.
                 using (var bitmap = new SkiaSharp.SKBitmap(8, 8))
