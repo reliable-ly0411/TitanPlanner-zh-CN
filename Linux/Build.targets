@@ -4,10 +4,13 @@
     <TargetFrameworks Condition="$([System.String]::Copy('$(TargetFrameworks)').Contains('net472'))">net472</TargetFrameworks>
     <TargetFrameworks Condition="$([System.String]::Copy('$(TargetFrameworks)').Contains('net461'))">net472</TargetFrameworks>
     <TargetFrameworks Condition="$([System.String]::Copy('$(TargetFrameworks)').Contains('netstandard2.0'))">netstandard2.0</TargetFrameworks>
+    <!-- Utilities/ArduPilot need the shim-backed netstandard target, while the
+         desktop UI needs GDI+. Do not leak real System.Drawing into shim users. -->
+    <TargetFrameworks Condition="'$(MSBuildProjectName)' == 'GMap.NET.Drawing'">net472;netstandard2.0</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup Condition="'$(MSBuildProjectName)' == 'MissionPlanner'">
     <!-- Match the application's managed SkiaSharp version. -->
-    <PackageReference Update="SkiaSharp.NativeAssets.Linux.NoDependencies" Version="2.88.8" GeneratePathProperty="true" />
+    <PackageReference Update="SkiaSharp.NativeAssets.Linux.NoDependencies" Version="2.88.9" GeneratePathProperty="true" />
     <Reference Include="Mono.Posix">
       <HintPath>$(MonoPosixPath)</HintPath>
     </Reference>

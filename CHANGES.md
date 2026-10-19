@@ -1,6 +1,6 @@
 ## TitanPlanner-zh-CN upstream synchronization (2026-10-19)
 
-Merged Titan-Dynamics/TitanPlanner master through `08602f654562`, preserving both Chinese variants, the fork's dependency fixes, Windows validation, and Chinese ZIP/MSI packaging. Ported enhanced Chinese display strings to the replacement 3D map settings and reconciled the new offline-map and directory-deletion flows. The inherited 32-bit MAVLink and terrain tests run with the fork's offline Windows regression suite.
+Merged Titan-Dynamics/TitanPlanner master through `08602f654562`, preserving both Chinese variants, the fork's dependency fixes, Windows validation, and Chinese ZIP/MSI packaging. Ported enhanced Chinese display strings to the replacement 3D map settings and reconciled the new offline-map and directory-deletion flows. The inherited 32-bit MAVLink and terrain tests run with the fork's offline Windows regression suite. The Linux build retains both GMap drawing targets to separate shim-based library types from desktop GDI+, and uses the fork's patched Skia native version.
 
 # Mission Planner - Titan Dynamics Edition - Features
 
