@@ -1227,7 +1227,9 @@ mc:Ignorable=""d""
                     pg.ViewForeColor = TextColor;
                     pg.HelpBackColor = BGColor;
                     pg.HelpForeColor = TextColor;
-                    pg.CategorySplitterColor = BGColor;
+                    // Mono 6.8 does not expose this optional .NET Framework property.
+                    // Avoid a static setter reference, which fails during JIT compilation.
+                    typeof(PropertyGrid).GetProperty("CategorySplitterColor")?.SetValue(pg, BGColor, null);
                     pg.CategoryForeColor = TextColor;
                 }
 

@@ -81,6 +81,21 @@ class LinuxSmokeTest
         CheckDashboardDefaults(table);
     }
 
+    private static void CheckPropertyGridTheme()
+    {
+        using (var root = new Panel())
+        using (var splitter = new SplitContainer())
+        using (var grid = new PropertyGrid())
+        {
+            root.Controls.Add(splitter);
+            splitter.Panel1.Controls.Add(grid);
+            ThemeManager.ApplyThemeTo(root);
+            if (grid.LineColor.ToArgb() != ThemeManager.BGColor.ToArgb() || grid.ViewBackColor.ToArgb() != ThemeManager.ControlBGColor.ToArgb() ||
+                grid.ViewForeColor.ToArgb() != ThemeManager.TextColor.ToArgb() || grid.CategoryForeColor.ToArgb() != ThemeManager.TextColor.ToArgb())
+                throw new Exception("Property-grid theme colors did not apply.");
+        }
+    }
+
     [STAThread]
     static void Main()
     {
@@ -127,6 +142,7 @@ class LinuxSmokeTest
                         throw new Exception("Clipped action control: " + modify.Name);
                 }
                 CheckChecklistResize();
+                CheckPropertyGridTheme();
                 // Check the packaged native library and its managed ABI together.
                 using (var bitmap = new SkiaSharp.SKBitmap(8, 8))
                 using (var canvas = new SkiaSharp.SKCanvas(bitmap))
