@@ -426,11 +426,11 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             try
             {
                 if (MainV2.comPort.MAV.param.ContainsKey(minParam))
-                    MainV2.comPort.setParam((byte)MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent,
+                    MainV2.comPort.setParam(MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent,
                         minParam, (double)newMin);
 
                 if (MainV2.comPort.MAV.param.ContainsKey(maxParam))
-                    MainV2.comPort.setParam((byte)MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent,
+                    MainV2.comPort.setParam(MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent,
                         maxParam, (double)newMax);
             }
             catch (Exception ex)

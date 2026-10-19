@@ -1381,5 +1381,7 @@
   "Language saved. It will take effect the next time you start TitanPlanner. You can continue working in this session.": "语言设置已保存，将在下次启动 TitanPlanner 时生效。你可以继续当前操作，稍后手动重启程序。",
   "Upstream updates may replace this Chinese build. Back up your installation before updating.": "上游更新可能覆盖此汉化版本。更新前请备份当前安装目录。",
   "Download tested build": "下载测试通过的版本",
-  "Download updates from this fork to keep both Chinese language options. Extract the complete package to a new folder.": "从本仓库下载更新可保留两套中文。请将完整更新包解压到新文件夹。"
+  "Download updates from this fork to keep both Chinese language options. Extract the complete package to a new folder.": "从本仓库下载更新可保留两套中文。请将完整更新包解压到新文件夹。",
+  "Stats for nerds": "性能统计",
+  "Failed to delete folder": "删除文件夹失败"
 }

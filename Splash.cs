@@ -1,5 +1,7 @@
 ﻿using System;
 using System.IO;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.Reflection;
 using System.Windows.Forms;
 using MissionPlanner.Utilities;
@@ -24,6 +26,19 @@ namespace MissionPlanner
             Console.WriteLine(strVersion);
 
             Console.WriteLine("Splash .ctor");
+        }
+
+        protected override void OnBackgroundImageChanged(EventArgs e)
+        {
+            // Mono cannot draw part of a 24 bit image, which the transparent labels need,
+            // so they show as blank boxes. A 32 bit copy draws everywhere.
+            if (BackgroundImage is Bitmap bitmap && bitmap.PixelFormat != PixelFormat.Format32bppArgb)
+            {
+                BackgroundImage = new Bitmap(bitmap);
+                return;
+            }
+
+            base.OnBackgroundImageChanged(e);
         }
     }
 }

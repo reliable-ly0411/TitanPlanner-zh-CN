@@ -514,7 +514,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                     try
                     {
                         await MainV2.comPort.setParamAsync(
-                            (byte)MainV2.comPort.sysidcurrent,
+                            MainV2.comPort.sysidcurrent,
                             (byte)MainV2.comPort.compidcurrent,
                             paramName,
                             0).ConfigureAwait(true);
@@ -551,7 +551,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                         // Set the other motor's function to our current servo
                         string oldServoParam = $"SERVO{currentServoForThisMotor}_FUNCTION";
                         await MainV2.comPort.setParamAsync(
-                            (byte)MainV2.comPort.sysidcurrent,
+                            MainV2.comPort.sysidcurrent,
                             (byte)MainV2.comPort.compidcurrent,
                             oldServoParam,
                             existingFunctionOnTargetServo).ConfigureAwait(true);
@@ -572,7 +572,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                         // Just clear old servo assignment (target has no motor function)
                         string oldServoParam = $"SERVO{currentServoForThisMotor}_FUNCTION";
                         await MainV2.comPort.setParamAsync(
-                            (byte)MainV2.comPort.sysidcurrent,
+                            MainV2.comPort.sysidcurrent,
                             (byte)MainV2.comPort.compidcurrent,
                             oldServoParam,
                             0).ConfigureAwait(true);
@@ -580,7 +580,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
 
                     // Set the new servo to this motor function
                     await MainV2.comPort.setParamAsync(
-                        (byte)MainV2.comPort.sysidcurrent,
+                        MainV2.comPort.sysidcurrent,
                         (byte)MainV2.comPort.compidcurrent,
                         newParamName,
                         motorFunction).ConfigureAwait(true);
@@ -637,7 +637,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             try
             {
                 await MainV2.comPort.setParamAsync(
-                    (byte)MainV2.comPort.sysidcurrent,
+                    MainV2.comPort.sysidcurrent,
                     (byte)MainV2.comPort.compidcurrent,
                     paramName,
                     newFunction).ConfigureAwait(true);
@@ -809,7 +809,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                                     {
                                         // Swap: move the target motor's existing servo to the source motor
                                         string oldTargetParam = $"SERVO{targetCurrentServo}_FUNCTION";
-                                        MainV2.comPort.setParam((byte)MainV2.comPort.sysidcurrent,
+                                        MainV2.comPort.setParam(MainV2.comPort.sysidcurrent,
                                             (byte)MainV2.comPort.compidcurrent, oldTargetParam, sourceFunctionValue);
 
                                         if (sourcePanel != null)
@@ -819,7 +819,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                                     }
 
                                     // Set the servo to the target motor's function
-                                    MainV2.comPort.setParam((byte)MainV2.comPort.sysidcurrent,
+                                    MainV2.comPort.setParam(MainV2.comPort.sysidcurrent,
                                         (byte)MainV2.comPort.compidcurrent, paramName, targetFunctionValue);
 
                                     // Update target motor's dropdown to show the servo
@@ -1092,7 +1092,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
         {
             try
             {
-                if (!MainV2.comPort.doCommand((byte)MainV2.comPort.sysidcurrent,
+                if (!MainV2.comPort.doCommand(MainV2.comPort.sysidcurrent,
                         (byte)MainV2.comPort.compidcurrent,
                         MAVLink.MAV_CMD.DO_MOTOR_TEST,
                         (float)motor,
@@ -1133,7 +1133,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
 
             try
             {
-                await MainV2.comPort.setParamAsync((byte)MainV2.comPort.sysidcurrent,
+                await MainV2.comPort.setParamAsync(MainV2.comPort.sysidcurrent,
                     (byte)MainV2.comPort.compidcurrent, "MOT_SPIN_ARM",
                     (float)NUM_mot_spin_arm.Value).ConfigureAwait(true);
             }
@@ -1152,7 +1152,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
 
             try
             {
-                await MainV2.comPort.setParamAsync((byte)MainV2.comPort.sysidcurrent,
+                await MainV2.comPort.setParamAsync(MainV2.comPort.sysidcurrent,
                     (byte)MainV2.comPort.compidcurrent, "MOT_SPIN_MIN",
                     (float)NUM_mot_spin_min.Value).ConfigureAwait(true);
             }

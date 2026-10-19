@@ -258,7 +258,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                 }
                 else
                 {
-                    MainV2.comPort.setParam((byte)MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, cap, float.Parse(TXT_battcapacity.Text));
+                    MainV2.comPort.setParam(MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, cap, float.Parse(TXT_battcapacity.Text));
                 }
             }
             catch
@@ -295,8 +295,8 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                         CMB_HWVersion.Enabled = false;
                         groupBox4.Enabled = false;
                         if (groupBoxCalibrate != null) groupBoxCalibrate.Enabled = false;
-                        MainV2.comPort.setParam((byte)MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, P("VOLT_PIN"), -1);
-                        MainV2.comPort.setParam((byte)MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, P("CURR_PIN"), -1);
+                        MainV2.comPort.setParam(MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, P("VOLT_PIN"), -1);
+                        MainV2.comPort.setParam(MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, P("CURR_PIN"), -1);
                     }
                     else if (selection == 4)
                     {
@@ -321,13 +321,13 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                         MainV2.comPort.MAV.param[monitor].Value == 0 &&
                         selection != 0)
                     {
-                        MainV2.comPort.setParam((byte)MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, monitor, selection);
+                        MainV2.comPort.setParam(MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, monitor, selection);
                         MainV2.comPort.getParamList();
                         this.Activate();
                     }
                     else
                     {
-                        MainV2.comPort.setParam((byte)MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, monitor, selection);
+                        MainV2.comPort.setParam(MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, monitor, selection);
                     }
                 }
             }
@@ -561,59 +561,59 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             {
                 if (selection == 0)
                 {
-                    MainV2.comPort.setParam((byte)MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, P("VOLT_PIN"), 0);
-                    MainV2.comPort.setParam((byte)MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, P("CURR_PIN"), 1);
+                    MainV2.comPort.setParam(MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, P("VOLT_PIN"), 0);
+                    MainV2.comPort.setParam(MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, P("CURR_PIN"), 1);
                 }
                 else if (selection == 1)
                 {
-                    MainV2.comPort.setParam((byte)MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, P("VOLT_PIN"), 1);
-                    MainV2.comPort.setParam((byte)MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, P("CURR_PIN"), 2);
+                    MainV2.comPort.setParam(MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, P("VOLT_PIN"), 1);
+                    MainV2.comPort.setParam(MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, P("CURR_PIN"), 2);
                 }
                 else if (selection == 2)
                 {
-                    MainV2.comPort.setParam((byte)MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, P("VOLT_PIN"), 13);
-                    MainV2.comPort.setParam((byte)MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, P("CURR_PIN"), 12);
+                    MainV2.comPort.setParam(MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, P("VOLT_PIN"), 13);
+                    MainV2.comPort.setParam(MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, P("CURR_PIN"), 12);
                 }
                 else if (selection == 3)
                 {
-                    MainV2.comPort.setParam((byte)MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, P("VOLT_PIN"), 100);
-                    MainV2.comPort.setParam((byte)MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, P("CURR_PIN"), 101);
+                    MainV2.comPort.setParam(MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, P("VOLT_PIN"), 100);
+                    MainV2.comPort.setParam(MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, P("CURR_PIN"), 101);
                 }
                 else if (selection == 4)
                 {
-                    MainV2.comPort.setParam((byte)MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, P("VOLT_PIN"), 2);
-                    MainV2.comPort.setParam((byte)MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, P("CURR_PIN"), 3);
+                    MainV2.comPort.setParam(MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, P("VOLT_PIN"), 2);
+                    MainV2.comPort.setParam(MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, P("CURR_PIN"), 3);
                 }
                 else if (selection == 5)
                 {
-                    MainV2.comPort.setParam((byte)MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, P("VOLT_PIN"), 10);
-                    MainV2.comPort.setParam((byte)MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, P("CURR_PIN"), 11);
+                    MainV2.comPort.setParam(MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, P("VOLT_PIN"), 10);
+                    MainV2.comPort.setParam(MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, P("CURR_PIN"), 11);
                 }
                 else if (selection == 6)
                 {
-                    MainV2.comPort.setParam((byte)MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, P("VOLT_PIN"), 10);
-                    MainV2.comPort.setParam((byte)MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, P("CURR_PIN"), -1);
+                    MainV2.comPort.setParam(MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, P("VOLT_PIN"), 10);
+                    MainV2.comPort.setParam(MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, P("CURR_PIN"), -1);
                 }
                 else if (selection == 7)
                 {
-                    MainV2.comPort.setParam((byte)MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, P("VOLT_PIN"), 6);
-                    MainV2.comPort.setParam((byte)MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, P("CURR_PIN"), 7);
+                    MainV2.comPort.setParam(MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, P("VOLT_PIN"), 6);
+                    MainV2.comPort.setParam(MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, P("CURR_PIN"), 7);
                 }
                 else if (selection == 8)
                 {
-                    MainV2.comPort.setParam((byte)MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, P("VOLT_PIN"), 14);
-                    MainV2.comPort.setParam((byte)MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, P("CURR_PIN"), 15);
+                    MainV2.comPort.setParam(MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, P("VOLT_PIN"), 14);
+                    MainV2.comPort.setParam(MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, P("CURR_PIN"), 15);
                 }
                 else if (selection == 9)
                 {
-                    MainV2.comPort.setParam((byte)MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, P("VOLT_PIN"), 16);
-                    MainV2.comPort.setParam((byte)MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, P("CURR_PIN"), 17);
+                    MainV2.comPort.setParam(MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, P("VOLT_PIN"), 16);
+                    MainV2.comPort.setParam(MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, P("CURR_PIN"), 17);
                 }
                 else if (selection == 10)
                 {
                     //Pixhawk 6C/Pix32 v6
-                    MainV2.comPort.setParam((byte)MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, P("VOLT_PIN"), 8);
-                    MainV2.comPort.setParam((byte)MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, P("CURR_PIN"), 4);
+                    MainV2.comPort.setParam(MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, P("VOLT_PIN"), 8);
+                    MainV2.comPort.setParam(MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, P("CURR_PIN"), 4);
                 }
             }
             catch

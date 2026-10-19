@@ -1,0 +1,2 @@
+# CI runs these with bash on Windows runners, where autocrlf would otherwise check them out as CRLF
+.github/scripts/*.sh text eol=lf

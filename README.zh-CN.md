@@ -41,6 +41,10 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts/localization/build_w
 
 VS Code 的简体中文包为 `MS-CEINTL.vscode-language-pack-zh-hans`，C# 扩展为 `ms-dotnettools.csharp`；VS Code 不提供 Visual Studio 的 WinForms 可视化设计器。
 
+## 上游同步记录
+
+2026-10-19 合并官方 `Titan-Dynamics/TitanPlanner` 的 `master` 至 `08602f654562`，保留本仓库中文双版本、依赖安全修复及 Windows 打包流程。此轮包含新的流式 3D 地图、离线地图管理、32 位 MAVLink 系统 ID 及 ADS-B 修复；原 3D 设置的增强中文已迁移到新版设置窗口。
+
 ## 测试与自动化
 
 详见 [AUTOMATION.zh-CN.md](AUTOMATION.zh-CN.md)。每日检查上游，先验证候选版本再推进主分支和发布；冲突或测试失败保留待审查分支。构建包括 Release/Debug、中文静态及运行测试、真实 Windows 控件、离线回归测试、依赖漏洞审计和 ZIP 校验。

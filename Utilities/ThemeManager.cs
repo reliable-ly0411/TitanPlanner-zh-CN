@@ -142,6 +142,7 @@ namespace MissionPlanner.Utilities
                 GCSViews.FlightData.myhud.skyColor1 = ThemeManager.HudSkyTop;
                 GCSViews.FlightData.myhud.skyColor2 = ThemeManager.HudSkyBot;
                 GCSViews.FlightData.myhud.hudcolor = ThemeManager.HudText;
+                GCSViews.FlightData.myhud.targetHeadingColor = ThemeManager.ButBG;
             }
         }
     }
@@ -1226,7 +1227,9 @@ mc:Ignorable=""d""
                     pg.ViewForeColor = TextColor;
                     pg.HelpBackColor = BGColor;
                     pg.HelpForeColor = TextColor;
-                    pg.CategorySplitterColor = BGColor;
+                    // Mono 6.8 does not expose this optional .NET Framework property.
+                    // Avoid a static setter reference, which fails during JIT compilation.
+                    typeof(PropertyGrid).GetProperty("CategorySplitterColor")?.SetValue(pg, BGColor, null);
                     pg.CategoryForeColor = TextColor;
                 }
 

@@ -226,6 +226,7 @@ namespace MissionPlanner.GCSViews
             this.AZ = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TagData = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.findLoc = new MissionPlanner.Controls.MyButton();
+            this.BUT_offlinemaps = new MissionPlanner.Controls.MyButton();
             this.gDALOpacityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editStyleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.useLegacyOverlayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -435,6 +436,7 @@ namespace MissionPlanner.GCSViews
             this.panelWaypoints.Controls.Add(this.CHK_verifyheight);
             this.panelWaypoints.Controls.Add(this.TXT_WPRad);
             this.panelWaypoints.Controls.Add(this.BUT_Add);
+            this.panelWaypoints.Controls.Add(this.BUT_offlinemaps);
             resources.ApplyResources(this.panelWaypoints, "panelWaypoints");
             this.panelWaypoints.ForeColor = System.Drawing.SystemColors.ControlText;
             this.panelWaypoints.Name = "panelWaypoints";
@@ -1580,6 +1582,14 @@ namespace MissionPlanner.GCSViews
             this.findLoc.UseVisualStyleBackColor = true;
             this.findLoc.Click += new System.EventHandler(this.findLoc_Click);
             //
+            // BUT_offlinemaps
+            //
+            resources.ApplyResources(this.BUT_offlinemaps, "BUT_offlinemaps");
+            this.BUT_offlinemaps.Name = "BUT_offlinemaps";
+            this.BUT_offlinemaps.TextColorNotEnabled = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(87)))), ((int)(((byte)(4)))));
+            this.BUT_offlinemaps.UseVisualStyleBackColor = true;
+            this.BUT_offlinemaps.Click += new System.EventHandler(this.BUT_offlinemaps_Click);
+            //
             // editStyleToolStripMenuItem
             //
             this.editStyleToolStripMenuItem.Name = "editStyleToolStripMenuItem";
@@ -1804,6 +1814,7 @@ namespace MissionPlanner.GCSViews
         private ProgressBar progressBarInjectCustomMap;
         private NumericUpDown Zoomlevel;
         private MyButton findLoc;
+        private MyButton BUT_offlinemaps;
         private ToolStripMenuItem editStyleToolStripMenuItem;
         private ToolStripMenuItem useLegacyOverlayToolStripMenuItem;
     }

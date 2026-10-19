@@ -11,7 +11,6 @@ using System.Threading;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using static MissionPlanner.Utilities.rtcm3;
-using Flurl.Http;
 using System.Diagnostics;
 
 namespace MissionPlanner.Utilities
@@ -80,9 +79,9 @@ namespace MissionPlanner.Utilities
         private const int API_LOOP_DELAY_MAX_MILLISECONDS = 10000;
 
         /// <summary>
-        /// Application version string for HTTP user agents - set by MainV2.cs
+        /// adsb.lol asks API clients to put contact info in their User-Agent and rejects generic ones.
         /// </summary>
-        public static string ApplicationVersion { get; set; }
+        private const string API_CONTACT = "contact@titanuas.com";
 
         public adsb()
         {
@@ -142,11 +141,8 @@ namespace MissionPlanner.Utilities
                     {
                         // ADSB Exchange API format - see https://api.adsb.lol/docs
                         string url = "{0}/v2/point/{1}/{2}/{3}";
-                        Download.RequestModification += (u, request) => {
-                            // for future use if necessary: request.Headers.Add("X-API-Auth", "example");
-                            request.SetHeader("User-Agent", "Mission-Planner/" + ApplicationVersion);
-                        };
                         var delay = API_LOOP_DELAY_MILLISECONDS;
+                        var userAgent = (Settings.Instance.UserAgent ?? "TitanPlanner") + " (contact: " + API_CONTACT + ")";
 
                         while (true)
                         {
@@ -154,7 +150,7 @@ namespace MissionPlanner.Utilities
                             var timer = Stopwatch.StartNew();
 
                             string formattedUrl = string.Format(CultureInfo.InvariantCulture, url, server, CurrentPosition.Lat, CurrentPosition.Lng, httpRequestRadius);
-                            var t = Download.GetAsyncWithStatus(formattedUrl);
+                            var t = Download.GetAsyncWithStatus(formattedUrl, userAgent);
                             t.Wait();
 
                             // Check for long running requests
@@ -165,6 +161,9 @@ namespace MissionPlanner.Utilities
 
                             if (!t.IsFaulted && t.Result.status == System.Net.HttpStatusCode.OK)
                             {
+                                // Back to the normal rate after a failure slowed it down.
+                                delay = API_LOOP_DELAY_MILLISECONDS;
+
                                 var result = JsonConvert.DeserializeObject<RootObject>(t.Result.content);
 
                                 // Increase range if we don't see many planes
@@ -428,6 +427,8 @@ namespace MissionPlanner.Utilities
             public double heading = 0;
             // Horizontal ground speed in cm/s
             internal int ground_speed;
+            // Vertical speed in cm/s, positive = ascent
+            internal double vertical_speed;
 
             public Plane()
             {
@@ -924,13 +925,6 @@ namespace MissionPlanner.Utilities
                                 lon = double.Parse(strArray[15], CultureInfo.InvariantCulture);//Float. Longitude 
                             }
                             catch { }
-                            int vspeed = 0;
-                            try
-                            {
-                                vspeed = (int)(int.Parse(strArray[16]) * FTM_TO_CMS);
-                            }
-                            catch { }
-
                             ushort squawk = 0;
                             try
                             {
@@ -950,11 +944,12 @@ namespace MissionPlanner.Utilities
 
                             if (UpdatePlanePosition != null && plane != null)
                             {
-                                double METERS_PER_FOOT = 3.28;
-                                PointLatLngAltHdg plln = new PointLatLngAltHdg(lat, lon, altitude / METERS_PER_FOOT, (float)plane.heading, plane.ground_speed, hex_ident, DateTime.Now)
+                                // altitude is already metres - converted from feet above
+                                PointLatLngAltHdg plln = new PointLatLngAltHdg(lat, lon, altitude, (float)plane.heading, plane.ground_speed, hex_ident, DateTime.Now)
                                 {
                                     CallSign = plane.CallSign,
-                                    Squawk = squawk
+                                    Squawk = squawk,
+                                    VerticalSpeed = plane.vertical_speed
                                 };
                                 UpdatePlanePosition(null, plln);
                             }
@@ -982,7 +977,12 @@ namespace MissionPlanner.Utilities
                             catch { }
                             try
                             {
-                                ((Plane)Planes[hex_ident]).heading = (int)double.Parse(strArray[13], CultureInfo.InvariantCulture);//Integer degrees, 0 = N. Ground track angle. 
+                                ((Plane)Planes[hex_ident]).heading = (int)double.Parse(strArray[13], CultureInfo.InvariantCulture);//Integer degrees, 0 = N. Ground track angle.
+                            }
+                            catch { }
+                            try
+                            {
+                                ((Plane)Planes[hex_ident]).vertical_speed = double.Parse(strArray[16], CultureInfo.InvariantCulture) * FTM_TO_CMS;// Integer. 64ft resolution climb/descent rate.
                             }
                             catch { }
 
