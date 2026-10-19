@@ -25,7 +25,6 @@ docker run "${docker_args[@]}" ubuntu:22.04 bash -euo pipefail -c '
     # Mono may write SIGQUIT thread dumps to files instead of standard error.
     mkdir /tmp/mono-thread-dumps
     export MONO_DEBUG=thread-dump-dir=/tmp/mono-thread-dumps
-    export MONO_ENV_OPTIONS="--trace=M:MissionPlanner.MainV2:SaveConfig,M:MissionPlanner.Utilities.Settings:Save,M:MissionPlanner.MainV2:OnLoad"
     diagnostics() {
         local status=$?
         trap - EXIT

@@ -960,13 +960,15 @@ namespace MissionPlanner.GCSViews
                         int defaultCols = defaults.GetLength(1);
                         setQuickViewRowsCols(defaultCols.ToString(), defaultRows.ToString());
 
+                        // Read explicit cell assignments: Mono has not calculated positions
+                        // for newly rebuilt controls while this layout is suspended.
                         // Apply defaults to each QuickView
                         foreach (Control ctrl in tableLayoutPanelQuick.Controls)
                         {
                             if (ctrl is QuickView qv)
                             {
-                                var pos = tableLayoutPanelQuick.GetPositionFromControl(qv);
-                                if (pos.Row < defaultRows && pos.Column < defaultCols)
+                                var pos = tableLayoutPanelQuick.GetCellPosition(qv);
+                                if (pos.Row >= 0 && pos.Column >= 0 && pos.Row < defaultRows && pos.Column < defaultCols)
                                 {
                                     var cellDefault = defaults[pos.Row, pos.Column];
                                     if (cellDefault != null)
@@ -1030,8 +1032,9 @@ namespace MissionPlanner.GCSViews
                         double.TryParse(parts[14], out colorGreenValue);
                     }
 
-                    // Find the control at this position
-                    var ctrl = tableLayoutPanelQuick.GetControlFromPosition(col, row);
+                    // Explicit cells remain available while layout is suspended on Mono.
+                    var ctrl = tableLayoutPanelQuick.Controls.OfType<QuickView>().FirstOrDefault(item =>
+                        tableLayoutPanelQuick.GetRow(item) == row && tableLayoutPanelQuick.GetColumn(item) == col);
                     if (ctrl is QuickView qv)
                     {
                         // Handle customfield source
@@ -6192,8 +6195,8 @@ namespace MissionPlanner.GCSViews
         private void SwapQuickViews(QuickView source, QuickView target)
         {
             // Get positions in the table layout
-            var sourcePos = tableLayoutPanelQuick.GetPositionFromControl(source);
-            var targetPos = tableLayoutPanelQuick.GetPositionFromControl(target);
+            var sourcePos = tableLayoutPanelQuick.GetCellPosition(source);
+            var targetPos = tableLayoutPanelQuick.GetCellPosition(target);
 
             // Swap positions in the table
             tableLayoutPanelQuick.SuspendLayout();
@@ -6210,7 +6213,7 @@ namespace MissionPlanner.GCSViews
             if (MainV2.DisplayConfiguration.lockQuickView)
                 return;
 
-            var currentPos = tableLayoutPanelQuick.GetPositionFromControl(qv);
+            var currentPos = tableLayoutPanelQuick.GetCellPosition(qv);
             int newCol = currentPos.Column + colDelta;
             int newRow = currentPos.Row + rowDelta;
 
@@ -6246,7 +6249,7 @@ namespace MissionPlanner.GCSViews
             {
                 if (ctrl is QuickView qv)
                 {
-                    var pos = tableLayoutPanelQuick.GetPositionFromControl(qv);
+                    var pos = tableLayoutPanelQuick.GetCellPosition(qv);
 
                     // Build the item string with all properties
                     var parts = new List<string>
@@ -6328,7 +6331,7 @@ namespace MissionPlanner.GCSViews
         {
             if (sender is ContextMenuStrip menu && menu.SourceControl is QuickView qv)
             {
-                var pos = tableLayoutPanelQuick.GetPositionFromControl(qv);
+                var pos = tableLayoutPanelQuick.GetCellPosition(qv);
 
                 // Enable/disable move options based on position
                 moveLeftToolStripMenuItem.Enabled = pos.Column > 0;
@@ -6362,7 +6365,7 @@ namespace MissionPlanner.GCSViews
                     if (MainV2.DisplayConfiguration.lockQuickView)
                         return;
 
-                    var pos = tableLayoutPanelQuick.GetPositionFromControl(qv);
+                    var pos = tableLayoutPanelQuick.GetCellPosition(qv);
                     ResetQuickViewToDefault(qv, pos.Row, pos.Column);
                 }
             }
@@ -6394,8 +6397,8 @@ namespace MissionPlanner.GCSViews
                 {
                     if (ctrl is QuickView qv)
                     {
-                        var pos = tableLayoutPanelQuick.GetPositionFromControl(qv);
-                        if (pos.Row < defaultRows && pos.Column < defaultCols)
+                        var pos = tableLayoutPanelQuick.GetCellPosition(qv);
+                        if (pos.Row >= 0 && pos.Column >= 0 && pos.Row < defaultRows && pos.Column < defaultCols)
                         {
                             var cellDefault = defaults[pos.Row, pos.Column];
                             if (cellDefault != null)
@@ -6424,7 +6427,7 @@ namespace MissionPlanner.GCSViews
             try
             {
                 var defaults = LoadQuickViewDefaultsFromCSV();
-                if (defaults == null || row >= defaults.GetLength(0) || col >= defaults.GetLength(1))
+                if (defaults == null || row < 0 || col < 0 || row >= defaults.GetLength(0) || col >= defaults.GetLength(1))
                 {
                     // Fallback to battery_voltage if no default exists
                     qv.Tag = "battery_voltage";
@@ -7553,7 +7556,7 @@ namespace MissionPlanner.GCSViews
             {
                 if (ctrl is QuickView originalQV)
                 {
-                    var pos = tableLayoutPanelQuick.GetPositionFromControl(originalQV);
+                    var pos = tableLayoutPanelQuick.GetCellPosition(originalQV);
 
                     var copyQV = new QuickView();
                     copyQV.Name = originalQV.Name + "_copy";

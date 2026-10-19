@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using MissionPlanner.Controls;
 using MissionPlanner.Controls.PreFlight;
@@ -41,6 +42,45 @@ class LinuxSmokeTest
         }
     }
 
+    private static void CheckDashboardDefaults(TableLayoutPanel table)
+    {
+        var expected = new[] {
+            "battery_voltage", "current", "watts", "battery_usedmah", "battery_mahperkm",
+            "airspeed", "groundspeed", "verticalspeed", "alt", "yaw",
+            "timeInAirMinSec", "distTraveled", "DistToHome", "wp_dist", "rxrssi"
+        };
+        var views = table.Controls.OfType<QuickView>().ToArray();
+        if (table.RowCount != 3 || table.ColumnCount != 5 || views.Length != expected.Length)
+            throw new Exception("Missing default dashboard cells.");
+        for (int i = 0; i < expected.Length; i++)
+        {
+            int row = i / 5, column = i % 5;
+            var view = views.Single(item => table.GetRow(item) == row && table.GetColumn(item) == column);
+            if ((string)view.Tag != expected[i] || view.DataBindings.Count == 0)
+                throw new Exception("Default dashboard field was not bound: " + expected[i]);
+            var saved = Settings.Instance["dashboardItem" + i].Split('|');
+            if (saved[0] != row.ToString() || saved[1] != column.ToString() || saved[2] != expected[i])
+                throw new Exception("Dashboard cell position was not persisted: " + expected[i]);
+        }
+    }
+
+    private static void CheckDashboard(MissionPlanner.GCSViews.FlightData flightData)
+    {
+        var table = (TableLayoutPanel)flightData.Controls.Find("tableLayoutPanelQuick", true).Single();
+        CheckDashboardDefaults(table);
+        var first = table.Controls.OfType<QuickView>().Single(item => table.GetRow(item) == 0 && table.GetColumn(item) == 0);
+        first.desc = "Smoke dashboard value";
+        var flags = BindingFlags.Instance | BindingFlags.NonPublic;
+        var type = flightData.GetType();
+        type.GetMethod("SaveQuickViewArrangement", flags).Invoke(flightData, null);
+        type.GetMethod("LoadDashboardItems", flags).Invoke(flightData, null);
+        first = table.Controls.OfType<QuickView>().Single(item => table.GetRow(item) == 0 && table.GetColumn(item) == 0);
+        if (first.desc != "Smoke dashboard value" || (string)first.Tag != "battery_voltage")
+            throw new Exception("Saved dashboard values did not reload.");
+        type.GetMethod("resetAllQuickViewToolStripMenuItem_Click", flags).Invoke(flightData, new object[] { null, EventArgs.Empty });
+        CheckDashboardDefaults(table);
+    }
+
     [STAThread]
     static void Main()
     {
@@ -61,6 +101,7 @@ class LinuxSmokeTest
             try
             {
                 var flightData = MainV2.instance.FlightData;
+                CheckDashboard(flightData);
                 var tabs = (ThemedTabStrip)flightData.Controls.Find("themedTabStrip", true).Single();
                 var actionTab = tabs.TabPages.Single(tab => tab.Name == "tabActions");
                 tabs.SelectedIndex = tabs.TabPages.ToList().IndexOf(actionTab);
