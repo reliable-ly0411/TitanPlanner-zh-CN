@@ -2,12 +2,21 @@
 from pathlib import Path
 import struct
 import unittest
+import xml.etree.ElementTree as ET
 
 
 ROOT = Path(__file__).resolve().parents[3]
 
 
 class ApplicationIconTests(unittest.TestCase):
+    def test_splash_reuses_the_mono_compatible_application_icon(self):
+        root = ET.parse(ROOT / 'Splash.resx').getroot()
+        icon = next(item for item in root.findall('data')
+                    if item.attrib.get('name') == '$this.Icon')
+        self.assertTrue(icon.attrib.get('type', '').startswith('System.Resources.ResXFileRef,'))
+        self.assertEqual('mpdesktop.ico', icon.findtext('value').split(';')[0])
+        self.assertNotIn('mimetype', icon.attrib)
+
     def test_all_icon_sizes_use_complete_uncompressed_dib_frames(self):
         data = (ROOT / 'mpdesktop.ico').read_bytes()
         reserved, kind, count = struct.unpack_from('<HHH', data)
