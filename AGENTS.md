@@ -178,3 +178,7 @@ whenever a change lands. `ChangeLog.txt` is upstream's and is not maintained her
   shaders, `Overlays/` the mission, vehicle and ADS-B drawing, `Scene/` the UTM frame, camera and pose
   smoothing. Selection and loading are pure logic with tests in `MissionPlannerTests/Controls/`.
 - **Commits.** Messages carry no AI attribution trailers. Do not commit or push unless asked.
+
+## Release and repository maintenance
+
+Before changing versions, branches, packaging, release notes, or public issue summaries, read `RELEASING.md` and follow its repository-specific mapping. Preserve all other instructions in this file and any narrower directory instructions. Published tags and asset bytes are immutable: fix a release through a new version, never by moving a published tag or overwriting assets. Keep upstream mirrors free of fork-only policy and localization changes. Release preparation does not itself grant permission to publish, merge, delete, or change repository settings.
