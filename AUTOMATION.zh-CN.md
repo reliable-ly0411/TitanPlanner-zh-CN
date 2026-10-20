@@ -1,22 +1,23 @@
 # 上游同步、验证与发布
 
-主工作流位于 `.github/workflows/main.yml`。上游为 `Titan-Dynamics/TitanPlanner` 的 `master`。
+源代码同步入口为 `.github/workflows/sync-upstream.yml`，Windows 构建入口为 `main.yml`。
 
-- 每天 03:17 UTC（北京时间 11:17）、主分支推送及手动运行时，检查上游更新。
-- 有更新时创建独立候选分支，以合并保留本仓库修改；不强制覆盖主分支。
-- 校验原版中文资源哈希、增强中文词典、自动化回归、翻译运行、Windows 界面及离线单元测试。
-- 使用独立 .NET 8 SDK 构建 Release 和 Debug，检查直接及传递依赖的已知漏洞。
-- 上游候选全部通过后，仅当主分支仍是本次验证的起点时才快进；并发用户提交不会被覆盖。普通推送构建若已属于主分支历史，即使随后有新提交，也允许发布该已测试提交的独立标签，不移动主分支。
-- 发布 Windows MSI 安装包、便携 ZIP、两份产物的 SHA256SUMS 和构建提交信息。MSI 使用 Windows 构建机预装的 WiX 3.14，从 ZIP 相同内容生成，通过安装、逐文件一致性、修复、卸载及配置/日志保留测试后才发布。每个提交使用唯一 `v<程序版本>-zh2-<提交前12位>` 标签，重跑不会覆盖已有发布。
-- 自动构建标记为预发布版。真实飞控、飞行、所有外部网络服务及不同显示器 DPI 不由这些自动测试证明。
+- 每天 03:17 UTC 仅合并上游 `Titan-Dynamics/TitanPlanner/master`，保留本仓历史和双中文版本。普通 push/PR 只执行 Python 资源、打包和策略回归，不运行本机编译、GUI、MSI 或发布。
+- 同步候选先运行轻量检查；主分支仍是准备时的起点才普通快进。冲突、上游自动化策略改动或并发主分支更新均停止，不强推、不覆盖用户提交。
+- 定时同步后只识别新建且正式发布的 `TitanPlanner-<四段版本>` GitHub Release。`development-build`、draft、prerelease、单纯新 tag 或上游 HEAD 变化均不会启动自动重型构建。
+- 2026-10-20 14:06:15 UTC 已存在的 Release ID 记为基线，包括当时最新的 `TitanPlanner-1.3.9789.1792`；不补建历史发布。每个后续 Release 固定其 ID、tag 的 peeled commit、下游补丁起点/提交/摘要与组合后的源码 SHA。源码在构建作业内组装，不推送生成的工作流改动，也不拿上游当前 HEAD 冒充已发布源码。
+- Windows 候选仍须通过两套中文资源、翻译运行、GUI/离线回归、Release/Debug 构建、依赖审计、ZIP 与 MSI 安装/修复/卸载及个人数据保留检查。Linux 候选仍执行原生构建与运行依赖测试。成功后保留原始工件及 SHA-256 证据，不在提升时重建。
+- 当前正式上游候选的自动发布明确阻塞：组合源码尚无经过审阅的远端不可变提交锚点和发布版本/说明映射。通过构建不等于已经发布；不能以下载附件或重建代替该缺口。`verify-release-candidate.yml` 可核验原 run、源码与工件，但会明确失败退出以报告该阻塞。
 
-发生合并冲突、上游改动自动化策略，或候选验证失败时，主分支与已有发布保持不变，工作流尝试创建待审查 PR。仓库 Settings → Actions → General 中需要允许 GitHub Actions 创建 PR；若未允许，候选分支仍保留，运行会清楚报错。主分支保护不允许机器人推送时，也应通过 PR 处理，不绕过保护规则。
+## 三个独立的手动入口
 
-只使用仓库自带 `GITHUB_TOKEN`，不要求个人令牌。构建与测试作业只有读取权限；推送与发布由单独作业执行。自动化动作固定到提交 SHA。
+1. 同步：手动运行 `sync-upstream.yml`，默认 `action=sync`，只同步。`check-releases` 才额外识别新正式发布；`retry_release_id` 仅重试已失败的新发布，不补建历史。
+2. 构建：在目标提交所在分支运行 `main.yml` 或 `linux.yml`；不会同步或发布。Android/macOS 与地形打包仍是独立手动入口，不进入 Windows 发布链。
+3. 发布：`promote-release.yml` 填写成功的手动 `main.yml` run ID 和精确 40 位 source SHA。只接受本仓 master 的成功手动构建、完整 Windows 检查及匹配 run/attempt/source/workflow 的原始工件与摘要，拒绝 PR、旧 push 或其他仓库工件。直接提升已验 ZIP/MSI，不编译、不重打包、不移动主分支、不覆盖既有 tag/附件。成功候选必须仍是 master 的祖先；没有新版本时不创建重复发布。
 
-GitHub 定时任务可能延迟；公共仓库长时间没有活动时，GitHub 可能自动停用定时工作流。可在 Actions 页面手动恢复。推送和定时运行共用一条并发队列，避免重复发布。
+发布保留不可变 `v<程序版本>-zh2-<源码前12位>` tag 和现有预发布分类。自动化仅使用仓库既有 `GITHUB_TOKEN`；构建作业只读，写入 ledger、同步或明确手动发布的作业独立授予所需权限。未新增凭据、签名或仓库设置权限。
 
-旧 Android/macOS 工作流保留为手动入口，供迁移旧 Xamarin 项目时参考；不属于 Windows 发布流程，也未宣称移动端已通过构建或完成签名。此仓库不自动提交到 Google Play。
+成功识别记录保存在独立 `release-policy-state` 分支，不移动产品分支。失败自动重试最多三次且沿用原固定来源；成功记录去重。移动/重命名/撤回或重复使用的上游 Release/tag 会停止。并发队列不取消正在运行的工作。GitHub 的定时运行可能延迟或因仓库长期不活跃被停用。
 
 ## 本地复现
 
@@ -35,4 +36,4 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts/ci/test_windows.ps1 
 
 ## 发布版本命名
 
-MSI 和 ZIP 统一命名为 `TitanPlanner-zh-CN-v<程序版本>-<提交前12位>-windows.msi/zip`，发布标题和标签同步携带程序版本。版本自动读取 `MissionPlanner.csproj`，并与 `AssemblyFileVersion` 核对，不使用依赖包版本；不一致时停止打包。`BUILD-INFO.json` 和 `build-info.json` 同时记录版本与提交。MSI 内部用于升级排序的安装器版本仍随工作流编号递增，并单独记为 `msi_version`。历史发布名称保持不变。
+MSI 和 ZIP 沿用固定附件名 `TitanPlanner-zh-CN.msi/zip`，以不可变 tag 区分版本，发布标题和标签同步携带程序版本。版本自动读取 `MissionPlanner.csproj`，并与 `AssemblyFileVersion` 核对，不使用依赖包版本；不一致时停止打包。`BUILD-INFO.json` 和 `build-info.json` 同时记录版本与提交。MSI 内部用于升级排序的安装器版本仍随工作流编号递增，并单独记为 `msi_version`。历史发布名称保持不变。

@@ -78,7 +78,7 @@ def prepare(sync, upstream=UPSTREAM):
         candidate = git('rev-parse', 'HEAD')
         git('push', 'origin', candidate + ':refs/heads/' + branch)
     # Automation must not silently replace its own validation/release policy.
-    protected = git('diff', '--name-only', base, candidate, '--', '.github/workflows', 'scripts/ci')
+    protected = git('diff', '--name-only', base, candidate, '--', '.github/workflows', '.github/release_policy', 'scripts/ci')
     if protected:
         proposal(branch, '上游修改涉及自动化策略，需要审查：\n\n```text\n' + protected + '\n```')
         raise RuntimeError('Automation policy changed; master unchanged')

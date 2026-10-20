@@ -1,0 +1,33 @@
+name: Promote verified Windows build (no rebuild)
+on:
+  workflow_dispatch:
+    inputs:
+      candidate_run:
+        description: Successful manual main.yml build run ID on master
+        type: string
+        required: true
+      source_sha:
+        description: Exact 40-character tested source SHA
+        type: string
+        required: true
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: titan-immutable-publication
+  cancel-in-progress: false
+jobs:
+  publish:
+    if: github.repository == 'reliable-ly0411/TitanPlanner-zh-CN' && github.ref == 'refs/heads/master'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ inputs.source_sha }}
+          fetch-depth: 0
+      - name: Verify original run, all gates, source, and artifact hashes; promote unchanged bytes
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CANDIDATE_RUN_ID: ${{ inputs.candidate_run }}
+          SOURCE_SHA: ${{ inputs.source_sha }}
+        run: python3 .github/release_policy/promote.py

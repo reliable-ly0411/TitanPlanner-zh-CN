@@ -19,9 +19,10 @@ Titan Dynamics fork; use these overrides when they differ from this fork's polic
   The Windows CI runs all offline regression tests, including the upstream MAVLink
   and 3D terrain tests. Linux build instructions are in `Linux/README.md`.
 - Preserve the fork's tested-candidate promotion, Chinese installer and immutable
-  release naming. A push to `master` normally starts automatic publication; a
-  source-only synchronization must first validate its exact tree in a PR and avoid
-  triggering an unrequested release. Do not change repository access settings.
+  release naming. Ordinary pushes and source synchronization run lightweight checks only.
+  Heavy automatic builds require a newly recognized formal upstream Release;
+  publication remains blocked until its exact released-source mapping is reviewed.
+  Manual native builds and immutable-artifact promotion remain separate interfaces. Do not change repository access settings.
 
 ## What this is
 
