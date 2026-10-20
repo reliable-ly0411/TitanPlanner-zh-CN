@@ -71,17 +71,16 @@ def prepare(sync, upstream=UPSTREAM):
         if result.returncode:
             conflicts = git('diff', '--name-only', '--diff-filter=U')
             git('merge', '--abort')
-            # A PR from upstream's commit exposes real conflicts without changing master.
-            git('push', 'origin', upstream_sha + ':refs/heads/' + branch)
-            proposal(branch, '发生合并冲突：\n\n```text\n' + conflicts + '\n```')
-            raise RuntimeError('Upstream merge conflicts; master unchanged')
+            # Never push raw upstream history: it could install unreviewed workflow
+            # triggers before a PR is reviewed. Preserve master and report the paths.
+            raise RuntimeError('Upstream merge conflicts; no candidate pushed, master unchanged: ' + conflicts)
         candidate = git('rev-parse', 'HEAD')
-        git('push', 'origin', candidate + ':refs/heads/' + branch)
     # Automation must not silently replace its own validation/release policy.
-    protected = git('diff', '--name-only', base, candidate, '--', '.github/workflows', 'scripts/ci')
+    protected = git('diff', '--name-only', base, candidate, '--', '.github/workflows', '.github/release_policy', 'scripts/ci')
     if protected:
-        proposal(branch, '上游修改涉及自动化策略，需要审查：\n\n```text\n' + protected + '\n```')
-        raise RuntimeError('Automation policy changed; master unchanged')
+        raise RuntimeError('Automation policy changed; no candidate pushed, master unchanged: ' + protected)
+    if not existing:
+        git('push', 'origin', candidate + ':refs/heads/' + branch)
     output(sha=candidate, base=base, candidate=branch, upstream=upstream_sha, changed='true')
 
 
