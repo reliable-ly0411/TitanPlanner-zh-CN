@@ -230,7 +230,9 @@ namespace MissionPlanner.Utilities
                     }
                     finally
                     {
-                        DestroyIcon(handle);
+                        // Mono/libgdiplus handles are not Win32 HICONs.
+                        if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+                            DestroyIcon(handle);
                     }
 
                     _formIconSource = source;

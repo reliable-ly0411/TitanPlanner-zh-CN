@@ -17,7 +17,7 @@ A new bundled theme (`titandynamics.mpsystheme`) is set as the default for new i
 Native Windows title bars now follow the application theme rather than always being light.
 
 ## New Application Icon, Splash, and Tab Icons
-A new app icon (Titan Dynamics branding), redesigned splash screen, and a fresh icon set for the main top-level tabs in both dark and light variants.
+A new app icon (Titan Dynamics branding), redesigned splash screen, and a fresh icon set for the main top-level tabs in both dark and light variants. Window icons are cached on Windows and Mono, with native handle cleanup confined to Windows.
 
 ## Plane & Copter Default Icons
 Tornado and Proton aircraft are the default rendered icons for plane and copter vehicle classes. Users can also drop in a custom aircraft icon image to override per-vehicle defaults entirely.
