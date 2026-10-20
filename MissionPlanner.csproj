@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <!-- Only the application output moves; dependency target frameworks stay isolated. -->
     <OutDir Condition="'$(TitanPlannerOutputDirectory)' != ''">$(TitanPlannerOutputDirectory)</OutDir>
@@ -792,6 +792,9 @@
     </Content>
     <Content Include="APMotorLayout.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MotorFrames\*.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="graphs\ekf3Graphs.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

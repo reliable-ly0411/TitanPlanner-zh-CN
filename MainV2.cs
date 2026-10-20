@@ -383,7 +383,7 @@ namespace MissionPlanner
                 {
                     _adsb = new Utilities.adsb();
 
-                    var adsbServer = Settings.Instance["adsbserverv2"] ?? Settings.Instance["adsbserver"];
+                    var adsbServer = Utilities.adsb.MigrateServer(Settings.Instance["adsbserverv2"] ?? Settings.Instance["adsbserver"]);
                     if (adsbServer != null)
                         Utilities.adsb.server = adsbServer;
                     if (Settings.Instance["adsbport"] != null)
@@ -1157,7 +1157,7 @@ namespace MissionPlanner
 
             if (Program.IconFile != null)
             {
-                this.Icon = Icon.FromHandle(((Bitmap) Program.IconFile).GetHicon());
+                this.Icon = ThemeManager.FormIcon;
             }
 
             var logoImage = ThemeManager.IsDarkTheme
@@ -1288,6 +1288,8 @@ namespace MissionPlanner
                     plane.Alt = adsb.Alt;
                     plane.Heading = adsb.Heading;
                     plane.Time = DateTime.Now;
+                    plane.PositionTime = adsb.PositionTime == default(DateTime) ? plane.Time : adsb.PositionTime;
+                    plane.TrackKnown = adsb.TrackKnown;
                     plane.CallSign = adsb.CallSign;
                     plane.Squawk = adsb.Squawk;
                     plane.Raw = adsb.Raw;
@@ -1306,7 +1308,8 @@ namespace MissionPlanner
                         new adsb.PointLatLngAltHdg(adsb.Lat, adsb.Lng,
                                 adsb.Alt, adsb.Heading, adsb.Speed, id,
                                 DateTime.Now)
-                            {CallSign = adsb.CallSign, Squawk = adsb.Squawk, Raw = adsb.Raw, Source = sender, Category = adsb.Category, Type = adsb.Type, IsOnGround = adsb.IsOnGround, VerticalSpeed = adsb.VerticalSpeed};
+                            {CallSign = adsb.CallSign, Squawk = adsb.Squawk, Raw = adsb.Raw, Source = sender, Category = adsb.Category, Type = adsb.Type, IsOnGround = adsb.IsOnGround, VerticalSpeed = adsb.VerticalSpeed,
+                             PositionTime = adsb.PositionTime == default(DateTime) ? DateTime.Now : adsb.PositionTime, TrackKnown = adsb.TrackKnown};
                 }
             }
         }
@@ -2073,7 +2076,7 @@ namespace MissionPlanner
 
         private void OnParamWritten(string paramName)
         {
-            if (IsDisposed)
+            if (IsDisposed || !IsHandleCreated)
                 return;
 
             BeginInvoke((Action)(() =>

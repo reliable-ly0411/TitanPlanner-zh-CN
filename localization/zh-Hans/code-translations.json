@@ -1383,5 +1383,9 @@
   "Download tested build": "下载测试通过的版本",
   "Download updates from this fork to keep both Chinese language options. Extract the complete package to a new folder.": "从本仓库下载更新可保留两套中文。请将完整更新包解压到新文件夹。",
   "Stats for nerds": "性能统计",
-  "Failed to delete folder": "删除文件夹失败"
+  "Failed to delete folder": "删除文件夹失败",
+  "Clear Messages": "清空消息",
+  "Server IP or API base URL (see https://ardupilot.org/planner/docs/common-adsb.html)\nDefault: live data from adsb.fi (https://adsb.fi), for personal, non-commercial use": "服务器 IP 或 API 基础地址（见 https://ardupilot.org/planner/docs/common-adsb.html）\n默认：使用 adsb.fi (https://adsb.fi) 的实时数据，仅限个人、非商业用途",
+  "This battery monitor type has no amps-per-volt setting, so its current can't be calibrated here. Calibrate the monitor itself.": "此电池监测器类型没有每伏安培数设置，无法在此校准电流。请在监测器本身进行校准。",
+  "This battery monitor type has no voltage multiplier ({0}), so its voltage can't be calibrated here. DroneCAN and other digital monitors send the voltage they measure; calibrate the monitor itself.": "此电池监测器类型没有电压倍率参数（{0}），无法在此校准电压。DroneCAN 和其他数字监测器会发送其测量的电压，请在监测器本身进行校准。"
 }
