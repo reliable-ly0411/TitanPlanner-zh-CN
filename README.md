@@ -1,6 +1,6 @@
 # TitanPlanner-zh-CN
 
-> **中文双版本：** 保留“中文(简体)”并提供增强“中文(简体)2”。本仓库使用独立 .NET SDK 构建 Windows 程序，测试通过后自动发布；参见 [中文使用说明](README.zh-CN.md) 与 [上游同步及发布流程](AUTOMATION.zh-CN.md)。下文保留上游项目介绍。
+> **中文双版本：** 保留“中文(简体)”并提供增强“中文(简体)2”。本仓库使用独立 .NET SDK 构建 Windows 程序，普通同步只运行轻量检查，新上游正式发布才自动构建候选，发布另受不可变源码与工件门禁约束；参见 [中文使用说明](README.zh-CN.md) 与 [上游同步及发布流程](AUTOMATION.zh-CN.md)。下文保留上游项目介绍。
 
 ## Mission Planner - Titan Dynamics Edition
 

@@ -1,0 +1,45 @@
+name: Validate pinned formal-release candidate
+on:
+  workflow_call:
+    inputs:
+      source_ref:
+        type: string
+        required: true
+      release_manifest:
+        type: string
+        required: true
+permissions:
+  contents: read
+jobs:
+  windows:
+    uses: ./.github/workflows/main.yml
+    with:
+      source_ref: ${{ inputs.source_ref }}
+      release_manifest: ${{ inputs.release_manifest }}
+  linux:
+    uses: ./.github/workflows/linux.yml
+    with:
+      source_ref: ${{ inputs.source_ref }}
+      release_manifest: ${{ inputs.release_manifest }}
+  evidence:
+    needs: [windows, linux]
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ inputs.source_ref }}
+      - name: Record exact source, original run and immutable artifact digests
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_MANIFEST: ${{ inputs.release_manifest }}
+        run: python3 .github/release_policy/evidence.py record
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: release-evidence
+          path: release-evidence.json
+          retention-days: 90
+      - name: Report publication blocker without pretending to publish
+        run: echo 'Candidate validated. Automatic publication is blocked until the assembled source has an approved immutable remote anchor and a reviewed version/notes mapping. No rebuild or existing asset overwrite.' >> "$GITHUB_STEP_SUMMARY"

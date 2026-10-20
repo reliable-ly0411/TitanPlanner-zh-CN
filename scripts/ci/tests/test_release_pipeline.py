@@ -100,11 +100,12 @@ class UpstreamTests(unittest.TestCase):
         self.assertEqual(values['sha'],upstream.git('ls-remote','origin','refs/heads/master').split()[0])
         upstream.promote(base,values['sha'])  # Retry is idempotent.
 
-    def test_conflict_keeps_master_and_opens_review(self):
+    def test_conflict_keeps_master_without_pushing_unreviewed_workflows(self):
         self.add_upstream('base.txt','upstream');base=self.fork_change('base.txt','fork')
         with patch.object(upstream,'proposal') as proposal:
             with self.assertRaises(RuntimeError):upstream.prepare(True,str(self.up))
-            proposal.assert_called_once()
+            proposal.assert_not_called()
+        self.assertEqual('', upstream.git('ls-remote', 'origin', 'refs/heads/automation/*'))
         self.assertEqual(base,upstream.git('rev-parse','HEAD'))
         self.assertEqual(base,upstream.git('ls-remote','origin','refs/heads/master').split()[0])
 
@@ -121,11 +122,19 @@ class UpstreamTests(unittest.TestCase):
         upstream.promote(tested, tested)
         self.assertEqual(latest, upstream.git('ls-remote', 'origin', 'refs/heads/master').split()[0])
 
+    def test_upstream_cannot_replace_release_detector_before_push(self):
+        self.add_upstream('.github/release_policy/policy.py', 'foreign policy');base=self.fork_change()
+        with self.assertRaisesRegex(RuntimeError, 'no candidate pushed'):
+            upstream.prepare(True,str(self.up))
+        self.assertEqual('', upstream.git('ls-remote','origin','refs/heads/automation/*'))
+        self.assertEqual(base,upstream.git('ls-remote','origin','refs/heads/master').split()[0])
+
     def test_upstream_cannot_replace_release_policy_automatically(self):
         self.add_upstream('.github/workflows/foreign.yml','policy change');base=self.fork_change()
         with patch.object(upstream,'proposal') as proposal:
             with self.assertRaises(RuntimeError):upstream.prepare(True,str(self.up))
-            proposal.assert_called_once()
+            proposal.assert_not_called()
+        self.assertEqual('', upstream.git('ls-remote', 'origin', 'refs/heads/automation/*'))
         self.assertEqual(base,upstream.git('ls-remote','origin','refs/heads/master').split()[0])
 
 
