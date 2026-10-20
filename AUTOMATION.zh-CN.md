@@ -3,7 +3,7 @@
 源代码同步入口为 `.github/workflows/sync-upstream.yml`，Windows 构建入口为 `main.yml`。
 
 - 每天 03:17 UTC 仅合并上游 `Titan-Dynamics/TitanPlanner/master`，保留本仓历史和双中文版本。普通 push/PR 只执行 Python 资源、打包和策略回归，不运行本机编译、GUI、MSI 或发布。
-- 同步候选先运行轻量检查；主分支仍是准备时的起点才普通快进。冲突、上游自动化策略改动或并发主分支更新均停止，不强推、不覆盖用户提交。
+- 同步候选先运行轻量检查；主分支仍是准备时的起点才普通快进。冲突、上游自动化策略改动或并发主分支更新均停止，不强推、不覆盖用户提交。冲突或策略改动只报告路径，绝不推送携带未审阅工作流的原始上游提交来创建候选。
 - 定时同步后只识别新建且正式发布的 `TitanPlanner-<四段版本>` GitHub Release。`development-build`、draft、prerelease、单纯新 tag 或上游 HEAD 变化均不会启动自动重型构建。
 - 2026-10-20 14:06:15 UTC 已存在的 Release ID 记为基线，包括当时最新的 `TitanPlanner-1.3.9789.1792`；不补建历史发布。每个后续 Release 固定其 ID、tag 的 peeled commit、下游补丁起点/提交/摘要与组合后的源码 SHA。源码在构建作业内组装，不推送生成的工作流改动，也不拿上游当前 HEAD 冒充已发布源码。
 - Windows 候选仍须通过两套中文资源、翻译运行、GUI/离线回归、Release/Debug 构建、依赖审计、ZIP 与 MSI 安装/修复/卸载及个人数据保留检查。Linux 候选仍执行原生构建与运行依赖测试。成功后保留原始工件及 SHA-256 证据，不在提升时重建。
