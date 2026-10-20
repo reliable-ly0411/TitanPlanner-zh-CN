@@ -28,4 +28,5 @@ verify(Path('release'), run, sha, 'windows')
 os.environ['BUILD_SHA'] = sha
 os.environ['BASE_SHA'] = sha
 os.environ['CANDIDATE_BRANCH'] = ''
-subprocess.run([sys.executable, 'scripts/ci/publish.py'],check=True)
+publisher = Path(__file__).resolve().parents[2] / 'scripts/ci/publish.py'
+subprocess.run([sys.executable, str(publisher)],check=True)
