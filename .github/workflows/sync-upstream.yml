@@ -67,6 +67,10 @@ jobs:
   build:
     needs: sync
     if: needs.sync.outputs.build == 'true'
+    # The reusable evidence job reads immutable Actions artifact metadata.
+    permissions:
+      contents: read
+      actions: read
     uses: ./.github/workflows/release-build.yml
     with:
       source_ref: ${{ needs.sync.outputs.source_ref }}
