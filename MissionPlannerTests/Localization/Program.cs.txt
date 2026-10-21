@@ -24,6 +24,7 @@ internal static class Program
         {
             CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo(language);
             Equal("3D 地图设置", UiText.Translate("3D Map Settings"));
+            Equal("清空消息", UiText.Translate("Clear Messages"));
             Equal("是", UiText.Translate("Yes"));
             Equal("否", UiText.Translate("No"));
             Equal("电机 4", UiText.Format($"Motor {4}"));
@@ -44,6 +45,7 @@ internal static class Program
         {
             CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo(language);
             Equal("3D Map Settings", UiText.Translate("3D Map Settings"));
+            Equal("Clear Messages", UiText.Translate("Clear Messages"));
             Equal("Motor 4", UiText.Format($"Motor {4}"));
         }
         CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo("zh-CN");

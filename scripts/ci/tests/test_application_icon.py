@@ -9,6 +9,12 @@ ROOT = Path(__file__).resolve().parents[3]
 
 
 class ApplicationIconTests(unittest.TestCase):
+    def test_native_icon_cleanup_is_windows_only(self):
+        source = (ROOT / 'Utilities/ThemeManager.cs').read_text(encoding='utf-8-sig')
+        self.assertRegex(source, r'if\s*\(Environment\.OSVersion\.Platform\s*==\s*'
+                         r'PlatformID\.Win32NT\)\s*DestroyIcon\(handle\);')
+        self.assertEqual(1, source.count('DestroyIcon(handle);'))
+
     def test_splash_reuses_the_mono_compatible_application_icon(self):
         root = ET.parse(ROOT / 'Splash.resx').getroot()
         icon = next(item for item in root.findall('data')

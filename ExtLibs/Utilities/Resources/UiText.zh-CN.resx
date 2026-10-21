@@ -1525,6 +1525,10 @@
     <value>清除日志</value>
     <comment>"Clear Logs"</comment>
   </data>
+  <data name="8cb62f95d46da370a25fe1337376aa7a64261d3ed245227c643a4aa860dc3f05" xml:space="preserve">
+    <value>清空消息</value>
+    <comment>"Clear Messages"</comment>
+  </data>
   <data name="c6f83a6a65c9fc896af971c5c0ec5cca164378430a7f5c58d4009797f372b3fe" xml:space="preserve">
     <value>清除多边形</value>
     <comment>"Clear Polygon"</comment>
@@ -6704,6 +6708,11 @@ gps_point：跟踪单个地面点</value>
     <value>服务器 IP 或 API 基础网址（参见 https://ardupilot.org/planner/docs/common-adsb.html）</value>
     <comment>"Server IP or API base URL (see https://ardupilot.org/planner/docs/common-adsb.html)"</comment>
   </data>
+  <data name="e8ca6e59c307a209fdeb0122097de523bddca4815998fc591cc3e0c9c16abc9a" xml:space="preserve">
+    <value>服务器 IP 或 API 基础地址（见 https://ardupilot.org/planner/docs/common-adsb.html）
+默认：使用 adsb.fi (https://adsb.fi) 的实时数据，仅限个人、非商业用途</value>
+    <comment>"Server IP or API base URL (see https://ardupilot.org/planner/docs/common-adsb.html)\nDefault: live data from adsb.fi (https://adsb.fi), for personal, non-commercial use"</comment>
+  </data>
   <data name="426f91710cc20359ec0f9047f13e478e198e792dc1a32843a88f869bb5fcd0c0" xml:space="preserve">
     <value>服务器端口</value>
     <comment>"Server port"</comment>
@@ -7459,6 +7468,14 @@ Acc：当前测定位置的精度
   <data name="bf24a1a4ee864de119635172186d5d819325d1b62a2c8ed151edfcfd38113c92" xml:space="preserve">
     <value>无效数据过多，操作失败</value>
     <comment>"There is to much bad data - failing"</comment>
+  </data>
+  <data name="fdfc758be1c307aa1aa9c372efce00319a13925bc28738e4ca28922762c0bd81" xml:space="preserve">
+    <value>此电池监测器类型没有每伏安培数设置，无法在此校准电流。请在监测器本身进行校准。</value>
+    <comment>"This battery monitor type has no amps-per-volt setting, so its current can't be calibrated here. Calibrate the monitor itself."</comment>
+  </data>
+  <data name="f8512c1baf5bd773f92681431130e5ec0e904488670c92a3aad2f64f57afd487" xml:space="preserve">
+    <value>此电池监测器类型没有电压倍率参数（{0}），无法在此校准电压。DroneCAN 和其他数字监测器会发送其测量的电压，请在监测器本身进行校准。</value>
+    <comment>"This battery monitor type has no voltage multiplier ({0}), so its voltage can't be calibrated here. DroneCAN and other digital monitors send the voltage they measure; calibrate the monitor itself."</comment>
   </data>
   <data name="26e82b5198ee50dbd182aca7e0b02b93f7a3e8a299a9e616601a897ac61b189f" xml:space="preserve">
     <value>这取决于飞控固件版本。如支持，请保持启用，因为新版消息对数据损坏的处理更好。</value>

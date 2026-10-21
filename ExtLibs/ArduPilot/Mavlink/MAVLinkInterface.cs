@@ -196,6 +196,11 @@ namespace MissionPlanner
         /// </summary>
         public static event Action<string> ParamWritten;
 
+        /// <summary>
+        /// When a reboot/shutdown command was last sent to any vehicle (UTC), so reconnecting can hold off.
+        /// </summary>
+        public static DateTime LastRebootSent { get; private set; } = DateTime.MinValue;
+
         public event EventHandler MavChanged
         {
             add
@@ -1721,7 +1726,17 @@ Mission Planner waits for 2 valid heartbeat packets before connecting
 
                     lastparamset = DateTime.UtcNow;
 
-                    ParamWritten?.Invoke(paramname);
+                    complete = true;
+
+                    // a throwing listener must not turn a confirmed write into a timeout
+                    try
+                    {
+                        ParamWritten?.Invoke(paramname);
+                    }
+                    catch (Exception ex)
+                    {
+                        log.Error(ex);
+                    }
 
                     // check if enabeling this param has added subparams, queue on gui thread
                     if (currentparamcount < par.param_count)
@@ -1734,8 +1749,6 @@ Mission Planner waits for 2 valid heartbeat packets before connecting
                         });
                         */
                     }
-
-                    complete = true;
                 }
 
                 return true;
@@ -1749,6 +1762,9 @@ Mission Planner waits for 2 valid heartbeat packets before connecting
                     compid);
 
                 DateTime start = DateTime.Now;
+                // ArduPilot answers once the value is saved, which its IO thread can delay by several seconds,
+                // so keep listening after the last retry instead of failing a write that went through
+                DateTime giveup = start.AddSeconds(10);
                 int retrys = 3;
                 while (true)
                 {
@@ -1766,7 +1782,8 @@ Mission Planner waits for 2 valid heartbeat packets before connecting
                             continue;
                         }
 
-                        throw new TimeoutException("Timeout on read - setParam " + paramname);
+                        if (DateTime.Now > giveup)
+                            throw new TimeoutException("Timeout on read - setParam " + paramname);
                     }
 
                     await readPacketAsync().ConfigureAwait(false);
@@ -2780,6 +2797,7 @@ Mission Planner waits for 2 valid heartbeat packets before connecting
             }
             else if (actionid == MAV_CMD.PREFLIGHT_REBOOT_SHUTDOWN)
             {
+                LastRebootSent = DateTime.UtcNow;
                 generatePacket((byte) MAVLINK_MSG_ID.COMMAND_LONG, req, sysid, compid);
                 giveComport = false;
                 return true;
@@ -5044,8 +5062,9 @@ Mission Planner waits for 2 valid heartbeat packets before connecting
                 {
                     // create an item - hidden
                     MAVlist.AddHiddenList(sysid, compid);
-                    // prevent packetloss counter on connect
-                    MAVlist[sysid, compid].recvpacketcount = unchecked(packetSeqNo - (byte)1);
+                    // prevent packetloss counter on connect: the first packet is taken as a dup of itself, so the
+                    // packet before it, never seen, is not marked as received in recvpacketmask
+                    MAVlist[sysid, compid].recvpacketcount = packetSeqNo;
                 }
 
                 // once set it cannot be reverted
@@ -5156,41 +5175,60 @@ Mission Planner waits for 2 valid heartbeat packets before connecting
                 {
                     packetSeemValid = true;
                     // check if we lost pacakets based on seqno
-                    int expectedPacketSeqNo = ((MAVlist[sysid, compid].recvpacketcount + 1) % 0x100);
+                    // seq is 8 bit, so a packet up to latePacketWindow behind the newest one is either late
+                    // (reordered on the link, UDP over IP) or the next one after 191..254 lost packets. It is
+                    // late only if it fills a hole in the mask of recently received seqs. Reordering is a
+                    // matter of milliseconds, so after a pause the seq has wrapped through an outage instead
+                    const int latePacketWindow = 64;
+                    int lastPacketSeqNo = MAVlist[sysid, compid].recvpacketcount;
+                    int delta = (packetSeqNo - lastPacketSeqNo) & 0xFF;
+                    int packetsBehind = 0x100 - delta;
+                    // bit n set: seq (lastPacketSeqNo - n - 1) has been received
+                    ulong lateBit = packetsBehind <= latePacketWindow ? 1UL << (packetsBehind - 1) : 0;
+                    bool sincePreviousPacketIsShort =
+                        (DateTime.UtcNow - MAVlist[sysid, compid].lastvalidpacket).TotalSeconds < 1;
 
                     {
-                        // the second part is to work around a 3dr radio bug sending dup seqno's
-                        if (packetSeqNo != expectedPacketSeqNo &&
-                            packetSeqNo != MAVlist[sysid, compid].recvpacketcount)
+                        if (delta == 0)
                         {
-                            MAVlist[sysid, compid].synclost++; // actual sync loss's
-                            int numLost = 0;
+                            // work around a 3dr radio bug sending dup seqno's
+                        }
+                        else if (lateBit != 0 && (MAVlist[sysid, compid].recvpacketmask & lateBit) == 0 &&
+                                 sincePreviousPacketIsShort)
+                        {
+                            // a late packet fills a hole that was counted as lost when the newer one came
+                            MAVlist[sysid, compid].recvpacketmask |= lateBit;
+                            if (MAVlist[sysid, compid].packetslost >= 1)
+                                MAVlist[sysid, compid].packetslost--;
+                        }
+                        else
+                        {
+                            // in order (delta 1) or a forward gap of delta - 1 lost packets
+                            int numLost = delta - 1;
 
-                            if (packetSeqNo < ((MAVlist[sysid, compid].recvpacketcount + 1)))
-                                // recvpacketcount = 255 then   10 < 256 = true if was % 0x100 this would fail
+                            if (numLost != 0)
                             {
-                                numLost = 0x100 - expectedPacketSeqNo + packetSeqNo;
-                            }
-                            else
-                            {
-                                numLost = packetSeqNo - expectedPacketSeqNo;
+                                MAVlist[sysid, compid].synclost++; // actual sync loss's
+                                MAVlist[sysid, compid].packetslost += numLost;
+                                WhenPacketLost.OnNext(numLost);
+
+                                if (!logreadmode)
+                                    log.InfoFormat("mav {2}-{4} seqno {0} exp {3} pkts lost {1}", packetSeqNo,
+                                        numLost,
+                                        sysid,
+                                        (lastPacketSeqNo + 1) & 0xFF, compid);
                             }
 
-                            MAVlist[sysid, compid].packetslost += numLost;
-                            WhenPacketLost.OnNext(numLost);
-
-                            if (!logreadmode)
-                                log.InfoFormat("mav {2}-{4} seqno {0} exp {3} pkts lost {1}", packetSeqNo,
-                                    numLost,
-                                    sysid,
-                                    expectedPacketSeqNo, compid);
+                            // shift the mask by delta, the previous newest packet is now delta behind
+                            // (a ulong shift by 64 or more is taken mod 64 in C#, so clear it explicitly)
+                            ulong mask = delta < 64 ? MAVlist[sysid, compid].recvpacketmask << delta : 0;
+                            if (delta <= latePacketWindow)
+                                mask |= 1UL << (delta - 1);
+                            MAVlist[sysid, compid].recvpacketmask = mask;
+                            MAVlist[sysid, compid].recvpacketcount = packetSeqNo;
                         }
 
                         MAVlist[sysid, compid].packetsnotlost++;
-
-                        //Console.WriteLine("{0} {1}", sysid, packetSeqNo);
-
-                        MAVlist[sysid, compid].recvpacketcount = packetSeqNo;
                     }
                     WhenPacketReceived.OnNext(1);
 
@@ -5390,16 +5428,24 @@ Mission Planner waits for 2 valid heartbeat packets before connecting
                             logdata = logdata.Substring(0, ind);
                         log.Info(DateTime.Now + " " + sev + " " + logdata);
 
-                        MAVlist[sysid, compid].cs.messages.Add((DateTime.Now, logdata, sev));
+                        // The Messages tab copies these lists on the UI thread; it locks them the same way.
+                        var messages = MAVlist[sysid, compid].cs.messages;
+                        lock (messages)
+                        {
+                            messages.Add((DateTime.Now, logdata, sev));
 
-                        // cap list at 1000 element
-                        while (MAVlist[sysid, compid].cs.messages.Count > 1000)
-                            MAVlist[sysid, compid].cs.messages.RemoveAt(0);
+                            // cap list at 1000 element
+                            while (messages.Count > 1000)
+                                messages.RemoveAt(0);
+                        }
 
                         // gymbals etc are a child/slave to the main sysid, this displays the children messages under the current displayed vehicle
                         if (sysid == sysidcurrent && compid != compidcurrent)
-                            MAVlist[sysidcurrent, compidcurrent].cs.messages
-                                .Add((DateTime.Now, compid + " : " + logdata, sev));
+                        {
+                            var currentMessages = MAVlist[sysidcurrent, compidcurrent].cs.messages;
+                            lock (currentMessages)
+                                currentMessages.Add((DateTime.Now, compid + " : " + logdata, sev));
+                        }
 
                         bool printit = false;
 
