@@ -37,3 +37,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts/ci/test_windows.ps1 
 ## 发布版本命名
 
 MSI 和 ZIP 沿用固定附件名 `TitanPlanner-zh-CN.msi/zip`，以不可变 tag 区分版本，发布标题和标签同步携带程序版本。版本自动读取 `MissionPlanner.csproj`，并与 `AssemblyFileVersion` 核对，不使用依赖包版本；不一致时停止打包。`BUILD-INFO.json` 和 `build-info.json` 同时记录版本与提交。MSI 内部用于升级排序的安装器版本仍随工作流编号递增，并单独记为 `msi_version`。历史发布名称保持不变。
+
+## 规范入口
+
+发布前读取 [RELEASING.md](RELEASING.md) 和 [RELEASING.repository.zh-CN.md](RELEASING.repository.zh-CN.md)。规范文件不改变上述同步、构建或发布行为，也不替代相关操作授权。

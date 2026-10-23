@@ -184,3 +184,12 @@ the git log has those. `ChangeLog.txt` is upstream's and is not maintained here.
   shaders, `Overlays/` the mission, vehicle and ADS-B drawing, `Scene/` the UTM frame, camera and pose
   smoothing. Selection and loading are pure logic with tests in `MissionPlannerTests/Controls/`.
 - **Commits.** Messages carry no AI attribution trailers. Do not commit or push unless asked.
+
+## 发布规范入口
+
+修改分支、版本、打包、Release 或公开 Issue 说明前，依次读取：
+
+1. [通用规范](RELEASING.md)：版本、分支、包名、验收与公开说明原则。
+2. [本仓库补充](RELEASING.repository.zh-CN.md)：本仓分支、版本映射及上游例外。
+
+保留本文件和下级目录的既有规则。具体任务、检查结果和整改进度不写入上述规范；规范文件不替代合并、发布、部署或设置变更所需的授权。
