@@ -96,6 +96,30 @@ class LinuxSmokeTest
         }
     }
 
+    private static void CheckFormIconCache()
+    {
+        var previous = Program.IconFile;
+        using (var source = new System.Drawing.Bitmap(16, 16))
+        {
+            try
+            {
+                Program.IconFile = source;
+                var first = ThemeManager.FormIcon;
+                if (first == null || first.Width != 16 || first.Height != 16)
+                    throw new Exception("Form icon was not created from its source bitmap.");
+                for (int i = 0; i < 200; i++)
+                    if (!ReferenceEquals(first, ThemeManager.FormIcon))
+                        throw new Exception("Form icon was not cached.");
+            }
+            finally
+            {
+                Program.IconFile = previous;
+                if (ThemeManager.FormIcon == null)
+                    throw new Exception("Form icon was not restored.");
+            }
+        }
+    }
+
     [STAThread]
     static void Main()
     {
@@ -143,6 +167,7 @@ class LinuxSmokeTest
                 }
                 CheckChecklistResize();
                 CheckPropertyGridTheme();
+                CheckFormIconCache();
                 // Check the packaged native library and its managed ABI together.
                 using (var bitmap = new SkiaSharp.SKBitmap(8, 8))
                 using (var canvas = new SkiaSharp.SKCanvas(bitmap))

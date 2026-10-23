@@ -1,0 +1,96 @@
+name: Sync source and recognize formal upstream releases
+on:
+  schedule:
+    - cron: '17 3 * * *'
+  workflow_dispatch:
+    inputs:
+      action:
+        description: Source sync only, or inspect new upstream releases after sync
+        type: choice
+        options: [sync, check-releases]
+        default: sync
+      retry_release_id:
+        description: Retry a failed new release using its original pinned source
+        type: string
+        default: ''
+permissions:
+  contents: read
+concurrency:
+  group: release-policy-master
+  cancel-in-progress: false
+jobs:
+  sync:
+    if: github.repository == 'reliable-ly0411/TitanPlanner-zh-CN' && github.ref == 'refs/heads/master'
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+      pull-requests: write
+    outputs:
+      build: ${{ steps.release.outputs.build }}
+      release_id: ${{ steps.release.outputs.release_id }}
+      source_ref: ${{ steps.release.outputs.source_ref }}
+      manifest: ${{ steps.release.outputs.manifest }}
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: master
+          fetch-depth: 0
+      - name: Prepare source-only merge candidate
+        id: candidate
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          python3 scripts/ci/upstream.py prepare --sync
+      - name: Check the exact prepared candidate, including reused candidate branches
+        env:
+          SOURCE_SHA: ${{ steps.candidate.outputs.sha }}
+        run: git checkout --detach "$SOURCE_SHA"
+      - name: Lightweight localization and policy regressions (no native build)
+        run: |
+          python3 scripts/localization/verify_zh_hans.py
+          python3 -m unittest discover -s scripts/ci/tests -v
+          python3 -m unittest discover -s .github/release_policy -p 'test_*.py' -v
+      - name: Fast-forward only the checked source merge, never publish from sync
+        env:
+          BASE_SHA: ${{ steps.candidate.outputs.base }}
+          SOURCE_SHA: ${{ steps.candidate.outputs.sha }}
+        run: python3 scripts/ci/upstream.py promote --base "$BASE_SHA" --sha "$SOURCE_SHA"
+      - name: Recognize one new formal release and pin exact released source
+        id: release
+        if: github.event_name == 'schedule' || inputs.action == 'check-releases'
+        env:
+          RETRY_ID: ${{ inputs.retry_release_id }}
+        run: python3 .github/release_policy/policy.py prepare --retry-id "$RETRY_ID"
+  build:
+    needs: sync
+    if: needs.sync.outputs.build == 'true'
+    # The reusable evidence job reads immutable Actions artifact metadata.
+    permissions:
+      contents: read
+      actions: read
+    uses: ./.github/workflows/release-build.yml
+    with:
+      source_ref: ${{ needs.sync.outputs.source_ref }}
+      release_manifest: ${{ needs.sync.outputs.manifest }}
+  finish:
+    needs: [sync, build]
+    if: always() && needs.sync.outputs.build == 'true'
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: master
+          fetch-depth: 0
+      - name: Record immutable build outcome
+        env:
+          RELEASE_ID: ${{ needs.sync.outputs.release_id }}
+          BUILD_RESULT: ${{ needs.build.result }}
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          python3 .github/release_policy/policy.py finish --release-id "$RELEASE_ID" --result "$BUILD_RESULT"

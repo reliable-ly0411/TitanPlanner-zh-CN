@@ -1,9 +1,5 @@
 name: Package China 30m terrain
 on:
-  push:
-    branches: [master]
-    paths:
-      - data/terrain/request.json
   workflow_dispatch:
 permissions:
   contents: read

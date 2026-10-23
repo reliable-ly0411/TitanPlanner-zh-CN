@@ -43,7 +43,7 @@ VS Code 的简体中文包为 `MS-CEINTL.vscode-language-pack-zh-hans`，C# 扩�
 
 ## 上游同步记录
 
-2026-10-19 合并官方 `Titan-Dynamics/TitanPlanner` 的 `master` 至 `08602f654562`，保留本仓库中文双版本、依赖安全修复及 Windows 打包流程。此轮包含新的流式 3D 地图、离线地图管理、32 位 MAVLink 系统 ID 及 ADS-B 修复；原 3D 设置的增强中文已迁移到新版设置窗口。
+2026-10-20 同步官方 `Titan-Dynamics/TitanPlanner` 的 `master` 至 `17830f7bdfa6`，保留完整历史、中文双版本、SSH.NET 2026.0.0、SkiaSharp 2.88.9 及 Windows 打包流程。此轮包含后台参数写入、USB 重启连接等待、消息列表、ADS-B、3D 地图、电池校准及 MAVLink 链路修复，并补齐新增提示的增强中文。源码同步不代表已发布新安装包；发布仍须通过对应验证。
 
 ## 测试与自动化
 

@@ -256,8 +256,6 @@ namespace MissionPlanner.GCSViews
         double LogPlayBackSpeed = 1.0;
         GMapMarker marker;
 
-        int messagecount;
-
         //whether or not the output console has already started
         bool outputwindowstarted;
 
@@ -2624,37 +2622,62 @@ namespace MissionPlanner.GCSViews
             {
                 if (map3DControl == null || map3DControl.IsDisposed)
                 {
-                    Dispose3DMap();
-                    map3DControl = new Map3D();
-                    map3DControl.Dock = DockStyle.Fill;
-                    ThemeManager.ApplyThemeTo(map3DControl);
-
-                    // Initialize with current 2D map position so tiles load immediately
-                    if (gMapControl1 != null && gMapControl1.Position.Lat != 0 && gMapControl1.Position.Lng != 0)
-                    {
-                        var pos = gMapControl1.Position;
-                        // Non-blocking: showing the map must not wait on a 26 MB elevation cell load.
-                        double terrainAlt;
-                        srtm.TryGetLoadedAltitude(pos.Lat, pos.Lng, out terrainAlt);
-                        map3DControl.LocationCenter = new PointLatLngAlt(pos.Lat, pos.Lng, terrainAlt + 100, "init");
-                    }
+                    Create3DMap();
+                    return;
                 }
 
                 if (map3DHost != null)
+                    map3DHost.Visible = true;
+
+                // Kept from the last time it was shown (Hide3DMap), GL context and all.
+                if (map3DHost != null && !map3DHost.Controls.Contains(map3DControl))
                 {
                     map3DHost.Controls.Clear();
                     map3DHost.Controls.Add(map3DControl);
-                    map3DHost.Visible = true;
                 }
+
+                map3DControl.Resume();
             }
             else
             {
-                Dispose3DMap();
-                if (map3DHost != null)
-                {
-                    map3DHost.Controls.Clear();
-                    map3DHost.Visible = false;
-                }
+                Hide3DMap();
+            }
+        }
+
+        /// <summary>
+        /// Hides the 3D map without disposing it: it stops drawing and frees its terrain, but keeps its GL context,
+        /// which took the driver about 1.5 s on the UI thread to create every time the map was shown.
+        /// </summary>
+        public void Hide3DMap()
+        {
+            if (map3DControl != null && !map3DControl.IsDisposed)
+                map3DControl.Suspend();
+            if (map3DHost != null)
+                map3DHost.Visible = false;
+        }
+
+        private void Create3DMap()
+        {
+            Dispose3DMap();
+            map3DControl = new Map3D();
+            map3DControl.Dock = DockStyle.Fill;
+            ThemeManager.ApplyThemeTo(map3DControl);
+
+            // Initialize with current 2D map position so tiles load immediately
+            if (gMapControl1 != null && gMapControl1.Position.Lat != 0 && gMapControl1.Position.Lng != 0)
+            {
+                var pos = gMapControl1.Position;
+                // Non-blocking: showing the map must not wait on a 26 MB elevation cell load.
+                double terrainAlt;
+                srtm.TryGetLoadedAltitude(pos.Lat, pos.Lng, out terrainAlt);
+                map3DControl.LocationCenter = new PointLatLngAlt(pos.Lat, pos.Lng, terrainAlt + 100, "init");
+            }
+
+            if (map3DHost != null)
+            {
+                map3DHost.Controls.Clear();
+                map3DHost.Controls.Add(map3DControl);
+                map3DHost.Visible = true;
             }
         }
 
@@ -2687,14 +2710,7 @@ namespace MissionPlanner.GCSViews
                 zg1.Visible = true;
 
             if (!map3DChecked)
-            {
-                Dispose3DMap();
-                if (map3DHost != null)
-                {
-                    map3DHost.Controls.Clear();
-                    map3DHost.Visible = false;
-                }
-            }
+                Hide3DMap();
 
             if (map3DChecked)
             {
@@ -4693,8 +4709,9 @@ namespace MissionPlanner.GCSViews
                             "here");
                     }
 
-                    // update 3D map (only when connected with valid location - disconnected mode uses 2D map center)
-                    if (Map3D.instance != null && MainV2.comPort?.BaseStream?.IsOpen == true &&
+                    // update 3D map (only when connected with valid location - disconnected mode uses 2D map center).
+                    // Not while it is hidden: the terrain lookup would load back an SRTM cell the hide just freed.
+                    if (Map3D.instance != null && Map3D.instance.IsActive && MainV2.comPort?.BaseStream?.IsOpen == true &&
                         MainV2.comPort.MAV.cs.lat != 0 && MainV2.comPort.MAV.cs.lng != 0)
                     {
                         Map3D.instance.rpy = new Vector3(MainV2.comPort.MAV.cs.roll,
@@ -5242,7 +5259,8 @@ namespace MissionPlanner.GCSViews
                                     if (pllau.ThreatLevel != MAVLink.MAV_COLLISION_THREAT_LEVEL.NONE)
                                         adsbplane.ToolTipText += "\n" + UiText.Translate("Collision risk: ") + (pllau.ThreatLevel == MAVLink.MAV_COLLISION_THREAT_LEVEL.LOW ? UiText.Translate("Warning") : UiText.Translate("Danger"));
                                     adsbplane.ToolTipMode = MarkerTooltipMode.OnMouseOver;
-                                    adsbplane.Position = pllau;
+                                    // Carried forward between feed updates so the plane moves smoothly.
+                                    adsbplane.Position = pllau.Predict(DateTime.Now);
                                     adsbplane.heading = pllau.Heading;
                                     adsbplane.Tag = pllau;
                                     adsbplane.EmitterCategory = pllau.GetEmitterCategory();
@@ -5315,8 +5333,9 @@ namespace MissionPlanner.GCSViews
                         prop.Update(MainV2.comPort.MAV.cs.HomeLocation, MainV2.comPort.MAV.cs.Location,
                             MainV2.comPort.MAV.cs.battery_kmleft);
 
-                        prop.alt = MainV2.comPort.MAV.cs.alt;
-                        prop.altasl = MainV2.comPort.MAV.cs.altasl;
+                        // in metres, like the terrain they are compared with
+                        prop.alt = MainV2.comPort.MAV.cs.alt / CurrentState.multiplieralt;
+                        prop.altasl = MainV2.comPort.MAV.cs.altasl / CurrentState.multiplieralt;
                         prop.center = gMapControl1.Position;
 
                         // Update camera bounds
@@ -5432,20 +5451,15 @@ namespace MissionPlanner.GCSViews
 
         private void Messagetabtimer_Tick(object sender, EventArgs e)
         {
-            var messagetime = MainV2.comPort.MAV.cs.messages.LastOrDefault().time;
-            if (messagecount != messagetime.toUnixTime())
+            // MessagesList works out whether anything changed. Gating on the newest message's second here missed
+            // messages that arrived in the same second as the last update.
+            try
             {
-                try
-                {
-                    // Update the new MessagesList control
-                    messagesList1.UpdateMessages(MainV2.comPort.MAV.cs.messages);
-
-                    messagecount = messagetime.toUnixTime();
-                }
-                catch (Exception ex)
-                {
-                    log.Error(ex);
-                }
+                messagesList1.UpdateMessages(MainV2.comPort.MAV.cs.messages);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
             }
 
             coords1.AltUnit = CurrentState.AltUnit;

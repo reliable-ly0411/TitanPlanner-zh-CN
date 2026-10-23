@@ -18,6 +18,10 @@ if os.environ.get('CANDIDATE_BRANCH'):
 promote(base, sha)
 repo = os.environ['GITHUB_REPOSITORY']
 tag = release_tag(sha, version)
+refs = git('ls-remote', 'origin', 'refs/tags/' + tag, 'refs/tags/' + tag + '^{}').splitlines()
+target = next((line.split()[0] for line in refs if line.endswith('^{}')), refs[0].split()[0] if refs else '')
+if target and target != sha:
+    raise RuntimeError('Existing release tag points to another commit; refusing to overwrite it')
 exists = run('gh', 'release', 'view', tag, '--repo', repo, '--json', 'url', check=False)
 if exists.returncode == 0:
     refs = git('ls-remote', 'origin', 'refs/tags/' + tag, 'refs/tags/' + tag + '^{}').splitlines()
