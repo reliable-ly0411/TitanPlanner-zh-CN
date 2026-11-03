@@ -68,7 +68,8 @@ class SettingsUiProbe {
     Check(language.GetItemText(language.Items.Cast<CultureInfo>().Single(c=>c.Name=="zh-CN"))=="中文(简体)2","new label mismatch");
     Check(language.GetItemText(language.Items.Cast<CultureInfo>().Single(c=>c.Name=="zh-Hans"))=="中文(简体)","original label mismatch");
     languageSetting.SetValue(settings,culture,new object[]{"language"});setup.Invoke(view,null);
-    foreach(int width in new[]{640,1024,1600}) {
+    // Returning to a narrow viewport catches stale widths and scroll ranges.
+    foreach(int width in new[]{640,1024,1600,640}) {
      form.ClientSize=new Size(width,1000);form.PerformLayout();view.PerformLayout();Application.DoEvents();
      Console.WriteLine("width="+width+" layout="+layout.GetType().Name+" client="+layout.ClientSize+" display="+layout.DisplayRectangle+" padding="+layout.Padding);
      foreach(Control group in layout.Controls) {

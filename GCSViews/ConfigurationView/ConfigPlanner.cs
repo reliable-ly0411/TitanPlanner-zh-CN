@@ -130,10 +130,14 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                 SuspendLayout();
                 foreach (var group in groups)
                 {
+                    // Each column includes the group's outer margins, just as the
+                    // previous flow layout did. Otherwise its right margin overflows
+                    // the padded viewport even when the group's border fits.
+                    int groupWidth = Math.Max(1, columnWidth - group.Margin.Horizontal);
                     group.MinimumSize = Size.Empty;
-                    group.MaximumSize = new Size(columnWidth, 0);
-                    group.MinimumSize = new Size(columnWidth, 0);
-                    group.Width = columnWidth;
+                    group.MaximumSize = new Size(groupWidth, 0);
+                    group.MinimumSize = new Size(groupWidth, 0);
+                    group.Width = groupWidth;
                 }
                 ResumeLayout(false);
 
@@ -145,8 +149,9 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                 foreach (var group in groups)
                 {
                     int column = Array.IndexOf(bottoms, bottoms.Min());
-                    group.Location = new Point(origin.X + column * (columnWidth + Gap), origin.Y + bottoms[column]);
-                    bottoms[column] += group.Height + Gap;
+                    group.Location = new Point(origin.X + column * (columnWidth + Gap) + group.Margin.Left,
+                        origin.Y + bottoms[column] + group.Margin.Top);
+                    bottoms[column] += group.Height + group.Margin.Vertical + Gap;
                 }
                 ResumeLayout(false);
 
