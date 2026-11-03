@@ -12,6 +12,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="7deaafc7bd3093df27c4c08bc6a62766825583a6fb7c01a6843a3f8449d606ee" xml:space="preserve">
+    <value>	将 {0}_ACCZ_P 设为 MOT_THST_HOVER
+	将 {0}_ACCZ_I 设为 2*MOT_THST_HOVER</value>
+    <comment>"\tSet {0}_ACCZ_P to MOT_THST_HOVER\r\n\tSet {0}_ACCZ_I to 2*MOT_THST_HOVER"</comment>
+  </data>
+  <data name="2df81ba6a4bf5b530832fbbc882ff53d665ac220f0d1ef11bf0abb15830195b5" xml:space="preserve">
+    <value>	将 {0}_D_ACC_P 设为 0.1*MOT_THST_HOVER
+	将 {0}_D_ACC_I 设为 0.2*MOT_THST_HOVER</value>
+    <comment>"\tSet {0}_D_ACC_P to 0.1*MOT_THST_HOVER\r\n\tSet {0}_D_ACC_I to 0.2*MOT_THST_HOVER"</comment>
+  </data>
   <data name="5553ae417dcf78629e9f69c6d765aeb1d527c5dc3b185618914f6649777390ff" xml:space="preserve">
     <value>
 
@@ -770,6 +780,10 @@
     <value>天线跟踪器</value>
     <comment>"Antenna Tracker"</comment>
   </data>
+  <data name="2b505597daa736f13c2910c260e8deb1af3b20ffe375eb5e01a003e92f541db9" xml:space="preserve">
+    <value>不限</value>
+    <comment>"Any"</comment>
+  </data>
   <data name="31e392d1c0378beca611de66c0f4c71cba29159905cc54242d9bddee5b23d851" xml:space="preserve">
     <value>应用</value>
     <comment>"Apply"</comment>
@@ -1168,6 +1182,10 @@
     <value>北斗</value>
     <comment>"Beidou"</comment>
   </data>
+  <data name="b023c379621d38f1e209e3d58987efb549c9fc5b84a84da51fd0bc251922aeee" xml:space="preserve">
+    <value>低于地形</value>
+    <comment>"Below terrain"</comment>
+  </data>
   <data name="e70100dade67decb352b00a9567c539da4343e32aeb698702aae05ff05985a54" xml:space="preserve">
     <value>台阶高度 [m]</value>
     <comment>"Bench Height [m]"</comment>
@@ -1188,6 +1206,10 @@
     <value>频率区间数</value>
     <comment>"Bins"</comment>
   </data>
+  <data name="265357c31740bc688bc41cd076a6044bd8100c40b4e0bb88d4817849f6b78f86" xml:space="preserve">
+    <value>板卡 ID</value>
+    <comment>"Board ID"</comment>
+  </data>
   <data name="91c21c570a01c66dc8226cec7d83aa2dc5ea80345a60e8224acb7a23a800b5bc" xml:space="preserve">
     <value>飞控安装方向</value>
     <comment>"Board Orientation"</comment>
@@ -1195,6 +1217,10 @@
   <data name="7fcdd834583bfe72bdd00e194b650006998c4117ecaab67d1f3b55e550a92229" xml:space="preserve">
     <value>引导程序</value>
     <comment>"BootLoader"</comment>
+  </data>
+  <data name="a6fa7d963cd5e8c6fbd96c89753a8f99d732d6a84efc0d9d970aedac3fd07b17" xml:space="preserve">
+    <value>引导程序 ID</value>
+    <comment>"Bootloader ID"</comment>
   </data>
   <data name="1018fea9b99f23fedd69e301b4cf3fff2ab8dbc570d987e3f53ae44e98f3a030" xml:space="preserve">
     <value>更新引导程序</value>
@@ -1437,6 +1463,10 @@
     <value>在拐角额外拍照</value>
     <comment>"Capture Extra Corner Images"</comment>
   </data>
+  <data name="bba8c808dc5ef682c7c0106a750b0b796b44b9f5214e950ee14cde95ce6bcb30" xml:space="preserve">
+    <value>采集设备</value>
+    <comment>"Capture device"</comment>
+  </data>
   <data name="894cce367aeca0ad7f963beaae2f671676b5243029742dd1a87540db10710d2d" xml:space="preserve">
     <value>电池节数</value>
     <comment>"Cell Count"</comment>
@@ -1488,6 +1518,10 @@
   <data name="3bbfc1bb9d7ad7ddcf0fbc3c0880c88ebfa8fd8bfd9f65d189375e3084e4d0dd" xml:space="preserve">
     <value>正在检查更新</value>
     <comment>"Checking for Updates"</comment>
+  </data>
+  <data name="63f993e5c35b4facfd02052187cecd097ed65dec602bced64f60788c1cb172d0" xml:space="preserve">
+    <value>请选择采集设备和格式</value>
+    <comment>"Choose a capture device and format"</comment>
   </data>
   <data name="a5e459267230d67a7aea26f9c10c81bcab65dcf83a614927be795284db7dd5a3" xml:space="preserve">
     <value>选择接收机输出 RTCM 消息的时间间隔。数值越小，数据速率越高。</value>
@@ -1545,6 +1579,10 @@
     <value>清除当前航点？</value>
     <comment>"Clear current waypoints?"</comment>
   </data>
+  <data name="3b937ae179bb984d72ad4334e6e3a1b7a818a4f34a1f22b2a0d6444d15053b01" xml:space="preserve">
+    <value>离地高度</value>
+    <comment>"Clearance"</comment>
+  </data>
   <data name="5a80b7b62699959b62cb1249c8e9bad42e4810bb35e0cc1df43987d5f925dd12" xml:space="preserve">
     <value>净空 [m]</value>
     <comment>"Clearance [m]"</comment>
@@ -1572,6 +1610,10 @@
   <data name="7d9eb7acb13e24625c404401d8e88b2350e32162455885f18276cf802f7701ed" xml:space="preserve">
     <value>关闭</value>
     <comment>"Close"</comment>
+  </data>
+  <data name="f82a0a16b642f8f358e1f467cbdeb5417ae3bcb8b893e8d0b025af95233d8d94" xml:space="preserve">
+    <value>云层密度：</value>
+    <comment>"Cloud density:"</comment>
   </data>
   <data name="27767398fd5a6489bf6c5fba3686c35bc088ce146ec8ad7e65eb46d02c47c96e" xml:space="preserve">
     <value>总距控制</value>
@@ -1767,6 +1809,10 @@ Ctrl+O 从文件加载</value>
     <value>坐标</value>
     <comment>"Coords"</comment>
   </data>
+  <data name="8d525e5f158b9afe05f3122af363ac67763bdc4e1395b46597b320c289766ce3" xml:space="preserve">
+    <value>已复制</value>
+    <comment>"Copied"</comment>
+  </data>
   <data name="8bcc452e311089ebd2df604cd163fc0c4400f99fae6fe65a651f0ed7205ba6f4" xml:space="preserve">
     <value>多旋翼选项</value>
     <comment>"Copter Options"</comment>
@@ -1778,6 +1824,10 @@ Ctrl+O 从文件加载</value>
   <data name="563849f6dc3d933f18d24e12805eefb7f42d44ed30595841ae3edeec29c37656" xml:space="preserve">
     <value>多旋翼集群 - 单链路</value>
     <comment>"Copter Swarm - Single link"</comment>
+  </data>
+  <data name="e21f935f11d7e966dbbae78da9daa378fe8142a14e7c0cd7434183005faa6c5c" xml:space="preserve">
+    <value>复制</value>
+    <comment>"Copy"</comment>
   </data>
   <data name="9dc71ab2157e1b88ea6836da3cb9e5b4106087e4ec072fa615c4302b1f08cc11" xml:space="preserve">
     <value>复制所有消息</value>
@@ -2036,6 +2086,10 @@ Ctrl+O 从文件加载</value>
   <data name="53b7bfa48dc61544cb25b05c31f630ac728b78dc2d998b5860a8c8fadf138f61" xml:space="preserve">
     <value>设备类型</value>
     <comment>"DevType"</comment>
+  </data>
+  <data name="6ba0bdeccb426d7b2ccb601c4e07015f50b6b427ec52c93a3b95f2245b67bdd4" xml:space="preserve">
+    <value>设备</value>
+    <comment>"Device"</comment>
   </data>
   <data name="49a0021f8c8d69dedf4e7903aaef7ad1fff0450bb31a279e40915b2c1b383066" xml:space="preserve">
     <value>设备序列号</value>
@@ -2434,6 +2488,10 @@ Ctrl+O 从文件加载</value>
     <value>加密密钥不是有效的十六进制数，长度上限为 </value>
     <comment>"Encryption key not valid hex number &lt;= "</comment>
   </data>
+  <data name="07a3ec67ea4c5b92c81d422e2eb506ba1cf2592fe04cc5bc6c46beeb85502e85" xml:space="preserve">
+    <value>请以 ! videoconvert ! video/x-raw,format=BGRA ! appsink name=outsink 结尾</value>
+    <comment>"End it with ! videoconvert ! video/x-raw,format=BGRA ! appsink name=outsink"</comment>
+  </data>
   <data name="d87edb339bd5ba8696bd768dd959b4f96747a932d43d1d6162dc0518e9bcaafd" xml:space="preserve">
     <value>能量高度</value>
     <comment>"Energy Height"</comment>
@@ -2558,6 +2616,10 @@ Ctrl+O 从文件加载</value>
     <value>输入分区，例如 50S、11N</value>
     <comment>"Enter Zone. (eg 50S, 11N)"</comment>
   </data>
+  <data name="aab514be74c294c06bb5fb6f0ac8c2a4e87ef34967d912eecc3587fa014b92b0" xml:space="preserve">
+    <value>请输入 GStreamer 管线</value>
+    <comment>"Enter a GStreamer pipeline"</comment>
+  </data>
   <data name="8142ef5a16e05e2c473a3ae80852505b75611f03a0102fbc4c50e34f3bc98a15" xml:space="preserve">
     <value>手动输入基站天线的固定位置，而非让接收机自动测定。这可以提高改正数据的精度。
 </value>
@@ -2664,6 +2726,14 @@ Ctrl+O 从文件加载</value>
     <value>输入视频源管线。
 末尾必须为 ! videoconvert ! video/x-raw,format=BGRA ! appsink name=outsink</value>
     <comment>"Enter the source pipeline\nEnsure the final payload is ! videoconvert ! video/x-raw,format=BGRA ! appsink name=outsink"</comment>
+  </data>
+  <data name="d81e64cd35a7f8c5860ed64c82f35fe3e42610631e2a7786c178ac9e5ab0a202" xml:space="preserve">
+    <value>请输入视频流的 RTSP URL</value>
+    <comment>"Enter the stream's RTSP URL"</comment>
+  </data>
+  <data name="0fb744af0a9b9d1da0d1b82b673dfca7b45c730cfb176999bc7dae0963f66404" xml:space="preserve">
+    <value>请输入视频流的 URL</value>
+    <comment>"Enter the stream's URL"</comment>
   </data>
   <data name="45bf8689a547d3174ab8ea43441c2a05e723934c692e78cb4f87a2b3467b9ba3" xml:space="preserve">
     <value>输入 MJPEG 视频源网址</value>
@@ -3461,9 +3531,21 @@ Ctrl+O 从文件加载</value>
     <value>停止 GStreamer</value>
     <comment>"GStreamer Stop"</comment>
   </data>
+  <data name="ccf496c97363bae46e7ecdffc2c01d6c28795ba510a9bba808aa8ba698c1dee8" xml:space="preserve">
+    <value>尚未安装 GStreamer</value>
+    <comment>"GStreamer isn't installed"</comment>
+  </data>
   <data name="f60791b72a5b30653536c2cc718a3799b8ea14bf2d17c6979d005ee1e0c29d1a" xml:space="preserve">
     <value>未找到 GStreamer</value>
     <comment>"GStreamer not found"</comment>
+  </data>
+  <data name="1236565dc1a164d9fb94d60f81e73628bef4bf5ec13b8063bb14e5be98030947" xml:space="preserve">
+    <value>GStreamer 管线</value>
+    <comment>"GStreamer pipeline"</comment>
+  </data>
+  <data name="423916015fd72d6f47f1cb60163ed4b71e95fd5eef4da6ffe021eeb6ee7132a7" xml:space="preserve">
+    <value>GStreamer 视频流</value>
+    <comment>"GStreamer stream"</comment>
   </data>
   <data name="f7bbb7a55469d22276dbb99ee8e69f95440b8d9d8e10b16ccab3c00f67900267" xml:space="preserve">
     <value>GStreamer 网址</value>
@@ -3604,6 +3686,10 @@ Ctrl+O 从文件加载</value>
   <data name="fc15a72d1d3718878b0c60f182f0e700d8e0b0224358ca2f764b69dd64b68f32" xml:space="preserve">
     <value>HUD 叠加层</value>
     <comment>"HUD Overlay"</comment>
+  </data>
+  <data name="b78c87853562c9b3190e421567f209d284f857a06d81fbce490e3950c2775a28" xml:space="preserve">
+    <value>叠加 HUD</value>
+    <comment>"HUD overlay"</comment>
   </data>
   <data name="398e761391f51cf2d23900d94cd4a70376236dca7a3e73d1afdb4401dbb1ac00" xml:space="preserve">
     <value>硬件 ID</value>
@@ -3857,6 +3943,17 @@ Ctrl+O 从文件加载</value>
 
 祝飞行顺利！</value>
     <comment>"Initial Parameters succesfully updated.\r\nCheck parameters before flight!\r\n\r\nAfter test flight :\r\n\tSet ATC_THR_MIX_MAN to 0.5\r\n\tSet PSC_ACCZ_P/PSC_D_ACC_P to MOT_THST_HOVER\r\n\tSet PSC_ACCZ_I/PSC_D_ACC_I to 2*MOT_THST_HOVER\r\n\r\nHappy flying!"</comment>
+  </data>
+  <data name="6f312d1405d6793eb9ac59b49ead70278e759cd646342b204f6f3e05f42e70e8" xml:space="preserve">
+    <value>初始参数已成功更新。
+飞行前请检查参数！
+
+试飞后（请先降落并锁定飞行器）：
+	将 {0}_THR_MIX_MAN 设为 0.5
+{1}
+
+祝飞行顺利！</value>
+    <comment>"Initial Parameters successfully updated.\r\nCheck parameters before flight!\r\n\r\nAfter test flight (land and disarm first):\r\n\tSet {0}_THR_MIX_MAN to 0.5\r\n{1}\r\n\r\nHappy flying!"</comment>
   </data>
   <data name="ebf7b9dc4151215c30769698a92f5dee8fe7fb8068bec701d51eb95704238b17" xml:space="preserve">
     <value>初始调参</value>
@@ -4158,6 +4255,10 @@ Ctrl+O 从文件加载</value>
     <value>保留为 0 时使用接收机输入范围</value>
     <comment>"Leave as 0 to use RX input range"</comment>
   </data>
+  <data name="adc95605a1b30c73959fbaf21e60f9723efe855c482fa336a957924d4ea0a08b" xml:space="preserve">
+    <value>航线长度</value>
+    <comment>"Length"</comment>
+  </data>
   <data name="1709305c9fa966d14f56f0da3c3614bbc10adcf53d72f90341bb96d24afcfca3" xml:space="preserve">
     <value>水平</value>
     <comment>"Level"</comment>
@@ -4282,6 +4383,10 @@ Ctrl+O 从文件加载</value>
   <data name="dc380888c4e2c7762212480ff86eb39150ec70b45009c33bc6adcbd0041384b1" xml:space="preserve">
     <value>正在加载</value>
     <comment>"Loading"</comment>
+  </data>
+  <data name="a3b365a3b9685053bac019a064158dc0bc1f5e1ff45a7dd97d7af15e06b817d4" xml:space="preserve">
+    <value>正在加载地形…</value>
+    <comment>"Loading terrain…"</comment>
   </data>
   <data name="47d2a515ef2f05b87d688656286a61e4f743da4b878684c7654969db17711c40" xml:space="preserve">
     <value>正在加载…</value>
@@ -4434,6 +4539,10 @@ Ctrl+O 从文件加载</value>
   <data name="4990b701d5c45ec5710ec943800f9368196104ae82ccde090d4785c14469567f" xml:space="preserve">
     <value>MAVLink 串口透传</value>
     <comment>"MAVSerial pass"</comment>
+  </data>
+  <data name="0896678f979122b57e173c20a8b5916dc086b24695e8f36b9465f929c3c7e991" xml:space="preserve">
+    <value>MJPEG 视频流</value>
+    <comment>"MJPEG stream"</comment>
   </data>
   <data name="c832c830609ee882f3cb772ba9aec0e0d4784a109fbb733740b00623bad8d207" xml:space="preserve">
     <value>消息 ID</value>
@@ -4663,6 +4772,10 @@ Ctrl+O 从文件加载</value>
     <value>最小油门</value>
     <comment>"Min Throttle"</comment>
   </data>
+  <data name="386220c57ef778cc90dd7a4322803ed6f23ce27546aad272d8e8e4d2facaf271" xml:space="preserve">
+    <value>最小离地高度</value>
+    <comment>"Min clearance"</comment>
+  </data>
   <data name="5a009427a7fd0513afaed3d9d7b733d1ce1b7ff6f2d8dd6d82a86e9733fe5283" xml:space="preserve">
     <value>最小偏移</value>
     <comment>"MinOffset"</comment>
@@ -4760,6 +4873,10 @@ Ctrl+O 从文件加载</value>
   <data name="d94eaf69438863a8d5ef755e74e6840048386eefbf0e34f39004d2e9c9157778" xml:space="preserve">
     <value>修改</value>
     <comment>"Modify"</comment>
+  </data>
+  <data name="23372b77addedb6380863e99d518bb7a1e2acec4adc6562c9ec23d7e14e6fd4f" xml:space="preserve">
+    <value>多个固件与此飞控匹配。请使用筛选条件缩小范围，选择所需固件。</value>
+    <comment>"More than one firmware matches this board. Use the filters to narrow it down to the one you want."</comment>
   </data>
   <data name="71064d15d676c2b045f8f8b31fa70e58b5c0042a4672fbbeb3b694f0237344e1" xml:space="preserve">
     <value>电机类型</value>
@@ -4995,6 +5112,10 @@ Ctrl+O 从文件加载</value>
     <value>此飞控板没有可用固件！</value>
     <comment>"No firmware available for this board!"</comment>
   </data>
+  <data name="236a80be174d57af5de43ec89b6ac7b4717b72963129311767de968be3584037" xml:space="preserve">
+    <value>没有符合当前筛选条件的固件</value>
+    <comment>"No firmware matches the current filters"</comment>
+  </data>
   <data name="2d378a1c0b9e7ffb26f98770771558412db58b7e8088328b5276f3f86cbf9c24" xml:space="preserve">
     <value>没有匹配参数</value>
     <comment>"No matching Params"</comment>
@@ -5039,6 +5160,10 @@ Ctrl+O 从文件加载</value>
     <value>没有需要设置的项目</value>
     <comment>"No settings to set"</comment>
   </data>
+  <data name="7e67009fb270c604d60ceb7b7d3fdbd4e8147b6d754d60a17bbdf01d3d8fdf99" xml:space="preserve">
+    <value>部分航段缺少地形数据</value>
+    <comment>"No terrain data for part of the route"</comment>
+  </data>
   <data name="ef5e097a00f1488a42591b119f1b65979a06b01fc920c787427b4b7ff72a306a" xml:space="preserve">
     <value>GPS 尚未确定有效的基站位置</value>
     <comment>"No valid base position determined by gps yet"</comment>
@@ -5050,6 +5175,10 @@ Ctrl+O 从文件加载</value>
   <data name="a3e3de74a9eb5bea01dffddf999f13f355061b518546650f5ea75e34c0d6835d" xml:space="preserve">
     <value>未检测到有效的 SiK 电台</value>
     <comment>"No valid sik radio"</comment>
+  </data>
+  <data name="82dd521e669a87bdc019094c971a4de2c98087059305fa5a474bfcdb74797577" xml:space="preserve">
+    <value>尚未启动视频</value>
+    <comment>"No video started"</comment>
   </data>
   <data name="fa1138cc070bcb11e1c1b46a7b335eafed66798aca8c98b74baa9bb3d9611919" xml:space="preserve">
     <value>禁飞区</value>
@@ -5253,6 +5382,10 @@ Mission Planner 需要收到 2 个有效心跳包后才会连接。</value>
     <value>打开 DEM 目录</value>
     <comment>"Open DEM Dir"</comment>
   </data>
+  <data name="68b3f4bff6de90aed6e47e72d8b680901da64dff39ed843e9eeed0464020e971" xml:space="preserve">
+    <value>打开文件夹</value>
+    <comment>"Open Folder"</comment>
+  </data>
   <data name="e6693ae56def237a33e4d8712fdc2cf2aa7a44f30f3559aae2c26093594d48dc" xml:space="preserve">
     <value>打开地图缓存</value>
     <comment>"Open Map Cache"</comment>
@@ -5356,6 +5489,10 @@ Mission Planner 需要收到 2 个有效心跳包后才会连接。</value>
   <data name="97bb4dfad15defb0441fa0178d55ed7809aaf0fa36e7e9b956343c73950d741c" xml:space="preserve">
     <value>兴趣点</value>
     <comment>"POI"</comment>
+  </data>
+  <data name="f545fd0c7a918cb5f32674d9b455e198d3418c21e9d307ee0720d0e6b469c852" xml:space="preserve">
+    <value>兴趣点名称：</value>
+    <comment>"POI Name:"</comment>
   </data>
   <data name="ae98ea9a0b492289b25d3d0ee783a63de32f3a842bf556e2281863556d83171c" xml:space="preserve">
     <value>位置</value>
@@ -5493,6 +5630,10 @@ Mission Planner 需要收到 2 个有效心跳包后才会连接。</value>
     <value>载荷</value>
     <comment>"Payload"</comment>
   </data>
+  <data name="a57feec7a920808a935c29765ab0ba932c38b0dd6b5ae455be46475ce40d9d2a" xml:space="preserve">
+    <value>最高高度</value>
+    <comment>"Peak"</comment>
+  </data>
   <data name="7c20e7759d02213ca38bd27c9c6fbc430e1ababf7ac0eeb6c3dad1e0f50759c2" xml:space="preserve">
     <value>许可文件</value>
     <comment>"Permission Artifact"</comment>
@@ -5513,6 +5654,10 @@ Mission Planner 需要收到 2 个有效心跳包后才会连接。</value>
   <data name="ff1cee74414621d812efa8f77a6024850158c209fba6158772088703c2a02ff9" xml:space="preserve">
     <value>引脚</value>
     <comment>"Pin"</comment>
+  </data>
+  <data name="37e1c775f452d695697b6e3389169e4109236f420f9ece420af0d5e7bb9b1533" xml:space="preserve">
+    <value>管线</value>
+    <comment>"Pipeline"</comment>
   </data>
   <data name="0b018475675141bcd86d6e168a41b7fcc906ea1cae4f71a5f95b9c05d517909d" xml:space="preserve">
     <value>自旋补偿</value>
@@ -5553,6 +5698,10 @@ Mission Planner 需要收到 2 个有效心跳包后才会连接。</value>
   <data name="38581d183b73c1b89348ca0ef634a845c156caeffda7c998557f3fa5f7d94bcc" xml:space="preserve">
     <value>规划器</value>
     <comment>"Planner"</comment>
+  </data>
+  <data name="c78ffe19571018fbc93a78873969046fe1a80c3d21e5d20fbb2ca17c7c53a144" xml:space="preserve">
+    <value>平台</value>
+    <comment>"Platform"</comment>
   </data>
   <data name="436e61016e26fcb773b9725745cbbf0afe7f001ea26041a814a7712c2925c442" xml:space="preserve">
     <value>播放</value>
@@ -5726,6 +5875,10 @@ Mission Planner 需要收到 2 个有效心跳包后才会连接。</value>
 ffdshow
 和 Haali Media Splitter。</value>
     <comment>"Please make sure you have installed\r\nffdshow\r\nand haali media splitter."</comment>
+  </data>
+  <data name="24fd62fdfd80e35ac4627bbaa1086cf23ad08bc6e49cbc34c38b3386019c759c" xml:space="preserve">
+    <value>请选择要下载并上传的文件（.apj）</value>
+    <comment>"Please pick a file to download and upload (.apj)"</comment>
   </data>
   <data name="0252b106a0337a80463d66f39084255fe62fc9ea6169f7a19dd5fe4f8c4430c3" xml:space="preserve">
     <value>请选择其他列，并选中要绘制曲线的单元格</value>
@@ -6019,6 +6172,10 @@ ffdshow
     <value>返航（放弃任务）</value>
     <comment>"RTL (abandon mission)"</comment>
   </data>
+  <data name="8cd62cca5acf3e924ebab51c5251afb2795fcdc74c5d7a5f293b79ca786d3a0c" xml:space="preserve">
+    <value>RTSP 视频流</value>
+    <comment>"RTSP stream"</comment>
+  </data>
   <data name="2a7dfeb2f2b018e5dae04497c0a281e7b22403057b91679046c9da52433894e1" xml:space="preserve">
     <value>遥控</value>
     <comment>"Radio"</comment>
@@ -6129,6 +6286,10 @@ ffdshow
     <value>正在接收航点</value>
     <comment>"Receiving WP's"</comment>
   </data>
+  <data name="715ee88095dd117c3f70bba7f0ffa82d881210b3ed0de1eae20111c5321f0c15" xml:space="preserve">
+    <value>录制 HUD</value>
+    <comment>"Record HUD"</comment>
+  </data>
   <data name="48966d6b4fab74c04dd9c2e331e53489431dca9e8e577cc1238e2acbb4ba8ae4" xml:space="preserve">
     <value>记录默认 PPM 流，用于 PPM 输出（飞行器端）</value>
     <comment>"Record default PPM stream for PPM output (vehicle side)"</comment>
@@ -6136,6 +6297,10 @@ ffdshow
   <data name="80e8dd1a5a05f7071a7ff71bccab5ed94aef4ad940c86bee6d2034d458f3946c" xml:space="preserve">
     <value>正在录制</value>
     <comment>"Recording"</comment>
+  </data>
+  <data name="6309badad074976082751128b2180c9fb4ee3721d92af56801ae0ba0d998b315" xml:space="preserve">
+    <value>正在录制到日志文件夹</value>
+    <comment>"Recording to the log folder"</comment>
   </data>
   <data name="b74ba553bd54cb4c6f93f4763525801d74b2a3e4622aa4bc41b98d6a0ca738e1" xml:space="preserve">
     <value>重新创建KML</value>
@@ -6192,6 +6357,10 @@ ffdshow
   <data name="d66fafd01c46341266908cec37f716413011d7669970714256713862b476e874" xml:space="preserve">
     <value>继电器编号</value>
     <comment>"Relay No#"</comment>
+  </data>
+  <data name="3459aada760277e9b1bd276d73e672cad1fe31b964e40fdb4c30024bf1e9c2f3" xml:space="preserve">
+    <value>发布类型</value>
+    <comment>"Release Type"</comment>
   </data>
   <data name="ffa98e02f7ce33fc935f02b3b668f6ad57661814dade5f41453fbee2b70cdd95" xml:space="preserve">
     <value>远端</value>
@@ -6537,6 +6706,10 @@ gps_point：跟踪单个地面点</value>
     <value>设置已保存到 </value>
     <comment>"Saved settings to "</comment>
   </data>
+  <data name="e29c6388959f1015a6408d67eb281e6d24ad7becd66df4d22ef25829c775a59a" xml:space="preserve">
+    <value>将 HUD 及其视频保存到日志文件夹</value>
+    <comment>"Saves the HUD and its video to the log folder"</comment>
+  </data>
   <data name="f102986b39effb31080ae442f61febe7ed58df1515c0711ccfadfe0311ccec81" xml:space="preserve">
     <value>比例</value>
     <comment>"Scale"</comment>
@@ -6588,6 +6761,10 @@ gps_point：跟踪单个地面点</value>
   <data name="b1cb1127ffc5b42cc9d1153d57dc43f91117aad29207643be2ef08d46b295c1a" xml:space="preserve">
     <value>选择自定义飞行器图标</value>
     <comment>"Select Custom Aircraft Icon"</comment>
+  </data>
+  <data name="a157c297b9226db3bd7d82fd350bf17e0f8f6be1a8520d5fe5e9e154460d5428" xml:space="preserve">
+    <value>选择固件</value>
+    <comment>"Select Firmware"</comment>
   </data>
   <data name="ce89d9174fe0e11900bfdf54974e8e45724125c18adad73742a4239abd6a2fff" xml:space="preserve">
     <value>选择飞行器 STL 文件</value>
@@ -7020,6 +7197,10 @@ gps_point：跟踪单个地面点</value>
     <value>智能分配</value>
     <comment>"Smart Assign"</comment>
   </data>
+  <data name="a50b6afa91df201afa6e0ae25cb0e0afadda2f0d57543197043653e4a048dce1" xml:space="preserve">
+    <value>平滑移动</value>
+    <comment>"Smooth movement"</comment>
+  </data>
   <data name="aad09c4a75f5edd3b4a82b1cef507144c23ea08bf103b4041b0827dc17c4cdc6" xml:space="preserve">
     <value>软件版本/CRC64</value>
     <comment>"Software version/CRC64"</comment>
@@ -7306,6 +7487,10 @@ Acc：当前测定位置的精度
     <value>TAK IP 端口已被占用，是否有其他应用正在使用？</value>
     <comment>"TAK IP Port in use. Is another app on this system already using it?"</comment>
   </data>
+  <data name="54cef68d92253bcb1b513720a5c167ab2300855ed426c2290d77fbad6404d826" xml:space="preserve">
+    <value>地形剖面</value>
+    <comment>"TERRAIN PROFILE"</comment>
+  </data>
   <data name="fc2d7b63b27f42af0a492325669a641a25cd725ccde47d03f6e204d28f6e630a" xml:space="preserve">
     <value>临时飞行限制</value>
     <comment>"TFR's"</comment>
@@ -7407,6 +7592,10 @@ Acc：当前测定位置的精度
 红灯常亮：处于固件更新模式</value>
     <comment>"The Sik Radios have 2 status LEDs, one red and one green.\ngreen LED blinking - searching for another radio \ngreen LED solid - link is established with another radio \nred LED flashing - transmitting data \nred LED solid - in firmware update mode"</comment>
   </data>
+  <data name="0dc1dae035ddb38f1bbd522f3860230d95d5f2203c6b0a7822adc54854bd6778" xml:space="preserve">
+    <value>采集设备未能启动： </value>
+    <comment>"The capture device didn't start: "</comment>
+  </data>
   <data name="7c87ee1e70d210fe70b9e0c86a7d6852ddb16b75884c76f29c75c462b7c59d3c" xml:space="preserve">
     <value>检测到以下图层：
  </value>
@@ -7448,6 +7637,10 @@ Acc：当前测定位置的精度
   <data name="a7288f79d184f2713930ca7a691ce21cdaa83f67cbe6d7b4d99a37664c4f2617" xml:space="preserve">
     <value>远端电台显示的范围和选项可能不准确。为确保准确，请让本地与远端电台使用相同版本的固件</value>
     <comment>"The ranges and options shown for the remote modem may not be accurate.  To ensure accurate, use the same firmware version in both the local and remote modems"</comment>
+  </data>
+  <data name="0e92a3e17cda0196aa3e72f5b9701b0397925a5d019a1cdd0c74478770322b19" xml:space="preserve">
+    <value>视频已停止：请检查视频源（详情见日志）</value>
+    <comment>"The video stopped: check the source (the log has the details)"</comment>
   </data>
   <data name="c137a5e77acb04169f5374753f1261accdf6faee32700c0f65eb1fe590993529" xml:space="preserve">
     <value>主题名称：</value>
@@ -7617,6 +7810,10 @@ Acc：当前测定位置的精度
     <value>容差</value>
     <comment>"Tolerance"</comment>
   </data>
+  <data name="b92ca58d746d632212685cd006ea14ab5b358ed6ed49b02805fc678b930b161e" xml:space="preserve">
+    <value>匹配项过多（{0}），请增加筛选条件</value>
+    <comment>"Too many matches ({0}) - apply more filters"</comment>
+  </data>
   <data name="6da74ae3a431b20e17b14f9ed8d08c752fc0316dd02872ff74e619db0dc139f2" xml:space="preserve">
     <value>航点过多、过少或距离过大 </value>
     <comment>"Too many/few WP's or to Big a Distance "</comment>
@@ -7729,6 +7926,10 @@ Acc：当前测定位置的精度
   <data name="88f4e275f1400cdebb4284c39e9a0119d6c33fb17771907a925def7f81228f45" xml:space="preserve">
     <value>UAVCAN 参数 - </value>
     <comment>"UAVCAN Params - "</comment>
+  </data>
+  <data name="ad0e436f31acab3002c3d413c816b14737cd2088407a12283a6bd2ef9ab132f9" xml:space="preserve">
+    <value>USB 标识</value>
+    <comment>"USB ID"</comment>
   </data>
   <data name="4789eeda506b794b611fb4afaba15841221761e309f1cb79a67f6a8d975e123e" xml:space="preserve">
     <value>无法执行：无人机正在飞行</value>
@@ -8003,6 +8204,10 @@ Acc：当前测定位置的精度
     <value>显示变为黄色的阈值</value>
     <comment>"Value at which the display turns yellow"</comment>
   </data>
+  <data name="4bce109cd8c9acce3fdaf3a0ec48384310c6e96f6e5384252907b878e2d7b927" xml:space="preserve">
+    <value>机型</value>
+    <comment>"Vehicle Type"</comment>
+  </data>
   <data name="8965cdc71634bfb3aee3598d2996bc72c78cbcb1c744076bcd2f9d2368bf0295" xml:space="preserve">
     <value>速度</value>
     <comment>"Velocity"</comment>
@@ -8054,6 +8259,10 @@ Acc：当前测定位置的精度
   <data name="5a25e1c8eb370dd9f63e0b806a2870d4ebc13f0e4c4cfe6dca5fb78e21681be9" xml:space="preserve">
     <value>视频格式</value>
     <comment>"Video Format"</comment>
+  </data>
+  <data name="67010cba087cc7bbf82f14b54f169b676abcc0e8dc1bca74844499b4f61f308f" xml:space="preserve">
+    <value>视频源</value>
+    <comment>"Video Source"</comment>
   </data>
   <data name="f37b2c00ea79327869a65938bb71aec8780a0750d31b46ee3928e6ecdfd4307d" xml:space="preserve">
     <value>视频流</value>
@@ -8472,6 +8681,10 @@ http://www.magnetic-declination.com/</value>
     <value>组件 ID</value>
     <comment>"compid"</comment>
   </data>
+  <data name="4b6394535d80d9a6d4d5f7adf96ceb8ff432ad9ab70e47bfe2c2391acdb52ea0" xml:space="preserve">
+    <value>正在连接…</value>
+    <comment>"connecting…"</comment>
+  </data>
   <data name="e256ee8e7aff6957a781d8328f0f68e26996564c81fa458da59fbca2305138ad" xml:space="preserve">
     <value>继续</value>
     <comment>"continue"</comment>
@@ -8715,6 +8928,10 @@ http://www.magnetic-declination.com/</value>
   <data name="144db0a3d60889b2c50e8f7a0d54a7dab790a3677ba73262e2b564237f36faca" xml:space="preserve">
     <value>多飞行器集群界面</value>
     <comment>"multi mav swarm interface"</comment>
+  </data>
+  <data name="0192d20b2cfdb38e5de2c9703110736ce6b56905ff2fd7d674cbbd9e0e09d654" xml:space="preserve">
+    <value>已 {0} 秒未收到视频</value>
+    <comment>"no video for {0} s"</comment>
   </data>
   <data name="c9c1e2b67b4ee6b46cebbc3bfe3b9064ab06536c7390671f646f4124c179d3bf" xml:space="preserve">
     <value>输入源文件采样率</value>
@@ -8973,6 +9190,10 @@ http://www.magnetic-declination.com/</value>
 
 如有字体问题，请安装：http://www.microsoft.com/en-us/download/details.aspx?id=16083</value>
     <comment>"{0}\n\n Font Issues? Please install this http://www.microsoft.com/en-us/download/details.aspx?id=16083"</comment>
+  </data>
+  <data name="f0a220c816cc527b5dbd16c1dfcc8da87331c3abddb6454c4cda3542adf304e9" xml:space="preserve">
+    <value>{0}，位于航程 {1} 处</value>
+    <comment>"{0} at {1}"</comment>
   </data>
   <data name="5097e8a37403b611dfbe72f08153e1b5de9786d8ae7060d6db47cde5973dbd6d" xml:space="preserve">
     <value>{name} 为 {value}</value>

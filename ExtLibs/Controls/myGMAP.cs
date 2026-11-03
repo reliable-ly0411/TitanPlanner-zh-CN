@@ -15,6 +15,20 @@ using System.Windows.Forms;
 namespace MissionPlanner.Controls
 {
     /// <summary>
+    /// A panel a screen draws over a <see cref="myGMAP"/> from its Paint event. While the pointer is over it, the panel
+    /// takes the mouse, so clicks and drags there don't reach the map, its markers, the screen's map handlers or the
+    /// map's context menu.
+    /// </summary>
+    public interface IMapPanel
+    {
+        bool HitTest(Point location);
+        void OnMouseMove(MouseEventArgs e);
+        void OnMouseDown(MouseEventArgs e);
+        void OnMouseUp(MouseEventArgs e);
+        void OnMouseLeave();
+    }
+
+    /// <summary>
     /// Mono handles calls from other thread difrently - this prevents those crashs
     /// </summary>
     public class myGMAP : GMap.NET.WindowsForms.GMapControl
@@ -29,6 +43,7 @@ namespace MissionPlanner.Controls
             this.Text = UiText.Translate("Map");
             IgnoreMarkerOnMouseWheel = true;
             GestureHappened += MyGMAP_GestureHappened;
+            _zoomTimer.Tick += ZoomTick;
         }
 
         GMapMarker p1 = new GMarkerGoogle(PointLatLng.Empty, GMarkerGoogleType.blue_small);
@@ -120,23 +135,226 @@ namespace MissionPlanner.Controls
             base.Invalidate();
         }
 
-        // Smooth mouse wheel zoom - 0.1 per scroll tick
+        // Smooth mouse wheel zoom - 0.2 per scroll tick
         private const double ZoomIncrement = 0.2;
 
         protected override void OnMouseWheel(MouseEventArgs e)
         {
             if (!Core.IsDragging)
             {
-                // Calculate zoom change - standard delta is 120, so normalize
-                double zoomChange = (e.Delta / 120.0) * ZoomIncrement;
-                double newZoom = Zoom + zoomChange;
-
-                // Clamp to valid range
-                if (newZoom < MinZoom) newZoom = MinZoom;
-                if (newZoom > MaxZoom) newZoom = MaxZoom;
-
-                Zoom = newZoom;
+                // standard delta is 120, so normalize; ticks during the animation add to where it is heading
+                AnimateZoom(ZoomTarget + (e.Delta / 120.0) * ZoomIncrement);
             }
+        }
+
+        // Zoom animation: the zoom eases to its level over a few frames instead of jumping there
+        private const double ZoomEaseSeconds = 0.06;
+        private readonly Timer _zoomTimer = new Timer { Interval = 15 };
+        private readonly Stopwatch _zoomClock = new Stopwatch();
+        private double _zoomTarget;
+        private double _zoomSet;
+
+        /// <summary>
+        /// The zoom level the map is heading to, or the current one when it isn't animating.
+        /// </summary>
+        public double ZoomTarget => _zoomTimer.Enabled ? _zoomTarget : Zoom;
+
+        /// <summary>
+        /// Eases the zoom to the level about the map centre. A call during the animation changes where it heads.
+        /// </summary>
+        public void AnimateZoom(double zoom)
+        {
+            zoom = Math.Max(MinZoom, Math.Min(MaxZoom, zoom));
+            if (!_zoomTimer.Enabled)
+            {
+                if (zoom == Zoom)
+                    return;
+                if (!Visible || !IsHandleCreated)
+                {
+                    Zoom = zoom;
+                    return;
+                }
+
+                _zoomSet = Zoom;
+                _zoomClock.Restart();
+                _zoomTimer.Start();
+            }
+
+            _zoomTarget = zoom;
+        }
+
+        /// <summary>
+        /// Zooms to the level, easing there when animate is set. A level the zoom is already heading to is left
+        /// alone, so the zoom controls writing the target back don't cut the animation short.
+        /// </summary>
+        public void SetZoom(double zoom, bool animate)
+        {
+            if (Math.Abs(zoom - ZoomTarget) < 1e-6)
+                return;
+
+            if (animate)
+            {
+                AnimateZoom(zoom);
+            }
+            else
+            {
+                _zoomTimer.Stop();
+                CentreZoomPivot();
+                Zoom = zoom;
+            }
+        }
+
+        // GMap draws a fractional zoom scaled (and rotated) about Core.renderOffset, which is the view centre only
+        // after a whole-level zoom change or a Position set. A pan moves it along with the map, so a zoom after a pan
+        // would grow from where the centre used to be, and Core works out Position without the fractional scale.
+
+        /// <summary>
+        /// The scale a fractional zoom draws the whole level it is between at (1 at whole levels).
+        /// </summary>
+        public double FractionalScale => ScaleMode == ScaleModes.Fractional ? Math.Pow(2, Zoom - Core.Zoom) : 1;
+
+        /// <summary>
+        /// A lat/lng in local pixels of the map before rotation (the frame Core.renderOffset and Pan work in), with
+        /// the fractional zoom applied, which Core.FromLatLngToLocal leaves out.
+        /// </summary>
+        public PointF FromLatLngToMapLocal(PointLatLng point)
+        {
+            var local = Core.FromLatLngToLocal(point);
+            var origin = Core.renderOffset;
+            double scale = FractionalScale;
+            return new PointF((float)(origin.X + (local.X - origin.X) * scale),
+                (float)(origin.Y + (local.Y - origin.Y) * scale));
+        }
+
+        private double _panCarryX, _panCarryY;
+
+        /// <summary>
+        /// Moves the map by the offset in pixels (before rotation) without re-projecting the overlays, keeping
+        /// Position on the view centre.
+        /// </summary>
+        public void Pan(GPoint offset)
+        {
+            if (IsRotated)
+            {
+                // GMap turns the tiles about Core.renderOffset but the overlays about the view centre, so on a rotated
+                // map the two only agree while that is the centre: move the centre itself, which re-centres the map
+                // and re-projects the overlays. The carry keeps the fractions of a whole level's pixel.
+                double scale = FractionalScale;
+                _panCarryX += offset.X / scale;
+                _panCarryY += offset.Y / scale;
+                long stepX = (long)Math.Truncate(_panCarryX), stepY = (long)Math.Truncate(_panCarryY);
+                if (stepX == 0 && stepY == 0)
+                    return;
+
+                _panCarryX -= stepX;
+                _panCarryY -= stepY;
+                var centre = CentrePixel();
+                var target = new GPoint(centre.X - stepX, centre.Y - stepY);
+                Position = MapProvider.Projection.FromPixelToLatLng(target, Core.Zoom);
+                // the lat/lng round trip can land a pixel short: keep that for the next step
+                _panCarryX += Core.positionPixel.X - target.X;
+                _panCarryY += Core.positionPixel.Y - target.Y;
+                return;
+            }
+
+            Core.DragOffset(offset);
+
+            var pixel = CentrePixel();
+            Core.positionPixel = pixel;
+            Core.position = MapProvider.Projection.FromPixelToLatLng(pixel, Core.Zoom);
+        }
+
+        // the world pixel, at the whole level the map is drawn from, under the view centre
+        private GPoint CentrePixel()
+        {
+            var origin = Core.renderOffset;
+            double scale = FractionalScale;
+            return new GPoint(
+                Core.compensationOffset.X + (long)Math.Round((Core.Width / 2 - origin.X) / scale),
+                Core.compensationOffset.Y + (long)Math.Round((Core.Height / 2 - origin.Y) / scale));
+        }
+
+        /// <summary>
+        /// Moves the point a zoom grows from back to the view centre. The overlays need re-projecting after, which
+        /// the zoom change that follows does.
+        /// </summary>
+        private void CentreZoomPivot()
+        {
+            // Before the map starts, Position is only stored (a restored last position, say) and the offsets aren't
+            // laid out yet; starting centres the map on Position.
+            if (!Core.IsStarted || IsDragging)
+                return;
+
+            var centre = new GPoint(Core.Width / 2, Core.Height / 2);
+            if (Core.renderOffset.X == centre.X && Core.renderOffset.Y == centre.Y)
+                return;
+
+            Core.compensationOffset = CentrePixel();
+            Core.renderOffset = centre;
+            // refreshes the tiles to draw and sets Position to the new centre
+            Core.DragOffset(GPoint.Empty);
+        }
+
+        private void ZoomTick(object sender, EventArgs e)
+        {
+            // Something else set the zoom (a zoom to fit, a restored level): leave it there. A zoom slider writing
+            // the level back through its own rounding lands within the tolerance and doesn't count.
+            if (Math.Abs(Zoom - _zoomSet) > 0.01)
+            {
+                _zoomTimer.Stop();
+                return;
+            }
+
+            double dt = Math.Min(_zoomClock.Elapsed.TotalSeconds, 0.1);
+            _zoomClock.Restart();
+
+            // the zoom setter ignores changes mid-drag
+            if (IsDragging)
+                return;
+
+            // cover the same share of the gap per second whatever the frame rate
+            double gap = _zoomTarget - Zoom;
+            double zoom = Math.Abs(gap) < 0.002 ? _zoomTarget : Zoom + gap * (1 - Math.Exp(-dt / ZoomEaseSeconds));
+
+            try
+            {
+                if (zoom != Zoom)
+                {
+                    CentreZoomPivot();
+                    Zoom = zoom;
+                }
+                else
+                {
+                    // the last frame set the zoom but its re-projection was cut short: re-project without moving
+                    CentreZoomPivot();
+                    Offset(0, 0);
+                }
+
+                if (zoom == _zoomTarget)
+                    _zoomTimer.Stop();
+            }
+            catch (Exception ex) when (ex is NullReferenceException || ex is InvalidOperationException ||
+                                       ex is ArgumentException || ex is IndexOutOfRangeException)
+            {
+                // The DATA screen's update loop changes overlays on its own thread, and one changed while they were
+                // being re-projected. The zoom is set; the next frame re-projects them again.
+                Debug.WriteLine(ex);
+            }
+            catch
+            {
+                // anything else would come back every frame
+                _zoomTimer.Stop();
+                throw;
+            }
+
+            _zoomSet = Zoom;
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+                _zoomTimer.Dispose();
+            base.Dispose(disposing);
         }
 
         protected override void OnMouseMove(System.Windows.Forms.MouseEventArgs e)
@@ -148,15 +366,100 @@ namespace MissionPlanner.Controls
                 if (e.X >= lastx - buffer && e.X <= lastx + buffer && e.Y >= lasty - buffer && e.Y <= lasty + buffer)
                     return;
 
-                if (HoldInvalidation)
+                // While the DATA screen's update loop holds invalidation, hover is skipped, but a drag still moves the
+                // map so it never freezes mid-drag; the repaint follows when the hold ends.
+                if (HoldInvalidation && e.Button == System.Windows.Forms.MouseButtons.None)
                     return;
 
                 lastx = e.X;
                 lasty = e.Y;
 
+                // a press on the panel keeps its moves until the release; a map drag passes over it
+                bool panel = OverlayPanel != null &&
+                             (e.Button == MouseButtons.None ? OverlayPanel.HitTest(e.Location) : _panelPressed);
+                if (panel)
+                {
+                    _panelHovered = true;
+                    OverlayPanel.OnMouseMove(e);
+                    return;
+                }
+
+                LeavePanel();
                 base.OnMouseMove(e);
             }
             catch (Exception ex) { Console.WriteLine(ex.ToString()); }
+        }
+
+        /// <summary>
+        /// The panel drawn over the map that takes the mouse while the pointer is over it, or null.
+        /// </summary>
+        public IMapPanel OverlayPanel { get; set; }
+
+        private bool _panelHovered;
+
+        // set by a press on the panel and kept until the next press, so the release and the clicks it raises stay
+        // with the panel too
+        private bool _panelPressed;
+
+        private void LeavePanel()
+        {
+            if (!_panelHovered)
+                return;
+            _panelHovered = false;
+            OverlayPanel?.OnMouseLeave();
+        }
+
+        protected override void OnMouseDown(MouseEventArgs e)
+        {
+            _panelPressed = OverlayPanel != null && OverlayPanel.HitTest(e.Location);
+            if (_panelPressed)
+            {
+                OverlayPanel.OnMouseDown(e);
+                return;
+            }
+
+            base.OnMouseDown(e);
+        }
+
+        protected override void OnMouseUp(MouseEventArgs e)
+        {
+            if (_panelPressed)
+            {
+                OverlayPanel?.OnMouseUp(e);
+                return;
+            }
+
+            base.OnMouseUp(e);
+        }
+
+        protected override void OnClick(EventArgs e)
+        {
+            if (!_panelPressed)
+                base.OnClick(e);
+        }
+
+        protected override void OnMouseClick(MouseEventArgs e)
+        {
+            if (!_panelPressed)
+                base.OnMouseClick(e);
+        }
+
+        protected override void OnDoubleClick(EventArgs e)
+        {
+            if (!_panelPressed)
+                base.OnDoubleClick(e);
+        }
+
+        protected override void OnMouseDoubleClick(MouseEventArgs e)
+        {
+            if (!_panelPressed)
+                base.OnMouseDoubleClick(e);
+        }
+
+        protected override void OnMouseLeave(EventArgs e)
+        {
+            LeavePanel();
+            base.OnMouseLeave(e);
         }
 
 
@@ -233,6 +536,16 @@ namespace MissionPlanner.Controls
         {
             if (_gestureConfigSize == 0)
                 SetupStructSizes();
+
+            // the map's context menu acts on the point clicked, which the panel has taken
+            const int WM_CONTEXTMENU = 0x7B;
+            if (m.Msg == WM_CONTEXTMENU && OverlayPanel != null && m.LParam.ToInt64() != -1)
+            {
+                long lparam = m.LParam.ToInt64();
+                var screen = new Point(unchecked((short)lparam), unchecked((short)(lparam >> 16)));
+                if (OverlayPanel.HitTest(PointToClient(screen)))
+                    return;
+            }
 
             bool handled;
             switch (m.Msg)

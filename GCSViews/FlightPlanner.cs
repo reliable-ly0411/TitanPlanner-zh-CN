@@ -32,7 +32,6 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -166,6 +165,13 @@ namespace MissionPlanner.GCSViews
             MainMap.OnMarkerEnter += MainMap_OnMarkerEnter;
             MainMap.OnMarkerLeave += MainMap_OnMarkerLeave;
 
+#if !LIB
+            // the terrain profile along the foot of the map, drawn over it after the map's own painting
+            terrainProfile = new Controls.TerrainProfile.TerrainProfilePanel(MainMap);
+            MainMap.OverlayPanel = terrainProfile;
+            MainMap.Paint += (s, e) => terrainProfile.Paint(e.Graphics);
+#endif
+
             MainMap.MapScaleInfoEnabled = false;
             MainMap.ScalePen = new Pen(Color.Red);
 
@@ -289,6 +295,10 @@ namespace MissionPlanner.GCSViews
         public static FlightPlanner instance { get; set; }
 
         public List<PointLatLngAlt> pointlist { get; set; } = new List<PointLatLngAlt>();
+
+#if !LIB
+        private Controls.TerrainProfile.TerrainProfilePanel terrainProfile;
+#endif
 
 
         public void Activate()
@@ -810,20 +820,6 @@ namespace MissionPlanner.GCSViews
             }
             updateUndoBuffer(true);
             setfromMap(lat, lng, alt);
-        }
-
-        public T DeepClone<T>(T obj)
-        {
-            using (var ms = new MemoryStream())
-            {
-                var formatter = new BinaryFormatter();
-
-                formatter.Serialize(ms, obj);
-
-                ms.Position = 0;
-
-                return (T) formatter.Deserialize(ms);
-            }
         }
 
         /// <summary>
@@ -1532,6 +1528,12 @@ namespace MissionPlanner.GCSViews
 
                     pointlist = activePointlist;
 
+#if !LIB
+                    // multirotors (and an unknown vehicle) land straight down; planes glide in
+                    terrainProfile?.SetMission(home, commandlist,
+                        MainV2.comPort.MAV.cs.vehicleClass != VehicleClass.Plane);
+#endif
+
                     if (!useV2)
                     {
                         foreach (var pointLatLngAlt in pointlist.PrevNowNext())
@@ -1587,6 +1589,13 @@ namespace MissionPlanner.GCSViews
 
                     MainMap.Refresh();
                 }
+#if !LIB
+                else
+                {
+                    // the grid holds fence or rally points: no route to profile
+                    terrainProfile?.SetMission(null, null, false);
+                }
+#endif
 
                 if ((MAVLink.MAV_MISSION_TYPE) cmb_missiontype.SelectedValue == MAVLink.MAV_MISSION_TYPE.FENCE)
                 {
@@ -3394,16 +3403,6 @@ namespace MissionPlanner.GCSViews
             kmlpolygonsoverlay.Routes.Add(route);
         }
 
-        public void elevationGraphToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            writeKML();
-            double homealt = MainV2.comPort.MAV.cs.HomeAlt;
-            Form temp = new ElevationProfile(pointlist, homealt,
-                (altmode) Enum.Parse(typeof(altmode), CMB_altmode.Text));
-            ThemeManager.ApplyThemeTo(temp);
-            temp.ShowDialog();
-        }
-
         public void enterUTMCoordToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string easting = "578994";
@@ -4467,7 +4466,7 @@ namespace MissionPlanner.GCSViews
         {
             try
             {
-                Process.Start("http://127.0.0.1:56781/network.kml");
+                Process.Start(new ProcessStartInfo("http://127.0.0.1:56781/network.kml") { UseShellExecute = true });
             }
             catch
             {
@@ -7140,7 +7139,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             {
                 lock (thisLock)
                 {
-                    MainMap.Zoom = TRK_zoom.Value;
+                    MainMap.AnimateZoom(TRK_zoom.Value);
                     SetMapZoomLevel(TRK_zoom.Value);
                 }
             }
@@ -7156,7 +7155,8 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             {
                 lock (thisLock)
                 {
-                    MainMap.Zoom = (double)Zoomlevel.Value;
+                    // animate what the user types or steps in the box, not the levels written back to it
+                    MainMap.SetZoom((double)Zoomlevel.Value, Zoomlevel.ContainsFocus);
                     TRK_zoom.Value = (float)Zoomlevel.Value;
                 }
             }
@@ -7400,7 +7400,8 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
 
                 TXT_homelng.Text = MainV2.comPort.MAV.cs.HomeLocation.Lng.ToString();
 
-                TXT_homealt.Text = MainV2.comPort.MAV.cs.HomeLocation.Alt.ToString("0.00");
+                // the vehicle home is in metres; the box, like the grid, is in display units
+                TXT_homealt.Text = (MainV2.comPort.MAV.cs.HomeLocation.Alt * CurrentState.multiplieralt).ToString("0.00");
 
                 writeKML();
             }
@@ -8224,8 +8225,9 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             {
                 try
                 {
-                    TRK_zoom.Value = (float)(MainMap.Zoom);
-                    SetMapZoomLevel(MainMap.Zoom);
+                    // show where an animated zoom is heading, so a slider being dragged isn't pulled back
+                    TRK_zoom.Value = (float)(MainMap.ZoomTarget);
+                    SetMapZoomLevel(MainMap.ZoomTarget);
                 }
                 catch (Exception ex)
                 {

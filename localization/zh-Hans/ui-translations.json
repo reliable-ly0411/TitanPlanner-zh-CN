@@ -815,5 +815,19 @@
   "ADSB Alerts": "ADS-B 警报",
   "Auto Connect on USB": "USB 自动连接",
   "Connection": "连接",
-  "How to Use:\n1. connect all drones including masters (right click top icon bar \"connection options\")\n2. select the correct vehicle and click set ground master\n3. select the correct vehicle and click set air master\n4. upload the path to the air master drone.\n5. set the seperation and lead options\n6. allow all drones to get gps lock, and calibrate. (failing to do so means they might fail prearm checks, this could be tested beforhand to ensure smooth operation)\n7. ensure your ground master is ready and waiting on the flight path\n8. click start": "使用方法：\n1. 连接所有无人机（包括主机；右键点击顶部图标栏的“连接选项”）。\n2. 选择正确的飞行器，点击设置地面主机。\n3. 选择正确的飞行器，点击设置空中主机。\n4. 将路径上传到空中主机。\n5. 设置间距和领航选项。\n6. 等待所有无人机完成 GPS 定位和校准，否则可能无法通过解锁前检查。可提前测试以确保正常运行。\n7. 确保地面主机已准备好，并在飞行路径上等待。\n8. 点击开始。"
+  "How to Use:\n1. connect all drones including masters (right click top icon bar \"connection options\")\n2. select the correct vehicle and click set ground master\n3. select the correct vehicle and click set air master\n4. upload the path to the air master drone.\n5. set the seperation and lead options\n6. allow all drones to get gps lock, and calibrate. (failing to do so means they might fail prearm checks, this could be tested beforhand to ensure smooth operation)\n7. ensure your ground master is ready and waiting on the flight path\n8. click start": "使用方法：\n1. 连接所有无人机（包括主机；右键点击顶部图标栏的“连接选项”）。\n2. 选择正确的飞行器，点击设置地面主机。\n3. 选择正确的飞行器，点击设置空中主机。\n4. 将路径上传到空中主机。\n5. 设置间距和领航选项。\n6. 等待所有无人机完成 GPS 定位和校准，否则可能无法通过解锁前检查。可提前测试以确保正常运行。\n7. 确保地面主机已准备好，并在飞行路径上等待。\n8. 点击开始。",
+  "Select Firmware": "选择固件",
+  "More than one firmware matches this board. Use the filters to narrow it down to the one you want.": "多个固件与此飞控匹配。请使用筛选条件缩小范围，选择所需固件。",
+  "Any": "不限",
+  "Too many matches ({0}) - apply more filters": "匹配项过多（{0}），请增加筛选条件",
+  "No firmware matches the current filters": "没有符合当前筛选条件的固件",
+  "Upload Firmware": "上传固件",
+  "Vehicle Type": "机型",
+  "Release Type": "发布类型",
+  "Platform": "平台",
+  "Format": "格式",
+  "USB ID": "USB 标识",
+  "Board ID": "板卡 ID",
+  "Bootloader ID": "引导程序 ID",
+  "Please pick a file to download and upload (.apj)": "请选择要下载并上传的文件（.apj）"
 }

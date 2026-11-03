@@ -33,8 +33,10 @@ class SettingsUiProbe {
    using(Form form=new Form()) using(Control view=(Control)Activator.CreateInstance(type)) {
     form.Text="TitanPlanner settings rendering probe";form.AutoScaleMode=AutoScaleMode.None;view.Dock=DockStyle.Fill;form.Controls.Add(view);
     form.Show();
-    FlowLayoutPanel layout=(FlowLayoutPanel)Find(view,"layoutRoot");
+    // Check the layout contract, not the concrete container used upstream.
+    Control layout=Find(view,"layoutRoot");
     Check(layout!=null,"layout root missing");
+    Check(layout is ScrollableControl && ((ScrollableControl)layout).AutoScroll,"settings layout must support scrolling");
     string[] titles=enhanced ? new[]{"连接与数据","地图与显示","单位与测量","更新","配置"} : new[]{"Connection && Data","Map & Display","Units & Measurement","Updates","Configuration"};
     foreach(string title in titles) Check(layout.Controls.Cast<Control>().Any(c=>c.Text==title),"untranslated group "+title);
     Check(Find(view,"label102").Text==(enhanced?"姿态":"高度"),"Attitude must not mean altitude");
@@ -66,8 +68,10 @@ class SettingsUiProbe {
     Check(language.GetItemText(language.Items.Cast<CultureInfo>().Single(c=>c.Name=="zh-CN"))=="中文(简体)2","new label mismatch");
     Check(language.GetItemText(language.Items.Cast<CultureInfo>().Single(c=>c.Name=="zh-Hans"))=="中文(简体)","original label mismatch");
     languageSetting.SetValue(settings,culture,new object[]{"language"});setup.Invoke(view,null);
-    foreach(int width in new[]{640,1024,1600}) {
+    // Returning to a narrow viewport catches stale widths and scroll ranges.
+    foreach(int width in new[]{640,1024,1600,640}) {
      form.ClientSize=new Size(width,1000);form.PerformLayout();view.PerformLayout();Application.DoEvents();
+     Console.WriteLine("width="+width+" layout="+layout.GetType().Name+" client="+layout.ClientSize+" display="+layout.DisplayRectangle+" padding="+layout.Padding);
      foreach(Control group in layout.Controls) {
       Console.WriteLine("width="+width+" group="+group.Text+" bounds="+group.Bounds);
       Check(group.Right+group.Margin.Right<=layout.ClientSize.Width-layout.Padding.Right+1,"group clips horizontally at "+width+": "+group.Text);

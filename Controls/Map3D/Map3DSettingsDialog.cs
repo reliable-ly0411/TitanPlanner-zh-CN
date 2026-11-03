@@ -78,6 +78,13 @@ namespace MissionPlanner.Controls
                 var numAdsbSize = new NumericUpDown { Minimum = 50, Maximum = 2000, Increment = 50, Value = clamp(settings.AdsbCircleSize, 50, 2000) };
                 addRow(UiText.Translate("ADSB Size:"), numAdsbSize);
 
+                var numClouds = new NumericUpDown
+                {
+                    Minimum = 0, Maximum = Scene3D.CloudField.MaxDensity, Increment = 10,
+                    Value = clamp(settings.CloudDensity, 0, Scene3D.CloudField.MaxDensity)
+                };
+                addRow(UiText.Translate("Cloud density:"), numClouds);
+
                 Color selectedColor = settings.VehicleColor;
                 var colorPanel = new Panel { Height = 23, BorderStyle = BorderStyle.FixedSingle, Cursor = Cursors.Hand, Tag = "IgnoreTheme", BackColor = selectedColor };
                 colorPanel.Click += (s, e) =>
@@ -129,6 +136,10 @@ namespace MissionPlanner.Controls
                 numDist.Enabled = !settings.FpvMode;
                 numHeight.Enabled = !settings.FpvMode;
                 addCheckbox(chkFpv);
+                var chkSmooth = new CheckBox { Text = UiText.Translate("Smooth movement"), Checked = settings.SmoothMovement };
+                addCheckbox(chkSmooth);
+                var chkHud = new CheckBox { Text = UiText.Translate("HUD overlay"), Checked = settings.HudOverlay };
+                addCheckbox(chkHud);
                 var chkStats = new CheckBox { Text = UiText.Translate("Stats for nerds"), Checked = settings.StatsForNerds };
                 addCheckbox(chkStats);
 
@@ -163,6 +174,9 @@ namespace MissionPlanner.Controls
                     chkTurnRadius.Checked = defaults.ShowTurnRadius;
                     chkTrail.Checked = defaults.ShowTrail;
                     chkFpv.Checked = defaults.FpvMode;
+                    chkSmooth.Checked = defaults.SmoothMovement;
+                    numClouds.Value = defaults.CloudDensity;
+                    chkHud.Checked = defaults.HudOverlay;
                     chkStats.Checked = defaults.StatsForNerds;
                     settings.CameraAngle = 0.0;
                     dialog.Close();
@@ -192,6 +206,9 @@ namespace MissionPlanner.Controls
                     settings.ShowTurnRadius = chkTurnRadius.Checked;
                     settings.ShowTrail = chkTrail.Checked;
                     settings.FpvMode = chkFpv.Checked;
+                    settings.SmoothMovement = chkSmooth.Checked;
+                    settings.CloudDensity = (int)numClouds.Value;
+                    settings.HudOverlay = chkHud.Checked;
                     settings.StatsForNerds = chkStats.Checked;
                     settings.Save();
                 };
