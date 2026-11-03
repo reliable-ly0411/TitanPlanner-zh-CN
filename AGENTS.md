@@ -162,7 +162,9 @@ the git log has those. `ChangeLog.txt` is upstream's and is not maintained here.
   `development`, resolve conflicts in favour of the fork's UI (HUD layout, `FlightDataActions`,
   Motor Setup, Battery Monitor, Radio Calibration, themed tabs) while taking upstream's fixes,
   then update the "Upstream Base" section of `CHANGES.md` (the date, and upstream capabilities users
-  may notice). Expect upstream's mechanical changes (e.g. the `byte` → `uint` sysid widening) to also
+  may notice). Upstream's Servo/Relay and Aux Function tabs are boxes in `FlightDataActions` here, and the
+  HUD's right-click Video menu is the Video tab (`FlightPlannerVideoOptions`), so upstream changes to
+  them belong there, not back in `FlightData.Designer.cs`. Expect upstream's mechanical changes (e.g. the `byte` → `uint` sysid widening) to also
   apply to fork-only code. Upstream PRs taken before they merge get a line in "Reliability Fixes Over
   Upstream" naming the PR.
 - **Line endings.** The repo stores a mix of CRLF and LF blobs and `core.autocrlf=true` is in use.
@@ -173,16 +175,44 @@ the git log has those. `ChangeLog.txt` is upstream's and is not maintained here.
   compiled twice. Keep `GenerateResourceUsePreserializedResources` on, or `dotnet build`/`dotnet test`
   fail. Both `plugins\` and `Plugins\` exist on disk; the csproj excludes both.
 - **Product identity and data folders.** The app is "TitanPlanner": its own MSI upgrade code and install
-  folder (`wix/Program.cs`) and its own data folders via `Settings.AppConfigName`. On first launch
+  folder (`wix/Program.cs`) and its own data folders via `Settings.AppConfigName` (`app.config` for the
+  log files). On first launch
   `DataFolderMigration` copies the previous folders (`Settings.PreviousAppConfigNames`, "Mission
   Planner") into the new ones. The NextVision edition sets these to "TitanPlanner-NextVision" and
   `{ "TitanPlanner", "Mission Planner" }`, so those lines differ between the two repos by design.
 - **3D map.** `Controls/Map3D/` is the 3D view (excluded from the LIB build). `Terrain/` streams satellite
-  terrain: `TerrainQuadtree` picks tiles by screen-space error, `TileLoader` fetches imagery (through the
-  shared GMap cache), samples SRTM (`srtm.GetCell`) and builds meshes on worker threads, and `TerrainEngine`
-  uploads and draws them on the render thread. `Rendering/` holds the GL helpers and GLSL 1.10/ES 2.0
-  shaders, `Overlays/` the mission, vehicle and ADS-B drawing, `Scene/` the UTM frame, camera and pose
-  smoothing. Selection and loading are pure logic with tests in `MissionPlannerTests/Controls/`.
+  terrain: `TerrainQuadtree` picks tiles by screen-space error, up to a finest zoom set by the camera's height
+  (`SelectionParams.MaxZoomFor`), `TileLoader` fetches imagery (through the shared GMap cache), samples SRTM
+  (`srtm.GetCell`) and builds meshes on worker threads, and `TerrainEngine` uploads and draws them on the render
+  thread. `Rendering/` holds the GL helpers and GLSL 1.10/ES 2.0 shaders, `Overlays/` the mission, vehicle and
+  ADS-B drawing, `Scene/` the UTM frame, camera and pose smoothing. `VehicleTracker` dead-reckons and
+  Kalman-filters the pose (MAVLink velocity is north, east, down); the trail and ADS-B prediction smooth too,
+  and `Map3DSettings.SmoothMovement` turns all of it off for raw telemetry. `CloudRenderer` draws the layers
+  `Scene/CloudField` defines (a tiling noise texture, heights kept above the vehicle, and the coverage
+  thresholds for a cloud density, measured on the texture with the shader's sampling) as quads shaded in the
+  fragment shader. Selection, loading and the cloud field are pure logic with tests in
+  `MissionPlannerTests/Controls/`.
+- **2D maps.** Setting `GMapControl.Position` or `Zoom` re-projects every overlay and repaints synchronously,
+  and `GMapControl.Invalidate` is throttled to about 9 fps. The DATA map pans with `myGMAP.Pan` plus
+  `((Control)map).Invalidate()` (dragging and the autopan timer in `FlightData`). Zoom from user input goes
+  through `myGMAP.AnimateZoom` / `SetZoom`, and zoom controls sync to `ZoomTarget`, not `Zoom`, so the
+  write-back doesn't cut the animation short. Hidden shapes are skipped by that re-projection, which is why
+  `FlightData.UpdateOverlayVisibility` hides the no-fly shapes (`NoFly/*.kmz`, ~200k points worldwide) away
+  from the view.
+- **GMap fractional zoom.** A fractional zoom is drawn scaled (and rotated) about `Core.renderOffset`, which
+  is the view centre only after a whole-level zoom or a `Position` set; a `Core.DragOffset` pan moves it, and
+  `Core.FromLocalToLatLng` / `FromLatLngToLocal` leave the scale out. Pan with `myGMAP.Pan` (keeps
+  `Position` on the centre), measure with `myGMAP.FromLatLngToMapLocal`, and zoom through `myGMAP`, which
+  moves the pivot back to the centre first. A rotated map turns its tiles about that point but its overlays
+  about the view centre, so there `Pan` moves `Position` itself (re-centring and re-projecting each step). The DATA update loop changes overlays on its own thread and GMap's
+  collections don't lock, so UI-thread code that walks overlays has to survive a collection changing under it.
+- **PLAN terrain profile.** `Controls/TerrainProfile/` (excluded from the LIB build): `MissionProfile` is the pure
+  route logic (mission order from home, altitudes AMSL by each item's frame, terrain-frame legs following the
+  ground, takeoff/landing/RTL) with tests in `MissionPlannerTests/Controls/TerrainProfileTests.cs`;
+  `TerrainProfilePanel` draws it over `MainMap` from its Paint event and takes the mouse through
+  `myGMAP.OverlayPanel`. `FlightPlanner.writeKML` hands it the mission; it rebuilds on a worker thread, taking
+  the ground from a loaded GeoTIFF elevation model first (as `srtm.getAltitude` does), else `srtm.GetCell`, and
+  retries while tiles download. It replaces upstream's `ElevationProfile` dialog.
 - **Commits.** Messages carry no AI attribution trailers. Do not commit or push unless asked.
 
 ## 发布规范入口

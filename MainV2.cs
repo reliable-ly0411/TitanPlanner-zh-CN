@@ -1323,11 +1323,26 @@ namespace MissionPlanner
             if (this.connectionStatsForm != null && connectionStatsForm.Visible)
             {
                 // else the form is already showing.  reset the stats
-                this.connectionStatsForm.Controls.Clear();
-                _connectionStats = new ConnectionStats(comPort);
-                this.connectionStatsForm.Controls.Add(_connectionStats);
-                ThemeManager.ApplyThemeTo(this.connectionStatsForm);
+                AttachConnectionStats();
             }
+        }
+
+        /// <summary>
+        /// Fills the Link Stats window with a new stats control for the current link and returns the control's
+        /// designed size.
+        /// </summary>
+        private Size AttachConnectionStats()
+        {
+            // disposing (not just removing) the old control stops its updates
+            foreach (var old in this.connectionStatsForm.Controls.Cast<Control>().ToList())
+                old.Dispose();
+
+            _connectionStats = new ConnectionStats(comPort);
+            var size = _connectionStats.Size;
+            _connectionStats.Dock = DockStyle.Fill;
+            this.connectionStatsForm.Controls.Add(_connectionStats);
+            ThemeManager.ApplyThemeTo(this.connectionStatsForm);
+            return size;
         }
 
         private void ShowConnectionStatsForm()
@@ -1337,8 +1352,6 @@ namespace MissionPlanner
                 // If the form has been closed, or never shown before, we need all new stuff
                 this.connectionStatsForm = new Form
                 {
-                    Width = 430,
-                    Height = 320,
                     MaximizeBox = false,
                     MinimizeBox = false,
                     FormBorderStyle = FormBorderStyle.FixedDialog,
@@ -1347,11 +1360,8 @@ namespace MissionPlanner
                 };
                 // Change the connection stats control, so that when/if the connection stats form is showing,
                 // there will be something to see
-                this.connectionStatsForm.Controls.Clear();
-                _connectionStats = new ConnectionStats(comPort);
-                this.connectionStatsForm.Controls.Add(_connectionStats);
-                this.connectionStatsForm.Width = _connectionStats.Width;
-                this.connectionStatsForm.Height = _connectionStats.Height + 40;
+                // size the inside to the stats, so the borders don't cut off the right of the graph
+                this.connectionStatsForm.ClientSize = AttachConnectionStats();
             }
 
             this.connectionStatsForm.Show();
@@ -1371,7 +1381,14 @@ namespace MissionPlanner
             _connectionControl.CMB_serialport.Items.Clear();
 
             _connectionControl.CMB_serialport.Items.Add("AUTO");
-            _connectionControl.CMB_serialport.Items.AddRange(SerialPort.GetPortNames());
+            try
+            {
+                _connectionControl.CMB_serialport.Items.AddRange(SerialPort.GetPortNames());
+            }
+            catch (Exception ex)
+            {
+                log.Error("Failed to populate serial port dropdown.", ex);
+            }
 
             _connectionControl.CMB_serialport.Items.Add("TCP");
             _connectionControl.CMB_serialport.Items.Add("UDP");
@@ -1744,6 +1761,7 @@ namespace MissionPlanner
                         File.ReadAllText(comPort.MAV.ParamCachePath).FromJSON<MAVLink.MAVLinkParamList>()
                             .ForEach(a => comPort.MAV.param.Add(a));
                         comPort.MAV.param.TotalReported = comPort.MAV.param.TotalReceived;
+                        comPort.OnParamListChanged();
                     }
                     else
                     {
@@ -1754,6 +1772,8 @@ namespace MissionPlanner
                                 try
                                 {
                                     comPort.getParamListMavftp(comPort.MAV.sysid, comPort.MAV.compid);
+                                    // pages showing params reload on this, as after a getParamList
+                                    this.BeginInvokeIfRequired(() => comPort.OnParamListChanged());
                                 }
                                 catch
                                 {
@@ -3388,6 +3408,9 @@ namespace MissionPlanner
             MyView.AddScreen(new MainSwitcher.Screen("Simulation", Simulation, true));
             MyView.AddScreen(new MainSwitcher.Screen("Help", typeof(GCSViews.Help), false));
 
+            // highlight the tab of whichever screen is shown, including switches made in code (SITL start, connect)
+            MyView.ScreenShown += MyView_ScreenShown;
+
             try
             {
                 if (Control.ModifierKeys == Keys.Shift)
@@ -3412,7 +3435,6 @@ namespace MissionPlanner
             {
                 this.PerformLayout();
                 MenuFlightPlanner_Click(this, e);
-                MainMenu_ItemClicked(this, new ToolStripItemClickedEventArgs(MenuFlightPlanner));
             }
             else
             {
@@ -3420,7 +3442,6 @@ namespace MissionPlanner
                 log.Info("show FlightData");
                 MenuFlightData_Click(this, e);
                 log.Info("show FlightData... Done");
-                MainMenu_ItemClicked(this, new ToolStripItemClickedEventArgs(MenuFlightData));
             }
 
             // for long running tasks using own threads.
@@ -4748,8 +4769,8 @@ namespace MissionPlanner
         {
             try
             {
-                System.Diagnostics.Process.Start(
-                    "https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=mich146%40hotmail%2ecom&lc=AU&item_name=Michael%20Oborne&no_note=0&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHostedGuest");
+                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(
+                    "https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=mich146%40hotmail%2ecom&lc=AU&item_name=Michael%20Oborne&no_note=0&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHostedGuest") { UseShellExecute = true });
             }
             catch
             {
@@ -4939,11 +4960,36 @@ namespace MissionPlanner
             DBT_USERDEFINED = 0xFFFF,
         }
 
-        private void MainMenu_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        // The tab highlight follows the shown screen rather than the clicked item, so switches made in code
+        // are shown, and Connect, the logo or a refused Setup password leave the current tab highlighted.
+        private void MyView_ScreenShown(string screen)
+        {
+            if (InvokeRequired)
+            {
+                BeginInvoke((Action)(() => MyView_ScreenShown(screen)));
+                return;
+            }
+
+            ToolStripItem tab;
+            switch (screen)
+            {
+                case "FlightData": tab = MenuFlightData; break;
+                case "FlightPlanner": tab = MenuFlightPlanner; break;
+                case "HWConfig": tab = MenuInitConfig; break;
+                case "SWConfig": tab = MenuConfigTune; break;
+                case "Simulation": tab = MenuSimulation; break;
+                case "Help": tab = MenuHelp; break;
+                default: return;
+            }
+
+            HighlightMenuItem(tab);
+        }
+
+        private void HighlightMenuItem(ToolStripItem selected)
         {
             foreach (ToolStripItem item in MainMenu.Items)
             {
-                if (e.ClickedItem == item)
+                if (selected == item)
                 {
                     item.BackColor = ThemeManager.ControlBGColor;
                 }
@@ -4995,7 +5041,7 @@ namespace MissionPlanner
         {
             try
             {
-                System.Diagnostics.Process.Start("https://titandynamics.aero");
+                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo("https://titandynamics.aero") { UseShellExecute = true });
             }
             catch
             {

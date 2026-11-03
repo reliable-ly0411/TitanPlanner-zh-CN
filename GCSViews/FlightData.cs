@@ -58,6 +58,9 @@ namespace MissionPlanner.GCSViews
             if (_hudGStreamerThread != null && _hudGStreamerThread.IsAlive)
                 return null;
 
+            // a stopped stream still finishing ends first, so its clearing of the HUD can't land after this
+            hudGStreamer.Stop();
+
             // Show loading state on HUD immediately, fitted to the current aspect ratio
             myhud.bgimage = CreateFittedNoVideoImage();
             _hudGStreamerFirstFrame = true;
@@ -136,16 +139,12 @@ namespace MissionPlanner.GCSViews
         public static void StopHudGStreamer()
         {
             _hudGStreamerFirstFrame = false;
-            myhud.bgimage = null;
 
-            // Stop in background to avoid blocking UI if GStreamer is slow to respond
-            var thread = _hudGStreamerThread;
+            // Stops at once, without waiting for the stream's thread to end: it shows no more frames, and a later
+            // Start waits for it. Stopping from a background task instead could land after that Start and stop it.
+            hudGStreamer.RequestStop();
             _hudGStreamerThread = null;
-
-            System.Threading.Tasks.Task.Run(() =>
-            {
-                hudGStreamer.Stop();
-            });
+            myhud.bgimage = null;
         }
         public static myGMAP mymap;
         public static bool threadrun;
@@ -178,6 +177,17 @@ namespace MissionPlanner.GCSViews
         // Map scale bar and zoom buttons
         private Controls.MapScaleBar _mapScaleBar;
         private bool _zoomInHover;
+        // the (i) in the map's bottom-right corner that shows the legend of the vehicle's lines
+        private readonly Controls.MapLegendButton _legendButton = new Controls.MapLegendButton();
+
+        // Autopan eases the map towards the vehicle every frame (AutoPanTick) while it is on.
+        private readonly System.Windows.Forms.Timer _autoPanTimer = new System.Windows.Forms.Timer { Interval = 15 };
+        private readonly Stopwatch _autoPanClock = new Stopwatch();
+        // the last position fix and how old it is, to carry the target along between fixes
+        private PointLatLng _autoPanFix;
+        private readonly Stopwatch _autoPanFixAge = new Stopwatch();
+        // what OffsetMap left over below a whole pixel, applied with the next offset
+        private double _offsetCarryX, _offsetCarryY;
         private bool _zoomOutHover;
 
         private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
@@ -317,7 +327,7 @@ namespace MissionPlanner.GCSViews
             HighLatency_Enable,
             HighLatency_Disable,
             Toggle_Safety_Switch,
-            Do_Parachute,
+            Parachute_Release,
             Engine_Start,
             Engine_Stop,
             Terminate_Flight,
@@ -796,9 +806,10 @@ namespace MissionPlanner.GCSViews
             gMapControl1.DoubleClick += (s, e) =>
             {
                 var me = e as MouseEventArgs;
-                if (me != null && (GetZoomInRect().Contains(me.Location) || GetZoomOutRect().Contains(me.Location)))
+                if (me != null && (GetZoomInRect().Contains(me.Location) || GetZoomOutRect().Contains(me.Location) ||
+                                   _legendButton.HitTest(LegendArea(), me.Location)))
                 {
-                    return; // Don't fly-to-here when double-clicking zoom buttons
+                    return; // Don't fly-to-here when double-clicking the map's buttons
                 }
                 if (_doubleClickFlyToHereEnabled)
                 {
@@ -811,6 +822,8 @@ namespace MissionPlanner.GCSViews
             _mapScaleBar = new Controls.MapScaleBar();
             _mapScaleBar.DrawY = 20;
             _mapScaleBar.SetMapControl(gMapControl1);
+
+            _autoPanTimer.Tick += AutoPanTick;
 
             // Track zoom button states and positions
             _zoomInHover = false;
@@ -832,8 +845,12 @@ namespace MissionPlanner.GCSViews
                     gMapControl1.Invalidate();
                 }
 
+                bool legendHover = _legendButton.HitTest(LegendArea(), e.Location);
+                if (_legendButton.SetHovered(legendHover))
+                    gMapControl1.Invalidate();
+
                 // Change cursor when over buttons
-                gMapControl1.Cursor = (newZoomInHover || newZoomOutHover) ? Cursors.Hand : Cursors.Default;
+                gMapControl1.Cursor = (newZoomInHover || newZoomOutHover || legendHover) ? Cursors.Hand : Cursors.Default;
             };
 
             gMapControl1.MouseLeave += (s, e) =>
@@ -844,27 +861,35 @@ namespace MissionPlanner.GCSViews
                     _zoomOutHover = false;
                     gMapControl1.Invalidate();
                 }
+
+                if (_legendButton.SetHovered(false))
+                    gMapControl1.Invalidate();
             };
 
             gMapControl1.MouseClick += (s, e) =>
             {
                 if (GetZoomInRect().Contains(e.Location))
                 {
-                    if (gMapControl1.Zoom < gMapControl1.MaxZoom)
+                    if (gMapControl1.ZoomTarget < gMapControl1.MaxZoom)
                     {
-                        gMapControl1.Zoom += 1;
-                        TRK_zoom.Value = (float)gMapControl1.Zoom;
-                        Zoomlevel.Value = Convert.ToDecimal(gMapControl1.Zoom);
+                        gMapControl1.AnimateZoom(gMapControl1.ZoomTarget + 1);
+                        TRK_zoom.Value = (float)gMapControl1.ZoomTarget;
+                        Zoomlevel.Value = Convert.ToDecimal(gMapControl1.ZoomTarget);
                     }
                 }
                 else if (GetZoomOutRect().Contains(e.Location))
                 {
-                    if (gMapControl1.Zoom > gMapControl1.MinZoom)
+                    if (gMapControl1.ZoomTarget > gMapControl1.MinZoom)
                     {
-                        gMapControl1.Zoom -= 1;
-                        TRK_zoom.Value = (float)gMapControl1.Zoom;
-                        Zoomlevel.Value = Convert.ToDecimal(gMapControl1.Zoom);
+                        gMapControl1.AnimateZoom(gMapControl1.ZoomTarget - 1);
+                        TRK_zoom.Value = (float)gMapControl1.ZoomTarget;
+                        Zoomlevel.Value = Convert.ToDecimal(gMapControl1.ZoomTarget);
                     }
+                }
+                else if (e.Button == MouseButtons.Left && _legendButton.HitTest(LegendArea(), e.Location))
+                {
+                    _legendButton.Toggle();
+                    gMapControl1.Invalidate();
                 }
             };
 
@@ -1253,7 +1278,14 @@ namespace MissionPlanner.GCSViews
 
                     log.Info("Open logfile " + file);
 
-                    MainV2.comPort.getHeartBeat();
+                    // the GCS that recorded the log may have another sysid than ours, and if its heartbeat comes
+                    // first it becomes the current MAV; getHeartBeat skips GCS heartbeats, so take the vehicle from it
+                    var hb = MainV2.comPort.getHeartBeat();
+                    if (hb.Length > 5)
+                    {
+                        MainV2.comPort.sysidcurrent = hb.sysid;
+                        MainV2.comPort.compidcurrent = hb.compid;
+                    }
 
                     tracklog.Value = 0;
                     tracklog.Minimum = 0;
@@ -1282,8 +1314,6 @@ namespace MissionPlanner.GCSViews
 
             TabListDisplay.Add(tabStatus.Name, MainV2.DisplayConfiguration.displayStatusTab);
 
-            TabListDisplay.Add(tabServo.Name, MainV2.DisplayConfiguration.displayServoTab);
-
             TabListDisplay.Add(tabScripts.Name, MainV2.DisplayConfiguration.displayScriptsTab);
 
             TabListDisplay.Add(tabTLogs.Name, MainV2.DisplayConfiguration.displayTelemetryTab);
@@ -1291,8 +1321,6 @@ namespace MissionPlanner.GCSViews
             TabListDisplay.Add(tabPagemessages.Name, MainV2.DisplayConfiguration.displayMessagesTab);
 
             TabListDisplay.Add(tabTransponder.Name, MainV2.DisplayConfiguration.displayTransponderTab);
-
-            TabListDisplay.Add(tabAuxFunction.Name, MainV2.DisplayConfiguration.displayAuxFunctionTab);
 
             TabListDisplay.Add(tabParams.Name, MainV2.DisplayConfiguration.displayParamsTab);
 
@@ -2433,7 +2461,7 @@ namespace MissionPlanner.GCSViews
 
                     int param1 = 0;
                     int param2 = 0;
-                    int param3 = 1;
+                    int param3 = 0;
 
                     // request gyro
                     if (flightDataActions1.CMB_action.Text == actions.Preflight_Calibration.ToString())
@@ -2447,6 +2475,17 @@ namespace MissionPlanner.GCSViews
                     {
                         MainV2.comPort.doCommand(MainV2.comPort.MAV.sysid, MainV2.comPort.MAV.compid, MAVLink.MAV_CMD.DO_FLIGHTTERMINATION, 1.0f, 0, 0, 0, 0, 0, 0);
                         ((Control)sender).Enabled = true;
+                        return;
+                    }
+
+                    if (flightDataActions1.CMB_action.Text == actions.Parachute_Release.ToString())
+                    {
+                        if (!MainV2.comPort.doCommand(MAVLink.MAV_CMD.DO_PARACHUTE,
+                                (float) MAVLink.PARACHUTE_ACTION.PARACHUTE_RELEASE, 0, 0, 0, 0, 0, 0))
+                        {
+                            CustomMessageBox.Show(Strings.CommandFailed + " " + MAVLink.MAV_CMD.DO_PARACHUTE, Strings.ERROR);
+                        }
+                        ((Control) sender).Enabled = true;
                         return;
                     }
 
@@ -2785,8 +2824,97 @@ namespace MissionPlanner.GCSViews
         private void CHK_autopan_CheckedChanged(object sender, EventArgs e)
         {
             Settings.Instance["CHK_autopan"] = CHK_autopan.Checked.ToString();
+            _autoPanTimer.Enabled = CHK_autopan.Checked;
 
             //GCSViews.FlightPlanner.instance.autopan = CHK_autopan.Checked;
+        }
+
+        /// <summary>
+        /// Moves the drawn map by pixels in the map's unrotated space, as GMap's own drag does: the overlays are drawn
+        /// shifted, not re-projected. Setting Position instead re-projects every overlay (fences, KML, no-fly zones)
+        /// and repaints at once, which made dragging this map slow.
+        /// </summary>
+        private void OffsetMap(double x, double y)
+        {
+            _offsetCarryX += x;
+            _offsetCarryY += y;
+            double stepX = Math.Truncate(_offsetCarryX), stepY = Math.Truncate(_offsetCarryY);
+            if (stepX == 0 && stepY == 0)
+                return;
+
+            _offsetCarryX -= stepX;
+            _offsetCarryY -= stepY;
+            gMapControl1.Pan(new GPoint((long)stepX, (long)stepY));
+            // Control.Invalidate, not GMap's: GMap's goes through its invalidator, which repaints at most every 111 ms
+            // (about 9 fps). Windows merges pending repaints, so this paints as often as painting allows.
+            ((Control)gMapControl1).Invalidate();
+        }
+
+        /// <summary>
+        /// Autopan: eases the map towards the vehicle each frame. The target is the last fix carried along at the
+        /// vehicle's ground speed and course, so the map glides at the vehicle's pace instead of stepping at the
+        /// telemetry rate; a vehicle far off screen is recentred at once.
+        /// </summary>
+        private void AutoPanTick(object sender, EventArgs e)
+        {
+            double dt = _autoPanClock.IsRunning ? _autoPanClock.Elapsed.TotalSeconds : 0;
+            _autoPanClock.Restart();
+
+            var cs = MainV2.comPort?.MAV?.cs;
+            // the map holds the mouse capture while the user drags it, even once the pointer leaves the map
+            if (cs == null || (cs.lat == 0 && cs.lng == 0) || !gMapControl1.Visible || gMapControl1.IsDragging ||
+                gMapControl1.Capture)
+                return;
+
+            var fix = new PointLatLng(cs.lat, cs.lng);
+            if (fix != _autoPanFix)
+            {
+                _autoPanFix = fix;
+                _autoPanFixAge.Restart();
+            }
+
+            // carry the fix along for up to a second (the next fix normally arrives well before)
+            double travelled = (cs.groundspeed / CurrentState.multiplierspeed) *
+                               Math.Min(1.0, _autoPanFixAge.Elapsed.TotalSeconds);
+            double course = cs.groundcourse * Math.PI / 180;
+            var target = new PointLatLng(
+                fix.Lat + travelled * Math.Cos(course) / 111320.0,
+                fix.Lng + travelled * Math.Sin(course) / (111320.0 * Math.Max(0.01, Math.Cos(fix.Lat * Math.PI / 180))));
+
+            // in the frame the map pans in, with the fractional zoom applied, so the vehicle lands on the centre
+            var vehicle = gMapControl1.FromLatLngToMapLocal(target);
+            double dx = gMapControl1.Core.Width / 2.0 - vehicle.X, dy = gMapControl1.Core.Height / 2.0 - vehicle.Y;
+
+            if (Math.Abs(dx) > gMapControl1.Width || Math.Abs(dy) > gMapControl1.Height)
+            {
+                gMapControl1.Position = target;
+                return;
+            }
+
+            // cover the same share of the gap per second whatever the frame rate (a quarter-second time constant)
+            double share = 1 - Math.Exp(-Math.Min(dt, 0.1) / 0.25);
+
+            // how far the view moves this frame
+            double moveX = -dx * share, moveY = -dy * share;
+
+            // Don't back the view up along the vehicle's course for the small steps new fixes make: one landing behind
+            // the carried-along target would otherwise reverse the pan for a moment, so the view waits for the vehicle
+            // to catch up. A vehicle well behind the centre (the map was dragged ahead of it) is panned back to as
+            // usual. The map's local space is north-up whatever its rotation, so the course gives the direction.
+            if (cs.groundspeed / CurrentState.multiplierspeed > 0.5)
+            {
+                double alongX = Math.Sin(course), alongY = -Math.Cos(course);
+                double behind = dx * alongX + dy * alongY;
+                double jitter = Math.Max(15, Math.Min(gMapControl1.Width, gMapControl1.Height) / 2.0 * 0.1);
+                double along = moveX * alongX + moveY * alongY;
+                if (along < 0 && behind < jitter)
+                {
+                    moveX -= along * alongX;
+                    moveY -= along * alongY;
+                }
+            }
+
+            OffsetMap(-moveX, -moveY);
         }
 
         void chk_box_tunningCheckedChanged(object sender, EventArgs e)
@@ -3695,6 +3823,7 @@ namespace MissionPlanner.GCSViews
 
             if (Settings.Instance["CHK_autopan"] != null)
                 CHK_autopan.Checked = Settings.Instance.GetBoolean("CHK_autopan");
+            _autoPanTimer.Enabled = CHK_autopan.Checked;
 
             if (Settings.Instance["CB_tuning"] != null)
                 CB_tuning.Checked = Settings.Instance.GetBoolean("CB_tuning");
@@ -4002,16 +4131,17 @@ namespace MissionPlanner.GCSViews
                 if (dx == 0 && dy == 0)
                     return;
 
-                double absLat = Math.Abs(gMapControl1.Position.Lat);
-                PointLatLng newCenter = gMapControl1.FromLocalToLatLng(
-                    gMapControl1.Width / 2 - dx,
-                    gMapControl1.Height / 2 - dy);
-
-                if (!double.IsNaN(newCenter.Lat) && !double.IsNaN(newCenter.Lng) &&
-                    !double.IsInfinity(newCenter.Lat) && !double.IsInfinity(newCenter.Lng))
+                // Move the drawn map by the mouse's pixels (pixel space has no pole singularity). On a rotated map
+                // the screen delta is turned back into the map's unrotated space: GMap draws it at -Bearing.
+                double x = dx, y = dy;
+                if (gMapControl1.IsRotated)
                 {
-                    gMapControl1.Position = newCenter;
+                    double bearing = gMapControl1.Bearing * Math.PI / 180;
+                    x = dx * Math.Cos(bearing) - dy * Math.Sin(bearing);
+                    y = dx * Math.Sin(bearing) + dy * Math.Cos(bearing);
                 }
+
+                OffsetMap(x, y);
 
                 // consume this step (critical for stable drag)
                 MouseDownStartLocal = e.Location;
@@ -4047,14 +4177,17 @@ namespace MissionPlanner.GCSViews
             try
             {
                 // Exception System.Runtime.InteropServices.SEHException: External component has thrown an exception.
-                TRK_zoom.Value = (float) gMapControl1.Zoom;
-                Zoomlevel.Value = Convert.ToDecimal(gMapControl1.Zoom);
+                // show where an animated zoom is heading, so a slider being dragged isn't pulled back
+                TRK_zoom.Value = (float) gMapControl1.ZoomTarget;
+                Zoomlevel.Value = Convert.ToDecimal(gMapControl1.ZoomTarget);
             }
             catch
             {
             }
 
             center.Position = gMapControl1.Position;
+
+            UpdateOverlayVisibility();
         }
 
         void gMapControl1_OnMarkerEnter(GMapMarker item)
@@ -4152,41 +4285,6 @@ namespace MissionPlanner.GCSViews
                 Gspeed.MaxValue = float.Parse(max);
                 Settings.Instance["GspeedMAX"] = Gspeed.MaxValue.ToString();
             }
-        }
-
-        private void GStreamerStopToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            StopHudGStreamer();
-        }
-
-        private void HereLinkVideoToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            string ipaddr = "192.168.43.1";
-
-            if (Settings.Instance["herelinkip"] != null)
-                ipaddr = Settings.Instance["herelinkip"].ToString();
-
-            InputBox.Show(UiText.Translate("herelink ip"), UiText.Translate("Enter herelink ip address"), ref ipaddr);
-
-            Settings.Instance["herelinkip"] = ipaddr;
-
-            string url = String.Format(
-                "rtspsrc location=rtsp://{0}:8554/fpv_stream latency=1 udp-reconnect=1 timeout=0 do-retransmission=false ! application/x-rtp ! rtph264depay ! h264parse ! queue ! avdec_h264 ! queue max-size-buffers=1 leaky=2 ! videoconvert ! video/x-raw,format=BGRx ! appsink name=outsink",
-                ipaddr);
-
-            GStreamer.GstLaunch = GStreamer.LookForGstreamer();
-
-            if (!GStreamer.GstLaunchExists)
-            {
-                GStreamerUI.DownloadGStreamer();
-
-                if (!GStreamer.GstLaunchExists)
-                {
-                    return;
-                }
-            }
-
-            StartHudGStreamer(url);
         }
 
         private void hud_UserItem(object sender, EventArgs e)
@@ -4401,7 +4499,6 @@ namespace MissionPlanner.GCSViews
 
             DateTime tunning = DateTime.Now.AddSeconds(0);
 
-            DateTime mapupdate = DateTime.Now.AddSeconds(0);
 
             DateTime vidrec = DateTime.Now.AddSeconds(0);
 
@@ -5316,11 +5413,10 @@ namespace MissionPlanner.GCSViews
                             // Draw the active aircraft
                             addMAVMarker(MainV2.comPort.MAV);
 
-                            if (route.Points.Count == 0 || route.Points[route.Points.Count - 1].Lat != 0 &&
-                                (mapupdate.AddSeconds(3) < DateTime.Now) && CHK_autopan.Checked)
+                            // autopan follows the vehicle every frame (AutoPanTick) rather than jumping here
+                            if (route.Points.Count == 0)
                             {
                                 updateMapPosition(currentloc);
-                                mapupdate = DateTime.Now;
                             }
 
                             if (route.Points.Count == 1 && gMapControl1.Zoom == 3) // 3 is the default load zoom
@@ -5515,6 +5611,19 @@ namespace MissionPlanner.GCSViews
             distanceBar1.DoPaintRemote(e);
             _mapScaleBar?.DoPaintRemote(e, gMapControl1);
             DrawZoomButtons(e);
+            _legendButton.Draw(e.Graphics, LegendArea());
+        }
+
+        /// <summary>
+        /// The part of the map the legend button takes its corner from: left of the zoom slider, which sits on
+        /// top of the map down its right edge.
+        /// </summary>
+        private Size LegendArea()
+        {
+            int right = gMapControl1.Width;
+            if (TRK_zoom.Visible && TRK_zoom.Parent != null)
+                right = Math.Min(right, gMapControl1.PointToClient(TRK_zoom.Parent.PointToScreen(TRK_zoom.Location)).X);
+            return new Size(right, gMapControl1.Height);
         }
 
         private Rectangle GetZoomInRect()
@@ -5567,6 +5676,8 @@ namespace MissionPlanner.GCSViews
             BeginInvoke((Action) delegate
             {
                 gMapControl1.Overlays.Add(e.NoFlyZones);
+                _noFlyOverlay = e.NoFlyZones;
+                UpdateOverlayVisibility();
             });
         }
 
@@ -5672,25 +5783,48 @@ namespace MissionPlanner.GCSViews
             Activate(); // Update new settings
         }
 
-        private void recordHudToAVIToolStripMenuItem_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Whether the HUD, with its video, is being recorded to an AVI in the log folder.
+        /// </summary>
+        public bool IsHudRecording => aviwriter != null;
+
+        /// <summary>
+        /// Starts recording the HUD, with its video, to a new AVI in the log folder.
+        /// </summary>
+        public void StartHudRecording()
         {
-            stopRecordToolStripMenuItem_Click(sender, e);
+            StopHudRecording();
 
-            CustomMessageBox.Show(UiText.Translate("Output avi will be saved to the log folder"));
-
-            aviwriter = new AviWriter();
+            var writer = new AviWriter();
             try
             {
                 Directory.CreateDirectory(Settings.Instance.LogDir);
-                aviwriter.avi_start(Settings.Instance.LogDir + Path.DirectorySeparatorChar +
-                                    DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss") + ".avi");
-
-                recordHudToAVIToolStripMenuItem.Text = UiText.Translate("Recording");
+                writer.avi_start(Settings.Instance.LogDir + Path.DirectorySeparatorChar +
+                                 DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss") + ".avi");
+                aviwriter = writer;
             }
             catch (UnauthorizedAccessException ex)
             {
                 CustomMessageBox.Show(ex.Message, Strings.ERROR);
             }
+        }
+
+        /// <summary>
+        /// Stops the HUD recording, if there is one, and closes its file.
+        /// </summary>
+        public void StopHudRecording()
+        {
+            try
+            {
+                if (aviwriter != null)
+                    aviwriter.avi_close();
+            }
+            catch (Exception ex)
+            {
+                CustomMessageBox.Show(Strings.ERROR + " " + ex, Strings.ERROR);
+            }
+
+            aviwriter = null;
         }
 
         /// <summary>
@@ -5827,45 +5961,6 @@ namespace MissionPlanner.GCSViews
             MainV2.comPort.sendPacket(go, MainV2.comPort.MAV.sysid, MainV2.comPort.MAV.compid);
         }
 
-        private void setGStreamerSourceToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            string url = Settings.Instance["gstreamer_url"] != null
-                ? Settings.Instance["gstreamer_url"]
-                : @"videotestsrc ! video/x-raw, width=1280, height=720, framerate=30/1 ! videoconvert ! video/x-raw,format=BGRA ! appsink name=outsink";
-
-            if (DialogResult.OK == InputBox.Show(UiText.Translate("GStreamer url"),
-                UiText.Translate("Enter the source pipeline\nEnsure the final payload is ! videoconvert ! video/x-raw,format=BGRA ! appsink name=outsink"),
-                ref url))
-            {
-                Settings.Instance["gstreamer_url"] = url;
-
-                GStreamer.GstLaunch = GStreamer.LookForGstreamer();
-
-                if (!GStreamer.GstLaunchExists)
-                {
-                    GStreamerUI.DownloadGStreamer();
-
-                    if (!GStreamer.GstLaunchExists)
-                    {
-                        return;
-                    }
-                }
-
-                try
-                {
-                    StartHudGStreamer(url);
-                }
-                catch (Exception ex)
-                {
-                    CustomMessageBox.Show(ex.ToString(), Strings.ERROR);
-                }
-            }
-            else
-            {
-                StopHudGStreamer();
-            }
-        }
-
         private async void setHomeHereToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (MainV2.comPort.BaseStream.IsOpen)
@@ -5904,28 +5999,6 @@ namespace MissionPlanner.GCSViews
         private void setMapBearing()
         {
             BeginInvoke((Action) delegate { gMapControl1.Bearing = (int) ((MainV2.comPort.MAV.cs.yaw + 360) % 360); });
-        }
-
-        private void setMJPEGSourceToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            string url = Settings.Instance["mjpeg_url"] != null
-                ? Settings.Instance["mjpeg_url"]
-                : @"http://127.0.0.1:56781/map.jpg";
-
-            if (DialogResult.OK == InputBox.Show(UiText.Translate("Mjpeg url"), UiText.Translate("Enter the url to the mjpeg source url"), ref url))
-            {
-                Settings.Instance["mjpeg_url"] = url;
-
-                CaptureMJPEG.Stop();
-
-                CaptureMJPEG.URL = url;
-
-                CaptureMJPEG.runAsync();
-            }
-            else
-            {
-                CaptureMJPEG.Stop();
-            }
         }
 
         private void setQuickViewRowsCols(string cols, string rows)
@@ -6577,56 +6650,6 @@ namespace MissionPlanner.GCSViews
 
         #endregion
 
-        private void startCameraToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (MainV2.MONO)
-                return;
-            if (MainV2.cam == null)
-            {
-                try
-                {
-                    MainV2.cam = new Capture(Settings.Instance.GetInt32("video_device"), new AMMediaType());
-
-                    MainV2.cam.Start();
-
-                    MainV2.cam.camimage += new CamImage(cam_camimage);
-                }
-                catch (Exception ex)
-                {
-                    CustomMessageBox.Show(UiText.Translate("Camera Fail: ") + ex.ToString(), Strings.ERROR);
-
-                    // Clean up the partially initialized camera to prevent crashes
-                    // from the background thread trying to access invalid resources
-                    if (MainV2.cam != null)
-                    {
-                        try
-                        {
-                            MainV2.cam.Dispose();
-                        }
-                        catch { }
-                        MainV2.cam = null;
-                    }
-                }
-            }
-        }
-
-        private void stopRecordToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            recordHudToAVIToolStripMenuItem.Text = UiText.Translate("Start Recording");
-
-            try
-            {
-                if (aviwriter != null)
-                    aviwriter.avi_close();
-            }
-            catch (Exception ex)
-            {
-                CustomMessageBox.Show(Strings.ERROR + " " + ex, Strings.ERROR);
-            }
-
-            aviwriter = null;
-        }
-
         private void SwapHud1AndMap()
         {
             if (this.huddropout)
@@ -7029,12 +7052,12 @@ namespace MissionPlanner.GCSViews
             {
                 if (gMapControl1.MaxZoom + 1 == (double) TRK_zoom.Value)
                 {
-                    gMapControl1.Zoom = TRK_zoom.Value - .1;
+                    gMapControl1.AnimateZoom(TRK_zoom.Value - .1);
                     Zoomlevel.Value = Convert.ToDecimal(TRK_zoom.Value - .1);
                 }
                 else
                 {
-                    gMapControl1.Zoom = TRK_zoom.Value;
+                    gMapControl1.AnimateZoom(TRK_zoom.Value);
                     Zoomlevel.Value = Convert.ToDecimal(TRK_zoom.Value);
                 }
 
@@ -7254,7 +7277,42 @@ namespace MissionPlanner.GCSViews
                     else
                         poly.IsVisible = false;
                 }
+
+                if (_noFlyOverlay != null)
+                {
+                    // a view's size of margin on each side covers zooming out within a level and panning between passes
+                    var near = gMapControl1.ViewArea;
+                    near.Inflate(near.HeightLat, near.WidthLng);
+                    // a pixel of the view, so shapes too small to see are left out
+                    double pixelLng = gMapControl1.ViewArea.WidthLng / Math.Max(1, gMapControl1.Width);
+                    double pixelLat = gMapControl1.ViewArea.HeightLat / Math.Max(1, gMapControl1.Height);
+
+                    foreach (var poly in _noFlyOverlay.Polygons.ToArray())
+                        poly.IsVisible = NoFlyShapeShown(poly, near, pixelLng, pixelLat);
+                    foreach (var route in _noFlyOverlay.Routes.ToArray())
+                        route.IsVisible = NoFlyShapeShown(route, near, pixelLng, pixelLat);
+                }
             }
+        }
+
+        // The no-fly zones load as one overlay of shapes from around the world, and the map re-projects every visible
+        // shape on each zoom change (hundreds of thousands of points), so only the shapes near the view are shown.
+        private GMapOverlay _noFlyOverlay;
+        private readonly Dictionary<MapRoute, RectLatLng> _noFlyBounds = new Dictionary<MapRoute, RectLatLng>();
+
+        private bool NoFlyShapeShown(MapRoute shape, RectLatLng near, double pixelLng, double pixelLat)
+        {
+            if (!_noFlyBounds.TryGetValue(shape, out var bounds))
+            {
+                if (shape.Points.Count == 0)
+                    return false;
+
+                bounds = RectLatLng.FromLTRB(shape.Points.Min(a => a.Lng), shape.Points.Max(a => a.Lat),
+                    shape.Points.Max(a => a.Lng), shape.Points.Min(a => a.Lat));
+                _noFlyBounds[shape] = bounds;
+            }
+
+            return bounds.IntersectsWith(near) && (bounds.WidthLng >= pixelLng || bounds.HeightLat >= pixelLat);
         }
 
         private void updatePlayPauseButton(bool playing)
@@ -7347,14 +7405,15 @@ namespace MissionPlanner.GCSViews
         {
             try
             {
+                // animate what the user types or steps in the box, not the levels written back to it
                 if (gMapControl1.MaxZoom + 1 == (double) Zoomlevel.Value)
                 {
-                    gMapControl1.Zoom = (double) Zoomlevel.Value - .1;
+                    gMapControl1.SetZoom((double) Zoomlevel.Value - .1, Zoomlevel.ContainsFocus);
                     TRK_zoom.Value = (float)Zoomlevel.Value - (float).1;
                 }
                 else
                 {
-                    gMapControl1.Zoom = (double) Zoomlevel.Value;
+                    gMapControl1.SetZoom((double) Zoomlevel.Value, Zoomlevel.ContainsFocus);
                     TRK_zoom.Value = (float)Zoomlevel.Value;
                 }
             }

@@ -46,10 +46,12 @@ namespace MissionPlanner.Controls
         // Created with the GL context on first paint.
         private TerrainEngine _terrain;
         private SkyRenderer _sky;
+        private CloudRenderer _clouds;
         private LineRenderer _lines;
         private MissionOverlay _mission;
         private VehicleOverlay _vehicleOverlay;
         private NerdStatsOverlay _nerdStats;
+        private HudOverlay _hudOverlay;
         private bool _glFailed;
 
         // Set as soon as disposal starts: a paint arriving afterwards must not rebuild the renderers.
@@ -361,10 +363,12 @@ namespace MissionPlanner.Controls
             if (_sky == null)
             {
                 _sky = new SkyRenderer();
+                _clouds = new CloudRenderer();
                 _lines = new LineRenderer();
                 _mission = new MissionOverlay();
                 _vehicleOverlay = new VehicleOverlay(_stlLoader);
                 _nerdStats = new NerdStatsOverlay();
+                _hudOverlay = new HudOverlay();
 
                 try
                 {
@@ -414,11 +418,13 @@ namespace MissionPlanner.Controls
             if (connected)
             {
                 _vehicle.Update(_frame, _viewCenter, centerTime, velocity, attitude, _groundHeight,
-                    cs?.nav_bearing ?? 0, cs?.groundcourse ?? 0);
+                    cs?.nav_bearing ?? 0, cs?.groundcourse ?? 0, _settings.SmoothMovement, cs?.armed == true);
                 _vehicleOverlay.RecordTrail(_frame, _vehicle, _settings.ShowTrail, cs?.armed == true);
 
+                // In FPV the eye stays a metre above the ground under the vehicle, or a landed vehicle would look
+                // out from level with the terrain mesh, half of the view under it.
                 if (_settings.FpvMode)
-                    _camera.FirstPerson(_vehicle);
+                    _camera.FirstPerson(_vehicle, _groundHeight + 1);
                 else
                     _camera.Chase(_vehicle, _settings.CameraDistance, _settings.CameraHeight, _settings.CameraAngle);
             }
@@ -460,7 +466,12 @@ namespace MissionPlanner.Controls
 
             var ownPosition = connected ? (cs?.Location ?? _viewCenter) : _viewCenter;
             _adsb.Draw(_lines, _frame, ownPosition, _settings.AdsbCircleSize, _camera.X, _camera.Y, _camera.Z,
-                _settings.FieldOfView, Width, Height, ref terrainProjection, ref _view);
+                _settings.FieldOfView, Width, Height, _settings.SmoothMovement, ref terrainProjection, ref _view);
+
+            // after the terrain (which hides them behind hills) and traffic (which they veil from behind)
+            if (_settings.CloudDensity > 0)
+                _clouds.Draw(_frame, _camera.X, _camera.Y, _camera.Z, _groundHeight, connected ? _vehicle.Z : _camera.Z,
+                    viewRadius, horizon, _settings.CloudDensity, ref terrainProjection, ref _view);
 
             // Pass 2: mission and vehicle.
             GL.Clear(ClearBufferMask.DepthBufferBit);
@@ -479,12 +490,17 @@ namespace MissionPlanner.Controls
                 }
 
                 if (_settings.ShowTrail)
-                    _vehicleOverlay.DrawTrail(_lines, _frame, _vehicle, cs?.armed == true, ref overlayProjection, ref _view);
+                    _vehicleOverlay.DrawTrail(_lines, _frame, _vehicle, cs?.armed == true, _settings.SmoothMovement,
+                        velocity.X, velocity.Y, velocity.Z, ref overlayProjection, ref _view);
 
                 if (!_settings.FpvMode)
                     _vehicleOverlay.DrawModel(_vehicle, _settings.VehicleScale, _settings.VehicleColor,
                         ref overlayProjection, ref _view);
             }
+
+            // under the stats panel, which stays readable over it
+            if (_settings.HudOverlay)
+                _hudOverlay.Draw(GCSViews.FlightData.myhud, Width, Height);
 
             if (_settings.StatsForNerds)
             {
@@ -533,6 +549,7 @@ namespace MissionPlanner.Controls
             _selection.ViewportHeight = Height;
             _selection.FovY = fov;
             _selection.ReferenceHeight = _groundHeight;
+            _selection.MaxZoom = SelectionParams.MaxZoomFor(_camera.Z - _groundHeight, _selection.MaxZoom);
 
             var timer = Stopwatch.StartNew();
             _terrain.Update(_selection);
@@ -655,10 +672,12 @@ namespace MissionPlanner.Controls
             try
             {
                 _sky.Dispose();
+                _clouds.Dispose();
                 _lines.Dispose();
                 _mission.Dispose();
                 _vehicleOverlay.Dispose();
                 _nerdStats.Dispose();
+                _hudOverlay.Dispose();
                 _settingsButton.Dispose();
             }
             catch (Exception ex)

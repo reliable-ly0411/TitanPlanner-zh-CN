@@ -29,8 +29,23 @@ namespace MissionPlanner.Controls
         public bool ShowTrail;
         public bool FpvMode;
 
+        /// <summary>
+        /// Carry the vehicle and traffic along between telemetry updates and filter their pose and the trail; off,
+        /// everything is drawn from the raw telemetry.
+        /// </summary>
+        public bool SmoothMovement = true;
+
+        /// <summary>
+        /// Layers of cloud drifting well above the vehicle: how much of the sky they cover, from 0 (none) to
+        /// <see cref="Scene3D.CloudField.MaxDensity"/>.
+        /// </summary>
+        public int CloudDensity = Scene3D.CloudField.DefaultDensity;
+
         /// <summary>The top-right diagnostics panel: frame timing graph, terrain streaming, view and GPU.</summary>
         public bool StatsForNerds;
+
+        /// <summary>The DATA tab's HUD drawn over the 3D view, without its sky and ground.</summary>
+        public bool HudOverlay;
         public double WaypointMarkerSize = 60;
         public double AdsbCircleSize = 500;
 
@@ -51,7 +66,11 @@ namespace MissionPlanner.Controls
                 ShowTurnRadius = s.GetBoolean("map3d_show_turn_radius", true),
                 ShowTrail = s.GetBoolean("map3d_show_trail", false),
                 FpvMode = s.GetBoolean("map3d_fpv_mode", false),
+                SmoothMovement = s.GetBoolean("map3d_smooth_movement", true),
+                CloudDensity = Math.Max(0, Math.Min(Scene3D.CloudField.MaxDensity,
+                    s.GetInt32("map3d_cloud_density", Scene3D.CloudField.DefaultDensity))),
                 StatsForNerds = s.GetBoolean("map3d_stats_for_nerds", false),
+                HudOverlay = s.GetBoolean("map3d_hud_overlay", false),
                 WaypointMarkerSize = s.GetDouble("map3d_waypoint_marker_size", 60),
                 AdsbCircleSize = s.GetDouble("map3d_adsb_size", 500)
             };
@@ -84,7 +103,10 @@ namespace MissionPlanner.Controls
             s["map3d_show_turn_radius"] = ShowTurnRadius.ToString();
             s["map3d_show_trail"] = ShowTrail.ToString();
             s["map3d_fpv_mode"] = FpvMode.ToString();
+            s["map3d_smooth_movement"] = SmoothMovement.ToString();
+            s["map3d_cloud_density"] = CloudDensity.ToString();
             s["map3d_stats_for_nerds"] = StatsForNerds.ToString();
+            s["map3d_hud_overlay"] = HudOverlay.ToString();
             SaveCamera();
         }
 

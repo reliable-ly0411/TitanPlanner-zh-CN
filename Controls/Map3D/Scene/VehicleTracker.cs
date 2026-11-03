@@ -5,14 +5,15 @@ namespace MissionPlanner.Controls.Scene3D
 {
     /// <summary>
     /// Smooths the vehicle's pose between telemetry updates: dead-reckons from the last fix using velocity,
-    /// then runs Kalman filters on position, attitude and the heading indicators. Position is filtered in
-    /// absolute UTM so moving the scene origin never makes the vehicle slide.
+    /// then runs Kalman filters on position, altitude, attitude and the heading indicators. Position is filtered
+    /// in absolute UTM so moving the scene origin never makes the vehicle slide.
     /// </summary>
     public sealed class VehicleTracker
     {
         // Lower q = smoother, higher r = trust measurements less.
         readonly SimpleKalmanFilter _east = new SimpleKalmanFilter(0.02, 1.5);
         readonly SimpleKalmanFilter _north = new SimpleKalmanFilter(0.02, 1.5);
+        readonly SimpleKalmanFilter _altitude = new SimpleKalmanFilter(0.02, 1.5);
         readonly SimpleKalmanFilter _roll = new SimpleKalmanFilter(0.015, 2.0);
         readonly SimpleKalmanFilter _pitch = new SimpleKalmanFilter(0.015, 2.0);
         readonly SimpleKalmanFilter _yaw = new SimpleKalmanFilter(0.015, 2.5);
@@ -20,6 +21,9 @@ namespace MissionPlanner.Controls.Scene3D
         readonly SimpleKalmanFilter _gpsHeading = new SimpleKalmanFilter(0.015, 2.0);
         bool _initialized;
         int _zoneVersion = -1;
+
+        // a fix this far (metres) from where the vehicle is drawn is jumped to rather than eased to
+        const double JumpDistance = 100;
 
         /// <summary>Vehicle position in local scene coordinates (z is AMSL).</summary>
         public double X, Y, Z;
@@ -33,9 +37,33 @@ namespace MissionPlanner.Controls.Scene3D
             _initialized = false;
         }
 
+        /// <summary>
+        /// Takes this frame's pose. With smooth off it is the telemetry as it last arrived, unfiltered and not carried
+        /// along between updates. Disarmed, the position is never eased either, so a first fix or the GPS settling
+        /// on the ground puts the vehicle (and the camera following it) straight there instead of gliding across
+        /// the map; armed, a fix more than <see cref="JumpDistance"/> away is jumped to as well.
+        /// </summary>
         public void Update(WorldFrame frame, PointLatLngAlt center, DateTime centerTime, Vector3 velocity,
-            Vector3 attitude, double groundHeight, double rawNavBearing, double rawGpsHeading)
+            Vector3 attitude, double groundHeight, double rawNavBearing, double rawGpsHeading, bool smooth, bool armed)
         {
+            if (!smooth)
+            {
+                double rawEast, rawNorth;
+                frame.ToAbsolute(center.Lat, center.Lng, out rawEast, out rawNorth);
+                X = rawEast - frame.OriginEasting;
+                Y = rawNorth - frame.OriginNorthing;
+                Z = Math.Max(center.Alt, groundHeight + 1);
+                Roll = (float)attitude.X;
+                Pitch = (float)attitude.Y;
+                Yaw = (float)attitude.Z;
+                NavBearing = rawNavBearing;
+                GpsHeading = rawGpsHeading;
+
+                // smoothing switched back on starts from here, not from where it left off
+                _initialized = false;
+                return;
+            }
+
             var projected = LocationProjection.Project(center, velocity, centerTime, DateTime.Now);
             double east, north;
             frame.ToAbsolute(projected.Lat, projected.Lng, out east, out north);
@@ -44,6 +72,7 @@ namespace MissionPlanner.Controls.Scene3D
             {
                 _east.Reset(east);
                 _north.Reset(north);
+                _altitude.Reset(projected.Alt);
                 _roll.Reset(attitude.X);
                 _pitch.Reset(attitude.Y);
                 _yaw.Reset(attitude.Z);
@@ -53,9 +82,18 @@ namespace MissionPlanner.Controls.Scene3D
                 _zoneVersion = frame.ZoneVersion;
             }
 
+            double jumpEast = east - _east.Value, jumpNorth = north - _north.Value;
+            if (!armed || jumpEast * jumpEast + jumpNorth * jumpNorth > JumpDistance * JumpDistance)
+            {
+                _east.Reset(east);
+                _north.Reset(north);
+                _altitude.Reset(projected.Alt);
+            }
+
             X = _east.Update(east) - frame.OriginEasting;
             Y = _north.Update(north) - frame.OriginNorthing;
-            Z = projected.Alt < groundHeight ? groundHeight + 1 : center.Alt;
+            // kept a metre above the ground, which the reported altitude often reads under on the ground
+            Z = Math.Max(_altitude.Update(projected.Alt), groundHeight + 1);
 
             Roll = (float)_roll.UpdateAngle(attitude.X);
             Pitch = (float)_pitch.UpdateAngle(attitude.Y);
@@ -90,9 +128,10 @@ namespace MissionPlanner.Controls.Scene3D
             Roll = 0;
         }
 
-        public void FirstPerson(VehicleTracker vehicle)
+        /// <summary>From the vehicle, but no lower than minZ: on the ground the vehicle sits level with the terrain.</summary>
+        public void FirstPerson(VehicleTracker vehicle, double minZ)
         {
-            Look(vehicle.X, vehicle.Y, vehicle.Z, vehicle.Yaw, vehicle.Pitch);
+            Look(vehicle.X, vehicle.Y, Math.Max(vehicle.Z, minZ), vehicle.Yaw, vehicle.Pitch);
             Roll = vehicle.Roll;
         }
 

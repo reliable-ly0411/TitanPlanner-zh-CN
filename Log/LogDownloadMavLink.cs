@@ -466,6 +466,11 @@ namespace MissionPlanner.Log
             }
         }
 
+        private void BUT_openlogdir_Click(object sender, EventArgs e)
+        {
+            LogFolder.Open();
+        }
+
         private void BUT_redokml_Click(object sender, EventArgs e)
         {
             using (OpenFileDialog openFileDialog1 = new OpenFileDialog())

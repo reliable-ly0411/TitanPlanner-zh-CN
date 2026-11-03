@@ -33,6 +33,7 @@ Major reflow of the HUD. Larger, optimized fonts; centering uses cached per-char
 - **AOA / SSA / critical AOA gauge** for fixed-wing
 - **Low airspeed warning** (red) and **rate-of-change of airspeed** (blue bar)
 - **Low ground speed warning**
+- **Waypoint and wind arrows** on the HUD under the speed tape: the waypoint / home distance with an arrow pointing at it, and the wind speed with an arrow the way it blows, both relative to the nose. HUD Items (right-click the HUD) can hide either line
 - **Dual GPS** support on the top bar
 - **EKF / VIBE / GPS1 / GPS2** indicators repositioned to the right-most edge
 - **ESC telemetry** in tlog graphs
@@ -56,7 +57,7 @@ The connected vehicle renders in 3D with default STL models per MAV type (plane,
 
 ## Terrain Streaming Engine
 Terrain streams Google Earth style:
-- **Screen-space level of detail.** A tile quadtree is refined until each imagery texel is about a pixel on screen, up to zoom 20, so detail follows what the camera actually sees; there is no zoom setting to manage.
+- **Screen-space level of detail.** A tile quadtree is refined until each imagery texel is about a pixel on screen, up to zoom 24 within 100 m of the ground, 22 up to 500 m and 20 above, so detail follows what the camera actually sees; there is no zoom setting to manage.
 - **Coarse first, centre outwards.** Load requests are ranked by distance relative to tile size and by angle from the view centre, re-ranked every frame, and dropped when no longer wanted. Tiles out of view are prefetched coarser so turning never shows holes.
 - **No holes or overlaps.** A tile is replaced by its children only once all of them are loaded; skirts hide cracks between levels.
 - **Off the UI thread.** Eight workers fetch imagery, sample elevation once per tile and build meshes; the render thread only uploads finished tiles within a per-frame time budget, with BGRA uploads, mipmaps and anisotropic filtering. A bounded GPU cache keeps recently seen terrain.
@@ -69,11 +70,14 @@ Terrain streams Google Earth style:
 
 ## Camera & Visual Effects
 - **FPV mode** with smooth camera movement and pitch-matched heading lines
+- **HUD overlay** setting: the DATA tab's HUD, with its items and plugin drawings, over the 3D view without its sky and ground
+- **Clouds**: three drifting layers (cumulus, patchy mid-level cloud and high streaks) at least a kilometre above the vehicle, with cloudy and clear stretches, shaded from below, hidden behind high terrain and fading into the horizon; a **Cloud density** setting from 0 (none) to 100, default 50, sets how much of the sky they cover
 - **Orbital camera** mode
 - **Distance haze** that fades terrain into the sky's horizon colour before the edge of the loaded terrain, at every altitude
 - **Sky gradient** that follows the true horizon through pitch and roll
 - **Heading indicators** and dynamic render distance
-- **Trailing flight path** with Kalman-smoothed lines on all axes; render gated on stable telemetry
+- **Trailing flight path** with Kalman-smoothed lines on all axes, curving into the vehicle along its velocity; render gated on stable telemetry
+- **Smooth movement** setting (on by default): the vehicle's position, altitude and attitude, its trail and ADS-B traffic are carried along between telemetry updates and filtered; off, everything is drawn from the raw telemetry. Disarmed, or when the position jumps more than 100 m, the vehicle and the view go straight to it instead of gliding across the map
 - **High-altitude rendering** improvements
 
 ## ADS-B in 3D
@@ -101,8 +105,8 @@ Replaced the dated FlightData tab bar with a modern themed strip and refreshed i
 ## New / Re-purposed Tabs
 - **Params tab** in FlightData and a Params panel co-located on the map
 - **Tuning tab** in FlightData (vehicle-aware: plane/copter/rover)
-- **Video tab** with USB camera and GStreamer support, plus immediate HUD-overlay toggle
-- **Inspector tab** (MAVLink Inspector exposed without `Ctrl+F`)
+- **Video tab** in place of the HUD's right-click Video menu: one source at a time (capture device, RTSP stream, MJPEG stream or GStreamer pipeline) with one Start/Stop button and a status indicator across the top (stopped, connecting, playing and its size, no video), remembered between launches, an RTSP URL that plays as entered with a HereLink preset, and boxes for the HUD overlay and OSD color, and for recording the HUD (with an Open Folder button)
+- **Inspector tab** (MAVLink Inspector exposed without `Ctrl+F`), in the theme's colours with field values in the accent colour
 - **Logs tab** unifying former Dataflash and Telemetry tabs
 - Working **Status tab** in FlightData
 - **Help tab** hidden by default; Gauges tab hidden by default
@@ -123,7 +127,9 @@ Themed search bar with suggest-only autocomplete; search resets when navigating 
 ## Other
 - No confirmation dialogs after param writes (reboot-required and save-failed are still shown)
 - Toast notification on successful param write
-- Tree collapsed by default in tab embeddings to save space
+- Tree collapsed by default in tab embeddings to save space, with a drawn arrow on its show/hide button
+- Param lists that are showing, including the one docked under the DATA map, reload once the full list has arrived after connecting
+- **Reset** (to defaults) sits apart at the toolbar's right edge as a plain button
 - User params can be set on the Flight Modes page
 
 ---
@@ -134,13 +140,13 @@ Themed search bar with suggest-only autocomplete; search resets when navigating 
 **Motor Setup** (upstream's "Motor Test") is a Betaflight-style page in the Mandatory Hardware section, shown only for copter/quadplane vehicles, with live frame and class type images. The frame diagrams ship with the app, so they show on air-gapped setups, and are refreshed from ardupilot.org when online.
 
 ## Servo Output Tab
-A revamped Servo Output panel with click-or-drag sliders for trim, an "Equidistant" min/max helper, and proper min/max-from-trim handling. The trim slider stays in sync with the combobox.
+A revamped Servo Output panel with click-or-drag sliders for trim, an "Equidistant" min/max helper, and proper min/max-from-trim handling. The trim slider stays in sync with the combobox. Min, trim and max accept 500–2500 µs and step by 10. Edits are written in the background once you pause, so the page never waits on the vehicle.
 
 ## Radio & Calibration
 Visual-stick-controls Radio Calibration UI with upstream's reversing logic; polished accel calibration.
 
 ## Other Setup Pages
-GUI cleanups across Compass, Failsafe, Flight Modes, Initial Setup Serial; Battery Monitor pages merged into one unified screen; voltage/current calibration enabled regardless of selected sensor.
+GUI cleanups across Accelerometer Calibration, Compass, Failsafe, Flight Modes, Initial Setup Serial; Battery Monitor pages merged into one unified screen; voltage/current calibration enabled regardless of selected sensor. Flight Modes shows its modes and RC Options in side-by-side boxes and writes each change as it is made, with no Save button. The Planner settings page packs its boxes into equal-width columns across the whole window.
 
 ## Configuration Profile Management
 Save and load named configuration profiles for the Mission Planner application itself.
@@ -160,7 +166,7 @@ ELRS airport support added.
 # Mode Selector & Vehicle State Toolbar
 
 ## Top-Bar Mode Selector
-A compact mode selector lives in the top menu bar. Users pin the modes they want as toolbar buttons (persisted in `ModeSelectorPinned`). The dropdown shows the vehicle's configured `FLTMODE1`–`FLTMODE6` (`MODE1`–`MODE6` on Rover) in a "Configured modes" section on top, then the full "Flight modes" list with favorite stars; it refreshes on connect and whenever a flight-mode parameter is written rather than polling. The selector auto-sizes based on available space and hides when not connected.
+A compact mode selector lives in the top menu bar. Users pin the modes they want as toolbar buttons (persisted in `ModeSelectorPinned`); only the pins the connected vehicle has show, so a plane's FBWA stays off a copter's toolbar and comes back with the plane. The dropdown shows the vehicle's configured `FLTMODE1`–`FLTMODE6` (`MODE1`–`MODE6` on Rover) in a "Configured modes" section on top, whose remembered **Pin All** option puts them all first on the toolbar ahead of the user's own pins, then the full "Flight modes" list with favorite stars, sized to the list up to 640 px and scrolling where the window is shorter; it refreshes on connect and whenever a flight-mode parameter is written rather than polling. The selector auto-sizes based on available space and hides when not connected.
 
 ## Vehicle State Toolbar
 Arm/disarm indicator and a clickable GPS status popup with detailed real-time telemetry, with values that update live.
@@ -206,6 +212,7 @@ Sensible default Quick tab options on first run; reset and reset-all per-item; l
 The WPOverlay2 rendering pipeline with its MissionStyleEditor, `MissionSegmentizer` arcs, `GMapRoute` arrow modes, `GMapMarkerWP` marker types with centred text, the plane return-path command, and correct `DO_LAND_START` Z units.
 
 ## Fork Additions
+- **Terrain profile** along the foot of the PLAN map: the mission's altitude in the theme's accent over the ground under its route, with its length, peak and least clearance, places it goes below the terrain in red, and a readout and map marker for the point under the pointer; it folds to a slim bar, and takes the place of upstream's Map Tool → Elevation Graph dialog
 - **Center to Vehicle** button
 - **Clear all** in PLAN tab; clear-path from FlightData
 - 2D ↔ 3D map waypoint sync
@@ -225,6 +232,9 @@ The WPOverlay2 rendering pipeline with its MissionStyleEditor, `MissionSegmentiz
 - Custom SITL locations; Woodley default
 - Larger fonts on Sats/HDOP labels with new VDOP readout
 - Zoom buttons and scale bar on map
+- Smooth dragging on the DATA map, and an autopan that glides after the vehicle instead of jumping every few seconds
+- Animated zoom on the maps: the mouse wheel, zoom slider, zoom box and zoom buttons ease to the new level, about the centre of the view
+- An **(i)** button in the DATA map's corner toggles the legend of the vehicle's lines (Current Heading, Direction to WP, Target Heading, Ground Track)
 - Clean pixel-perfect bottom-bar layout
 - Auto-pan on parameter button swap
 
@@ -257,8 +267,9 @@ Built for air-gapped use. Opened from the **Offline Maps** button next to Find L
 
 - `SuspendLayout`/`ResumeLayout` and async loading on heavy tabs (Tuning, Params, Dashboard) to eliminate UI stalls
 - Faster, smoother docking/undocking of flight modes panel
+- The DATA map only keeps the no-fly zones near the view, so zooming and panning stay fast with the worldwide zone files loaded
 - Increased debouncing on 2D→3D map sync
-- Robust GStreamer start/stop handling
+- Robust video start/stop handling: stopped GStreamer and MJPEG video stays stopped, even when stopped while still connecting, and an unreachable MJPEG stream is retried once a second
 - Resilient QuickView state under churn
 
 ---
@@ -268,14 +279,16 @@ Built for air-gapped use. Opened from the **Offline Maps** button next to Find L
 Behaviour that differs from upstream because the fork fixed it:
 
 - The 3D map doesn't hit the intermittent `Destination array was not long enough` crash
+- Connecting or loading params doesn't crash when the progress dialog closes before it finishes
+- HUD text always draws the right characters; upstream's OpenGL HUD can show "FAILSAFE" as "FAI AFE" or an altitude as "SS"
 - SITL starts with home at the ground height of the chosen point, so terrain readings match ([#28](https://github.com/Titan-Dynamics/TitanPlanner/issues/28))
 - The Messages tab keeps updating on long flights, keeps your place when scrolled up, and has a right-click **Clear Messages** ([#23](https://github.com/Titan-Dynamics/TitanPlanner/issues/23))
 - Battery monitor calibration handles DroneCAN and other digital monitors: voltage Calc explains they are calibrated on the device, and current Calc scales `BATTx_CURR_MULT` ([#27](https://github.com/Titan-Dynamics/TitanPlanner/issues/27))
 - The EKF status window keeps working on long sessions instead of failing with a GDI+ error ([#31](https://github.com/Titan-Dynamics/TitanPlanner/issues/31))
-- Mission, fence and rally uploads don't send the vehicle an extra MISSION_ACK (upstream PR [#3705](https://github.com/ArduPilot/MissionPlanner/pull/3705))
-- SSH (terminal, SCP/SFTP log download, Solo tools) uses SSH.NET 2026, with current key exchanges and ciphers and the `ScpClient` security fixes; SkiaSharp packages aligned at 2.88.9 in this Chinese fork (upstream PR [#3729](https://github.com/ArduPilot/MissionPlanner/pull/3729))
-- Link quality counts reordered MAVLink packets (UDP over LTE, Starlink, VPNs) as received, so the HUD shows the real loss (upstream PR [#3807](https://github.com/ArduPilot/MissionPlanner/pull/3807))
-- The RF Map outline (Ctrl+W) shows the real line-of-sight range at the aircraft's current height (upstream PR [#3825](https://github.com/ArduPilot/MissionPlanner/pull/3825))
+- SSH (terminal, SCP/SFTP log download, Solo tools) uses SSH.NET 2026, with current key exchanges and ciphers and the `ScpClient` security fixes (upstream PR [#3729](https://github.com/ArduPilot/MissionPlanner/pull/3729))
+- The Actions tab's **Parachute_Release** releases the parachute; upstream's Do_Parachute sends it as Disable, which turns the parachute off until a reboot (upstream PR [#3854](https://github.com/ArduPilot/MissionPlanner/pull/3854))
+- The Actions tab's commands send the reserved param3 as 0 (Preflight_Calibration still sets it); upstream sends 1, which an autopilot strict about reserved params refuses and Loiter_Unlim reads as a 1 m radius (upstream PR [#3853](https://github.com/ArduPilot/MissionPlanner/pull/3853))
+- The initial parameters calculator's after-flight advice matches the vehicle: on Copter 4.7 `PSC_D_ACC_P` / `PSC_D_ACC_I` at 0.1 / 0.2 × `MOT_THST_HOVER` (upstream gives the older gains' values, ten times too high), and the `Q_` names on QuadPlanes (upstream PR [#3829](https://github.com/ArduPilot/MissionPlanner/pull/3829))
 - ADS-B from adsb.lol works (it requires a User-Agent) and stays within its rate limit
 - Elevation (SRTM) lookups are thread-safe and never block the UI behind a slow load
 - The Full Parameter List opens without crashing, and Flight Modes populates its `RCx_OPTION` lists on load
@@ -283,6 +296,7 @@ Behaviour that differs from upstream because the fork fixed it:
 - Dashboard items repaint after context-menu edits, the panel never outgrows its tab, and the default layout has no duplicate "distance to home"
 - The 3D map's nav-bearing line points at the actual waypoint, and the PLAN and DATA maps stay in sync
 - Aborting a script when none is running is a no-op rather than a crash
+- With Bluetooth on, the scan for Bluetooth telemetry radios doesn't crash the app as it finishes
 - Servo Output's function dropdown shows the real value for REAL32-stored integer params such as `SERVOn_FUNCTION`; upstream truncates and can show the option below (Gripper for LandingGear)
 - Firmware flashing and the installer/release zip work on current .NET builds
 - Builds cleanly in Visual Studio 2022 and with `dotnet build` / `dotnet test`
@@ -320,17 +334,21 @@ Settings, logs, map tiles, offline maps, elevation data and caches live in `Prog
 - **Reboot Vehicle** button in the Actions tab; global **`Ctrl+R`** shortcut to reboot autopilot
 - "Don't show again" option on the param-missing dialog, info dialogs, the failsafe-mode-change warning, and the ground-station-log dialog
 - Param write toast notifications
-- Actions tab laid out as a flow layout with the payload controls alongside
+- The mouse wheel scrolls the page past a dropdown instead of changing it; an open dropdown's list still scrolls
+- Actions tab laid out as a flow layout with the payload controls alongside, an **Aux Functions** box (four rows that each run a chosen aux function Low / Mid / High) and **Servos** and **Relays** boxes side by side below them, in place of upstream's Aux Function and Servo/Relay tabs
 - Revamped Telemetry Log tab
 - Logs tab combining Dataflash + Telemetry views
+- **Open Log Folder** button in the Log Downloader
+- **Copy** button on the error dialog: puts the error and the build version on the clipboard for pasting into a report
 - Custom upgrade-path logic so existing original Mission Planner users transition cleanly to the Titan Dynamics edition (theme, default tab visibility, settings migration)
 - No console window behind the main exe
+- The top menu highlights the screen being shown, including after SITL starts and on connect
 
 ---
 
 # Upstream Base
 
-The fork tracks `upstream/master` and currently includes upstream as of 2026-10-16. Where the two conflict, the fork keeps its own UI (HUD layout, Actions tab, Motor Setup, Battery Monitor, Radio Calibration, themed tabs) and takes upstream's fixes. Upstream capabilities in this build that users may notice:
+The fork tracks `upstream/master` and currently includes upstream as of 2026-10-25. Where the two conflict, the fork keeps its own UI (HUD layout, Actions tab, Motor Setup, Battery Monitor, Radio Calibration, themed tabs) and takes upstream's fixes. Upstream capabilities in this build that users may notice:
 
 - 32-bit MAVLink system IDs everywhere (GCS id, vehicle lists, map markers)
 - Plugins can add actions to the Actions tab dropdown and draw on the HUD (`OnCustomPaint`)
@@ -340,3 +358,12 @@ The fork tracks `upstream/master` and currently includes upstream as of 2026-10-
 - Packaged Linux builds (`Linux/build.sh`, `run.sh`) and a touch-friendly main menu on Linux
 - The WPOverlay2 mission pipeline, `MissionSegmentizer` arcs, and `ThemeManager` theming of ListBox/PropertyGrid
 - Correct behaviour on Turkish-locale systems for `.BIN` log detection, KMZ export and mode changes by name; MSI requires .NET Framework 4.7.2
+- Link quality counts reordered MAVLink packets (UDP over LTE, Starlink, VPNs) as received, so the HUD shows the real loss
+- The RF Map outline (Ctrl+W) shows the real line-of-sight range at the aircraft's current height
+- Mission, fence and rally uploads don't send the vehicle an extra MISSION_ACK
+- A WinForms firmware picker with filters for platform, vehicle type, release and version
+- MAVLink mirrors (MAVLink Output) can be added and stopped safely while connected, and a TCP listener accepts a new client without crashing
+- Saved POIs load once, without duplicates, and are never overwritten by a failed read
+- tlog playback selects the vehicle rather than the recording GCS; the PLAN home box shows altitude in display units
+- COM port lists survive misbehaving Bluetooth drivers; signed driver for Pixhawk 6C
+- SkiaSharp 3 on the desktop and faster drawing on Linux/Mono; Altitude Angel is removed

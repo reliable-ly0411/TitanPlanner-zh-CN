@@ -8,6 +8,12 @@ namespace MissionPlanner.GCSViews.ConfigurationView
 {
     public partial class ConfigRadioOutput : MyUserControl, IActivate, IDeactivate
     {
+        // changes are sent once editing pauses for this long, so stepping a value writes it once
+        private const int WriteDelayMs = 250;
+        // PWM range the min/trim/max boxes and trim slider allow
+        private const int ServoMin = 500;
+        private const int ServoMax = 2500;
+
         public ConfigRadioOutput()
         {
             InitializeComponent();
@@ -55,8 +61,8 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             };
             var bAR1 = new HorizontalProgressBar2()
             {
-                Minimum = 800,
-                Maximum = 2200,
+                Minimum = 500,
+                Maximum = 2500,
                 Value = 1500,
                 DrawLabel = true,
                 Name = "BAR" + servono,
@@ -68,6 +74,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             var rev1 = new MissionPlanner.Controls.MavlinkCheckBox()
             {
                 WriteInBackground = true,
+                BackgroundWriteDelay = WriteDelayMs,
                 Enabled = false,
                 AutoSize = false,
                 Height = controlHeight,
@@ -79,6 +86,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             var func1 = new MavlinkComboBox()
             {
                 WriteInBackground = true,
+                BackgroundWriteDelay = WriteDelayMs,
                 Enabled = false,
                 DropDownStyle = ComboBoxStyle.DropDownList,
                 Width = 160,
@@ -89,8 +97,9 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             var min1 = new MavlinkNumericUpDown()
             {
                 WriteInBackground = true,
-                Minimum = 800,
-                Maximum = 2200,
+                BackgroundWriteDelay = WriteDelayMs,
+                Minimum = 500,
+                Maximum = 2500,
                 Value = 1500,
                 Enabled = false,
                 Width = 50,
@@ -100,8 +109,8 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             };
             var trimSlider = new TrackBar()
             {
-                Minimum = 800,
-                Maximum = 2200,
+                Minimum = 500,
+                Maximum = 2500,
                 Value = 1500,
                 Width = 420,
                 Height = controlHeight,
@@ -116,8 +125,9 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             var trim1 = new MavlinkNumericUpDown()
             {
                 WriteInBackground = true,
-                Minimum = 800,
-                Maximum = 2200,
+                BackgroundWriteDelay = WriteDelayMs,
+                Minimum = 500,
+                Maximum = 2500,
                 Value = 1500,
                 Enabled = false,
                 Width = 50,
@@ -128,8 +138,9 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             var max1 = new MavlinkNumericUpDown()
             {
                 WriteInBackground = true,
-                Minimum = 800,
-                Maximum = 2200,
+                BackgroundWriteDelay = WriteDelayMs,
+                Minimum = 500,
+                Maximum = 2500,
                 Value = 1500,
                 Enabled = false,
                 Width = 50,
@@ -140,7 +151,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             var minMaxFromTrim1 = new NumericUpDown()
             {
                 Minimum = 0,
-                Maximum = 700,
+                Maximum = 1000,
                 Value = 0,
                 Width = 50,
                 Height = controlHeight,
@@ -183,11 +194,16 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             rev1.setup(1, 0, servo + "_REVERSED", MainV2.comPort.MAV.param);
             func1.setup(ParameterMetaDataRepository.GetParameterOptionsInt(servo + "_FUNCTION",
                     MainV2.comPort.MAV.cs.firmware.ToString()), servo + "_FUNCTION", MainV2.comPort.MAV.param);
-            min1.setup(800, 2200, 1, 1, servo + "_MIN", MainV2.comPort.MAV.param);
-            trim1.setup(800, 2200, 1, 1, servo + "_TRIM", MainV2.comPort.MAV.param);
-            // step like the trim slider; set after setup, which takes the increment from the param metadata
-            trim1.Increment = 10;
-            max1.setup(800, 2200, 1, 1, servo + "_MAX", MainV2.comPort.MAV.param);
+            min1.setup(ServoMin, ServoMax, 1, 1, servo + "_MIN", MainV2.comPort.MAV.param);
+            trim1.setup(ServoMin, ServoMax, 1, 1, servo + "_TRIM", MainV2.comPort.MAV.param);
+            max1.setup(ServoMin, ServoMax, 1, 1, servo + "_MAX", MainV2.comPort.MAV.param);
+            // range and step like the trim slider; set after setup, which takes them from the param metadata
+            foreach (var pwm in new[] { min1, trim1, max1 })
+            {
+                pwm.Minimum = Math.Min(ServoMin, pwm.Value);
+                pwm.Maximum = Math.Max(ServoMax, pwm.Value);
+                pwm.Increment = 10;
+            }
 
             // Enable slider if trim parameter exists
             if (MainV2.comPort.MAV.param.ContainsKey(servo + "_TRIM"))
@@ -396,8 +412,8 @@ namespace MissionPlanner.GCSViews.ConfigurationView
 
         private static decimal ClampServoValue(decimal value)
         {
-            if (value < 800) return 800;
-            if (value > 2200) return 2200;
+            if (value < ServoMin) return ServoMin;
+            if (value > ServoMax) return ServoMax;
             return value;
         }
 
@@ -431,10 +447,10 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                 return;
 
             if (MainV2.comPort.MAV.param.ContainsKey(minParam))
-                ParamWriteQueue.Write(minParam, (double)newMin);
+                ParamWriteQueue.Write(minParam, (double)newMin, null, WriteDelayMs);
 
             if (MainV2.comPort.MAV.param.ContainsKey(maxParam))
-                ParamWriteQueue.Write(maxParam, (double)newMax);
+                ParamWriteQueue.Write(maxParam, (double)newMax, null, WriteDelayMs);
         }
 
         public void Activate()
@@ -445,6 +461,8 @@ namespace MissionPlanner.GCSViews.ConfigurationView
         public void Deactivate()
         {
             timer1.Stop();
+            // leaving the page sends what is still waiting out the write delay
+            ParamWriteQueue.Flush();
         }
 
 

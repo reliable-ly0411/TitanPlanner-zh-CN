@@ -600,4 +600,20 @@ Mission Planner将会在30秒内寻找控制板。</value>
 在 ArduPlane 中，零高度可能表示实际零高度，也可能表示保持当前高度。WAYPOINT 命令通常会使用零高度；LOITER 命令通常会将其解释为“使用当前高度”，但仅当高度坐标系为“相对”时如此。还可能有其他例外，未来版本也可能改变。
 
 只有在完全了解当前情况的实际行为时才设为零（请使用仿真器确认）。[link;https://ardupilot.org/plane/docs/common-mavlink-mission-command-messages-mav_cmd.html;命令文档]</value></data>
+  <data name="FirmwareSelectionVersion" xml:space="preserve"><value>版本</value></data>
+  <data name="FirmwareSelectionFile" xml:space="preserve"><value>文件</value></data>
+  <data name="FirmwareSelectionTitle" xml:space="preserve"><value>选择固件</value></data>
+  <data name="FirmwareSelectionPrompt" xml:space="preserve"><value>多个固件与此飞控匹配。请使用筛选条件缩小范围，选择所需固件。</value></data>
+  <data name="FirmwareSelectionAny" xml:space="preserve"><value>不限</value></data>
+  <data name="FirmwareSelectionTooMany" xml:space="preserve"><value>匹配项过多（{0}），请增加筛选条件</value></data>
+  <data name="FirmwareSelectionNoMatches" xml:space="preserve"><value>没有符合当前筛选条件的固件</value></data>
+  <data name="FirmwareSelectionUpload" xml:space="preserve"><value>上传固件</value></data>
+  <data name="FirmwareSelectionVehicleType" xml:space="preserve"><value>机型</value></data>
+  <data name="FirmwareSelectionReleaseType" xml:space="preserve"><value>发布类型</value></data>
+  <data name="FirmwareSelectionPlatform" xml:space="preserve"><value>平台</value></data>
+  <data name="FirmwareSelectionFormat" xml:space="preserve"><value>格式</value></data>
+  <data name="FirmwareSelectionUsbId" xml:space="preserve"><value>USB 标识</value></data>
+  <data name="FirmwareSelectionBoardId" xml:space="preserve"><value>板卡 ID</value></data>
+  <data name="FirmwareSelectionBootloaderId" xml:space="preserve"><value>引导程序 ID</value></data>
+  <data name="FirmwareSelectionPickFile" xml:space="preserve"><value>请选择要下载并上传的文件（.apj）</value></data>
 </root>

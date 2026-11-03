@@ -28,6 +28,10 @@ internal static class Program
             Equal("是", UiText.Translate("Yes"));
             Equal("否", UiText.Translate("No"));
             Equal("电机 4", UiText.Format($"Motor {4}"));
+            Equal("地形剖面", UiText.Translate("TERRAIN PROFILE"));
+            Equal("12 m，位于航程 30 m 处", UiText.Format($"{"12 m"} at {"30 m"}"));
+            Equal("复制", UiText.Translate("Copy"));
+            Equal("已复制", UiText.Translate("Copied"));
             Equal("航迹方向：12.3°", UiText.Format($"Course: {12.34:0.0}°"));
             Equal("设置 MOT_SPIN_ARM 失败： ", UiText.Format($"Failed to set {"MOT_SPIN_ARM"}: "));
             Equal("MOT_SPIN_ARM", UiText.Translate("MOT_SPIN_ARM"));
@@ -47,6 +51,8 @@ internal static class Program
             Equal("3D Map Settings", UiText.Translate("3D Map Settings"));
             Equal("Clear Messages", UiText.Translate("Clear Messages"));
             Equal("Motor 4", UiText.Format($"Motor {4}"));
+            Equal("12 m at 30 m", UiText.Format($"{"12 m"} at {"30 m"}"));
+            Equal("TERRAIN PROFILE", UiText.Translate("TERRAIN PROFILE"));
         }
         CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo("zh-CN");
         // 逐条读取真实编译资源，检查换行、大小写键、中文编码及资源覆盖。

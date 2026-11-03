@@ -22,7 +22,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
         private List<CultureInfo> _languages;
         private bool startup;
         static temp temp;
-        private FlowLayoutPanel layoutRoot;
+        private GroupColumnsPanel layoutRoot;
         private readonly CheckBox CHK_startFullscreen;
 
         public ConfigPlanner()
@@ -78,17 +78,14 @@ namespace MissionPlanner.GCSViews.ConfigurationView
         {
             SuspendLayout();
 
-            layoutRoot = new FlowLayoutPanel
+            layoutRoot = new GroupColumnsPanel
             {
                 Name = "layoutRoot",
                 Dock = DockStyle.Fill,
                 AutoScroll = true,
-                FlowDirection = FlowDirection.LeftToRight,
-                WrapContents = true,
                 Padding = new Padding(10),
                 Margin = new Padding(0)
             };
-            layoutRoot.SizeChanged += (s, e) => ResizeGroupBoxes();
 
             layoutRoot.Controls.Add(CreateConnectivityGroup());
             layoutRoot.Controls.Add(CreateLayoutAndAppearanceGroup());
@@ -103,35 +100,58 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             Controls.Clear();
             Controls.Add(layoutRoot);
 
-            ResizeGroupBoxes();
-
             ResumeLayout(true);
         }
 
-        private void ResizeGroupBoxes()
+        /// <summary>
+        /// Lays the setting groups out in equal-width columns, putting each in turn under the shortest column, so
+        /// boxes of different heights pack without gaps.
+        /// </summary>
+        private class GroupColumnsPanel : Panel
         {
-            if (layoutRoot == null)
+            private const int MinColumnWidth = 400;
+            private const int Gap = 10;
+
+            protected override void OnLayout(LayoutEventArgs levent)
             {
-                return;
-            }
+                var groups = Controls.Cast<Control>().Where(c => c.Visible).ToList();
+                int width = ClientSize.Width - Padding.Horizontal;
+                if (groups.Count == 0 || width <= 0)
+                {
+                    base.OnLayout(levent);
+                    return;
+                }
 
-            var width = layoutRoot.ClientSize.Width - layoutRoot.Padding.Horizontal;
-            if (width <= 0)
-                return;
+                int minColumnWidth = (int)Math.Ceiling(MinColumnWidth * DeviceDpi / 96.0);
+                int columns = Math.Max(1, Math.Min(3, Math.Min(groups.Count, (width + Gap) / (minColumnWidth + Gap))));
+                int columnWidth = Math.Max(1, (width - (columns - 1) * Gap) / columns);
 
-            var minGroupWidth = (int)Math.Ceiling(380 * layoutRoot.DeviceDpi / 96.0);
-            var margin = 10;
-            var columns = Math.Max(1, Math.Min(3, width / (minGroupWidth + margin)));
-            var columnWidth = Math.Max(1, width / columns - margin);
+                // the groups size their height to their content; pin their width to the column's
+                SuspendLayout();
+                foreach (var group in groups)
+                {
+                    group.MinimumSize = Size.Empty;
+                    group.MaximumSize = new Size(columnWidth, 0);
+                    group.MinimumSize = new Size(columnWidth, 0);
+                    group.Width = columnWidth;
+                }
+                ResumeLayout(false);
 
-            foreach (Control child in layoutRoot.Controls)
-            {
-                // Constrain AutoSize groups to their column, including both margins.
-                // On narrow windows allow a single column below the preferred width.
-                child.MinimumSize = Size.Empty;
-                child.MaximumSize = new Size(columnWidth, 0);
-                child.MinimumSize = new Size(columnWidth, 0);
-                child.Width = columnWidth;
+                base.OnLayout(levent);
+
+                var bottoms = new int[columns];
+                var origin = DisplayRectangle.Location;
+                SuspendLayout();
+                foreach (var group in groups)
+                {
+                    int column = Array.IndexOf(bottoms, bottoms.Min());
+                    group.Location = new Point(origin.X + column * (columnWidth + Gap), origin.Y + bottoms[column]);
+                    bottoms[column] += group.Height + Gap;
+                }
+                ResumeLayout(false);
+
+                // the scroll range follows the groups' new places
+                AdjustFormScrollbars(AutoScroll);
             }
         }
 
@@ -297,6 +317,11 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             table.Controls.Add(audioFlow, 0, 2);
 
             group.Controls.Add(table);
+
+            // In a one-column table the flow sets the column's width, so it would be measured as one row and the
+            // group sized too short for the rows it wraps into; capping it at the group's width measures it wrapped.
+            group.SizeChanged += (s, e) => speechFlow.MaximumSize = new Size(
+                Math.Max(1, group.DisplayRectangle.Width - table.Padding.Horizontal - speechFlow.Margin.Horizontal), 0);
             return group;
         }
 
@@ -526,6 +551,8 @@ namespace MissionPlanner.GCSViews.ConfigurationView
 
             txt_log_dir.Width = 260;
             txt_log_dir.MaximumSize = new Size(500, txt_log_dir.Height);
+            // stretch with the column rather than run into the Browse button when the group is narrower
+            txt_log_dir.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             table.Controls.Add(label3, 0, 7);
             table.Controls.Add(txt_log_dir, 1, 7);
             table.Controls.Add(BUT_logdirbrowse, 2, 7);
