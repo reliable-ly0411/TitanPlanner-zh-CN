@@ -20,7 +20,11 @@ CONTROL_PATHS = ['.github/workflows', '.github/release_policy']
 
 
 def command(*args, cwd=None, env=None, data=None):
-    return subprocess.check_output(args, cwd=cwd, env=env, input=data, text=True).strip()
+    # Text-mode stdin translates LF to CRLF on Windows, changing commit-tree
+    # messages (and hash-object input) even when the source tree is identical.
+    # Git object bytes must be independent of the host's newline and encoding.
+    payload = data.encode('utf-8') if data is not None else None
+    return subprocess.check_output(args, cwd=cwd, env=env, input=payload).decode('utf-8').strip()
 
 
 def git(*args, **kwargs):

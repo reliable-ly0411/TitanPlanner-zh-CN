@@ -50,9 +50,15 @@ class WorkflowPolicyTests(unittest.TestCase):
             with self.subTest(name=name):
                 self.assertIn('workflow_call:',text)
                 self.assertIn('RELEASE_MANIFEST: ${{ inputs.release_manifest }}',text)
-                self.assertIn('python3 .github/release_policy/policy.py materialize',text)
+                self.assertIn('POLICY_SHA: ${{ github.workflow_sha }}',text)
+                self.assertIn('git show "$POLICY_SHA:.github/release_policy/policy.py"',text)
+                self.assertIn('python3 "$RUNNER_TEMP/release-policy.py" materialize',text)
                 self.assertIn('ref: ${{ inputs.source_ref || github.sha }}',text)
                 self.assertIn('fetch-depth: 0',text)
+    def test_windows_runs_source_identity_regressions_without_native_build(self):
+        text=workflow('policy-checks.yml')
+        self.assertIn('runs-on: windows-2022',text)
+        self.assertIn("python -m unittest discover -s .github/release_policy -p 'test_policy.py' -v",text)
     def test_daily_sync_default_manual_sync_and_no_cancel(self):
         text=workflow('sync-upstream.yml')
         self.assertIn('default: sync',text)
