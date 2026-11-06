@@ -3,6 +3,7 @@ import importlib.util
 import os
 from pathlib import Path
 import subprocess
+import sys
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -16,6 +17,15 @@ SHA = 'a' * 40
 def release(rid=1, tag='v1.0.0', **kwargs):
     return dict(id=rid, tag_name=tag, draft=False, prerelease=False,
                 published_at='2026-10-21T00:00:00Z', **kwargs)
+
+
+class CommandTests(unittest.TestCase):
+    def test_stdin_preserves_utf8_and_lf_bytes_on_every_platform(self):
+        data = 'Release candidate v1.0.0\nDownstream baseline: 中文\n'
+        digest = p.command(sys.executable, '-c',
+                           'import hashlib, sys; print(hashlib.sha256(sys.stdin.buffer.read()).hexdigest())',
+                           data=data)
+        self.assertEqual(digest, p.hashlib.sha256(data.encode('utf-8')).hexdigest())
 
 
 class SelectionTests(unittest.TestCase):
@@ -175,6 +185,22 @@ class MaterializationTests(unittest.TestCase):
             self.assertTrue((self.repo / '.github/workflows/policy.txt').exists())
             self.manifest['source_sha'] = sha
             self.assertEqual(p.materialize(self.manifest, self.repo, update_submodules=False), sha)
+
+    def test_commit_message_matches_canonical_bytes_not_native_newlines(self):
+        with patch.object(p, 'git', self.local_fetch):
+            sha = p.materialize(self.manifest, self.repo, update_submodules=False)
+        raw = subprocess.check_output(['git', 'cat-file', 'commit', sha], cwd=self.repo)
+        headers, message = raw.split(b'\n\n', 1)
+        expected = ('Release candidate v1.0.0\nDownstream baseline: '
+                    + self.manifest['downstream_sha'] + '\n').encode('utf-8')
+        self.assertEqual(message, expected)
+        # A manifest pinned by another OS must be accepted without changing its SHA.
+        canonical = subprocess.check_output(['git', 'hash-object', '-t', 'commit', '--stdin'],
+                                            cwd=self.repo, input=headers + b'\n\n' + expected)
+        self.manifest['source_sha'] = canonical.decode('ascii').strip()
+        with patch.object(p, 'git', self.local_fetch):
+            self.assertEqual(p.materialize(self.manifest, self.repo, update_submodules=False),
+                             self.manifest['source_sha'])
 
     def test_patch_digest_tampering_is_rejected(self):
         self.manifest['patch_sha256'] = '0' * 64

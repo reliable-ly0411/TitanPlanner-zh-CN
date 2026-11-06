@@ -2,6 +2,10 @@
 
 Merged Titan-Dynamics/TitanPlanner master through `08602f654562`, preserving both Chinese variants, the fork's dependency fixes, Windows validation, and Chinese ZIP/MSI packaging. Ported enhanced Chinese display strings to the replacement 3D map settings and reconciled the new offline-map and directory-deletion flows. The inherited 32-bit MAVLink and terrain tests run with the fork's offline Windows regression suite. The Linux build retains both GMap drawing targets to separate shim-based library types from desktop GDI+, and uses the fork's patched Skia native version. Re-encoded all seven application icon frames losslessly as uncompressed DIBs with transparency masks so Mono can load the same Titan artwork. The splash screen references that shared icon instead of retaining a duplicate PNG-compressed copy. The Linux runtime smoke test now exercises the Titan themed action tabs and setpoint controls under enhanced Chinese with an explicitly selected map in its isolated profile. Dashboard defaults, saved arrangements and reset operations use explicit grid cells so Mono does not read uncomputed layout positions while layout is suspended. The runtime test verifies all 15 default cells plus save/reload/reset behavior. Property-grid theme colors now detect the optional category-splitter API at runtime, retaining Windows styling while allowing Mono startup.
 
+## Reproducible release candidates
+
+Windows and Linux validate the same pinned release-source identity. Candidate retries preserve the original source manifest while using the run's fixed validation policy. Automatic publication remains separately gated.
+
 # Mission Planner - Titan Dynamics Edition - Features
 
 What this fork adds on top of upstream [ArduPilot/MissionPlanner](https://github.com/ArduPilot/MissionPlanner), by area. It describes how the fork behaves today, not the history of how it got there; for that, use the git log. (`ChangeLog.txt` is upstream's own log.)
