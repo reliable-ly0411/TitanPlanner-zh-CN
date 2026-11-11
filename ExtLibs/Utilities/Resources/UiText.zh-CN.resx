@@ -1611,6 +1611,10 @@
     <value>关闭</value>
     <comment>"Close"</comment>
   </data>
+  <data name="aa17fb1cf283b88c59263959f27421bd76d33833f1e91478adfdb14327fe58fc" xml:space="preserve">
+    <value>云层密度：</value>
+    <comment>"Cloud Density:"</comment>
+  </data>
   <data name="f82a0a16b642f8f358e1f467cbdeb5417ae3bcb8b893e8d0b025af95233d8d94" xml:space="preserve">
     <value>云层密度：</value>
     <comment>"Cloud density:"</comment>
@@ -1671,6 +1675,10 @@
   <data name="add442752471c69987a533e5fae978ed600b69917ba756d0177461a49226a589" xml:space="preserve">
     <value>提交参数</value>
     <comment>"Commit Params"</comment>
+  </data>
+  <data name="7d804a42d8904ac2af111504c933d0a72e8a3bad5cbb66991fa24f2de9922dc8" xml:space="preserve">
+    <value>正在比较当前构建与发布版本…</value>
+    <comment>"Comparing this build with the releases..."</comment>
   </data>
   <data name="571527339d0e3e34a6fd5b9c1d776218573a85cc984efb94d0631d47b8aa1d76" xml:space="preserve">
     <value>比较</value>
@@ -1866,6 +1874,10 @@ Ctrl+O 从文件加载</value>
   <data name="1d870cd2197a70b627ea667e6030586407cdb1c939c41419a329823eb2d74a7a" xml:space="preserve">
     <value>无法与电台通信，请尝试给电台重新上电。</value>
     <comment>"Couldn't communicate with modem.  Try power-cycling modem."</comment>
+  </data>
+  <data name="cf9a780702cce6f1d3fe12f1e881cef2aeb06e2b56041988e99dadf06d027b5d" xml:space="preserve">
+    <value>无法比较当前构建与发布版本。</value>
+    <comment>"Couldn't compare this build with the releases."</comment>
   </data>
   <data name="f38df760de993d66813c668c0b217a9da923e4c27264650e68646c534bd0a55f" xml:space="preserve">
     <value>无法联系 </value>
@@ -2078,6 +2090,10 @@ Ctrl+O 从文件加载</value>
   <data name="4617021b1a3faeb7c5abe67e917c29b703b91466fb534cc9dff1f8d05156cbcc" xml:space="preserve">
     <value>检测到的数据流</value>
     <comment>"Detected Streams"</comment>
+  </data>
+  <data name="5ac197f8103a9ea9627b36671ee28e15da18bbc21e7a6002c311ccee97a18e12" xml:space="preserve">
+    <value>检测中…</value>
+    <comment>"Detecting..."</comment>
   </data>
   <data name="8a553569b5db97419a99435eb1558ce8d1df98ab7dd3bbda3928cc1347065035" xml:space="preserve">
     <value>设备 ID</value>
@@ -2900,6 +2916,10 @@ Ctrl+O 从文件加载</value>
   <data name="15fde6edd95f7323f1edd158fc777082ea5bed5cced87eed157c7655a4704bbf" xml:space="preserve">
     <value>FFT 设置</value>
     <comment>"FFT Setup"</comment>
+  </data>
+  <data name="21cb9b1261893566ce26c7f128b24fc9f5ff90432b99028e7f4d6945a7869b63" xml:space="preserve">
+    <value>第一人称模式</value>
+    <comment>"FPV Mode"</comment>
   </data>
   <data name="3dab06155183a707fb67898eab37ffd8107dc9534502aad95ed927950456c646" xml:space="preserve">
     <value>第一人称视角（相机位于飞行器处）</value>
@@ -4191,6 +4211,10 @@ Ctrl+O 从文件加载</value>
     <value>按键绑定冲突</value>
     <comment>"Key Binding Clash"</comment>
   </data>
+  <data name="59cdaa26dd9dcd4cbcded97a7b91029b396bcfdbfd927356facbeb163283a3df" xml:space="preserve">
+    <value>键盘快捷键</value>
+    <comment>"Keyboard Shortcuts"</comment>
+  </data>
   <data name="aff22143c746e43f9ca144df7425ea15a2bb4fc09dc107ee5c7b7e47d0aaefac" xml:space="preserve">
     <value>剩余公里数</value>
     <comment>"Kmleft"</comment>
@@ -4632,6 +4656,10 @@ Ctrl+O 从文件加载</value>
     <value>恢复参数后将罗盘标记为已校准</value>
     <comment>"Mark mag as cal'd after param restore"</comment>
   </data>
+  <data name="b6d841ededa3fcdac61c7ec781dd2137a9e6940c8d28e44a7566bf079f08d025" xml:space="preserve">
+    <value>标记大小：</value>
+    <comment>"Marker Size:"</comment>
+  </data>
   <data name="4e8d1a7260782cb2cd2eafb4492345c19bf6a29d222ee7e8675e0f3cb25f4290" xml:space="preserve">
     <value>标记</value>
     <comment>"Markers"</comment>
@@ -4861,6 +4889,14 @@ Ctrl+O 从文件加载</value>
   <data name="5e2c614c23f02239bc03c6c04fcb681950f9e72bf8fdff6be79c79841cbb10c0" xml:space="preserve">
     <value>型号</value>
     <comment>"Model"</comment>
+  </data>
+  <data name="c7c0742166b954ff054c9087845611f0df8592c0e5dce3a2ef2c86d019742742" xml:space="preserve">
+    <value>模型颜色：</value>
+    <comment>"Model Color:"</comment>
+  </data>
+  <data name="368480b59dbf56a61204d4da49c2e07e2058245d4a25781de86517a9fbd2a15a" xml:space="preserve">
+    <value>模型比例（米）：</value>
+    <comment>"Model Scale (m):"</comment>
   </data>
   <data name="e8ce5dcaf408935ff76747226d2e8bee4319a2f593c1d7a838115e56183d1f37" xml:space="preserve">
     <value>已修改</value>
@@ -5457,6 +5493,10 @@ Mission Planner 需要收到 2 个有效心跳包后才会连接。</value>
   <data name="9e250a5c616990a3e9b1fd72edac38f531c640e7cefd5544ce60cd70a1b11286" xml:space="preserve">
     <value>输出 Cursor-on-Target 数据</value>
     <comment>"Outputs Cursor-on-Target"</comment>
+  </data>
+  <data name="2a612b761a20eb0aaaa05ab56c7396007d69bf66091e660073aaca1a8e70fc35" xml:space="preserve">
+    <value>围栏外</value>
+    <comment>"Outside fence"</comment>
   </data>
   <data name="b87746d409a3f8112ab4002a047279c80f1d93dc072ff0e5e25e44594d0521be" xml:space="preserve">
     <value>延伸段 [m]</value>
@@ -6206,6 +6246,10 @@ ffdshow
     <value>集结点</value>
     <comment>"Rally Point"</comment>
   </data>
+  <data name="f8f9cd7a2cdb952a03d8e1f03d7a8c103256f9768eaa8d1e4eb46e8b17281a57" xml:space="preserve">
+    <value>集结点</value>
+    <comment>"Rally points"</comment>
+  </data>
   <data name="eb8027371ca325be6ea6fb82d0a319c7fd7e8c153adafad1e9499060bbd9ad33" xml:space="preserve">
     <value>集结点：没有可下载的内容</value>
     <comment>"Rally points - Nothing to download"</comment>
@@ -6573,6 +6617,10 @@ gps_point：跟踪单个地面点</value>
   <data name="57f949ea487271a9b4cc59b704c6613fa116a6a7a778293c7edf1f060586ef11" xml:space="preserve">
     <value>在低性能计算机上运行</value>
     <comment>"Runing on a slow computer"</comment>
+  </data>
+  <data name="59598999e35f744b10573aba810bcd2e8b5080acd562c22961040625231ec731" xml:space="preserve">
+    <value>正在运行中文分支 {0}。请到本分支发布页面检查更新。</value>
+    <comment>"Running Chinese fork {0}. Check this fork’s Releases for updates."</comment>
   </data>
   <data name="802868b4f1cea84991a0f7f5625b8a21fd431e9fee8f2e90a7ca15f2466fdf6f" xml:space="preserve">
     <value>加速至工作转速（秒）</value>
@@ -7137,6 +7185,10 @@ gps_point：跟踪单个地面点</value>
     <value>显示比例尺</value>
     <comment>"Show Scale"</comment>
   </data>
+  <data name="2150d8df37e489573fb8f0f19ef89d2eda2ba4b49b3beb36333e5096a99a6dc0" xml:space="preserve">
+    <value>显示全部</value>
+    <comment>"Show all"</comment>
+  </data>
   <data name="8d9c2a0e39f9457ee8bdbaf5ac0f517e72c6a62fa37af41ef1331e5a1ec8d22a" xml:space="preserve">
     <value>在地图上用额外图标显示您的当前位置。</value>
     <comment>"Show an extra icon on the map of your current location."</comment>
@@ -7196,6 +7248,10 @@ gps_point：跟踪单个地面点</value>
   <data name="4ba4f150a1a1c36107d3dccc6ca9e53484f9fe9b3bb308edff1bb1df2ad23e5e" xml:space="preserve">
     <value>智能分配</value>
     <comment>"Smart Assign"</comment>
+  </data>
+  <data name="89d04319e6975d913eb88febec96e0e7adc1a8324688251b324641437397f1c0" xml:space="preserve">
+    <value>平滑运动</value>
+    <comment>"Smooth Movement"</comment>
   </data>
   <data name="a50b6afa91df201afa6e0ae25cb0e0afadda2f0d57543197043653e4a048dce1" xml:space="preserve">
     <value>平滑移动</value>
@@ -7368,6 +7424,10 @@ gps_point：跟踪单个地面点</value>
   <data name="b4a7365740ef880b7e19c7ddba99950365af73b2346a235ba7cd6f1bf5f2c281" xml:space="preserve">
     <value>统计</value>
     <comment>"Stats"</comment>
+  </data>
+  <data name="3543a01eb0469db2d05ee269901792410282e194706537de894a53aad1174afc" xml:space="preserve">
+    <value>性能统计</value>
+    <comment>"Stats For Nerds"</comment>
   </data>
   <data name="15b3495efdddb104b432269418c714b0cec508412cff233cfe4ebd5b2c6062b9" xml:space="preserve">
     <value>性能统计</value>

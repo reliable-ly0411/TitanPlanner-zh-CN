@@ -59,6 +59,8 @@ No Russian-localized HUD variant and no time readout; the CPU message and link s
 ## Real-Time Vehicle Rendering
 The connected vehicle renders in 3D with default STL models per MAV type (plane, quadplane, copter, rover, boat, sub, tricopter, etc.) in correct colours, over terrain drawn out to just past the horizon (30–150 km depending on altitude). The model is uploaded to the GPU once and lit in a shader.
 
+With several vehicles connected, every one is drawn with its own model, the ones not selected at half opacity as on the 2D map, each with a locating beacon (rings that grow out to the size of the waypoint markers and fade) and its system ID just above it, so they stand out from far off; selecting another puts the camera straight behind it, with its trail already recorded.
+
 ## Terrain Streaming Engine
 Terrain streams Google Earth style:
 - **Screen-space level of detail.** A tile quadtree is refined until each imagery texel is about a pixel on screen, up to zoom 24 within 100 m of the ground, 22 up to 500 m and 20 above, so detail follows what the camera actually sees; there is no zoom setting to manage.
@@ -70,18 +72,18 @@ Terrain streams Google Earth style:
 - **No reloads while flying.** Tiles keep their own UTM origins, so moving the scene origin never discards loaded terrain.
 - **Light when hidden, quick to show.** Hiding the 3D map frees its terrain and elevation data so RAM drops back, while the view itself stays ready, so showing it again is near-instant. Elevation lookups never block the UI, and the vehicle model loads in the background.
 - **Idle rendering.** Full frame rate only while something changes (connected vehicle, terrain streaming, markers, ADS-B, input, the 2D map moving, or the stats panel open); otherwise one frame a second.
-- **Stats for nerds** (3D map Settings, off by default): a colour-coded panel with FPS and a frame-time graph, terrain streaming internals (tiles, per-zoom histogram, GPU memory, queue, load rate, failures, elevation status), the camera view and GPU info.
+- **Stats For Nerds** (3D map Settings, off by default): a colour-coded panel with FPS and a frame-time graph, terrain streaming internals (tiles, per-zoom histogram, GPU memory, queue, load rate, failures, elevation status), the camera view and GPU info.
 
 ## Camera & Visual Effects
-- **FPV mode** with smooth camera movement and pitch-matched heading lines
-- **HUD overlay** setting: the DATA tab's HUD, with its items and plugin drawings, over the 3D view without its sky and ground
-- **Clouds**: three drifting layers (cumulus, patchy mid-level cloud and high streaks) at least a kilometre above the vehicle, with cloudy and clear stretches, shaded from below, hidden behind high terrain and fading into the horizon; a **Cloud density** setting from 0 (none) to 100, default 50, sets how much of the sky they cover
+- **FPV mode** with smooth camera movement and pitch-matched heading lines; Alt-F swaps between FPV and the chase view
+- **HUD Overlay** setting: the DATA tab's HUD, with its items and plugin drawings, over the 3D view without its sky and ground
+- **Clouds**: three drifting layers (cumulus, patchy mid-level cloud and high streaks) at least a kilometre above the vehicle, with cloudy and clear stretches, shaded from below, hidden behind high terrain and fading into the horizon; a **Cloud Density** setting from 0 (none) to 100, default 50, sets how much of the sky they cover
 - **Orbital camera** mode
 - **Distance haze** that fades terrain into the sky's horizon colour before the edge of the loaded terrain, at every altitude
 - **Sky gradient** that follows the true horizon through pitch and roll
 - **Heading indicators** and dynamic render distance
 - **Trailing flight path** with Kalman-smoothed lines on all axes, curving into the vehicle along its velocity; render gated on stable telemetry
-- **Smooth movement** setting (on by default): the vehicle's position, altitude and attitude, its trail and ADS-B traffic are carried along between telemetry updates and filtered; off, everything is drawn from the raw telemetry. Disarmed, or when the position jumps more than 100 m, the vehicle and the view go straight to it instead of gliding across the map
+- **Smooth Movement** setting (on by default): the vehicle's position, altitude and attitude, its trail and ADS-B traffic are carried along between telemetry updates and filtered; off, everything is drawn from the raw telemetry. Disarmed, or when the position jumps more than 100 m, the vehicle and the view go straight to it instead of gliding across the map
 - **High-altitude rendering** improvements
 
 ## ADS-B in 3D
@@ -90,7 +92,9 @@ ADS-B traffic is rendered with proper depth testing and pass ordering so it corr
 ## Persistence & UX
 - Camera distance, height, and angle saved on close
 - Settings dialog overhaul with persistence and out-of-range guards, opened from a translucent gear icon in the top-left corner
-- Configurable marker size
+- Configurable **Marker Size**, for the waypoints and the other vehicles' beacons
+- Waypoint markers fade out as the vehicle comes within 61 m of them, gone at 15 m, rather than vanishing at once
+- A yellow dot marks the centre of each numbered waypoint marker
 - Reset button defaults aligned with settings defaults
 - 2D ↔ 3D map waypoint and position synchronization
 - Required-valid-GPS gate before vehicle tracking begins
@@ -109,7 +113,7 @@ Replaced the dated FlightData tab bar with a modern themed strip and refreshed i
 ## New / Re-purposed Tabs
 - **Params tab** in FlightData and a Params panel co-located on the map
 - **Tuning tab** in FlightData (vehicle-aware: plane/copter/rover)
-- **Video tab** in place of the HUD's right-click Video menu: one source at a time (capture device, RTSP stream, MJPEG stream or GStreamer pipeline) with one Start/Stop button and a status indicator across the top (stopped, connecting, playing and its size, no video), remembered between launches, an RTSP URL that plays as entered with a HereLink preset, and boxes for the HUD overlay and OSD color, and for recording the HUD (with an Open Folder button)
+- **Video tab** in place of the HUD's right-click Video menu: one source at a time (capture device, RTSP stream, MJPEG stream or GStreamer pipeline) with one Start/Stop button and a status indicator across the top (stopped, connecting, playing and its size, no video), remembered between launches, an RTSP URL that plays as entered with a HereLink preset, and boxes for the HUD overlay (Alt-H flips it) and OSD color, and for recording the HUD (with an Open Folder button)
 - **Inspector tab** (MAVLink Inspector exposed without `Ctrl+F`), in the theme's colours with field values in the accent colour
 - **Logs tab** unifying former Dataflash and Telemetry tabs
 - Working **Status tab** in FlightData
@@ -150,7 +154,10 @@ A revamped Servo Output panel with click-or-drag sliders for trim, an "Equidista
 Visual-stick-controls Radio Calibration UI with upstream's reversing logic; polished accel calibration.
 
 ## Other Setup Pages
-GUI cleanups across Accelerometer Calibration, Compass, Failsafe, Flight Modes, Initial Setup Serial; Battery Monitor pages merged into one unified screen; voltage/current calibration enabled regardless of selected sensor. Flight Modes shows its modes and RC Options in side-by-side boxes and writes each change as it is made, with no Save button. The Planner settings page packs its boxes into equal-width columns across the whole window.
+GUI cleanups across Accelerometer Calibration, Compass, Failsafe, Flight Modes, Initial Setup Serial; Battery Monitor pages merged into one unified screen; voltage/current calibration enabled regardless of selected sensor. Flight Modes shows its modes and RC Options in side-by-side boxes and writes each change as it is made, with no Save button. The Planner settings page packs its boxes into equal-width columns across the whole window, with a Keyboard Shortcuts box across the bottom listing every shortcut by where it works.
+
+## Joystick Configuration
+The Joystick configuration window opens quickly and lays out the joystick's inputs, the RC channels and the button assignments in side-by-side boxes, under a top row with the joystick, its buttons and the Elevons, Manual Control and Send Rate options. The inputs box shows every axis, slider and hat the joystick has, by the joystick's own names and the axis to choose for each, with live values, and every button lit while it is pressed, enabled or not. Each Detect button reads "Detecting..." while it listens, with no prompts: a channel takes the axis that moved most in 3 seconds, a button row the next button pressed. The send rate (25 to 100 Hz, 50 by default) sets how often the joystick is read and sent to the vehicle, each reading going out as soon as it is taken, and how often the window shows it.
 
 ## Configuration Profile Management
 Save and load named configuration profiles for the Mission Planner application itself.
@@ -217,6 +224,9 @@ The WPOverlay2 rendering pipeline with its MissionStyleEditor, `MissionSegmentiz
 
 ## Fork Additions
 - **Terrain profile** along the foot of the PLAN map: the mission's altitude in the theme's accent over the ground under its route, with its length, peak and least clearance, places it goes below the terrain in red, and a readout and map marker for the point under the pointer; it folds to a slim bar, and takes the place of upstream's Map Tool → Elevation Graph dialog
+- The terrain profile shows the rally points in purple, at the route's nearest point or, without a mission, along a line through them, and follows spline legs along the map's curve
+- While connected, the terrain profile shows the vehicle's fence: the ceiling and floor (red when it will hold to them, grey when off or not in `FENCE_TYPE`) and where the route crosses the fence circle, which the PLAN map draws too; points outside the fence are ringed in red and named in its header (after upstream PR [#3813](https://github.com/ArduPilot/MissionPlanner/pull/3813))
+- The terrain profile zooms with a dragged box or the mouse wheel and pans with Ctrl+drag, keeping the zoom while the plan is edited; it resizes from its top edge, and a double-click on its header makes it tall
 - **Center to Vehicle** button
 - **Clear all** in PLAN tab; clear-path from FlightData
 - 2D ↔ 3D map waypoint sync
@@ -239,6 +249,7 @@ The WPOverlay2 rendering pipeline with its MissionStyleEditor, `MissionSegmentiz
 - Smooth dragging on the DATA map, and an autopan that glides after the vehicle instead of jumping every few seconds
 - Animated zoom on the maps: the mouse wheel, zoom slider, zoom box and zoom buttons ease to the new level, about the centre of the view
 - An **(i)** button in the DATA map's corner toggles the legend of the vehicle's lines (Current Heading, Direction to WP, Target Heading, Ground Track)
+- With several vehicles connected, the ones not selected are drawn at half opacity without their lines; Config > Planner's secondary display style can show them solid or hide them
 - Clean pixel-perfect bottom-bar layout
 - Auto-pan on parameter button swap
 
@@ -313,11 +324,11 @@ Behaviour that differs from upstream because the fork fixed it:
 GitHub Actions builds Release and Debug, packages an MSI (`TitanPlanner-Installer.msi`) and zip, computes `checksums.txt` and `version.txt`, and publishes:
 - A **`development-build`** prerelease on every push to `development`
 - A **`TitanPlanner-<version>`** stable release on every push to `master`
-- Each release's notes list every commit since the previous release on its channel (the previous `development-build`, or the previous `TitanPlanner-*` tag), with the fork's commits first and the commits brought in from upstream in a collapsed section. The same notes are published as the release's `ChangeLog.txt`. `.github/scripts/release-notes.sh <development|master>` previews them locally
+- Each release's notes list every commit since the last `TitanPlanner-*` release (for the development build, everything it has that the newest release doesn't, so they read as the next release's would), with the fork's commits first and the commits brought in from upstream in a collapsed section. The same notes are published as the release's `ChangeLog.txt`. `.github/scripts/release-notes.sh <development|master>` previews them locally
 - Upstream's Linux and macOS workflows build here too, but their `linux-latest` / `osxlatest` prereleases are only published from the ArduPilot repository, so this fork's Releases page stays limited to the two channels above
 
 ## In-App Updater
-Reads `version.txt` from the channel URL (stable or beta) and compares as `System.Version`. When a newer build exists it streams only the files that differ straight out of the release zip (`TitanPlanner.zip`) with HTTP range requests, checks each file's MD5 against `checksums.txt`, then hands off to `Updater.exe` for the in-place swap. Both channels use the same path. The "update found" prompt's ChangeLog link opens that release's notes. The splash screen and title bar show the single build-stamped version (e.g. `1.3.9615.29424`) that the updater compares against.
+Reads `version.txt` from the channel URL (stable or beta) and compares as `System.Version`. When a newer build exists it streams only the files that differ straight out of the release zip (`TitanPlanner.zip`) with HTTP range requests, checks each file's MD5 against `checksums.txt`, then hands off to `Updater.exe` for the in-place swap, which waits for the planner to exit first. Both channels use the same path. A development build checks the development channel on every launch, so a new dev build is offered as soon as it's published; a release offers a newer release once a day. Turning on Beta Updates checks for a development build right away. The Updates box in Planner settings shows the running build, its date and how many releases behind the latest it is, and whether a newer development build is out. The "update found" prompt's ChangeLog link opens that release's notes. The splash screen and title bar show the single build-stamped version (e.g. `1.3.9615.29424`) that the updater compares against.
 
 ---
 

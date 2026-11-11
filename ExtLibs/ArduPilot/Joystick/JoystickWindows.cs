@@ -15,6 +15,49 @@ namespace MissionPlanner.Joystick
          
         }
 
+        [System.Runtime.InteropServices.DllImport("winmm.dll")]
+        private static extern uint timeBeginPeriod(uint milliseconds);
+
+        [System.Runtime.InteropServices.DllImport("winmm.dll")]
+        private static extern uint timeEndPeriod(uint milliseconds);
+
+        /// <summary>
+        /// Windows' timer at 1 ms until the result is disposed, null if it can't be.
+        /// </summary>
+        internal static IDisposable BeginFineTimer()
+        {
+            try
+            {
+                if (timeBeginPeriod(1) == 0)
+                    return new TimerPeriod();
+            }
+            catch
+            {
+            }
+
+            return null;
+        }
+
+        private sealed class TimerPeriod : IDisposable
+        {
+            private int ended;
+
+            public void Dispose()
+            {
+                if (System.Threading.Interlocked.Exchange(ref ended, 1) == 0)
+                    timeEndPeriod(1);
+            }
+        }
+
+        /// <summary>
+        /// The loop with Windows' timer at 1 ms while it runs (see JoystickBase.FineTimer).
+        /// </summary>
+        protected override void mainloop()
+        {
+            using (BeginFineTimer())
+                base.mainloop();
+        }
+
         public override void Dispose()
         {
             Dispose(true);
@@ -54,6 +97,11 @@ namespace MissionPlanner.Joystick
         {
             joystick = getJoyStickByNameInternal(name);
 
+            return Acquire();
+        }
+
+        private bool Acquire()
+        {
             if (joystick == null)
                 return false;
 
@@ -72,6 +120,53 @@ namespace MissionPlanner.Joystick
         public override bool IsJoystickValid()
         {
             return joystick != null && !joystick.IsDisposed;
+        }
+
+        /// <summary>
+        /// The axes, sliders and first hat DirectInput reports for the device, with its names for them ("X Axis",
+        /// "Throttle", "Rudder"...).
+        /// </summary>
+        public override List<KeyValuePair<joystickaxis, string>> GetAxes()
+        {
+            var axes = new List<KeyValuePair<joystickaxis, string>>();
+            try
+            {
+                var sliders = 0;
+                foreach (var obj in joystick.GetObjects(DeviceObjectTypeFlags.AbsoluteAxis |
+                                                        DeviceObjectTypeFlags.PointOfViewController))
+                {
+                    joystickaxis axis;
+                    if (obj.ObjectType == ObjectGuid.XAxis)
+                        axis = joystickaxis.X;
+                    else if (obj.ObjectType == ObjectGuid.YAxis)
+                        axis = joystickaxis.Y;
+                    else if (obj.ObjectType == ObjectGuid.ZAxis)
+                        axis = joystickaxis.Z;
+                    else if (obj.ObjectType == ObjectGuid.RxAxis)
+                        axis = joystickaxis.Rx;
+                    else if (obj.ObjectType == ObjectGuid.RyAxis)
+                        axis = joystickaxis.Ry;
+                    else if (obj.ObjectType == ObjectGuid.RzAxis)
+                        axis = joystickaxis.Rz;
+                    else if (obj.ObjectType == ObjectGuid.Slider)
+                        axis = sliders++ == 0 ? joystickaxis.Slider1 : joystickaxis.Slider2;
+                    else if (obj.ObjectType == ObjectGuid.PovController)
+                        axis = joystickaxis.Hatud1;
+                    else
+                        continue;
+
+                    // the state holds two sliders and reads the first hat
+                    if (axes.Any(a => a.Key == axis))
+                        continue;
+
+                    axes.Add(new KeyValuePair<joystickaxis, string>(axis, obj.Name.TrimUnPrintable()));
+                }
+            }
+            catch
+            {
+            } // not acquired
+
+            return axes.Count > 0 ? axes : base.GetAxes();
         }
 
         public override IMyJoystickState GetCurrentState()
@@ -121,8 +216,10 @@ namespace MissionPlanner.Joystick
             {
                 if (device.ProductName.TrimUnPrintable() == name)
                 {
+                    // the device found, without listing the devices again
                     var js = new JoystickWindows(() => null);
-                    js.AcquireJoystick(name);
+                    js.joystick = new SharpDX.DirectInput.Joystick(new DirectInput(), device.InstanceGuid);
+                    js.Acquire();
                     return js;
                 }
             }

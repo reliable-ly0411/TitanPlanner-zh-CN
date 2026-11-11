@@ -38,6 +38,7 @@ using UnauthorizedAccessException = System.UnauthorizedAccessException;
 
 namespace MissionPlanner.GCSViews
 {
+    [KeyboardShortcutScope("FLY screen", 1)]
     public partial class FlightData : MyUserControl, IActivate, IDeactivate
     {
         public static FlightData instance;
@@ -70,7 +71,8 @@ namespace MissionPlanner.GCSViews
         }
 
         /// <summary>
-        /// Called when a new frame arrives. On first frame, triggers resize to fix aspect ratio.
+        /// Called on the stream's thread when a new frame arrives. On first frame, triggers resize to fix aspect ratio
+        /// (which the HUD does on the UI thread).
         /// </summary>
         public static void OnHudGStreamerNewFrame()
         {
@@ -643,7 +645,7 @@ namespace MissionPlanner.GCSViews
             // Set up action combobox through FlightDataActions
             flightDataActions1.CMB_action.DataSource = ActionList;
 
-            flightDataActions1.CMB_modes.DataSource = ArduPilot.Common.getModesList(MainV2.comPort.MAV.cs.firmware);
+            flightDataActions1.CMB_modes.DataSource = ArduPilot.Common.getModesList(MainV2.comPort.MAV);
             flightDataActions1.CMB_modes.ValueMember = "Key";
             flightDataActions1.CMB_modes.DisplayMember = "Value";
 
@@ -1483,84 +1485,74 @@ namespace MissionPlanner.GCSViews
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
-            if (keyData == (Keys.Control | Keys.D1))
-            {
-                _themedTabStrip.SelectedIndex = 0;
-                return true;
-            }
-            else if (keyData == (Keys.Control | Keys.D2))
-            {
-                _themedTabStrip.SelectedIndex = 1;
-                return true;
-            }
-            else if (keyData == (Keys.Control | Keys.D3))
-            {
-                _themedTabStrip.SelectedIndex = 2;
-                return true;
-            }
-            else if (keyData == (Keys.Control | Keys.D4))
-            {
-                _themedTabStrip.SelectedIndex = 3;
-                return true;
-            }
-            else if (keyData == (Keys.Control | Keys.D5))
-            {
-                _themedTabStrip.SelectedIndex = 4;
-                return true;
-            }
-            else if (keyData == (Keys.Control | Keys.D6))
-            {
-                _themedTabStrip.SelectedIndex = 5;
-                return true;
-            }
-            else if (keyData == (Keys.Control | Keys.D7))
-            {
-                _themedTabStrip.SelectedIndex = 6;
-                return true;
-            }
-            else if (keyData == (Keys.Control | Keys.D8))
-            {
-                _themedTabStrip.SelectedIndex = 7;
-                return true;
-            }
-            else if (keyData == (Keys.Control | Keys.D9))
-            {
-                _themedTabStrip.SelectedIndex = 8;
-                return true;
-            }
-            else if (keyData == (Keys.Control | Keys.D0))
-            {
-                _themedTabStrip.SelectedIndex = 9;
-                return true;
-            }
+            // the shortcuts are the [KeyboardShortcut] methods below
+            return KeyboardShortcuts.Handle(this, ref msg, keyData);
+        }
 
-            if (keyData == (Keys.Space))
-            {
-                if (MainV2.comPort.logplaybackfile != null)
-                {
-                    BUT_playlog_Click(null, null);
-                    return true;
-                }
-            }
-            else if (keyData == (Keys.Subtract))
-            {
-                if (LogPlayBackSpeed > 1)
-                    LogPlayBackSpeed--;
-                else
-                    LogPlayBackSpeed /= 2;
+        [KeyboardShortcut(Keys.Alt | Keys.F, "Swap the 3D map between FPV and the chase view")]
+        internal bool ShortcutFpv()
+        {
+            if (map3DControl == null || !map3DControl.Visible)
+                return false;
 
-                updateLogPlayPosition();
-            }
-            else if (keyData == (Keys.Add))
-            {
-                if (LogPlayBackSpeed > 1)
-                    LogPlayBackSpeed++;
-                else
-                    LogPlayBackSpeed *= 2;
+            map3DControl.ToggleFpvMode();
+            return true;
+        }
 
-                updateLogPlayPosition();
-            }
+        [KeyboardShortcut(Keys.Alt | Keys.H, "Show or hide the HUD over the video (the Video tab's HUD Overlay)")]
+        internal void ShortcutHudOverlay()
+        {
+            flightPlannerVideoOptions1.ToggleHudOverlay();
+        }
 
+        [KeyboardShortcut(Keys.Control | Keys.D1, "Open the tab at that place along the tabs (0 for the tenth)")]
+        [KeyboardShortcut(Keys.Control | Keys.D2, "Open the tab at that place along the tabs (0 for the tenth)")]
+        [KeyboardShortcut(Keys.Control | Keys.D3, "Open the tab at that place along the tabs (0 for the tenth)")]
+        [KeyboardShortcut(Keys.Control | Keys.D4, "Open the tab at that place along the tabs (0 for the tenth)")]
+        [KeyboardShortcut(Keys.Control | Keys.D5, "Open the tab at that place along the tabs (0 for the tenth)")]
+        [KeyboardShortcut(Keys.Control | Keys.D6, "Open the tab at that place along the tabs (0 for the tenth)")]
+        [KeyboardShortcut(Keys.Control | Keys.D7, "Open the tab at that place along the tabs (0 for the tenth)")]
+        [KeyboardShortcut(Keys.Control | Keys.D8, "Open the tab at that place along the tabs (0 for the tenth)")]
+        [KeyboardShortcut(Keys.Control | Keys.D9, "Open the tab at that place along the tabs (0 for the tenth)")]
+        [KeyboardShortcut(Keys.Control | Keys.D0, "Open the tab at that place along the tabs (0 for the tenth)")]
+        private void ShortcutTabAt(Keys keys)
+        {
+            int digit = (keys & Keys.KeyCode) - Keys.D0;
+            _themedTabStrip.SelectedIndex = digit == 0 ? 9 : digit - 1;
+        }
+
+        [KeyboardShortcut(Keys.Space, "Play or pause the log being played back")]
+        private bool ShortcutPlayLog()
+        {
+            if (MainV2.comPort.logplaybackfile == null)
+                return false;
+
+            BUT_playlog_Click(null, null);
+            return true;
+        }
+
+        // the playback speed keys go on to the focused control too
+        [KeyboardShortcut(Keys.Subtract, "Slow the log playback down")]
+        private bool ShortcutPlaybackSlower()
+        {
+            if (LogPlayBackSpeed > 1)
+                LogPlayBackSpeed--;
+            else
+                LogPlayBackSpeed /= 2;
+
+            updateLogPlayPosition();
+            return false;
+        }
+
+        [KeyboardShortcut(Keys.Add, "Speed the log playback up")]
+        private bool ShortcutPlaybackFaster()
+        {
+            if (LogPlayBackSpeed > 1)
+                LogPlayBackSpeed++;
+            else
+                LogPlayBackSpeed *= 2;
+
+            updateLogPlayPosition();
             return false;
         }
 
@@ -1589,6 +1581,22 @@ namespace MissionPlanner.GCSViews
 
                 addMissionRouteMarker(marker);
             });
+        }
+
+        /// <summary>
+        /// Adds a vehicle that has a position to the 3D map's set, on the 3D map's ground plus its height above home.
+        /// </summary>
+        private static bool Add3DMapVehicle(List<Map3D.VehicleFeed> vehicles, MAVState MAV)
+        {
+            var cs = MAV.cs;
+            if (cs.lat == 0 || cs.lng == 0)
+                return false;
+
+            var terrainAlt = srtm.getAltitude(cs.lat, cs.lng).alt;
+            vehicles.Add(new Map3D.VehicleFeed(MAV,
+                new PointLatLngAlt(cs.lat, cs.lng, terrainAlt + cs.alt / CurrentState.multiplieralt, "here"),
+                new Vector3(cs.roll, cs.pitch, cs.yaw), new Vector3(cs.vx, cs.vy, cs.vz)));
+            return true;
         }
 
         private void addMissionRouteMarker(GMapMarker marker)
@@ -3485,7 +3493,7 @@ namespace MissionPlanner.GCSViews
         private void CMB_modes_Click(object sender, EventArgs e)
         {
             string current_value = flightDataActions1.CMB_modes.Text;
-            flightDataActions1.CMB_modes.DataSource = ArduPilot.Common.getModesList(MainV2.comPort.MAV.cs.firmware);
+            flightDataActions1.CMB_modes.DataSource = ArduPilot.Common.getModesList(MainV2.comPort.MAV);
             flightDataActions1.CMB_modes.ValueMember = "Key";
             flightDataActions1.CMB_modes.DisplayMember = "Value";
             flightDataActions1.CMB_modes.Text = current_value;
@@ -4806,23 +4814,26 @@ namespace MissionPlanner.GCSViews
                             "here");
                     }
 
-                    // update 3D map (only when connected with valid location - disconnected mode uses 2D map center).
+                    // update 3D map: every vehicle with a position (disconnected, it follows the 2D map's centre).
                     // Not while it is hidden: the terrain lookup would load back an SRTM cell the hide just freed.
-                    if (Map3D.instance != null && Map3D.instance.IsActive && MainV2.comPort?.BaseStream?.IsOpen == true &&
-                        MainV2.comPort.MAV.cs.lat != 0 && MainV2.comPort.MAV.cs.lng != 0)
+                    if (Map3D.instance != null && Map3D.instance.IsActive)
                     {
-                        Map3D.instance.rpy = new Vector3(MainV2.comPort.MAV.cs.roll,
-                            MainV2.comPort.MAV.cs.pitch,
-                            MainV2.comPort.MAV.cs.yaw);
-                        // Use terrain altitude + relative altitude for correct 3D positioning
-                        var terrainAlt = srtm.getAltitude(MainV2.comPort.MAV.cs.lat, MainV2.comPort.MAV.cs.lng).alt;
-                        var relativeAlt = MainV2.comPort.MAV.cs.alt / CurrentState.multiplieralt;
-                        Map3D.instance.LocationCenter = new PointLatLngAlt(MainV2.comPort.MAV.cs.lat,
-                            MainV2.comPort.MAV.cs.lng, terrainAlt + relativeAlt,
-                            "here");
-                        Map3D.instance.Velocity = new Vector3(MainV2.comPort.MAV.cs.vx, MainV2.comPort.MAV.cs.vy,
-                            MainV2.comPort.MAV.cs.vz);
-                        Map3D.instance.WPs = MainV2.comPort.MAV.wps.Values.Select(a => (Locationwp) a).ToList();
+                        var selectedPort = MainV2.comPort;
+                        var selected = selectedPort.MAV;
+                        var vehicles = new List<Map3D.VehicleFeed>();
+                        foreach (var port in MainV2.Comports.ToArray())
+                        {
+                            if (port?.BaseStream?.IsOpen != true)
+                                continue;
+                            foreach (var MAV in port.MAVlist)
+                                if (MAV != selected)
+                                    Add3DMapVehicle(vehicles, MAV);
+                        }
+
+                        if (selectedPort.BaseStream?.IsOpen == true && Add3DMapVehicle(vehicles, selected))
+                            Map3D.instance.WPs = selected.wps.Values.Select(a => (Locationwp) a).ToList();
+
+                        Map3D.instance.SetVehicles(vehicles);
                     }
 
                     // update vario info
