@@ -9,7 +9,7 @@ import tempfile
 
 UPSTREAM = 'https://github.com/Titan-Dynamics/TitanPlanner.git'
 TARGET = os.environ.get('SYNC_BRANCH', 'master')
-if TARGET not in ('master', 'zh-CN-dev'):
+if TARGET not in ('master', 'zh-CN-dev', 'zh-CN'):
     raise ValueError('Source synchronization is restricted to the development line')
 
 
@@ -52,6 +52,8 @@ def proposal(branch, reason):
 
 
 def prepare(sync, upstream=UPSTREAM):
+    if TARGET == 'zh-CN':
+        raise ValueError('Source synchronization cannot advance stable directly')
     base = git('rev-parse', 'HEAD')
     if not sync:
         output(sha=base, base=base, candidate='', upstream='', changed='false')

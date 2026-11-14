@@ -2,8 +2,8 @@
 
 源代码同步入口为 `.github/workflows/sync-upstream.yml`，Windows 构建入口为 `main.yml`。
 
-- 每天 03:17 UTC 仅合并上游 `Titan-Dynamics/TitanPlanner/master`，保留本仓历史和双中文版本。普通 push/PR 只执行 Python 资源、打包和策略回归，不运行本机编译、GUI、MSI 或发布。
-- 同步候选先运行轻量检查；主分支仍是准备时的起点才普通快进。冲突、上游自动化策略改动或并发主分支更新均停止，不强推、不覆盖用户提交。冲突或策略改动只报告路径，绝不推送携带未审阅工作流的原始上游提交来创建候选。
+- 每天 03:17 UTC 从默认汉化稳定线启动，先快进更新 `Titanmain` / `missionmain` 两条精确上游镜像，再向 `zh-CN-dev` 合并上游 `Titan-Dynamics/TitanPlanner/master`，保留本仓历史和双中文版本。普通 push/PR 只执行 Python 资源、打包和策略回归，不运行本机编译、GUI、MSI 或发布。
+- 同步候选先运行轻量检查；开发分支仍是准备时的起点才普通快进。冲突、上游自动化策略改动或并发主分支更新均停止，不强推、不覆盖用户提交。冲突或策略改动只报告路径，绝不推送携带未审阅工作流的原始上游提交来创建候选。
 - 定时同步后只识别新建且正式发布的 `TitanPlanner-<四段版本>` GitHub Release。`development-build`、draft、prerelease、单纯新 tag 或上游 HEAD 变化均不会启动自动重型构建。
 - 2026-10-20 14:06:15 UTC 已存在的 Release ID 记为基线，包括当时最新的 `TitanPlanner-1.3.9789.1792`；不补建历史发布。每个后续 Release 固定其 ID、tag 的 peeled commit、下游补丁起点/提交/摘要与组合后的源码 SHA。源码在构建作业内组装，不推送生成的工作流改动，也不拿上游当前 HEAD 冒充已发布源码。
 - 源码组装器取自本次工作流的固定提交，重试仍使用首次记录的 manifest、下游控制文件和源码 SHA。Git 对象输入固定为 UTF-8/LF 字节；Windows 与 Linux 均运行轻量源码身份回归，源码或补丁摘要不匹配仍立即停止。
@@ -14,7 +14,7 @@
 
 1. 同步：手动运行 `sync-upstream.yml`，默认 `action=sync`，只同步。`check-releases` 才额外识别新正式发布；`retry_release_id` 仅重试已失败的新发布，不补建历史。
 2. 构建：在目标提交所在分支运行 `main.yml` 或 `linux.yml`；不会同步或发布。Android/macOS 与地形打包仍是独立手动入口，不进入 Windows 发布链。
-3. 发布：`promote-release.yml` 填写成功的手动 `main.yml` run ID 和精确 40 位 source SHA。只接受本仓 master 的成功手动构建、完整 Windows 检查及匹配 run/attempt/source/workflow 的原始工件与摘要，拒绝 PR、旧 push 或其他仓库工件。直接提升已验 ZIP/MSI，不编译、不重打包、不移动主分支、不覆盖既有 tag/附件。成功候选必须仍是 master 的祖先；没有新版本时不创建重复发布。
+3. 发布：`promote-release.yml` 填写成功的手动 `main.yml` run ID 和精确 40 位 source SHA。只接受本仓 `zh-CN`（兼容旧 `master`）的成功手动构建、完整 Windows 检查及匹配 run/attempt/source/workflow 的原始工件与摘要，拒绝 PR、旧 push 或其他仓库工件。直接提升已验 ZIP/MSI，不编译、不重打包、不移动主分支、不覆盖既有 tag/附件。成功候选必须仍是对应稳定线的祖先；没有新版本时不创建重复发布。
 
 发布保留不可变 `v<程序版本>-zh2-<源码前12位>` tag 和现有预发布分类。自动化仅使用仓库既有 `GITHUB_TOKEN`；构建作业只读，写入 ledger、同步或明确手动发布的作业独立授予所需权限。未新增凭据、签名或仓库设置权限。
 
