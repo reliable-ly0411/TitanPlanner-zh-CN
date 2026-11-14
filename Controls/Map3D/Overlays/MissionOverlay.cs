@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Drawing.Text;
 using System.Linq;
 using GMap.NET.WindowsForms;
 using MissionPlanner.Utilities;
@@ -17,13 +15,16 @@ namespace MissionPlanner.Controls.Scene3D
     /// </summary>
     public sealed class MissionOverlay : IDisposable
     {
-        /// <summary>Markers closer than this to the vehicle (200 ft) are hidden.</summary>
-        const double MinMarkerDistance = 61.0;
+        /// <summary>
+        /// Markers closer than this to the vehicle (200 ft) fade, and are gone at a quarter of it, rather than vanishing
+        /// at once as the vehicle nears them.
+        /// </summary>
+        public const double MarkerFadeDistance = 61.0;
 
         readonly VertexList _planLine = new VertexList();
         readonly QuadRenderer _markers = new QuadRenderer();
         readonly QuadRenderer _homeMarker = new QuadRenderer();
-        readonly Dictionary<string, int> _labelTextures = new Dictionary<string, int>();
+        readonly LabelTextures _labels = new LabelTextures();
         readonly Dictionary<long, double> _terrainCache = new Dictionary<long, double>();
         readonly List<PointLatLngAlt> _waypoints = new List<PointLatLngAlt>();
         int _waypointsHash;
@@ -34,6 +35,7 @@ namespace MissionPlanner.Controls.Scene3D
         DateTime _planBuilt;
         int _markerTexture;
         int _markerAltTexture;
+        int _dotTexture;
 
         /// <summary>Markers drawn last frame; they spin, so the view keeps animating while any are visible.</summary>
         public int MarkersDrawn { get; private set; }
@@ -230,15 +232,19 @@ namespace MissionPlanner.Controls.Scene3D
         }
 
         /// <summary>
-        /// Billboarded markers that face the camera and slowly spin, with an upright label.
+        /// Billboarded markers that face the camera and slowly spin, with an upright label. vehicleX and vehicleY are
+        /// where the vehicle is drawn, in scene coordinates: markers fade by their distance from it, which moves
+        /// smoothly where the telemetry steps.
         /// </summary>
-        public void DrawMarkers(WorldFrame frame, PointLatLngAlt vehicle, double cameraX, double cameraY,
+        public void DrawMarkers(WorldFrame frame, double vehicleX, double vehicleY, double cameraX, double cameraY,
             double markerHalfSize, ref Matrix4 projection, ref Matrix4 view)
         {
             if (_markerTexture == 0)
                 _markerTexture = MarkerTexture(GMap.NET.Drawing.Properties.Resources.wp_3d.ToBitmap());
             if (_markerAltTexture == 0)
                 _markerAltTexture = MarkerTexture(GMap.NET.Drawing.Properties.Resources.wp_3d_alt.ToBitmap());
+            if (_dotTexture == 0)
+                _dotTexture = DotTexture();
 
             var waypoints = Waypoints();
             var points = waypoints.Where(a => a != null).ToList();
@@ -262,11 +268,13 @@ namespace MissionPlanner.Controls.Scene3D
             {
                 if (point.Lat == 0 && point.Lng == 0)
                     continue;
-                if (point.GetDistance(vehicle) < MinMarkerDistance)
-                    continue;
 
                 double x, y;
                 frame.ToLocal(point.Lat, point.Lng, out x, out y);
+                float opacity = MarkerOpacity(Math.Sqrt((x - vehicleX) * (x - vehicleX) + (y - vehicleY) * (y - vehicleY)));
+                if (opacity <= 0)
+                    continue;
+
                 double z = DrawAltitude(point);
 
                 string label = null;
@@ -295,8 +303,19 @@ namespace MissionPlanner.Controls.Scene3D
                     return new Vector3d(x + axisX * rh * markerHalfSize, y + axisY * rh * markerHalfSize, z + rv * markerHalfSize);
                 };
                 batch.Add(special ? _markerAltTexture : _markerTexture,
-                    spun(-1, 1), spun(1, 1), spun(-1, -1), spun(1, -1));
+                    spun(-1, 1), spun(1, 1), spun(-1, -1), spun(1, -1), opacity: opacity);
                 MarkersDrawn++;
+
+                // a yellow dot in the middle of each numbered waypoint, its radius a fifteenth of the Marker Size
+                if (label != null && !special)
+                {
+                    double dot = markerHalfSize / 15;
+                    batch.Add(_dotTexture,
+                        new Vector3d(x - axisX * dot, y - axisY * dot, z + dot),
+                        new Vector3d(x + axisX * dot, y + axisY * dot, z + dot),
+                        new Vector3d(x - axisX * dot, y - axisY * dot, z - dot),
+                        new Vector3d(x + axisX * dot, y + axisY * dot, z - dot), opacity: opacity);
+                }
 
                 if (label == null)
                     continue;
@@ -306,7 +325,8 @@ namespace MissionPlanner.Controls.Scene3D
                 double labelOffset = special ? -(markerHalfSize / 20) : markerHalfSize * 0.5;
                 Func<double, double, Vector3d> upright = (h, v) => new Vector3d(
                     x - axisX * h * labelHalfSize, y - axisY * h * labelHalfSize, z + v * labelHalfSize + labelOffset);
-                batch.Add(LabelTexture(label), upright(-1, 1), upright(1, 1), upright(-1, -1), upright(1, -1));
+                batch.Add(_labels.Get(label), upright(-1, 1), upright(1, 1), upright(-1, -1), upright(1, -1),
+                    opacity: opacity);
             }
 
             GL.Enable(EnableCap.Blend);
@@ -324,6 +344,13 @@ namespace MissionPlanner.Controls.Scene3D
 
             GL.DepthMask(true);
             GL.Disable(EnableCap.Blend);
+        }
+
+        /// <summary>A marker's opacity at a distance (metres) from the vehicle.</summary>
+        public static float MarkerOpacity(double distance)
+        {
+            double gone = MarkerFadeDistance / 4;
+            return (float)Math.Max(0, Math.Min(1, (distance - gone) / (MarkerFadeDistance - gone)));
         }
 
         static bool IsGuidedTarget(PointLatLngAlt point)
@@ -346,47 +373,29 @@ namespace MissionPlanner.Controls.Scene3D
             }
         }
 
-        int LabelTexture(string label)
+        static int DotTexture()
         {
-            int texture;
-            if (_labelTextures.TryGetValue(label, out texture))
-                return texture;
-
-            const int size = 128;
+            const int size = 64;
             using (var bitmap = new Bitmap(size, size, System.Drawing.Imaging.PixelFormat.Format32bppArgb))
             {
                 using (var g = Graphics.FromImage(bitmap))
-                using (var font = new Font("Arial", 48, FontStyle.Bold))
-                using (var format = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center })
-                using (var path = new GraphicsPath())
-                using (var outline = new Pen(Color.Black, 6) { LineJoin = LineJoin.Round })
                 {
-                    g.Clear(Color.Transparent);
-                    g.SmoothingMode = SmoothingMode.AntiAlias;
-                    g.TextRenderingHint = TextRenderingHint.AntiAlias;
-                    path.AddString(label, font.FontFamily, (int)font.Style, font.Size, new RectangleF(0, 0, size, size), format);
-                    g.DrawPath(outline, path);
-                    g.FillPath(Brushes.White, path);
+                    // cleared to the dot's colour, so the smaller mipmaps don't fringe it with another
+                    g.Clear(Color.FromArgb(0, Color.Yellow));
+                    g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+                    g.FillEllipse(Brushes.Yellow, 1, 1, size - 2, size - 2);
                 }
 
-                texture = GLTextures.CreateFromImage(bitmap, true);
+                return GLTextures.CreateFromImage(bitmap, true);
             }
-
-            _labelTextures[label] = texture;
-            return texture;
         }
 
         public void Dispose()
         {
             GLTextures.Delete(ref _markerTexture);
             GLTextures.Delete(ref _markerAltTexture);
-            foreach (var id in _labelTextures.Values)
-            {
-                int texture = id;
-                GLTextures.Delete(ref texture);
-            }
-
-            _labelTextures.Clear();
+            GLTextures.Delete(ref _dotTexture);
+            _labels.Dispose();
             _markers.Dispose();
             _homeMarker.Dispose();
         }

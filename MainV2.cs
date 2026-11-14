@@ -49,6 +49,7 @@ using DroneCAN;
 
 namespace MissionPlanner
 {
+    [KeyboardShortcutScope("Everywhere", 0)]
     public partial class MainV2 : Form
     {
         private static readonly ILog log =
@@ -2402,8 +2403,10 @@ namespace MissionPlanner
         /// </summary>
         private async void joysticksend()
         {
-            float rate = 50; // 1000 / 50 = 20 hz
+            // the least time between packets in ms, half the joystick's period (set each time round)
+            float rate = 50;
             int count = 0;
+            var sinceSend = System.Diagnostics.Stopwatch.StartNew();
 
             DateTime lastratechange = DateTime.Now;
 
@@ -2420,6 +2423,17 @@ namespace MissionPlanner
                         log.Error("Mono: closing joystick thread");
                         break;
                     }
+
+                    // each reading of the joystick goes out as soon as it is taken, at the joystick's rate;
+                    // without a joystick, look again shortly
+                    var reading = joystick;
+                    if (reading != null && reading.enabled)
+                        await reading.WaitForReading(TimeSpan.FromMilliseconds(100)).ConfigureAwait(false);
+                    else
+                        await Task.Delay(40).ConfigureAwait(false);
+
+                    // half a period, so a reading a little early still goes
+                    rate = 500f / Joystick.JoystickBase.RateHz;
 
                     if (!MONO)
                     {
@@ -2509,7 +2523,7 @@ namespace MissionPlanner
                                 if (joystick.getJoystickAxis(18) != Joystick.joystickaxis.None)
                                     rc.chan18_raw = (ushort) MainV2.comPort.MAV.cs.rcoverridech18;
 
-                                if (lastjoystick.AddMilliseconds(rate) < DateTime.Now)
+                                if (sinceSend.Elapsed.TotalMilliseconds >= rate)
                                 {
                                     /*
                                 if (MainV2.comPort.MAV.cs.rssi > 0 && MainV2.comPort.MAV.cs.remrssi > 0)
@@ -2557,6 +2571,7 @@ namespace MissionPlanner
 
                                         count++;
                                         lastjoystick = DateTime.Now;
+                                        sinceSend.Restart();
                                     }
                                 }
                             }
@@ -2575,7 +2590,7 @@ namespace MissionPlanner
                                 if (joystick.getJoystickAxis(4) != Joystick.joystickaxis.None)
                                     rc.r = MainV2.comPort.MAV.cs.rcoverridech4;
 
-                                if (lastjoystick.AddMilliseconds(rate) < DateTime.Now)
+                                if (sinceSend.Elapsed.TotalMilliseconds >= rate)
                                 {
                                     if (!comPort.BaseStream.IsOpen)
                                         continue;
@@ -2593,13 +2608,12 @@ namespace MissionPlanner
 
                                         count++;
                                         lastjoystick = DateTime.Now;
+                                        sinceSend.Restart();
                                     }
                                 }
                             }
                         }
                     }
-
-                    await Task.Delay(40).ConfigureAwait(false);
                 }
                 catch
                 {
@@ -3896,17 +3910,11 @@ namespace MissionPlanner
 
             try
             {
-                // single update check per day - in a seperate thread
-                if (Settings.Instance["update_check"] != DateTime.Now.ToShortDateString())
-                {
-                    System.Threading.ThreadPool.QueueUserWorkItem(checkupdate);
-                    Settings.Instance["update_check"] = DateTime.Now.ToShortDateString();
-                }
-                else if (Settings.Instance.GetBoolean("beta_updates") == true)
-                {
+                if (Settings.Instance.GetBoolean("beta_updates") == true)
                     MissionPlanner.Utilities.Update.dobeta = true;
-                    System.Threading.ThreadPool.QueueUserWorkItem(checkupdate);
-                }
+
+                // in a seperate thread; a new release is offered once a day, a new development build on every launch
+                System.Threading.ThreadPool.QueueUserWorkItem(checkupdate);
             }
             catch (Exception ex)
             {
@@ -4098,11 +4106,14 @@ namespace MissionPlanner
             GMapMarkerBase.DisplayNavBearingSetting = Settings.Instance.GetBoolean("GMapMarkerBase_DisplayNavBearing", true);
             GMapMarkerBase.DisplayRadiusSetting = Settings.Instance.GetBoolean("GMapMarkerBase_DisplayRadius", true);
             GMapMarkerBase.DisplayTargetSetting = Settings.Instance.GetBoolean("GMapMarkerBase_DisplayTarget", true);
-            var inactiveDisplayStyle = GMapMarkerBase.InactiveDisplayStyleEnum.Normal;
-            string inactiveDisplayStyleStr = Settings.Instance.GetString("GMapMarkerBase_InactiveDisplayStyle", inactiveDisplayStyle.ToString());
+            // Vehicles other than the selected one are faded by default. The older key was saved at every start, Normal
+            // included, so of its values only Hidden was a choice.
+            var inactiveDisplayStyle = GMapMarkerBase.InactiveDisplayStyleEnum.Transparent;
+            string inactiveDisplayStyleStr = Settings.Instance.GetString("GMapMarkerBase_InactiveStyle",
+                Settings.Instance.GetString("GMapMarkerBase_InactiveDisplayStyle") == "Hidden" ? "Hidden" : inactiveDisplayStyle.ToString());
             Enum.TryParse(inactiveDisplayStyleStr, out inactiveDisplayStyle);
             GMapMarkerBase.InactiveDisplayStyle = inactiveDisplayStyle;
-            Settings.Instance["GMapMarkerBase_InactiveDisplayStyle"] = inactiveDisplayStyle.ToString();
+            Settings.Instance["GMapMarkerBase_InactiveStyle"] = inactiveDisplayStyle.ToString();
 
             // Initialize auto-connect USB feature (default ON)
             InitializeUSBAutoConnect();
@@ -4348,7 +4359,7 @@ namespace MissionPlanner
 
             try
             {
-                MissionPlanner.Utilities.Update.CheckForUpdate();
+                MissionPlanner.Utilities.Update.CheckForUpdate(startup: true);
             }
             catch (Exception ex)
             {
@@ -4384,154 +4395,9 @@ namespace MissionPlanner
                 return false;
             }
 
-            if (keyData == Keys.F12)
-            {
-                MenuConnect_Click(null, null);
+            // the shortcuts are the [KeyboardShortcut] methods below
+            if (KeyboardShortcuts.Handle(this, ref msg, keyData))
                 return true;
-            }
-
-            if (keyData == Keys.F2)
-            {
-                MenuFlightData_Click(null, null);
-                return true;
-            }
-
-            if (keyData == Keys.F3)
-            {
-                MenuFlightPlanner_Click(null, null);
-                return true;
-            }
-
-            if (keyData == Keys.F4)
-            {
-                MenuTuning_Click(null, null);
-                return true;
-            }
-
-            if (keyData == Keys.F5)
-            {
-                comPort.getParamList();
-                MyView.ShowScreen(MyView.current.Name);
-                return true;
-            }
-
-            if (keyData == (Keys.Control | Keys.F)) // temp
-            {
-                Form frm = new temp();
-                ThemeManager.ApplyThemeTo(frm);
-                frm.Show();
-                return true;
-            }
-
-            /*if (keyData == (Keys.Control | Keys.S)) // screenshot
-            {
-                ScreenShot();
-                return true;
-            }*/
-            if (keyData == (Keys.Control | Keys.P))
-            {
-                new PluginUI().Show();
-                return true;
-            }
-
-            if (keyData == (Keys.Control | Keys.G)) // nmea out
-            {
-                Form frm = new SerialOutputNMEA();
-                ThemeManager.ApplyThemeTo(frm);
-                frm.Show();
-                return true;
-            }
-
-            if (keyData == (Keys.Control | Keys.X))
-            {
-                new GMAPCache().ShowUserControl();
-                return true;
-            }
-
-            if (keyData == (Keys.Control | Keys.L)) // limits
-            {
-                //new DigitalSkyUI().ShowUserControl();
-
-                new SpectrogramUI().Show();
-
-                return true;
-            }
-
-            if (keyData == (Keys.Control | Keys.R)) // reboot autopilot
-            {
-                if (comPort.BaseStream.IsOpen)
-                {
-                    if (CustomMessageBox.Show(UiText.Translate("Are you sure you want to reboot the autopilot?"), UiText.Translate("Reboot"),
-                            MessageBoxButtons.YesNo) == (int)DialogResult.Yes)
-                    {
-                        try
-                        {
-                            comPort.doReboot(false, true);
-                        }
-                        catch
-                        {
-                            CustomMessageBox.Show(Strings.CommandFailed, Strings.ERROR);
-                        }
-                    }
-                }
-
-                return true;
-            }
-
-            if (keyData == (Keys.Control | Keys.W)) // test ac config
-            {
-                new PropagationSettings().Show();
-
-                return true;
-            }
-
-            if (keyData == (Keys.Control | Keys.Z))
-            {
-                //ScanHW.Scan(comPort);
-                new Camera().test(MainV2.comPort);
-                return true;
-            }
-
-            if (keyData == (Keys.Control | Keys.T)) // for override connect
-            {
-                try
-                {
-                    MainV2.comPort.Open(false);
-                }
-                catch (Exception ex)
-                {
-                    CustomMessageBox.Show(ex.ToString());
-                }
-
-                return true;
-            }
-
-            if (keyData == (Keys.Control | Keys.Y)) // for ryan beall and ollyw42
-            {
-                // write
-                try
-                {
-                    MainV2.comPort.doCommand(MainV2.comPort.sysidcurrent, (byte) MainV2.comPort.compidcurrent,
-                        MAVLink.MAV_CMD.PREFLIGHT_STORAGE, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
-                }
-                catch
-                {
-                    CustomMessageBox.Show(UiText.Translate("Invalid command"));
-                    return true;
-                }
-
-                //read
-                ///////MainV2.comPort.doCommand(MAVLink09.MAV_CMD.PREFLIGHT_STORAGE, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
-                CustomMessageBox.Show(UiText.Translate("Done MAV_ACTION_STORAGE_WRITE"));
-                return true;
-            }
-
-            if (keyData == (Keys.Control | Keys.J))
-            {
-                new DevopsUI().ShowUserControl();
-
-                return true;
-            }
 
             if (ProcessCmdKeyCallback != null)
             {
@@ -4544,6 +4410,146 @@ namespace MissionPlanner
         public delegate bool ProcessCmdKeyHandler(ref Message msg, Keys keyData);
 
         public event ProcessCmdKeyHandler ProcessCmdKeyCallback;
+
+        [KeyboardShortcut(Keys.F12, "Connect or disconnect")]
+        private void ShortcutConnect()
+        {
+            MenuConnect_Click(null, null);
+        }
+
+        [KeyboardShortcut(Keys.F2, "Open the FLY screen")]
+        private void ShortcutFly()
+        {
+            MenuFlightData_Click(null, null);
+        }
+
+        [KeyboardShortcut(Keys.F3, "Open the PLAN screen")]
+        private void ShortcutPlan()
+        {
+            MenuFlightPlanner_Click(null, null);
+        }
+
+        [KeyboardShortcut(Keys.F4, "Open the CONFIG screen")]
+        private void ShortcutConfig()
+        {
+            MenuTuning_Click(null, null);
+        }
+
+        [KeyboardShortcut(Keys.F5, "Download the parameters again and reload the screen")]
+        private void ShortcutRefreshParams()
+        {
+            comPort.getParamList();
+            MyView.ShowScreen(MyView.current.Name);
+        }
+
+        [KeyboardShortcut(Keys.Control | Keys.F, "Open the Tools window")]
+        private void ShortcutTools()
+        {
+            Form frm = new temp();
+            ThemeManager.ApplyThemeTo(frm);
+            frm.Show();
+        }
+
+        [KeyboardShortcut(Keys.Control | Keys.P, "Open the plugin manager")]
+        private void ShortcutPlugins()
+        {
+            new PluginUI().Show();
+        }
+
+        [KeyboardShortcut(Keys.Control | Keys.G, "Send the vehicle's position out as NMEA")]
+        private void ShortcutNmeaOut()
+        {
+            Form frm = new SerialOutputNMEA();
+            ThemeManager.ApplyThemeTo(frm);
+            frm.Show();
+        }
+
+        [KeyboardShortcut(Keys.Control | Keys.X, "Open the map cache")]
+        private void ShortcutMapCache()
+        {
+            new GMAPCache().ShowUserControl();
+        }
+
+        [KeyboardShortcut(Keys.Control | Keys.L, "Open the spectrogram")]
+        private void ShortcutSpectrogram()
+        {
+            //new DigitalSkyUI().ShowUserControl();
+
+            new SpectrogramUI().Show();
+        }
+
+        [KeyboardShortcut(Keys.Control | Keys.R, "Reboot the autopilot")]
+        private void ShortcutReboot()
+        {
+            if (comPort.BaseStream.IsOpen)
+            {
+                if (CustomMessageBox.Show(UiText.Translate("Are you sure you want to reboot the autopilot?"), UiText.Translate("Reboot"),
+                        MessageBoxButtons.YesNo) == (int)DialogResult.Yes)
+                {
+                    try
+                    {
+                        comPort.doReboot(false, true);
+                    }
+                    catch
+                    {
+                        CustomMessageBox.Show(Strings.CommandFailed, Strings.ERROR);
+                    }
+                }
+            }
+        }
+
+        [KeyboardShortcut(Keys.Control | Keys.W, "Open the propagation settings")]
+        private void ShortcutPropagation()
+        {
+            new PropagationSettings().Show();
+        }
+
+        [KeyboardShortcut(Keys.Control | Keys.Z, "Ask the camera for its information and start its video stream")]
+        private void ShortcutCameraTest()
+        {
+            //ScanHW.Scan(comPort);
+            new Camera().test(MainV2.comPort);
+        }
+
+        [KeyboardShortcut(Keys.Control | Keys.T, "Open the connection without downloading the parameters")]
+        private void ShortcutOpenConnection()
+        {
+            try
+            {
+                MainV2.comPort.Open(false);
+            }
+            catch (Exception ex)
+            {
+                CustomMessageBox.Show(ex.ToString());
+            }
+        }
+
+        [KeyboardShortcut(Keys.Control | Keys.Y, "Have the autopilot save its parameters to storage")]
+        private void ShortcutWriteStorage()
+        {
+            // for ryan beall and ollyw42
+            // write
+            try
+            {
+                MainV2.comPort.doCommand(MainV2.comPort.sysidcurrent, (byte) MainV2.comPort.compidcurrent,
+                    MAVLink.MAV_CMD.PREFLIGHT_STORAGE, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
+            }
+            catch
+            {
+                CustomMessageBox.Show(UiText.Translate("Invalid command"));
+                return;
+            }
+
+            //read
+            ///////MainV2.comPort.doCommand(MAVLink09.MAV_CMD.PREFLIGHT_STORAGE, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
+            CustomMessageBox.Show(UiText.Translate("Done MAV_ACTION_STORAGE_WRITE"));
+        }
+
+        [KeyboardShortcut(Keys.Control | Keys.J, "Open the DevOps tools")]
+        private void ShortcutDevops()
+        {
+            new DevopsUI().ShowUserControl();
+        }
 
         public void changelanguage(CultureInfo ci)
         {
@@ -4815,6 +4821,10 @@ namespace MissionPlanner
 
         protected override void WndProc(ref Message m)
         {
+            // releasing Alt after an Alt shortcut would otherwise select the menu
+            if (KeyboardShortcuts.SuppressMenuKey(ref m))
+                return;
+
             switch (m.Msg)
             {
                 case WM_CREATE:

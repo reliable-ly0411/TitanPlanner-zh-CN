@@ -31,6 +31,10 @@ if exists.returncode == 0:
     print('Release already exists; immutable assets retained: ' + exists.stdout)
 else:
     notes = root / 'release-notes.md'
+    upstream_notes = Path(__file__).resolve().parents[2] / 'docs/releases/upstream-sync.md'
+    upstream_body = upstream_notes.read_text(encoding='utf-8')
+    if not upstream_body.strip():
+        raise RuntimeError('Reviewed upstream release notes are required')
     notes.write_text(f'程序版本：**{version}**。\n\n自动构建的 Windows 安装版和便携版（测试版）。\n\n'
                      '- 保留“中文(简体)”与增强“中文(简体)2”，选择后重启生效。\n'
                      '- 已通过中文资源、翻译运行、Windows 控件及离线回归测试、Release/Debug 构建和依赖漏洞检查。\n'
@@ -38,7 +42,8 @@ else:
                      '- ZIP：解压完整文件后启动 MissionPlanner.exe；不要仅复制 EXE。\n'
                      '- MSI 已通过安装、文件一致性、修复和卸载保留数据测试。\n'
                      '- 包含 SHA256SUMS 校验文件。未签名；真实飞控、飞行、高 DPI 与所有外部服务尚需实机验收。\n\n'
-                     f'构建提交：`{sha}`\n', encoding='utf-8')
+                     f'构建提交：`{sha}`\n\n'
+                     + upstream_body, encoding='utf-8')
     print(run('gh', 'release', 'create', tag, *(str(path) for path in artifacts), str(root / 'SHA256SUMS'), str(root / 'build-info.json'),
               '--repo', repo, '--target', sha, '--title', f'TitanPlanner-zh-CN v{version}（中文双版本 · {sha[:12]}）',
               '--prerelease', '--notes-file', str(notes)).stdout)

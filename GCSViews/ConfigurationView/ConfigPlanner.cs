@@ -12,6 +12,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using WebCamService;
 
@@ -66,10 +67,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             CMB_severity.Items.Add(SeverityLevel.Debug);
 
             cmb_secondarydisplaystyle.DataSource = Enum.GetNames(typeof(Maps.GMapMarkerBase.InactiveDisplayStyleEnum));
-            cmb_secondarydisplaystyle.Text = Settings.Instance.GetString(
-                "GMapMarkerBase_InactiveDisplayStyle",
-                Maps.GMapMarkerBase.InactiveDisplayStyleEnum.Normal.ToString()
-            );
+            cmb_secondarydisplaystyle.Text = Maps.GMapMarkerBase.InactiveDisplayStyle.ToString();
 
             BuildLayout();
         }
@@ -95,6 +93,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             layoutRoot.Controls.Add(CreateSpeechAndAudioGroup());
             layoutRoot.Controls.Add(CreateUpdatesGroup());
             layoutRoot.Controls.Add(CreateConfigurationGroup());
+            layoutRoot.Controls.Add(CreateKeyboardShortcutsGroup());
 
             PrepareLayoutControls(layoutRoot);
             Controls.Clear();
@@ -105,18 +104,23 @@ namespace MissionPlanner.GCSViews.ConfigurationView
 
         /// <summary>
         /// Lays the setting groups out in equal-width columns, putting each in turn under the shortest column, so
-        /// boxes of different heights pack without gaps.
+        /// boxes of different heights pack without gaps. Groups tagged <see cref="FullWidth"/> go under all the
+        /// columns, as wide as they are together.
         /// </summary>
         private class GroupColumnsPanel : Panel
         {
             private const int MinColumnWidth = 400;
             private const int Gap = 10;
 
+            public static readonly object FullWidth = new object();
+
             protected override void OnLayout(LayoutEventArgs levent)
             {
-                var groups = Controls.Cast<Control>().Where(c => c.Visible).ToList();
+                var visible = Controls.Cast<Control>().Where(c => c.Visible).ToList();
+                var groups = visible.Where(c => c.Tag != FullWidth).ToList();
+                var wide = visible.Where(c => c.Tag == FullWidth).ToList();
                 int width = ClientSize.Width - Padding.Horizontal;
-                if (groups.Count == 0 || width <= 0)
+                if (visible.Count == 0 || width <= 0)
                 {
                     base.OnLayout(levent);
                     return;
@@ -125,15 +129,16 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                 int minColumnWidth = (int)Math.Ceiling(MinColumnWidth * DeviceDpi / 96.0);
                 int columns = Math.Max(1, Math.Min(3, Math.Min(groups.Count, (width + Gap) / (minColumnWidth + Gap))));
                 int columnWidth = Math.Max(1, (width - (columns - 1) * Gap) / columns);
+                int fullWidth = columns * columnWidth + (columns - 1) * Gap;
 
-                // the groups size their height to their content; pin their width to the column's
+                // the groups size their height to their content; pin their width to the column's (or all of them)
                 SuspendLayout();
-                foreach (var group in groups)
+                foreach (var group in visible)
                 {
                     // Each column includes the group's outer margins, just as the
                     // previous flow layout did. Otherwise its right margin overflows
                     // the padded viewport even when the group's border fits.
-                    int groupWidth = Math.Max(1, columnWidth - group.Margin.Horizontal);
+                    int groupWidth = Math.Max(1, (wide.Contains(group) ? fullWidth : columnWidth) - group.Margin.Horizontal);
                     group.MinimumSize = Size.Empty;
                     group.MaximumSize = new Size(groupWidth, 0);
                     group.MinimumSize = new Size(groupWidth, 0);
@@ -152,6 +157,15 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                     group.Location = new Point(origin.X + column * (columnWidth + Gap) + group.Margin.Left,
                         origin.Y + bottoms[column] + group.Margin.Top);
                     bottoms[column] += group.Height + group.Margin.Vertical + Gap;
+                }
+
+                int bottom = bottoms.Max();
+                foreach (var group in wide)
+                {
+                    // Width excludes the outer margins, so position and stacking
+                    // must account for them just like ordinary column groups.
+                    group.Location = new Point(origin.X + group.Margin.Left, origin.Y + bottom + group.Margin.Top);
+                    bottom += group.Height + group.Margin.Vertical + Gap;
                 }
                 ResumeLayout(false);
 
@@ -298,6 +312,49 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             return group;
         }
 
+        /// <summary>
+        /// The keyboard shortcuts, by where they work, read from their [KeyboardShortcut] declarations: a shortcut
+        /// added or changed in the code shows here as it is.
+        /// </summary>
+        private Control CreateKeyboardShortcutsGroup()
+        {
+            var group = CreateGroupBox(UiText.Translate("Keyboard Shortcuts"));
+            group.Tag = GroupColumnsPanel.FullWidth;
+            var table = CreateTableLayout(2);
+
+            string scope = null;
+            int row = 0;
+            foreach (var shortcut in KeyboardShortcuts.All)
+            {
+                if (shortcut.Scope != scope)
+                {
+                    scope = shortcut.Scope;
+                    var header = new Label
+                    {
+                        AutoSize = true,
+                        Text = UiText.Translate(scope),
+                        Margin = new Padding(3, row == 0 ? 3 : 12, 3, 3)
+                    };
+                    header.Font = new Font(header.Font, FontStyle.Bold);
+                    table.Controls.Add(header, 0, row);
+                    table.SetColumnSpan(header, 2);
+                    row++;
+                }
+
+                table.Controls.Add(new Label
+                {
+                    AutoSize = true,
+                    Text = shortcut.KeysText,
+                    Margin = new Padding(15, 3, 20, 3)
+                }, 0, row);
+                table.Controls.Add(new Label { AutoSize = true, Text = UiText.Translate(shortcut.Description) }, 1, row);
+                row++;
+            }
+
+            group.Controls.Add(table);
+            return group;
+        }
+
         private Control CreateSpeechAndAudioGroup()
         {
             var group = CreateGroupBox(label95.Text);
@@ -335,13 +392,29 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             var group = CreateGroupBox("Updates");
             var table = CreateTableLayout(1);
 
+            // the running build and how many releases behind it is, filled in once GitHub answers
+            var lblBuild = new Label
+            {
+                Text = UiText.Translate("Comparing this build with the releases..."),
+                AutoSize = true,
+                Margin = new Padding(3, 3, 3, 6)
+            };
+            table.Controls.Add(lblBuild, 0, 0);
+            Task.Run(() => Utilities.Update.DescribeRunningBuild()).ContinueWith(t =>
+            {
+                if (!lblBuild.IsDisposed)
+                    lblBuild.Text = t.Status == TaskStatus.RanToCompletion
+                        ? t.Result
+                        : UiText.Translate("Couldn't compare this build with the releases.");
+            }, TaskScheduler.FromCurrentSynchronizationContext());
+
             var btnCheckUpdate = new MyButton
             {
                 Text = UiText.Translate("Check for Updates"),
                 AutoSize = true
             };
             btnCheckUpdate.Click += BtnCheckUpdate_Click;
-            table.Controls.Add(btnCheckUpdate, 0, 0);
+            table.Controls.Add(btnCheckUpdate, 0, 1);
 
             var btnBetaUpdate = new MyButton
             {
@@ -349,7 +422,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                 AutoSize = true
             };
             btnBetaUpdate.Click += BtnBetaUpdate_Click;
-            table.Controls.Add(btnBetaUpdate, 0, 1);
+            table.Controls.Add(btnBetaUpdate, 0, 2);
 
             var lnkReleases = new LinkLabel
             {
@@ -358,7 +431,11 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                 Margin = new Padding(3, 6, 3, 3)
             };
             lnkReleases.LinkClicked += LnkReleases_LinkClicked;
-            table.Controls.Add(lnkReleases, 0, 2);
+            table.Controls.Add(lnkReleases, 0, 3);
+
+            // wrap the text to the group's width, as the speech options do
+            group.SizeChanged += (s, e) => lblBuild.MaximumSize = new Size(
+                Math.Max(1, group.DisplayRectangle.Width - table.Padding.Horizontal - lblBuild.Margin.Horizontal), 0);
 
             var updateNotice = new Label
             {
@@ -368,7 +445,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             };
             table.SizeChanged += (sender, e) => updateNotice.MaximumSize =
                 new Size(Math.Max(1, table.ClientSize.Width - updateNotice.Margin.Horizontal), 0);
-            table.Controls.Add(updateNotice, 0, 3);
+            table.Controls.Add(updateNotice, 0, 4);
 
             group.Controls.Add(table);
             return group;
@@ -1406,7 +1483,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                     return;
                 Settings.Instance["speecharm"] = speechstring;
 
-                speechstring = "Disarmed";
+                speechstring = UiText.Translate("Disarmed");
                 if (Settings.Instance["speechdisarm"] != null)
                     speechstring = Settings.Instance["speechdisarm"];
                 if (DialogResult.Cancel == InputBox.Show(UiText.Translate("Disarmed"), UiText.Translate("What do you want it to say?"), ref speechstring))
@@ -1445,6 +1522,10 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             Settings.Instance["beta_updates"] = CHK_beta.Checked.ToString();
 
             MissionPlanner.Utilities.Update.dobeta = CHK_beta.Checked;
+
+            // turned on by the user (not loaded from settings): offer the development build now
+            if (!startup && CHK_beta.Checked)
+                BtnCheckUpdate_Click(sender, e);
         }
 
         private void CHK_Password_CheckedChanged(object sender, EventArgs e)
@@ -1736,13 +1817,13 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             if (Enum.TryParse(cmb_secondarydisplaystyle.Text,
                               out Maps.GMapMarkerBase.InactiveDisplayStyleEnum result))
             {
-                Settings.Instance["GMapMarkerBase_InactiveDisplayStyle"] = cmb_secondarydisplaystyle.Text;
+                Settings.Instance["GMapMarkerBase_InactiveStyle"] = cmb_secondarydisplaystyle.Text;
                 Maps.GMapMarkerBase.InactiveDisplayStyle = result;
             }
             else
             {
-                Settings.Instance["GMapMarkerBase_InactiveDisplayStyle"] = Maps.GMapMarkerBase.InactiveDisplayStyleEnum.Normal.ToString();
-                Maps.GMapMarkerBase.InactiveDisplayStyle = Maps.GMapMarkerBase.InactiveDisplayStyleEnum.Normal;
+                Settings.Instance["GMapMarkerBase_InactiveStyle"] = Maps.GMapMarkerBase.InactiveDisplayStyleEnum.Transparent.ToString();
+                Maps.GMapMarkerBase.InactiveDisplayStyle = Maps.GMapMarkerBase.InactiveDisplayStyleEnum.Transparent;
             }
         }
 

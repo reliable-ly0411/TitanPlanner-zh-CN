@@ -1430,5 +1430,20 @@
   "Altitude": "高度",
   "Terrain": "地形",
   "Clearance": "离地高度",
-  "{0} at {1}": "{0}，位于航程 {1} 处"
+  "{0} at {1}": "{0}，位于航程 {1} 处",
+  "Model Scale (m):": "模型比例（米）：",
+  "Marker Size:": "标记大小：",
+  "Cloud Density:": "云层密度：",
+  "Model Color:": "模型颜色：",
+  "FPV Mode": "第一人称模式",
+  "Smooth Movement": "平滑运动",
+  "Stats For Nerds": "性能统计",
+  "Show all": "显示全部",
+  "Rally points": "集结点",
+  "Outside fence": "围栏外",
+  "Detecting...": "检测中…",
+  "Comparing this build with the releases...": "正在比较当前构建与发布版本…",
+  "Couldn't compare this build with the releases.": "无法比较当前构建与发布版本。",
+  "Running Chinese fork {0}. Check this fork’s Releases for updates.": "正在运行中文分支 {0}。请到本分支发布页面检查更新。",
+  "Keyboard Shortcuts": "键盘快捷键"
 }
