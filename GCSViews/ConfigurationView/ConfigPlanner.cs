@@ -162,8 +162,10 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                 int bottom = bottoms.Max();
                 foreach (var group in wide)
                 {
-                    group.Location = new Point(origin.X, origin.Y + bottom);
-                    bottom += group.Height + Gap;
+                    // Width excludes the outer margins, so position and stacking
+                    // must account for them just like ordinary column groups.
+                    group.Location = new Point(origin.X + group.Margin.Left, origin.Y + bottom + group.Margin.Top);
+                    bottom += group.Height + group.Margin.Vertical + Gap;
                 }
                 ResumeLayout(false);
 
