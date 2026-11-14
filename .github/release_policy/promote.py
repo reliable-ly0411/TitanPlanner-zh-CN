@@ -28,6 +28,7 @@ if len(records) != 1:
 archive(repo, records[0])  # Verify immutable GitHub artifact digest before download/extraction.
 subprocess.run(['gh','run','download',run_id,'--repo',repo,'--name','windows-release','--dir','release'],check=True)
 verify(Path('release'), run, sha, 'windows')
+os.environ['SYNC_BRANCH'] = candidate_branch
 os.environ['BUILD_SHA'] = sha
 os.environ['BASE_SHA'] = sha
 os.environ['CANDIDATE_BRANCH'] = ''

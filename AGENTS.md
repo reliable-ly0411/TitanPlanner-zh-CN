@@ -9,7 +9,9 @@ This repository is `reliable-ly0411/TitanPlanner-zh-CN`. Its immediate upstream 
 Titan Dynamics fork; use these overrides when they differ from this fork's policy.
 
 - Preserve the complete fork history and both Chinese variants when merging upstream.
-  Never reset or force-push `master` to the upstream branch.
+  Never reset or force-push a localized branch to upstream. `Titanmain` and `missionmain`
+  are exact upstream mirrors; `zh-CN-dev` receives source merges, `zh-CN` is the stable
+  maintenance line, and `master` remains migration-compatible history.
 - Keep original `zh-Hans` resources byte-for-byte against the recorded baseline.
   Maintain enhanced `zh-CN` strings through `localization/zh-Hans/*translations.json`
   and the generators under `scripts/localization/`; keep display translation separate
