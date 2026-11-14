@@ -68,6 +68,15 @@ class SettingsUiProbe {
     Check(language.GetItemText(language.Items.Cast<CultureInfo>().Single(c=>c.Name=="zh-CN"))=="中文(简体)2","new label mismatch");
     Check(language.GetItemText(language.Items.Cast<CultureInfo>().Single(c=>c.Name=="zh-Hans"))=="中文(简体)","original label mismatch");
     languageSetting.SetValue(settings,culture,new object[]{"language"});setup.Invoke(view,null);
+    // Upstream's shortcuts section deliberately spans all columns. Keep it
+    // out of the column-count assertion, and verify its separate layout contract.
+    FieldInfo fullWidthField=layout.GetType().GetField("FullWidth",BindingFlags.Public|BindingFlags.Static);
+    Check(fullWidthField!=null,"full-width layout marker missing");
+    object fullWidthTag=fullWidthField.GetValue(null);
+    var columnGroups=layout.Controls.Cast<Control>().Where(c=>c.Visible&&!Object.ReferenceEquals(c.Tag,fullWidthTag)).ToList();
+    var fullWidthGroups=layout.Controls.Cast<Control>().Where(c=>c.Visible&&Object.ReferenceEquals(c.Tag,fullWidthTag)).ToList();
+    Check(columnGroups.Count>0,"ordinary settings groups missing");
+    Check(fullWidthGroups.Count==1,"keyboard shortcuts full-width group missing/duplicated");
     // Returning to a narrow viewport catches stale widths and scroll ranges.
     foreach(int width in new[]{640,1024,1600,640}) {
      form.ClientSize=new Size(width,1000);form.PerformLayout();view.PerformLayout();Application.DoEvents();
@@ -76,7 +85,12 @@ class SettingsUiProbe {
       Console.WriteLine("width="+width+" group="+group.Text+" bounds="+group.Bounds);
       Check(group.Right+group.Margin.Right<=layout.ClientSize.Width-layout.Padding.Right+1,"group clips horizontally at "+width+": "+group.Text);
      }
-     if(width==1600) Check(layout.Controls.Cast<Control>().Select(c=>c.Left).Distinct().Count()==3,"wide screen should have three columns");
+     if(width==1600) Check(columnGroups.Select(c=>c.Left).Distinct().Count()==3,"wide screen should have three columns");
+     foreach(Control wide in fullWidthGroups) {
+      Check(wide.Top>=columnGroups.Max(c=>c.Bottom+c.Margin.Bottom),"full-width group overlaps ordinary settings at "+width);
+      Check(wide.Left>=layout.Padding.Left&&wide.Left<=columnGroups.Min(c=>c.Left),"full-width group left edge is outside the columns at "+width);
+      Check(wide.Right>=columnGroups.Max(c=>c.Right),"full-width group does not span all columns at "+width);
+     }
      using(Bitmap image=new Bitmap(form.ClientSize.Width,form.ClientSize.Height)){view.DrawToBitmap(image,new Rectangle(Point.Empty,image.Size));image.Save(Path.Combine(output,"settings-"+width+".png"),ImageFormat.Png);}
     }
     // Exercise real selection events and persistence in this process's isolated
