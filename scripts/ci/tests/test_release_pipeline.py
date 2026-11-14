@@ -59,6 +59,9 @@ class PackageTests(unittest.TestCase):
 
 class UpstreamTests(unittest.TestCase):
     def setUp(self):
+        target = patch.object(upstream, 'TARGET', 'master')
+        target.start()
+        self.addCleanup(target.stop)
         self.temp=tempfile.TemporaryDirectory();self.addCleanup(self.temp.cleanup)
         self.root=Path(self.temp.name);self.original=Path.cwd();self.addCleanup(os.chdir,self.original)
         self.origin=self.root/'origin.git';self.up=self.root/'upstream.git';self.repo=self.root/'work'
