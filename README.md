@@ -30,7 +30,9 @@ This fork implements every feature we've always yearned for with considerable UI
 
 ### Windows (Recommended)
 
-Grab the latest installer from [Releases](https://github.com/Titan-Dynamics/TitanPlanner/releases/latest). The app will notify you on updates from then on.
+For this Chinese-localized fork, use [TitanPlanner-zh-CN releases](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/releases) and read the [Chinese installation and verification notes](README.zh-CN.md). Source updates on `master` are not automatically published binaries.
+
+The original Titan Dynamics packages remain available from [upstream releases](https://github.com/Titan-Dynamics/TitanPlanner/releases/latest); they do not include this fork's enhanced Chinese resources.
 
 ### Building from Source
 

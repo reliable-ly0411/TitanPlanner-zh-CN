@@ -13,12 +13,12 @@
 
 ## 获取和更新
 
-本仓库 [Releases](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/releases) 提供同一构建的两种 Windows 预发布包：
+本仓库 [Releases](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/releases) 提供 Windows 安装版和便携版。优先核对具体发布的源码提交、附件与已知限制；历史发布可能同时存在正式/预发布标记，不能仅凭 Latest 标记认定已完成实机验收。
 
 - **MSI 安装版**：适用于 64 位 Windows，安装到当前用户的 `%LOCALAPPDATA%\Programs\TitanPlanner-zh-CN`，并创建开始菜单入口；可通过系统“应用和功能”卸载，保留个人配置和日志。安装界面为简体中文，需要 .NET Framework 4.7.2 或更新版本。
 - **ZIP 便携版**：解压完整 ZIP 到新目录，运行 `MissionPlanner.exe`，保留全部中文卫星程序集及原生库。
 
-两种格式均包含原版中文和“中文(简体)2”。文件名包含程序版本和提交标识，例如 `TitanPlanner-zh-CN-v1.3.83-<提交前12位>-windows.msi/zip`；发布标题和标签也带程序版本。`SHA256SUMS` 用于核对下载完整性。
+两种格式均包含原版中文和“中文(简体)2”。当前打包约定为固定附件名 `TitanPlanner-zh-CN.msi` 和 `TitanPlanner-zh-CN.zip`，发布标题、不可变标签及包内构建信息用于区分版本与源码提交。历史附件曾使用带版本和提交的名称；校验时使用该次发布实际列出的文件名及 SHA-256，不能将不同发布的清单混用。
 
 应用内更新入口也指向本仓库，不再用上游二进制覆盖中文版本。自动发布仍需真实飞控、飞行、高 DPI 与完整功能验收；不能把通过单元测试等同于飞行验证。
 
@@ -47,7 +47,9 @@ VS Code 的简体中文包为 `MS-CEINTL.vscode-language-pack-zh-hans`，C# 扩�
 
 ## 测试与自动化
 
-详见 [AUTOMATION.zh-CN.md](AUTOMATION.zh-CN.md)。每日检查上游，先验证候选版本再推进主分支和发布；冲突或测试失败保留待审查分支。构建包括 Release/Debug、中文静态及运行测试、真实 Windows 控件、离线回归测试、依赖漏洞审计和 ZIP 校验。
+详见 [AUTOMATION.zh-CN.md](AUTOMATION.zh-CN.md)。每日 03:17 UTC 同步上游源码并运行轻量检查；普通 push/PR 不触发完整编译或发布。只有新识别的上游正式 Release 才触发自动候选构建，手动原生构建与已验工件提升是独立入口。冲突或策略变化会停止同步，不应把同步失败直接称为 Windows 构建失败。
+
+原生构建包括 Release/Debug、中文静态及运行测试、真实 Windows 控件、离线回归测试、依赖漏洞审计和 ZIP/MSI 校验。自动发布仍受不可变源码锚点与版本/说明映射门禁限制；通过轻量检查或构建均不等于已经发布。
 
 ```powershell
 python scripts/localization/verify_zh_hans.py
@@ -70,3 +72,11 @@ python scripts/localization/verify_zh_hans.py
 动态文本只在显示位置调用 `UiText.Translate` / `UiText.Format`；保留格式占位符、链接和协议标识。原版与其他语言不会串用增强版动态译文。
 
 原版资源基线：`26d0836e3854c2166dc0cbcacbbbb9813b890b2d`。本轮不改飞控控制算法。
+
+## 维护状态与反馈
+
+截至 2026-11-14，实际维护入口仍为 `master`；`release-policy-state` 是发布识别台账，不是程序版本分支。历史 Release/tag、Actions 运行和构建工件各有不同用途，不以数量或相同程序版本号判断内容重复。
+
+- [PR #8：上游同步冲突修复](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/pull/8) 仍为草稿。精确候选 `b0637145d675` 的[轻量检查已通过](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/actions/runs/43016066166)，但尚未合入 `master`；其说明仍列明 Windows 原生编译、WinForms 与 .NET 离线回归未验证。
+- 最新发布的源码不等于当前 `master`。下载时以该次 Release 的构建提交为准，不把尚未发布的同步改进计入旧安装包。
+- 本仓库目前未开放 Issues。已有同步提案和验证进度通过上述 PR 跟踪；不要把部分验证或文档整理视为问题已关闭。
