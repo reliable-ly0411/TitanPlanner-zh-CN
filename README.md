@@ -2,6 +2,20 @@
 
 > **中文双版本：** 保留“中文(简体)”并提供增强“中文(简体)2”。本仓库使用独立 .NET SDK 构建 Windows 程序，普通同步只运行轻量检查，新上游正式发布才自动构建候选，发布另受不可变源码与工件门禁约束；参见 [中文使用说明](README.zh-CN.md) 与 [上游同步及发布流程](AUTOMATION.zh-CN.md)。下文保留上游项目介绍。
 
+## 双上游实时比较
+
+以下链接在打开或刷新时按 GitHub 当前分支计算，不是写死的领先/落后数字。
+
+| 汉化线 | 相对 TitanPlanner 镜像 | 相对 MissionPlanner 镜像 |
+| --- | --- | --- |
+| 稳定 `zh-CN` | [本线新增](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/compare/Titanmain...zh-CN) · [镜像侧新增](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/compare/zh-CN...Titanmain) | [本线新增](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/compare/missionmain...zh-CN) · [镜像侧新增](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/compare/zh-CN...missionmain) |
+| 开发 `zh-CN-dev` | [本线新增](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/compare/Titanmain...zh-CN-dev) · [镜像侧新增](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/compare/zh-CN-dev...Titanmain) | [本线新增](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/compare/missionmain...zh-CN-dev) · [镜像侧新增](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/compare/zh-CN-dev...missionmain) |
+
+- “本线新增”以镜像为 base、汉化线为 compare；“镜像侧新增”反向比较，查看尚未进入该汉化线历史的提交。
+- 三点比较的文件差异从共同祖先算到 compare 分支，不是两个最新文件树的逐项差异。提交数包含合并、流程与文档，不能当作未翻译条目或缺陷数量。
+- `Titanmain` 是直接上游 TitanPlanner 的纯镜像；`missionmain` 是 MissionPlanner 的纯镜像。相对 MissionPlanner 的差异还包含 TitanPlanner 自身功能，不能全算作汉化改动，也不表示应直接合并 MissionPlanner。
+- 比较针对本仓镜像的当前状态；镜像通过定时或手动同步刷新，并非上游一提交就自动实时同步。同步情况见 [Actions](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/actions) 和 [同步流程](AUTOMATION.zh-CN.md)。两个镜像不加入本仓 README 改动。
+
 ## Mission Planner - Titan Dynamics Edition
 
 <p align="center">
@@ -30,7 +44,7 @@ This fork implements every feature we've always yearned for with considerable UI
 
 ### Windows (Recommended)
 
-For this Chinese-localized fork, use [TitanPlanner-zh-CN releases](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/releases) and read the [Chinese installation and verification notes](README.zh-CN.md). Source updates on `master` are not automatically published binaries.
+For this Chinese-localized fork, use [TitanPlanner-zh-CN releases](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/releases) and read the [Chinese installation and verification notes](README.zh-CN.md). Source updates on `zh-CN` or `zh-CN-dev` are not automatically published binaries.
 
 The original Titan Dynamics packages remain available from [upstream releases](https://github.com/Titan-Dynamics/TitanPlanner/releases/latest); they do not include this fork's enhanced Chinese resources.
 
