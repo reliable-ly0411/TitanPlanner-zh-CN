@@ -8,6 +8,9 @@ import subprocess
 import tempfile
 
 UPSTREAM = 'https://github.com/Titan-Dynamics/TitanPlanner.git'
+TARGET = os.environ.get('SYNC_BRANCH', 'master')
+if TARGET not in ('master', 'zh-CN-dev'):
+    raise ValueError('Source synchronization is restricted to the development line')
 
 
 def run(*args, check=True):
@@ -41,7 +44,7 @@ def proposal(branch, reason):
     with tempfile.NamedTemporaryFile(mode='w', encoding='utf-8', suffix='.md') as file:
         file.write(body)
         file.flush()
-        result = run('gh', 'pr', 'create', '--repo', repo, '--base', 'master', '--head', branch,
+        result = run('gh', 'pr', 'create', '--repo', repo, '--base', TARGET, '--head', branch,
                      '--title', 'chore: review upstream TitanPlanner update', '--body-file', file.name, check=False)
     if result.returncode:
         raise RuntimeError('Candidate branch retained, but PR creation failed. Enable Actions PR creation in repository settings.\n' + result.stderr)
@@ -85,7 +88,7 @@ def prepare(sync, upstream=UPSTREAM):
 
 
 def promote(base, sha):
-    git('fetch', 'origin', 'master')
+    git('fetch', 'origin', TARGET)
     current = git('rev-parse', 'FETCH_HEAD')
     if current == sha:
         return  # Safe retry after a release upload failure.
@@ -99,7 +102,7 @@ def promote(base, sha):
     if not ancestor(base, sha):
         raise RuntimeError('Candidate is not a descendant of tested base')
     # Ordinary fast-forward push also protects against a race after the fetch.
-    git('push', 'origin', sha + ':refs/heads/master')
+    git('push', 'origin', sha + ':refs/heads/' + TARGET)
 
 
 if __name__ == '__main__':

@@ -1,9 +1,9 @@
 name: Lightweight localization and policy checks
 on:
   push:
-    branches: [master]
+    branches: [master, zh-CN, zh-CN-dev]
   pull_request:
-    branches: [master]
+    branches: [master, zh-CN, zh-CN-dev]
 permissions:
   contents: read
 jobs:

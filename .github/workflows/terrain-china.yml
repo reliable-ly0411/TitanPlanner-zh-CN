@@ -8,7 +8,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   package:
-    if: github.repository == 'reliable-ly0411/TitanPlanner-zh-CN' && github.ref == 'refs/heads/master'
+    if: github.repository == 'reliable-ly0411/TitanPlanner-zh-CN' && (github.ref == 'refs/heads/zh-CN' || github.ref == 'refs/heads/master')
     runs-on: ubuntu-24.04
     timeout-minutes: 180
     permissions:

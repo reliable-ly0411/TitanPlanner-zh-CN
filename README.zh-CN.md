@@ -80,3 +80,14 @@ python scripts/localization/verify_zh_hans.py
 - [PR #8：上游同步冲突修复](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/pull/8) 仍为草稿。精确候选 `b0637145d675` 的[轻量检查已通过](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/actions/runs/43016066166)，但尚未合入 `master`；其说明仍列明 Windows 原生编译、WinForms 与 .NET 离线回归未验证。
 - 最新发布的源码不等于当前 `master`。下载时以该次 Release 的构建提交为准，不把尚未发布的同步改进计入旧安装包。
 - 本仓库目前未开放 Issues。已有同步提案和验证进度通过上述 PR 跟踪；不要把部分验证或文档整理视为问题已关闭。
+
+
+## 分支导航 / Branches
+
+- `Titanmain`：TitanPlanner 上游 `master` 精确镜像。
+- `missionmain`：MissionPlanner 上游 `master` 精确镜像。
+- `zh-CN`：汉化稳定维护线；分支存在不代表其中每个提交均已发包。
+- `zh-CN-dev`：汉化开发与上游合并候选；验收后推进稳定线。
+- `master`：迁移兼容历史；`release-policy-state`：发布状态记录，非产品分支。
+
+镜像不含本仓改动。定时同步先刷新镜像，再检查开发线；不自动将开发候选升级为稳定版。详见 [分支和发布规范](RELEASING.repository.zh-CN.md)。

@@ -86,3 +86,14 @@ See [Linux/README.md](Linux/README.md) for the upstream build (`./Linux/build.sh
 ## License
 
 See [COPYING.txt](COPYING.txt).
+
+
+## 分支导航 / Branches
+
+- `Titanmain`：TitanPlanner 上游 `master` 精确镜像。
+- `missionmain`：MissionPlanner 上游 `master` 精确镜像。
+- `zh-CN`：汉化稳定维护线；分支存在不代表其中每个提交均已发包。
+- `zh-CN-dev`：汉化开发与上游合并候选；验收后推进稳定线。
+- `master`：迁移兼容历史；`release-policy-state`：发布状态记录，非产品分支。
+
+镜像不含本仓改动。定时同步先刷新镜像，再检查开发线；不自动将开发候选升级为稳定版。详见 [分支和发布规范](RELEASING.repository.zh-CN.md)。

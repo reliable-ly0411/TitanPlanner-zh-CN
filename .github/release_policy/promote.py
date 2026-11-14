@@ -13,7 +13,10 @@ if repo != 'reliable-ly0411/TitanPlanner-zh-CN':
 run_id = os.environ['CANDIDATE_RUN_ID']
 sha = os.environ['SOURCE_SHA']
 run = api(f'repos/{repo}/actions/runs/{run_id}')
-validate_run(run, repo, sha, 'master', '.github/workflows/main.yml')
+candidate_branch = run.get('head_branch')
+if candidate_branch not in ('zh-CN', 'master'):
+    raise ValueError('Only a stable-line candidate can be published')
+validate_run(run, repo, sha, candidate_branch, '.github/workflows/main.yml')
 if subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip() != sha:
     raise ValueError('Checkout differs from requested source')
 jobs = api(f'repos/{repo}/actions/runs/{run_id}/jobs?per_page=100')
