@@ -2,6 +2,20 @@
 
 基于 Titan-Dynamics/TitanPlanner，在保留原项目许可和署名的基础上维护简体中文体验、Windows 构建及自动上游同步。见 [COPYING.txt](COPYING.txt)、[上游说明](README.md)。
 
+## 双上游实时比较
+
+以下链接在打开或刷新时按 GitHub 当前分支计算，不是写死的领先/落后数字。
+
+| 汉化线 | 相对 TitanPlanner 镜像 | 相对 MissionPlanner 镜像 |
+| --- | --- | --- |
+| 稳定 `zh-CN` | [本线新增](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/compare/Titanmain...zh-CN) · [镜像侧新增](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/compare/zh-CN...Titanmain) | [本线新增](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/compare/missionmain...zh-CN) · [镜像侧新增](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/compare/zh-CN...missionmain) |
+| 开发 `zh-CN-dev` | [本线新增](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/compare/Titanmain...zh-CN-dev) · [镜像侧新增](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/compare/zh-CN-dev...Titanmain) | [本线新增](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/compare/missionmain...zh-CN-dev) · [镜像侧新增](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/compare/zh-CN-dev...missionmain) |
+
+- “本线新增”以镜像为 base、汉化线为 compare；“镜像侧新增”反向比较，查看尚未进入该汉化线历史的提交。
+- 三点比较的文件差异从共同祖先算到 compare 分支，不是两个最新文件树的逐项差异。提交数包含合并、流程与文档，不能当作未翻译条目或缺陷数量。
+- `Titanmain` 是直接上游 TitanPlanner 的纯镜像；`missionmain` 是 MissionPlanner 的纯镜像。相对 MissionPlanner 的差异还包含 TitanPlanner 自身功能，不能全算作汉化改动，也不表示应直接合并 MissionPlanner。
+- 比较针对本仓镜像的当前状态；镜像通过定时或手动同步刷新，并非上游一提交就自动实时同步。同步情况见 [Actions](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/actions) 和 [同步流程](AUTOMATION.zh-CN.md)。两个镜像不加入本仓 README 改动。
+
 ## 选择界面语言
 
 - **中文(简体)**：原版 `zh-Hans`，69 个原版资源文件按基线哈希保留。
@@ -75,10 +89,10 @@ python scripts/localization/verify_zh_hans.py
 
 ## 维护状态与反馈
 
-截至 2026-11-14，实际维护入口仍为 `master`；`release-policy-state` 是发布识别台账，不是程序版本分支。历史 Release/tag、Actions 运行和构建工件各有不同用途，不以数量或相同程序版本号判断内容重复。
+实际维护入口为稳定线 `zh-CN` 和开发线 `zh-CN-dev`，`master` 仅保留迁移兼容历史；`release-policy-state` 是发布识别台账，不是程序版本分支。历史 Release/tag、Actions 运行和构建工件各有不同用途，不以数量或相同程序版本号判断内容重复。
 
-- [PR #8：上游同步冲突修复](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/pull/8) 仍为草稿。精确候选 `b0637145d675` 的[轻量检查已通过](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/actions/runs/43016066166)，但尚未合入 `master`；其说明仍列明 Windows 原生编译、WinForms 与 .NET 离线回归未验证。
-- 最新发布的源码不等于当前 `master`。下载时以该次 Release 的构建提交为准，不把尚未发布的同步改进计入旧安装包。
+- [PR #8：上游同步冲突修复](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/pull/8) 跟踪同步候选及验证。以 PR 和对应精确提交的 Actions 结果为准；进入开发线、通过测试、推进稳定线与发布安装包是不同阶段。
+- 最新发布的源码不一定等于当前汉化分支。下载时以该次 Release 的构建提交为准，不把尚未发布的同步改进计入旧安装包。
 - 本仓库目前未开放 Issues。已有同步提案和验证进度通过上述 PR 跟踪；不要把部分验证或文档整理视为问题已关闭。
 
 
