@@ -2,7 +2,16 @@
 
 基于 Titan-Dynamics/TitanPlanner，在保留原项目许可和署名的基础上维护简体中文体验、Windows 构建及自动上游同步。见 [COPYING.txt](COPYING.txt)、[上游说明](README.md)。
 
-## 双上游实时比较
+## 双上游差异数字与比较
+
+以下数字直接读取 GitHub compare API：`ahead` 表示该汉化线领先镜像的提交数，`behind` 表示落后镜像的提交数。每列镜像为 base，每行汉化线为 head；不是未翻译条数。
+
+| 汉化线 | 相对 TitanPlanner 镜像 `Titanmain` | 相对 MissionPlanner 镜像 `missionmain` |
+| --- | --- | --- |
+| `zh-CN` | [![zh-CN 相对 Titanmain ahead](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.github.com%2Frepos%2Freliable-ly0411%2FTitanPlanner-zh-CN%2Fcompare%2FTitanmain...zh-CN&query=%24.ahead_by&label=ahead&cacheSeconds=300&color=blue)](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/compare/Titanmain...zh-CN) [![zh-CN 相对 Titanmain behind](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.github.com%2Frepos%2Freliable-ly0411%2FTitanPlanner-zh-CN%2Fcompare%2FTitanmain...zh-CN&query=%24.behind_by&label=behind&cacheSeconds=300&color=orange)](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/compare/Titanmain...zh-CN) | [![zh-CN 相对 missionmain ahead](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.github.com%2Frepos%2Freliable-ly0411%2FTitanPlanner-zh-CN%2Fcompare%2Fmissionmain...zh-CN&query=%24.ahead_by&label=ahead&cacheSeconds=300&color=blue)](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/compare/missionmain...zh-CN) [![zh-CN 相对 missionmain behind](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.github.com%2Frepos%2Freliable-ly0411%2FTitanPlanner-zh-CN%2Fcompare%2Fmissionmain...zh-CN&query=%24.behind_by&label=behind&cacheSeconds=300&color=orange)](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/compare/missionmain...zh-CN) |
+| `zh-CN-dev` | [![zh-CN-dev 相对 Titanmain ahead](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.github.com%2Frepos%2Freliable-ly0411%2FTitanPlanner-zh-CN%2Fcompare%2FTitanmain...zh-CN-dev&query=%24.ahead_by&label=ahead&cacheSeconds=300&color=blue)](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/compare/Titanmain...zh-CN-dev) [![zh-CN-dev 相对 Titanmain behind](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.github.com%2Frepos%2Freliable-ly0411%2FTitanPlanner-zh-CN%2Fcompare%2FTitanmain...zh-CN-dev&query=%24.behind_by&label=behind&cacheSeconds=300&color=orange)](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/compare/Titanmain...zh-CN-dev) | [![zh-CN-dev 相对 missionmain ahead](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.github.com%2Frepos%2Freliable-ly0411%2FTitanPlanner-zh-CN%2Fcompare%2Fmissionmain...zh-CN-dev&query=%24.ahead_by&label=ahead&cacheSeconds=300&color=blue)](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/compare/missionmain...zh-CN-dev) [![zh-CN-dev 相对 missionmain behind](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.github.com%2Frepos%2Freliable-ly0411%2FTitanPlanner-zh-CN%2Fcompare%2Fmissionmain...zh-CN-dev&query=%24.behind_by&label=behind&cacheSeconds=300&color=orange)](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/compare/missionmain...zh-CN-dev) |
+
+数字使用 Shields 动态徽章，请求缓存 300 秒，GitHub 图片代理也可能缓存，因此不是瞬时实时数据；服务不提供可在徽章中可靠显示的取数时间。限流或服务异常时可能显示错误或旧缓存，不能把它当作零。点击数字或下列比较链接可核对 GitHub 当前结果。镜像本身按同步流程刷新，不保证始终等于上游此刻的最新提交。
 
 以下链接在打开或刷新时按 GitHub 当前分支计算，不是写死的领先/落后数字。
 
