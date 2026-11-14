@@ -161,6 +161,35 @@
       "reason": "Tag reused by a different release ID",
       "status": "blocked",
       "tag": "development-build"
+    },
+    "440005578": {
+      "attempts": 1,
+      "family": "stable",
+      "manifest": {
+        "dependencies": {},
+        "downstream_sha": "dd38ee30b51274b836af8039d415de0d67af597d",
+        "family": "stable",
+        "patch_base": "399939a98eaf9f31ee2ae1d003f918419838025b",
+        "patch_sha256": "06a0884415283401ea2c7714f3b055d5be67bc9b285285c4adb5723c5e3b2832",
+        "publication": "blocked: release-tag plus downstream patch source needs a reviewed immutable remote source anchor and release/version mapping; no automatic publishing is claimed",
+        "published_at": "2026-11-10T06:11:01Z",
+        "release_id": "440005578",
+        "schema": 1,
+        "source_sha": "a37a0d1dc64290dd9f5bf1f88bfb3a5dd636146c",
+        "tag": "TitanPlanner-1.3.9810.11050",
+        "upstream": "Titan-Dynamics/TitanPlanner",
+        "upstream_sha": "399939a98eaf9f31ee2ae1d003f918419838025b"
+      },
+      "published_at": "2026-11-10T06:11:01Z",
+      "run_id": "43586211100",
+      "status": "building",
+      "tag": "TitanPlanner-1.3.9810.11050",
+      "upstream_sha": "399939a98eaf9f31ee2ae1d003f918419838025b"
+    },
+    "445035357": {
+      "reason": "Tag reused by a different release ID",
+      "status": "blocked",
+      "tag": "development-build"
     }
   },
   "schema": 1
