@@ -180,9 +180,11 @@
         "upstream": "Titan-Dynamics/TitanPlanner",
         "upstream_sha": "399939a98eaf9f31ee2ae1d003f918419838025b"
       },
+      "publication": "blocked: release-tag plus downstream patch source needs a reviewed immutable remote source anchor and release/version mapping; no automatic publishing is claimed",
       "published_at": "2026-11-10T06:11:01Z",
+      "result": "success",
       "run_id": "43586211100",
-      "status": "building",
+      "status": "built",
       "tag": "TitanPlanner-1.3.9810.11050",
       "upstream_sha": "399939a98eaf9f31ee2ae1d003f918419838025b"
     },
