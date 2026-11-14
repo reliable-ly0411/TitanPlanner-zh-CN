@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
     inputs:
       candidate_run:
-        description: Successful manual main.yml build run ID on master
+        description: Successful manual main.yml build run ID on zh-CN (master retained during migration)
         type: string
         required: true
       source_sha:
@@ -18,7 +18,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   publish:
-    if: github.repository == 'reliable-ly0411/TitanPlanner-zh-CN' && github.ref == 'refs/heads/master'
+    if: github.repository == 'reliable-ly0411/TitanPlanner-zh-CN' && (github.ref == 'refs/heads/zh-CN' || github.ref == 'refs/heads/master')
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1

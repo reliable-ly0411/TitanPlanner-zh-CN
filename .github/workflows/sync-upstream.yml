@@ -16,11 +16,11 @@ on:
 permissions:
   contents: read
 concurrency:
-  group: release-policy-master
+  group: release-policy-development
   cancel-in-progress: false
 jobs:
   sync:
-    if: github.repository == 'reliable-ly0411/TitanPlanner-zh-CN' && github.ref == 'refs/heads/master'
+    if: github.repository == 'reliable-ly0411/TitanPlanner-zh-CN' && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/zh-CN')
     runs-on: ubuntu-24.04
     permissions:
       contents: write
@@ -32,12 +32,15 @@ jobs:
       manifest: ${{ steps.release.outputs.manifest }}
     env:
       PYTHONDONTWRITEBYTECODE: '1'
+      SYNC_BRANCH: zh-CN-dev
       GH_TOKEN: ${{ github.token }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
-          ref: master
+          ref: zh-CN-dev
           fetch-depth: 0
+      - name: Refresh exact upstream mirrors without merging or force pushing
+        run: python3 scripts/ci/mirror_upstreams.py
       - name: Prepare source-only merge candidate
         id: candidate
         run: |
@@ -84,7 +87,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
-          ref: master
+          ref: zh-CN-dev
           fetch-depth: 0
       - name: Record immutable build outcome
         env:

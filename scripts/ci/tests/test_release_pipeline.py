@@ -100,6 +100,20 @@ class UpstreamTests(unittest.TestCase):
         self.assertEqual(values['sha'],upstream.git('ls-remote','origin','refs/heads/master').split()[0])
         upstream.promote(base,values['sha'])  # Retry is idempotent.
 
+    def test_development_promotion_does_not_move_stable_or_master(self):
+        self.add_upstream('new.txt', 'upstream')
+        base = self.fork_change()
+        upstream.git('push', 'origin', base + ':refs/heads/zh-CN-dev')
+        upstream.git('push', 'origin', base + ':refs/heads/zh-CN')
+        with patch.object(upstream, 'TARGET', 'zh-CN-dev'):
+            with patch.object(upstream, 'output') as output:
+                upstream.prepare(True, str(self.up))
+                candidate = output.call_args.kwargs['sha']
+            upstream.promote(base, candidate)
+        self.assertEqual(candidate, upstream.git('ls-remote', 'origin', 'refs/heads/zh-CN-dev').split()[0])
+        for branch in ('master', 'zh-CN'):
+            self.assertEqual(base, upstream.git('ls-remote', 'origin', 'refs/heads/' + branch).split()[0])
+
     def test_conflict_keeps_master_without_pushing_unreviewed_workflows(self):
         self.add_upstream('base.txt','upstream');base=self.fork_change('base.txt','fork')
         with patch.object(upstream,'proposal') as proposal:

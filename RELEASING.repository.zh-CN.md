@@ -3,8 +3,10 @@
 本文件仅定义本仓库的分支、版本映射与上游例外；与通用规范一并读取。具体任务、检查结果和整改进度不写在本文件。
 
 ## 分支映射
-- 实际维护入口为 `master`；独立长期开发线名称未约定。
-- 本仓汉化维护线与上游原有分支说明分开；专项使用 `docs/`、`fix/` 等，未经确认不创建或重命名长期线。
+- `Titanmain` 精确镜像 `Titan-Dynamics/TitanPlanner/master`；`missionmain` 精确镜像 `ArduPilot/MissionPlanner/master`。镜像不加入汉化、流程或文档提交，仅快进；上游重写历史时停止并报告。
+- `zh-CN` 为汉化稳定维护线；`zh-CN-dev` 为汉化开发线，接收 Titan 上游普通合并及汉化改进。开发线通过验收后才普通合并至稳定线，不将 MissionPlanner 直接混入 Titan 汉化线。
+- `master` 为迁移兼容线，保留历史及旧构建来源；`release-policy-state` 为发布状态数据，不作为产品线或临时分支删除。
+- 纯镜像更新及开发线同步不等于验收或发布。发布只提升稳定线已验原包；旧 `master` 原包仍按相同证据门槛兼容。专项使用 `docs/`、`fix/` 等分支。
 
 ## 版本与产物映射
 - 程序版本来自 `MissionPlanner.csproj`，与 `AssemblyFileVersion` 核对；Windows 四段文件版本和 MSI 升级排序版本单独记录。
