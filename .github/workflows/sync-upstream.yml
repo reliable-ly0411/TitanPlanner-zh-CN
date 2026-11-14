@@ -39,6 +39,18 @@ jobs:
         with:
           ref: zh-CN-dev
           fetch-depth: 0
+      # Also catches stable updates made using GITHUB_TOKEN, which do not emit push workflows.
+      - name: Carry stable history into development before upstream synchronization
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          python3 scripts/ci/align_development.py prepare > /tmp/stable-alignment.txt
+          python3 scripts/localization/verify_zh_hans.py
+          python3 -m unittest discover -s scripts/ci/tests -v
+          python3 -m unittest discover -s .github/release_policy -p 'test_*.py' -v
+          BASE_SHA=$(sed -n 's/^base=//p' /tmp/stable-alignment.txt)
+          SOURCE_SHA=$(sed -n 's/^sha=//p' /tmp/stable-alignment.txt)
+          python3 scripts/ci/align_development.py publish --base "$BASE_SHA" --sha "$SOURCE_SHA"
       - name: Refresh exact upstream mirrors without merging or force pushing
         run: python3 scripts/ci/mirror_upstreams.py
       - name: Prepare source-only merge candidate

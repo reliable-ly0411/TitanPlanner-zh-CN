@@ -1,0 +1,38 @@
+name: Carry stable promotion history into development
+on:
+  push:
+    branches: [zh-CN]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: release-policy-development
+  cancel-in-progress: false
+jobs:
+  align:
+    if: github.repository == 'reliable-ly0411/TitanPlanner-zh-CN' && github.ref == 'refs/heads/zh-CN'
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          fetch-depth: 0
+      - name: Prepare stable history on the current development head
+        id: candidate
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          python3 scripts/ci/align_development.py prepare
+      - name: Validate the merged candidate without a native build
+        run: |
+          python3 scripts/localization/verify_zh_hans.py
+          python3 -m unittest discover -s scripts/ci/tests -v
+          python3 -m unittest discover -s .github/release_policy -p 'test_*.py' -v
+      - name: Publish the checked candidate with a normal fast-forward push
+        env:
+          BASE_SHA: ${{ steps.candidate.outputs.base }}
+          SOURCE_SHA: ${{ steps.candidate.outputs.sha }}
+        run: python3 scripts/ci/align_development.py publish --base "$BASE_SHA" --sha "$SOURCE_SHA"

@@ -5,7 +5,8 @@
 ## 分支映射
 - `Titanmain` 精确镜像 `Titan-Dynamics/TitanPlanner/master`；`missionmain` 精确镜像 `ArduPilot/MissionPlanner/master`。镜像不加入汉化、流程或文档提交，仅快进；上游重写历史时停止并报告。
 - `zh-CN` 为汉化稳定维护线；`zh-CN-dev` 为汉化开发线，接收 Titan 上游普通合并及汉化改进。开发线通过验收后才普通合并至稳定线，不将 MissionPlanner 直接混入 Titan 汉化线。
-- `master` 为迁移兼容线，保留历史及旧构建来源；`release-policy-state` 为发布状态数据，不作为产品线或临时分支删除。
+- 稳定线晋级或维护提交后，自动将稳定历史回合并开发线；可快进时直接快进，否则普通合并并运行轻量检查。冲突由维护者处理，不重写历史。
+- `release-policy-state` 为发布状态数据，不作为产品线或临时分支删除。旧 `master` 历史保留在汉化长期线中。
 - 纯镜像更新及开发线同步不等于验收或发布。发布只提升稳定线已验原包；旧 `master` 原包仍按相同证据门槛兼容。专项使用 `docs/`、`fix/` 等分支。
 
 ## 版本与产物映射
