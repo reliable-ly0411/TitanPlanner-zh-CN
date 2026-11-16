@@ -224,9 +224,9 @@ namespace MissionPlannerTests.Utilities
                         {
                             var pixel = source.GetPixel(x, y);
                             if (Math.Max(pixel.R, Math.Max(pixel.G, pixel.B)) <= 110)
-                                ink.SetPixel(x, y, Color.FromArgb((pixel.A * 217 + 127) / 255, 235, 235, 235));
+                                ink.SetPixel(x, y, Color.FromArgb((pixel.A * 217 + 127) / 255, 190, 190, 190));
                         }
-                        int radius = Math.Max(1, (int)Math.Round(size.Height / 58.0));
+                        const int radius = 1;
                         for (int dy = -radius; dy <= radius; dy++)
                         for (int dx = -radius; dx <= radius; dx++)
                         {

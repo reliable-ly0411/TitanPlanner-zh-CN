@@ -227,7 +227,7 @@ namespace MissionPlanner.Utilities
                     // A display-only underlay follows the supplied neutral dark ink.
                     // Blue artwork and every original foreground pixel stay untouched.
                     if (pixel.R <= 110 && pixel.G <= 110 && pixel.B <= 110)
-                        support.SetPixel(x, y, Color.FromArgb((pixel.A * 217 + 127) / 255, 235, 235, 235));
+                        support.SetPixel(x, y, Color.FromArgb((pixel.A * 217 + 127) / 255, 190, 190, 190));
                 }
                 return support;
             }
@@ -265,7 +265,7 @@ namespace MissionPlanner.Utilities
                 graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
                 if (NeedsInkSupport())
                 {
-                    int radius = Math.Max(1, (int)Math.Round(Height / 58.0));
+                    const int radius = 1;
                     for (int y = -radius; y <= radius; y++)
                     for (int x = -radius; x <= radius; x++)
                     {
