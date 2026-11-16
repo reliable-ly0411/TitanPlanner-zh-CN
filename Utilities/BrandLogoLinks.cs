@@ -17,7 +17,7 @@ namespace MissionPlanner.Utilities
         public static void Configure(ToolStrip menu, ToolStripButton left, Action<string> open)
         {
             using (var stream = typeof(BrandLogoLinks).Assembly.GetManifestResourceStream(
-                "MissionPlanner.Resources.LocalizedBrandLogo.png"))
+                "MissionPlanner.Resources.LocalizedBrandLogo.jpg"))
             using (var source = Image.FromStream(stream))
             {
                 // Keep the existing toolbar height and scale proportionally at its actual DPI.
