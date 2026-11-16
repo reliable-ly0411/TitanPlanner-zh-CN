@@ -21,8 +21,6 @@ jobs:
   branding:
     runs-on: windows-2022
     timeout-minutes: 10
-    env:
-      BRAND_LOGO_SCREENSHOTS: ${{ runner.temp }}/brand-logo-screenshots
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
@@ -31,6 +29,8 @@ jobs:
         with:
           dotnet-version: 8.0.x
       - name: Test brand controls without building the application or flight libraries
+        env:
+          BRAND_LOGO_SCREENSHOTS: ${{ runner.temp }}/brand-logo-screenshots
         run: dotnet test MissionPlannerTests/Branding/Branding.csproj --configuration Release --logger "trx;LogFileName=brand-links.trx" --results-directory "${{ runner.temp }}/brand-logo-results"
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         if: always()
