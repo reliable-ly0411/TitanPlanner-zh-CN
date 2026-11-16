@@ -54,7 +54,16 @@ namespace MissionPlannerTests.Utilities
                     Assert.IsTrue(menu.ClientRectangle.Contains(fixture.Connection.Bounds));
                     Assert.IsTrue(menu.ClientRectangle.Contains(fixture.Connect.Bounds));
                     Assert.AreEqual(2, brand.Control.Controls.Count);
-                    AssertPartition(brand.Control);
+                    // Native GetChildAtPoint excludes invisible overflow controls.
+                    // Check geometry now and exercise hit testing after opening it.
+                    AssertPartition(brand.Control, brand.Placement == ToolStripItemPlacement.Main);
+                    foreach (ToolStripItem item in menu.Items)
+                    {
+                        var hosted = item as ToolStripControlHost;
+                        if (hosted == null || hosted == fixture.Connection || !item.Available || item.Placement != ToolStripItemPlacement.Main) continue;
+                        Assert.IsFalse(hosted.Control.Bounds.IntersectsWith(fixture.Connection.Control.Bounds),
+                            item.Name + " covers the serial/baud controls");
+                    }
                     if (brand.Placement == ToolStripItemPlacement.Main)
                     {
                         Assert.IsTrue(menu.ClientRectangle.Contains(brand.Bounds));
@@ -75,6 +84,9 @@ namespace MissionPlannerTests.Utilities
                         Assert.IsTrue(brand.Control.Visible, "Whole logo must remain reachable in overflow");
                         Assert.IsTrue(brand.Control.Controls.Cast<Control>().All(control => control.Visible));
                         AssertPartition(brand.Control);
+                        var parent = brand.GetCurrentParent();
+                        Assert.IsTrue(parent.ClientRectangle.Contains(brand.Control.Bounds), "Overflow must contain the complete logo");
+                        fixture.SaveScreenshot("overflow-" + scale + "-" + width + "-" + connected, parent);
                         menu.OverflowButton.HideDropDown();
                     }
                     fixture.SaveScreenshot("layout-" + scale + "-" + width + "-" + connected);
@@ -82,7 +94,7 @@ namespace MissionPlannerTests.Utilities
             });
         }
 
-        private static void AssertPartition(Control links)
+        private static void AssertPartition(Control links, bool hitTest = true)
         {
             int middle = links.Width / 2;
             var left = links.Controls["MenuArduPilotLink"];
@@ -93,8 +105,11 @@ namespace MissionPlannerTests.Utilities
             Assert.AreEqual(links.Width, right.Right);
             Assert.AreEqual(links.Height, left.Height);
             Assert.AreEqual(links.Height, right.Height);
-            Assert.AreEqual(left, links.GetChildAtPoint(new Point(middle - 1, links.Height / 2)));
-            Assert.AreEqual(right, links.GetChildAtPoint(new Point(middle, links.Height / 2)));
+            if (hitTest)
+            {
+                Assert.AreEqual(left, links.GetChildAtPoint(new Point(middle - 1, links.Height / 2)));
+                Assert.AreEqual(right, links.GetChildAtPoint(new Point(middle, links.Height / 2)));
+            }
         }
 
         [TestMethod]
@@ -232,6 +247,8 @@ namespace MissionPlannerTests.Utilities
                 Assert.AreEqual(new Size(596, 182), image.Size);
                 Assert.AreEqual(Color.FromArgb(255, 25, 141, 255).ToArgb(), image.GetPixel(40, 140).ToArgb());
                 Assert.AreEqual(Color.FromArgb(255, 15, 129, 244).ToArgb(), image.GetPixel(145, 111).ToArgb());
+                Assert.AreEqual(Color.FromArgb(255, 42, 42, 42).ToArgb(), image.GetPixel(567, 125).ToArgb());
+                Assert.AreEqual(Color.FromArgb(255, 45, 40, 36).ToArgb(), image.GetPixel(382, 90).ToArgb());
                 foreach (var point in new[] { Point.Empty, new Point(595, 181), new Point(380, 125) })
                     Assert.AreEqual(0, (int)image.GetPixel(point.X, point.Y).A);
                 Assert.IsTrue(Enumerable.Range(0, image.Width).Any(x => image.GetPixel(x, 90).A > 0 && image.GetPixel(x, 90).A < 255));
@@ -310,16 +327,18 @@ namespace MissionPlannerTests.Utilities
                 Form.Show();
                 Menu.PerformLayout();
                 Application.DoEvents();
+                SaveScreenshot("initial-" + scale + "-" + width + "-" + connected);
             }
 
-            public void SaveScreenshot(string name)
+            public void SaveScreenshot(string name, Control surface = null)
             {
                 var directory = Environment.GetEnvironmentVariable("BRAND_LOGO_SCREENSHOTS");
                 if (string.IsNullOrEmpty(directory)) return;
                 System.IO.Directory.CreateDirectory(directory);
-                using (var frame = new Bitmap(Menu.Width, Menu.Height))
+                surface = surface ?? Menu;
+                using (var frame = new Bitmap(surface.Width, surface.Height))
                 {
-                    Menu.DrawToBitmap(frame, Menu.ClientRectangle);
+                    surface.DrawToBitmap(frame, surface.ClientRectangle);
                     frame.Save(System.IO.Path.Combine(directory, name + ".png"));
                 }
             }
