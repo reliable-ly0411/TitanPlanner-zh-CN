@@ -20,6 +20,16 @@ namespace MissionPlannerTests.Utilities
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         private static extern IntPtr SendMessage(IntPtr window, int message, IntPtr wParam, IntPtr lParam);
 
+        [DllImport("user32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool SetWindowPos(IntPtr window, IntPtr insertAfter, int x, int y, int width, int height, uint flags);
+
+        [DllImport("user32.dll")]
+        private static extern IntPtr WindowFromPoint(Point point);
+
+        [DllImport("user32.dll")]
+        private static extern IntPtr GetAncestor(IntPtr window, uint flags);
+
         [DllImport("dwmapi.dll")]
         private static extern int DwmFlush();
 
@@ -241,6 +251,11 @@ namespace MissionPlannerTests.Utilities
 
             public void Pump()
             {
+                // Hosted runners can open their own topmost console after our form.
+                // Raise only this fixture, never hide or capture unrelated windows.
+                Assert.IsTrue(SetWindowPos(Form.Handle, new IntPtr(-1), 0, 0, 0, 0, 0x0001 | 0x0002 | 0x0040),
+                    "Could not raise the native paint fixture");
+                Form.Activate();
                 Form.PerformLayout();
                 Form.Invalidate(true);
                 Form.Update();
@@ -275,13 +290,16 @@ namespace MissionPlannerTests.Utilities
 
             public void AssertLivePixels(string name)
             {
+                Pump();
                 var bounds = Brand.Control.RectangleToScreen(Brand.Control.ClientRectangle);
                 Assert.IsTrue(Header.RectangleToScreen(Header.ClientRectangle).Contains(bounds), "Logo must lie inside the actual header");
                 Assert.IsTrue(Screen.FromControl(Form).Bounds.Contains(bounds), "The complete logo must be on screen for pixel verification");
+                AssertUnobscured(bounds);
                 using (var actual = new Bitmap(bounds.Width, bounds.Height))
                 using (var expected = ExpectedLogo(bounds.Size, Background))
                 {
                     using (var graphics = Graphics.FromImage(actual)) graphics.CopyFromScreen(bounds.Location, Point.Empty, bounds.Size);
+                    AssertUnobscured(bounds);
                     Save(name, actual);
                     // Retain an actual desktop capture before any assertions fail.
                     var window = Rectangle.Intersect(Form.Bounds, Screen.FromControl(Form).Bounds);
@@ -292,6 +310,15 @@ namespace MissionPlannerTests.Utilities
                     }
                     AssertPixels(expected, actual, Background, name);
                 }
+            }
+
+            private void AssertUnobscured(Rectangle bounds)
+            {
+                foreach (var point in new[] { new Point(bounds.Left + 1, bounds.Top + 1),
+                    new Point(bounds.Right - 2, bounds.Top + 1), new Point(bounds.Left + 1, bounds.Bottom - 2),
+                    new Point(bounds.Right - 2, bounds.Bottom - 2), new Point(bounds.Left + bounds.Width / 2, bounds.Top + bounds.Height / 2) })
+                    Assert.AreEqual(Form.Handle, GetAncestor(WindowFromPoint(point), 2),
+                        "Another desktop window occludes the logo at " + point + "; not an application pixel result");
             }
 
             public void Dispose()
