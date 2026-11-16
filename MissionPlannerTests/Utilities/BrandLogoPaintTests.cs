@@ -2,6 +2,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MissionPlanner.Utilities;
 using System;
 using System.Drawing;
+using System.Diagnostics;
 using System.ComponentModel;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
@@ -31,6 +32,15 @@ namespace MissionPlannerTests.Utilities
 
         [DllImport("user32.dll")]
         private static extern IntPtr GetAncestor(IntPtr window, uint flags);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern bool RedrawWindow(IntPtr window, IntPtr rectangle, IntPtr region, uint flags);
+        [DllImport("gdi32.dll", SetLastError = true)]
+        private static extern bool GdiFlush();
+        [DllImport("user32.dll")]
+        private static extern IntPtr GetWindowDpiAwarenessContext(IntPtr window);
+        [DllImport("user32.dll")]
+        private static extern bool AreDpiAwarenessContextsEqual(IntPtr first, IntPtr second);
 
         [DllImport("dwmapi.dll")]
         private static extern int DwmFlush();
@@ -201,6 +211,39 @@ namespace MissionPlannerTests.Utilities
             });
         }
 
+        [TestMethod]
+        public void CapturedFrameKeepsTheSamePhysicalPixelAfterTheDesktopChanges()
+        {
+            InNativeSta(() =>
+            {
+                using (var fixture = new PaintFixture(false, false, 58))
+                {
+                    fixture.Header.Visible = false;
+                    var patch = fixture.AddCalibrationPatch(new Point(80, 80), Color.Red);
+                    fixture.Pump();
+                    var bounds = PhysicalClientBounds(patch);
+                    var point = new Point(bounds.Left + bounds.Width / 2, bounds.Top + bounds.Height / 2);
+                    using (var red = fixture.CaptureClientFrame("calibration-red", point))
+                    {
+                        Assert.AreEqual(Color.Red.ToArgb(), red.ReadPhysical(point).ToArgb());
+                        patch.BackColor = Color.Blue;
+                        fixture.Pump();
+                        using (var blue = fixture.CaptureClientFrame("calibration-blue", point))
+                        using (var png = new MemoryStream())
+                        {
+                            Assert.AreEqual(Color.Blue.ToArgb(), blue.ReadPhysical(point).ToArgb());
+                            Assert.AreEqual(Color.Red.ToArgb(), red.ReadPhysical(point).ToArgb(), "Earlier frame must stay unchanged");
+                            red.Pixels.Save(png, ImageFormat.Png);
+                            png.Position = 0;
+                            using (var reopened = new Bitmap(png))
+                                Assert.AreEqual(red.ReadPhysical(point).ToArgb(), reopened.GetPixel(point.X - red.Bounds.Left, point.Y - red.Bounds.Top).ToArgb(),
+                                    "The saved PNG and assertion must identify the same pixel in the same frame");
+                        }
+                    }
+                }
+            });
+        }
+
         private static Bitmap ExpectedLogo(Size size, Color background)
         {
             var expected = new Bitmap(size.Width, size.Height);
@@ -265,11 +308,11 @@ namespace MissionPlannerTests.Utilities
                     fixture.RevealToolbarOverPreviousPage("contrast-" + toolbarHeight);
                     fixture.AssertLivePixels("contrast-" + toolbarHeight);
                     var bounds = PhysicalClientBounds(fixture.Brand.Control);
-                    using (var actual = new Bitmap(bounds.Width, bounds.Height))
+                    using (var frame = fixture.CaptureClientFrame("contrast-" + toolbarHeight + "-core"))
+                    using (var actual = frame.CropPhysical(bounds))
                     using (var sourceStream = typeof(BrandLogoLinks).Assembly.GetManifestResourceStream("MissionPlanner.Resources.LocalizedBrandLogo.png"))
                     using (var source = new Bitmap(sourceStream))
                     {
-                        using (var graphics = Graphics.FromImage(actual)) graphics.CopyFromScreen(bounds.Location, Point.Empty, bounds.Size);
                         int imageHeight = (int)Math.Round(bounds.Width * (double)source.Height / source.Width);
                         int top = (bounds.Height - imageHeight) / 2;
                         using (var scaled = new Bitmap(bounds.Width, imageHeight))
@@ -370,6 +413,8 @@ namespace MissionPlannerTests.Utilities
             private readonly Panel page;
             private readonly CheckBox parameter;
             private Bitmap tile;
+            private int pagePaints;
+            private string pageGraphics = "not painted";
 
             public PaintFixture(bool dark, bool overlay, int height)
             {
@@ -381,7 +426,14 @@ namespace MissionPlannerTests.Utilities
                 page = new Panel { Dock = DockStyle.Fill, BackColor = Poison };
                 parameter = new CheckBox { Text = "参数", AutoSize = true, Location = new Point(Form.ClientSize.Width - 110, 16) };
                 page.Controls.Add(parameter);
-                page.Paint += (sender, args) => args.Graphics.DrawEllipse(Pens.Lime, page.Width - 140, 4, 100, 100);
+                page.Paint += (sender, args) =>
+                {
+                    pagePaints++;
+                    using (var transform = args.Graphics.Transform)
+                        pageGraphics = "dpi=" + args.Graphics.DpiX + "x" + args.Graphics.DpiY + ", pageUnit=" + args.Graphics.PageUnit
+                            + ", pageScale=" + args.Graphics.PageScale + ", transform=" + string.Join(",", transform.Elements);
+                    args.Graphics.DrawEllipse(Pens.Lime, page.Width - 140, 4, 100, 100);
+                };
                 Form.Controls.Add(page);
                 Header = new Panel { Name = "ToolbarPanel", Height = height, Dock = overlay ? DockStyle.None : DockStyle.Top,
                     Location = Point.Empty, Width = Form.ClientSize.Width, Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right };
@@ -432,13 +484,19 @@ namespace MissionPlannerTests.Utilities
                 Form.Activate();
                 Form.PerformLayout();
                 Form.Invalidate(true);
-                Form.Update();
                 Application.DoEvents();
-                DwmFlush();
+                // UpdateWindow(Form) alone does not synchronously paint every child.
+                // Include the visible descendants and erase their old backing pixels.
+                if (!RedrawWindow(Form.Handle, IntPtr.Zero, IntPtr.Zero, 0x0001 | 0x0004 | 0x0080 | 0x0100))
+                    throw new Win32Exception(Marshal.GetLastWin32Error());
+                if (!GdiFlush()) throw new Win32Exception(Marshal.GetLastWin32Error());
+                int result = DwmFlush();
+                if (result < 0) Marshal.ThrowExceptionForHR(result);
             }
 
             public void RevealToolbarOverPreviousPage(string name)
             {
+                int paintsBefore = pagePaints;
                 Header.Visible = false;
                 Pump();
                 var client = PhysicalClientBounds(Form);
@@ -448,45 +506,57 @@ namespace MissionPlannerTests.Utilities
                 var context = SetThreadDpiAwarenessContext(new IntPtr(-1));
                 if (context == IntPtr.Zero) throw new Win32Exception(Marshal.GetLastWin32Error());
                 try { legacy = Form.PointToScreen(new Point(Form.ClientSize.Width / 2, 2)); }
-                finally { SetThreadDpiAwarenessContext(context); }
+                finally
+                {
+                    if (SetThreadDpiAwarenessContext(context) == IntPtr.Zero) throw new Win32Exception(Marshal.GetLastWin32Error());
+                }
                 var text = new StringBuilder();
                 text.AppendLine("probe physical=" + point + ", legacy-unaware=" + legacy);
                 foreach (var control in new Control[] { Form, page, Header, Menu, Brand.Control })
                 {
                     var deviceDpi = typeof(Control).GetProperty("DeviceDpi");
-                    text.AppendLine(control.GetType().Name + " nativeClient=" + PhysicalClientBounds(control)
+                    text.AppendLine(control.GetType().Name + " hwnd=" + control.Handle + " nativeClient=" + PhysicalClientBounds(control)
                         + ", nativeWindow=" + PhysicalWindowBounds(control) + ", managedClient=" + control.ClientSize
                         + ", managedOrigin=" + control.PointToScreen(Point.Empty) + ", windowDpi=" + GetDpiForWindow(control.Handle)
-                        + ", deviceDpi=" + (deviceDpi == null ? null : deviceDpi.GetValue(control, null)));
+                        + ", deviceDpi=" + (deviceDpi == null ? null : deviceDpi.GetValue(control, null))
+                        + ", hwndAwareness=" + GetAwarenessFromDpiAwarenessContext(GetWindowDpiAwarenessContext(control.Handle))
+                        + ", hwndPMv2=" + AreDpiAwarenessContextsEqual(GetWindowDpiAwarenessContext(control.Handle), new IntPtr(-4)));
                 }
                 text.AppendLine("monitor=" + PhysicalMonitorBounds(Form, false) + ", work=" + PhysicalMonitorBounds(Form, true)
                     + ", managedScreen=" + Screen.FromControl(Form).Bounds + ", threadAwareness="
                     + GetAwarenessFromDpiAwarenessContext(GetThreadDpiAwarenessContext()));
-                using (var probe = new Bitmap(1, 1))
+                text.AppendLine("page paints=" + paintsBefore + "->" + pagePaints + ", pageColor=" + page.BackColor + ", graphics=" + pageGraphics);
+                var packedPoint = new IntPtr((point.X & 0xFFFF) | (point.Y << 16));
+                text.AppendLine("form WM_NCHITTEST=" + SendMessage(Form.Handle, 0x0084, IntPtr.Zero, packedPoint) + " (client=1, caption=2)");
+                using (var frame = CaptureClientFrame(name + "-probe", point))
                 {
-                    using (var graphics = Graphics.FromImage(probe)) graphics.CopyFromScreen(point, Point.Empty, probe.Size);
-                    var actual = probe.GetPixel(0, 0);
+                    // PNG, crop and assertion all use this exact immutable bitmap.
+                    var actual = frame.ReadPhysical(point);
+                    var relative = new Point(point.X - frame.Bounds.Left, point.Y - frame.Bounds.Top);
+                    text.AppendLine("asserted frame=" + frame.Digest + ", utc=" + frame.CapturedUtc.ToString("O")
+                        + ", bounds=" + frame.Bounds + ", probe-relative=" + relative);
+                    text.AppendLine(frame.Diagnostics);
+                    var crop = Rectangle.Intersect(new Rectangle(point.X - 20, point.Y - 20, 41, 41), frame.Bounds);
+                    using (var neighbourhood = frame.CropPhysical(crop)) Save(name + "-probe-neighbourhood", neighbourhood);
                     var window = WindowFromPoint(point);
                     var className = new StringBuilder(256);
                     GetClassName(window, className, className.Capacity);
                     text.AppendLine("probe expected=#FF00FF actual=#" + actual.R.ToString("X2") + actual.G.ToString("X2") + actual.B.ToString("X2")
                         + ", sampledHwnd=" + window + ", sampledRoot=" + GetAncestor(window, 2) + ", class=" + className);
-                    if (PhysicalMonitorBounds(Form, false).Contains(legacy))
+                    if (frame.Bounds.Contains(legacy))
                     {
-                        using (var oldProbe = new Bitmap(1, 1))
-                        {
-                            using (var graphics = Graphics.FromImage(oldProbe)) graphics.CopyFromScreen(legacy, Point.Empty, oldProbe.Size);
-                            var oldColor = oldProbe.GetPixel(0, 0);
-                            text.AppendLine("legacy-unaware point sampled in physical space=#" + oldColor.R.ToString("X2")
-                                + oldColor.G.ToString("X2") + oldColor.B.ToString("X2") + ", owner=" + GetAncestor(WindowFromPoint(legacy), 2));
-                        }
+                        var oldColor = frame.ReadPhysical(legacy);
+                        text.AppendLine("legacy-unaware point in SAME frame=#" + oldColor.R.ToString("X2")
+                            + oldColor.G.ToString("X2") + oldColor.B.ToString("X2") + ", owner=" + GetAncestor(WindowFromPoint(legacy), 2));
                     }
                     Console.WriteLine(text.ToString());
                     SaveDiagnostics(name + "-probe", text.ToString());
-                    SaveWindow(name + "-probe-window");
+                    Save(name + "-probe-window", frame.Pixels);
+                    Assert.IsTrue(pagePaints > paintsBefore, "Hidden page must have painted after the toolbar was removed; " + text);
                     Assert.AreEqual(client.Top, body.Top, "Hidden toolbar must release the top client area; " + text);
                     Assert.AreEqual(client.Width, body.Width, "Previous page must fill the physical client width; " + text);
                     Assert.AreEqual(Form.Handle, GetAncestor(window, 2), "Probe is occluded; " + text);
+                    Assert.AreEqual(page.Handle, window, "Probe must hit the exposed page, not non-client chrome or the hidden header; " + text);
                     Assert.AreEqual(Poison.ToArgb(), actual.ToArgb(), "Physical y=2 must see the previous page; " + text);
                 }
                 Header.Visible = true;
@@ -512,26 +582,63 @@ namespace MissionPlannerTests.Utilities
                 Assert.IsTrue(PhysicalClientBounds(Header).Contains(bounds), "Logo must lie inside the actual header");
                 Assert.IsTrue(PhysicalMonitorBounds(Form, false).Contains(bounds), "The complete logo must be on screen for pixel verification");
                 AssertUnobscured(bounds);
-                using (var actual = new Bitmap(bounds.Width, bounds.Height))
+                using (var frame = CaptureClientFrame(name))
+                using (var actual = frame.CropPhysical(bounds))
                 using (var expected = ExpectedLogo(bounds.Size, Background))
                 {
-                    using (var graphics = Graphics.FromImage(actual)) graphics.CopyFromScreen(bounds.Location, Point.Empty, bounds.Size);
                     AssertUnobscured(bounds);
                     Save(name, actual);
-                    // Retain an actual desktop capture before any assertions fail.
-                    SaveWindow(name + "-window");
+                    Save(name + "-window", frame.Pixels);
                     AssertPixels(expected, actual, Background, name);
                 }
             }
 
-            private void SaveWindow(string name)
+            public BrandLogoDesktopFrame CaptureClientFrame(string name, Point? probe = null)
             {
-                var window = Rectangle.Intersect(PhysicalWindowBounds(Form), PhysicalMonitorBounds(Form, false));
-                using (var frame = new Bitmap(window.Width, window.Height))
+                BrandLogoDesktopFrame previous = null;
+                var timeline = new StringBuilder();
+                var timer = Stopwatch.StartNew();
+                try
                 {
-                    using (var graphics = Graphics.FromImage(frame)) graphics.CopyFromScreen(window.Location, Point.Empty, window.Size);
-                    Save(name, frame);
+                    for (int index = 0; index < 60 && timer.Elapsed < TimeSpan.FromSeconds(2); index++)
+                    {
+                        Application.DoEvents();
+                        if (!GdiFlush()) throw new Win32Exception(Marshal.GetLastWin32Error());
+                        int result = DwmFlush();
+                        if (result < 0) Marshal.ThrowExceptionForHR(result);
+                        var current = BrandLogoDesktopFrame.Capture(PhysicalClientBounds(Form), probe);
+                        timeline.AppendLine("frame=" + index + ", elapsedMs=" + timer.ElapsedMilliseconds + ", utc=" + current.CapturedUtc.ToString("O")
+                            + ", bounds=" + current.Bounds + ", hash=" + current.Digest
+                            + (probe.HasValue ? ", probe=" + current.ReadPhysical(probe.Value) : ""));
+                        if (index == 0) Save(name + "-first-client", current.Pixels);
+                        // Stability depends on equal image bytes, never the wanted color.
+                        if (previous != null && previous.Bounds == current.Bounds && previous.Digest == current.Digest)
+                        {
+                            previous.Dispose();
+                            previous = null;
+                            Save(name + "-client", current.Pixels);
+                            timeline.AppendLine(current.Diagnostics);
+                            return current;
+                        }
+                        if (previous != null) previous.Dispose();
+                        previous = current;
+                        Thread.Sleep(20); // permit another desktop presentation, bounded to two seconds
+                    }
+                    throw new InvalidOperationException("Desktop image did not settle to two equal frames; " + timeline);
                 }
+                finally
+                {
+                    if (previous != null) previous.Dispose();
+                    SaveDiagnostics(name + "-frames", timeline.ToString());
+                }
+            }
+
+            public Control AddCalibrationPatch(Point location, Color color)
+            {
+                var patch = new Panel { Location = location, Size = new Size(24, 24), BackColor = color };
+                page.Controls.Add(patch);
+                patch.BringToFront();
+                return patch;
             }
 
             private static void SaveDiagnostics(string name, string text)

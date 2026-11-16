@@ -4,14 +4,14 @@ on:
     paths:
       - Utilities/BrandLogoLinks.cs
       - Resources/LocalizedBrandLogo.png
-      - MissionPlannerTests/Utilities/BrandLogo*Tests.cs
+      - MissionPlannerTests/Utilities/BrandLogo*.cs
       - MissionPlannerTests/Branding/Branding.csproj
       - .github/workflows/brand-logo-links.yml
   pull_request:
     paths:
       - Utilities/BrandLogoLinks.cs
       - Resources/LocalizedBrandLogo.png
-      - MissionPlannerTests/Utilities/BrandLogo*Tests.cs
+      - MissionPlannerTests/Utilities/BrandLogo*.cs
       - MissionPlannerTests/Branding/Branding.csproj
       - .github/workflows/brand-logo-links.yml
   workflow_dispatch:
