@@ -1786,5 +1786,10 @@
   "mcu max voltage": "MCU 最高电压",
   "mcu min voltage": "MCU 最低电压",
   "mcu temperature": "MCU 温度",
-  "mcu voltage": "MCU 电压"
+  "mcu voltage": "MCU 电压",
+  "No Heartbeat Packets Received": "未收到心跳数据包（Heartbeat）",
+  "This appears to be a CAN port, please use the DroneCAN screen": "此端口似乎是 CAN 端口，请使用 DroneCAN 页面",
+  "Timeout getting parameters": "获取参数超时",
+  "User Canceled": "操作已取消",
+  "There was an unexpected error ({0})": "发生意外错误（{0}）"
 }

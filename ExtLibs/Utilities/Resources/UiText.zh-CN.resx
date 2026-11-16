@@ -5879,6 +5879,10 @@ Ctrl+O 从文件加载</value>
     <value>无 GPS</value>
     <comment>"No GPS"</comment>
   </data>
+  <data name="5479a20a39aaaa71dd6efff37112eb25d94315d8167fa0caa207e53460d9330f" xml:space="preserve">
+    <value>未收到心跳数据包（Heartbeat）</value>
+    <comment>"No Heartbeat Packets Received"</comment>
+  </data>
   <data name="b9c4ffb121d783cb79b7f7dbcb790461a708aae4fa70a8ce0d1cc5462b7ee87e" xml:space="preserve">
     <value>未找到 IPv4 属性</value>
     <comment>"No IPv4 properties found"</comment>
@@ -8858,6 +8862,14 @@ Acc：当前测定位置的精度
     <value>无效数据过多，操作失败</value>
     <comment>"There is to much bad data - failing"</comment>
   </data>
+  <data name="609d8d46e950a052734f2af566ca24059b7d0172e067572640e15679a50f3357" xml:space="preserve">
+    <value>发生意外错误（{0}）</value>
+    <comment>"There was an unexpected error ({0})"</comment>
+  </data>
+  <data name="1e1408509d7650d3c207cd8e31fcad3ff2f89ef176b08c03ace3db0c4b5596f5" xml:space="preserve">
+    <value>此端口似乎是 CAN 端口，请使用 DroneCAN 页面</value>
+    <comment>"This appears to be a CAN port, please use the DroneCAN screen"</comment>
+  </data>
   <data name="fdfc758be1c307aa1aa9c372efce00319a13925bc28738e4ca28922762c0bd81" xml:space="preserve">
     <value>此电池监测器类型没有每伏安培数设置，无法在此校准电流。请在监测器本身进行校准。</value>
     <comment>"This battery monitor type has no amps-per-volt setting, so its current can't be calibrated here. Calibrate the monitor itself."</comment>
@@ -8979,6 +8991,10 @@ Acc：当前测定位置的精度
   <data name="18b8dadf676d19de375d54f4583c20b738bfe341dd55aa2231bacbe8cb789a2f" xml:space="preserve">
     <value>飞行时间，秒</value>
     <comment>"TimeInAir, sec"</comment>
+  </data>
+  <data name="a2c2d1c470384a740feb5a5bc7fb62d3fc4438431ed34f8b1fda37d95bca3315" xml:space="preserve">
+    <value>获取参数超时</value>
+    <comment>"Timeout getting parameters"</comment>
   </data>
   <data name="84da9b5826e933eced54804cc9fa7a52b63fbc35c43ee040b0bb2e6fa7ceba66" xml:space="preserve">
     <value>等待自动扫描超时，或未连接 MAVLink 设备</value>
@@ -9399,6 +9415,10 @@ Acc：当前测定位置的精度
   <data name="fa38c3e9239c015af6a42c34b5e0b462000f88cccc3adbd644931050885081b6" xml:space="preserve">
     <value>保存当前测定的基站位置</value>
     <comment>"Used to save the current base station positon as surveyed"</comment>
+  </data>
+  <data name="9ec2136049ae0a74f0e333e614577b98e787fd20f15f72b1d492f650bb267edb" xml:space="preserve">
+    <value>操作已取消</value>
+    <comment>"User Canceled"</comment>
   </data>
   <data name="75aa78440ee2cfdbd8e99c1a12676218863ff7913ac4d0354b63f866d727eef8" xml:space="preserve">
     <value>用户离线触发</value>
