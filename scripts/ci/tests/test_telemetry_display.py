@@ -24,6 +24,13 @@ class TelemetryDisplayTest(unittest.TestCase):
                            "(Amps)": "(A)", "(mah/km)": "(mAh/km)"}
                 self.assertTrue(unit in translated or aliases.get(unit, unit) in translated, description)
 
+    def test_abstract_unit_labels_do_not_infer_unit_settings(self):
+        source = (ROOT / 'Controls/TelemetryFieldPresentation.cs').read_text()
+        for setting in ('CurrentState.DistanceUnit', 'CurrentState.SpeedUnit', 'CurrentState.AltUnit'):
+            self.assertNotIn(setting, source)
+        for placeholder in ('dist', 'alt', 'speed', 'speed/s'):
+            self.assertIn('Replace(" (' + placeholder + ')", "")', source)
+
     def test_binding_and_selection_stay_on_original_key(self):
         status = (ROOT / 'Controls/StatusControl.cs').read_text()
         chart = (ROOT / 'Controls/DisplayThisForm.cs').read_text()

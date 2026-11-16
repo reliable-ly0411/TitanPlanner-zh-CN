@@ -16,13 +16,10 @@ namespace MissionPlanner.Controls
             if (!string.Equals(CultureInfo.CurrentUICulture.Name, "zh-CN", StringComparison.OrdinalIgnoreCase))
                 return key;
             var description = CurrentState.GetDisplayText(key);
-            if (!string.IsNullOrEmpty(CurrentState.DistanceUnit))
-                description = description.Replace("(dist)", "(" + CurrentState.DistanceUnit + ")");
-            if (!string.IsNullOrEmpty(CurrentState.AltUnit))
-                description = description.Replace("(alt)", "(" + CurrentState.AltUnit + ")");
-            if (!string.IsNullOrEmpty(CurrentState.SpeedUnit))
-                description = description.Replace("(speed)", "(" + CurrentState.SpeedUnit + ")")
-                    .Replace("(speed/s)", "(" + CurrentState.SpeedUnit + "/s)");
+            // Attribute placeholders do not guarantee the units of every input path.
+            // Keep the key and description, but never infer a physical unit from them.
+            description = description.Replace(" (dist)", "").Replace(" (alt)", "")
+                .Replace(" (speed)", "").Replace(" (speed/s)", "");
             return Combine(key, description);
         }
 

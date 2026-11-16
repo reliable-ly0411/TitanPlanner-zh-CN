@@ -30,23 +30,43 @@ namespace MissionPlannerTests.Controls
         }
 
         [TestMethod]
-        public void DisplayUnitsFollowConfiguredUnitsWithoutChangingKeys()
+        public void AbstractUnitLabelsDoNotInferUnitsAcrossMessagePaths()
         {
             var previousCulture = CultureInfo.CurrentUICulture;
-            var previousUnit = CurrentState.SpeedUnit;
+            var previousSpeed = CurrentState.SpeedUnit;
+            var previousDistance = CurrentState.DistanceUnit;
+            var previousAltitude = CurrentState.AltUnit;
             try
             {
                 CultureInfo.CurrentUICulture = new CultureInfo("zh-CN");
-                CurrentState.SpeedUnit = "km/h";
-                var label = TelemetryFieldPresentation.FieldLabel("airspeed");
-                Assert.IsTrue(label.StartsWith("airspeed (", StringComparison.Ordinal));
-                Assert.IsTrue(label.Contains("km/h"), label);
-                Assert.IsFalse(label.Contains("(speed)"), label);
+                var fields = new[] { "alt", "altasl", "horizondist", "altoffsethome", "altasl2",
+                    "airspeed", "accel_air", "targetairspeed", "groundspeed", "verticalspeed", "wp_dist",
+                    "alt_error", "aspd_error", "climbrate", "distTraveled", "turnrate", "radius",
+                    "wind_vel", "DistToHome", "DistFromMovingBase", "sonarrange" };
+                foreach (var units in new[] { new[] { "km/h", "km", "ft" }, new[] { "knots", "nm", "m" } })
+                {
+                    CurrentState.SpeedUnit = units[0];
+                    CurrentState.DistanceUnit = units[1];
+                    CurrentState.AltUnit = units[2];
+                    foreach (var field in fields)
+                    {
+                        var label = TelemetryFieldPresentation.FieldLabel(field);
+                        Assert.IsTrue(label.StartsWith(field + " (", StringComparison.Ordinal), field);
+                        var raw = CurrentState.GetDisplayText(field);
+                        var expected = raw.Replace(" (dist)", "").Replace(" (alt)", "")
+                            .Replace(" (speed)", "").Replace(" (speed/s)", "");
+                        Assert.AreEqual(field + " (" + expected + ")", label, field);
+                        Assert.IsFalse(label.Contains("(dist)") || label.Contains("(alt)") || label.Contains("(speed"), field);
+                    }
+                }
+                Assert.IsTrue(TelemetryFieldPresentation.FieldLabel("vx").Contains("(ms)"));
             }
             finally
             {
                 CultureInfo.CurrentUICulture = previousCulture;
-                CurrentState.SpeedUnit = previousUnit;
+                CurrentState.SpeedUnit = previousSpeed;
+                CurrentState.DistanceUnit = previousDistance;
+                CurrentState.AltUnit = previousAltitude;
             }
         }
 
