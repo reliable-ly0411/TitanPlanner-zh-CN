@@ -9,6 +9,8 @@ namespace MissionPlanner.Utilities
     /// <summary>Two keyboard-accessible destinations forming one proportional brand image.</summary>
     public static class BrandLogoLinks
     {
+        private static readonly object LogoMarker = new object();
+
         public const string ArduPilotUrl = "https://ardupilot.org";
         public const string GitHubUrl = "https://github.com/reliable-ly0411";
 
@@ -29,6 +31,15 @@ namespace MissionPlanner.Utilities
                 // Right-aligned ToolStrip items are arranged from right to left.
                 menu.Items.Insert(menu.Items.IndexOf(left), right);
             }
+        }
+
+        /// <summary>Keep branding independent of navigation selection and themed backgrounds.</summary>
+        public static bool PreserveSurface(ToolStripItem item)
+        {
+            if (!ReferenceEquals(item.Tag, LogoMarker)) return false;
+            item.BackColor = Color.WhiteSmoke;
+            item.BackgroundImage = null;
+            return true;
         }
 
         private static void ConfigureHalf(ToolStripButton button, Image source, int width,
@@ -53,7 +64,8 @@ namespace MissionPlanner.Utilities
             button.ToolTipText = name + "\n" + url;
             button.Text = name;
             // A neutral light surface preserves the supplied black lettering on dark themes.
-            button.BackColor = Color.WhiteSmoke;
+            button.Tag = LogoMarker;
+            PreserveSurface(button);
             button.Disposed += (sender, args) => image.Dispose();
         }
     }

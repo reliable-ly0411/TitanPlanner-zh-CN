@@ -9,6 +9,33 @@ namespace MissionPlannerTests.Utilities
     public class BrandLogoLinksTests
     {
         [TestMethod]
+        public void NavigationAndThemeRefreshPreserveBothLogoSurfaces()
+        {
+            using (var menu = new ToolStrip())
+            using (var left = new ToolStripButton { AutoSize = false, Height = 40 })
+            using (var navigation = new ToolStripButton())
+            using (var background = new System.Drawing.Bitmap(1, 1))
+            {
+                menu.Items.Add(left);
+                menu.Items.Add(navigation);
+                BrandLogoLinks.Configure(menu, left, url => { });
+                var right = menu.Items[0];
+                for (int page = 0; page < 4; page++)
+                {
+                    foreach (var logo in new ToolStripItem[] { left, right })
+                    {
+                        logo.BackColor = System.Drawing.Color.Black;
+                        logo.BackgroundImage = background;
+                        Assert.IsTrue(BrandLogoLinks.PreserveSurface(logo));
+                        Assert.AreEqual(System.Drawing.Color.WhiteSmoke, logo.BackColor);
+                        Assert.IsNull(logo.BackgroundImage);
+                    }
+                    Assert.IsFalse(BrandLogoLinks.PreserveSurface(navigation));
+                }
+            }
+        }
+
+        [TestMethod]
         public void LogoHasTwoAccessibleProportionalDestinations()
         {
             using (var menu = new ToolStrip())

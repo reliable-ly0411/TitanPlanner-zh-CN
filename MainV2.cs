@@ -4998,6 +4998,9 @@ namespace MissionPlanner
         {
             foreach (ToolStripItem item in MainMenu.Items)
             {
+#if !LIB
+                if (BrandLogoLinks.PreserveSurface(item)) continue;
+#endif
                 if (selected == item)
                 {
                     item.BackColor = ThemeManager.ControlBGColor;
