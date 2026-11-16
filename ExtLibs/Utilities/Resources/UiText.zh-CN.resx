@@ -22,6 +22,12 @@
 	将 {0}_D_ACC_I 设为 0.2*MOT_THST_HOVER</value>
     <comment>"\tSet {0}_D_ACC_P to 0.1*MOT_THST_HOVER\r\n\tSet {0}_D_ACC_I to 0.2*MOT_THST_HOVER"</comment>
   </data>
+  <data name="5926015ff8ad0ec0c6194b4946618ddda8b711453d4fd7551c4afc1a283c9895" xml:space="preserve">
+    <value>
+
+请确认已安装 Dokan 驱动程序。</value>
+    <comment>"\n\nMake sure Dokan driver is installed."</comment>
+  </data>
   <data name="5553ae417dcf78629e9f69c6d765aeb1d527c5dc3b185618914f6649777390ff" xml:space="preserve">
     <value>
 
@@ -2821,6 +2827,10 @@ Ctrl+O 从文件加载</value>
 注意：需要 GPS 定位；使用真航向，而非磁航向</value>
     <comment>"Enter current heading in degrees\nNOTE: gps lock is required. Heading is true, not magnetic"</comment>
   </data>
+  <data name="c45dbf0a18245f1438802021793b15eac5fff4bcebd73df1783a8fb93fc422ff" xml:space="preserve">
+    <value>输入盘符或路径（例如 M:\）</value>
+    <comment>"Enter drive letter or path (e.g. M:\\)"</comment>
+  </data>
   <data name="b945662a62b0c039ed6403c5311fd5a277596aa49925be3115e8feb4f7a4bcc1" xml:space="preserve">
     <value>输入目录名称</value>
     <comment>"Enter folder name"</comment>
@@ -3106,6 +3116,14 @@ Ctrl+O 从文件加载</value>
     <value>第一人称视角（相机位于飞行器处）</value>
     <comment>"FPV Mode (camera at aircraft)"</comment>
   </data>
+  <data name="193dc68de545acb4899f478471145fdd070a3763db8d3694f1c6bb09849ad0f6" xml:space="preserve">
+    <value>FUSE 驱动器已挂载到：</value>
+    <comment>"FUSE drive mounted at "</comment>
+  </data>
+  <data name="1d7e13f613894e7f9f0e712f1f66e6d7d8fafbb25398cc1d426edab05ddafaaf" xml:space="preserve">
+    <value>FUSE 驱动器已卸载</value>
+    <comment>"FUSE drive unmounted"</comment>
+  </data>
   <data name="85293afb89d86562c786e31fa4054126aabf5f1b3fd6a5badc0c39d0a58daf20" xml:space="preserve">
     <value>FX 比例</value>
     <comment>"FX Scale"</comment>
@@ -3247,6 +3265,10 @@ Ctrl+O 从文件加载</value>
     <value>WMS 服务请求失败： </value>
     <comment>"Failed to make WMS Server request: "</comment>
   </data>
+  <data name="ab2d11d7feff05702a91f91584d766c88fafe0d2bbabf868f0684a0aed05297b" xml:space="preserve">
+    <value>挂载失败：</value>
+    <comment>"Failed to mount: "</comment>
+  </data>
   <data name="ea89f6c426aeb1bde1adfb5d6b55e9f745652bee2e8202f2201c8f3b930fbaf5" xml:space="preserve">
     <value>无法打开网址</value>
     <comment>"Failed to open url"</comment>
@@ -3383,6 +3405,10 @@ Ctrl+O 从文件加载</value>
     <value>测试电机失败
 </value>
     <comment>"Failed to test motor\n"</comment>
+  </data>
+  <data name="995ab479a6f05c85815b18f27b7c51c6aa75a1c6c50c37c6ff7f734b12b9adfd" xml:space="preserve">
+    <value>卸载失败：</value>
+    <comment>"Failed to unmount: "</comment>
   </data>
   <data name="30d8061e3940f6ee356df54aa5231b04eb22fe721e0a8d3d4a28eb5657957002" xml:space="preserve">
     <value>更新起飞点失败 (</value>
@@ -5178,6 +5204,14 @@ Ctrl+O 从文件加载</value>
   <data name="e4337fbd33ffc4fecc77bd7777f01bd07bc4dbe4c48844b20dfd75f622cc2f3a" xml:space="preserve">
     <value>电机 {0} 尚未分配舵机通道。</value>
     <comment>"Motor {0} is not assigned to a servo channel."</comment>
+  </data>
+  <data name="f6801ce62d6d6de3052036995ddbf5c39dc0fff2a7f9b27c825ac06f6656ad58" xml:space="preserve">
+    <value>挂载位置</value>
+    <comment>"Mount Point"</comment>
+  </data>
+  <data name="252585d8f6fbb1f2b2f269b8b335050a8aa63452f94a8b21157077679717a5c5" xml:space="preserve">
+    <value>挂载为驱动器</value>
+    <comment>"Mount as Drive"</comment>
   </data>
   <data name="b58330ac25057a441365f4f4f1be20daba2d6d940142c891231e0eac66843ff4" xml:space="preserve">
     <value>下移</value>
@@ -8461,6 +8495,10 @@ Acc：当前测定位置的精度
   <data name="43fdc6e169d3a8a6300ab6846278a1cad8d8dcb9df8e69c6ff7c304c228a681c" xml:space="preserve">
     <value>解除网格锁定</value>
     <comment>"Unlock from grid"</comment>
+  </data>
+  <data name="6a8174de046d0d2f6a49aa2b91a6fde3a5af083dce278554dc7af79400112843" xml:space="preserve">
+    <value>卸载驱动器</value>
+    <comment>"Unmount Drive"</comment>
   </data>
   <data name="55490a4bf3a8e8cb5eed69720293a700ff01ef7da2bfc749f332f626cb584916" xml:space="preserve">
     <value>向上</value>

@@ -1570,5 +1570,14 @@
   "Latest (Dev)": "最新开发版",
   "Beta": "测试版",
   "Stable": "稳定版",
-  "Skip Download": "跳过下载"
+  "Skip Download": "跳过下载",
+  "\n\nMake sure Dokan driver is installed.": "\n\n请确认已安装 Dokan 驱动程序。",
+  "Enter drive letter or path (e.g. M:\\)": "输入盘符或路径（例如 M:\\）",
+  "FUSE drive mounted at ": "FUSE 驱动器已挂载到：",
+  "FUSE drive unmounted": "FUSE 驱动器已卸载",
+  "Failed to mount: ": "挂载失败：",
+  "Failed to unmount: ": "卸载失败：",
+  "Mount Point": "挂载位置",
+  "Mount as Drive": "挂载为驱动器",
+  "Unmount Drive": "卸载驱动器"
 }
