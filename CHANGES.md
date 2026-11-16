@@ -392,3 +392,7 @@ The fork tracks `upstream/master` and currently includes upstream as of 2026-10-
 - tlog playback selects the vehicle rather than the recording GCS; the PLAN home box shows altitude in display units
 - COM port lists survive misbehaving Bluetooth drivers; signed driver for Pixhawk 6C
 - SkiaSharp 3 on the desktop and faster drawing on Linux/Mono; Altitude Angel is removed
+
+## Localized branding
+
+- Upper-right brand image provides separate ArduPilot and localization-maintainer GitHub links.
