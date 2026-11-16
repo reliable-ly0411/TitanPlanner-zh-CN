@@ -1,5 +1,7 @@
 ## Enhanced Chinese display
 
+New Simplified Chinese profiles default to Bing Satellite. Saved map selections and provider coordinate projections are preserved.
+
 Mission altitude references, bundled plugin menu entries and dashboard descriptions use localized display text while retaining protocol values and field keys. Dashboard field selection shows the original identifier beside its description. Vibration axes and mission altitude headers use context-specific labels.
 
 ## TitanPlanner-zh-CN upstream synchronization (2026-10-19)
