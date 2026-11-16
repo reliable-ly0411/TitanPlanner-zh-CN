@@ -2,12 +2,14 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MissionPlanner.Utilities;
 using System;
 using System.Drawing;
+using System.ComponentModel;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
+using System.Text;
 using System.Windows.Forms;
 
 namespace MissionPlannerTests.Utilities
@@ -33,6 +35,85 @@ namespace MissionPlannerTests.Utilities
         [DllImport("dwmapi.dll")]
         private static extern int DwmFlush();
 
+        [StructLayout(LayoutKind.Sequential)]
+        private struct NativeRect
+        {
+            public int Left, Top, Right, Bottom;
+            public Rectangle Rectangle { get { return Rectangle.FromLTRB(Left, Top, Right, Bottom); } }
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        private struct MonitorInfo
+        {
+            public int Size;
+            public NativeRect Monitor, Work;
+            public uint Flags;
+        }
+
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern IntPtr SetThreadDpiAwarenessContext(IntPtr context);
+        [DllImport("user32.dll")]
+        private static extern IntPtr GetThreadDpiAwarenessContext();
+        [DllImport("user32.dll")]
+        private static extern int GetAwarenessFromDpiAwarenessContext(IntPtr context);
+        [DllImport("user32.dll")]
+        private static extern uint GetDpiForWindow(IntPtr window);
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern bool GetClientRect(IntPtr window, out NativeRect rectangle);
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern bool GetWindowRect(IntPtr window, out NativeRect rectangle);
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern bool ClientToScreen(IntPtr window, ref Point point);
+        [DllImport("user32.dll")]
+        private static extern IntPtr MonitorFromWindow(IntPtr window, uint flags);
+        [DllImport("user32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+        private static extern bool GetMonitorInfo(IntPtr monitor, ref MonitorInfo info);
+        [DllImport("user32.dll", CharSet = CharSet.Unicode)]
+        private static extern int GetClassName(IntPtr window, StringBuilder name, int capacity);
+
+        private sealed class NativeDpiScope : IDisposable
+        {
+            private readonly IntPtr previous;
+            public NativeDpiScope()
+            {
+                previous = SetThreadDpiAwarenessContext(new IntPtr(-4)); // per-monitor v2
+                if (previous == IntPtr.Zero) throw new Win32Exception(Marshal.GetLastWin32Error());
+                Console.WriteLine("DPI awareness previous=" + GetAwarenessFromDpiAwarenessContext(previous)
+                    + ", capture=" + GetAwarenessFromDpiAwarenessContext(GetThreadDpiAwarenessContext()));
+                Assert.AreEqual(2, GetAwarenessFromDpiAwarenessContext(GetThreadDpiAwarenessContext()),
+                    "Pixel fixture must use one physical per-monitor coordinate space");
+            }
+            public void Dispose()
+            {
+                if (SetThreadDpiAwarenessContext(previous) == IntPtr.Zero)
+                    throw new Win32Exception(Marshal.GetLastWin32Error());
+            }
+        }
+
+        private static Rectangle PhysicalClientBounds(Control control)
+        {
+            NativeRect client;
+            var origin = Point.Empty;
+            if (!GetClientRect(control.Handle, out client) || !ClientToScreen(control.Handle, ref origin))
+                throw new Win32Exception(Marshal.GetLastWin32Error());
+            return new Rectangle(origin, client.Rectangle.Size);
+        }
+
+        private static Rectangle PhysicalWindowBounds(Control control)
+        {
+            NativeRect bounds;
+            if (!GetWindowRect(control.Handle, out bounds)) throw new Win32Exception(Marshal.GetLastWin32Error());
+            return bounds.Rectangle;
+        }
+
+        private static Rectangle PhysicalMonitorBounds(Control control, bool workingArea)
+        {
+            var info = new MonitorInfo { Size = Marshal.SizeOf(typeof(MonitorInfo)) };
+            var monitor = MonitorFromWindow(control == null ? IntPtr.Zero : control.Handle, control == null ? 1u : 2u);
+            if (!GetMonitorInfo(monitor, ref info)) throw new Win32Exception(Marshal.GetLastWin32Error());
+            return workingArea ? info.Work.Rectangle : info.Monitor.Rectangle;
+        }
+
         private static void InNativeSta(Action test)
         {
             if (Environment.OSVersion.Platform != PlatformID.Win32NT)
@@ -40,7 +121,7 @@ namespace MissionPlannerTests.Utilities
             Exception failure = null;
             var thread = new Thread(() =>
             {
-                try { test(); }
+                try { using (var dpi = new NativeDpiScope()) test(); }
                 catch (Exception error) { failure = error; }
             });
             thread.SetApartmentState(ApartmentState.STA);
@@ -98,13 +179,13 @@ namespace MissionPlannerTests.Utilities
                 using (var fixture = new PaintFixture(dark, overlay, height))
                 {
                     string name = "live-" + dark + "-" + overlay + "-" + height;
-                    fixture.RevealToolbarOverPreviousPage();
+                    fixture.RevealToolbarOverPreviousPage(name);
                     fixture.AssertLivePixels(name + "-revealed");
                     fixture.Form.WindowState = FormWindowState.Maximized;
                     fixture.Pump();
                     fixture.AssertLivePixels(name + "-maximized");
                     fixture.Form.WindowState = FormWindowState.Normal;
-                    var area = Screen.PrimaryScreen.WorkingArea;
+                    var area = PhysicalMonitorBounds(null, true);
                     fixture.Form.ClientSize = new Size(Math.Min(1420, area.Width - 80), Math.Min(790, area.Height - 120));
                     fixture.Pump();
                     fixture.AssertLivePixels(name + "-restored");
@@ -199,7 +280,7 @@ namespace MissionPlannerTests.Utilities
 
             public PaintFixture(bool dark, bool overlay, int height)
             {
-                var area = Screen.PrimaryScreen.WorkingArea;
+                var area = PhysicalMonitorBounds(null, true);
                 Assert.IsTrue(area.Width >= 1000 && area.Height >= 600, "Native visual fixture needs an unobscured 1000x600 desktop");
                 Form = new PaintForm { AutoScaleMode = AutoScaleMode.None, TopMost = true,
                     StartPosition = FormStartPosition.Manual, Location = area.Location,
@@ -263,15 +344,47 @@ namespace MissionPlannerTests.Utilities
                 DwmFlush();
             }
 
-            public void RevealToolbarOverPreviousPage()
+            public void RevealToolbarOverPreviousPage(string name)
             {
                 Header.Visible = false;
                 Pump();
-                var point = Form.PointToScreen(new Point(Form.ClientSize.Width / 2, 2));
+                var client = PhysicalClientBounds(Form);
+                var body = PhysicalClientBounds(page);
+                var point = new Point(body.Left + body.Width / 2, body.Top + 2);
+                var legacy = Point.Empty;
+                var context = SetThreadDpiAwarenessContext(new IntPtr(-1));
+                if (context == IntPtr.Zero) throw new Win32Exception(Marshal.GetLastWin32Error());
+                try { legacy = Form.PointToScreen(new Point(Form.ClientSize.Width / 2, 2)); }
+                finally { SetThreadDpiAwarenessContext(context); }
+                var text = new StringBuilder();
+                text.AppendLine("probe physical=" + point + ", legacy-unaware=" + legacy);
+                foreach (var control in new Control[] { Form, page, Header, Menu, Brand.Control })
+                {
+                    var deviceDpi = typeof(Control).GetProperty("DeviceDpi");
+                    text.AppendLine(control.GetType().Name + " nativeClient=" + PhysicalClientBounds(control)
+                        + ", nativeWindow=" + PhysicalWindowBounds(control) + ", managedClient=" + control.ClientSize
+                        + ", managedOrigin=" + control.PointToScreen(Point.Empty) + ", windowDpi=" + GetDpiForWindow(control.Handle)
+                        + ", deviceDpi=" + (deviceDpi == null ? null : deviceDpi.GetValue(control, null)));
+                }
+                text.AppendLine("monitor=" + PhysicalMonitorBounds(Form, false) + ", work=" + PhysicalMonitorBounds(Form, true)
+                    + ", managedScreen=" + Screen.FromControl(Form).Bounds + ", threadAwareness="
+                    + GetAwarenessFromDpiAwarenessContext(GetThreadDpiAwarenessContext()));
                 using (var probe = new Bitmap(1, 1))
                 {
                     using (var graphics = Graphics.FromImage(probe)) graphics.CopyFromScreen(point, Point.Empty, probe.Size);
-                    Assert.AreEqual(Poison.ToArgb(), probe.GetPixel(0, 0).ToArgb(), "Desktop capture must see the seeded previous page");
+                    var actual = probe.GetPixel(0, 0);
+                    var window = WindowFromPoint(point);
+                    var className = new StringBuilder(256);
+                    GetClassName(window, className, className.Capacity);
+                    text.AppendLine("probe expected=#FF00FF actual=#" + actual.R.ToString("X2") + actual.G.ToString("X2") + actual.B.ToString("X2")
+                        + ", sampledHwnd=" + window + ", sampledRoot=" + GetAncestor(window, 2) + ", class=" + className);
+                    Console.WriteLine(text.ToString());
+                    SaveDiagnostics(name + "-probe", text.ToString());
+                    SaveWindow(name + "-probe-window");
+                    Assert.AreEqual(client.Top, body.Top, "Hidden toolbar must release the top client area; " + text);
+                    Assert.AreEqual(client.Width, body.Width, "Previous page must fill the physical client width; " + text);
+                    Assert.AreEqual(Form.Handle, GetAncestor(window, 2), "Probe is occluded; " + text);
+                    Assert.AreEqual(Poison.ToArgb(), actual.ToArgb(), "Physical y=2 must see the previous page; " + text);
                 }
                 Header.Visible = true;
                 Header.BringToFront();
@@ -291,9 +404,10 @@ namespace MissionPlannerTests.Utilities
             public void AssertLivePixels(string name)
             {
                 Pump();
-                var bounds = Brand.Control.RectangleToScreen(Brand.Control.ClientRectangle);
-                Assert.IsTrue(Header.RectangleToScreen(Header.ClientRectangle).Contains(bounds), "Logo must lie inside the actual header");
-                Assert.IsTrue(Screen.FromControl(Form).Bounds.Contains(bounds), "The complete logo must be on screen for pixel verification");
+                var bounds = PhysicalClientBounds(Brand.Control);
+                Assert.AreEqual(Brand.Control.ClientSize, bounds.Size, "Managed/native logo dimensions disagree; capture cannot be compared");
+                Assert.IsTrue(PhysicalClientBounds(Header).Contains(bounds), "Logo must lie inside the actual header");
+                Assert.IsTrue(PhysicalMonitorBounds(Form, false).Contains(bounds), "The complete logo must be on screen for pixel verification");
                 AssertUnobscured(bounds);
                 using (var actual = new Bitmap(bounds.Width, bounds.Height))
                 using (var expected = ExpectedLogo(bounds.Size, Background))
@@ -302,14 +416,28 @@ namespace MissionPlannerTests.Utilities
                     AssertUnobscured(bounds);
                     Save(name, actual);
                     // Retain an actual desktop capture before any assertions fail.
-                    var window = Rectangle.Intersect(Form.Bounds, Screen.FromControl(Form).Bounds);
-                    using (var frame = new Bitmap(window.Width, window.Height))
-                    {
-                        using (var graphics = Graphics.FromImage(frame)) graphics.CopyFromScreen(window.Location, Point.Empty, window.Size);
-                        Save(name + "-window", frame);
-                    }
+                    SaveWindow(name + "-window");
                     AssertPixels(expected, actual, Background, name);
                 }
+            }
+
+            private void SaveWindow(string name)
+            {
+                var window = Rectangle.Intersect(PhysicalWindowBounds(Form), PhysicalMonitorBounds(Form, false));
+                using (var frame = new Bitmap(window.Width, window.Height))
+                {
+                    using (var graphics = Graphics.FromImage(frame)) graphics.CopyFromScreen(window.Location, Point.Empty, window.Size);
+                    Save(name, frame);
+                }
+            }
+
+            private static void SaveDiagnostics(string name, string text)
+            {
+                var directory = Environment.GetEnvironmentVariable("BRAND_LOGO_SCREENSHOTS");
+                if (string.IsNullOrEmpty(directory)) return;
+                directory = Path.Combine(directory, "actual-paint");
+                Directory.CreateDirectory(directory);
+                File.WriteAllText(Path.Combine(directory, name + ".txt"), text);
             }
 
             private void AssertUnobscured(Rectangle bounds)
