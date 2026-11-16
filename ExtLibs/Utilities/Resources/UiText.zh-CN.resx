@@ -8022,6 +8022,110 @@ Acc：当前测定位置的精度
     <value>遥测日志</value>
     <comment>"Telemetry Logs"</comment>
   </data>
+  <data name="31a492940715a07f10dc231238a305f6a347cfd48593277a8f13dd151bfbd044" xml:space="preserve">
+    <value>姿态航向参考系统2</value>
+    <comment>"Telemetry group: AHRS2"</comment>
+  </data>
+  <data name="4d4787cb304aabe29fc9260ff580f48beb3a7abd733f2d671a761d8d5afbeca6" xml:space="preserve">
+    <value>姿态</value>
+    <comment>"Telemetry group: Attitude"</comment>
+  </data>
+  <data name="2376d5d72a833ef37fac42a11ce2e5ec629cd41a58993a923b63e67ae5517099" xml:space="preserve">
+    <value>电池</value>
+    <comment>"Telemetry group: Battery"</comment>
+  </data>
+  <data name="16e83323237928f0397f45b2cfd7d8da93e7a8d3ab1ae69bfca53255ec86d36c" xml:space="preserve">
+    <value>校准</value>
+    <comment>"Telemetry group: Calibration"</comment>
+  </data>
+  <data name="d57d018e9537569f7ed0a83601ad7ac5e68fd8578f9c7f07ea4b1b041d055863" xml:space="preserve">
+    <value>电子燃油喷射</value>
+    <comment>"Telemetry group: EFI"</comment>
+  </data>
+  <data name="b884e6f30106d1627bdc205b7b70acac9dd46449aca1bbf387b01a777cf017ec" xml:space="preserve">
+    <value>扩展卡尔曼滤波</value>
+    <comment>"Telemetry group: EKF"</comment>
+  </data>
+  <data name="b3a5f5fb40bfd5b756e8abe40a88ffd8e66f9e522b03b5265ccdbc3c4b91efa5" xml:space="preserve">
+    <value>电子调速器</value>
+    <comment>"Telemetry group: ESC"</comment>
+  </data>
+  <data name="9a86bc4ce07b84539a16c115bdf27c4ee4475673958008a40092af3ea2eca2c5" xml:space="preserve">
+    <value>环境</value>
+    <comment>"Telemetry group: Enviromental"</comment>
+  </data>
+  <data name="014f643024a6a34a5468857f17dc903823f10f67bb45852530eb8e460a8998b0" xml:space="preserve">
+    <value>围栏</value>
+    <comment>"Telemetry group: Fence"</comment>
+  </data>
+  <data name="acd43dae38d984718c0e16fc10efa87e40b4251382edf9e5309029064892b04e" xml:space="preserve">
+    <value>光流</value>
+    <comment>"Telemetry group: Flow"</comment>
+  </data>
+  <data name="a509da84ab687c4d444965079900ed6256b58e7a1a7324e0357032f82f0cbd93" xml:space="preserve">
+    <value>发电机</value>
+    <comment>"Telemetry group: Generator"</comment>
+  </data>
+  <data name="84c4cf6a44906762edc7650c6c6fe3879f041ef2a3ef94e085920eb228840104" xml:space="preserve">
+    <value>硬件</value>
+    <comment>"Telemetry group: Hardware"</comment>
+  </data>
+  <data name="95c3d458eeaee0773a1fc344849e369494978252db2d7530c92c16b4ea5cf373" xml:space="preserve">
+    <value>微控制器</value>
+    <comment>"Telemetry group: MCU"</comment>
+  </data>
+  <data name="42b0f4da468bff90217ab39a11ccfde7303b1ba0735a0309b9a82e8abcf4448c" xml:space="preserve">
+    <value>云台</value>
+    <comment>"Telemetry group: Mount"</comment>
+  </data>
+  <data name="2c292e244ad0e26aa93f923630e7a662edcbe33c1e1d22e66dd9a1c6a2650f76" xml:space="preserve">
+    <value>导航</value>
+    <comment>"Telemetry group: NAV"</comment>
+  </data>
+  <data name="ad95a7fbc5471079c3ad78a5452c0af42830596523384cb139770126cd97e8f1" xml:space="preserve">
+    <value>其他</value>
+    <comment>"Telemetry group: Other"</comment>
+  </data>
+  <data name="bf857a4973ff22251e0a6841a7a9308654689ed3c112cbceeaaf9c4e559cbb28" xml:space="preserve">
+    <value>比例积分微分控制</value>
+    <comment>"Telemetry group: PID"</comment>
+  </data>
+  <data name="621bd67f0046059d41dd265f0474635d507ec3ad0eb989f50eabb18bc1241261" xml:space="preserve">
+    <value>位置</value>
+    <comment>"Telemetry group: Position"</comment>
+  </data>
+  <data name="d6da6cb3ed76a900e3a40a96be124955a3de2de8837e7170852de97f6a3f455e" xml:space="preserve">
+    <value>遥控输入</value>
+    <comment>"Telemetry group: RadioIn"</comment>
+  </data>
+  <data name="49c2b6b63b485c99bff05575cc4585776baecf3ac5be118512d6d097e889cb12" xml:space="preserve">
+    <value>遥控输出</value>
+    <comment>"Telemetry group: RadioOut"</comment>
+  </data>
+  <data name="7082344e5d4912323a5efaa02fafd82eb81a55ce8cbbc0dfb8a55760c587cf40" xml:space="preserve">
+    <value>传感器</value>
+    <comment>"Telemetry group: Sensor"</comment>
+  </data>
+  <data name="b04e2a27f789ad83e5f31169b6d3df60cf23769d6ac36cf6521a80f8b911b921" xml:space="preserve">
+    <value>软件</value>
+    <comment>"Telemetry group: Software"</comment>
+  </data>
+  <data name="45797ffa93f8cde737e46652f70eeaed893fa5e5dce274da46ad753519ede889" xml:space="preserve">
+    <value>遥测</value>
+    <comment>"Telemetry group: Telem"</comment>
+  </data>
+  <data name="6a43bd4eec8fce59ff82ea68565b41e80563d79b4322a756fb59b3faa3a3b10e" xml:space="preserve">
+    <value>地形</value>
+    <comment>"Telemetry group: Terrain"</comment>
+  </data>
+  <data name="d17ffd5c0a549ab19d3ac1edc4beb6dca94da650f55c4cf0ea11bca61d4f2ecd" xml:space="preserve">
+    <value>应答机状态</value>
+    <comment>"Telemetry group: Transponder Status"</comment>
+  </data>
+  <data name="d16d536f9726ef80db3fcaae1250c1b75f3bd58eac597cd27455c420ad2cad2a" xml:space="preserve">
+    <value>振动</value>
+    <comment>"Telemetry group: Vibe"</comment>
+  </data>
   <data name="e0926fdac700b09497b5f0218ea3dd54fa13c0bdeaee6caa7b85e50b852aa05f" xml:space="preserve">
     <value>终端</value>
     <comment>"Terminal"</comment>

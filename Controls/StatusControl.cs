@@ -81,12 +81,13 @@ namespace MissionPlanner.Controls
             var list = MainV2.comPort.MAV.cs.GetItemList(true);
             foreach (var field in list)
             {
-                _allItems.Add(new StatusItem { Name = field, Value = "" });
+                _allItems.Add(new StatusItem { Name = field, DisplayName = TelemetryFieldPresentation.FieldLabel(field), Value = "" });
             }
             _filteredItems = _allItems;
 
             // Set up autocomplete
-            _searchBox.SetAutoCompleteSource(list);
+            _searchBox.SetAutoCompleteSource(_allItems.SelectMany(x => new[] { x.Name, x.DisplayName }).Distinct().ToList());
+            _columnWidthsCalculated = false;
 
             UpdateScrollSize();
             _contentPanel.Invalidate();
@@ -94,10 +95,22 @@ namespace MissionPlanner.Controls
 
         private void UpdateScrollSize()
         {
+            if (_filteredItems == null || _contentPanel == null)
+                return;
             if (_filteredItems.Count == 0)
             {
                 _contentPanel.AutoScrollMinSize = Size.Empty;
                 return;
+            }
+
+            // Measure the actual bilingual labels before reserving the value column.
+            using (var graphics = _contentPanel.CreateGraphics())
+            using (var nameFont = new Font(this.Font, FontStyle.Bold))
+            {
+                _nameWidth = 130;
+                foreach (var item in _allItems)
+                    _nameWidth = Math.Max(_nameWidth, (int)Math.Ceiling(graphics.MeasureString(item.DisplayName, nameFont).Width) + 8);
+                _rowHeight = Math.Max(18, (int)Math.Ceiling(nameFont.GetHeight(graphics)) + 4);
             }
 
             // Only calculate column widths once values have been populated
@@ -198,7 +211,7 @@ namespace MissionPlanner.Controls
                 foreach (var item in _filteredItems)
                 {
                     // Draw property name in bold green
-                    g.DrawString(item.Name, _boldFont, nameBrush, x, y);
+                    g.DrawString(item.DisplayName, _boldFont, nameBrush, x, y);
 
                     // Draw value in normal font
                     g.DrawString(item.Value, _normalFont, valueBrush, x + _nameWidth, y);
@@ -263,7 +276,7 @@ namespace MissionPlanner.Controls
 
         private void SearchBox_TextChanged(object sender, EventArgs e)
         {
-            var searchText = _searchBox.Text.Trim().ToLower();
+            var searchText = _searchBox.Text.Trim();
 
             if (string.IsNullOrEmpty(searchText))
             {
@@ -271,7 +284,7 @@ namespace MissionPlanner.Controls
             }
             else
             {
-                _filteredItems = _allItems.Where(x => x.Name.ToLower().Contains(searchText)).ToList();
+                _filteredItems = _allItems.Where(x => TelemetryFieldPresentation.Matches(searchText, x.Name, x.DisplayName)).ToList();
             }
 
             // Recalculate column widths for filtered results
@@ -286,7 +299,7 @@ namespace MissionPlanner.Controls
             // Recalculate column widths since rows per column changes
             _columnWidthsCalculated = false;
             UpdateScrollSize();
-            _contentPanel.Invalidate();
+            _contentPanel?.Invalidate();
         }
 
         public void ApplyTheme()
@@ -314,6 +327,7 @@ namespace MissionPlanner.Controls
         public class StatusItem
         {
             public string Name { get; set; }
+            public string DisplayName { get; set; }
             public string Value { get; set; }
         }
 
