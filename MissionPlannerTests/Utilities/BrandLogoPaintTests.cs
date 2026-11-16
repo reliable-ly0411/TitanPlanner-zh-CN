@@ -212,9 +212,102 @@ namespace MissionPlannerTests.Utilities
                 int height = (int)Math.Round(size.Width * (double)source.Height / source.Width);
                 graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
                 graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
-                graphics.DrawImage(source, new Rectangle(0, (size.Height - height) / 2, size.Width, height));
+                var destination = new Rectangle(0, (size.Height - height) / 2, size.Width, height);
+                if (Contrast(background, Color.FromArgb(42, 42, 42)) < 4.5)
+                {
+                    // Golden composition: a thin neutral underlay follows only dark
+                    // source ink; the supplied PNG is still the final foreground.
+                    using (var ink = new Bitmap(source.Width, source.Height))
+                    {
+                        for (int y = 0; y < source.Height; y++)
+                        for (int x = 0; x < source.Width; x++)
+                        {
+                            var pixel = source.GetPixel(x, y);
+                            if (Math.Max(pixel.R, Math.Max(pixel.G, pixel.B)) <= 110)
+                                ink.SetPixel(x, y, Color.FromArgb((pixel.A * 217 + 127) / 255, 235, 235, 235));
+                        }
+                        int radius = Math.Max(1, (int)Math.Round(size.Height / 58.0));
+                        for (int dy = -radius; dy <= radius; dy++)
+                        for (int dx = -radius; dx <= radius; dx++)
+                        {
+                            if (dx * dx + dy * dy == 0 || dx * dx + dy * dy > radius * (radius + 1)) continue;
+                            graphics.DrawImage(ink, new Rectangle(destination.X + dx, destination.Y + dy, destination.Width, destination.Height));
+                        }
+                    }
+                }
+                graphics.DrawImage(source, destination);
             }
             return expected;
+        }
+
+        private static double Contrast(Color a, Color b)
+        {
+            Func<Color, double> luminance = color =>
+            {
+                Func<byte, double> linear = channel => channel / 255.0 <= 0.04045 ? channel / 255.0 / 12.92
+                    : Math.Pow((channel / 255.0 + 0.055) / 1.055, 2.4);
+                return 0.2126 * linear(color.R) + 0.7152 * linear(color.G) + 0.0722 * linear(color.B);
+            };
+            double first = luminance(a), second = luminance(b);
+            return (Math.Max(first, second) + 0.05) / (Math.Min(first, second) + 0.05);
+        }
+
+        [DataTestMethod]
+        [DataRow(58)]
+        [DataRow(87)]
+        [DataRow(116)]
+        public void DarkToolbarKeepsOriginalInkAndAddsReadableContourWithoutAWhiteRectangle(int toolbarHeight)
+        {
+            InNativeSta(() =>
+            {
+                using (var fixture = new PaintFixture(true, false, toolbarHeight))
+                {
+                    fixture.RevealToolbarOverPreviousPage("contrast-" + toolbarHeight);
+                    fixture.AssertLivePixels("contrast-" + toolbarHeight);
+                    var bounds = PhysicalClientBounds(fixture.Brand.Control);
+                    using (var actual = new Bitmap(bounds.Width, bounds.Height))
+                    using (var sourceStream = typeof(BrandLogoLinks).Assembly.GetManifestResourceStream("MissionPlanner.Resources.LocalizedBrandLogo.png"))
+                    using (var source = new Bitmap(sourceStream))
+                    {
+                        using (var graphics = Graphics.FromImage(actual)) graphics.CopyFromScreen(bounds.Location, Point.Empty, bounds.Size);
+                        int imageHeight = (int)Math.Round(bounds.Width * (double)source.Height / source.Width);
+                        int top = (bounds.Height - imageHeight) / 2;
+                        using (var scaled = new Bitmap(bounds.Width, imageHeight))
+                        {
+                            using (var graphics = Graphics.FromImage(scaled))
+                            {
+                                graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                                graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                                graphics.DrawImage(source, new Rectangle(Point.Empty, scaled.Size));
+                            }
+                            int core = 0, contour = 0;
+                            for (int y = 0; y < scaled.Height; y++)
+                            for (int x = 0; x < scaled.Width; x++)
+                            {
+                                var original = scaled.GetPixel(x, y);
+                                var pixel = actual.GetPixel(x, top + y);
+                                if (original.A == 255 && Math.Max(original.R, Math.Max(original.G, original.B)) <= 110)
+                                {
+                                    core++;
+                                    Assert.IsTrue(Math.Abs(original.R - pixel.R) <= 2 && Math.Abs(original.G - pixel.G) <= 2
+                                        && Math.Abs(original.B - pixel.B) <= 2, "Original black ink was recolored");
+                                }
+                                if (x >= scaled.Width / 2 && original.A == 0 && pixel.R >= 170
+                                    && Math.Abs(pixel.R - pixel.G) <= 3 && Math.Abs(pixel.R - pixel.B) <= 3
+                                    && Contrast(pixel, Color.FromArgb(42, 42, 42)) >= 4.5) contour++;
+                            }
+                            Assert.IsTrue(core >= 50, "Check actual original ink, not merely an accessible name");
+                            Assert.IsTrue(contour >= 20, "Dark text needs a visibly contrasting contour");
+                            Console.WriteLine("contrast height=" + toolbarHeight + ", original core=" + core + ", readable contour=" + contour);
+                            for (int x = 0; x < actual.Width; x++)
+                            {
+                                Assert.AreEqual(fixture.Background.ToArgb(), actual.GetPixel(x, 1).ToArgb(), "No rectangular light backing");
+                                Assert.AreEqual(fixture.Background.ToArgb(), actual.GetPixel(x, actual.Height - 2).ToArgb(), "No rectangular light backing");
+                            }
+                        }
+                    }
+                }
+            });
         }
 
         private static void AssertPixels(Bitmap expected, Bitmap actual, Color background, string stage)
@@ -378,6 +471,16 @@ namespace MissionPlannerTests.Utilities
                     GetClassName(window, className, className.Capacity);
                     text.AppendLine("probe expected=#FF00FF actual=#" + actual.R.ToString("X2") + actual.G.ToString("X2") + actual.B.ToString("X2")
                         + ", sampledHwnd=" + window + ", sampledRoot=" + GetAncestor(window, 2) + ", class=" + className);
+                    if (PhysicalMonitorBounds(Form, false).Contains(legacy))
+                    {
+                        using (var oldProbe = new Bitmap(1, 1))
+                        {
+                            using (var graphics = Graphics.FromImage(oldProbe)) graphics.CopyFromScreen(legacy, Point.Empty, oldProbe.Size);
+                            var oldColor = oldProbe.GetPixel(0, 0);
+                            text.AppendLine("legacy-unaware point sampled in physical space=#" + oldColor.R.ToString("X2")
+                                + oldColor.G.ToString("X2") + oldColor.B.ToString("X2") + ", owner=" + GetAncestor(WindowFromPoint(legacy), 2));
+                        }
+                    }
                     Console.WriteLine(text.ToString());
                     SaveDiagnostics(name + "-probe", text.ToString());
                     SaveWindow(name + "-probe-window");

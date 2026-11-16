@@ -53,6 +53,9 @@ namespace MissionPlannerTests.Utilities
                     Assert.AreEqual(ToolStripItemPlacement.Main, fixture.Connect.Placement);
                     Assert.IsTrue(menu.ClientRectangle.Contains(fixture.Connection.Bounds));
                     Assert.IsTrue(menu.ClientRectangle.Contains(fixture.Connect.Bounds));
+                    int expectedGap = (int)Math.Round(menu.DisplayRectangle.Height * 8.0 / 58);
+                    Assert.AreEqual(expectedGap, brand.Margin.Left);
+                    Assert.AreEqual(expectedGap, brand.Margin.Right);
                     Assert.AreEqual(2, brand.Control.Controls.Count);
                     // Native GetChildAtPoint excludes invisible overflow controls.
                     // Check geometry now and exercise hit testing after opening it.
@@ -67,6 +70,10 @@ namespace MissionPlannerTests.Utilities
                     if (brand.Placement == ToolStripItemPlacement.Main)
                     {
                         Assert.IsTrue(menu.ClientRectangle.Contains(brand.Bounds));
+                        Assert.IsTrue(menu.ClientRectangle.Right - brand.Bounds.Right >= expectedGap,
+                            "Logo must have a gap to the window edge");
+                        Assert.IsTrue(brand.Bounds.Left - fixture.Connect.Bounds.Right >= expectedGap,
+                            "Logo must have a gap to the connection button");
                         foreach (ToolStripItem item in menu.Items)
                         {
                             if (item == brand || !item.Available || item.Placement != ToolStripItemPlacement.Main) continue;

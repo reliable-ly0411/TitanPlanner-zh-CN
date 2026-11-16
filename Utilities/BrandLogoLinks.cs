@@ -65,6 +65,9 @@ namespace MissionPlanner.Utilities
                     var size = links.SizeForToolbar(menu.DisplayRectangle.Height);
                     if (host.Size != size) host.Size = size;
                     if (links.Size != size) links.Size = size;
+                    int gap = Math.Max(1, (int)Math.Round(size.Height * 8.0 / 58));
+                    var margin = new Padding(gap, 0, gap, 0);
+                    if (host.Margin != margin) host.Margin = margin;
                 };
                 menu.Layout += updateSize;
                 host.Disposed += (sender, args) => menu.Layout -= updateSize;
@@ -97,6 +100,7 @@ namespace MissionPlanner.Utilities
         private sealed class BrandLogoControl : UserControl
         {
             private readonly Bitmap source;
+            private readonly Bitmap inkSupport;
             private readonly Button left;
             private readonly Button right;
             private readonly ToolTip toolTip = new ToolTip();
@@ -104,6 +108,7 @@ namespace MissionPlanner.Utilities
             public BrandLogoControl(Bitmap source, Action<string> open)
             {
                 this.source = source;
+                inkSupport = CreateInkSupport(source);
                 AutoScaleMode = AutoScaleMode.None;
                 BackColor = Color.Transparent;
                 Margin = Padding.Empty;
@@ -212,12 +217,66 @@ namespace MissionPlanner.Utilities
                 PaintLogo(e.Graphics);
             }
 
+            private static Bitmap CreateInkSupport(Bitmap image)
+            {
+                var support = new Bitmap(image.Width, image.Height);
+                for (int y = 0; y < image.Height; y++)
+                for (int x = 0; x < image.Width; x++)
+                {
+                    var pixel = image.GetPixel(x, y);
+                    // A display-only underlay follows the supplied neutral dark ink.
+                    // Blue artwork and every original foreground pixel stay untouched.
+                    if (pixel.R <= 110 && pixel.G <= 110 && pixel.B <= 110)
+                        support.SetPixel(x, y, Color.FromArgb((pixel.A * 217 + 127) / 255, 235, 235, 235));
+                }
+                return support;
+            }
+
+            private bool NeedsInkSupport()
+            {
+                // BackColor alone can be light while the toolbar's tiled image is dark.
+                // Sample the backdrop that is actually composited under the black text.
+                using (var sample = new Bitmap(1, 1))
+                using (var graphics = Graphics.FromImage(sample))
+                {
+                    graphics.TranslateTransform(-Width * 3 / 4, -Height / 2);
+                    PaintToolbarBackground(graphics);
+                    var color = sample.GetPixel(0, 0);
+                    return (Luminance(color) + 0.05) / (Luminance(Color.FromArgb(42, 42, 42)) + 0.05) < 4.5;
+                }
+            }
+
+            private static double Luminance(Color color)
+            {
+                return 0.2126 * Linear(color.R) + 0.7152 * Linear(color.G) + 0.0722 * Linear(color.B);
+            }
+
+            private static double Linear(byte value)
+            {
+                double channel = value / 255.0;
+                return channel <= 0.04045 ? channel / 12.92 : Math.Pow((channel + 0.055) / 1.055, 2.4);
+            }
+
             private void PaintLogo(Graphics graphics)
             {
                 int imageHeight = Math.Max(1, (int)Math.Round(Width * (double)source.Height / source.Width));
+                var imageBounds = new Rectangle(0, (Height - imageHeight) / 2, Width, imageHeight);
                 graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
                 graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
-                graphics.DrawImage(source, new Rectangle(0, (Height - imageHeight) / 2, Width, imageHeight));
+                if (NeedsInkSupport())
+                {
+                    int radius = Math.Max(1, (int)Math.Round(Height / 58.0));
+                    for (int y = -radius; y <= radius; y++)
+                    for (int x = -radius; x <= radius; x++)
+                    {
+                        if ((x == 0 && y == 0) || x * x + y * y > radius * radius + radius) continue;
+                        var offset = imageBounds;
+                        offset.Offset(x, y);
+                        graphics.DrawImage(inkSupport, offset);
+                    }
+                }
+                // The exact original RGBA image is always the final foreground layer.
+                graphics.DrawImage(source, imageBounds);
             }
 
             public void PaintLinkSurface(Graphics graphics, Point location)
@@ -234,6 +293,7 @@ namespace MissionPlanner.Utilities
                 if (disposing)
                 {
                     toolTip.Dispose();
+                    inkSupport.Dispose();
                     source.Dispose();
                 }
                 base.Dispose(disposing);
