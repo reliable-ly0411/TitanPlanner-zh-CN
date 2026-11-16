@@ -1234,6 +1234,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Plugins\example23-switch.resx" />
     <EmbeddedResource Include="Resources\DefaultQuickViewSettings.csv" />
+    <EmbeddedResource Include="Resources\LocalizedBrandLogo.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="Properties\Resources.resx">
