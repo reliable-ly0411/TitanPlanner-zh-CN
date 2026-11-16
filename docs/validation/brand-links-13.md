@@ -69,7 +69,107 @@ The scoped `Native Windows brand link checks` workflow runs this suite and retai
 TRX results plus toolbar screenshots as CI artifacts. It does not build or publish
 the application, create a release, or change existing release assets.
 
-## Results (2026-11-16)
+## Actual-window paint regression (2026-11-16)
+
+Full-application GPD verification of `3e221779` **failed**: both accessible links
+existed, but the toolbar image was invisible. Old parameter-checkbox pixels and,
+after restoring to 1420 × 790, map wind-circle pixels remained in the logo region.
+The earlier 18/18 result below verifies layout, accessibility and print rendering;
+it does **not** establish successful on-screen painting.
+
+The child BrandLinkButton inherited ButtonBase's Opaque style. Its OnPaint drew
+only a focus rectangle, while the artwork and background were placed in
+OnPaintBackground. Normal WM_PAINT skips that background method for an Opaque
+control. The child HWNDs also clip the UserControl parent's paint, leaving no
+complete painter for their visible pixels. Depending on the previous backing
+surface, the result was blank or stale page contents. This is separate from the
+previous split-item layout problem; correct bounds and accessible names cannot
+prove visible pixels. See Microsoft's [Opaque style definition](https://learn.microsoft.com/en-us/dotnet/api/system.windows.forms.controlstyles?view=netframework-4.8.1)
+and [ButtonBase defaults](https://github.com/dotnet/winforms/blob/main/src/System.Windows.Forms/System/Windows/Forms/Controls/Buttons/ButtonBase.cs).
+The native regression also reads Opaque=True from the actual net472 Windows controls.
+
+Regression-only commit `7dccccbadb06007c10499e1e63f0b557849da901` runs the new tests
+against the unchanged failing implementation. [Native run 43904532484](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/actions/runs/43904532484)
+reproduced **18 passed / 6 failed**. The two WM_PAINT tests matched zero logo pixels
+in both halves. All four actual-desktop tests detected old magenta page pixels
+(1,202 stale pixels) after revealing the toolbar. Thus the new assertions fail on
+the previously accepted code, instead of merely checking the replacement logic.
+
+Fix `efcce3dba6d7b0d73160f96e3969e5932fa558bf` makes each child button paint its
+complete backdrop and original artwork in OnPaint. The child background callback
+does no separate painting. Explicit opaque/double-buffer/resize styles make the painter
+responsible for every pixel on every WM_PAINT, including transparent PNG areas.
+The backdrop resolves an opaque toolbar/ancestor color before compositing the
+original PNG. Source artwork, the atomic layout and accessible link actions remain
+the same.
+
+The added visual regression sends WM_PAINT into a seeded bitmap DC **and** uses
+CopyFromScreen to inspect actual desktop pixels. A positive-control probe first
+verifies that screen capture sees the previous page. The fixture uses a double-
+buffered form, a fill-docked menu inside a toolbar panel, and previous page controls
+with a parameter checkbox and wind-circle surrogate. It tests docked and floating
+headers, light/dark backgrounds and toolbar heights 58/87/116. Each desktop case
+checks reveal, maximize, restore, page/theme change and hide/show. Pixel assertions
+require the original artwork in both halves, no stale magenta, mean RGB error at
+most 2/255 and at most 1% materially mismatched pixels against the PNG-composited
+reference. These are actual-window fixture checks, still not full-application GPD
+acceptance or a per-monitor DPI transition test.
+
+## Corrected paint result (2026-11-16)
+
+Runtime fix: `efcce3dba6d7b0d73160f96e3969e5932fa558bf`.
+Final native test source: `b27ed9cb7bd83df1e998240652aaa0b805fca746`.
+[Native run 43905914653](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/actions/runs/43905914653)
+passed **24/24, zero skipped**, including the six added visual cases. The TRX records
+22 pixel comparisons: two native WM_PAINT bitmap targets and 20 real desktop states.
+All 22 had zero materially mismatched pixels, zero stale-magenta pixels and 100%
+foreground matches in both image halves. Maximum mean RGB error was 0.01483/255.
+
+The [verified artifact](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/actions/runs/43905914653/artifacts/14246366379)
+contains TRX plus 71 PNGs (the 29 historical print renderings and 42 actual-paint
+captures). ZIP size: 797,054 bytes; SHA256
+`e47c4146c7c04f79ce255a49f63b5a8222ab7f0742d38d306a4879992e8d8684`.
+The downloaded ZIP hash, 24/24 counters and all 22 pixel metrics were checked.
+
+The live capture harness raises its own window immediately before capture and
+checks native window ownership at five points before and after copying pixels.
+An intermediate run correctly rejected screenshots partly covered by a hosted
+runner console. This occlusion check prevents another window from becoming either
+a false visual failure or false evidence of correct application pixels.
+The observed CI desktop was 1024 pixels wide, so the restore test used a 944-pixel
+client width; the 1420 × 790 request is capped by available desktop size. Exact GPD
+1420 × 790 and maximized full-application validation therefore remain separate.
+
+Native WM_PAINT before the correction (the unchanged failing painter):
+
+![Failing native WM_PAINT](brand-links-wm-paint-before.png)
+
+Native WM_PAINT after the correction:
+
+![Corrected native WM_PAINT](brand-links-wm-paint-after.png)
+
+Actual on-screen toolbar crops after reveal and after restore:
+
+![Live light toolbar after reveal](brand-links-live-revealed-light.png)
+
+![Live dark toolbar after restore](brand-links-live-restored-dark.png)
+
+[Maximized actual-desktop fixture capture](brand-links-live-maximized.png) shows
+the intentionally magenta previous page below the correctly composited toolbar.
+These fixture images are not GPD screenshots.
+
+The current Mono run is **15 passed / 0 failed / 9 skipped**; native desktop paint,
+Windows accessibility and native input cases are Windows-only. Localization checks
+(2,710 dictionary entries, 96 enhanced resources), all 59 offline CI regressions,
+actionlint and CRLF-aware diff checks also passed after the correction. Both the
+source JPEG and transparent PNG hashes are unchanged from the artwork section.
+The runtime change touches only BrandLogoLinks.cs; HUD, connection and flight
+logic were not edited. No release, tag, merge or force push was performed.
+
+**GPD full-application revalidation is still pending.** The earlier 18/18 and the
+new 24/24 fixture results do not override a failing full-application capture.
+
+## Historical print/layout result (superseded for visual acceptance)
 
 Runtime and UI test source: `90077de97b33c4d0f756f6edff677dc28ee6ff17`.
 Later validation-document and parent-test-project exclusion changes do not alter
@@ -89,13 +189,13 @@ those runtime or UI test source files.
 - actionlint 1.7.12: the scoped workflow passed. CRLF-aware diff check passed;
   original CRLF source/project files were preserved.
 
-These are exact native WinForms **fixture** screenshots, not full-application or
-GPD captures. The fixture uses the toolbar/connection dimensions and placeholder
-navigation/vehicle controls.
+The following are **off-screen DrawToBitmap/WM_PRINT fixture renderings**. They
+are not actual-window screenshots and did not detect the missing WM_PAINT painter.
+They must not be used as evidence that the GPD failure passed.
 
-![Native dark toolbar fixture](brand-links-dark.png)
+![Historical off-screen dark rendering](brand-links-dark.png)
 
-![Native light toolbar fixture](brand-links-light.png)
+![Historical off-screen light rendering](brand-links-light.png)
 
 Full-application GPD verification, physical monitor DPI transitions and
 flight/telemetry testing are outside these isolated checks and must not be inferred
