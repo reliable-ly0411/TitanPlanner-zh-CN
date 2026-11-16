@@ -31,6 +31,20 @@ class TelemetryDisplayTest(unittest.TestCase):
         for placeholder in ('dist', 'alt', 'speed', 'speed/s'):
             self.assertIn('Replace(" (' + placeholder + ')", "")', source)
 
+    def test_velocity_unit_correction_is_limited_to_three_fields(self):
+        source = (ROOT / 'Controls/TelemetryFieldPresentation.cs').read_text()
+        self.assertIn('if (key == "vx" || key == "vy" || key == "vz")', source)
+        self.assertIn('description.Replace("(ms)", "(m/s)")', source)
+        state = (ROOT / 'ExtLibs/ArduPilot/CurrentState.cs').read_text()
+        for field in ('vx', 'vy', 'vz'):
+            self.assertIn(field + ' = loc.' + field + ' * 0.01;', state)
+        # Genuine time labels keep milliseconds, rather than a global string replacement.
+        catalogs = {}
+        for name in ('ui-translations.json', 'code-translations.json'):
+            catalogs.update(json.loads((ROOT / 'localization/zh-Hans' / name).read_text()))
+        for label in ('Delay (ms)', 'Shutter lag (ms)', 'Max Window (ms)'):
+            self.assertIn('(ms)', catalogs[label])
+
     def test_binding_and_selection_stay_on_original_key(self):
         status = (ROOT / 'Controls/StatusControl.cs').read_text()
         chart = (ROOT / 'Controls/DisplayThisForm.cs').read_text()

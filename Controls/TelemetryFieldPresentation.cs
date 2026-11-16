@@ -20,6 +20,10 @@ namespace MissionPlanner.Controls
             // Keep the key and description, but never infer a physical unit from them.
             description = description.Replace(" (dist)", "").Replace(" (alt)", "")
                 .Replace(" (speed)", "").Replace(" (speed/s)", "");
+            // GLOBAL_POSITION_INT velocity components are centimetres/second on the wire
+            // and stored as metres/second; the legacy attribute spells this ambiguously as ms.
+            if (key == "vx" || key == "vy" || key == "vz")
+                description = description.Replace("(ms)", "(m/s)");
             return Combine(key, description);
         }
 

@@ -59,7 +59,13 @@ namespace MissionPlannerTests.Controls
                         Assert.IsFalse(label.Contains("(dist)") || label.Contains("(alt)") || label.Contains("(speed"), field);
                     }
                 }
-                Assert.IsTrue(TelemetryFieldPresentation.FieldLabel("vx").Contains("(ms)"));
+                foreach (var field in new[] { "vx", "vy", "vz" })
+                {
+                    var label = TelemetryFieldPresentation.FieldLabel(field);
+                    Assert.IsTrue(label.StartsWith(field + " (", StringComparison.Ordinal), field);
+                    Assert.IsTrue(label.Contains("(m/s)"), label);
+                    Assert.IsFalse(label.Contains("(ms)"), label);
+                }
             }
             finally
             {
