@@ -4,7 +4,7 @@ using System.Threading;
 using System.Windows.Forms;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MissionPlanner.Controls;
-using MissionPlanner.MsgBox;
+using CustomMessageBox = MissionPlanner.MsgBox.CustomMessageBox;
 
 namespace MissionPlannerTests.Controls
 {

@@ -2387,7 +2387,7 @@ namespace MissionPlanner.GCSViews
                  try
                 {
                     StorageFormatConfirmation.Execute(
-                        () => CustomMessageBox.ShowDestructiveConfirmation(
+                        () => MissionPlanner.MsgBox.CustomMessageBox.ShowDestructiveConfirmation(
                             UiText.Translate("Formatting the flight controller SD card will delete all data on the card. Continue?"),
                             UiText.Translate("Format SD card")),
                         () =>

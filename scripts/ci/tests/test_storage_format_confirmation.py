@@ -11,9 +11,14 @@ class StorageFormatSourceTests(unittest.TestCase):
         block = source.split('if (flightDataActions1.CMB_action.Text == actions.Format_SD_Card.ToString())', 1)[1].split('if (flightDataActions1.CMB_action.Text == actions.Trigger_Camera.ToString())', 1)[0]
         self.assertEqual(block.count('MAVLink.MAV_CMD.STORAGE_FORMAT'), 1)
         self.assertIn('StorageFormatConfirmation.Execute(', block)
-        self.assertIn('CustomMessageBox.ShowDestructiveConfirmation(', block)
+        self.assertIn('MissionPlanner.MsgBox.CustomMessageBox.ShowDestructiveConfirmation(', block)
         self.assertIn('MainV2.comPort.doCommandInt(MainV2.comPort.MAV.sysid, MainV2.comPort.MAV.compid, MAVLink.MAV_CMD.STORAGE_FORMAT, 1, 1, 0, 0, 0, 0, 0)', block)
         self.assertLess(block.index('ShowDestructiveConfirmation'), block.index('doCommandInt'))
+
+    def test_dialog_tests_bind_the_windows_implementation(self):
+        source = (ROOT / 'MissionPlannerTests/Controls/StorageFormatDialogTests.cs').read_text()
+        self.assertIn('using CustomMessageBox = MissionPlanner.MsgBox.CustomMessageBox;', source)
+        self.assertNotIn('using MissionPlanner.MsgBox;', source)
 
     def test_safe_default_is_opt_in_and_applied_before_dialog(self):
         source = (ROOT / 'ExtLibs/Controls/CustomMessageBox.cs').read_text(encoding='utf-8-sig')
