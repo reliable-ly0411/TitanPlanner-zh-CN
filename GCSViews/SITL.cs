@@ -124,10 +124,10 @@ namespace MissionPlanner.GCSViews
             // Populate the version selection box
             var versionSelect = new Dictionary<string, APFirmware.RELEASE_TYPES?>()
             {
-                { "Latest (Dev)", APFirmware.RELEASE_TYPES.DEV },
-                { "Beta", APFirmware.RELEASE_TYPES.BETA },
-                { "Stable", APFirmware.RELEASE_TYPES.OFFICIAL },
-                { "Skip Download", null }
+                { UiText.Translate("Latest (Dev)"), APFirmware.RELEASE_TYPES.DEV },
+                { UiText.Translate("Beta"), APFirmware.RELEASE_TYPES.BETA },
+                { UiText.Translate("Stable"), APFirmware.RELEASE_TYPES.OFFICIAL },
+                { UiText.Translate("Skip Download"), null }
             };
             cmb_version.DataSource = new BindingSource(versionSelect, null);
             cmb_version.DisplayMember = "Key";

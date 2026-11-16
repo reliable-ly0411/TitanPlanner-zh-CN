@@ -1566,5 +1566,9 @@
   "{0:N0} of {1:N0}": "{0:N0} / {1:N0}",
   "{0:N0} tiles in {1}": "{1} 中有 {0:N0} 个瓦片",
   "{0} area(s)  ·  the whole tile cache holds {1:N0} tiles, {2}": "{0} 个区域  ·  全部缓存含 {1:N0} 个瓦片，占用 {2}",
-  "{0}{1:N0} tiles copied, {2:N0} were already present.\n{3} area(s) added to the list.": "{0}已复制 {1:N0} 个瓦片，{2:N0} 个已存在。\n已向列表添加 {3} 个区域。"
+  "{0}{1:N0} tiles copied, {2:N0} were already present.\n{3} area(s) added to the list.": "{0}已复制 {1:N0} 个瓦片，{2:N0} 个已存在。\n已向列表添加 {3} 个区域。",
+  "Latest (Dev)": "最新开发版",
+  "Beta": "测试版",
+  "Stable": "稳定版",
+  "Skip Download": "跳过下载"
 }

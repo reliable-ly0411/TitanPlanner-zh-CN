@@ -756,13 +756,8 @@ namespace MissionPlanner
 
 
 
-            if (Settings.Instance["theme"] == null)
-            {
-                if (File.Exists($"{running_directory}custom.mpsystheme"))
-                    Settings.Instance["theme"] = "custom.mpsystheme";
-                else
-                    Settings.Instance["theme"] = "BurntKermit.mpsystheme";
-            }
+            Settings.Instance["theme"] = ThemeManager.SelectStartupTheme(
+                Settings.Instance["theme"], File.Exists($"{running_directory}custom.mpsystheme"));
 
             ThemeManager.LoadTheme(Settings.Instance["theme"]);
 

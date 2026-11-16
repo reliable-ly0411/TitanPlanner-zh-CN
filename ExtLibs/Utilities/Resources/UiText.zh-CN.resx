@@ -1284,6 +1284,10 @@
     <value>平台深度 [m]</value>
     <comment>"Berm Depth [m]"</comment>
   </data>
+  <data name="703390318bd55aef50b7823d2b90a846debff99e6e3d401a24a921b733912a6d" xml:space="preserve">
+    <value>测试版</value>
+    <comment>"Beta"</comment>
+  </data>
   <data name="ec6257cb8dd3d0cf013b65d1446b400d0feec5d5607bdd1c5f2907f423363968" xml:space="preserve">
     <value>测试版固件</value>
     <comment>"Beta firmwares"</comment>
@@ -4476,6 +4480,10 @@ Ctrl+O 从文件加载</value>
     <value>纬度/X： </value>
     <comment>"Lat/X: "</comment>
   </data>
+  <data name="4de8fd4b2b8dacd9015f46bc7668362e4efc26fe1a5c38e873e9d2fae8fc8498" xml:space="preserve">
+    <value>最新开发版</value>
+    <comment>"Latest (Dev)"</comment>
+  </data>
   <data name="1131a552f90d0d73eb64ece4b6bf43890a4c7cbf7d246452554774726d847b9d" xml:space="preserve">
     <value>编队布局编辑器</value>
     <comment>"Layout Editor"</comment>
@@ -7617,6 +7625,10 @@ gps_point：跟踪单个地面点</value>
     <value>大小</value>
     <comment>"Size"</comment>
   </data>
+  <data name="7de483a643608071ef16a9a0f852acda3748a2c9af7f39c97676be7bfcc87afd" xml:space="preserve">
+    <value>跳过下载</value>
+    <comment>"Skip Download"</comment>
+  </data>
   <data name="4ba4f150a1a1c36107d3dccc6ca9e53484f9fe9b3bb308edff1bb1df2ad23e5e" xml:space="preserve">
     <value>智能分配</value>
     <comment>"Smart Assign"</comment>
@@ -7740,6 +7752,10 @@ gps_point：跟踪单个地面点</value>
   <data name="460fc79227aa586fc6f10902721e3f81ce71c455f3f4cd9716cd0521d63c4d13" xml:space="preserve">
     <value>自稳 4</value>
     <comment>"Stab 4"</comment>
+  </data>
+  <data name="90ee305714d7103317705bfffd734c654b78807e5a0f51fcc61bc1d81105ebd1" xml:space="preserve">
+    <value>稳定版</value>
+    <comment>"Stable"</comment>
   </data>
   <data name="05a619cc568c73506325ff2b766896461961b051c53433b9ad29f0d6e6baddd7" xml:space="preserve">
     <value>阶段 1</value>

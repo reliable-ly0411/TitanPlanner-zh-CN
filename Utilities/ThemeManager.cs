@@ -377,6 +377,12 @@ namespace MissionPlanner.Utilities
         }
 
 
+        // Select only; loading and persistence remain in the existing startup flow.
+        public static string SelectStartupTheme(string savedTheme, bool hasCustomTheme)
+        {
+            return savedTheme ?? (hasCustomTheme ? "custom.mpsystheme" : "BurntKermit.mpsystheme");
+        }
+
         public static void LoadTheme(string strThemeName)
         {
 
