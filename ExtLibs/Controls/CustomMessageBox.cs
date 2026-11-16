@@ -41,6 +41,13 @@ namespace MissionPlanner.MsgBox
             return ShowOnUiThread(text, caption, buttons, icon, YesText, NoText, true, null);
         }
 
+        /// <summary>Requires an explicit Yes; Enter, Escape and closing default to not proceeding.</summary>
+        public static DialogResult ShowDestructiveConfirmation(string text, string caption)
+        {
+            return ShowOnUiThread(text, caption, MessageBoxButtons.YesNo, MessageBoxIcon.Warning,
+                "Yes", "Cancel", true, null, true);
+        }
+
         /// <summary>
         /// Shows the message with a Copy button that puts copyText on the clipboard, so an error can be pasted into a
         /// report.
@@ -50,7 +57,7 @@ namespace MissionPlanner.MsgBox
             return ShowOnUiThread(text, caption, buttons, MessageBoxIcon.None, "Yes", "No", true, copyText);
         }
 
-        static DialogResult ShowOnUiThread(string text, string caption, MessageBoxButtons buttons, MessageBoxIcon icon, string YesText, string NoText, bool label, string copyText)
+        static DialogResult ShowOnUiThread(string text, string caption, MessageBoxButtons buttons, MessageBoxIcon icon, string YesText, string NoText, bool label, string copyText, bool defaultCancel = false)
         {
             DialogResult answer = DialogResult.Cancel;
 
@@ -65,7 +72,7 @@ namespace MissionPlanner.MsgBox
                     {
                         Console.WriteLine("CustomMessageBox thread running invoke " +
                                           System.Threading.Thread.CurrentThread.Name);
-                        answer = ShowUI(text, caption, buttons, icon, YesText, NoText, label, copyText);
+                        answer = ShowUI(text, caption, buttons, icon, YesText, NoText, label, copyText, defaultCancel);
                     });
                 }
                 catch (Exception ex)
@@ -73,19 +80,19 @@ namespace MissionPlanner.MsgBox
                     Console.WriteLine(ex);
                     // fall back
                     Console.WriteLine("CustomMessageBox thread running " + System.Threading.Thread.CurrentThread.Name);
-                    answer = ShowUI(text, caption, buttons, icon, YesText, NoText, label, copyText);
+                    answer = ShowUI(text, caption, buttons, icon, YesText, NoText, label, copyText, defaultCancel);
                 }
             }
             else
             {
                 Console.WriteLine("CustomMessageBox thread running " + System.Threading.Thread.CurrentThread.Name);
-                answer =  ShowUI(text, caption, buttons, icon, YesText, NoText, label, copyText);
+                answer =  ShowUI(text, caption, buttons, icon, YesText, NoText, label, copyText, defaultCancel);
             }
 
             return answer;
         }
 
-        static DialogResult ShowUI(string text, string caption, MessageBoxButtons buttons, MessageBoxIcon icon, string YesText = "Yes", string NoText = "No", bool label = true, string copyText = null)
+        static DialogResult ShowUI(string text, string caption, MessageBoxButtons buttons, MessageBoxIcon icon, string YesText = "Yes", string NoText = "No", bool label = true, string copyText = null, bool defaultCancel = false)
         {
             DialogResult answer = DialogResult.Abort;
 
@@ -236,7 +243,7 @@ namespace MissionPlanner.MsgBox
                 if (copyText != null)
                     msgBoxFrm.Width = Math.Max(msgBoxFrm.Width, 75 * 3 + FORM_X_MARGIN * 4);
 
-                AddButtonsToForm(msgBoxFrm, buttons, YesText, NoText);
+                AddButtonsToForm(msgBoxFrm, buttons, YesText, NoText, defaultCancel);
 
                 if (copyText != null)
                     AddCopyButton(msgBoxFrm, copyText);
@@ -252,9 +259,15 @@ namespace MissionPlanner.MsgBox
                 {
                 }
 
+                if (defaultCancel)
+                {
+                    msgBoxFrm.AcceptButton = msgBoxFrm.CancelButton;
+                    msgBoxFrm.ActiveControl = msgBoxFrm.CancelButton as Control;
+                }
+
                 DialogResult test = msgBoxFrm.ShowDialog();
 
-                answer = _state;
+                answer = defaultCancel ? test : _state;
             }
 
             return answer;
@@ -295,7 +308,7 @@ namespace MissionPlanner.MsgBox
             return sb.ToString();
         }
 
-        private static void AddButtonsToForm(Form msgBoxFrm, MessageBoxButtons buttons, string YesText = "Yes", string NoText = "No")
+        private static void AddButtonsToForm(Form msgBoxFrm, MessageBoxButtons buttons, string YesText = "Yes", string NoText = "No", bool defaultCancel = false)
         {
             Rectangle screenRectangle = msgBoxFrm.RectangleToScreen(msgBoxFrm.ClientRectangle);
             int titleHeight = screenRectangle.Top - msgBoxFrm.Top;
@@ -333,7 +346,12 @@ namespace MissionPlanner.MsgBox
                         Top = msgBoxFrm.Height - 23 - FORM_Y_MARGIN - titleHeight
                     };
 
-                    butyes.Click += delegate { _state = DialogResult.Yes; msgBoxFrm.Close(); };
+                    butyes.Click += delegate
+                    {
+                        if (defaultCancel) msgBoxFrm.DialogResult = DialogResult.Yes;
+                        else _state = DialogResult.Yes;
+                        msgBoxFrm.Close();
+                    };
                     msgBoxFrm.Controls.Add(butyes);
                     msgBoxFrm.AcceptButton = butyes;
 
@@ -345,7 +363,12 @@ namespace MissionPlanner.MsgBox
                         Top = msgBoxFrm.Height - 23 - FORM_Y_MARGIN - titleHeight
                     };
 
-                    butno.Click += delegate { _state = DialogResult.No; msgBoxFrm.Close(); };
+                    butno.Click += delegate
+                    {
+                        if (defaultCancel) msgBoxFrm.DialogResult = DialogResult.Cancel;
+                        else _state = DialogResult.No;
+                        msgBoxFrm.Close();
+                    };
                     msgBoxFrm.Controls.Add(butno);
                     msgBoxFrm.CancelButton = butno;
                     break;

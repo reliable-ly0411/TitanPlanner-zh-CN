@@ -1,3 +1,7 @@
+## SD card formatting confirmation
+
+Formatting the flight controller SD card requires explicit confirmation, with Cancel selected by default.
+
 ## Enhanced Chinese display
 
 New Simplified Chinese profiles default to Bing Satellite. Saved map selections and provider coordinate projections are preserved.
