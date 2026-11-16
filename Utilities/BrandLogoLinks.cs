@@ -173,7 +173,9 @@ namespace MissionPlanner.Utilities
                 // Painting a transparent hosted control through ToolStrip.OnPaint also
                 // repaints its items. Copy only the toolbar's background, never its text.
                 var parent = Parent;
-                var color = parent == null ? SystemColors.Control : parent.BackColor;
+                var backdrop = parent;
+                while (backdrop != null && backdrop.BackColor.A != 255) backdrop = backdrop.Parent;
+                var color = backdrop == null ? SystemColors.Control : backdrop.BackColor;
                 using (var brush = new SolidBrush(color))
                     graphics.FillRectangle(brush, ClientRectangle);
                 var background = parent == null ? null : parent.BackgroundImage;
@@ -218,7 +220,7 @@ namespace MissionPlanner.Utilities
                 graphics.DrawImage(source, new Rectangle(0, (Height - imageHeight) / 2, Width, imageHeight));
             }
 
-            public void PaintLinkBackground(Graphics graphics, Point location)
+            public void PaintLinkSurface(Graphics graphics, Point location)
             {
                 var state = graphics.Save();
                 graphics.TranslateTransform(-location.X, -location.Y);
@@ -240,15 +242,24 @@ namespace MissionPlanner.Utilities
 
         private sealed class BrandLinkButton : Button
         {
+            public BrandLinkButton()
+            {
+                SetStyle(ControlStyles.UserPaint | ControlStyles.Opaque | ControlStyles.AllPaintingInWmPaint |
+                    ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
+            }
+
             protected override void OnPaintBackground(PaintEventArgs e)
             {
-                ((BrandLogoControl)Parent).PaintLinkBackground(e.Graphics, Location);
+                // The entire surface is painted in OnPaint. ButtonBase is Opaque, so
+                // normal WM_PAINT skips this method even when WM_PRINT calls it.
             }
 
             protected override void OnPaint(PaintEventArgs e)
             {
-                // The transparent button background paints its parent's complete image,
-                // so both hit regions share one transform and have no seam or hover fill.
+                // Replace every pixel, including transparent PNG pixels, with the
+                // toolbar backdrop plus artwork. Child HWNDs clip the parent's paint;
+                // relying on the parent or OnPaintBackground leaves old page pixels.
+                ((BrandLogoControl)Parent).PaintLinkSurface(e.Graphics, Location);
                 if (Focused || (ShowFocusCues && IsDefault))
                 {
                     var bounds = ClientRectangle;
