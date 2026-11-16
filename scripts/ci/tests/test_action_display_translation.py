@@ -22,6 +22,33 @@ class ActionDisplayTranslationTest(unittest.TestCase):
         actions = (ROOT / 'GCSViews/FlightData.cs').read_text()
         self.assertIn('setMode(flightDataActions1.CMB_modes.Text)', actions)
         self.assertIn('flightDataActions1.CMB_action.Text == actions.Terminate_Flight.ToString()', actions)
+    def test_actual_metadata_and_builtin_formatted_mode_names(self):
+        import xml.etree.ElementTree as ET
+        source = (ROOT / 'ExtLibs/ArduPilot/Common.cs').read_text()
+        acronyms = set(re.findall(r'"([^"\n]+)"', source.split('ModeAcronyms =')[1].split('};')[0]))
+        def formatted(name):
+            return ' '.join(part.upper() if part.upper() in acronyms else part[:1].upper() + part[1:].lower()
+                            for part in name.replace('_', ' ').split(' '))
+        names = []
+        metadata = ET.parse(ROOT / 'ParameterMetaDataBackup.xml')
+        for firmware, key in [('ArduCopter2', 'FLTMODE1'), ('ArduPlane', 'FLTMODE1'), ('ArduRover', 'MODE1')]:
+            values = metadata.findtext(firmware + '/' + key + '/Values')
+            self.assertTrue(values, firmware)
+            names.extend(item.split(':', 1)[1] for item in values.split(','))
+        builtin = source.split('public static List<KeyValuePair<int, string>> getModesList(Firmwares firmware)')[1].split('// ArduPlane')[0]
+        names.extend(re.findall(r',\s*"([^"\n]+)"\)', builtin))
+        catalog = json.loads((ROOT / 'localization/zh-Hans/code-translations.json').read_text())
+        self.assertGreater(len(names), 60)
+        for name in names:
+            self.assertIn(formatted(name), catalog, name)
+
+    def test_confirmation_only_translates_display_not_dispatch(self):
+        source = (ROOT / 'GCSViews/FlightData.cs').read_text()
+        self.assertIn('FlightDataActions.DisplayCommandLabel(flightDataActions1.CMB_action.Text)', source)
+        self.assertIn('MessageBoxButtons.YesNo) == (int) DialogResult.Yes)', source)
+        self.assertIn('flightDataActions1.CMB_action.Text == actions.Preflight_Reboot_Shutdown.ToString()', source)
+        self.assertIn('Enum.Parse(typeof(MAVLink.MAV_CMD), flightDataActions1.CMB_action.Text.ToUpper(CultureInfo.InvariantCulture))', source)
+
     def test_download_and_dynamic_button_labels(self):
         sitl = (ROOT / 'GCSViews/SITL.cs').read_text()
         self.assertIn('Common.LoadingBox(UiText.Translate("Downloading"), UiText.Translate("Downloading sitl software"))', sitl)

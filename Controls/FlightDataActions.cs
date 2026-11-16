@@ -22,6 +22,12 @@ namespace MissionPlanner.Controls
             scrollPanel.Resize += ScrollPanel_Resize;
         }
 
+        public static string DisplayCommandLabel(string raw)
+        {
+            var translated = UiText.Translate(raw);
+            return translated == raw ? raw : translated + " (" + raw + ")";
+        }
+
         // Paint bilingual labels without changing Text/SelectedValue used by command handlers.
         private static void ConfigureCommandDisplay(ComboBox combo)
         {
@@ -33,8 +39,7 @@ namespace MissionPlanner.Controls
                 if (e.Index >= 0 && e.Index < combo.Items.Count)
                 {
                     var raw = combo.GetItemText(combo.Items[e.Index]);
-                    var translated = UiText.Translate(raw);
-                    var label = translated == raw ? raw : translated + " (" + raw + ")";
+                    var label = DisplayCommandLabel(raw);
                     TextRenderer.DrawText(e.Graphics, label, combo.Font, e.Bounds, e.ForeColor,
                         TextFormatFlags.Left | TextFormatFlags.VerticalCenter | TextFormatFlags.EndEllipsis);
                 }
@@ -46,8 +51,7 @@ namespace MissionPlanner.Controls
                 foreach (var item in combo.Items)
                 {
                     var raw = combo.GetItemText(item);
-                    var translated = UiText.Translate(raw);
-                    var label = translated == raw ? raw : translated + " (" + raw + ")";
+                    var label = DisplayCommandLabel(raw);
                     width = Math.Max(width, TextRenderer.MeasureText(label, combo.Font).Width + 30);
                 }
                 combo.DropDownWidth = Math.Min(width, Screen.FromControl(combo).WorkingArea.Width);
