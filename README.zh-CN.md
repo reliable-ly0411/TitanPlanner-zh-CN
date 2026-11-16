@@ -31,6 +31,10 @@
 
 新版修正“姿态”“无遥控接收机”等语境译法，设置页按可用宽度分为一至三列，文字控件按内容调整大小。MAVLink 参数、枚举、协议字段、数值格式保留原值。
 
+## 界面主题
+
+新配置默认使用 Mission Planner 的绿色 `BurntKermit` 风格。已有主题设置和自定义主题保留；可在设置页的主题选项中选择 `BurntKermit`，切换为绿色风格。
+
 ## 获取和更新
 
 本仓库 [Releases](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/releases) 提供 Windows 安装版和便携版。优先核对具体发布的源码提交、附件与已知限制；历史发布可能同时存在正式/预发布标记，不能仅凭 Latest 标记认定已完成实机验收。

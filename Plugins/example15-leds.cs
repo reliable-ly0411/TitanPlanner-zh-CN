@@ -44,7 +44,7 @@ namespace leds
 
         public override bool Loaded()
         {
-            var rootbut = new ToolStripMenuItem("LED");
+            var rootbut = new ToolStripMenuItem(MissionPlanner.Utilities.UiText.Translate("LED"));
             //rootbut.Click += but_Click;
             ToolStripItemCollection col = Host.FDMenuMap.Items;
             col.Add(rootbut);

@@ -55,7 +55,7 @@ namespace MissionPlanner.Controls
             _searchBox = new PlaceholderTextBox();
             _searchBox.Dock = DockStyle.Top;
             _searchBox.Font = new Font(this.Font.FontFamily, 10);
-            _searchBox.PlaceholderText = "Search";
+            _searchBox.PlaceholderText = UiText.Translate("Search");
             _searchBox.PlaceholderColor = Color.Gray;
             _searchBox.TextChanged += SearchBox_TextChanged;
             _searchBox.MinimumSize = new Size(0, 28);

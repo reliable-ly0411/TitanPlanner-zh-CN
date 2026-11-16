@@ -27,7 +27,7 @@ namespace AnonymizeBinlog
 
         public override bool Loaded()
         {
-            Host.FDMenuMap.Items.Add(new ToolStripMenuItem("Anonymize Bin Log...", null, OnAnonymizeBinlog));
+            Host.FDMenuMap.Items.Add(new ToolStripMenuItem(MissionPlanner.Utilities.UiText.Translate("Anonymize Bin Log..."), null, OnAnonymizeBinlog));
             return true;
         }
 

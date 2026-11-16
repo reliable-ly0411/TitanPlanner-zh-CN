@@ -23,6 +23,14 @@ try {
         & $probe $BuildDirectory (Join-Path $ResultsDirectory $culture) $culture
         if ($LASTEXITCODE) { throw "UI probe failed for $culture" }
     }
+    $sitlProbe = Join-Path $ResultsDirectory 'SitlLayoutProbe.exe'
+    & $csc /nologo /r:System.Windows.Forms.dll /r:System.Drawing.dll /r:System.Core.dll "/out:$sitlProbe" MissionPlannerTests\Localization\SitlLayoutProbe.cs.txt
+    if ($LASTEXITCODE) { throw 'SITL layout probe compilation failed' }
+    Copy-Item (Join-Path $BuildDirectory 'MissionPlanner.exe.config') "$sitlProbe.config" -Force
+    foreach ($culture in @('en-US','zh-Hans','zh-CN')) {
+        & $sitlProbe $BuildDirectory (Join-Path $ResultsDirectory "sitl-$culture") $culture
+        if ($LASTEXITCODE) { throw "SITL layout probe failed for $culture" }
+    }
     $filter = @('--filter','TestCategory!=Network&TestCategory!=Hardware')
     if ($IncludeNetwork) { $filter = @('--filter','TestCategory!=Hardware') }
     & $DotNet test MissionPlannerTests\MissionPlannerTests.csproj -c Release -m:2 `

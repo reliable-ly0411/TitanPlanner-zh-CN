@@ -58,7 +58,9 @@ namespace MissionPlanner.Controls
                 }
                 else
                 {
-                    all_fields.Add(new Tuple<string, string>(field.Name, field.Name));
+                    var description = UiText.Translate(MainV2.comPort.MAV.cs.GetNameandUnit(field.Name));
+                    var display = description == field.Name ? field.Name : field.Name + " (" + description + ")";
+                    all_fields.Add(new Tuple<string, string>(field.Name, display));
                 }
             }
 
@@ -70,10 +72,6 @@ namespace MissionPlanner.Controls
             try
             {
                 variable_name = (string)_qv.Tag;
-                if (variable_name.StartsWith("customfield"))
-                {
-                    variable_name = CurrentState.custom_field_names[variable_name];
-                }
             }
             catch
             {
@@ -84,7 +82,7 @@ namespace MissionPlanner.Controls
             CMB_Source.ValueMember = "Item1";
             CMB_Source.DisplayMember = "Item2";
             CMB_Source.DataSource = all_fields;
-            CMB_Source.Text = variable_name;
+            CMB_Source.SelectedValue = variable_name;
 
             // Initialize precision field, check if _qv.numberformat is in the form "0" or "0.00" etc.
             // and count the zeros after the decimal if it is

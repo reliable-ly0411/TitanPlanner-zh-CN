@@ -146,4 +146,6 @@
   <data name="BUT_DLthese.ToolTip" xml:space="preserve"><value>下载上方列表中勾选的日志。</value></data>
   <data name="BUT_bintolog.ToolTip" xml:space="preserve"><value>将二进制日志文件 (.bin) 转换为文本格式 (.log)。</value></data>
   <data name="BUT_redokml.ToolTip" xml:space="preserve"><value>将日志文件转换为 KML 格式。</value></data>
+  <data name="BUT_openlogdir.Text" xml:space="preserve"><value>打开日志文件夹</value></data>
+  <data name="BUT_openlogdir.ToolTip" xml:space="preserve"><value>打开已下载日志的保存文件夹。</value></data>
 </root>

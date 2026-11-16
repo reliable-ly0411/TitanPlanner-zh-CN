@@ -1,0 +1,9 @@
+{
+  "Controls/Vibration.resx": {
+    "label3.Text": "X",
+    "label8.Text": "加速度计削波"
+  },
+  "GCSViews/FlightPlanner.resx": {
+    "Frame.HeaderText": "高度基准"
+  }
+}

@@ -1,3 +1,7 @@
+## Enhanced Chinese display
+
+Mission altitude references, bundled plugin menu entries and dashboard descriptions use localized display text while retaining protocol values and field keys. Dashboard field selection shows the original identifier beside its description. Vibration axes and mission altitude headers use context-specific labels.
+
 ## TitanPlanner-zh-CN upstream synchronization (2026-10-19)
 
 Merged Titan-Dynamics/TitanPlanner master through `08602f654562`, preserving both Chinese variants, the fork's dependency fixes, Windows validation, and Chinese ZIP/MSI packaging. Ported enhanced Chinese display strings to the replacement 3D map settings and reconciled the new offline-map and directory-deletion flows. The inherited 32-bit MAVLink and terrain tests run with the fork's offline Windows regression suite. The Linux build retains both GMap drawing targets to separate shim-based library types from desktop GDI+, and uses the fork's patched Skia native version. Re-encoded all seven application icon frames losslessly as uncompressed DIBs with transparency masks so Mono can load the same Titan artwork. The splash screen references that shared icon instead of retaining a duplicate PNG-compressed copy. The Linux runtime smoke test now exercises the Titan themed action tabs and setpoint controls under enhanced Chinese with an explicitly selected map in its isolated profile. Dashboard defaults, saved arrangements and reset operations use explicit grid cells so Mono does not read uncomputed layout positions while layout is suspended. The runtime test verifies all 15 default cells plus save/reload/reset behavior. Property-grid theme colors now detect the optional category-splitter API at runtime, retaining Windows styling while allowing Mono startup.
@@ -12,10 +16,14 @@ What this fork adds on top of upstream [ArduPilot/MissionPlanner](https://github
 
 ---
 
+# Simulation layout
+
+The simulation screen keeps location and heading controls reachable in smaller windows, wraps advanced options and vehicle choices, and scrolls when the available height is limited.
+
 # Branding & Theming
 
 ## Titan Dynamics System Theme
-A new bundled theme (`titandynamics.mpsystheme`) is set as the default for new installs. Theming also covers controls upstream leaves unthemed — `ListBox`, `PropertyGrid`, `MessagesList`, status tab, menu-bar icons, the Splash form, and toast notifications.
+The localized edition defaults to Mission Planner’s green `BurntKermit` theme for new installs. The bundled Titan Dynamics theme remains selectable; existing theme preferences are preserved. Theming also covers controls upstream leaves unthemed — `ListBox`, `PropertyGrid`, `MessagesList`, status tab, menu-bar icons, the Splash form, and toast notifications.
 
 ## Dark Windows Title Bars
 Native Windows title bars now follow the application theme rather than always being light.

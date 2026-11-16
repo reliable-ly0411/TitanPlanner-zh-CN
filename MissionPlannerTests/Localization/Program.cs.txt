@@ -23,6 +23,14 @@ internal static class Program
         foreach (var language in new[] { "zh-CN" })
         {
             CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo(language);
+            Equal("相对高度", UiText.Translate("Relative"));
+            Equal("海拔高度", UiText.Translate("Absolute"));
+            Equal("离地高度", UiText.Translate("Terrain"));
+            Equal("任务 (MISSION)", UiText.Translate("MISSION"));
+            Equal("电池功率 (W)", UiText.Translate("Bat Watts"));
+            Equal("已用电量 (mAh)", UiText.Translate("Bat used (mah)"));
+            Equal("提取 CAN 日志", UiText.Translate("CAN Log Extract"));
+            Equal("battery_usedmah", UiText.Translate("battery_usedmah"));
             Equal("3D 地图设置", UiText.Translate("3D Map Settings"));
             Equal("清空消息", UiText.Translate("Clear Messages"));
             Equal("是", UiText.Translate("Yes"));

@@ -64,7 +64,7 @@ namespace MissionPlanner.Utilities
         {
             iconSet = IconSet.BurnKermitIconSet;
             terminalTheming = true;
-            strThemeName = "titandynamics.mpsystheme";
+            strThemeName = "BurntKermit.mpsystheme";
 
             colors.Add("Background", Color.FromArgb(0x26, 0x27, 0x28), "BGColor");						// This changes the colour of the main menu background
             colors.Add("Control Background", Color.FromArgb(0x43, 0x44, 0x45), "ControlBGColor");		// This changes the colour of the sub menu backgrounds

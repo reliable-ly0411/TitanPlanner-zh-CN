@@ -248,13 +248,17 @@ namespace MissionPlanner.GCSViews
 
             CMB_altmode.DisplayMember = "Value";
             CMB_altmode.ValueMember = "Key";
-            CMB_altmode.DataSource = EnumTranslator.EnumToList<altmode>();
+            CMB_altmode.DataSource = EnumTranslator.EnumToList<altmode>()
+                .Select(item => new KeyValuePair<int, string>(item.Key, UiText.Translate(item.Value))).ToList();
 
             //set default
-            CMB_altmode.SelectedItem = altmode.Relative;
+            CMB_altmode.SelectedValue = (int)altmode.Relative;
 
             cmb_missiontype.DataSource = new List<MAVLink.MAV_MISSION_TYPE>()
                 {MAVLink.MAV_MISSION_TYPE.MISSION, MAVLink.MAV_MISSION_TYPE.FENCE, MAVLink.MAV_MISSION_TYPE.RALLY};
+
+            cmb_missiontype.FormattingEnabled = true;
+            cmb_missiontype.Format += (sender, args) => args.Value = UiText.Translate(args.ListItem.ToString());
 
             updateCMDParams();
 
@@ -267,7 +271,8 @@ namespace MissionPlanner.GCSViews
             Commands.Columns[Delete.Index].CellTemplate.Value = "X";
             Frame.DisplayMember = "Value";
             Frame.ValueMember = "Key";
-            Frame.DataSource = EnumTranslator.EnumToList<altmode>();
+            Frame.DataSource = EnumTranslator.EnumToList<altmode>()
+                .Select(item => new KeyValuePair<int, string>(item.Key, UiText.Translate(item.Value))).ToList();
 
             updateMapType(null, null);
 

@@ -79,6 +79,22 @@
 警告：包含 USB 端口在内，MAVLink 端口最多 5 个！</value>
     <comment>"\r\nWarning: Maximum number of Mavlink ports are 5 including the USB port!"</comment>
   </data>
+  <data name="f3495d3cfd89bb260e13270dc82531a2a747f6c7f9dfe3afcbe80397ccdc4c83" xml:space="preserve">
+    <value>    {0}（{1}，缩放级别 {2}–{3}）</value>
+    <comment>"    {0}  ({1}, zoom {2}–{3})"</comment>
+  </data>
+  <data name="2de7e373886199a13e0db6016e1feef217550d565f868adf6c165e2028364640" xml:space="preserve">
+    <value>    …另有 </value>
+    <comment>"    …and "</comment>
+  </data>
+  <data name="c4caf0705f541d2169bdc0353b0a49abbc076e67f4134f357d92ff2da3a2bf2c" xml:space="preserve">
+    <value>  ·  斜线表示瓦片未下载</value>
+    <comment>"  ·  hatching = tile not downloaded"</comment>
+  </data>
+  <data name="ef7aa8b24421d7b28c4f709b97aa57b66f1c266c2a211323a9ae4d8a3d826f48" xml:space="preserve">
+    <value>  ·  缩放级别 </value>
+    <comment>"  ·  zoom "</comment>
+  </data>
   <data name="a0b212278936f48595601c055003a55f68bc0a9279bb4877e9c41bfd8ca1a530" xml:space="preserve">
     <value>（在地面）</value>
     <comment>" (On Ground)"</comment>
@@ -190,6 +206,18 @@
     <value>（设置 CPORT 后）。请重启！</value>
     <comment>" after setting CPORT. Please reboot!"</comment>
   </data>
+  <data name="8d86584a4b090e942e021fbb9a289c045eb003850d1efd24673a6b1262af419b" xml:space="preserve">
+    <value> 个区域 · 正在统计瓦片…</value>
+    <comment>" area(s) · counting tiles…"</comment>
+  </data>
+  <data name="251d9bcc9df76854458a37e0e508dd9bace87b9023b3761d921c8d72c5de0a6b" xml:space="preserve">
+    <value> 个区域</value>
+    <comment>" areas"</comment>
+  </data>
+  <data name="6cc22720b4e94c94b0ef93d7f21c1d1d330c6a9fe227728793e8d4f3d0b595db" xml:space="preserve">
+    <value> 个区域已选中</value>
+    <comment>" areas selected"</comment>
+  </data>
   <data name="1b5aa0d9cc0da4584379a1412d88629ec24f98a94af360e97291ec5a06a82645" xml:space="preserve">
     <value> 可能绕过安全检查，
 导致飞行器坠毁
@@ -218,6 +246,10 @@
   <data name="7d9f3e260412257f43e928af7f3b63dc550e6f354ab4cc1e946c7c5b00b4e874" xml:space="preserve">
     <value>（适用于 SOLO）</value>
     <comment>" for SOLO"</comment>
+  </data>
+  <data name="51e007e3e6474eb827fcfdf1676f9d763b3497eea78229e8edb904188af19048" xml:space="preserve">
+    <value>，是否从离线地图列表移除？</value>
+    <comment>" from the offline maps list?"</comment>
   </data>
   <data name="e887a4537cb244083f8e4994a7b86b882d2ed19ff298eb42ac3ce84fa3b37daf" xml:space="preserve">
     <value> 超过上次输入值的两倍，是否确定？</value>
@@ -250,6 +282,10 @@
   <data name="90ac94eac97c3d4eac7b836097fc86961cdddc6c155702872ad55d819ae25e45" xml:space="preserve">
     <value> 平方英里</value>
     <comment>" miles^2"</comment>
+  </data>
+  <data name="226ba18bbcdb7518da5ccb19a97bd3af05bf3ff316ae5f0d559932d97b6dca38" xml:space="preserve">
+    <value> 个</value>
+    <comment>" more"</comment>
   </data>
   <data name="c89e3a6e8da7fa84bfdadf3026996f844a885bb028916604018149dffa4abd0d" xml:space="preserve">
     <value> 未找到</value>
@@ -350,6 +386,10 @@
   <data name="5ccfa692036b8f0a36069b583eef9bf764112ef348f79e13b3ef6b3c3b56898d" xml:space="preserve">
     <value>。请按电源按钮 </value>
     <comment>". Press the Power button "</comment>
+  </data>
+  <data name="463a14451280485761bc20d8c7ba231ba458f391f3ac463211d4db029a79666b" xml:space="preserve">
+    <value>。对应瓦片将被复制，但无法显示。</value>
+    <comment>". Those tiles will be copied but cannot be displayed."</comment>
   </data>
   <data name="a518aaf88d7e0c68bc9f94236bc9bd32c35354621d552105b12f2141dc3e1e61" xml:space="preserve">
     <value>.bin 转为 .log</value>
@@ -542,6 +582,10 @@
     <value>中止降落</value>
     <comment>"Abort Landing"</comment>
   </data>
+  <data name="f288738f604233a7487d253bd1ebcc267361d638a53c77897c24c35398d2fed8" xml:space="preserve">
+    <value>海拔高度</value>
+    <comment>"Absolute"</comment>
+  </data>
   <data name="c7a1e7d021aa2e81e6752028b3c6f43a8ab5045ee93583068d18d5d779b5bf58" xml:space="preserve">
     <value>已选择绝对高度，是否确定？</value>
     <comment>"Absolute Alt is selected are you sure?"</comment>
@@ -606,6 +650,10 @@
     <value>是否添加适用于 4.0 及更新版本的建议设置（电池失控保护和围栏）？</value>
     <comment>"Add suggested settings for 4.0 and up (Battery failsafe and Fence) ?"</comment>
   </data>
+  <data name="6b02e0d363a4af1c95eef50364bb0202c8b250aa05a48a69e68fd7787b4b0632" xml:space="preserve">
+    <value>添加时间</value>
+    <comment>"Added"</comment>
+  </data>
   <data name="88dd4af6122f4294dfef0fa6aa93f9e8ac038482b8a96717e1dec5a7adee8766" xml:space="preserve">
     <value>附加详情</value>
     <comment>"Additional Details"</comment>
@@ -647,6 +695,10 @@
     <value>空速</value>
     <comment>"Air Speed"</comment>
   </data>
+  <data name="e628fd2975f92de515b0ca5a6ac294e4020afbc3ee7af050ec70f153f0872d4e" xml:space="preserve">
+    <value>空速 (speed)</value>
+    <comment>"AirSpeed (speed)"</comment>
+  </data>
   <data name="f57d67552b6f9f1b69145b88e623f437e4101a58a862e1d5927f0e859f78a377" xml:space="preserve">
     <value>飞行器</value>
     <comment>"Aircraft"</comment>
@@ -663,6 +715,10 @@
     <value>螺旋桨尺寸（英寸）：</value>
     <comment>"Airscrew size in inch:"</comment>
   </data>
+  <data name="03af1ae1e1e87892fd2dcfd256979945a652bc284466ce3a5800418d9c286c30" xml:space="preserve">
+    <value>空速 (speed)</value>
+    <comment>"Airspeed (speed)"</comment>
+  </data>
   <data name="44a57b22e03d9a661c22ffc5ffea51b3e1e33de24a53609e70f690dea8f70872" xml:space="preserve">
     <value>警报</value>
     <comment>"Alert"</comment>
@@ -670,6 +726,12 @@
   <data name="ccd3ad0efa43a237a61f67a1a64aa4a2b8a6950b4a69512ea2b1ff37b28db8ff" xml:space="preserve">
     <value>全部选项</value>
     <comment>"All Options"</comment>
+  </data>
+  <data name="54c3c79d59ff2d83edc8dc305d118104115f8719177a7350e733e6f95fd95f07" xml:space="preserve">
+    <value>是否同时从磁盘删除 {0:N0} 个缓存瓦片（{1}）？
+
+</value>
+    <comment>"Also delete the {0:N0} cached tiles ({1}) from disk?\n\n"</comment>
   </data>
   <data name="c91da2e0203bbe907d39b323ce7f5de534ce2529069c5aa04737cb0bcefc635b" xml:space="preserve">
     <value>高度</value>
@@ -718,6 +780,10 @@
   <data name="cbc2e75740ca7af8938d4b82a2ae9e6d66b840e457c12dd21013bbc23234d7e6" xml:space="preserve">
     <value>高度</value>
     <comment>"Altitude"</comment>
+  </data>
+  <data name="6b4708b2229805c29d749bcb3ff6d37356e882770c460c26b1be6140dfb933fe" xml:space="preserve">
+    <value>高度 (alt)</value>
+    <comment>"Altitude (alt)"</comment>
   </data>
   <data name="074c60d27da58bce8f9956ec14935fc7ca37a068bd9146465d4e6b02e7eb2dba" xml:space="preserve">
     <value>高度 (m)</value>
@@ -771,6 +837,10 @@
   <data name="25f403af92414141a4672a10433f46016a2554591027692efdcdd3c913d15aa1" xml:space="preserve">
     <value>日志匿名化</value>
     <comment>"Anon Log"</comment>
+  </data>
+  <data name="ce2904574bf8bb16c232af1c7117e4d72a3ce5f35d620d282d90aa178f62f1b0" xml:space="preserve">
+    <value>匿名化 BIN 日志…</value>
+    <comment>"Anonymize Bin Log..."</comment>
   </data>
   <data name="edf62253e11554137a512894a75c1970e19f1c2a008b887327e573cf637c3e31" xml:space="preserve">
     <value>天线模式</value>
@@ -1130,6 +1200,26 @@
     <value>基本滤波器</value>
     <comment>"Basic Filters"</comment>
   </data>
+  <data name="7d8d78355211396d64cdca2739155a962c6a61c171c5c089590fdc80b245c10f" xml:space="preserve">
+    <value>电池电流 (A)</value>
+    <comment>"Bat Current (Amps)"</comment>
+  </data>
+  <data name="22a5fa51121c9f845979791f8148ca36d4d152bdc9d7825cdec3578e7df4aaec" xml:space="preserve">
+    <value>电池电压 (V)</value>
+    <comment>"Bat Voltage (V)"</comment>
+  </data>
+  <data name="710b4cbe99b857f65e8a5c64fee53dcc8395071e8cd3d0905a0cb5740ce574f3" xml:space="preserve">
+    <value>电池功率 (W)</value>
+    <comment>"Bat Watts"</comment>
+  </data>
+  <data name="a799cafbe92e2ec52442986b5e8e4ad187721c4a42d5e918c28ed7305f6ad8a0" xml:space="preserve">
+    <value>单位航程耗电 (mAh/km)</value>
+    <comment>"Bat efficiency (mah/km)"</comment>
+  </data>
+  <data name="82903eb54664546507d7722f2962db344f8620ef3c1768b30b13e59fac4851a0" xml:space="preserve">
+    <value>已用电量 (mAh)</value>
+    <comment>"Bat used (mah)"</comment>
+  </data>
   <data name="dfcb7c1619d5abd12f2df162337eaaba53ebe837d8de991db4d4d8a958867815" xml:space="preserve">
     <value>电池</value>
     <comment>"Battery"</comment>
@@ -1311,6 +1401,10 @@
     <value>CAN GPS 顺序</value>
     <comment>"CAN GPS Order"</comment>
   </data>
+  <data name="07be0313615e6f6d50dd45a4f905f6144f12eafd256f628cb3aab8bf8c99c03f" xml:space="preserve">
+    <value>提取 CAN 日志</value>
+    <comment>"CAN Log Extract"</comment>
+  </data>
   <data name="f68d6d1b786baf717754b122db3cdf57b8f665c2067db6234bec4cc29bab6904" xml:space="preserve">
     <value>Here3+/4 CAN 透传</value>
     <comment>"CANPassThough Here3+/4"</comment>
@@ -1475,6 +1569,10 @@
     <value>以飞行器为中心</value>
     <comment>"Center to Vehicle"</comment>
   </data>
+  <data name="a0e6a31c4872f1e7825992f6db16266a2d561682f1ea77096f868b88eff75251" xml:space="preserve">
+    <value>区域中心，缩放级别 </value>
+    <comment>"Centre of the area at zoom "</comment>
+  </data>
   <data name="9ff2805b16ef50005ae5e96f73e59641b37b37039e67a1b1d3d8e11e82cb666a" xml:space="preserve">
     <value>更改高度</value>
     <comment>"Change Alt"</comment>
@@ -1490,6 +1588,10 @@
   <data name="e405c7a05f2f769d2ed90ff573c28eaa15072839e3283075be318a722dcd0e2e" xml:space="preserve">
     <value>改变放大级别</value>
     <comment>"Change Zoom Level"</comment>
+  </data>
+  <data name="2cf35c2db803ccbf7f3969674db5f40ace008994c55777ca8b72715f92ebbde5" xml:space="preserve">
+    <value>修改图标说明</value>
+    <comment>"Change icon Description"</comment>
   </data>
   <data name="b3c9c13f197e53e6e94119aeef627840fff927bbf85219fbb40840ba80994348" xml:space="preserve">
     <value>4.7 版本变更： </value>
@@ -1867,6 +1969,11 @@ Ctrl+O 从文件加载</value>
 原因：{1}</value>
     <comment>"Could not find location: '{0}'\nReason: {1}"</comment>
   </data>
+  <data name="cc88d78c1fd1e73d12ed8dc09c590c7cca7334e6072c9675b560ab8ddd328958" xml:space="preserve">
+    <value>无法打开文件夹。
+</value>
+    <comment>"Could not open the folder.\n"</comment>
+  </data>
   <data name="a8b79d89fd42606ff42464d886ed9d1cc987c915b953d5b131e67ccdac6f15ad" xml:space="preserve">
     <value>无法发送报告，通常是由于没有网络连接。</value>
     <comment>"Could not send report! Typically due to lack of internet connection."</comment>
@@ -1894,6 +2001,10 @@ Ctrl+O 从文件加载</value>
   <data name="66d2508bbf17c413dc66b0530e17c1ea59687dcef39f61970fdf8c51ba0ce93f" xml:space="preserve">
     <value>航迹方向：{0:0.0}°</value>
     <comment>"Course: {0:0.0}°"</comment>
+  </data>
+  <data name="523487a5de21adb5301bbf09807653a537991aded9884ef99c115d906c5b8a1d" xml:space="preserve">
+    <value>覆盖率</value>
+    <comment>"Coverage"</comment>
   </data>
   <data name="559dd6c207b74eb06a538187b5e6dc6382c8573ae5d55b8cfff92e9d13c36f7d" xml:space="preserve">
     <value>创建圆形测绘任务</value>
@@ -2067,6 +2178,14 @@ Ctrl+O 从文件加载</value>
     <value>删除所选项</value>
     <comment>"Delete selected"</comment>
   </data>
+  <data name="96f9a3d4b543aeb71b2b3fda82d1ab2f98787c878499c698dc41f2ce5b5bc214" xml:space="preserve">
+    <value>已删除 {0:N0} 个瓦片</value>
+    <comment>"Deleted {0:N0} tiles"</comment>
+  </data>
+  <data name="0c63941e4f92af98092123200463d6bbcf4e448bec4a22715dd9222d784cb82f" xml:space="preserve">
+    <value>正在删除缓存瓦片</value>
+    <comment>"Deleting cached tiles"</comment>
+  </data>
   <data name="a2e08869d18b298367d16558b1add31a1dd4199e0a2b139628a050e95cf02877" xml:space="preserve">
     <value>说明 / 数值</value>
     <comment>"Desciption / Value"</comment>
@@ -2211,6 +2330,10 @@ Ctrl+O 从文件加载</value>
     <value>显示为带指针的 180 度仪表</value>
     <comment>"Display as a 180-degree gauge with needle"</comment>
   </data>
+  <data name="8c7236c8d24a8cb22683b68370bc9feed82052acb67dd4be33de43c4bd80ade1" xml:space="preserve">
+    <value>累计航程 (dist)</value>
+    <comment>"Dist Traveled (dist)"</comment>
+  </data>
   <data name="4600dedda35c68b5460b3db2ca82708b4dbb3b5ea5d4de8ccfccc376b7fcbdf0" xml:space="preserve">
     <value>照片间距： </value>
     <comment>"Dist between images: "</comment>
@@ -2219,9 +2342,17 @@ Ctrl+O 从文件加载</value>
     <value>航线间距：</value>
     <comment>"Dist between lines:"</comment>
   </data>
+  <data name="27daade9ed3acacc3002bd2377306b11aaa7c98e51e51febefe627b415251a44" xml:space="preserve">
+    <value>距起点 (dist)</value>
+    <comment>"Dist to Home (dist)"</comment>
+  </data>
   <data name="6f92b3061e842a8e66b9606f2ee55848cf5ece67c53783ca64221bc51549780b" xml:space="preserve">
     <value>距起飞点距离： </value>
     <comment>"Dist to Home: "</comment>
+  </data>
+  <data name="ca7011048542d6c97f33a5050fae33fce86660e61b4dddda96accef18863734c" xml:space="preserve">
+    <value>距航点 (dist)</value>
+    <comment>"Dist to WP (dist)"</comment>
   </data>
   <data name="f7885cfcd240966f22f02d63a0b5e8784c23009cf5fb302cbde75146950a5378" xml:space="preserve">
     <value>已行进距离，m</value>
@@ -2238,6 +2369,10 @@ Ctrl+O 从文件加载</value>
   <data name="e7c69da5daa248383f6c5a215561f323f71188184e3d9eb598018055dc495eee" xml:space="preserve">
     <value>与立面的距离</value>
     <comment>"Distance From Face"</comment>
+  </data>
+  <data name="bf7c9d9f08fbf3c374ea223f1567aa5076c8f241b4432696a5eb5e68371e25f6" xml:space="preserve">
+    <value>累计航程 (dist)</value>
+    <comment>"Distance Traveled (dist)"</comment>
   </data>
   <data name="cbcbf1e8d33fe3d2dea83c6ca5246dcf10731296342dc0260fae1abceb8701d6" xml:space="preserve">
     <value>航线间距 [m]</value>
@@ -2355,9 +2490,17 @@ Ctrl+O 从文件加载</value>
     <value>下载这些日志</value>
     <comment>"Download Selected Logs"</comment>
   </data>
+  <data name="128e0151117b667fc42e2e7f06ff84816b7b5dcae7b7f99f4d0e2084c388e18a" xml:space="preserve">
+    <value>下载地图区域</value>
+    <comment>"Download map area"</comment>
+  </data>
   <data name="7c2f9fc949c390a92eb8c7bb0b0f9a2ab1dfae56075b38821a0ee889a719366e" xml:space="preserve">
     <value>下载测试通过的版本</value>
     <comment>"Download tested build"</comment>
+  </data>
+  <data name="506e7d26e66b291fded628ee3a5e070c39f952a249bc34c32054cfe251ea1aec" xml:space="preserve">
+    <value>下载当前地图区域，或按住 ALT 拖动选中的区域</value>
+    <comment>"Download the area shown on the map, or the area selected with ALT + drag"</comment>
   </data>
   <data name="b1ef225eb6543ad191cbf1292c9e661560db7f3f1994077bff64854220fad1ee" xml:space="preserve">
     <value>下载上方列表中勾选的日志。</value>
@@ -2370,6 +2513,14 @@ Ctrl+O 从文件加载</value>
   <data name="171c4d2e846365da50d0b1c523d6fbd3fb37b47c677d8e989dacd044794b3cf8" xml:space="preserve">
     <value>正在下载更新的数据</value>
     <comment>"Downloading updated data"</comment>
+  </data>
+  <data name="4392addadab67c077a0ceb15dc9b2e843aa3c42a2ca289b96c90cfa027a3bc66" xml:space="preserve">
+    <value>下载…</value>
+    <comment>"Download…"</comment>
+  </data>
+  <data name="539b12c7afb2597114990d686beb493ae50f2ae25599715eaaeaca64de9bc4a2" xml:space="preserve">
+    <value>绘制围栏距离</value>
+    <comment>"Draw Fence Dist"</comment>
   </data>
   <data name="61f0265197447d2ecc3ffe67b9cfcc973ee487bba617f4073c9b288f036fc7b0" xml:space="preserve">
     <value>添加多边形点</value>
@@ -2897,6 +3048,28 @@ Ctrl+O 从文件加载</value>
     <value>导出可见部分</value>
     <comment>"Export Visible"</comment>
   </data>
+  <data name="b8f0bf131afab7b603097aa4720c46e7b5aa1efa987f27abb6fe55ac275c727e" xml:space="preserve">
+    <value>导出和删除将作用于所有选中区域</value>
+    <comment>"Export and Delete act on all selected areas"</comment>
+  </data>
+  <data name="ffa4f8ad4b886580352e93629085463648ed537404e46b7c5e789ecc274e56e3" xml:space="preserve">
+    <value>导出离线地图包</value>
+    <comment>"Export offline map pack"</comment>
+  </data>
+  <data name="6dc0806463a6cb890aa0c9e8f92c78cc8b307294d97736e8a8da0554d3b61a9d" xml:space="preserve">
+    <value>已将 {0} 个区域导出到
+{1}
+（{2}）</value>
+    <comment>"Exported {0} area(s) to\n{1}\n({2})"</comment>
+  </data>
+  <data name="f6c0b6ce2094510bff8f028b47b157703f9c0404dd56324caf76c5860f4c8a5d" xml:space="preserve">
+    <value>正在导出离线地图</value>
+    <comment>"Exporting offline maps"</comment>
+  </data>
+  <data name="4a4c59c5208e8a7d0ca2aba5c7495e073c05a224f3b85866bb473a1494a64b89" xml:space="preserve">
+    <value>导出…</value>
+    <comment>"Export…"</comment>
+  </data>
   <data name="68c114ea9c8c66041e9452211afd1f4fbc6e15554179f7f5f96a73219d4937a0" xml:space="preserve">
     <value>外部</value>
     <comment>"External"</comment>
@@ -2912,6 +3085,10 @@ Ctrl+O 从文件加载</value>
   <data name="0b53c45b8ce17cc85dabf36c48e90c2122ec4b454f6d6d35a40a9c60b11f1a60" xml:space="preserve">
     <value>提取当前状态</value>
     <comment>"Extract CS"</comment>
+  </data>
+  <data name="243e24095dc3315c1b2cd215780417d89d51e2b7a019c6d066423b7307a06ec6" xml:space="preserve">
+    <value>围栏 (FENCE)</value>
+    <comment>"FENCE"</comment>
   </data>
   <data name="15fde6edd95f7323f1edd158fc777082ea5bed5cced87eed157c7655a4704bbf" xml:space="preserve">
     <value>FFT 设置</value>
@@ -3451,6 +3628,10 @@ Ctrl+O 从文件加载</value>
     <value>格式说明符，例如 "0.00" 或 "m:ss"</value>
     <comment>"Format specifier, e.g. \"0.00\" or \"m:ss\""</comment>
   </data>
+  <data name="c43f146bdf3eaa6e368cb99305dd6be3b7c8908498567911e03419af8cdab136" xml:space="preserve">
+    <value>链路间转发</value>
+    <comment>"Forward between links"</comment>
+  </data>
   <data name="8959b7d1b1417f31d6bebfe3ec32e522107fca93ae599c39200c8cb2165b1fdd" xml:space="preserve">
     <value>转发器错误 </value>
     <comment>"Forwarder problem "</comment>
@@ -3687,6 +3868,10 @@ Ctrl+O 从文件加载</value>
     <value>地速</value>
     <comment>"Ground Speed"</comment>
   </data>
+  <data name="869a8de4078c34acb29c63c394c93de3e3950b27b7465242998727102dc0de4a" xml:space="preserve">
+    <value>地速 (speed)</value>
+    <comment>"GroundSpeed (speed)"</comment>
+  </data>
   <data name="b91d958acac03ba3ab29c3f53bb3d71a646c15f7526a322b772222c78f0d2350" xml:space="preserve">
     <value>引导</value>
     <comment>"Guided"</comment>
@@ -3738,6 +3923,10 @@ Ctrl+O 从文件加载</value>
   <data name="b34f17f02ecf0307437429f667421d119aaf1bf819694236efe15c538850445c" xml:space="preserve">
     <value>航向</value>
     <comment>"Heading"</comment>
+  </data>
+  <data name="0865e7cf7c0b7ae381fdbd36c7facbe104a222e164b39e02c51ee685ac46b9f9" xml:space="preserve">
+    <value>航向 (°)</value>
+    <comment>"Heading (°)"</comment>
   </data>
   <data name="ee056feef8eb3e0a946e4f6a2f70189175bf0667414a54de9e4d70ef668b0d32" xml:space="preserve">
     <value>航向保持</value>
@@ -3931,6 +4120,30 @@ Ctrl+O 从文件加载</value>
   <data name="4f3aa8bdbc775280dfc02b8d6e9e962a4a9db175530ab1fd97499d01df30ff50" xml:space="preserve">
     <value>导入游戏杆配置</value>
     <comment>"Import Joystick Config"</comment>
+  </data>
+  <data name="657ef330b7f3c718b41e0e867973a57263c8b05af0748c9404346b1dfd0cee46" xml:space="preserve">
+    <value>已取消导入。</value>
+    <comment>"Import cancelled. "</comment>
+  </data>
+  <data name="8101007642546b8644394200aa1efd68be9e2c14cf4dad5a6ce10518ebd74a65" xml:space="preserve">
+    <value>是否导入地图缓存？已有瓦片将保留不变。</value>
+    <comment>"Import into the map cache? Tiles already present are kept as they are."</comment>
+  </data>
+  <data name="2322cfa5624e54273286c1e05aebfbdc61b64c6ab9a2282d7e8d7525a57496d3" xml:space="preserve">
+    <value>导入离线地图包</value>
+    <comment>"Import offline map pack"</comment>
+  </data>
+  <data name="2b521d43807f61139df6b31fe774639b1fc14839c4af232ca94b5540afd40985" xml:space="preserve">
+    <value>导入离线地图</value>
+    <comment>"Import offline maps"</comment>
+  </data>
+  <data name="074b2352c2a46a1101d1ec2600837330ecd576848be99586769465ac5c12e289" xml:space="preserve">
+    <value>正在导入离线地图</value>
+    <comment>"Importing offline maps"</comment>
+  </data>
+  <data name="ea94509e38cf6d6427db3a1b5a3b5816cba1e8f89b08f9739f6077ade188163c" xml:space="preserve">
+    <value>导入…</value>
+    <comment>"Import…"</comment>
   </data>
   <data name="b4cc4b07c300103a4bc38e01e084cc945144a7eb0ae61d74d62ca49b8abe0908" xml:space="preserve">
     <value>正在进行</value>
@@ -4223,6 +4436,10 @@ Ctrl+O 从文件加载</value>
     <value>先听后发 RSSI</value>
     <comment>"LBT Rssi"</comment>
   </data>
+  <data name="498785455dcb5a9e49d815731ead0399021427b333d2b29c79075525c12c2c17" xml:space="preserve">
+    <value>LED 灯控制</value>
+    <comment>"LED"</comment>
+  </data>
   <data name="0e66373f45dcf3dd656151e519f7ee5e3d558d9c22cb87df339bbdd2b6c6a3c1" xml:space="preserve">
     <value>标签</value>
     <comment>"Label"</comment>
@@ -4367,6 +4584,10 @@ Ctrl+O 从文件加载</value>
   <data name="00a36dfbaee3b84884a01b9bdfcbe027df0513580623d62b75ae6a65facbeae7" xml:space="preserve">
     <value>加载 TLog</value>
     <comment>"Load Tlog"</comment>
+  </data>
+  <data name="6c4210b7fa47e1785ba007199fe806f1dd1db460b8f381c7e6d8888b8949b86f" xml:space="preserve">
+    <value>从 .mappack 文件导入区域和瓦片到本机地图缓存</value>
+    <comment>"Load areas and tiles from a .mappack file into this computer's map cache"</comment>
   </data>
   <data name="d749f04930af45aac61edd16f3c65cead2ebfa0ef7a3be89ee0fb04068ea96e8" xml:space="preserve">
     <value>加载自定义固件</value>
@@ -4564,6 +4785,10 @@ Ctrl+O 从文件加载</value>
     <value>MAVLink 串口透传</value>
     <comment>"MAVSerial pass"</comment>
   </data>
+  <data name="78532b626e71177e016f57a4a03c952c96b40952031c20893965256101593b87" xml:space="preserve">
+    <value>任务 (MISSION)</value>
+    <comment>"MISSION"</comment>
+  </data>
   <data name="0896678f979122b57e173c20a8b5916dc086b24695e8f36b9465f929c3c7e991" xml:space="preserve">
     <value>MJPEG 视频流</value>
     <comment>"MJPEG stream"</comment>
@@ -4648,6 +4873,14 @@ Ctrl+O 从文件加载</value>
     <value>切换地图失败，请先尝试缩小地图。</value>
     <comment>"Map change failed. try zooming out first."</comment>
   </data>
+  <data name="ccb083afb8a59e634641773acef42aa9b8a6a097a526805d2bbb5a76a58cc081" xml:space="preserve">
+    <value>地图来源</value>
+    <comment>"Map source"</comment>
+  </data>
+  <data name="a66666b928f28ff9e61806a855fd8dac89f55dc9a8cd2bb86e2821e981d1fe8b" xml:space="preserve">
+    <value>地图来源：</value>
+    <comment>"Map sources: "</comment>
+  </data>
   <data name="21c64db14c331c9301d9821672b8bb8eb1b36eebd1b82f0a2ab29cfb808de641" xml:space="preserve">
     <value>恢复参数后将加速度计标记为已校准</value>
     <comment>"Mark accel as cal'd after param restore"</comment>
@@ -4667,6 +4900,10 @@ Ctrl+O 从文件加载</value>
   <data name="e368929abd3614e92ad17e56175b67d1f6ba94aca92ab43b7f16f31764ff7447" xml:space="preserve">
     <value>掩码</value>
     <comment>"Mask"</comment>
+  </data>
+  <data name="10a0c5f853c3da31cadcb56186be374f9dd123a4473e3d7362b572c48b279a23" xml:space="preserve">
+    <value>批量控制</value>
+    <comment>"Mass"</comment>
   </data>
   <data name="fb5fff69713020acc7f80ccb658a3b37ce9d7ff4bd50787b07f02337b0016f26" xml:space="preserve">
     <value>主机备份</value>
@@ -5024,9 +5261,21 @@ Ctrl+O 从文件加载</value>
     <value>名称</value>
     <comment>"Name"</comment>
   </data>
+  <data name="d9c75fa2a1c2ec21d07b93625238fc666bf67ba3d7c776d8664b6d2c6026d4f0" xml:space="preserve">
+    <value>地图上所选区域的名称：</value>
+    <comment>"Name for the area selected on the map:"</comment>
+  </data>
+  <data name="ddb7d72b665caf55126c2113bc380ed8b79814997ea92b86556507f99f7e9aaf" xml:space="preserve">
+    <value>当前地图区域的名称（按住 ALT 拖动可精确选择区域）：</value>
+    <comment>"Name for the current map view (hold ALT and drag on the map to pick an exact area instead):"</comment>
+  </data>
   <data name="1e55b14241a9d70a49546d6098abc6c3ccb09ae954d735f3b720f916ef896909" xml:space="preserve">
     <value>名称或 ID 已存在</value>
     <comment>"Name or ID exists"</comment>
+  </data>
+  <data name="2683cad48a14dc3f79c167e4e98cc01ed6cf0e364cdb399fc187a8fc39902571" xml:space="preserve">
+    <value>名称：</value>
+    <comment>"Name:"</comment>
   </data>
   <data name="f6d0352997224d088eb0ed566ec83986a74d4f51e6dda09a6f7f93b06bef8376" xml:space="preserve">
     <value>导航方位线（橙色）</value>
@@ -5140,6 +5389,10 @@ Ctrl+O 从文件加载</value>
     <value>文件中未找到航点！</value>
     <comment>"No Waypoint found in file!"</comment>
   </data>
+  <data name="0a5a6f466bc61610e2848e00887b1d4de05663458073be133ab5a0ef2592c3a7" xml:space="preserve">
+    <value>未选择区域</value>
+    <comment>"No area selected"</comment>
+  </data>
   <data name="ee1678fbbcf67603c7399abd7882bc4ce61181853cab4fc0a7aed9c5964fc86a" xml:space="preserve">
     <value>尚无现有译文</value>
     <comment>"No existing translation has been done"</comment>
@@ -5151,6 +5404,19 @@ Ctrl+O 从文件加载</value>
   <data name="236a80be174d57af5de43ec89b6ac7b4717b72963129311767de968be3584037" xml:space="preserve">
     <value>没有符合当前筛选条件的固件</value>
     <comment>"No firmware matches the current filters"</comment>
+  </data>
+  <data name="ee0a6b190531a2211a248249d617504940353bd5ccd5a39f68ccd5ed221e5626" xml:space="preserve">
+    <value>选择“否”将保留瓦片供地图使用，仅从此列表中移除。
+</value>
+    <comment>"No keeps the tiles: the map still uses them, they are just no longer listed here.\n"</comment>
+  </data>
+  <data name="52f35a16e9d2753736c1dbe611d9909b6ca2c3e7c9b7adc83c9d06e6be5fc0eb" xml:space="preserve">
+    <value>本机未安装此名称的地图源，无法显示这些瓦片。</value>
+    <comment>"No map source with this name exists on this computer, so these tiles cannot be shown."</comment>
+  </data>
+  <data name="448ba78086c7145355cd69ed33c79970153a35adf4ed84f3ced9a46ccb4da056" xml:space="preserve">
+    <value>此文件中未找到地图瓦片。</value>
+    <comment>"No map tiles were found in this file."</comment>
   </data>
   <data name="2d378a1c0b9e7ffb26f98770771558412db58b7e8088328b5276f3f86cbf9c24" xml:space="preserve">
     <value>没有匹配参数</value>
@@ -5167,6 +5433,12 @@ Ctrl+O 从文件加载</value>
   <data name="263454e6b51c179feb30733264d9fe76bc3daf475da7109a3cdc7022b3c406e6" xml:space="preserve">
     <value>航带数量：</value>
     <comment>"No of Strips:"</comment>
+  </data>
+  <data name="c1eb18b3aa5ed3d85a1cd46386187682ee9e01b898422e2e6e8c3dd439524cb4" xml:space="preserve">
+    <value>尚无离线地图区域。
+
+联网时点击“下载…”，或导入 .mappack 文件。</value>
+    <comment>"No offline map areas yet.\n\nClick Download… while online, or Import… a .mappack file."</comment>
   </data>
   <data name="25a6c7708e3f93e0a81ae5a4a018bfda799c3c9d0ce3a23c3c0fb48909525835" xml:space="preserve">
     <value>尚未定义多边形。是否加载文件？</value>
@@ -5199,6 +5471,10 @@ Ctrl+O 从文件加载</value>
   <data name="7e67009fb270c604d60ceb7b7d3fdbd4e8147b6d754d60a17bbdf01d3d8fdf99" xml:space="preserve">
     <value>部分航段缺少地形数据</value>
     <comment>"No terrain data for part of the route"</comment>
+  </data>
+  <data name="ca890c045c4a5fba5da3ea267f9268db55beae644071d1c793482be66bb0066e" xml:space="preserve">
+    <value>此区域尚无缓存瓦片</value>
+    <comment>"No tiles on disk for this area yet"</comment>
   </data>
   <data name="ef5e097a00f1488a42591b119f1b65979a06b01fc920c787427b4b7ff72a306a" xml:space="preserve">
     <value>GPS 尚未确定有效的基站位置</value>
@@ -5357,6 +5633,10 @@ Ctrl+O 从文件加载</value>
     <value>关闭</value>
     <comment>"Off"</comment>
   </data>
+  <data name="ccdfca6d0c039e3760c1ea5e4a902f2444db2183cfe4c980b1197e30b9d316e7" xml:space="preserve">
+    <value>离线地图</value>
+    <comment>"Offline Maps"</comment>
+  </data>
   <data name="b1a1e8e3cf7c522ed8606c3c3c3f35d3299eca78cb664fec00d9787da111f418" xml:space="preserve">
     <value>偏移</value>
     <comment>"Offset"</comment>
@@ -5376,6 +5656,10 @@ Ctrl+O 从文件加载</value>
   <data name="5706b8c50e708e3525f331f00b097b9b46dbd037217729ebb273885c1a2eb2d2" xml:space="preserve">
     <value>在地面</value>
     <comment>"On Ground"</comment>
+  </data>
+  <data name="00ca4dac69afa4fc5c9ef6defa903d6989767844612466e3578e73d9fe822e62" xml:space="preserve">
+    <value>缓存占用</value>
+    <comment>"On disk"</comment>
   </data>
   <data name="39a720443f255a47d296ec9d13869d9b73bec6b8589d25454562ce0f70b720b8" xml:space="preserve">
     <value>机载罗盘校准</value>
@@ -5422,9 +5706,21 @@ Mission Planner 需要收到 2 个有效心跳包后才会连接。</value>
     <value>打开文件夹</value>
     <comment>"Open Folder"</comment>
   </data>
+  <data name="4e1ab78adecca1be162099bd9aafdaa9b08b3046dbee940b4109192eacb9a2ce" xml:space="preserve">
+    <value>打开日志文件夹</value>
+    <comment>"Open Log Folder"</comment>
+  </data>
   <data name="e6693ae56def237a33e4d8712fdc2cf2aa7a44f30f3559aae2c26093594d48dc" xml:space="preserve">
     <value>打开地图缓存</value>
     <comment>"Open Map Cache"</comment>
+  </data>
+  <data name="7023f61a6742dd2846c441f38d107a721de0d0482ea1eadb61dd66e7074e5a50" xml:space="preserve">
+    <value>打开已下载日志的保存文件夹。</value>
+    <comment>"Open the folder where downloaded logs are saved."</comment>
+  </data>
+  <data name="2e74d8dec260809fff2fb252ba834737b712b17e17b1a9d7141ab2fba90f010a" xml:space="preserve">
+    <value>在资源管理器中打开地图瓦片缓存文件夹</value>
+    <comment>"Open the tile cache folder in Explorer"</comment>
   </data>
   <data name="0132a0a37d62466140474091db0757e548bae3e62f4cdf09034b40f89e2b00f3" xml:space="preserve">
     <value>优化航程</value>
@@ -5457,6 +5753,10 @@ Mission Planner 需要收到 2 个有效心跳包后才会连接。</value>
   <data name="312e9333f389bcb7c6eb6e2756f37911e5706afc03e643c5dd7db148a9fe4756" xml:space="preserve">
     <value>超出范围</value>
     <comment>"Out of range"</comment>
+  </data>
+  <data name="e3d2063603c45e14aabfc440cbe12d4c55fc771d77c6ec9cd70bcdfb2e16407b" xml:space="preserve">
+    <value>在地图上标出所选区域并缩放到该区域</value>
+    <comment>"Outline the selected area on the map and zoom to it"</comment>
   </data>
   <data name="9a20fb16eee7707c45a6787cea539c40ee66cd140b2ac3c346c659c9805e3f0a" xml:space="preserve">
     <value>输出 Cursor-on-Target</value>
@@ -5702,6 +6002,10 @@ Mission Planner 需要收到 2 个有效心跳包后才会连接。</value>
   <data name="0b018475675141bcd86d6e168a41b7fcc906ea1cae4f71a5f95b9c05d517909d" xml:space="preserve">
     <value>自旋补偿</value>
     <comment>"Piro Comp"</comment>
+  </data>
+  <data name="cfd749ab1a6091ad2e5feb06a09ba8620ae9ec5c5923402dcbc5bce70ad933b5" xml:space="preserve">
+    <value>俯仰角 (°)</value>
+    <comment>"Pitch (°)"</comment>
   </data>
   <data name="329ef6e55eba42d0509d1b4526d6935dc4538b4a97174cc579ceb142bdd56a9d" xml:space="preserve">
     <value>俯仰增益</value>
@@ -6104,6 +6408,14 @@ ffdshow
     <value>预览颜色</value>
     <comment>"Preview Colors"</comment>
   </data>
+  <data name="b99fa6c061504f0011fb2d5af1fb600b28ed177f02cf94286d5b542f2333d803" xml:space="preserve">
+    <value>无法预览</value>
+    <comment>"Preview unavailable"</comment>
+  </data>
+  <data name="21b4ad0dde3b14ffe2ac9bca5a1d4bec50f046ba25b2c5f9baafac58ce2f2b2d" xml:space="preserve">
+    <value>无法预览：未安装地图源</value>
+    <comment>"Preview unavailable: map source not installed"</comment>
+  </data>
   <data name="efe10c80ec8a9f38624cbb47103010a8cf32488a503e4b4bfe4f92307a9cefa7" xml:space="preserve">
     <value>主用</value>
     <comment>"Primary"</comment>
@@ -6151,6 +6463,10 @@ ffdshow
   <data name="c3651214431afdc3c1f85125f13d799b76a65d742af355c517cf7c63e52af1d0" xml:space="preserve">
     <value>快速面板着色</value>
     <comment>"QuickPanel Coloring"</comment>
+  </data>
+  <data name="39b90f44d18e299d34165fdd6363d190daef6736de86618012eedd2e0fe09270" xml:space="preserve">
+    <value>集结点 (RALLY)</value>
+    <comment>"RALLY"</comment>
   </data>
   <data name="0c272fe9f89a55ade8cc4289ec56b30aadd97234d4b5cbdcaf0fc57b55ad4e68" xml:space="preserve">
     <value>遥控</value>
@@ -6215,6 +6531,10 @@ ffdshow
   <data name="8cd62cca5acf3e924ebab51c5251afb2795fcdc74c5d7a5f293b79ca786d3a0c" xml:space="preserve">
     <value>RTSP 视频流</value>
     <comment>"RTSP stream"</comment>
+  </data>
+  <data name="f9b19f0378dfd0ab4e8639651517d25b5b551d9375aae5bc27dcff658cb3bb9c" xml:space="preserve">
+    <value>接收信号强度 (RSSI)</value>
+    <comment>"RX Rssi"</comment>
   </data>
   <data name="2a7dfeb2f2b018e5dae04497c0a281e7b22403057b91679046c9da52433894e1" xml:space="preserve">
     <value>遥控</value>
@@ -6346,6 +6666,10 @@ ffdshow
     <value>正在录制到日志文件夹</value>
     <comment>"Recording to the log folder"</comment>
   </data>
+  <data name="750c5bda02c82abc96e73bf3fbd98adc8e1fb2e5f57dff2184e1cea0302210ba" xml:space="preserve">
+    <value>重新统计缓存瓦片并绘制预览</value>
+    <comment>"Recount tiles on disk and redraw previews"</comment>
+  </data>
   <data name="b74ba553bd54cb4c6f93f4763525801d74b2a3e4622aa4bc41b98d6a0ca738e1" xml:space="preserve">
     <value>重新创建KML</value>
     <comment>"Recreate KML"</comment>
@@ -6379,7 +6703,7 @@ ffdshow
     <comment>"Rel Alt base"</comment>
   </data>
   <data name="8e99cd986fa2ec261c93d7669c1edfb2477d3b6355a6fb4fb08be4deba52ae2f" xml:space="preserve">
-    <value>相对</value>
+    <value>相对高度</value>
     <comment>"Relative"</comment>
   </data>
   <data name="ab00d1c79ba9a802bae1346f7f46ddb4665668f8d7c7503fa35f05c74b4fc398" xml:space="preserve">
@@ -6414,6 +6738,10 @@ ffdshow
     <value>移除</value>
     <comment>"Remove"</comment>
   </data>
+  <data name="5948954e3b49be94f9644e5646a60d5926d938072c1abf5d4b046bfdb927df6a" xml:space="preserve">
+    <value>移除 </value>
+    <comment>"Remove "</comment>
+  </data>
   <data name="39df7694c508491241fd1dc45a02154b83c0530fccbc64cb5aa72ed1a1f81286" xml:space="preserve">
     <value>删除超过 30 天的内容</value>
     <comment>"Remove 30+days"</comment>
@@ -6438,6 +6766,10 @@ ffdshow
     <value>删除点失败，请重试。</value>
     <comment>"Remove point Failed. Please try again."</comment>
   </data>
+  <data name="c250cd8ce14b0c47e04a0273254719e936b23695c832896d911b7cdc36f6e310" xml:space="preserve">
+    <value>从列表中移除所选区域，并可选择删除其缓存瓦片</value>
+    <comment>"Remove the selected areas from the list, optionally deleting their tiles"</comment>
+  </data>
   <data name="84c69150e11c5a978affb3d895ae1cb2b79c168b49d09498c423db85dc9cacf4" xml:space="preserve">
     <value>已移除 </value>
     <comment>"Removed "</comment>
@@ -6445,6 +6777,18 @@ ffdshow
   <data name="3064d79a295cefe4b384b8fe5cb29fd6b06d7eb1ad94b8895f4148039d06b330" xml:space="preserve">
     <value>重命名</value>
     <comment>"Rename"</comment>
+  </data>
+  <data name="888202a039868eef237f7e29d6fa11e325002a93fcfeec32497c429c3420f767" xml:space="preserve">
+    <value>重命名区域</value>
+    <comment>"Rename area"</comment>
+  </data>
+  <data name="37eedc03a6c39e9ce943e141c6bd2b69df3d630222255ab92478f18220c0b633" xml:space="preserve">
+    <value>重命名所选区域</value>
+    <comment>"Rename the selected area"</comment>
+  </data>
+  <data name="62c0034294653e36c0903d25e0928211b05551fb5d0d9674a5db844b0f779079" xml:space="preserve">
+    <value>正在绘制预览…</value>
+    <comment>"Rendering preview…"</comment>
   </data>
   <data name="7dace62f2d14ddb388b41999571088cfe4f73a17f6efeae3086974d6b54caca0" xml:space="preserve">
     <value>重复时间</value>
@@ -6565,6 +6909,10 @@ gps_point：跟踪单个地面点</value>
   <data name="4464105f259b642447aa1822c9e9da42015985f4b8f3d25c53bcb985f00e394f" xml:space="preserve">
     <value>横滚</value>
     <comment>"Roll"</comment>
+  </data>
+  <data name="1740f9a886e3b2707c0b4008dc0df92e262a0b0bb45cbe03fdb4d7bd39c0e0d5" xml:space="preserve">
+    <value>横滚角 (°)</value>
+    <comment>"Roll (°)"</comment>
   </data>
   <data name="2bcce578f6ef708bb5d4ac754747f5f9c8ec0cfa35bd87f9aed3ab2bea7643ef" xml:space="preserve">
     <value>横滚转升降舵</value>
@@ -6738,6 +7086,10 @@ gps_point：跟踪单个地面点</value>
     <value>保存设置</value>
     <comment>"Save Settings"</comment>
   </data>
+  <data name="e77e151aaaf8689f08702845a58b1801265488aacb44279b8402dbe9df3dad89" xml:space="preserve">
+    <value>将所选区域及其瓦片保存为 .mappack 文件</value>
+    <comment>"Save the selected areas and their tiles to a .mappack file"</comment>
+  </data>
   <data name="76b810fdf9d9450895a9b28c065c606306a7fa4615f0c874fb244d356099e3dc" xml:space="preserve">
     <value>保存到文件…</value>
     <comment>"Save to File..."</comment>
@@ -6818,9 +7170,17 @@ gps_point：跟踪单个地面点</value>
     <value>选择飞行器 STL 文件</value>
     <comment>"Select Plane STL File"</comment>
   </data>
+  <data name="202a97e1a5b8ebe7b9c17903341ff203061dfd6f5d3d6531d6a06216982d782c" xml:space="preserve">
+    <value>选择区域以查看预览</value>
+    <comment>"Select an area to preview it"</comment>
+  </data>
   <data name="3c1749cc99330da07b74e748bf94a2291309956253a9959cd0a4c60f8ce4e9cc" xml:space="preserve">
     <value>按住 ALT 选择地图区域</value>
     <comment>"Select map area holding ALT"</comment>
+  </data>
+  <data name="c5b8bdc4dd92c6f553d8a317ecfcb3878f2a3261fd2188bba0197eb82c488fec" xml:space="preserve">
+    <value>请选择一个或多个要导出的区域。</value>
+    <comment>"Select one or more areas to export."</comment>
   </data>
   <data name="abdf932e10b5e5224f80aa0ee01a4b3cb8145799843c61eb8001d335ed158d02" xml:space="preserve">
     <value>从右上角的下拉列表选择 ODID 设备，
@@ -7153,6 +7513,10 @@ gps_point：跟踪单个地面点</value>
     <value>设置</value>
     <comment>"Settings"</comment>
   </data>
+  <data name="d85892a9e630301227b52a13229511c78a9d838099ac7103c8b5bda49a60e38d" xml:space="preserve">
+    <value>设置其他位置</value>
+    <comment>"Setup other positions"</comment>
+  </data>
   <data name="5e9f98120dbe568255ee059f39671686982b113d4e917b6d6faf149918c81709" xml:space="preserve">
     <value>消息级别</value>
     <comment>"Severity"</comment>
@@ -7160,6 +7524,10 @@ gps_point：跟踪单个地面点</value>
   <data name="b828f618b92a4da0f0e3ab5c6c34956a1fbb4111ae32baf94e643bd55b52caf0" xml:space="preserve">
     <value>与支持工程师共享连接</value>
     <comment>"Share connection with support engineer"</comment>
+  </data>
+  <data name="cde3366e1316adda2bb1d0c072a5188b535a5480e14dc1fc5c494bec911e1967" xml:space="preserve">
+    <value>共享到 API</value>
+    <comment>"Share to API"</comment>
   </data>
   <data name="b3e78d4b21af1a69519f9531f68ecbe7403558333335b3cf53775fb59f484210" xml:space="preserve">
     <value>显示错误</value>
@@ -7196,6 +7564,10 @@ gps_point：跟踪单个地面点</value>
   <data name="783ba98b98d367300aa698150cf25d01a9c191a496dc8c4a62571ddac047bacf" xml:space="preserve">
     <value>显示图标</value>
     <comment>"Show icons"</comment>
+  </data>
+  <data name="7371031c223e15453d90efc4e18c4b27120410d438c3843e3af0654ef70f6c97" xml:space="preserve">
+    <value>在地图上显示</value>
+    <comment>"Show on Map"</comment>
   </data>
   <data name="757a3ab6fd183396647eaecc827b19e4cc2488ecfafbc1215ffb0adb7d88f06b" xml:space="preserve">
     <value>显示参数编辑器</value>
@@ -7605,7 +7977,7 @@ Acc：当前测定位置的精度
     <comment>"Terminal"</comment>
   </data>
   <data name="5dd6e0396c9df27d3535f32afe0049cfbe0108aefcd2b5bbd745ed5170f7aa6e" xml:space="preserve">
-    <value>地形</value>
+    <value>离地高度</value>
     <comment>"Terrain"</comment>
   </data>
   <data name="af3ddd815af84ae581f631295b763f729697b8a8dc36e4b49b301ea423bc1500" xml:space="preserve">
@@ -7644,6 +8016,12 @@ Acc：当前测定位置的精度
     <value>命令执行失败</value>
     <comment>"The Command failed to execute"</comment>
   </data>
+  <data name="5e178892fa1a6062791800acdbc50bbfafca71c0fc363389d5bc30ca0c8ede7a" xml:space="preserve">
+    <value>无法打开离线地图窗口。
+
+</value>
+    <comment>"The Offline Maps window could not be opened.\n\n"</comment>
+  </data>
   <data name="e05b7a68d7201ed8446c9c0ecd4d64055483de6dc0a7b9ddab7f02067a48c6b5" xml:space="preserve">
     <value>SiK 电台有红、绿两个状态指示灯。
 绿灯闪烁：正在搜索其他电台
@@ -7673,6 +8051,10 @@ Acc：当前测定位置的精度
     <value>加载的 HEX 文件无效，请重试。</value>
     <comment>"The hex file loaded is invalid, please try again."</comment>
   </data>
+  <data name="7fdc5e6fac23f11db0a0d1a8aa9d7a145ef4b2b1579f6b031cf7eb553f197e58" xml:space="preserve">
+    <value>地图中尚无可下载区域。</value>
+    <comment>"The map has no area to download yet."</comment>
+  </data>
   <data name="1ea6a743c5ec2211cb8ec8d29ba46d2f4387b40005fdf44668cb7939f902c655" xml:space="preserve">
     <value>名称“{0}”为保留名称。
 请选择其他名称。</value>
@@ -7697,6 +8079,10 @@ Acc：当前测定位置的精度
   <data name="a7288f79d184f2713930ca7a691ce21cdaa83f67cbe6d7b4d99a37664c4f2617" xml:space="preserve">
     <value>远端电台显示的范围和选项可能不准确。为确保准确，请让本地与远端电台使用相同版本的固件</value>
     <comment>"The ranges and options shown for the remote modem may not be accurate.  To ensure accurate, use the same firmware version in both the local and remote modems"</comment>
+  </data>
+  <data name="ed3dcdfee61086aa098ddb36c7414738d99def6da6a592494e07c07ec5add242" xml:space="preserve">
+    <value>瓦片缓存位置：</value>
+    <comment>"The tile cache is at "</comment>
   </data>
   <data name="0e92a3e17cda0196aa3e72f5b9701b0397925a5d019a1cdd0c74478770322b19" xml:space="preserve">
     <value>视频已停止：请检查视频源（详情见日志）</value>
@@ -7737,6 +8123,11 @@ Acc：当前测定位置的精度
   <data name="b0ec48f83ba12e9715f55d0b900345d7a80261751692ad77bea34c8b8deb363b" xml:space="preserve">
     <value>此功能需要 GStreamer，是否现在下载并安装？</value>
     <comment>"This feature requires GStreamer. Would you like to download and install it now?"</comment>
+  </data>
+  <data name="1056f454502a85bf5b2e24b0f8b8acf6a6acc3d5f5513685a92e3cc90a34a3c0" xml:space="preserve">
+    <value>无法将此文件作为离线地图包读取。
+</value>
+    <comment>"This file is not a readable offline map pack.\n"</comment>
   </data>
   <data name="266a18f4e32df195c4d3b4d1fcac417f49e4438bb4bd5ac3c7afaaa6f3f5ebb1" xml:space="preserve">
     <value>这是测试版，请检查输出文件</value>
@@ -7787,6 +8178,14 @@ Acc：当前测定位置的精度
     <value>油门设置</value>
     <comment>"Throttle Settings"</comment>
   </data>
+  <data name="4da22a362d386464986ac588eba5fd2fc7197f751e2c6aab248827c60201fdbc" xml:space="preserve">
+    <value>瓦片</value>
+    <comment>"Tiles"</comment>
+  </data>
+  <data name="49ec1dc545b5cbbcf31d0fd9fb067b00b26b550fdcf0678d9f33aab1b2879025" xml:space="preserve">
+    <value>已缓存瓦片</value>
+    <comment>"Tiles on disk"</comment>
+  </data>
   <data name="9498a18774830c62bdda63968143fd44a3ad3e61e3e3f7df8c577b25c92eb04b" xml:space="preserve">
     <value>俯仰</value>
     <comment>"Tilt"</comment>
@@ -7802,6 +8201,10 @@ Acc：当前测定位置的精度
   <data name="ac8bee3f02b537186fdb351c8b0fffd3e4aa2968990a8b8b7ff434a93ba9e780" xml:space="preserve">
     <value>时间（秒）</value>
     <comment>"Time (sec)"</comment>
+  </data>
+  <data name="4a6eec0763c9fafc7d72022fdfd092df3fa3936ca7b680922b0813798c6fc909" xml:space="preserve">
+    <value>空中时间 (分:秒)</value>
+    <comment>"Time in Air (min.sec)"</comment>
   </data>
   <data name="967ee5d6ac80409c85b7485a7d8a30832b408fd0610d10caff05e72b6e885244" xml:space="preserve">
     <value>时间偏移</value>
@@ -8296,6 +8699,10 @@ Acc：当前测定位置的精度
     <value>垂直</value>
     <comment>"Vertical"</comment>
   </data>
+  <data name="1e4bec428a68776248596eefe642af5b35d963d117d8839adcaddb83c4c50637" xml:space="preserve">
+    <value>升降速度 (speed)</value>
+    <comment>"Vertical Speed (speed)"</comment>
+  </data>
   <data name="339cddc8e5b2e300536efaa6b30bb90619f969ce9ab0b8d610e6a657cc3a7530" xml:space="preserve">
     <value>振动</value>
     <comment>"Vibe"</comment>
@@ -8343,6 +8750,10 @@ Acc：当前测定位置的精度
   <data name="4d7cfa73270cdf1c8e2ec86ad496bd2411ba1e8a30027e632a366462a70a2fd5" xml:space="preserve">
     <value>电压引脚：</value>
     <comment>"Volt Pin:"</comment>
+  </data>
+  <data name="6f42cd107d6797d4817eddcea56243ceb36df6ad15b43b15f3399e65156f1c43" xml:space="preserve">
+    <value>电源状态标志</value>
+    <comment>"Voltage Flags"</comment>
   </data>
   <data name="d0fb73a0a88f7e2a4d3883418f1d76c41a30017510fd0aed70225725f1f764b6" xml:space="preserve">
     <value>警告：{name} 为 {value}</value>
@@ -8412,6 +8823,10 @@ Acc：当前测定位置的精度
     <value>警告：这将重新写入任务、解锁并发送起飞命令（多旋翼）</value>
     <comment>"Warning this will reprogram your mission, arm and issue a takeoff command (copter)"</comment>
   </data>
+  <data name="90522e57bba35fb397ad26f5f48d38528dab49b0dca4fd5a4a207c8152c75145" xml:space="preserve">
+    <value>警告：本机未安装以下地图源：</value>
+    <comment>"Warning: this computer has no map source named "</comment>
+  </data>
   <data name="cc56cb7acd18b313fca5b02edbf4888fac8e0725fc44e14cf5d456d742244795" xml:space="preserve">
     <value>网络请求失败： </value>
     <comment>"Web request failed: "</comment>
@@ -8452,6 +8867,14 @@ http://www.magnetic-declination.com/</value>
   <data name="63ec69fde300e6d6040089df9d6f27ab61f1d07933c6cb04985963386b9ed4b6" xml:space="preserve">
     <value>维基文档</value>
     <comment>"Wiki"</comment>
+  </data>
+  <data name="36d8f16468e0b6db6dacd36c59cd3f16be77a15afbe4b04e23d9ff7249f751d4" xml:space="preserve">
+    <value>风向 (°)</value>
+    <comment>"Wind Direction (Deg)"</comment>
+  </data>
+  <data name="0e4c4183c4bd638d0dc17fb5ba34f976afb3585763b20d24a850f61136c70db3" xml:space="preserve">
+    <value>风速 (speed)</value>
+    <comment>"Wind Velocity (speed)"</comment>
   </data>
   <data name="3404644e01177ee996b69247aa3967e7a3f66702c5ff0f7270591e8d9622183b" xml:space="preserve">
     <value>清除</value>
@@ -8497,6 +8920,14 @@ http://www.magnetic-declination.com/</value>
     <value>DSMX对频</value>
     <comment>"X"</comment>
   </data>
+  <data name="22409e97ec7ced2d15b8d2251543cbc19f5f29cd6595de0fdcce9818290b8142" xml:space="preserve">
+    <value>横向航迹误差 (m)</value>
+    <comment>"Xtrack Error (m)"</comment>
+  </data>
+  <data name="75b7318c702f77e6a2b503b50a220477f003d13b98e8cc4a40e6553f08ec21e7" xml:space="preserve">
+    <value>偏航角 (°)</value>
+    <comment>"Yaw (°)"</comment>
+  </data>
   <data name="3caaac470a4a589f5a397f70cfa97bb302188306f4c98acc63379783599f62e2" xml:space="preserve">
     <value>偏航增益</value>
     <comment>"Yaw Gain"</comment>
@@ -8524,6 +8955,10 @@ http://www.magnetic-declination.com/</value>
   <data name="85a39ab345d672ff8ca9b9c6876f3adcacf45ee7c1e2dbd2408fd338bd55e07e" xml:space="preserve">
     <value>是</value>
     <comment>"Yes"</comment>
+  </data>
+  <data name="05ec2ec2416483b83970b451e8c0198574f78b7d2460c6531c6ab133c88ba456" xml:space="preserve">
+    <value>选择“是”将释放空间，但与重叠区域共用的瓦片也会被删除。</value>
+    <comment>"Yes frees the space; tiles shared with an overlapping area are deleted too."</comment>
   </data>
   <data name="20c743afbd07c0cd38b1bd3b9262ce500a9b688f30685ab6be251f28c0c46d8f" xml:space="preserve">
     <value>当前处于失控保护状态，是否确定更改模式？</value>
@@ -8641,6 +9076,14 @@ http://www.magnetic-declination.com/</value>
     <value>分区</value>
     <comment>"Zone"</comment>
   </data>
+  <data name="509c517ede79fef060a5f3a109fd1f45951eef2c7970b25c20992011e36a4070" xml:space="preserve">
+    <value>缩放级别</value>
+    <comment>"Zoom"</comment>
+  </data>
+  <data name="e3ce6241ad144b88a802406fa8343a20588ffdd7d65712664c9b51d91ad85141" xml:space="preserve">
+    <value>缩放级别 </value>
+    <comment>"Zoom "</comment>
+  </data>
   <data name="eee6159defa0473f2d1d0528282e3a7c60f4d32d07904f609199a23c4a434372" xml:space="preserve">
     <value>放大至</value>
     <comment>"Zoom To"</comment>
@@ -8756,6 +9199,10 @@ http://www.magnetic-declination.com/</value>
   <data name="6c35493a2b937829c9815c39e23af964bc84e5430a7dc104c700bbc0de2b59e3" xml:space="preserve">
     <value>数量</value>
     <comment>"count"</comment>
+  </data>
+  <data name="e17e97a90df41f32f2dad36968b262b25515efee0aba65ee0c25a40a81e3a737" xml:space="preserve">
+    <value>正在统计…</value>
+    <comment>"counting…"</comment>
   </data>
   <data name="3f820224a828d1a11574d43313aa23af7f5e4c3633883bd83ee423e7cc56cb80" xml:space="preserve">
     <value>创建到 GPS 的独占透传（端口 500）</value>
@@ -9217,6 +9664,10 @@ http://www.magnetic-declination.com/</value>
     <value>TLog 浏览器</value>
     <comment>"tlog browser"</comment>
   </data>
+  <data name="b4181802978b60408531baabbce233dd386158d93d64228ad73f3990303d0b60" xml:space="preserve">
+    <value>诊断跟踪 (tracemp)</value>
+    <comment>"tracemp"</comment>
+  </data>
   <data name="5177ab4042cb1b66324592e5a213d58249dd8842a5d941771204ed0489e19ce2" xml:space="preserve">
     <value>翻译语言编辑器</value>
     <comment>"translation language editor"</comment>
@@ -9241,9 +9692,37 @@ http://www.magnetic-declination.com/</value>
     <value>模拟按下安全按钮</value>
     <comment>"virtual press the safety button"</comment>
   </data>
+  <data name="2726fca3c18919f22e237b4e8e29f96ec8161bdea1b837a1e7edc6fae04000c9" xml:space="preserve">
+    <value>垂直起降状态</value>
+    <comment>"vtol_state"</comment>
+  </data>
+  <data name="0a11050211a20cd545402fcf0497aea6cf53cb017f751fd1b98ba19211adb47d" xml:space="preserve">
+    <value>X 轴速度</value>
+    <comment>"vx"</comment>
+  </data>
+  <data name="0e1c0f0eda0a4029d4e4062a635e132e65e880352ebc004528702722dd9493ba" xml:space="preserve">
+    <value>Y 轴速度</value>
+    <comment>"vy"</comment>
+  </data>
+  <data name="9685c81b76accc50694909aed78fa64a4cfa14a92c2f347785ef06b7840815a7" xml:space="preserve">
+    <value>Z 轴速度</value>
+    <comment>"vz"</comment>
+  </data>
   <data name="1503e174c94c38b232802ed86999d5d677d43f178d354ee5eb5251faf3f8f154" xml:space="preserve">
     <value>清除自定义影像</value>
     <comment>"wipe custom imagery"</comment>
+  </data>
+  <data name="c1251edd6b5f1f61282ea3c7406c5b0194ad3ea1078dc5ab6b2500d0a67f65e3" xml:space="preserve">
+    <value>当前航点序号</value>
+    <comment>"wpno"</comment>
+  </data>
+  <data name="8f17e33840aad772de36c4811e313805cc7dd619961490897600e3481c91d09d" xml:space="preserve">
+    <value>{0:N0} / {1:N0}</value>
+    <comment>"{0:N0} of {1:N0}"</comment>
+  </data>
+  <data name="35fb6844e9412cd491ff8d4e14c79ce67d8ed9dad1ab70d3b407d0ddec0760f3" xml:space="preserve">
+    <value>{1} 中有 {0:N0} 个瓦片</value>
+    <comment>"{0:N0} tiles in {1}"</comment>
   </data>
   <data name="e9f48d25053b1f959535f38044bdc911a7523c96ed88ac8ddf5d98f0bf296948" xml:space="preserve">
     <value>{0}
@@ -9251,9 +9730,18 @@ http://www.magnetic-declination.com/</value>
 如有字体问题，请安装：http://www.microsoft.com/en-us/download/details.aspx?id=16083</value>
     <comment>"{0}\n\n Font Issues? Please install this http://www.microsoft.com/en-us/download/details.aspx?id=16083"</comment>
   </data>
+  <data name="f07d911660e8061ac439ea195c54146209c0596cd41476b6ec4067e60b4caccb" xml:space="preserve">
+    <value>{0} 个区域  ·  全部缓存含 {1:N0} 个瓦片，占用 {2}</value>
+    <comment>"{0} area(s)  ·  the whole tile cache holds {1:N0} tiles, {2}"</comment>
+  </data>
   <data name="f0a220c816cc527b5dbd16c1dfcc8da87331c3abddb6454c4cda3542adf304e9" xml:space="preserve">
     <value>{0}，位于航程 {1} 处</value>
     <comment>"{0} at {1}"</comment>
+  </data>
+  <data name="82b5325728316d7379c85de67184a1b8831d0337b76f74a6b6862e2a3f44fbd8" xml:space="preserve">
+    <value>{0}已复制 {1:N0} 个瓦片，{2:N0} 个已存在。
+已向列表添加 {3} 个区域。</value>
+    <comment>"{0}{1:N0} tiles copied, {2:N0} were already present.\n{3} area(s) added to the list."</comment>
   </data>
   <data name="5097e8a37403b611dfbe72f08153e1b5de9786d8ae7060d6db47cde5973dbd6d" xml:space="preserve">
     <value>{name} 为 {value}</value>
