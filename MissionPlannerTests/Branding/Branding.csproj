@@ -8,6 +8,7 @@
   <ItemGroup>
     <Compile Include="../../Utilities/BrandLogoLinks.cs" Link="BrandLogoLinks.cs" />
     <Compile Include="../Utilities/BrandLogoLinksTests.cs" Link="BrandLogoLinksTests.cs" />
+    <Compile Include="../Utilities/BrandLogoPaintTests.cs" Link="BrandLogoPaintTests.cs" />
     <EmbeddedResource Include="../../Resources/LocalizedBrandLogo.png" LogicalName="MissionPlanner.Resources.LocalizedBrandLogo.png" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Drawing" />
