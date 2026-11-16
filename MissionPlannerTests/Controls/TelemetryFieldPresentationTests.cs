@@ -5,6 +5,10 @@ using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
 using System.Globalization;
+using System.Linq;
+using MissionPlanner;
+using MissionPlanner.ArduPilot;
+using MissionPlanner.Attributes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MissionPlanner.Controls;
 
@@ -13,6 +17,28 @@ namespace MissionPlannerTests.Controls
     [TestClass]
     public class TelemetryFieldPresentationTests
     {
+        [TestMethod]
+        public void EveryAttributedTelemetryPropertyHasChineseDescriptionAndOriginalKey()
+        {
+            var previous = CultureInfo.CurrentUICulture;
+            try
+            {
+                CultureInfo.CurrentUICulture = new CultureInfo("zh-CN");
+                int count = 0;
+                foreach (var property in typeof(CurrentState).GetProperties())
+                {
+                    if (!property.IsDefined(typeof(DisplayTextAttribute), false)) continue;
+                    var description = CurrentState.GetDisplayText(property.Name);
+                    Assert.IsTrue(description.Any(c => c >= '\u4e00' && c <= '\u9fff'), property.Name + ": " + description);
+                    var label = TelemetryFieldPresentation.FieldLabel(property.Name);
+                    Assert.IsTrue(label.StartsWith(property.Name + " (", StringComparison.Ordinal), property.Name);
+                    count++;
+                }
+                Assert.IsTrue(count >= 200, "Expected the actual telemetry property catalog.");
+            }
+            finally { CultureInfo.CurrentUICulture = previous; }
+        }
+
         [TestMethod]
         public void BilingualLabelReservesWidthAndScrollsAtNarrowSizes()
         {
