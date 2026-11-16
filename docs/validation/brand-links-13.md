@@ -3,7 +3,98 @@
 Base: `b5bca65edef67e73cedc5ef0b7a8343e088b6a68` (`fix/10-14-integrated-ui`).
 Scope: the desktop toolbar brand entry, source asset, and focused UI checks.
 
-## Current follow-up: contrast, spacing and physical capture coordinates
+## Current follow-up: one desktop frame for pixels and screenshots
+
+GPD tested `febb6e9dbb82848fb18ef874b576840bbcc116ac`: Release built,
+21/27 checks passed and six stopped at the strict previous-page seed assertion.
+The reported physical probe `(721,47)` was #F3F3F3 with native window DPI 144
+and managed DeviceDpi 96; a subsequently saved client screenshot was magenta.
+Those two observations were separate desktop reads, so they cannot establish
+that the failed assertion and screenshot represented the same presentation.
+The DPI disagreement alone also does not prove a wrong capture coordinate.
+**The GPD cause and its 144-DPI recheck remain open.**
+
+Test source `f2e899451672757d33105307b8a91f2a0a668991` closes that evidence gap:
+
+- `BrandLogoDesktopFrame` captures one physical client rectangle with native
+  GetDC/BitBlt into an owned bitmap. Assertions, logo crops, probe neighbourhoods
+  and saved PNGs read that same buffer, using `physicalPoint - frame.Bounds.Location`.
+  They do not take another desktop screenshot. Frame bounds, UTC and a SHA256
+  of normalized RGB32 pixel bytes identify the asserted image.
+- Capture still establishes PMv2 before creating fixture HWNDs. It checks the
+  screen DC's MM_TEXT mapping, zero origins and identity LPtoDP at both corners;
+  it logs logical/desktop resolutions and DC DPI rather than applying an assumed
+  144/96 scale factor. PNG DPI metadata never rescales pixel coordinates.
+- Pump synchronously invalidates, erases and updates the form's visible children
+  with [RedrawWindow](https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-redrawwindow)
+  and flushes the calling thread's GDI batch before the DWM fence. DwmFlush alone
+  is insufficient evidence that all child WM_PAINT messages have completed.
+- Capture records successive frames and accepts two consecutive identical
+  pixel hashes and bounds, bounded to two seconds. Stability never depends on
+  seeing the expected colour: two stable gray frames still fail exact magenta.
+  The first frame, settled frame and timestamp/hash timeline are retained.
+- The original physical client-y=2 magenta assertion remains. Additional checks
+  require a new page Paint event and an exact hit on the exposed page HWND, as
+  well as the existing client bounds, fixture ownership and logo occlusion checks.
+  Logs include Paint Graphics DPI/transform, HWND awareness/PMv2 identity,
+  WM_NCHITTEST, and diagnostic native GetPixel reads before/after BitBlt.
+
+The native regression `CapturedFrameKeepsTheSamePhysicalPixelAfterTheDesktopChanges`
+captures a red child patch at a nonzero client offset, repaints it blue, and
+verifies that the first buffer and its PNG round trip still read red at the same
+relative pixel. This exercises an actual desktop change and the capture offset.
+
+### Verified result and its limit
+
+[Native run 43936580098](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/actions/runs/43936580098)
+checked the exact test source above: **28/28 passed, zero skipped**, on the
+Windows runner's 96-DPI desktop. The artifact was downloaded and independently
+verified: [TRX, PNGs and diagnostics](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/actions/runs/43936580098/artifacts/14260965729),
+1,638,616-byte ZIP, SHA256
+`ecc093f75c75e5d4d5799d58d5df1139c8b72740c7a541a62d7dc031a3a8322d`.
+It contains 161 PNGs, 35 capture timelines, seven probe reports and the TRX.
+All 35 captures settled on two identical frames; the latest second frame was
+253 ms after capture started. All seven saved probe PNGs independently read
+#FF00FF at their recorded relative coordinate `(496,2)`.
+
+For the linked example, physical client origin `(8,31)` plus relative probe
+`(496,2)` gives the asserted desktop coordinate `(504,33)`. Its PNG dimensions
+are exactly 992 x 648, the native client size. DC mapping is identity; both
+native GetPixel diagnostics agree with the immutable frame. Page Paint count
+grew from 2 to 4 and the hit HWND is the page. These are **96-DPI CI observations**,
+not a substitute for the GPD `(721,47)` observation at 144 DPI.
+
+[Same asserted client PNG](brand-links-same-frame-probe.png),
+[same-buffer neighbourhood](brand-links-same-frame-neighbourhood.png),
+[probe report](brand-links-same-frame-probe.txt),
+[capture timeline](brand-links-same-frame-frames.txt).
+Across 25 actual-paint comparisons, stale-magenta and wrong-pixel counts were
+zero and maximum mean RGB error was 0.01483/255. Local Mono verification passed
+15 portable cases and skipped 13 Windows-only cases; actionlint and diff checks
+passed. Neither original image nor the application renderer changed in this
+follow-up.
+
+### GPD recheck still required
+
+Keep the actual display scale and run all 28 cases on source `f2e89945` or its
+documentation-only successor. Retain all output, including failed seed cases:
+
+```powershell
+$env:BRAND_LOGO_SCREENSHOTS = Join-Path $PWD 'local-qa-logo-same-frame'
+dotnet test MissionPlannerTests/Branding/Branding.csproj --configuration Release --logger 'trx;LogFileName=brand-links-gpd.trx' --results-directory "$env:BRAND_LOGO_SCREENSHOTS/results"
+```
+
+For any failure, compare `actual-paint/*-probe.txt`, `*-probe-frames.txt`,
+`*-probe-first-client.png`, `*-probe-client.png`, `*-probe-window.png` and
+`*-probe-neighbourhood.png`. Use the recorded relative coordinate directly in
+the PNG. A stable gray pixel with page hit/paint evidence requires investigation
+of the actual exposed surface; a caption or another HWND hit points to geometry
+or occlusion. A changing frame timeline identifies presentation timing. Do not
+infer the outcome from a later, separately captured screenshot or relax the
+magenta assertion. Full-application visual acceptance remains a separate GPD
+check coordinated by the other work line; Issue #13 stays open.
+
+## Previous follow-up: contrast, spacing and physical capture coordinates
 
 GPD full-application checks of `e99a4ca1` reported a visible transparent logo,
 correct ArduPilot/GitHub browser destinations and no old-page residue after
