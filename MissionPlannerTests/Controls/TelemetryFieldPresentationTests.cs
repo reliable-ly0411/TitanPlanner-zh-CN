@@ -18,6 +18,27 @@ namespace MissionPlannerTests.Controls
     public class TelemetryFieldPresentationTests
     {
         [TestMethod]
+        public void DisplayUnitsFollowConfiguredUnitsWithoutChangingKeys()
+        {
+            var previousCulture = CultureInfo.CurrentUICulture;
+            var previousUnit = CurrentState.SpeedUnit;
+            try
+            {
+                CultureInfo.CurrentUICulture = new CultureInfo("zh-CN");
+                CurrentState.SpeedUnit = "km/h";
+                var label = TelemetryFieldPresentation.FieldLabel("airspeed");
+                Assert.IsTrue(label.StartsWith("airspeed (", StringComparison.Ordinal));
+                Assert.IsTrue(label.Contains("km/h"), label);
+                Assert.IsFalse(label.Contains("(speed)"), label);
+            }
+            finally
+            {
+                CultureInfo.CurrentUICulture = previousCulture;
+                CurrentState.SpeedUnit = previousUnit;
+            }
+        }
+
+        [TestMethod]
         public void EveryAttributedTelemetryPropertyHasChineseDescriptionAndOriginalKey()
         {
             var previous = CultureInfo.CurrentUICulture;

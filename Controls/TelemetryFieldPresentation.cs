@@ -15,7 +15,15 @@ namespace MissionPlanner.Controls
                 return customName;
             if (!string.Equals(CultureInfo.CurrentUICulture.Name, "zh-CN", StringComparison.OrdinalIgnoreCase))
                 return key;
-            return Combine(key, CurrentState.GetDisplayText(key));
+            var description = CurrentState.GetDisplayText(key);
+            if (!string.IsNullOrEmpty(CurrentState.DistanceUnit))
+                description = description.Replace("(dist)", "(" + CurrentState.DistanceUnit + ")");
+            if (!string.IsNullOrEmpty(CurrentState.AltUnit))
+                description = description.Replace("(alt)", "(" + CurrentState.AltUnit + ")");
+            if (!string.IsNullOrEmpty(CurrentState.SpeedUnit))
+                description = description.Replace("(speed)", "(" + CurrentState.SpeedUnit + ")")
+                    .Replace("(speed/s)", "(" + CurrentState.SpeedUnit + "/s)");
+            return Combine(key, description);
         }
 
         public static string Combine(string original, string description)
