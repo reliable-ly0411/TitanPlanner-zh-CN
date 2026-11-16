@@ -1157,6 +1157,7 @@ namespace MissionPlanner
             }
 
 #if !LIB
+            MenuArduPilot.Click -= MenuArduPilot_Click;
             BrandLogoLinks.Configure(MainMenu, MenuArduPilot, OpenBrandUrl);
 #else
             var logoImage = ThemeManager.IsDarkTheme

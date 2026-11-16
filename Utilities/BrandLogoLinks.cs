@@ -27,6 +27,7 @@ namespace MissionPlanner.Utilities
                 var right = new ToolStripButton { Name = "MenuLocalizedGitHub" };
                 ConfigureHalf(left, source, width, height, false, "ArduPilot", ArduPilotUrl);
                 ConfigureHalf(right, source, width, height, true, "GitHub: reliable-ly0411", GitHubUrl);
+                left.Click += (sender, args) => open(ArduPilotUrl);
                 right.Click += (sender, args) => open(GitHubUrl);
                 // Right-aligned ToolStrip items are arranged from right to left.
                 menu.Items.Insert(menu.Items.IndexOf(left), right);

@@ -8,6 +8,26 @@ namespace MissionPlannerTests.Utilities
     [TestClass]
     public class BrandLogoLinksTests
     {
+        [DataTestMethod]
+        [DataRow(40)]
+        [DataRow(60)]
+        [DataRow(80)]
+        public void ToolbarScalePreservesAspectRatioAndVisualOrder(int toolbarHeight)
+        {
+            using (var menu = new ToolStrip { AutoSize = false, Width = 800, Height = toolbarHeight })
+            using (var left = new ToolStripButton { AutoSize = false, Height = toolbarHeight })
+            {
+                menu.Items.Add(left);
+                BrandLogoLinks.Configure(menu, left, url => { });
+                menu.PerformLayout();
+                var right = menu.Items[0];
+                Assert.IsTrue(left.Bounds.Left < right.Bounds.Left, "ArduPilot must be visually left of GitHub");
+                Assert.AreEqual(left.Width, right.Width);
+                Assert.AreEqual(596.0 / 182.0,
+                    (left.Image.Width + right.Image.Width) / (double)left.Image.Height, 0.07);
+            }
+        }
+
         [TestMethod]
         public void NavigationAndThemeRefreshPreserveBothLogoSurfaces()
         {
@@ -54,9 +74,10 @@ namespace MissionPlannerTests.Utilities
                 Assert.AreEqual(BrandLogoLinks.GitHubUrl, right.AccessibleDescription);
                 Assert.IsTrue(left.Image.Width > left.Image.Height);
                 Assert.IsTrue(left.Image.Height >= 24);
+                left.PerformClick();
                 right.PerformClick();
                 right.PerformClick();
-                CollectionAssert.AreEqual(new[] { BrandLogoLinks.GitHubUrl, BrandLogoLinks.GitHubUrl }, opened);
+                CollectionAssert.AreEqual(new[] { BrandLogoLinks.ArduPilotUrl, BrandLogoLinks.GitHubUrl, BrandLogoLinks.GitHubUrl }, opened);
             }
         }
     }
