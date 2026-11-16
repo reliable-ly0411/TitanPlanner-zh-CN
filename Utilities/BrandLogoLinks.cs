@@ -138,6 +138,9 @@ namespace MissionPlanner.Utilities
                 };
                 button.FlatAppearance.BorderSize = 0;
                 button.Click += (sender, args) => open(url);
+                // ToolStripControlHost forwards the UserControl's leave event. Relay
+                // leaves from the child hit regions too, for the menu's auto-hide mode.
+                button.MouseLeave += (sender, args) => OnMouseLeave(args);
                 toolTip.SetToolTip(button, text + "\n" + url);
                 return button;
             }

@@ -217,6 +217,24 @@ namespace MissionPlannerTests.Utilities
         }
 
         [TestMethod]
+        public void NativeMouseLeaveFromEitherLinkReachesToolbarHost()
+        {
+            if (Environment.OSVersion.Platform != PlatformID.Win32NT)
+                Assert.Inconclusive("Native mouse dispatch is covered on the Windows runner");
+            InSta(() =>
+            {
+                using (var fixture = new ToolbarFixture(1, 1231, false))
+                {
+                    int leaves = 0;
+                    fixture.Brand.MouseLeave += (sender, args) => leaves++;
+                    foreach (var name in new[] { "MenuArduPilotLink", "MenuLocalizedGitHub" })
+                        SendMessage(fixture.Brand.Control.Controls[name].Handle, 0x2A3, IntPtr.Zero, IntPtr.Zero);
+                    Assert.IsTrue(leaves >= 2, "Auto-hide must observe leaving either child link");
+                }
+            });
+        }
+
+        [TestMethod]
         public void LiveToolbarResizingKeepsImageProportionsAndRebuildsHitRegions()
         {
             InSta(() =>
