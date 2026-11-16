@@ -113,7 +113,7 @@ namespace MissionPlanner.Controls
                 string group = CurrentState.GetGroupText(field.Name);
                 if (string.IsNullOrEmpty(group)) group = "Other";
 
-                string displayName = field.Name;
+                string displayName = TelemetryFieldPresentation.FieldLabel(field.Name);
                 if (field.Name.Contains("customfield"))
                 {
                     if (CurrentState.custom_field_names.ContainsKey(field.Name))
@@ -131,6 +131,7 @@ namespace MissionPlanner.Controls
                     Name = field.Name,
                     DisplayName = displayName,
                     Group = group,
+                    GroupLabel = TelemetryFieldPresentation.GroupLabel(group),
                     Value = fieldValue?.ToString() ?? "",
                     IsChecked = _isChecked(field.Name)
                 });
@@ -141,7 +142,7 @@ namespace MissionPlanner.Controls
             _filteredItems = _allItems;
 
             // Set up autocomplete
-            _searchBox.SetAutoCompleteSource(_allItems.Select(x => x.DisplayName).ToList());
+            _searchBox.SetAutoCompleteSource(_allItems.SelectMany(x => new[] { x.Name, x.DisplayName }).Distinct().ToList());
 
             UpdateScrollSize();
             _contentPanel.Invalidate();
@@ -158,16 +159,39 @@ namespace MissionPlanner.Controls
                 return;
             }
 
+            using (var graphics = _contentPanel.CreateGraphics())
+            using (var headerFont = new Font(this.Font.FontFamily, this.Font.Size + 1, FontStyle.Bold))
+            {
+                _nameWidth = 140;
+                foreach (var item in _allItems)
+                {
+                    _nameWidth = Math.Max(_nameWidth, (int)Math.Ceiling(graphics.MeasureString(item.DisplayName, this.Font).Width) + 8);
+                    _nameWidth = Math.Max(_nameWidth, (int)Math.Ceiling(graphics.MeasureString(item.GroupLabel, headerFont).Width) + 8);
+                }
+                _rowHeight = Math.Max(18, (int)Math.Ceiling(headerFont.GetHeight(graphics)) + 4);
+            }
             int availableHeight = _contentPanel.ClientSize.Height;
-            int headerHeight = _rowHeight + 4;
-
-            // Count groups and items
-            var groups = _filteredItems.GroupBy(x => x.Group).ToList();
-            int totalRows = _filteredItems.Count + groups.Count; // items + group headers
 
             int rowsPerColumn = Math.Max(1, (availableHeight - _padding * 2) / _rowHeight);
             int columnWidth = _checkboxSize + _checkboxMargin + _nameWidth + _valueWidth + _columnGap;
-            int numColumns = (int)Math.Ceiling((double)totalRows / rowsPerColumn);
+            // Match painting exactly, including a group header wrapping before its first item.
+            int column = 0;
+            int lastOccupiedColumn = 0;
+            int row = 0;
+            string group = null;
+            foreach (var item in _filteredItems)
+            {
+                if (item.Group != group)
+                {
+                    group = item.Group;
+                    if (row > 0 && row >= rowsPerColumn - 1) { column++; row = 0; }
+                    lastOccupiedColumn = column;
+                    if (++row >= rowsPerColumn) { column++; row = 0; }
+                }
+                lastOccupiedColumn = column;
+                if (++row >= rowsPerColumn) { column++; row = 0; }
+            }
+            int numColumns = lastOccupiedColumn + 1;
 
             int totalWidth = _padding + (numColumns * columnWidth) + _padding;
             _contentPanel.AutoScrollMinSize = new Size(totalWidth, 0);
@@ -222,7 +246,7 @@ namespace MissionPlanner.Controls
                         }
 
                         // Draw header
-                        g.DrawString(currentGroup, _headerFont, headerBrush, x, y);
+                        g.DrawString(item.GroupLabel, _headerFont, headerBrush, x, y);
                         y += _rowHeight;
                         rowInColumn++;
 
@@ -373,7 +397,7 @@ namespace MissionPlanner.Controls
 
         private void SearchBox_TextChanged(object sender, EventArgs e)
         {
-            var searchText = _searchBox.Text.Trim().ToLower();
+            var searchText = _searchBox.Text.Trim();
 
             if (string.IsNullOrEmpty(searchText))
             {
@@ -382,9 +406,7 @@ namespace MissionPlanner.Controls
             else
             {
                 _filteredItems = _allItems.Where(x =>
-                    x.DisplayName.ToLower().Contains(searchText) ||
-                    x.Name.ToLower().Contains(searchText) ||
-                    x.Group.ToLower().Contains(searchText)).ToList();
+                    TelemetryFieldPresentation.Matches(searchText, x.DisplayName, x.Name, x.Group, x.GroupLabel)).ToList();
             }
 
             UpdateScrollSize();
@@ -425,6 +447,7 @@ namespace MissionPlanner.Controls
             public string Name { get; set; }
             public string DisplayName { get; set; }
             public string Group { get; set; }
+            public string GroupLabel { get; set; }
             public string Value { get; set; }
             public bool IsChecked { get; set; }
             public Rectangle Bounds { get; set; }

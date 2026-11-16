@@ -233,7 +233,7 @@ namespace MissionPlanner.Controls
             this.btnMountFuse.Name = "btnMountFuse";
             this.btnMountFuse.Size = new System.Drawing.Size(125, 23);
             this.btnMountFuse.TabIndex = 3;
-            this.btnMountFuse.Text = "Mount as Drive";
+            this.btnMountFuse.Text = UiText.Translate("Mount as Drive");
             this.btnMountFuse.UseVisualStyleBackColor = true;
             this.btnMountFuse.Click += new System.EventHandler(this.BtnMountFuse_Click);
             //
