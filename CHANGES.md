@@ -1,3 +1,7 @@
+## SD card formatting confirmation
+
+Formatting the flight controller SD card requires explicit confirmation, with Cancel selected by default.
+
 ## Enhanced Chinese display
 
 Mission altitude references, bundled plugin menu entries and dashboard descriptions use localized display text while retaining protocol values and field keys. Dashboard field selection shows the original identifier beside its description. Vibration axes and mission altitude headers use context-specific labels.

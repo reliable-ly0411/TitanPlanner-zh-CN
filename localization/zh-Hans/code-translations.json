@@ -1895,5 +1895,7 @@
   "Offboard Control": "外部控制",
   "Auto: Ready": "自动：就绪",
   "Auto: Takeoff": "自动：起飞",
-  "Auto: Landing": "自动：降落"
+  "Auto: Landing": "自动：降落",
+  "Formatting the flight controller SD card will delete all data on the card. Continue?": "格式化飞控 SD 卡将删除卡内全部数据。是否继续？",
+  "Format SD card": "格式化 SD 卡"
 }
