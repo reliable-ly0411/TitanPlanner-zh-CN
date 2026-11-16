@@ -1,0 +1,41 @@
+name: Native Windows brand link checks
+on:
+  push:
+    paths:
+      - Utilities/BrandLogoLinks.cs
+      - Resources/LocalizedBrandLogo.png
+      - MissionPlannerTests/Utilities/BrandLogoLinksTests.cs
+      - MissionPlannerTests/Branding/Branding.csproj
+      - .github/workflows/brand-logo-links.yml
+  pull_request:
+    paths:
+      - Utilities/BrandLogoLinks.cs
+      - Resources/LocalizedBrandLogo.png
+      - MissionPlannerTests/Utilities/BrandLogoLinksTests.cs
+      - MissionPlannerTests/Branding/Branding.csproj
+      - .github/workflows/brand-logo-links.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  branding:
+    runs-on: windows-2022
+    timeout-minutes: 10
+    env:
+      BRAND_LOGO_SCREENSHOTS: ${{ runner.temp }}/brand-logo-screenshots
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68
+        with:
+          dotnet-version: 8.0.x
+      - name: Test brand controls without building the application or flight libraries
+        run: dotnet test MissionPlannerTests/Branding/Branding.csproj --configuration Release --logger "trx;LogFileName=brand-links.trx" --results-directory "${{ runner.temp }}/brand-logo-results"
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        if: always()
+        with:
+          name: native-brand-links
+          path: |
+            ${{ runner.temp }}/brand-logo-results
+            ${{ runner.temp }}/brand-logo-screenshots

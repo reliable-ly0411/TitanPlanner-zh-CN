@@ -81,6 +81,12 @@ python -m unittest discover -s scripts/ci/tests -v
 dotnet run --project MissionPlannerTests/Localization/Localization.csproj
 ```
 
+## 右上角品牌链接
+
+右上角使用保留原图样式的透明品牌图标：左半打开 ArduPilot 官网，右半打开 reliable-ly0411 的 GitHub 主页。两个区域各有悬停提示和可访问名称，支持 Tab、左右方向键、Enter 与空格；窄窗口下整张图作为一个菜单项进入溢出菜单，连接控件保持可用。
+
+素材来源、抠图方法及定向验证范围见[品牌链接验证记录](docs/validation/brand-links-13.md)。
+
 ## 维护翻译
 
 在 `localization/zh-Hans/ui-translations.json` 和 `code-translations.json` 维护增强译文，再执行：
