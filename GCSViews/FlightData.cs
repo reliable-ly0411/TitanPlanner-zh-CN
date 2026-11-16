@@ -3957,7 +3957,7 @@ namespace MissionPlanner.GCSViews
                 }
 
                 // percent
-                flightDataActions1.modifyandSetSpeed.ButtonText = "Apply";
+                flightDataActions1.modifyandSetSpeed.ButtonText = UiText.Translate("Apply");
             }
 
             try

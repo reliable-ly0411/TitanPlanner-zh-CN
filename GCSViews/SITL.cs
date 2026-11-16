@@ -831,7 +831,7 @@ namespace MissionPlanner.GCSViews
 
                 Uri fullurl = new Uri(url, filename);
 
-                var load = Common.LoadingBox("Downloading", "Downloading sitl software");
+                var load = Common.LoadingBox(UiText.Translate("Downloading"), UiText.Translate("Downloading sitl software"));
 
                 var t1 = Download.getFilefromNetAsync(fullurl.ToString(),
                     sitldirectory + Path.GetFileNameWithoutExtension(filename) + ".exe");
