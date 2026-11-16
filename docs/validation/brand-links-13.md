@@ -3,6 +3,125 @@
 Base: `b5bca65edef67e73cedc5ef0b7a8343e088b6a68` (`fix/10-14-integrated-ui`).
 Scope: the desktop toolbar brand entry, source asset, and focused UI checks.
 
+## Current follow-up: contrast, spacing and physical capture coordinates
+
+GPD full-application checks of `e99a4ca1` reported a visible transparent logo,
+correct ArduPilot/GitHub browser destinations and no old-page residue after
+maximize/restore. Those observations resolve the missing-painter symptom. Overall
+visual acceptance remains open: the original black text had low contrast on the
+dark toolbar and the logo had insufficient space beside Connect and the edge.
+The four GPD desktop pixel cases also stopped at the previous-page probe
+(expected magenta, actual #F3F3F3); they did not reach a logo-pixel assertion and
+are not evidence of either a passing or failing logo image at that stage.
+
+### Display treatment, original artwork retained
+
+Runtime `8fc88eee7ac9fc54f874511352e259c41f33e8cf` retains both image files and draws
+the original RGBA foreground last. Only a low-contrast backdrop activates a thin
+neutral contour **behind the original dark ink**, derived from its alpha. The
+source text, blue artwork and original opaque foreground RGB values are not
+recolored or redrawn. This is a display contrast treatment, not an edited logo
+asset or a rectangular light backing. The contour is limited to one paint pixel,
+neutral RGB 190 with source-derived alpha. Light-background rendering uses only
+the original PNG. The backdrop decision samples the actual composited toolbar
+background, including its tiled image, rather than trusting BackColor alone.
+
+The host now reserves horizontal gaps proportional to the live toolbar height:
+8/12/16 pixels at heights 58/87/116. The image dimensions and the two click regions
+retain their original proportions; native layout reserves the gaps alongside
+connection items and the window edge. Narrow-window atomic overflow remains active.
+
+### Strict probe retained; coordinate/DPI diagnosis added
+
+The old screen tests mixed managed screen coordinates with a physical desktop
+copy without explicitly setting the capture thread's DPI context. At display
+scales above 100%, a logical client-y=2 coordinate can refer to another physical
+pixel, including non-client chrome. The reported #F3F3F3 alone cannot establish
+which coordinate or window was sampled. This is a coordinate-virtualization risk
+in the old harness, not a confirmed diagnosis of that GPD sample without its
+native bounds and DPI log. See Microsoft's [mixed-mode DPI API guidance](https://learn.microsoft.com/en-us/windows/win32/hidpi/high-dpi-improvements-for-desktop-applications)
+and [ClientToScreen device-coordinate contract](https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-clienttoscreen).
+
+Test source `e3511f31278cca841302d101baf385e6ad9f987b` establishes per-monitor-v2
+awareness **before creating any fixture windows**, scoped to the test thread and
+restored afterward. Native GetClientRect/ClientToScreen and GetMonitorInfo define
+the physical capture regions. This does not change the application's DPI policy,
+the process default or the user's display scale.
+
+All four live tests still assert exact magenta at physical client y=2. They also
+assert that the hidden toolbar released the top client area, the previous page
+fills the native client width, and the sampled root HWND belongs to the fixture.
+No failing Windows case was skipped or converted into an inconclusive result.
+Before the assertion they save a window capture and a diagnostic text file with:
+
+- Physical and managed client/window rectangles and origins for form, page,
+  header, menu and logo.
+- Window DPI, managed DeviceDpi, capture-thread awareness and native/managed
+  monitor rectangles.
+- Physical probe coordinates, sampled RGB, owning HWND/root and native class.
+- The old unaware-context probe coordinate and the RGB/owner found if that
+  coordinate is used as a physical pixel.
+
+The existing five-point before/after occlusion checks remain in place for the
+logo itself. GPD must rerun the four cases to confirm the corrected mapping on its
+actual scaled display; a 96-DPI CI pass does not substitute for that confirmation.
+
+### Current verified native result
+
+[Native run 43916310337](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/actions/runs/43916310337)
+on runtime/test source `8fc88eee7ac9fc54f874511352e259c41f33e8cf` passed **27/27,
+zero skipped**. This includes all four live cases with their strict preconditions,
+20 reveal/resize/page/hide-show states and three additional dark-ink checks. Across
+25 actual-paint comparisons there were zero stale-magenta pixels and maximum mean
+RGB error 0.01483/255 against the original-PNG-plus-contour reference.
+
+At toolbar heights 58/87/116, the independent contrast checks verified respectively
+233/690/1,374 unchanged opaque dark-ink pixels, plus 101/133/179 visible neutral
+contour pixels in the right half with contrast at least 4.5 relative to the
+representative original dark ink. This is a rendering check, not a claim of full
+WCAG conformance. Transparent top/bottom padding stayed at the actual toolbar
+background color. Layout checks verified both reserved gaps and connection bounds.
+
+The CI display was 96 DPI. The capture thread logged awareness 0 before the scope
+and 2 inside it; native/managed client origins agreed, and every physical probe
+read exact #FF00FF with a fixture-owned HWND. The old/unaware sample also read
+#FF00FF at 96 DPI. Therefore this CI does **not** establish the cause or resolution
+of the earlier GPD #F3F3F3 sample at its actual scale; the new logs are intended to
+make that recheck decisive.
+
+[Verified TRX, screenshots and diagnostics](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/actions/runs/43916310337/artifacts/14250621020):
+1,022,360-byte ZIP, SHA256
+`e27c5ead9d2f6cfcd369be1acc969c4ed12198e6b04512d2843b8cbc1a48ea2d`.
+The ZIP hash, 27/27 counters and 25 pixel-comparison outputs were independently
+checked. The artifact contains 84 PNGs, seven probe-diagnostic text files and TRX.
+
+Actual desktop crops of the current treatment:
+
+![Current dark ink with thin neutral support](brand-links-contrast-dark.png)
+
+![Current original foreground on a light toolbar](brand-links-spacing-light.png)
+
+[Restored actual-desktop fixture with the reserved gaps](brand-links-contrast-window.png).
+These are CI fixture captures, not GPD full-application acceptance images.
+
+On GPD, keep all paint cases and retain their logs:
+
+```powershell
+$env:BRAND_LOGO_SCREENSHOTS = Join-Path $PWD 'local-qa-logo-next'
+dotnet test MissionPlannerTests/Branding/Branding.csproj --configuration Release --filter 'FullyQualifiedName~BrandLogoPaintTests' --logger 'trx;LogFileName=brand-paint-gpd.trx' --results-directory "$env:BRAND_LOGO_SCREENSHOTS/results"
+```
+
+If a top-y=2 precondition fails again, inspect the corresponding
+`actual-paint/*-probe.txt`, its `*-probe-window.png` and the TRX output before
+attributing it to logo painting. The native client rectangles, window DPI,
+physical/legacy probe points, sampled RGB and HWND ownership are all retained.
+
+Both original image hashes above are unchanged. The lightweight regression suite
+(59 tests), localization verification (2,710 dictionary entries and 96 resources),
+actionlint and diff checks passed. **GPD dark-theme appearance, spacing and the
+four scaled-display probe cases still require revalidation on this source.**
+Issue #13 remains open. No release, promotion, force push or HUD change was made.
+
 ## Original artwork
 
 `Resources/LocalizedBrandLogo.jpg` is kept byte-for-byte as the supplied source
