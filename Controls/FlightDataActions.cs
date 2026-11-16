@@ -15,9 +15,47 @@ namespace MissionPlanner.Controls
         public FlightDataActions()
         {
             InitializeComponent();
+            ConfigureCommandDisplay(cmbAction);
+            ConfigureCommandDisplay(cmbModes);
             CreateAuxRows();
             CreateServoRows();
             scrollPanel.Resize += ScrollPanel_Resize;
+        }
+
+        public static string DisplayCommandLabel(string raw)
+        {
+            var translated = UiText.Translate(raw);
+            return translated == raw ? raw : translated + " (" + raw + ")";
+        }
+
+        // Paint bilingual labels without changing Text/SelectedValue used by command handlers.
+        private static void ConfigureCommandDisplay(ComboBox combo)
+        {
+            combo.DrawMode = DrawMode.OwnerDrawFixed;
+            combo.ItemHeight = Math.Max(combo.ItemHeight, combo.Font.Height + 6);
+            combo.DrawItem += (sender, e) =>
+            {
+                e.DrawBackground();
+                if (e.Index >= 0 && e.Index < combo.Items.Count)
+                {
+                    var raw = combo.GetItemText(combo.Items[e.Index]);
+                    var label = DisplayCommandLabel(raw);
+                    TextRenderer.DrawText(e.Graphics, label, combo.Font, e.Bounds, e.ForeColor,
+                        TextFormatFlags.Left | TextFormatFlags.VerticalCenter | TextFormatFlags.EndEllipsis);
+                }
+                e.DrawFocusRectangle();
+            };
+            combo.DropDown += (sender, e) =>
+            {
+                var width = combo.Width;
+                foreach (var item in combo.Items)
+                {
+                    var raw = combo.GetItemText(item);
+                    var label = DisplayCommandLabel(raw);
+                    width = Math.Max(width, TextRenderer.MeasureText(label, combo.Font).Width + 30);
+                }
+                combo.DropDownWidth = Math.Min(width, Screen.FromControl(combo).WorkingArea.Width);
+            };
         }
 
         private void ScrollPanel_Resize(object sender, EventArgs e)
@@ -120,7 +158,7 @@ namespace MissionPlanner.Controls
                         Enabled = false,
                         Height = btnDoAction.Height,
                         Margin = btnDoAction.Margin,
-                        Text = AuxPositions[i].Text,
+                        Text = UiText.Translate(AuxPositions[i].Text),
                         TextColorNotEnabled = btnDoAction.TextColorNotEnabled,
                         UseVisualStyleBackColor = true,
                     };

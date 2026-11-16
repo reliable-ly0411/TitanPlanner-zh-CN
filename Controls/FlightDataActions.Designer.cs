@@ -351,7 +351,7 @@ namespace MissionPlanner.Controls
             // modSetSpeed
             // 
             this.modSetSpeed.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.modSetSpeed.ButtonText = "Apply";
+            this.modSetSpeed.ButtonText = UiText.Translate("Apply");
             this.modSetSpeed.DecimalPlaces = 0;
             this.modSetSpeed.Increment = new decimal(new int[] {
             1,
@@ -393,7 +393,7 @@ namespace MissionPlanner.Controls
             // modSetAlt
             // 
             this.modSetAlt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.modSetAlt.ButtonText = "Apply";
+            this.modSetAlt.ButtonText = UiText.Translate("Apply");
             this.modSetAlt.DecimalPlaces = 0;
             this.modSetAlt.Increment = new decimal(new int[] {
             1,
@@ -435,7 +435,7 @@ namespace MissionPlanner.Controls
             // modSetLoiterRad
             // 
             this.modSetLoiterRad.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.modSetLoiterRad.ButtonText = "Apply";
+            this.modSetLoiterRad.ButtonText = UiText.Translate("Apply");
             this.modSetLoiterRad.DecimalPlaces = 0;
             this.modSetLoiterRad.Increment = new decimal(new int[] {
             10,
@@ -575,7 +575,7 @@ namespace MissionPlanner.Controls
             this.grpAux.Size = new System.Drawing.Size(350, 180);
             this.grpAux.TabIndex = 3;
             this.grpAux.TabStop = false;
-            this.grpAux.Text = "Aux Functions";
+            this.grpAux.Text = UiText.Translate("Aux Functions");
             // 
             // tableAux
             // 
@@ -758,7 +758,7 @@ namespace MissionPlanner.Controls
             this.grpServos.Size = new System.Drawing.Size(1050, 200);
             this.grpServos.TabIndex = 5;
             this.grpServos.TabStop = false;
-            this.grpServos.Text = "Servos";
+            this.grpServos.Text = UiText.Translate("Servos");
             // 
             // flowServos
             // 
@@ -778,7 +778,7 @@ namespace MissionPlanner.Controls
             this.grpRelays.Size = new System.Drawing.Size(1050, 200);
             this.grpRelays.TabIndex = 6;
             this.grpRelays.TabStop = false;
-            this.grpRelays.Text = "Relays";
+            this.grpRelays.Text = UiText.Translate("Relays");
             // 
             // flowRelays
             // 

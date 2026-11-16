@@ -2460,7 +2460,7 @@ namespace MissionPlanner.GCSViews
             }
 
             if (
-                CustomMessageBox.Show(UiText.Translate("Are you sure you want to do ") + flightDataActions1.CMB_action.Text + " ?", UiText.Translate("Action"),
+                CustomMessageBox.Show(UiText.Translate("Are you sure you want to do ") + FlightDataActions.DisplayCommandLabel(flightDataActions1.CMB_action.Text) + " ?", UiText.Translate("Action"),
                     MessageBoxButtons.YesNo) == (int) DialogResult.Yes)
             {
                 try
@@ -3957,7 +3957,7 @@ namespace MissionPlanner.GCSViews
                 }
 
                 // percent
-                flightDataActions1.modifyandSetSpeed.ButtonText = "Apply";
+                flightDataActions1.modifyandSetSpeed.ButtonText = UiText.Translate("Apply");
             }
 
             try
