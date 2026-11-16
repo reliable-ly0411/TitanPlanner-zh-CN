@@ -43,6 +43,7 @@ class TelemetryDisplayTest(unittest.TestCase):
         catalog = json.loads((ROOT / 'localization/zh-Hans/code-translations.json').read_text())
         self.assertEqual(catalog['Telemetry group: Terrain'], '地形')
         self.assertEqual(catalog['Telemetry group: Other'], '其他')
+        self.assertEqual(catalog['Sat Count Blend'], '两个 GPS 卫星数量之和')
         self.assertEqual(len([k for k in catalog if k.startswith('Telemetry group: ')]), 26)
 
 

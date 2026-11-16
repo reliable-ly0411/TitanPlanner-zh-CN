@@ -1740,7 +1740,7 @@
   "Roll Target (°)": "目标横滚角 (°)",
   "SSA (°)": "侧滑角 (°)",
   "Sat Count": "卫星数量",
-  "Sat Count Blend": "融合卫星数量",
+  "Sat Count Blend": "两个 GPS 卫星数量之和",
   "Sat Count2": "卫星数量2",
   "Servo Rail Voltage": "舵机电源轨电压",
   "Sik Radio est dist (m)": "SiK 电台估算距离 (m)",

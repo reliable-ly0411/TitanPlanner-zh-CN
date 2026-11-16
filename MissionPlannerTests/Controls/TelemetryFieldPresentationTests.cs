@@ -18,6 +18,18 @@ namespace MissionPlannerTests.Controls
     public class TelemetryFieldPresentationTests
     {
         [TestMethod]
+        public void CombinedSatelliteCountLabelDescribesSum()
+        {
+            var previous = CultureInfo.CurrentUICulture;
+            try
+            {
+                CultureInfo.CurrentUICulture = new CultureInfo("zh-CN");
+                Assert.AreEqual("两个 GPS 卫星数量之和", CurrentState.GetDisplayText("satcountB"));
+            }
+            finally { CultureInfo.CurrentUICulture = previous; }
+        }
+
+        [TestMethod]
         public void DisplayUnitsFollowConfiguredUnitsWithoutChangingKeys()
         {
             var previousCulture = CultureInfo.CurrentUICulture;

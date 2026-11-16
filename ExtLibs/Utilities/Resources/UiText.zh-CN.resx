@@ -7601,7 +7601,7 @@ gps_point：跟踪单个地面点</value>
     <comment>"Sat Count"</comment>
   </data>
   <data name="df3960c00213ad2213bd38146e16ae073b875952c3b38b0d32ae9f47de3307ee" xml:space="preserve">
-    <value>融合卫星数量</value>
+    <value>两个 GPS 卫星数量之和</value>
     <comment>"Sat Count Blend"</comment>
   </data>
   <data name="e80dcc366c4061aab91d950af150421f3b3fd2c2c4ebdfb9d133f2c2f0e91aa8" xml:space="preserve">
