@@ -3,7 +3,77 @@
 Base: `b5bca65edef67e73cedc5ef0b7a8343e088b6a68` (`fix/10-14-integrated-ui`).
 Scope: the desktop toolbar brand entry, source asset, and focused UI checks.
 
-## Current follow-up: one desktop frame for pixels and screenshots
+## Current follow-up: focus, hover and press without a center line
+
+Remote source inspection confirms that `178463cf` still loads the original JPEG,
+sets WhiteSmoke and creates two independent ToolStripButtons. It does not contain
+this branch's transparent, atomic host. That candidate cannot validate the
+current logo renderer; a complete application build must include the logo source
+as well as the other intended UI changes.
+
+The renderer at `561f64a2` already paints the PNG continuously across two accessible
+hit regions, but its `Focused || (ShowFocusCues && IsDefault)` condition paints a
+rectangle around a half even when Windows hides keyboard cues. The rectangle's
+inside edge crosses the artwork close to the midpoint. Source
+`7ef134a91bdc85fd7cc4bbcebee4db3404e4ed04` requires both actual focus and
+ShowFocusCues, and confines the visible keyboard cue to the empty bottom padding
+under the active half. Mouse focus, hover and press retain the complete image.
+The two native accessible links, keyboard traversal, tooltips and URL destinations
+are retained. The original image bytes, geometry and shared painting transform
+are unchanged.
+
+The new native test exercises each half in five states: hidden mouse-focus cues,
+native mouse movement, button-down before button-up, visible keyboard focus and
+cleared cues. It verifies effective WM_QUERYUISTATE and WinForms ShowFocusCues,
+and confirms that native mouse events were dispatched. In all states it compares
+every pixel against one full-image reference, allowing focus pixels only in the
+active half's bottom padding. The center columns receive the same strict
+comparison as the rest of the artwork. Keyboard cues must contain visible pixels;
+removing focus indication does not pass. The native fixture also includes TCP,
+baud, the second connection row and its statistics link for occlusion checks.
+
+[Native run 43990215576](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/actions/runs/43990215576)
+passed **31/31, zero skipped**, on exact source `7ef134a9`. All 30 interaction
+captures (three sizes/backgrounds x two halves x five states) had zero unexpected
+pixels. Visible cues had 51/84/115 changed pixels for heights 58/87/116; the other
+states had none. Each state uses the same-frame native capture and HWND occlusion
+checks described below. The existing narrow-window, connection, accessibility,
+keyboard, repaint and contrast cases also passed.
+
+The [verified artifact](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/actions/runs/43990215576/artifacts/14288080712)
+is 3,604,425 bytes, SHA256
+`2ad33f054fae76867e6e3189d84c7a40a749123e748b13daf103e57446a4ab96`.
+Its downloaded ZIP hash, TRX counters and all 30 interaction metrics were checked
+independently. It contains 293 PNGs, 68 frame timelines and ten probe reports.
+The CI desktop was **96 DPI**; sized-toolbar cases are not proof of a real
+144-DPI desktop result. Local Mono checks passed 15 and skipped 16 Windows-only
+cases; actionlint and diff checks passed.
+
+Native fixture crops, containing only the public logo and synthetic controls:
+
+![Keyboard focus below ArduPilot](brand-links-interaction-left-focus.png)
+
+![Keyboard focus below GitHub](brand-links-interaction-right-focus.png)
+
+![Pressed link on the dark toolbar](brand-links-interaction-dark-pressed.png)
+
+[Complete synthetic TCP toolbar and focused logo](brand-links-interaction-window.png).
+These are original desktop captures from the test artifact. They contain no
+actual vehicle, address, map or user desktop data and may be linked as **fixture
+evidence**, not as a GPD application screenshot.
+
+**Full-application acceptance remains pending.** Integrate the exact logo source
+with the intended HUD fixes in a separate candidate, preserving both branches,
+then build and observe it on GPD. Check both halves at rest, after mouse clicks,
+during hover/press, with Tab/arrow focus, on dark/light backgrounds, narrow windows,
+maximize/restore and the real display scale. TCP/baud/sysid controls must stay
+reachable without covering the logo. Include version provenance with screenshots
+and redact actual addresses, telemetry, maps and unrelated desktop content before
+posting to Issue #13. The earlier 144-DPI seed discrepancy below also remains
+unconfirmed until its exact updated-source rerun. No integrated candidate or GPD
+result is claimed by this fixture pass; Issue #13 stays open.
+
+## Previous follow-up: one desktop frame for pixels and screenshots
 
 GPD tested `febb6e9dbb82848fb18ef874b576840bbcc116ac`: Release built,
 21/27 checks passed and six stopped at the strict previous-page seed assertion.
