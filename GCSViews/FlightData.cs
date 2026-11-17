@@ -443,12 +443,17 @@ namespace MissionPlanner.GCSViews
             CB_3dmap.CheckedChanged += CB_3dmap_CheckedChanged;
 
             panel1.Controls.Add(CB_3dmap);
+#if !LIB
+            MapFooterLayout.Configure(tableMap, panel1, coords1, CB_tuning, CB_params, CB_3dmap, CHK_autopan);
+#else
             Position3DMapCheckbox();
             panel1.Resize += (s, e) => Position3DMapCheckbox();
+#endif
 
             // Restore saved state
         }
 
+#if LIB
         private void Position3DMapCheckbox()
         {
             if (CB_3dmap == null || CB_params == null || CHK_autopan == null)
@@ -457,6 +462,8 @@ namespace MissionPlanner.GCSViews
             CB_3dmap.Location = new Point(CB_params.Right + 10, CB_params.Top);
             CHK_autopan.Location = new Point(CB_3dmap.Right + 10, CHK_autopan.Top);
         }
+
+#endif
 
         private void SaveSplitRatio(SplitContainer split, string settingsKey)
         {
