@@ -41,6 +41,6 @@ Windows 的 `Form.Icon` 决定窗体在控制框及任务栏中的表示，但�
 
 ## 实施和验证
 
-主要实现为 `AppearanceAssetStore`（导入、验证及原子保存）、`DesktopAppearance`（运行窗口桥接）、独立 `ConfigAppearance` 页面与 `Splash` 布局。共享入口只在 `SoftwareConfig` 插入一处页面注册、在 `ThemeManager.FormIcon` 插入桌面偏好读取；新桌面代码均有 `!LIB` 防护。不修改 `ConfigPlanner`、HUD、右上角品牌入口、安装器、自动发布或系统注册表。
+主要实现为 `AppearanceAssetStore`（导入、验证及原子保存）、`DesktopAppearance`（运行窗口桥接）、独立 `ConfigAppearance` 页面与 `Splash` 布局。窗口刷新显式包含 `MainV2.instance`，与 `Application.OpenForms` 去重，覆盖主窗口暂不在后者集合中的情况；导入与恢复默认使用同一路径。共享入口只在 `SoftwareConfig` 插入一处页面注册、在 `ThemeManager.FormIcon` 插入桌面偏好读取；新桌面代码均有 `!LIB` 防护。不修改 `ConfigPlanner`、HUD、右上角品牌入口、安装器、自动发布或系统注册表。
 
 测试范围、复跑命令和原生待验项见 [外观测试记录](../MissionPlannerTests/Appearance/Evidence.md)。当前候选和精确 SHA 由 [Issue #22](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/issues/22) 记录；功能分支不等于已发布安装包。

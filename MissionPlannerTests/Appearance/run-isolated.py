@@ -14,6 +14,7 @@ def main():
     parser.add_argument('--mcs', default='mcs')
     parser.add_argument('--mono', default='mono')
     parser.add_argument('--framework-references', help='Optional .NET Framework 4.7.2 reference assembly directory')
+    parser.add_argument('--desktop-appearance-source', help='Optional earlier bridge source for a negative regression run')
     args = parser.parse_args()
     output = Path(args.output).resolve()
     output.mkdir(parents=True, exist_ok=True)
@@ -44,7 +45,10 @@ def main():
     sources = ['Utilities/AppearanceAssetStore.cs', 'Utilities/DesktopAppearance.cs',
                'GCSViews/ConfigurationView/ConfigAppearance.cs', 'Splash.cs', 'Splash.Designer.cs',
                'ExtLibs/Utilities/UiText.cs', 'MissionPlannerTests/Utilities/AppearanceAssetStoreTests.cs',
+               'MissionPlannerTests/Utilities/WindowIconRefreshTests.cs',
                'MissionPlannerTests/Appearance/IsolatedHost.cs.txt']
+    if args.desktop_appearance_source:
+        sources[1] = str(Path(args.desktop_appearance_source).resolve())
     executable = output / 'AppearanceIsolated.exe'
     compile('-out:' + str(executable), neutral,
             '-resource:' + str(output / 'Splash.resources') + ',MissionPlanner.Splash.resources', shim,

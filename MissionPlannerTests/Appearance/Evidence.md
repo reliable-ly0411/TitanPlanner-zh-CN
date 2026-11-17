@@ -2,7 +2,21 @@
 
 基线 `dd38ee30b51274b836af8039d415de0d67af597d`，独立分支 `feat/custom-window-icon-splash-20261117`；精确候选 SHA 见 [Issue #22](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/issues/22)。未发布、未合并。
 
-## 已执行
+## 主窗口不在 OpenForms 时的刷新修复
+
+首个候选 `4f3f4610a32be571849c0dc2146010b6ab650308` 的 Windows 验证反馈：主程序和测试编译完成，存储测试 14/14、三语言共 18 个独立进程阶段通过；完整应用导入图标时普通 Form 更新，但主窗口托管 `Icon` 和原生 `WM_GETICON` 仍为旧值。实际主窗口不在 `Application.OpenForms`，首个候选仅枚举该集合而漏掉它。这些是旧 SHA 的验证反馈，不是后续修复的 Windows 验收结果。
+
+修复使用主窗口构造时建立的 `MainV2.instance`，将其与 `Application.OpenForms` 合成去重快照；忽略空引用和已释放窗体。导入和恢复默认共用该入口。生产变更仅在 `DesktopAppearance.cs`，没有改变 EXE、安装器图标或主窗口启动/销毁流程。
+
+新增 `WindowIconRefreshTests` 两项回归：一个已创建句柄但未 Show、因此不在 `Application.OpenForms` 的主窗口替身，与正常已显示窗口一同更新自定义图标及恢复默认；另验空/已释放主窗口不阻挡其他窗口。Windows 分支还核对 `WM_GETICON / ICON_BIG` 与预期 Icon 的原生句柄。为避免启动飞控/地图子系统，MSTest 通过反射调用生产的窗口赋值方法；隔离宿主另用 `MainV2` 的 Form 引用替身，从真实 Import / RestoreDefault 入口验证整个刷新链。替身未运行真实 MainV2 构造器。
+
+使用 net472 API 引用的 Mono / Xvfb 定向验证：14 项存储测试、2 项窗口刷新测试、473 条 UI 断言、六个独立进程的 12 条读取断言全部通过。Windows 专用 `WM_GETICON` 断言在此环境不执行，须在新候选复验。35 项 Python CI 与资源检查仍通过。
+
+负向对照将同一个回归宿主的 bridge 文件换回 `4f3f4610` 原文：普通窗体先确认已更新，随后准确失败于 `main window absent from OpenForms kept original icon after import`。修复后同一入口通过导入和恢复默认，且主窗口全程仍不在集合中。[正向与负向简明记录](Evidence/window-refresh-results.txt)。可用 `run-isolated.py --desktop-appearance-source <git-show导出的旧DesktopAppearance.cs>` 复跑负向对照；该对照预期返回非零。
+
+新候选 Windows 定向复跑时，将下方 dotnet test 的 filter 改为 `FullyQualifiedName~AppearanceAssetStoreTests|FullyQualifiedName~WindowIconRefreshTests`，在独立/非交互桌面执行；还需完整应用实际导入与恢复默认，检查真实 MainV2 的托管 Icon、WM_GETICON 和可见图标。
+
+## 首个候选 4f3f4610 的云端检查
 
 - Debian 13 / Mono 6.12.0.199 / libgdiplus / 私有 Xvfb，使用 Microsoft `.NETFramework.ReferenceAssemblies.net472` 1.0.3 的真实 .NET Framework 4.7.2 API 引用定向编译后运行。没有系统级安装或注册工具。
 - **14 项存储测试通过，0 失败、0 跳过**。同一 `AppearanceAssetStoreTests.cs` 测试体在本轮使用轻量 MSTest 断言兼容层运行；不是 Windows MSTest 执行记录。
@@ -14,7 +28,7 @@
 - Windows `NativeProbe.cs.txt` 已用上述 .NET Framework 4.7.2 引用编译通过，**尚未在 Windows 执行**。
 - 35 项已有 Python CI 回归通过；资源校验通过：2297 条词典、96 个增强简体资源、原版中文基线、占位符及链接。`git -c core.whitespace=cr-at-eol diff --check` 通过；既有 CRLF 文件保持 CRLF。
 
-核心和 UI 采用真实生产文件 `AppearanceAssetStore.cs`、`DesktopAppearance.cs`、`ConfigAppearance.cs`、`Splash.cs`、`Splash.Designer.cs`、`UiText.cs` 及实际启动资源、中文卫星资源。`ThemeManager.FormIcon` 从真实源码提取原样编译。宿主替身限于 `Settings.GetUserDataDirectory`、`Program.IconFile` 的初始默认来源及 `MyUserControl` 基类；没有全应用入口、串口、遥测或飞控通信。所有替身和测试命令均可审阅。
+核心和 UI 采用真实生产文件 `AppearanceAssetStore.cs`、`DesktopAppearance.cs`、`ConfigAppearance.cs`、`Splash.cs`、`Splash.Designer.cs`、`UiText.cs` 及实际启动资源、中文卫星资源。`ThemeManager.FormIcon` 从真实源码提取原样编译。首个宿主替身限于 `Settings.GetUserDataDirectory`、`Program.IconFile` 的初始默认来源及 `MyUserControl` 基类；窗口刷新回归另增加上述 MainV2 Form 引用替身。没有全应用入口、串口、遥测或飞控通信。所有替身和测试命令均可审阅。
 
 简明结果在 [isolated-results.txt](Evidence/isolated-results.txt)。[黑背景启动页](Evidence/splash-zh-CN-Black.png)、[白背景启动页](Evidence/splash-zh-CN-White.png) 均来自合成测试，版本 `0.0.0.0` 是隔离夹具版本，不是产品版本。截图没有用户路径、位置、设备或私人素材；[截图 SHA-256](Evidence/screenshots.sha256.json)。
 
@@ -42,7 +56,7 @@ git switch --detach <Issue中记录的40位候选SHA>
 git rev-parse HEAD
 git submodule update --init --recursive
 powershell -NoProfile -ExecutionPolicy Bypass -File scripts/localization/build_windows.ps1 -OutputDirectory D:\TitanPlanner-appearance-test
-dotnet test MissionPlannerTests\MissionPlannerTests.csproj -c Release --filter FullyQualifiedName~AppearanceAssetStoreTests --logger 'trx;LogFileName=appearance.trx' --results-directory D:\TitanPlanner-appearance-results -p:TitanPlannerOutputDirectory=D:\TitanPlanner-appearance-test\ -p:GenerateResourceUsePreserializedResources=true -p:GenerateSerializationAssemblies=Off
+dotnet test MissionPlannerTests\MissionPlannerTests.csproj -c Release --filter 'FullyQualifiedName~AppearanceAssetStoreTests|FullyQualifiedName~WindowIconRefreshTests' --logger 'trx;LogFileName=appearance.trx' --results-directory D:\TitanPlanner-appearance-results -p:TitanPlannerOutputDirectory=D:\TitanPlanner-appearance-test\ -p:GenerateResourceUsePreserializedResources=true -p:GenerateSerializationAssemblies=Off
 powershell -NoProfile -ExecutionPolicy Bypass -File MissionPlannerTests/Appearance/run-windows.ps1 -BuildDirectory D:\TitanPlanner-appearance-test -ResultsDirectory D:\TitanPlanner-appearance-native-results
 ```
 
@@ -55,4 +69,4 @@ powershell -NoProfile -ExecutionPolicy Bypass -File MissionPlannerTests/Appearan
 - [ ] 大小/比例不同、透明、超宽/超高及含 EXIF 方向的图片符合已说明的范围；默认资源、两套中文与英文仍可辨认。
 - [ ] 与其他候选整合后重新验证页面注册、主题图标入口和词典；保留各任务的独立提交。此分支不包含其他分支的 HUD、品牌、参数或布局修复。
 
-当前环境没有 Windows/GPD 桌面入口，以上原生项目尚未执行；Issue 保持开放。没有发布、安装、快捷方式变更或系统级持久化。
+当前环境没有 Windows 桌面入口；首个候选的原生反馈已在上方分开记录，本次主窗口刷新修复仍待新 SHA 的 Windows/GPD 复验。Issue 保持开放。没有发布、安装、快捷方式变更或系统级持久化。

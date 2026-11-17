@@ -16,11 +16,13 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
     [AttributeUsage(AttributeTargets.Method)] public class TestMethodAttribute : Attribute { }
     public static class Assert
     {
-        public static void IsTrue(bool value) { if (!value) throw new Exception("Expected true"); }
+        public static void IsTrue(bool value, string message = null) { if (!value) throw new Exception(message ?? "Expected true"); }
         public static void IsFalse(bool value) { IsTrue(!value); }
         public static void IsNull(object value) { IsTrue(value == null); }
         public static void IsNotNull(object value) { IsTrue(value != null); }
-        public static void AreEqual<T>(T expected, T actual) { if (!object.Equals(expected, actual)) throw new Exception("Expected " + expected + "; actual " + actual); }
+        public static void AreEqual<T>(T expected, T actual, string message = null) { if (!object.Equals(expected, actual)) throw new Exception(message ?? "Expected " + expected + "; actual " + actual); }
+        public static void AreSame(object expected, object actual) { IsTrue(object.ReferenceEquals(expected, actual)); }
+        public static void Fail(string message) { throw new Exception(message); }
         public static void ThrowsException<T>(Action action) where T : Exception
         { try { action(); } catch (T) { return; } throw new Exception("Expected " + typeof(T).Name); }
     }
@@ -34,6 +36,12 @@ namespace MissionPlanner.Controls { public class MyUserControl : UserControl { }
 namespace MissionPlanner
 {
     public static class Program { public static Image IconFile = SystemIcons.Application.ToBitmap(); }
+    // Only the authoritative Form reference is needed; the real MainV2 constructor starts vehicle/map subsystems.
+    public class MainV2 : Form
+    {
+        public static MainV2 instance;
+        public MainV2() { instance = this; }
+    }
 }
 namespace MissionPlanner.Utilities
 {
@@ -112,15 +120,34 @@ internal static class AppearanceIsolatedHost
             Application.EnableVisualStyles();
             var originalIcon = ThemeManager.FormIcon;
             string source = AppearanceAssetStoreTests.IconFile(output);
-            using (var form = new Form())
+            try
             {
-                form.Icon = originalIcon; form.Show();
-                DesktopAppearance.Import(AppearanceAsset.WindowIcon, source);
-                Check(object.ReferenceEquals(form.Icon, ThemeManager.FormIcon), "open form did not receive custom icon");
-                Check(!object.ReferenceEquals(originalIcon, form.Icon), "custom icon ignored");
-                DesktopAppearance.RestoreDefault(AppearanceAsset.WindowIcon);
-                Check(object.ReferenceEquals(originalIcon, form.Icon), "default icon not restored");
+                using (var mainWindow = new MissionPlanner.MainV2())
+                using (var form = new Form())
+                {
+                    mainWindow.Icon = originalIcon;
+                    var handle = mainWindow.Handle;
+                    form.Icon = originalIcon; form.Show();
+                    Check(!Application.OpenForms.Cast<Form>().Contains(mainWindow), "fixture main unexpectedly in OpenForms");
+                    DesktopAppearance.Import(AppearanceAsset.WindowIcon, source);
+                    Check(object.ReferenceEquals(form.Icon, ThemeManager.FormIcon), "open form did not receive custom icon");
+                    Check(object.ReferenceEquals(mainWindow.Icon, ThemeManager.FormIcon), "main window absent from OpenForms kept original icon after import");
+                    Check(!object.ReferenceEquals(originalIcon, form.Icon), "custom icon ignored");
+                    Check(!Application.OpenForms.Cast<Form>().Contains(mainWindow), "main unexpectedly entered OpenForms before reset");
+                    DesktopAppearance.RestoreDefault(AppearanceAsset.WindowIcon);
+                    Check(object.ReferenceEquals(originalIcon, mainWindow.Icon), "main window absent from OpenForms did not restore default icon");
+                    Check(object.ReferenceEquals(originalIcon, form.Icon), "default icon not restored");
+                    Check(!Application.OpenForms.Cast<Form>().Contains(mainWindow), "reset unexpectedly registered the main window");
+                }
             }
+            finally { MissionPlanner.MainV2.instance = null; }
+            var refreshTests = new WindowIconRefreshTests(); int refreshPassed = 0;
+            foreach (var method in refreshTests.GetType().GetMethods().Where(m => m.GetCustomAttributes(typeof(Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute), false).Length != 0))
+            {
+                try { method.Invoke(refreshTests, null); refreshPassed++; Console.WriteLine("PASS " + method.Name); }
+                catch (TargetInvocationException ex) { throw new Exception(method.Name, ex.InnerException); }
+            }
+            Console.WriteLine("PASS window-refresh-tests=" + refreshPassed + " native-WM_GETICON=Windows-only");
             foreach (string culture in new[] { "zh-CN", "zh-Hans", "en-US" })
             {
                 Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.GetCultureInfo(culture);

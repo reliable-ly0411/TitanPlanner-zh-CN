@@ -54,15 +54,22 @@ namespace MissionPlanner.Utilities
             try
             {
                 ReloadIcon();
-                var icon = ThemeManager.FormIcon;
-                // Called from the settings UI thread. Snapshot: changing a form can dispatch window messages.
-                foreach (var form in Application.OpenForms.Cast<Form>().ToArray())
-                {
-                    try { if (!form.IsDisposed) form.Icon = icon; }
-                    catch (Exception) { IconWarning = "Appearance saved; reopen any window whose icon did not refresh."; }
-                }
+                ApplyWindowIcon(ThemeManager.FormIcon, MainV2.instance);
             }
             catch (Exception) { IconWarning = "Appearance saved; reopen any window whose icon did not refresh."; }
+        }
+
+        private static void ApplyWindowIcon(Icon icon, Form mainWindow)
+        {
+            // MainV2.instance is established by its constructor. A live main window can be absent from OpenForms;
+            // keep that authoritative instance in the snapshot even during its handle lifecycle.
+            var forms = Application.OpenForms.Cast<Form>().Concat(new[] { mainWindow })
+                .Where(form => form != null).Distinct().ToArray();
+            foreach (var form in forms)
+            {
+                try { if (!form.IsDisposed) form.Icon = icon; }
+                catch (Exception) { IconWarning = "Appearance saved; reopen any window whose icon did not refresh."; }
+            }
         }
 
         public static Bitmap CreateStartupPreview(out string warning)
