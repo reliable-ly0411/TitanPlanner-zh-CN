@@ -1,0 +1,172 @@
+// Run from a checkout using an isolated Windows session (Session 0):
+// csc /nologo /codepage:65001 /r:System.Drawing.dll /r:System.Windows.Forms.dll /r:System.Xml.dll /out:MapFooterProbe.exe Controls/MapFooterLayout.cs MissionPlannerTests/Controls/MapFooterLayoutProbe.cs.txt
+// MapFooterProbe.exe <checkout-directory> <results-directory>
+// Compiles the production layout helper directly; no app build, packages, profile or vehicle are needed.
+// The coordinates host is a size placeholder. PNGs are isolated component renders, not FlightData screenshots.
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Windows.Forms;
+using System.Xml;
+using MissionPlanner.Controls;
+
+class MapFooterLayoutProbe
+{
+    static int cases;
+
+    [STAThread]
+    static int Main(string[] args)
+    {
+        try
+        {
+            if (Environment.OSVersion.Platform == PlatformID.Win32NT && Process.GetCurrentProcess().SessionId != 0)
+                throw new InvalidOperationException("Run through an isolated Session 0 agent; this probe must not open windows on the active desktop.");
+            if (args.Length != 2)
+                throw new ArgumentException("Expected checkout-directory and results-directory.");
+            string source = Path.GetFullPath(args[0]);
+            string output = Path.GetFullPath(args[1]);
+            Directory.CreateDirectory(output);
+            Application.EnableVisualStyles();
+            using (var graphics = Graphics.FromHwnd(IntPtr.Zero))
+                Console.WriteLine("Runtime={0}; display DPI={1}x{2}; additional Scale factors simulate scaling.", Environment.Version, graphics.DpiX, graphics.DpiY);
+
+            foreach (string culture in new[] { "en", "zh-Hans", "zh-CN" })
+            {
+                var resources = ReadResources(Path.Combine(source, "GCSViews", "FlightData.resx"));
+                if (culture != "en")
+                    foreach (var entry in ReadResources(Path.Combine(source, "GCSViews", "FlightData." + culture + ".resx")))
+                        resources[entry.Key] = entry.Value;
+                string mapText = "3D Map";
+                if (culture == "zh-CN")
+                {
+                    var dynamicText = new XmlDocument();
+                    dynamicText.XmlResolver = null;
+                    dynamicText.Load(Path.Combine(source, "ExtLibs", "Utilities", "Resources", "UiText.zh-CN.resx"));
+                    mapText = dynamicText.SelectSingleNode("/root/data[comment='\"3D Map\"']/value").InnerText;
+                }
+
+                // Report the resource mismatch separately from the fixed flow layout.
+                Console.WriteLine("{0}: resource locations tuning={1}, params={2}, autopan={3}", culture,
+                    resources["CB_tuning.Location"], resources["CB_params.Location"], resources["CHK_autopan.Location"]);
+                foreach (string family in new[] { "Segoe UI", "Microsoft YaHei", "Noto Sans CJK SC" })
+                foreach (float scale in new[] { 1f, 1.25f, 1.5f, 2f })
+                    Probe(resources, mapText, culture, family, scale, output);
+            }
+            Console.WriteLine("PASS: {0} resource/font/scale/width cases; wrapping, map bounds, state and event identity checked.", cases);
+            return 0;
+        }
+        catch (Exception ex)
+        {
+            Console.Error.WriteLine(ex);
+            return 1;
+        }
+    }
+
+    static Dictionary<string, string> ReadResources(string path)
+    {
+        var document = new XmlDocument();
+        document.XmlResolver = null;
+        document.Load(path);
+        var result = new Dictionary<string, string>();
+        foreach (XmlNode node in document.SelectNodes("/root/data[value]"))
+            result[node.Attributes["name"].Value] = node.SelectSingleNode("value").InnerText;
+        return result;
+    }
+
+    static void Apply(Dictionary<string, string> resources, Control control, string name)
+    {
+        control.Name = name;
+        foreach (string property in new[] { "AutoSize", "Anchor", "Location", "Size", "Text", "Margin" })
+        {
+            string value;
+            if (!resources.TryGetValue(name + "." + property, out value)) continue;
+            var descriptor = TypeDescriptor.GetProperties(control)[property];
+            descriptor.SetValue(control, descriptor.Converter.ConvertFromInvariantString(value));
+        }
+    }
+
+    static void Require(bool condition, string message)
+    {
+        if (!condition) throw new InvalidOperationException(message);
+    }
+
+    static void Probe(Dictionary<string, string> resources, string mapText, string culture, string family, float scale, string output)
+    {
+        using (var font = new Font(family, 9 * scale))
+        using (var form = new Form { AutoScaleMode = AutoScaleMode.None, ShowInTaskbar = false, Font = font, ClientSize = new Size(1100, 360) })
+        {
+            if (scale == 1) Console.WriteLine("{0}: requested font={1}; resolved font={2}", culture, family, font.Name);
+            var table = new TableLayoutPanel { Dock = DockStyle.Fill, ColumnCount = 1, RowCount = 2, CellBorderStyle = TableLayoutPanelCellBorderStyle.Single };
+            table.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
+            table.RowStyles.Add(new RowStyle(SizeType.Percent, 100));
+            table.RowStyles.Add(new RowStyle(SizeType.Absolute, 25));
+            var map = new Panel { Dock = DockStyle.Fill, Margin = Padding.Empty };
+            var footer = new FlowLayoutPanel { Dock = DockStyle.Fill, Margin = Padding.Empty };
+            var coordinates = new Panel();
+            Apply(resources, coordinates, "coords1");
+            var options = new[] { new CheckBox(), new CheckBox(), new CheckBox { Text = mapText, AutoSize = true }, new CheckBox() };
+            Apply(resources, options[0], "CB_tuning");
+            Apply(resources, options[1], "CB_params");
+            Apply(resources, options[3], "CHK_autopan");
+            options[3].Checked = true;
+            int changes = 0;
+            foreach (var option in options) option.CheckedChanged += delegate { changes++; };
+            footer.Controls.AddRange(new Control[] { coordinates, options[3], options[0], options[1], options[2] });
+            table.Controls.Add(map, 0, 0);
+            table.Controls.Add(footer, 0, 1);
+            form.Controls.Add(table);
+            MapFooterLayout.Configure(table, footer, coordinates, options);
+            form.Scale(new SizeF(scale, scale));
+            form.Show();
+            int wideFooter = -1, wideMap = -1;
+            foreach (int width in new[] { 1100, 800, 600, 420, 280, 1100 })
+            {
+                form.ClientSize = new Size((int)(width * scale), (int)(360 * scale));
+                form.PerformLayout();
+                table.PerformLayout();
+                footer.PerformLayout();
+                Application.DoEvents();
+                string context = culture + "/" + family + "/" + scale.ToString(CultureInfo.InvariantCulture) + "/" + width;
+                Require(!map.Bounds.IntersectsWith(footer.Bounds), context + ": footer covers map");
+                var controls = new Control[] { coordinates }.Concat(options).ToArray();
+                for (int i = 0; i < controls.Length; i++)
+                {
+                    Require(footer.ClientRectangle.Contains(controls[i].Bounds), context + ": clipped " + controls[i].Name);
+                    for (int j = i + 1; j < controls.Length; j++)
+                    {
+                        Require(!controls[i].Bounds.IntersectsWith(controls[j].Bounds), context + ": overlapping controls");
+                        if (controls[i].Top < controls[j].Bottom && controls[j].Top < controls[i].Bottom)
+                            Require(Math.Abs(controls[i].Top + controls[i].Bottom - controls[j].Top - controls[j].Bottom) <= 2,
+                                context + ": unequal vertical centers");
+                    }
+                }
+                if (width == 1100)
+                {
+                    if (wideFooter < 0) { wideFooter = footer.Height; wideMap = map.Height; }
+                    Require(footer.Height == wideFooter && map.Height == wideMap, context + ": stale wrapped height");
+                }
+                if (width == 280) Require(footer.Height > wideFooter && map.Height < wideMap, context + ": failed to wrap");
+                if (scale == 1 && family == "Microsoft YaHei" && (width == 600 || width == 280))
+                    using (var bitmap = new Bitmap(footer.Width, footer.Height))
+                    {
+                        footer.DrawToBitmap(bitmap, new Rectangle(Point.Empty, bitmap.Size));
+                        bitmap.Save(Path.Combine(output, culture + "-component-" + width + ".png"), ImageFormat.Png);
+                    }
+                cases++;
+            }
+            Require(changes == 0 && options[3].Checked, "Layout changed an option's state.");
+            options[0].Checked = true;
+            MapFooterLayout.Configure(table, footer, coordinates, options);
+            Require(changes == 1 && options[0].Checked && options[3].Checked, "Reconfiguration changed event/state identity.");
+            for (int i = 0; i < options.Length; i++) Require(ReferenceEquals(options[i], footer.Controls[i + 1]), "Reconfiguration replaced a control.");
+            options[0].Checked = false;
+            Require(changes == 2, "Original CheckedChanged handler was lost.");
+        }
+    }
+}
