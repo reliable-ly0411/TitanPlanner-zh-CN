@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>MissionPlanner.Utilities</RootNamespace>
+    <EnableDefaultEmbeddedResourceItems>false</EnableDefaultEmbeddedResourceItems>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs.txt" Link="Program.cs" />
+    <Compile Include="../../ExtLibs/Utilities/UiText.cs" Link="UiText.cs" />
+    <Compile Include="../../ExtLibs/Utilities/FlightModeDisplay.cs" Link="FlightModeDisplay.cs" />
+    <Compile Include="../../ExtLibs/Controls/FlightModeLayout.cs" Link="FlightModeLayout.cs" />
+    <EmbeddedResource Include="../../ExtLibs/Utilities/Resources/UiText.resx" Link="Resources/UiText.resx" />
+    <EmbeddedResource Include="../../ExtLibs/Utilities/Resources/UiText.zh-CN.resx" Link="Resources/UiText.zh-CN.resx" />
+    <EmbeddedResource Include="../../ExtLibs/Utilities/Resources/UiText.zh-Hans.resx" Link="Resources/UiText.zh-Hans.resx" />
+  </ItemGroup>
+</Project>

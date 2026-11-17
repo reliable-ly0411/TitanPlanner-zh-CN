@@ -82,7 +82,7 @@ namespace MissionPlanner.Controls
             _container = (Panel)Control;
             _container.AutoSize = false;
             _container.Height = 32;
-            _container.MinimumSize = new Size(180, 32);
+            _container.MinimumSize = new Size(0, 32);
             _container.BackColor = Color.Transparent;
 
             this.AutoSize = false;
@@ -176,7 +176,7 @@ namespace MissionPlanner.Controls
             int armWidth = TextRenderer.MeasureText(_armButton.Text, _armButton.Font).Width + 24;
 
             // Calculate dropdown width (always shown)
-            int dropdownWidth = Math.Max(MinimumModeWidth, TextRenderer.MeasureText(_modeDropdown.Text, _modeDropdown.Font).Width + 24);
+            int dropdownWidth = Math.Max(MinimumModeWidth, _modeDropdown.GetPreferredSize(Size.Empty).Width);
 
             // Calculate GPS panel width
             int gpsWidth = 32; // icon width + margin
@@ -188,6 +188,11 @@ namespace MissionPlanner.Controls
             }
 
             int basePadding = 16; // padding around controls
+
+            // The current mode uses the remaining width after the arm indicator. Its painter ellipsizes
+            // both lines inside that width, leaving the neighboring connection controls reachable.
+            dropdownWidth = Math.Min(dropdownWidth, Math.Max(0, availableWidth - basePadding - armWidth));
+            SetModeWidth(dropdownWidth);
 
             // Minimum required: arm button + dropdown
             int minRequired = basePadding + armWidth + dropdownWidth;
@@ -251,7 +256,7 @@ namespace MissionPlanner.Controls
 
             // Update width
             int totalWidth = minRequired + pinnedWidth + (showGps ? gpsWidth : 0);
-            totalWidth = Math.Max(totalWidth, Math.Min(availableWidth, minRequired)); // Don't exceed available, but at least show arm+dropdown
+            totalWidth = Math.Min(availableWidth, totalWidth);
 
             if (_container.Width != totalWidth)
             {
@@ -278,7 +283,7 @@ namespace MissionPlanner.Controls
                 Padding = new Padding(4, 1, 0, 1)
             };
             table.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize)); // Arm button
-            table.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize)); // Dropdown
+            table.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 0)); // Measured, width-limited dropdown
             table.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize)); // Pinned buttons
             table.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize)); // GPS status
             table.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
@@ -303,6 +308,7 @@ namespace MissionPlanner.Controls
             _modeDropdown.FavoriteToggled += ModeDropdown_FavoriteToggled;
             _modeDropdown.PinToggled += ModeDropdown_PinToggled;
             _modeDropdown.PinAllToggled += ModeDropdown_PinAllToggled;
+            _modeDropdown.FontChanged += (sender, e) => UpdateContainerWidth();
 
             // Pinned modes panel (shows in toolbar)
             _pinnedPanel = new TableLayoutPanel
@@ -735,8 +741,11 @@ namespace MissionPlanner.Controls
             int armWidth = TextRenderer.MeasureText(_armButton.Text, _armButton.Font).Width + 24;
             _armButton.Width = armWidth;
 
-            int dropdownWidth = Math.Max(MinimumModeWidth, TextRenderer.MeasureText(_modeDropdown.Text, _modeDropdown.Font).Width + 24);
-            _modeDropdown.Width = dropdownWidth;
+            var preferredModeSize = _modeDropdown.GetPreferredSize(Size.Empty);
+            int dropdownWidth = Math.Max(MinimumModeWidth, preferredModeSize.Width);
+            SetModeWidth(dropdownWidth);
+            int availableHeight = _parentMenuStrip?.DisplayRectangle.Height ?? int.MaxValue;
+            _container.Height = Math.Max(32, Math.Min(preferredModeSize.Height + 2, availableHeight));
 
             int pinnedWidth = 0;
             foreach (ColumnStyle cs in _pinnedPanel.ColumnStyles)
@@ -760,6 +769,15 @@ namespace MissionPlanner.Controls
 
             _container.Width = totalWidth;
             this.Size = new Size(totalWidth, _container.Height);
+            AdjustWidthToAvailableSpace();
+        }
+
+        private void SetModeWidth(int width)
+        {
+            _modeDropdown.Width = width;
+            var table = _modeDropdown.Parent as TableLayoutPanel;
+            if (table != null)
+                table.ColumnStyles[1].Width = width + _modeDropdown.Margin.Horizontal;
         }
 
         private void PinnedButton_Click(object sender, EventArgs e)
@@ -1245,6 +1263,10 @@ namespace MissionPlanner.Controls
         private List<string> _fltModes = new List<string>();
         private bool _pinAll = false;
         private string _currentMode = "---";
+        private readonly ToolTip _modeTip = new ToolTip();
+
+        private const TextFormatFlags ModeTextFlags = TextFormatFlags.SingleLine |
+            TextFormatFlags.NoPrefix | TextFormatFlags.NoPadding;
 
         public string CurrentMode
         {
@@ -1279,6 +1301,9 @@ namespace MissionPlanner.Controls
                 if (base.Text != value)
                 {
                     base.Text = value;
+                    var display = FlightModeDisplay.FromMode(value);
+                    AccessibleName = display.AccessibleText;
+                    _modeTip?.SetToolTip(this, display.AccessibleText);
                     Invalidate();
                 }
             }
@@ -1287,6 +1312,43 @@ namespace MissionPlanner.Controls
         public void SetFavorites(List<string> favorites)
         {
             _favorites = favorites.ToList();
+        }
+
+        public override Size GetPreferredSize(Size proposedSize)
+        {
+            var display = FlightModeDisplay.FromMode(Text);
+            var primary = TextRenderer.MeasureText(display.Primary, Font, Size.Empty, ModeTextFlags);
+            using (var secondaryFont = new Font(Font.FontFamily, Font.Size * 0.72f, Font.Style, Font.Unit))
+            {
+                var secondary = display.IsBilingual
+                    ? TextRenderer.MeasureText(display.Secondary, secondaryFont, Size.Empty, ModeTextFlags)
+                    : Size.Empty;
+                return new Size(Math.Max(primary.Width, secondary.Width) + 24,
+                    Math.Max(30, primary.Height + secondary.Height + (display.IsBilingual ? 1 : 0) + 4));
+            }
+        }
+
+        private Font ModeFont(float pixels)
+        {
+            return new Font(Font.FontFamily, pixels, Font.Style, GraphicsUnit.Pixel);
+        }
+
+        private FlightModeLayout GetModeLayout(Graphics graphics)
+        {
+            return FlightModeLayout.Create(FlightModeDisplay.FromMode(Text),
+                new RectangleF(4, 2, Math.Max(0, Width - 18), Math.Max(0, Height - 4)),
+                Font.SizeInPoints * graphics.DpiY / 72f,
+                (text, pixels) => {
+                    if (text.Length == 0) return SizeF.Empty;
+                    using (var measuredFont = ModeFont(pixels))
+                        return TextRenderer.MeasureText(graphics, text, measuredFont, Size.Empty, ModeTextFlags);
+                });
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing) _modeTip.Dispose();
+            base.Dispose(disposing);
         }
 
         public void SetPinned(List<string> pinned)
@@ -1446,12 +1508,21 @@ namespace MissionPlanner.Controls
                 e.Graphics.DrawRectangle(borderPen, 0, 0, Width - 1, Height - 1);
             }
 
-            // Draw text
-            var textSize = TextRenderer.MeasureText(Text, Font);
-            var textRect = new Rectangle(4, (Height - textSize.Height) / 2, Width - 16, textSize.Height);
-            TextRenderer.DrawText(e.Graphics, Text, Font, textRect, textColor, TextFormatFlags.Left | TextFormatFlags.VerticalCenter);
+            // The source Text / CurrentMode remain unchanged for mode selection and popup comparisons.
+            var layout = GetModeLayout(e.Graphics);
+            if (layout.PrimaryText.Length != 0)
+            {
+                using (var primaryFont = ModeFont(layout.PrimarySize))
+                    TextRenderer.DrawText(e.Graphics, layout.PrimaryText, primaryFont,
+                        Rectangle.Ceiling(layout.PrimaryBounds), textColor, ModeTextFlags);
+                if (layout.SecondaryText.Length != 0)
+                    using (var secondaryFont = ModeFont(layout.SecondarySize))
+                        TextRenderer.DrawText(e.Graphics, layout.SecondaryText, secondaryFont,
+                            Rectangle.Ceiling(layout.SecondaryBounds), textColor, ModeTextFlags);
+            }
 
             // Draw dropdown arrow
+            if (Width < 18) return;
             int arrowSize = 6;
             int arrowX = Width - 8;
             int arrowY = (Height - arrowSize / 2) / 2;

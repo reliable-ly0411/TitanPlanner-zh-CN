@@ -1,0 +1,285 @@
+{
+  "captured_utc": "2026-11-17",
+  "firmwares": [
+    {
+      "vehicle": "ArduPlane",
+      "parameter": "FLTMODE1",
+      "source": "https://autotest.ardupilot.org/Parameters/ArduPlane/apm.pdef.xml.gz",
+      "xml_sha256": "6f603458cbd78f616feef88f8621a9d7f469039d8e3b547f66cceb05ce391a85",
+      "modes": [
+        {
+          "value": 0,
+          "name": "Manual"
+        },
+        {
+          "value": 1,
+          "name": "CIRCLE"
+        },
+        {
+          "value": 2,
+          "name": "STABILIZE"
+        },
+        {
+          "value": 3,
+          "name": "TRAINING"
+        },
+        {
+          "value": 4,
+          "name": "ACRO"
+        },
+        {
+          "value": 5,
+          "name": "FBWA"
+        },
+        {
+          "value": 6,
+          "name": "FBWB"
+        },
+        {
+          "value": 7,
+          "name": "CRUISE"
+        },
+        {
+          "value": 8,
+          "name": "AUTOTUNE"
+        },
+        {
+          "value": 10,
+          "name": "Auto"
+        },
+        {
+          "value": 11,
+          "name": "RTL"
+        },
+        {
+          "value": 12,
+          "name": "Loiter"
+        },
+        {
+          "value": 13,
+          "name": "TAKEOFF"
+        },
+        {
+          "value": 14,
+          "name": "AVOID_ADSB"
+        },
+        {
+          "value": 15,
+          "name": "Guided"
+        },
+        {
+          "value": 17,
+          "name": "QSTABILIZE"
+        },
+        {
+          "value": 18,
+          "name": "QHOVER"
+        },
+        {
+          "value": 19,
+          "name": "QLOITER"
+        },
+        {
+          "value": 20,
+          "name": "QLAND"
+        },
+        {
+          "value": 21,
+          "name": "QRTL"
+        },
+        {
+          "value": 22,
+          "name": "QAUTOTUNE"
+        },
+        {
+          "value": 23,
+          "name": "QACRO"
+        },
+        {
+          "value": 24,
+          "name": "THERMAL"
+        },
+        {
+          "value": 25,
+          "name": "Loiter to QLand"
+        },
+        {
+          "value": 26,
+          "name": "AUTOLAND"
+        }
+      ]
+    },
+    {
+      "vehicle": "ArduCopter",
+      "parameter": "FLTMODE1",
+      "source": "https://autotest.ardupilot.org/Parameters/ArduCopter/apm.pdef.xml.gz",
+      "xml_sha256": "eb8b0607fe41963c37c31a199070009d405b9347d8afa43e4ec7133e5765db8e",
+      "modes": [
+        {
+          "value": 0,
+          "name": "Stabilize"
+        },
+        {
+          "value": 1,
+          "name": "Acro"
+        },
+        {
+          "value": 2,
+          "name": "AltHold"
+        },
+        {
+          "value": 3,
+          "name": "Auto"
+        },
+        {
+          "value": 4,
+          "name": "Guided"
+        },
+        {
+          "value": 5,
+          "name": "Loiter"
+        },
+        {
+          "value": 6,
+          "name": "RTL"
+        },
+        {
+          "value": 7,
+          "name": "Circle"
+        },
+        {
+          "value": 9,
+          "name": "Land"
+        },
+        {
+          "value": 11,
+          "name": "Drift"
+        },
+        {
+          "value": 13,
+          "name": "Sport"
+        },
+        {
+          "value": 14,
+          "name": "Flip"
+        },
+        {
+          "value": 15,
+          "name": "AutoTune"
+        },
+        {
+          "value": 16,
+          "name": "PosHold"
+        },
+        {
+          "value": 17,
+          "name": "Brake"
+        },
+        {
+          "value": 18,
+          "name": "Throw"
+        },
+        {
+          "value": 19,
+          "name": "Avoid_ADSB"
+        },
+        {
+          "value": 20,
+          "name": "Guided_NoGPS"
+        },
+        {
+          "value": 21,
+          "name": "Smart_RTL"
+        },
+        {
+          "value": 22,
+          "name": "FlowHold"
+        },
+        {
+          "value": 23,
+          "name": "Follow"
+        },
+        {
+          "value": 24,
+          "name": "ZigZag"
+        },
+        {
+          "value": 25,
+          "name": "SystemID"
+        },
+        {
+          "value": 26,
+          "name": "Heli_Autorotate"
+        },
+        {
+          "value": 27,
+          "name": "Auto RTL"
+        },
+        {
+          "value": 28,
+          "name": "Turtle"
+        }
+      ]
+    },
+    {
+      "vehicle": "Rover",
+      "parameter": "MODE1",
+      "source": "https://autotest.ardupilot.org/Parameters/Rover/apm.pdef.xml.gz",
+      "xml_sha256": "ab0494845103ff705af221ee59653d12855afd2236d7214001746e00948a30d2",
+      "modes": [
+        {
+          "value": 0,
+          "name": "Manual"
+        },
+        {
+          "value": 1,
+          "name": "Acro"
+        },
+        {
+          "value": 3,
+          "name": "Steering"
+        },
+        {
+          "value": 4,
+          "name": "Hold"
+        },
+        {
+          "value": 5,
+          "name": "Loiter"
+        },
+        {
+          "value": 6,
+          "name": "Follow"
+        },
+        {
+          "value": 7,
+          "name": "Simple"
+        },
+        {
+          "value": 8,
+          "name": "Dock"
+        },
+        {
+          "value": 9,
+          "name": "Circle"
+        },
+        {
+          "value": 10,
+          "name": "Auto"
+        },
+        {
+          "value": 11,
+          "name": "RTL"
+        },
+        {
+          "value": 12,
+          "name": "SmartRTL"
+        },
+        {
+          "value": 15,
+          "name": "Guided"
+        }
+      ]
+    }
+  ]
+}

@@ -600,6 +600,10 @@
     <value>已解锁</value>
     <comment>"ARMED"</comment>
   </data>
+  <data name="eb9ddb89f6ef2299f536e96b089d07be6d30e1869198138b99750ea3d45a8904" xml:space="preserve">
+    <value>自动着陆</value>
+    <comment>"AUTOLAND"</comment>
+  </data>
   <data name="68973397f4b233bdaf94966abdef84ea197ee5555fd724d7b12c6049fa296759" xml:space="preserve">
     <value>自动调参</value>
     <comment>"AUTOTUNE"</comment>
@@ -1128,6 +1132,14 @@
   <data name="d98bfcbfb6087785118f9416759630ade61950202ba2db17de6839856ffeca77" xml:space="preserve">
     <value>自动：起飞</value>
     <comment>"Auto: Takeoff"</comment>
+  </data>
+  <data name="64e024a807cfcc3798b29b8ab8871726a65b2b111f2f4e7c8d302a3c1a9523d0" xml:space="preserve">
+    <value>自动着陆</value>
+    <comment>"AutoLand"</comment>
+  </data>
+  <data name="8ff7ae58f742a703dbda7dc2c7dd88bd740ee839515c573ce3f400bc0f31dda1" xml:space="preserve">
+    <value>自动着陆</value>
+    <comment>"Autoland"</comment>
   </data>
   <data name="f99d77250d1e272cd5234c81611e4795970b161ed5f95ea4e17a0d0b61d6d21f" xml:space="preserve">
     <value>自动配置选项</value>
@@ -2392,6 +2404,10 @@ Ctrl+O 从文件加载</value>
     <value>已锁定</value>
     <comment>"DISARMED"</comment>
   </data>
+  <data name="266c6b61be9afd452381380af6a8a1172369ddf0161f35744f92a3a8fd3ab8d9" xml:space="preserve">
+    <value>自动停靠</value>
+    <comment>"DOCK"</comment>
+  </data>
   <data name="3470efc4572c7bdb43604ac2c8833bc4df2736c720497834db3e9bceb1bcabb7" xml:space="preserve">
     <value>漂移</value>
     <comment>"DRIFT"</comment>
@@ -2703,6 +2719,10 @@ Ctrl+O 从文件加载</value>
   <data name="fd937a72085c29d421fa0e6160fb8520d3785d7b043b47f01c2abc33611e67ba" xml:space="preserve">
     <value>是否通过 DFU 上传？</value>
     <comment>"Do you want to upload this via DFU?"</comment>
+  </data>
+  <data name="49c1e208c54a34af7a1cdac846450ea9964150efe02e47f696e4daf1d84940de" xml:space="preserve">
+    <value>自动停靠</value>
+    <comment>"Dock"</comment>
   </data>
   <data name="5f7f916caddf5a7da183882cd6b1f5de0ec16744874fb3d3bc098389e18d06ef" xml:space="preserve">
     <value>正在执行命令</value>
@@ -8937,6 +8957,10 @@ Acc：当前测定位置的精度
     <value>临时飞行限制</value>
     <comment>"TFR's"</comment>
   </data>
+  <data name="995703c6d5f4bedd56369cc60317fe89aa5285ceb74aaed54aa324fa4ef75483" xml:space="preserve">
+    <value>翻正自救</value>
+    <comment>"TURTLE"</comment>
+  </data>
   <data name="84dfcd998ffe73531f704c0a279f6269a7f10a5d9babc707fdac94a3adf742ba" xml:space="preserve">
     <value>发射系统故障</value>
     <comment>"TX Sys. Fail."</comment>
@@ -9563,6 +9587,10 @@ Acc：当前测定位置的精度
   <data name="912ccf0e98e9c94bc7002ee29e8d3f861d05c49ee24415274e2dd26183c666e1" xml:space="preserve">
     <value>转弯速率： </value>
     <comment>"TurnRate: "</comment>
+  </data>
+  <data name="5171ce3048d31e55453e6465e144e041ac1128ae40ac6f5f4b54bd7bf8e987c8" xml:space="preserve">
+    <value>翻正自救</value>
+    <comment>"Turtle"</comment>
   </data>
   <data name="fd96853304e45c99209bb21f6ff6c280972f3f2d19b9ab9daeddf2c7ed22bc40" xml:space="preserve">
     <value>发射功率</value>

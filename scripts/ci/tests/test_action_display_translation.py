@@ -35,12 +35,33 @@ class ActionDisplayTranslationTest(unittest.TestCase):
             values = metadata.findtext(firmware + '/' + key + '/Values')
             self.assertTrue(values, firmware)
             names.extend(item.split(':', 1)[1] for item in values.split(','))
+        # The backup predates modes such as Plane AUTOLAND and Rover Dock.
+        # This frozen official metadata snapshot keeps their actual names/values covered offline.
+        recent = json.loads((ROOT / 'scripts/ci/tests/fixtures/flight_mode_metadata.json').read_text())
+        by_vehicle = {firmware['vehicle']: {mode['value']: mode['name'] for mode in firmware['modes']}
+                      for firmware in recent['firmwares']}
+        self.assertEqual(by_vehicle['ArduPlane'][26], 'AUTOLAND')
+        self.assertEqual(by_vehicle['Rover'][8], 'Dock')
+        for firmware in recent['firmwares']:
+            names.extend(mode['name'] for mode in firmware['modes'])
         builtin = source.split('public static List<KeyValuePair<int, string>> getModesList(Firmwares firmware)')[1].split('// ArduPlane')[0]
         names.extend(re.findall(r',\s*"([^"\n]+)"\)', builtin))
         catalog = json.loads((ROOT / 'localization/zh-Hans/code-translations.json').read_text())
         self.assertGreater(len(names), 60)
         for name in names:
             self.assertIn(formatted(name), catalog, name)
+
+    def test_recent_firmware_values_and_display_spellings(self):
+        source = (ROOT / 'ExtLibs/Mavlink/Mavlink.cs').read_text()
+        plane = re.search(r'public enum PLANE_MODE\b[^\{]*\{([^}]+)', source).group(1)
+        self.assertRegex(plane, r'\bAUTOLAND\s*=\s*26\b')
+        catalog = json.loads((ROOT / 'localization/zh-Hans/code-translations.json').read_text())
+        for spelling in ('Autoland', 'AUTOLAND', 'AutoLand'):
+            self.assertEqual(catalog.get(spelling), '自动着陆', spelling)
+        rover = re.search(r'public enum ROVER_MODE\b[^\{]*\{([^}]+)', source).group(1)
+        self.assertRegex(rover, r'\bDOCK\s*=\s*8\b')
+        for spelling in ('Dock', 'DOCK'):
+            self.assertEqual(catalog.get(spelling), '自动停靠', spelling)
 
     def test_confirmation_only_translates_display_not_dispatch(self):
         source = (ROOT / 'GCSViews/FlightData.cs').read_text()
