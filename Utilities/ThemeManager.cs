@@ -215,6 +215,10 @@ namespace MissionPlanner.Utilities
         {
             get
             {
+#if !LIB
+                var custom = DesktopAppearance.WindowIcon;
+                if (custom != null) return custom;
+#endif
                 var source = Program.IconFile as Bitmap;
                 if (source == null)
                     return null;

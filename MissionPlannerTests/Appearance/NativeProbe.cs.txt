@@ -1,0 +1,123 @@
+// Compile with .NET Framework csc. Loads the complete, already-built application by reflection.
+// Run each phase in a fresh process: seed -> verify -> damage -> fallback -> reset -> defaults.
+using System;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Windows.Forms;
+
+internal static class AppearanceNativeProbe
+{
+    private static int assertions;
+    private static void Check(bool value, string message)
+    { assertions++; if (!value) throw new Exception(message); }
+    private static Control[] Descendants(Control root)
+    { return new[] { root }.Concat(root.Controls.Cast<Control>().SelectMany(Descendants)).ToArray(); }
+
+    [STAThread]
+    private static int Main(string[] args)
+    {
+        try
+        {
+            Check(Environment.GetEnvironmentVariable("CI") == "true" || System.Diagnostics.Process.GetCurrentProcess().SessionId == 0,
+                "Run through an isolated Guest Agent session; do not occupy the active desktop.");
+            string build = Path.GetFullPath(args[0]), output = Path.GetFullPath(args[1]);
+            string culture = args[2], phase = args[3];
+            Directory.CreateDirectory(output);
+            AppDomain.CurrentDomain.AssemblyResolve += (sender, e) =>
+            {
+                string path = Path.Combine(build, new AssemblyName(e.Name).Name + ".dll");
+                return File.Exists(path) ? Assembly.LoadFrom(path) : null;
+            };
+            CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo(culture);
+            Application.EnableVisualStyles();
+            var utilities = Assembly.LoadFrom(Path.Combine(build, "MissionPlanner.Utilities.dll"));
+            var settings = utilities.GetType("MissionPlanner.Utilities.Settings", true);
+            settings.GetField("CustomUserDataDirectory").SetValue(null, Path.Combine(output, "synthetic-user-data"));
+            string data = (string)settings.GetMethod("GetUserDataDirectory").Invoke(null, null);
+            string assets = Path.Combine(data, "appearance");
+            var main = Assembly.LoadFrom(Path.Combine(build, "MissionPlanner.exe"));
+            var desktop = main.GetType("MissionPlanner.Utilities.DesktopAppearance", true);
+            var kind = main.GetType("MissionPlanner.Utilities.AppearanceAsset", true);
+            var theme = main.GetType("MissionPlanner.Utilities.ThemeManager", true);
+            var resources = main.GetType("MissionPlanner.Properties.Resources", true);
+            var defaultIcon = (Icon)resources.GetProperty("mpdesktop", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null, null);
+            main.GetType("MissionPlanner.Program").GetField("IconFile").SetValue(null, defaultIcon.ToBitmap());
+            Action<int, string> import = (which, path) => desktop.GetMethod("Import").Invoke(null, new[] { Enum.ToObject(kind, which), (object)path });
+            Action<int> reset = which => desktop.GetMethod("RestoreDefault").Invoke(null, new[] { Enum.ToObject(kind, which) });
+            Func<Icon> current = () => (Icon)theme.GetProperty("FormIcon").GetValue(null, null);
+            if (phase == "seed")
+            {
+                Check(!Directory.Exists(assets), "seed output must be fresh");
+                Directory.CreateDirectory(data); File.WriteAllText(Path.Combine(data, "user-sentinel.txt"), "preserve");
+                string ico = Path.Combine(output, "source.ico"), png = Path.Combine(output, "source.png");
+                using (var stream = File.Create(ico)) SystemIcons.Information.Save(stream);
+                using (var bitmap = new Bitmap(80, 40))
+                { using (var graphics = Graphics.FromImage(bitmap)) graphics.Clear(Color.White); bitmap.Save(png, ImageFormat.Png); }
+                using (var form = new Form())
+                {
+                    form.Icon = current(); form.Show(); var original = form.Icon;
+                    import(0, ico); Check(object.ReferenceEquals(form.Icon, current()), "live icon not applied");
+                    Check(!object.ReferenceEquals(original, form.Icon), "custom icon ignored");
+                }
+                import(1, png); File.Delete(ico); File.Delete(png);
+                File.Copy(Path.Combine(assets, "settings.xml"), Path.Combine(output, "committed-settings.xml"));
+            }
+            else if (phase == "damage")
+            {
+                foreach (var path in Directory.GetFiles(assets, "*.png")) File.Delete(path);
+                foreach (var path in Directory.GetFiles(assets, "*.ico")) File.WriteAllText(path, "synthetic corruption");
+            }
+            else if (phase == "reset")
+            {
+                reset(0); reset(1);
+                Check(Directory.GetFiles(assets, "settings.xml.backup-*").Length >= 3, "backups lost");
+            }
+            else
+            {
+                bool custom = phase == "verify";
+                Check(custom == (desktop.GetProperty("WindowIcon").GetValue(null, null) != null), "fresh-process icon selection wrong");
+                if (phase == "fallback")
+                {
+                    Check(desktop.GetProperty("IconWarning").GetValue(null, null) != null, "missing fallback warning");
+                    Check(File.ReadAllText(Path.Combine(assets, "settings.xml")) == File.ReadAllText(Path.Combine(output, "committed-settings.xml")), "fallback rewrote preference");
+                }
+                if (phase == "defaults") Check(desktop.GetProperty("IconWarning").GetValue(null, null) == null, "default still warns");
+                using (var splash = (Form)Activator.CreateInstance(main.GetType("MissionPlanner.Splash", true)))
+                {
+                    splash.TopMost = false; splash.Show(); Application.DoEvents();
+                    var controls = Descendants(splash);
+                    var credit = controls.OfType<Label>().Single(l => l.Text.Contains("lyy0405"));
+                    Check(credit.Text.Contains("Michael Oborne"), "known author missing");
+                    Check(controls.OfType<Label>().Any(l => l.Text.Contains("Mohammad Adib")), "upstream credit missing");
+                    Check(credit.ForeColor.ToArgb() == Color.White.ToArgb() && credit.Parent.BackColor.ToArgb() == Color.FromArgb(32, 32, 32).ToArgb(), "credit contrast lost");
+                    Check(credit.Height >= credit.PreferredHeight, "credit text clipped");
+                    var picture = controls.OfType<PictureBox>().Single();
+                    Check(custom == (picture.Image.Width == 80 && picture.Image.Height == 40), "fresh-process startup image wrong");
+                    using (var bitmap = new Bitmap(splash.Width, splash.Height))
+                    { splash.DrawToBitmap(bitmap, new Rectangle(Point.Empty, bitmap.Size)); bitmap.Save(Path.Combine(output, phase + "-splash.png")); }
+                }
+                using (var form = new Form())
+                using (var page = (Control)Activator.CreateInstance(main.GetType("MissionPlanner.GCSViews.ConfigurationView.ConfigAppearance", true)))
+                {
+                    form.Controls.Add(page); page.Dock = DockStyle.Fill; form.Show();
+                    foreach (int width in new[] { 320, 640, 1024 })
+                    {
+                        form.ClientSize = new Size(width, 720); Application.DoEvents();
+                        foreach (var label in Descendants(page).OfType<Label>())
+                        { Check(label.Width <= page.ClientSize.Width, "settings text exceeds viewport"); Check(label.Height >= label.PreferredHeight, "settings text clipped"); }
+                    }
+                    using (var bitmap = new Bitmap(form.Width, form.Height))
+                    { form.DrawToBitmap(bitmap, new Rectangle(Point.Empty, bitmap.Size)); bitmap.Save(Path.Combine(output, phase + "-settings.png")); }
+                }
+            }
+            Check(File.ReadAllText(Path.Combine(data, "user-sentinel.txt")) == "preserve", "unrelated user data changed");
+            Console.WriteLine("PASS phase=" + phase + " culture=" + culture + " assertions=" + assertions);
+            return 0;
+        }
+        catch (Exception ex) { Console.Error.WriteLine(ex); return 1; }
+    }
+}

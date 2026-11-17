@@ -1,0 +1,16 @@
+using System;
+using System.Collections;
+using System.IO;
+using System.Resources;
+internal static class BuildResources
+{
+    private static void Main(string[] args)
+    {
+        using (var reader = new ResXResourceReader(args[0]))
+        using (var writer = new ResourceWriter(args[1]))
+        {
+            reader.BasePath = Path.GetDirectoryName(Path.GetFullPath(args[0]));
+            foreach (DictionaryEntry entry in reader) writer.AddResource((string)entry.Key, entry.Value);
+        }
+    }
+}

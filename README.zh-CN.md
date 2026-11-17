@@ -33,6 +33,8 @@
 
 ## 获取和更新
 
+设置的“窗口图标与启动画面”页支持导入 ICO 和 PNG / JPEG / BMP 图片，并分别恢复默认。窗口图标立即应用，启动图片下次启动生效；素材副本与外观设置单独保存，保留原图及个人配置。此设置不改写 EXE、安装器或已有/固定快捷方式图标，Windows 任务栏也可能使用缓存图标。输入限制、生效范围、备份及验收说明见 [外观定制说明](docs/desktop-appearance.zh-CN.md)。
+
 本仓库 [Releases](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/releases) 提供 Windows 安装版和便携版。优先核对具体发布的源码提交、附件与已知限制；历史发布可能同时存在正式/预发布标记，不能仅凭 Latest 标记认定已完成实机验收。
 
 - **MSI 安装版**：适用于 64 位 Windows，安装到当前用户的 `%LOCALAPPDATA%\Programs\TitanPlanner-zh-CN`，并创建开始菜单入口；可通过系统“应用和功能”卸载，保留个人配置和日志。安装界面为简体中文，需要 .NET Framework 4.7.2 或更新版本。
