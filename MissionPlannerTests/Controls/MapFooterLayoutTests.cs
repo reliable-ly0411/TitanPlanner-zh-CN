@@ -69,6 +69,54 @@ namespace MissionPlannerTests.Controls
         }
 
         [TestMethod]
+        public void RealCoordinatesFitThe186PixelPaneOfA760PixelHost()
+        {
+            OnSta(() =>
+            {
+                foreach (string family in new[] { "Segoe UI", "Microsoft YaHei", "Noto Sans CJK SC" })
+                using (var fixture = new FooterFixture(true, family, true))
+                {
+                    int naturalCoordinateWidth = fixture.Coordinates.Width;
+                    var split = new SplitContainer
+                    {
+                        Dock = DockStyle.Fill, SplitterWidth = 4, FixedPanel = FixedPanel.Panel1,
+                        Panel1MinSize = 0, Panel2MinSize = 0
+                    };
+                    fixture.Form.Controls.Remove(fixture.Table);
+                    split.Panel2.Controls.Add(fixture.Table);
+                    fixture.Form.Controls.Add(split);
+                    foreach (int width in new[] { 760, 1100, 760, 1360, 760 })
+                    {
+                        fixture.Form.ClientSize = new Size(width, 360);
+                        split.SplitterDistance = 568;
+                        fixture.VerifyLayout();
+                        if (width == 760)
+                        {
+                            Assert.AreEqual(186, fixture.Footer.ClientSize.Width, "The production narrow-pane constraint was not reproduced.");
+                            Assert.IsTrue(fixture.Options[3].Bottom + fixture.Options[3].Margin.Bottom <= fixture.Footer.ClientSize.Height,
+                                "Auto-pan's last row is clipped in the 760-pixel host.");
+                        }
+                        else
+                            Assert.AreEqual(naturalCoordinateWidth, fixture.Coordinates.Width, "Coordinates did not regain their natural width.");
+                    }
+                    // Scale while constrained, then widen: the natural coordinate width must scale too.
+                    fixture.Form.Scale(new SizeF(1.5f, 1.5f));
+                    fixture.Form.ClientSize = new Size(1140, 540);
+                    split.SplitterDistance = 852;
+                    fixture.VerifyLayout();
+                    fixture.Form.ClientSize = new Size(2040, 540);
+                    split.SplitterDistance = 852;
+                    fixture.VerifyLayout();
+                    Assert.IsTrue(Math.Abs(naturalCoordinateWidth * 1.5 - fixture.Coordinates.Width) <= 1,
+                        "Scaling a constrained coordinate control lost its natural width.");
+                    Assert.IsTrue(fixture.Coordinates is MissionPlanner.Controls.Coords, "Use the real coordinate control in this regression.");
+                    Assert.AreEqual(0, fixture.CheckedChanges);
+                    Assert.IsTrue(fixture.Options[3].Checked);
+                }
+            });
+        }
+
+        [TestMethod]
         public void ConfigurationKeepsControlsAndTheirCheckedChangedHandlers()
         {
             OnSta(() =>
@@ -113,13 +161,16 @@ namespace MissionPlannerTests.Controls
             };
             internal readonly Panel Map = new Panel { Dock = DockStyle.Fill, Margin = Padding.Empty };
             internal readonly FlowLayoutPanel Footer = new FlowLayoutPanel { Dock = DockStyle.Fill, Margin = Padding.Empty };
-            private readonly Panel coordinates = new Panel { Size = new Size(255, 21) };
+            internal readonly Control Coordinates;
+            private Control coordinates { get { return Coordinates; } }
             private readonly Font font;
             internal readonly CheckBox[] Options;
             internal int CheckedChanges;
 
-            internal FooterFixture(bool chinese, string family)
+            internal FooterFixture(bool chinese, string family, bool realCoordinates = false)
             {
+                Coordinates = realCoordinates ? (Control)new MissionPlanner.Controls.Coords() : new Panel();
+                Coordinates.Size = new Size(255, 21);
                 font = new Font(family, 9);
                 Form.Font = font;
                 Form.ClientSize = new Size(1100, 360);

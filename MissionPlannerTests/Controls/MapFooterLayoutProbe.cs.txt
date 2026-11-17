@@ -1,8 +1,9 @@
 // Run from a checkout using an isolated Windows session (Session 0):
 // csc /nologo /codepage:65001 /r:System.Drawing.dll /r:System.Windows.Forms.dll /r:System.Xml.dll /out:MapFooterProbe.exe Controls/MapFooterLayout.cs MissionPlannerTests/Controls/MapFooterLayoutProbe.cs.txt
-// MapFooterProbe.exe <checkout-directory> <results-directory>
+// MapFooterProbe.exe <checkout-directory> <results-directory> [application-build-directory]
 // Compiles the production layout helper directly; no app build, packages, profile or vehicle are needed.
-// The coordinates host is a size placeholder. PNGs are isolated component renders, not FlightData screenshots.
+// With an application build directory, use its real Coords control; otherwise use a size placeholder.
+// PNGs are isolated component renders, not FlightData screenshots.
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,6 +13,7 @@ using System.Drawing.Imaging;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 using System.Xml;
 using MissionPlanner.Controls;
@@ -19,6 +21,7 @@ using MissionPlanner.Controls;
 class MapFooterLayoutProbe
 {
     static int cases;
+    static Type coordinateType;
 
     [STAThread]
     static int Main(string[] args)
@@ -27,11 +30,23 @@ class MapFooterLayoutProbe
         {
             if (Environment.OSVersion.Platform == PlatformID.Win32NT && Process.GetCurrentProcess().SessionId != 0)
                 throw new InvalidOperationException("Run through an isolated Session 0 agent; this probe must not open windows on the active desktop.");
-            if (args.Length != 2)
-                throw new ArgumentException("Expected checkout-directory and results-directory.");
+            if (args.Length < 2 || args.Length > 3)
+                throw new ArgumentException("Expected checkout-directory, results-directory and optional application-build-directory.");
             string source = Path.GetFullPath(args[0]);
             string output = Path.GetFullPath(args[1]);
             Directory.CreateDirectory(output);
+            if (args.Length == 3)
+            {
+                string build = Path.GetFullPath(args[2]);
+                AppDomain.CurrentDomain.AssemblyResolve += delegate(object sender, ResolveEventArgs e)
+                {
+                    string path = Path.Combine(build, new AssemblyName(e.Name).Name + ".dll");
+                    return File.Exists(path) ? Assembly.LoadFrom(path) : null;
+                };
+                coordinateType = Assembly.LoadFrom(Path.Combine(build, "MissionPlanner.Controls.dll"))
+                    .GetType("MissionPlanner.Controls.Coords", true);
+            }
+            Console.WriteLine("Coordinates={0}", coordinateType == null ? "size placeholder" : coordinateType.FullName);
             Application.EnableVisualStyles();
             using (var graphics = Graphics.FromHwnd(IntPtr.Zero))
                 Console.WriteLine("Runtime={0}; display DPI={1}x{2}; additional Scale factors simulate scaling.", Environment.Version, graphics.DpiX, graphics.DpiY);
@@ -108,7 +123,7 @@ class MapFooterLayoutProbe
             table.RowStyles.Add(new RowStyle(SizeType.Absolute, 25));
             var map = new Panel { Dock = DockStyle.Fill, Margin = Padding.Empty };
             var footer = new FlowLayoutPanel { Dock = DockStyle.Fill, Margin = Padding.Empty };
-            var coordinates = new Panel();
+            var coordinates = coordinateType == null ? (Control)new Panel() : (Control)Activator.CreateInstance(coordinateType);
             Apply(resources, coordinates, "coords1");
             var options = new[] { new CheckBox(), new CheckBox(), new CheckBox { Text = mapText, AutoSize = true }, new CheckBox() };
             Apply(resources, options[0], "CB_tuning");
@@ -120,19 +135,30 @@ class MapFooterLayoutProbe
             footer.Controls.AddRange(new Control[] { coordinates, options[3], options[0], options[1], options[2] });
             table.Controls.Add(map, 0, 0);
             table.Controls.Add(footer, 0, 1);
-            form.Controls.Add(table);
+            var split = new SplitContainer
+            {
+                Dock = DockStyle.Fill, SplitterWidth = 4, FixedPanel = FixedPanel.Panel1,
+                Panel1MinSize = 0, Panel2MinSize = 0
+            };
+            split.Panel2.Controls.Add(table);
+            form.Controls.Add(split);
             MapFooterLayout.Configure(table, footer, coordinates, options);
             form.Scale(new SizeF(scale, scale));
             form.Show();
             int wideFooter = -1, wideMap = -1;
-            foreach (int width in new[] { 1100, 800, 600, 420, 280, 1100 })
+            foreach (int width in new[] { 1100, 800, 600, 420, 280, 186, 1100 })
             {
-                form.ClientSize = new Size((int)(width * scale), (int)(360 * scale));
+                int left = (int)Math.Round(568 * scale);
+                split.SplitterWidth = Math.Max(1, (int)Math.Round(4 * scale));
+                form.ClientSize = new Size(left + split.SplitterWidth + 2 + (int)(width * scale), (int)(360 * scale));
+                split.SplitterDistance = left;
                 form.PerformLayout();
                 table.PerformLayout();
                 footer.PerformLayout();
                 Application.DoEvents();
                 string context = culture + "/" + family + "/" + scale.ToString(CultureInfo.InvariantCulture) + "/" + width;
+                if (width == 186 && scale == 1)
+                    Require(form.ClientSize.Width == 760 && footer.ClientSize.Width == 186, "The production 760/186 host constraint was not reproduced.");
                 Require(!map.Bounds.IntersectsWith(footer.Bounds), context + ": footer covers map");
                 var controls = new Control[] { coordinates }.Concat(options).ToArray();
                 for (int i = 0; i < controls.Length; i++)
@@ -152,6 +178,7 @@ class MapFooterLayoutProbe
                     Require(footer.Height == wideFooter && map.Height == wideMap, context + ": stale wrapped height");
                 }
                 if (width == 280) Require(footer.Height > wideFooter && map.Height < wideMap, context + ": failed to wrap");
+                Require(options[3].Bottom + options[3].Margin.Bottom <= footer.ClientSize.Height, context + ": last row is clipped");
                 if (scale == 1 && family == "Microsoft YaHei" && (width == 600 || width == 280))
                     using (var bitmap = new Bitmap(footer.Width, footer.Height))
                     {
