@@ -37,10 +37,12 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts/ci/test_bilingual_mo
 
 检查真实固件模式列表及原始数值（Turtle=28、Flip=14）、原生顶部绘制、80/140/280 px 按钮、100%/150%/200% 字体压力、520/800/1420 px 菜单宿主及相邻控件边界、模式反复更新，以及 320/640/960 px 的 GDI HUD、双电池和单/双 GPS。HUD 模式更新前后的像素比较要求航点、高度和告警区域保持一致。字体压力不是多 DPI 实测。
 
+HUD 截帧先等待 40 ms，越过生产控件的 30 ms 绘制节流，再验证绘制时间戳推进、画面非空且缓存的模式与目标相符。最多尝试四次；被丢弃的空/陈旧帧会记录原因并保存 `rejected-capture-*.png`，无法取得有效帧则测试失败。有效 before/after 帧也保存，原来的航点/高度/告警区域逐像素相等断言不变，不遮罩、不增加像素容差，也不修改生产 HUD 节流。
+
 可另外运行 MSTest 的 `FlightModeTranslationTests`：真实固件模式列表测试汇总全部漏译并要求零遗漏；另有 Turtle/Flip 值与显示断言，以及从 `Common.getModesList` 按值读取 ArduPlane Autoland（26）和 Rover Dock（8）、验证三语言显示和原始值不变的两组数据用例。静态检查还覆盖 `scripts/ci/tests/fixtures/flight_mode_metadata.json` 中固定的 2026-11-17 官方元数据 64 个模式名称/值，记录来源和 XML 摘要，补充较旧备份的缺口。未删除模式或放宽翻译要求。完整应用、默认 OpenGL HUD、实际 DPI 切换、SITL 状态切换和告警仍需独立 GUI 验收；本探针成功不代替这些项目。
 
 ## 当前验证范围
 
 Linux：加入 Autoland / Dock 后显示/合成几何 8,316 条断言通过；显示翻译静态测试 6 项通过；资源校验通过。Windows 探针已用 .NET Framework 4.7.2 引用程序集编译，未在此环境执行 Windows GUI。
 
-独立 Windows 复验报告：`178463cf` Release 编译成功；原有 3 项真实模式测试中 2 通过、1 在 ArduPlane Autoland 漏译处失败，本次补译待同环境复验。英文与原版简体探针的 HUD 像素比较存在偶现失败，正在单独诊断；该遮挡断言保持原样。完整应用、OpenGL、真实 DPI、SITL 不能由这些检查代替。
+独立 Windows 复验报告：`178463cf` Release 编译成功；原有 3 项真实模式测试中 2 通过、1 在 ArduPlane Autoland 漏译处失败，本次补译待同环境复验。该版本的 HUD 像素比较偶现失败已捕获到整张黑色 before 帧、正常 after 帧，与 30 ms 节流导致紧邻 `DrawToBitmap` 未绘制的路径吻合。本次修复探针取帧并保留遮挡断言，仍须在 Windows 分语言反复执行；空帧原因已找到不代表其他遮挡已排除。完整应用、OpenGL、真实 DPI、SITL 不能由这些检查代替。

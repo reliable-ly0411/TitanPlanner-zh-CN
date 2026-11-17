@@ -51,6 +51,50 @@ internal static class NativeModeProbe
         Check(found, "Native text row has no painted pixels");
     }
 
+    private static int hudCaptureNumber;
+
+    private static bool HasHudPixels(Bitmap bitmap)
+    {
+        int first = bitmap.GetPixel(0, 0).ToArgb();
+        for (int y = 0; y < bitmap.Height; y += 8)
+        for (int x = 0; x < bitmap.Width; x += 8)
+            if (bitmap.GetPixel(x, y).ToArgb() != first) return true;
+        return false;
+    }
+
+    private static Bitmap CaptureHud(Control hud, string expectedMode, string output)
+    {
+        int number = ++hudCaptureNumber;
+        var stamp = hud.GetType().GetField("starttime", Instance);
+        var modeKey = hud.GetType().GetField("_flightModeLayoutKey", Instance);
+        Check(stamp != null && modeKey != null, "HUD capture instrumentation unavailable");
+        for (int attempt = 1; attempt <= 4; attempt++)
+        {
+            // OnPaint deliberately skips requests within 30 ms. DrawToBitmap then returns an empty bitmap.
+            // Wait for a real paint; do not compare a skipped frame or alter the production throttle.
+            System.Threading.Thread.Sleep(40);
+            var previousPaint = (DateTime)stamp.GetValue(hud);
+            var bitmap = new Bitmap(hud.Width, hud.Height);
+            hud.DrawToBitmap(bitmap, hud.ClientRectangle);
+            bool fresh = (DateTime)stamp.GetValue(hud) > previousPaint;
+            bool content = HasHudPixels(bitmap);
+            object key = modeKey.GetValue(hud);
+            bool current = (string)key.GetType().GetField("Item1").GetValue(key) == expectedMode;
+            if (fresh && content && current)
+            {
+                Check(fresh, "HUD capture did not paint a new frame");
+                Check(content, "HUD capture is empty or uniform");
+                Check(current, "HUD capture contains a stale mode");
+                return bitmap;
+            }
+            bitmap.Save(Path.Combine(output, "rejected-capture-" + number + "-" + attempt + ".png"), ImageFormat.Png);
+            bitmap.Dispose();
+            Console.WriteLine("Rejected HUD capture " + number + " attempt " + attempt +
+                ": fresh=" + fresh + ", content=" + content + ", currentMode=" + current);
+        }
+        throw new Exception("Unable to capture a fresh nonempty HUD frame for " + expectedMode);
+    }
+
     [STAThread]
     private static int Main(string[] args)
     {
@@ -203,9 +247,8 @@ internal static class NativeModeProbe
                     foreach (var raw in new[] { "RTL", "Loiter To QLAND", "Turtle", "Autoland", "Dock", "PLUGIN_LONG_UNKNOWN_MODE" })
                     {
                         Set(hud, "mode", raw);
-                        using (var bitmap = new Bitmap(hud.Width, hud.Height))
+                        using (var bitmap = CaptureHud(hud, raw, output))
                         {
-                            hud.DrawToBitmap(bitmap, hud.ClientRectangle);
                             var layout = hud.GetType().GetField("_flightModeLayout", Instance).GetValue(hud);
                             Check(layout != null, "HUD did not reach mode painting");
                             Check((string)Get(hud, "mode") == raw, "HUD raw mode changed");
@@ -225,18 +268,20 @@ internal static class NativeModeProbe
                     }
                     // Changing only the displayed mode must preserve waypoint, altitude and warning pixels.
                     Set(hud, "mode", "Turtle");
-                    using (var before = new Bitmap(hud.Width, hud.Height))
-                    using (var after = new Bitmap(hud.Width, hud.Height))
+                    using (var before = CaptureHud(hud, "Turtle", output))
                     {
-                        hud.DrawToBitmap(before, hud.ClientRectangle);
                         Set(hud, "mode", "Loiter To QLAND");
-                        hud.DrawToBitmap(after, hud.ClientRectangle);
-                        int limit = (int)(hud.Height - 2.4f * (hud.Height / 28)) - 2;
-                        bool equal = true;
-                        for (int y = 0; y < limit && equal; y++)
-                        for (int x = 0; x < hud.Width && equal; x++)
-                            equal = before.GetPixel(x, y) == after.GetPixel(x, y);
-                        Check(equal, "Mode update changed pixels in the waypoint / altitude / warning region");
+                        using (var after = CaptureHud(hud, "Loiter To QLAND", output))
+                        {
+                            before.Save(Path.Combine(output, "before-" + width + "-" + gps2 + ".png"), ImageFormat.Png);
+                            after.Save(Path.Combine(output, "after-" + width + "-" + gps2 + ".png"), ImageFormat.Png);
+                            int limit = (int)(hud.Height - 2.4f * (hud.Height / 28)) - 2;
+                            bool equal = true;
+                            for (int y = 0; y < limit && equal; y++)
+                            for (int x = 0; x < hud.Width && equal; x++)
+                                equal = before.GetPixel(x, y) == after.GetPixel(x, y);
+                            Check(equal, "Mode update changed pixels in the waypoint / altitude / warning region");
+                        }
                     }
                 }
             }
