@@ -1,0 +1,8 @@
+before-640-font100 outer={Width=648, Height=527} content={Width=640, Height=472} dpi=96 extent={Width=4486, Height=0} hbar=True vbar=False
+after-640-font100 outer={Width=648, Height=527} content={Width=640, Height=472} dpi=96 extent={Width=570, Height=2598} hbar=False vbar=True
+before-640-font150 outer={Width=648, Height=527} content={Width=640, Height=472} dpi=96 extent={Width=8210, Height=0} hbar=True vbar=False
+after-640-font150 outer={Width=648, Height=527} content={Width=640, Height=472} dpi=96 extent={Width=414, Height=7134} hbar=False vbar=True
+before-960-font100 outer={Width=968, Height=527} content={Width=960, Height=472} dpi=96 extent={Width=4486, Height=0} hbar=True vbar=False
+after-960-font100 outer={Width=968, Height=527} content={Width=960, Height=472} dpi=96 extent={Width=857, Height=1747} hbar=False vbar=True
+before-960-font150 outer={Width=968, Height=527} content={Width=960, Height=472} dpi=96 extent={Width=8210, Height=0} hbar=True vbar=False
+after-960-font150 outer={Width=968, Height=527} content={Width=960, Height=472} dpi=96 extent={Width=836, Height=3614} hbar=False vbar=True

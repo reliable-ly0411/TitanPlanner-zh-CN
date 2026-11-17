@@ -1,0 +1,42 @@
+using System;
+using System.Linq;
+using System.IO;
+using System.Collections;
+using System.Drawing;
+using System.Reflection;
+using System.Windows.Forms;
+using MissionPlanner.Controls;
+class BeforeProbe : BeforeDisplayThisForm {
+ public BeforeProbe():base(_=>false,(s,e)=>{}) { MinimumSize=Size.Empty;AutoScaleMode=AutoScaleMode.None; }
+ protected override void OnLoad(EventArgs e) {}
+}
+class AfterProbe : DisplayThisForm {
+ public AfterProbe():base(_=>false,(s,e)=>{}) { MinimumSize=Size.Empty;AutoScaleMode=AutoScaleMode.None; }
+ protected override void OnLoad(EventArgs e) {}
+}
+class PopupVisualProbe {
+ const BindingFlags Private=BindingFlags.NonPublic|BindingFlags.Instance;
+ [STAThread] static void Main(string[] args) {
+  foreach(int width in new[]{640,960}) foreach(float scale in new[]{1f,1.5f}) foreach(bool before in new[]{true,false}) {
+   using(var form=before?(Form)new BeforeProbe():new AfterProbe())
+   using(var font=new Font(SystemFonts.DefaultFont.FontFamily,SystemFonts.DefaultFont.SizeInPoints*scale)) {
+    form.Font=font; form.ClientSize=new Size(width,500); Cursor.Position=new Point(1500,950); form.Show();
+    var type=before?typeof(BeforeDisplayThisForm):typeof(DisplayThisForm);
+    var list=(IList)type.GetField("_allItems",Private).GetValue(form);var itemType=list.GetType().GetGenericArguments()[0];
+    var fixtures=File.ReadAllLines(args[0]).Select(line=>line.Split('\t')).Select(parts=>new {Key=parts[0],Label=parts[1],Group=parts[0].Contains("airspeed")?"Air":parts[0].StartsWith("battery")?"Battery":"Other"}).OrderBy(x=>x.Group).ThenBy(x=>x.Label).ToArray();
+    int i=0;foreach(var f in fixtures) {
+     var item=Activator.CreateInstance(itemType);
+     foreach(var pair in new[]{new[]{"Name",f.Key},new[]{"DisplayName",f.Label},new[]{"Group",f.Group},new[]{"GroupLabel",f.Group+" ("+(f.Group=="Air"?"空速":f.Group=="Battery"?"电池":"其他")+")"},new[]{"Value",i++%5==0?"-1234.56789":"12.5"}}) itemType.GetProperty(pair[0]).SetValue(item,pair[1],null);
+     itemType.GetProperty("IsChecked").SetValue(item,i%7==0,null); list.Add(item);
+    }
+    type.GetField("_filteredItems",Private).SetValue(form,list);
+    type.GetMethod("ApplyTheme",Private).Invoke(form,null);
+    type.GetMethod("UpdateScrollSize",Private).Invoke(form,null);Application.DoEvents();
+    var panel=(Panel)type.GetField("_contentPanel",Private).GetValue(form);
+    string name=(before?"before":"after")+"-"+width+"-font"+(int)(100*scale);
+    using(var bitmap=new Bitmap(panel.Width,panel.Height)) {panel.DrawToBitmap(bitmap,new Rectangle(Point.Empty,bitmap.Size));bitmap.Save(Path.Combine(args[1],name+".png"));}
+    using(var graphics=panel.CreateGraphics()) Console.WriteLine(name+" outer="+form.Size+" content="+panel.ClientSize+" dpi="+graphics.DpiX+" extent="+panel.AutoScrollMinSize+" hbar="+panel.HorizontalScroll.Visible+" vbar="+panel.VerticalScroll.Visible);
+   }
+  }
+ }
+}
