@@ -4,6 +4,8 @@ Formatting the flight controller SD card requires explicit confirmation, with Ca
 
 ## Enhanced Chinese display
 
+The HUD and toolbar show the current flight mode in Chinese above a smaller original English line in enhanced Simplified Chinese. Long labels fit their reserved area; unknown modes retain their source text. Turtle is labelled 翻正自救, separately from Flip.
+
 New Simplified Chinese profiles default to Bing Satellite. Saved map selections and provider coordinate projections are preserved.
 
 Mission altitude references, bundled plugin menu entries and dashboard descriptions use localized display text while retaining protocol values and field keys. Dashboard field selection shows the original identifier beside its description. Vibration axes and mission altitude headers use context-specific labels.

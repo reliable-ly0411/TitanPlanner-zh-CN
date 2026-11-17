@@ -3111,6 +3111,9 @@ namespace MissionPlanner.Controls
                 
                 //Console.WriteLine("HUD Height " + this.Height + " fontsize " + fontsize + " offset " + yBotOffset + " ypos0: " + yPos[0] + " ypos1: " + yPos[1]);
 
+                // Keep the mode badge between the actual bottom telemetry readouts.
+                float modeLeft = 0, modeRight = this.Width;
+
                 // battery
                 if (batteryon)
                 {
@@ -3162,6 +3165,9 @@ namespace MissionPlanner.Controls
                         drawstring(_batterylevel.ToString("0.00v"), font, fontsize, textcolor, textX, yVoltage);
                         drawstring(_current.ToString("0.0A"), font, fontsize, textcolor, textX, yCurrent);
                         drawstring(_batteryremaining + "%", font, fontsize, textcolor, textX, yPercent);
+                        modeLeft = textX + Math.Max(calcsize(_batterylevel.ToString("0.00v"), fontsize, textcolor).Width,
+                            Math.Max(calcsize(_current.ToString("0.0A"), fontsize, textcolor).Width,
+                                calcsize(_batteryremaining + "%", fontsize, textcolor).Width)) + fontsize;
 
                         // Battery 2 (if present)
                         if (_batterylevel2 > 0 && batteryon2)
@@ -3189,19 +3195,27 @@ namespace MissionPlanner.Controls
                             drawstring(_batterylevel2.ToString("0.00v"), font, fontsize, textcolor, text2X, yVoltage);
                             drawstring(_current2.ToString("0.0A"), font, fontsize, textcolor, text2X, yCurrent);
                             drawstring(_batteryremaining2 + "%", font, fontsize, textcolor, text2X, yPercent);
+                            modeLeft = text2X + Math.Max(calcsize(_batterylevel2.ToString("0.00v"), fontsize, textcolor).Width,
+                                Math.Max(calcsize(_current2.ToString("0.0A"), fontsize, textcolor).Width,
+                                    calcsize(_batteryremaining2 + "%", fontsize, textcolor).Width)) + fontsize;
                         }
                     }
                     else
                     {
 
                         if (displayCellVoltage & (_batterycellcount != 0))
-                            drawstring(HUDT.Cell + " " + (_batterylevel / _batterycellcount).ToString("0.00v"), font, fontsize + 2, textcolor, xPos, yPos[1]);
+                        {
+                            text = HUDT.Cell + " " + (_batterylevel / _batterycellcount).ToString("0.00v");
+                            drawstring(text, font, fontsize + 2, textcolor, xPos, yPos[1]);
+                            modeLeft = xPos + calcsize(text, fontsize + 2, textcolor).Width + fontsize;
+                        }
                         else if (_batterylevel2 > 0 && batteryon2)
                         {
                             text = HUDT.Bat + "2 " + _batterylevel2.ToString("0.00v") + " " + _current2.ToString("0.0 A") + " " +
                                    (_batteryremaining2) + "%";
 
                             drawstring(text, font, fontsize, textcolor, xPos, yPos[1]);
+                            modeLeft = xPos + calcsize(text, fontsize, textcolor).Width + fontsize;
                         } else {
                             textIdx=1;
                         }
@@ -3211,6 +3225,7 @@ namespace MissionPlanner.Controls
                         text = HUDT.Bat + "1 " + _batterylevel.ToString("0.00v") + " " + _current.ToString("0.0 A") + " " + (_batteryremaining) + "%";
                         
                         drawstring(text, font, fontsize, textcolor, xPos, yPos[textIdx]);
+                        modeLeft = Math.Max(modeLeft, xPos + calcsize(text, fontsize, textcolor).Width + fontsize);
 
 
                     }
@@ -3301,12 +3316,14 @@ namespace MissionPlanner.Controls
                                 slot = 1; // Single GPS at slot 1
 
                             var hor_pos = this.Width - rightMargin - slot * width - (slot - 1) * gap;
+                            modeRight = Math.Min(modeRight, hor_pos - fontsize);
                             DrawImage(icon, hor_pos, this.Height - (fontsize + 5), width, fontsize);
                         }
                         else
                         {
 
                             drawstring(gps, font, fontsize, col, this.Width - 13 * fontsize, yPos[textIdx]);
+                            modeRight = Math.Min(modeRight, this.Width - 14 * fontsize);
                         }
 
                         a++;
@@ -3438,6 +3455,8 @@ namespace MissionPlanner.Controls
                         vibehitzone = new Rectangle(this.Width - 18 * fontsize, yPos[1], 40, fontsize * 2);
                     }
 
+                    modeRight = Math.Min(modeRight, vibehitzone.Left - fontsize);
+
                     if (CustomVibeRenderer != null)
                     {
                         try { CustomVibeRenderer.Render(this, vibehitzone, fontsize, displayicons); }
@@ -3502,6 +3521,8 @@ namespace MissionPlanner.Controls
                         ekfhitzone = new Rectangle(this.Width - 23 * fontsize, yPos[1], 40, fontsize * 2);
                     }
 
+                    modeRight = Math.Min(modeRight, ekfhitzone.Left - fontsize);
+
                     if (CustomEkfRenderer != null)
                     {
                         try { CustomEkfRenderer.Render(this, ekfhitzone, fontsize, displayicons); }
@@ -3550,31 +3571,9 @@ namespace MissionPlanner.Controls
                     drawstring(prearmstatus ? HUDT.ReadyToArm : HUDT.NotReadyToArm, font, fontsize, prearmstatus ? _whiteBrush : (SolidBrush) Brushes.Red, graphicsObject.Width / 2, graphicsObject.Height - (fontsize * 4), true);
                 }
 
-                // draw mode
+                // Display translation never changes mode, which the waypoint and command paths still use.
                 graphicsObject.ResetTransform();
-                var mode_x = graphicsObject.Width / 2;
-
-                var length = mode.ToCharArray().Length;
-                var wPerLetter = fontsize * 0.35f;
-                var textSizeHalf = ((length * wPerLetter) / 2);
-                var mode_text_x = mode_x - textSizeHalf;
-                var mode_height = fontsize * 2f;
-
-                PointF[] polyM = new PointF[4];
-                polyM[0] = new PointF(mode_x - textSizeHalf - (mode_height), graphicsObject.Height);
-                polyM[1] = new PointF(mode_x - textSizeHalf - (mode_height / 2f), graphicsObject.Height - mode_height);
-                polyM[2] = new PointF(mode_x + textSizeHalf + (mode_height / 2f), graphicsObject.Height - mode_height);
-                polyM[3] = new PointF(mode_x + textSizeHalf + (mode_height), graphicsObject.Height);
-
-                graphicsObject.FillPolygon(SlightlyTransparentBrush, polyM);
-                graphicsObject.DrawPolygon(_whitePen, polyM);
-
-                var modeBrush = new SolidBrush(Color.White);
-                if (_modechanged.AddSeconds(2) > datetime)
-                {
-                    modeBrush = _redBrush;
-                }
-                drawstring(_mode, font, fontsize, _whiteBrush, mode_x, graphicsObject.Height - (fontsize * 1.5f), true);
+                DrawFlightMode(fontsize, modeLeft, modeRight);
 
                 // plugins subscribe to the on-screen HUD; an overlay runs the same painters on itself
                 (_overlaySource ?? this).OnCustomPaint?.Invoke(this);
@@ -3663,6 +3662,59 @@ namespace MissionPlanner.Controls
         private readonly GraphicsPath pth = new GraphicsPath();
 
         private float _load;
+
+        private FlightModeLayout _flightModeLayout;
+        private (string, string, RectangleF, int) _flightModeLayoutKey;
+
+        private void DrawFlightMode(int fontsize, float left, float right)
+        {
+            var area = FlightModeLayout.HudArea(this.Width, this.Height, fontsize, left, right);
+            var textArea = RectangleF.Inflate(area, -fontsize * 0.65f, -1);
+            var key = (_mode, System.Globalization.CultureInfo.CurrentUICulture.Name, textArea, fontsize);
+            if (_flightModeLayout == null || !_flightModeLayoutKey.Equals(key))
+            {
+                _flightModeLayout = FlightModeLayout.Create(FlightModeDisplay.FromMode(_mode), textArea,
+                    fontsize, MeasureModeText);
+                _flightModeLayoutKey = key;
+            }
+            var layout = _flightModeLayout;
+            if (layout.PrimaryText.Length == 0) return;
+
+            var center = area.Left + area.Width / 2;
+            var halfWidth = Math.Max(layout.PrimaryBounds.Width, layout.SecondaryBounds.Width) / 2 + fontsize * 0.65f;
+            var slope = fontsize * 0.5f;
+            var polygon = new[] {
+                new PointF(center - halfWidth, area.Bottom),
+                new PointF(center - halfWidth + slope, area.Top),
+                new PointF(center + halfWidth - slope, area.Top),
+                new PointF(center + halfWidth, area.Bottom)
+            };
+            graphicsObject.FillPolygon(SlightlyTransparentBrush, polygon);
+            graphicsObject.DrawPolygon(_whitePen, polygon);
+            drawstring(layout.PrimaryText, font, layout.PrimarySize, _whiteBrush, center, layout.PrimaryBounds.Top + 1, true);
+            if (layout.SecondaryText.Length != 0)
+                drawstring(layout.SecondaryText, font, layout.SecondarySize, _whiteBrush, center, layout.SecondaryBounds.Top + 1, true);
+        }
+
+        private SizeF MeasureModeText(string text, float fontsize)
+        {
+            if (string.IsNullOrEmpty(text)) return SizeF.Empty;
+            float width = 0, bottom = 0;
+            var scale = fontsize / (fontsize + 5);
+            foreach (var c in text)
+            {
+                // Match the per-glyph advance used by both drawstring backends, even on the first frame.
+                using (var path = new GraphicsPath())
+                {
+                    path.AddString(c.ToString(), font.FontFamily, 0, fontsize + 5, Point.Empty,
+                        StringFormat.GenericTypographic);
+                    var bounds = path.PointCount == 0 ? RectangleF.Empty : path.GetBounds();
+                    width += (int)(Math.Max(this.Width / 150f, bounds.Right) + 2) * scale;
+                    bottom = Math.Max(bottom, bounds.Bottom * scale);
+                }
+            }
+            return new SizeF((float)Math.Ceiling(width) + 2, (float)Math.Ceiling(bottom) + 2);
+        }
 
         float calcfontsize(string text, Font font, float fontsize, SolidBrush brush, int targetwidth)
         {

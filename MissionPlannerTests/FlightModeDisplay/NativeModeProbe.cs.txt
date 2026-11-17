@@ -1,0 +1,238 @@
+using System;
+using System.Collections;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Windows.Forms;
+
+// Compile with the Framework csc, then load the exact application's assemblies and config.
+internal static class NativeModeProbe
+{
+    private const BindingFlags Instance = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
+    private static int assertions;
+    private static void Check(bool condition, string message)
+    {
+        assertions++;
+        if (!condition) throw new Exception(message);
+    }
+    private static object Get(object target, string name) { return target.GetType().GetProperty(name, Instance).GetValue(target, null); }
+    private static void Set(object target, string name, object value) { target.GetType().GetProperty(name, Instance).SetValue(target, value, null); }
+    private static object Call(object target, string name, params object[] args) { return target.GetType().GetMethod(name, Instance).Invoke(target, args); }
+    private static void Inside(RectangleF outer, RectangleF inner)
+    {
+        Check(inner.Left >= outer.Left - 0.01 && inner.Right <= outer.Right + 0.01 &&
+            inner.Top >= outer.Top - 0.01 && inner.Bottom <= outer.Bottom + 0.01, "Text escaped its reserved area");
+    }
+    private static void CheckLayout(object layout, RectangleF area, bool bilingual)
+    {
+        Check(((string)Get(layout, "PrimaryText")).Length > 0, "Primary mode missing");
+        Inside(area, (RectangleF)Get(layout, "PrimaryBounds"));
+        if (bilingual)
+        {
+            Check(((string)Get(layout, "SecondaryText")).Length > 0, "English mode missing");
+            Inside(area, (RectangleF)Get(layout, "SecondaryBounds"));
+            Check((float)Get(layout, "SecondarySize") < (float)Get(layout, "PrimarySize"), "English is not smaller");
+            Check(((RectangleF)Get(layout, "PrimaryBounds")).Bottom < ((RectangleF)Get(layout, "SecondaryBounds")).Top,
+                "The two mode lines overlap");
+        }
+        else Check((string)Get(layout, "SecondaryText") == "", "Fallback must have one line");
+    }
+    private static void Ink(Bitmap bitmap, RectangleF bounds)
+    {
+        var rect = Rectangle.Intersect(Rectangle.Ceiling(bounds), new Rectangle(0, 0, bitmap.Width, bitmap.Height));
+        Color background = bitmap.GetPixel(2, 2);
+        bool found = false;
+        for (int y = rect.Top; y < rect.Bottom && !found; y++)
+        for (int x = rect.Left; x < rect.Right && !found; x++)
+            found = bitmap.GetPixel(x, y).ToArgb() != background.ToArgb();
+        Check(found, "Native text row has no painted pixels");
+    }
+
+    [STAThread]
+    private static int Main(string[] args)
+    {
+        try
+        {
+            Check(args.Length >= 3, "Expected build directory, output directory and culture");
+            Check(Environment.GetEnvironmentVariable("CI") == "true" ||
+                System.Diagnostics.Process.GetCurrentProcess().SessionId == 0 ||
+                args.Contains("--allow-interactive"), "Use an isolated Windows session or explicitly pass --allow-interactive");
+            string root = Path.GetFullPath(args[0]), output = Path.GetFullPath(args[1]);
+            Directory.CreateDirectory(output);
+            AppDomain.CurrentDomain.AssemblyResolve += delegate(object sender, ResolveEventArgs e) {
+                string path = Path.Combine(root, new AssemblyName(e.Name).Name + ".dll");
+                return File.Exists(path) ? Assembly.LoadFrom(path) : null;
+            };
+            CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo(args[2]);
+            CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+            bool enhanced = args[2] == "zh-CN";
+            Application.EnableVisualStyles();
+            var utilities = Assembly.LoadFrom(Path.Combine(root, "MissionPlanner.Utilities.dll"));
+            utilities.GetType("MissionPlanner.Utilities.Settings", true).GetField("CustomUserDataDirectory")
+                .SetValue(null, Path.Combine(output, "isolated-user-data"));
+            var app = Assembly.LoadFrom(Path.Combine(root, "MissionPlanner.exe"));
+            var controls = Assembly.LoadFrom(Path.Combine(root, "MissionPlanner.Controls.dll"));
+            var displayType = utilities.GetType("MissionPlanner.Utilities.FlightModeDisplay", true);
+            var fromMode = displayType.GetMethod("FromMode");
+
+            // Exercise the real formatter and firmware mode lists, retaining their command values.
+            var ardupilot = Assembly.LoadFrom(Path.Combine(root, "MissionPlanner.ArduPilot.dll"));
+            var firmwareType = ardupilot.GetType("MissionPlanner.ArduPilot.Firmwares", true);
+            var common = ardupilot.GetType("MissionPlanner.ArduPilot.Common", true);
+            var modeList = common.GetMethod("getModesList", new[] { firmwareType });
+            foreach (var firmware in new[] { "ArduCopter2", "ArduPlane", "ArduRover", "PX4", "ArduTracker" })
+            {
+                var modes = (IEnumerable)modeList.Invoke(null, new[] { Enum.Parse(firmwareType, firmware) });
+                Check(modes != null, "Firmware mode list unavailable: " + firmware);
+                foreach (object pair in modes)
+                {
+                    int key = (int)Get(pair, "Key"); string raw = (string)Get(pair, "Value");
+                    var text = fromMode.Invoke(null, new object[] { raw });
+                    Check((bool)Get(text, "IsBilingual") == enhanced, firmware + ": " + raw);
+                    Check((string)Get(text, "Secondary") == (enhanced ? raw : ""), "Original mode lost");
+                    Check((int)Get(pair, "Key") == key && (string)Get(pair, "Value") == raw, "Protocol value changed");
+                }
+            }
+            var mavlink = Assembly.LoadFrom(Path.Combine(root, "MAVLink.dll"));
+            var copterMode = mavlink.GetType("MAVLink+COPTER_MODE", true);
+            Check(Convert.ToInt32(Enum.Parse(copterMode, "TURTLE")) == 28, "Turtle protocol value");
+            Check(Convert.ToInt32(Enum.Parse(copterMode, "FLIP")) == 14, "Flip protocol value");
+            Check((string)Get(fromMode.Invoke(null, new object[] { "Turtle" }), "Primary") ==
+                (enhanced ? "翻正自救" : "Turtle"), "Turtle display");
+
+            // Real WinForms TextRenderer and owner painting, with explicit font stress (not a DPI claim).
+            var buttonType = app.GetType("MissionPlanner.Controls.ModeDropdownButton", true);
+            using (var button = (Control)Activator.CreateInstance(buttonType, true))
+            {
+                button.CreateControl();
+                foreach (int width in new[] { 80, 140, 280 })
+                foreach (float scale in new[] { 1f, 1.5f, 2f })
+                using (var font = new Font("Segoe UI", 11 * scale, FontStyle.Bold))
+                {
+                    button.Font = font;
+                    button.Size = new Size(width, 42);
+                    foreach (var raw in new[] { "RTL", "Loiter To QLAND", "Turtle", "PLUGIN_MODE_WITH_A_VERY_LONG_UNKNOWN_NAME" })
+                    {
+                        button.Text = raw; Set(button, "CurrentMode", raw);
+                        object layout;
+                        using (var graphics = button.CreateGraphics()) layout = Call(button, "GetModeLayout", graphics);
+                        CheckLayout(layout, new RectangleF(4, 2, width - 18, 38), enhanced && !raw.StartsWith("PLUGIN_"));
+                        Check(button.Text == raw && (string)Get(button, "CurrentMode") == raw, "Toolbar source mode changed");
+                        Check(button.AccessibleName == (string)Get(fromMode.Invoke(null, new object[] { raw }), "AccessibleText"),
+                            "Full accessible label missing");
+                        using (var bitmap = new Bitmap(button.Width, button.Height))
+                        {
+                            button.DrawToBitmap(bitmap, button.ClientRectangle);
+                            Ink(bitmap, (RectangleF)Get(layout, "PrimaryBounds"));
+                            if (((string)Get(layout, "SecondaryText")).Length != 0) Ink(bitmap, (RectangleF)Get(layout, "SecondaryBounds"));
+                            if (width == 140 && scale == 1f && raw == "Loiter To QLAND")
+                                bitmap.Save(Path.Combine(output, "toolbar.png"), ImageFormat.Png);
+                        }
+                    }
+                    button.Font = SystemFonts.MessageBoxFont;
+                }
+                for (int i = 0; i < 100; i++)
+                {
+                    string raw = i % 2 == 0 ? "RTL" : "Loiter To QLAND";
+                    button.Text = raw; Set(button, "CurrentMode", raw);
+                    using (var graphics = button.CreateGraphics())
+                        CheckLayout(Call(button, "GetModeLayout", graphics), new RectangleF(4, 2, button.Width - 18, button.Height - 4), enhanced);
+                }
+            }
+
+            // The toolbar host must respect space occupied by neighboring menu items.
+            using (var form = new Form())
+            using (var menu = new MenuStrip())
+            using (var host = (ToolStripControlHost)Activator.CreateInstance(app.GetType("MissionPlanner.Controls.ToolStripVehicleState", true)))
+            {
+                form.AutoScaleMode = AutoScaleMode.None;
+                menu.AutoSize = false; menu.Height = 58;
+                menu.Items.Add(new ToolStripLabel { AutoSize = false, Width = 180, Text = "Navigation" });
+                menu.Items.Add(host);
+                menu.Items.Add(new ToolStripLabel { AutoSize = false, Width = 180, Text = "Connection" });
+                form.Controls.Add(menu);
+                var timer = (Timer)host.GetType().GetField("_updateTimer", Instance).GetValue(host);
+                if (timer != null) timer.Stop();
+                form.Show();
+                host.Visible = true;
+                foreach (int width in new[] { 520, 800, 1420 })
+                {
+                    form.ClientSize = new Size(width, 200); menu.PerformLayout();
+                    Call(host, "UpdateModeDisplay", "Loiter To QLAND");
+                    Call(host, "AdjustWidthToAvailableSpace");
+                    int other = menu.Items.Cast<ToolStripItem>().Where(i => i != host && i.Available)
+                        .Sum(i => i.Width + i.Margin.Horizontal);
+                    Check(host.Width <= Math.Max(0, menu.Width - other - 20), "Mode host overlaps neighboring controls");
+                    Check(host.Control.Height <= menu.Height, "Mode host exceeds toolbar height");
+                    var dropdown = (Control)host.GetType().GetField("_modeDropdown", Instance).GetValue(host);
+                    var location = host.Control.PointToClient(dropdown.PointToScreen(Point.Empty));
+                    if (dropdown.Width > 0)
+                        Inside(host.Control.ClientRectangle, new RectangleF(location, dropdown.Size));
+                }
+            }
+
+            // Draw the real GDI HUD. Its cached layout is generated by the exact HUD font metrics.
+            using (var hud = (Control)Activator.CreateInstance(controls.GetType("MissionPlanner.Controls.HUD", true)))
+            {
+                Set(hud, "opengl", false);
+                Set(hud, "datetime", new DateTime(2026, 1, 1));
+                Set(hud, "disttowp", 1234f); Set(hud, "alt", 123f); Set(hud, "message", "TEST WARNING");
+                Set(hud, "batterylevel", 24.5f); Set(hud, "batterylevel2", 24.6f);
+                Set(hud, "batteryon2", true);
+                hud.CreateControl();
+                foreach (int width in new[] { 320, 640, 960 })
+                foreach (float gps2 in new[] { 0f, 6f })
+                {
+                    // This fork deliberately fixes displayicons=true; exercise single / dual GPS instead.
+                    Check((bool)Get(hud, "displayicons"), "Expected the fork's icon HUD");
+                    Set(hud, "gpsfix2", gps2);
+                    hud.Size = new Size(width, width * 3 / 4);
+                    foreach (var raw in new[] { "RTL", "Loiter To QLAND", "Turtle", "PLUGIN_LONG_UNKNOWN_MODE" })
+                    {
+                        Set(hud, "mode", raw);
+                        using (var bitmap = new Bitmap(hud.Width, hud.Height))
+                        {
+                            hud.DrawToBitmap(bitmap, hud.ClientRectangle);
+                            var layout = hud.GetType().GetField("_flightModeLayout", Instance).GetValue(hud);
+                            Check(layout != null, "HUD did not reach mode painting");
+                            Check((string)Get(hud, "mode") == raw, "HUD raw mode changed");
+                            var key = hud.GetType().GetField("_flightModeLayoutKey", Instance).GetValue(hud);
+                            var area = (RectangleF)key.GetType().GetField("Item3").GetValue(key);
+                            if (area.Width > 20 && area.Height > 8)
+                                CheckLayout(layout, area, enhanced && !raw.StartsWith("PLUGIN_"));
+                            else Check((string)Get(layout, "PrimaryText") == "", "HUD painted over occupied telemetry");
+                            if (((string)Get(layout, "PrimaryText")).Length != 0)
+                            {
+                                Check(((RectangleF)Get(layout, "PrimaryBounds")).Top > hud.Height * 0.8f, "Waypoint / altitude boundary");
+                                Check(area.Top > hud.Height - 2.5f * (hud.Height / 28), "Pre-arm boundary");
+                            }
+                            if (width == 640 && gps2 == 6f && raw == "Loiter To QLAND")
+                                bitmap.Save(Path.Combine(output, "hud-gdi.png"), ImageFormat.Png);
+                        }
+                    }
+                    // Changing only the displayed mode must preserve waypoint, altitude and warning pixels.
+                    Set(hud, "mode", "Turtle");
+                    using (var before = new Bitmap(hud.Width, hud.Height))
+                    using (var after = new Bitmap(hud.Width, hud.Height))
+                    {
+                        hud.DrawToBitmap(before, hud.ClientRectangle);
+                        Set(hud, "mode", "Loiter To QLAND");
+                        hud.DrawToBitmap(after, hud.ClientRectangle);
+                        int limit = (int)(hud.Height - 2.4f * (hud.Height / 28)) - 2;
+                        bool equal = true;
+                        for (int y = 0; y < limit && equal; y++)
+                        for (int x = 0; x < hud.Width && equal; x++)
+                            equal = before.GetPixel(x, y) == after.GetPixel(x, y);
+                        Check(equal, "Mode update changed pixels in the waypoint / altitude / warning region");
+                    }
+                }
+            }
+            Console.WriteLine(args[2] + ": " + assertions + " native assertions passed; font stress 100/150/200%; GDI HUD; full app / OpenGL / real DPI changes not tested.");
+            return 0;
+        }
+        catch (Exception ex) { Console.Error.WriteLine(ex); return 1; }
+    }
+}

@@ -53,5 +53,24 @@ namespace MissionPlannerTests.Controls
             }
             finally { CultureInfo.CurrentUICulture = previous; }
         }
+
+        [TestMethod]
+        public void CurrentModePresentationKeepsTurtleAndFlipValuesDistinct()
+        {
+            var previous = CultureInfo.CurrentUICulture;
+            try
+            {
+                CultureInfo.CurrentUICulture = new CultureInfo("zh-CN");
+                Assert.AreEqual(28, (int)MAVLink.COPTER_MODE.TURTLE);
+                Assert.AreEqual(14, (int)MAVLink.COPTER_MODE.FLIP);
+                var raw = Common.FormatModeName("TURTLE");
+                var display = FlightModeDisplay.FromMode(raw);
+                Assert.AreEqual("Turtle", raw);
+                Assert.AreEqual("翻正自救", display.Primary);
+                Assert.AreEqual(raw, display.Secondary);
+                Assert.AreEqual("翻转", FlightModeDisplay.FromMode("Flip").Primary);
+            }
+            finally { CultureInfo.CurrentUICulture = previous; }
+        }
     }
 }

@@ -8937,6 +8937,10 @@ Acc：当前测定位置的精度
     <value>临时飞行限制</value>
     <comment>"TFR's"</comment>
   </data>
+  <data name="995703c6d5f4bedd56369cc60317fe89aa5285ceb74aaed54aa324fa4ef75483" xml:space="preserve">
+    <value>翻正自救</value>
+    <comment>"TURTLE"</comment>
+  </data>
   <data name="84dfcd998ffe73531f704c0a279f6269a7f10a5d9babc707fdac94a3adf742ba" xml:space="preserve">
     <value>发射系统故障</value>
     <comment>"TX Sys. Fail."</comment>
@@ -9563,6 +9567,10 @@ Acc：当前测定位置的精度
   <data name="912ccf0e98e9c94bc7002ee29e8d3f861d05c49ee24415274e2dd26183c666e1" xml:space="preserve">
     <value>转弯速率： </value>
     <comment>"TurnRate: "</comment>
+  </data>
+  <data name="5171ce3048d31e55453e6465e144e041ac1128ae40ac6f5f4b54bd7bf8e987c8" xml:space="preserve">
+    <value>翻正自救</value>
+    <comment>"Turtle"</comment>
   </data>
   <data name="fd96853304e45c99209bb21f6ff6c280972f3f2d19b9ab9daeddf2c7ed22bc40" xml:space="preserve">
     <value>发射功率</value>
