@@ -9,6 +9,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Localization\**" />
+    <Compile Remove="Branding\**" />
     <ProjectReference Include="..\ExtLibs\ArduPilot\MissionPlanner.ArduPilot.csproj" />
     <ProjectReference Include="..\ExtLibs\Controls\MissionPlanner.Controls.csproj" />
     <ProjectReference Include="..\ExtLibs\DroneCAN\DroneCAN.csproj" />

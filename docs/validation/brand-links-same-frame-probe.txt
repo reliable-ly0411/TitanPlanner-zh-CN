@@ -1,0 +1,18 @@
+probe physical={X=504,Y=33}, legacy-unaware={X=504,Y=33}
+PaintForm hwnd=1442202 nativeClient={X=8,Y=31,Width=992,Height=648}, nativeWindow={X=0,Y=0,Width=1008,Height=687}, managedClient={Width=992, Height=648}, managedOrigin={X=8,Y=31}, windowDpi=96, deviceDpi=96, hwndAwareness=2, hwndPMv2=True
+Panel hwnd=1442196 nativeClient={X=8,Y=31,Width=992,Height=648}, nativeWindow={X=8,Y=31,Width=992,Height=648}, managedClient={Width=992, Height=648}, managedOrigin={X=8,Y=31}, windowDpi=96, deviceDpi=96, hwndAwareness=2, hwndPMv2=True
+Panel hwnd=1769948 nativeClient={X=8,Y=31,Width=992,Height=87}, nativeWindow={X=8,Y=31,Width=992,Height=87}, managedClient={Width=992, Height=87}, managedOrigin={X=8,Y=31}, windowDpi=96, deviceDpi=96, hwndAwareness=2, hwndPMv2=True
+MenuStrip hwnd=1442342 nativeClient={X=8,Y=31,Width=992,Height=87}, nativeWindow={X=8,Y=31,Width=992,Height=87}, managedClient={Width=992, Height=87}, managedOrigin={X=8,Y=31}, windowDpi=96, deviceDpi=96, hwndAwareness=2, hwndPMv2=True
+BrandLogoControl hwnd=1442224 nativeClient={X=798,Y=31,Width=190,Height=87}, nativeWindow={X=798,Y=31,Width=190,Height=87}, managedClient={Width=190, Height=87}, managedOrigin={X=798,Y=31}, windowDpi=96, deviceDpi=96, hwndAwareness=2, hwndPMv2=True
+monitor={X=0,Y=0,Width=1024,Height=768}, work={X=0,Y=0,Width=1024,Height=728}, managedScreen={X=0,Y=0,Width=1024,Height=768}, threadAwareness=2
+page paints=2->4, pageColor=Color [Magenta], graphics=dpi=96x96, pageUnit=Pixel, pageScale=1, transform=1,0,0,1,0,0
+form WM_NCHITTEST=1 (client=1, caption=2)
+asserted frame=5E9700028B479FF81CDDA10DB4F070E4CB64036B50154CD44AA813563670F24A, utc=2026-11-16T19:11:44.6022983Z, bounds={X=8,Y=31,Width=992,Height=648}, probe-relative={X=496,Y=2}
+screenDC mapMode=1, viewportOrigin={X=0,Y=0}, windowOrigin={X=0,Y=0}, LPtoDP(origin)={X=8,Y=31}, sourceOrigin={X=8,Y=31}, LPtoDP(end)={X=1000,Y=679}
+screenDC HORZRES=1024, VERTRES=768, DESKTOPHORZRES=1024, DESKTOPVERTRES=768, LOGPIXELS=96x96
+native GetPixel before=#FF00FF
+native GetPixel after=#FF00FF
+frame bounds={X=8,Y=31,Width=992,Height=648}, bitmap size={Width=992, Height=648}, bitmapDpi=96x96
+
+probe expected=#FF00FF actual=#FF00FF, sampledHwnd=1442196, sampledRoot=1442202, class=WindowsForms10.Window.8.app.0.358a177_r7_ad6
+legacy-unaware point in SAME frame=#FF00FF, owner=1442202
