@@ -320,11 +320,13 @@ namespace MissionPlanner.Utilities
                 // toolbar backdrop plus artwork. Child HWNDs clip the parent's paint;
                 // relying on the parent or OnPaintBackground leaves old page pixels.
                 ((BrandLogoControl)Parent).PaintLinkSurface(e.Graphics, Location);
-                if (Focused || (ShowFocusCues && IsDefault))
+                if (Focused && ShowFocusCues)
                 {
-                    var bounds = ClientRectangle;
-                    bounds.Inflate(-2, -2);
-                    ControlPaint.DrawFocusRectangle(e.Graphics, bounds);
+                    // Keep the keyboard cue in the empty bottom padding. A frame
+                    // around either hit region draws a vertical line through the
+                    // continuous artwork at its midpoint, even after mouse clicks.
+                    var cue = new Rectangle(6, Height - 5, Math.Max(1, Width - 12), 3);
+                    ControlPaint.DrawFocusRectangle(e.Graphics, cue);
                 }
             }
 

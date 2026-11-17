@@ -244,6 +244,56 @@ namespace MissionPlannerTests.Utilities
             });
         }
 
+        [DataTestMethod]
+        [DataRow(false, 58)]
+        [DataRow(true, 87)]
+        [DataRow(true, 116)]
+        public void LiveHoverPressAndKeyboardFocusKeepTheArtworkContinuous(bool dark, int height)
+        {
+            InNativeSta(() =>
+            {
+                using (var fixture = new PaintFixture(dark, false, height))
+                {
+                    string name = "interaction-" + dark + "-" + height;
+                    fixture.RevealToolbarOverPreviousPage(name);
+                    foreach (Control link in fixture.Brand.Control.Controls)
+                    {
+                        string stage = name + "-" + link.Name;
+                        Assert.IsTrue(link.Focus(), "Both links must keep independent keyboard focus");
+                        SetFocusCues(fixture, link, false);
+                        fixture.AssertInteractionPixels(stage + "-mouse-focus", link, false);
+                        int moves = 0, downs = 0, ups = 0;
+                        link.MouseMove += (sender, args) => moves++;
+                        link.MouseDown += (sender, args) => downs++;
+                        link.MouseUp += (sender, args) => ups++;
+                        var position = new IntPtr(link.Width / 2 | ((link.Height / 2) << 16));
+                        SendMessage(link.Handle, 0x0200, IntPtr.Zero, position); // WM_MOUSEMOVE
+                        fixture.AssertInteractionPixels(stage + "-hover", link, false);
+                        Assert.IsTrue(moves > 0, "Hover must exercise native mouse dispatch");
+                        SendMessage(link.Handle, 0x0201, new IntPtr(1), position); // WM_LBUTTONDOWN
+                        try { fixture.AssertInteractionPixels(stage + "-pressed", link, false); }
+                        finally { SendMessage(link.Handle, 0x0202, IntPtr.Zero, position); }
+                        Assert.IsTrue(downs > 0 && ups > 0, "Pressed state must exercise both native mouse events");
+                        SetFocusCues(fixture, link, true);
+                        fixture.AssertInteractionPixels(stage + "-keyboard-focus", link, true);
+                        SetFocusCues(fixture, link, false);
+                        fixture.AssertInteractionPixels(stage + "-cue-cleared", link, false);
+                    }
+                }
+            });
+        }
+
+        private static void SetFocusCues(PaintFixture fixture, Control link, bool visible)
+        {
+            // Windows propagates WM_CHANGEUISTATE to the children. Verify the
+            // actual cue state rather than assuming the last input device.
+            SendMessage(fixture.Form.Handle, 0x0127, new IntPtr((visible ? 2 : 1) | (1 << 16)), IntPtr.Zero);
+            fixture.Pump();
+            Assert.AreEqual(visible ? 0 : 1, (int)SendMessage(link.Handle, 0x0129, IntPtr.Zero, IntPtr.Zero) & 1);
+            var cues = typeof(Control).GetProperty("ShowFocusCues", BindingFlags.Instance | BindingFlags.NonPublic);
+            Assert.AreEqual(visible, (bool)cues.GetValue(link, null), "Exercise the effective WinForms focus cue state");
+        }
+
         private static Bitmap ExpectedLogo(Size size, Color background)
         {
             var expected = new Bitmap(size.Width, size.Height);
@@ -448,8 +498,10 @@ namespace MissionPlannerTests.Utilities
                     Size = new Size(79, height), Alignment = ToolStripItemAlignment.Right, Margin = Padding.Empty };
                 var connection = new ToolStripControlHost(new Panel { Size = new Size(241, height) })
                     { Name = "SerialBaud", Alignment = ToolStripItemAlignment.Right, Margin = Padding.Empty };
-                connection.Control.Controls.Add(new ComboBox { Text = "AUTO", Width = 121 });
+                connection.Control.Controls.Add(new ComboBox { Text = "TCP", Width = 121 });
                 connection.Control.Controls.Add(new ComboBox { Text = "115200", Width = 111, Left = 127 });
+                connection.Control.Controls.Add(new ComboBox { Text = "TCP-1", Width = 155, Left = 83, Top = 27 });
+                connection.Control.Controls.Add(new LinkLabel { Text = "统计", AutoSize = true, Left = 3, Top = 32 });
                 Menu.Items.Add(connect);
                 Menu.Items.Add(connection);
                 var original = new ToolStripButton { Name = "MenuArduPilot", Alignment = ToolStripItemAlignment.Right };
@@ -590,6 +642,39 @@ namespace MissionPlannerTests.Utilities
                     Save(name, actual);
                     Save(name + "-window", frame.Pixels);
                     AssertPixels(expected, actual, Background, name);
+                }
+            }
+
+            public void AssertInteractionPixels(string name, Control focusedLink, bool cueVisible)
+            {
+                Pump();
+                var bounds = PhysicalClientBounds(Brand.Control);
+                AssertUnobscured(bounds);
+                using (var frame = CaptureClientFrame(name))
+                using (var actual = frame.CropPhysical(bounds))
+                using (var expected = ExpectedLogo(bounds.Size, Background))
+                {
+                    Save(name, actual);
+                    Save(name + "-window", frame.Pixels);
+                    int cuePixels = 0, mismatches = 0;
+                    // Only bottom padding under the active half may contain a cue.
+                    // Every artwork pixel, including both sides of the midpoint,
+                    // must equal the same full-image reference in every state.
+                    var allowedCue = new Rectangle(focusedLink.Left + 4, bounds.Height - 6, focusedLink.Width - 8, 5);
+                    for (int y = 0; y < actual.Height; y++)
+                    for (int x = 0; x < actual.Width; x++)
+                    {
+                        var a = actual.GetPixel(x, y);
+                        var e = expected.GetPixel(x, y);
+                        int delta = Math.Max(Math.Abs(a.R - e.R), Math.Max(Math.Abs(a.G - e.G), Math.Abs(a.B - e.B)));
+                        if (delta <= 16) continue;
+                        if (cueVisible && allowedCue.Contains(x, y)) cuePixels++;
+                        else mismatches++;
+                    }
+                    Console.WriteLine(name + ": unwanted pixels=" + mismatches + ", bottom-padding cue pixels=" + cuePixels);
+                    Assert.AreEqual(0, mismatches, "Focus/hover/press must not draw a seam, border or white backing in the artwork");
+                    if (cueVisible) Assert.IsTrue(cuePixels >= focusedLink.Width / 3, "Keyboard focus must stay visibly indicated below the active link");
+                    AssertUnobscured(bounds);
                 }
             }
 
