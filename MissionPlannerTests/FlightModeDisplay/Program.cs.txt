@@ -1,0 +1,106 @@
+using System;
+using System.Drawing;
+using System.Globalization;
+using MissionPlanner.Controls;
+using MissionPlanner.Utilities;
+
+internal static class ModeDisplayChecks
+{
+    private static int assertions;
+    private static void Check(bool condition, string message)
+    {
+        assertions++;
+        if (!condition) throw new Exception(message);
+    }
+
+    // Deterministic metrics exercise geometry only. Native font and paint checks run separately on Windows.
+    private static SizeF Measure(string text, float size)
+    {
+        float width = 0;
+        foreach (var c in text) width += c >= '\u4e00' ? size : size * 0.65f;
+        return text.Length == 0 ? SizeF.Empty : new SizeF(width, size * 1.3f);
+    }
+
+    private static void Inside(RectangleF outer, RectangleF inner, string message)
+    {
+        Check(inner.Left >= outer.Left - 0.01f && inner.Right <= outer.Right + 0.01f &&
+            inner.Top >= outer.Top - 0.01f && inner.Bottom <= outer.Bottom + 0.01f, message);
+    }
+
+    private static void LayoutChecks(FlightModeDisplay display, RectangleF area, float fontSize)
+    {
+        var layout = FlightModeLayout.Create(display, area, fontSize, Measure);
+        Inside(area, layout.PrimaryBounds, "primary escaped reserved area");
+        Check(layout.PrimaryText.Length > 0, "primary should fit at practical sizes");
+        if (display.IsBilingual)
+        {
+            Check(layout.SecondaryText.Length > 0, "English line missing");
+            Check(layout.SecondarySize < layout.PrimarySize, "English must be smaller");
+            Check(layout.PrimaryBounds.Bottom < layout.SecondaryBounds.Top, "lines overlap");
+            Inside(area, layout.SecondaryBounds, "English escaped reserved area");
+        }
+        else Check(layout.SecondaryText.Length == 0, "duplicate fallback line");
+    }
+
+    private static int Main()
+    {
+        var previous = CultureInfo.CurrentUICulture;
+        try
+        {
+            foreach (var culture in new[] { "en-US", "zh-Hans", "zh-CN" })
+            {
+                CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo(culture);
+                bool enhanced = culture == "zh-CN";
+                foreach (var raw in new[] { "Auto", "RTL", "Althold", "AltHold", "Guided Nogps",
+                    "Loiter To QLAND", "QSTABILIZE", "Turtle", "TURTLE", "Flip",
+                    "Autoland", "AUTOLAND", "AutoLand", "Dock", "DOCK" })
+                {
+                    var display = FlightModeDisplay.FromMode(raw);
+                    Check(display.Primary == (enhanced ? UiText.Translate(raw) : raw), culture + ": " + raw);
+                    Check(display.Secondary == (enhanced ? raw : ""), "source mode must stay exact");
+                    Check(display.IsBilingual == enhanced, "language fallback");
+                    foreach (int width in new[] { 48, 90, 160, 360 })
+                    foreach (float scale in new[] { 1f, 1.5f, 2f })
+                    {
+                        LayoutChecks(display, new RectangleF(4, 2, width, 36), 15 * scale);
+                        int height = width * 3 / 4 + 120;
+                        float hudFont = height / 28;
+                        var area = FlightModeLayout.HudArea(width + 200, height, hudFont, 0, width + 200);
+                        Check(area.Top > height * 0.75f + hudFont, "altitude / waypoint tape boundary");
+                        Check(area.Top > height - hudFont * 2.5f, "pre-arm boundary");
+                        LayoutChecks(display, area, hudFont * scale);
+                    }
+                }
+                var unknown = "PLUGIN_MODE_WITH_A_VERY_LONG_UNKNOWN_NAME_123";
+                Check(FlightModeDisplay.FromMode(unknown).Primary == unknown, "unknown text changed");
+                Check(!FlightModeDisplay.FromMode(unknown).IsBilingual, "unknown duplicated");
+                LayoutChecks(FlightModeDisplay.FromMode(unknown), new RectangleF(0, 0, 45, 24), 16);
+                foreach (string empty in new string[] { null, "" })
+                    Check(FlightModeDisplay.FromMode(empty).Primary == "---", "empty fallback");
+            }
+            CultureInfo.CurrentUICulture = new CultureInfo("zh-CN");
+            Check(FlightModeDisplay.FromMode("Turtle").Primary == "翻正自救", "Turtle translation");
+            Check(FlightModeDisplay.FromMode("Flip").Primary == "翻转", "Flip must stay distinct");
+            foreach (var name in new[] { "Autoland", "AUTOLAND", "AutoLand" })
+                Check(FlightModeDisplay.FromMode(name).Primary == "自动着陆", "Plane AUTOLAND translation: " + name);
+            foreach (var name in new[] { "Dock", "DOCK" })
+                Check(FlightModeDisplay.FromMode(name).Primary == "自动停靠", "Rover DOCK translation: " + name);
+            for (int i = 0; i < 500; i++)
+            {
+                CultureInfo.CurrentUICulture = new CultureInfo(i % 2 == 0 ? "zh-CN" : "en-US");
+                var text = FlightModeDisplay.FromMode(i % 3 == 0 ? "Loiter To QLAND" : "RTL");
+                Check(text.IsBilingual == (i % 2 == 0), "stale language after repeated updates");
+                LayoutChecks(text, new RectangleF(0, 0, 60 + i % 80, 30), 18);
+            }
+            var small = FlightModeDisplay.FromMode("RTL");
+            Check(FlightModeLayout.Create(small, RectangleF.Empty, 15, Measure).PrimaryText == "", "empty area");
+            var blocked = FlightModeLayout.HudArea(320, 240, 8, 220, 180);
+            Check(blocked.Width == 0, "no room between telemetry must collapse safely");
+            Check(FlightModeLayout.Create(small, blocked, 8, Measure).PrimaryText == "", "must not paint over telemetry");
+            Console.WriteLine("Flight mode display / synthetic geometry: " + assertions + " assertions passed; native GUI not exercised.");
+            return 0;
+        }
+        catch (Exception ex) { Console.Error.WriteLine(ex); return 1; }
+        finally { CultureInfo.CurrentUICulture = previous; }
+    }
+}

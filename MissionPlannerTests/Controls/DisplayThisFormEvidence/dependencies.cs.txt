@@ -1,0 +1,30 @@
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+namespace MissionPlanner.ArduPilot { }
+namespace MissionPlanner.Utilities {
+ public static class NumericExtensions { public static bool IsNumber(this object value) { return value is double || value is float || value is int || value is long || value is decimal; } }
+ public static class UiText { public static string Translate(string value) { return value; } }
+ public static class ThemeManager {
+  public static void ApplyThemeTo(System.Windows.Forms.Control control) {}
+  public static Color BGColor = Color.FromArgb(28,28,28), ControlBGColor=Color.FromArgb(45,45,45), TextColor=Color.WhiteSmoke, BannerColor2=Color.LimeGreen;
+ }
+}
+namespace MissionPlanner {
+ public class CurrentState {
+  public static Dictionary<string,string> custom_field_names=new Dictionary<string,string>();
+  public string mode {get;set;} = "Stabilize";
+  public double airspeed {get;set;} = 12.5;
+  public double airspeed1_temp {get;set;} = -8.4;
+  public double airspeed2_temp {get;set;} = -12.3;
+  public double lowairspeed {get;set;} = 1;
+  public double targetairspeed {get;set;} = 15;
+  public double alt {get;set;} = 120.3;
+  public List<string> GetItemList(bool alpha) { return new List<string> {"airspeed","airspeed1_temp","airspeed2_temp","alt","lowairspeed","mode","targetairspeed"}; }
+  public static string GetGroupText(string key) { return key.Contains("airspeed") ? "Air" : "Position"; }
+  public static string GetDisplayText(string key) { return key.Contains("airspeed") ? "空速" : key; }
+ }
+ public class StatePort { public StateMav MAV=new StateMav(); }
+ public class StateMav { public CurrentState cs=new CurrentState(); }
+ public static class MainV2 { public static StatePort comPort=new StatePort(); }
+}

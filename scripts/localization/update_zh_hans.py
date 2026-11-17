@@ -40,9 +40,11 @@ def main():
     parser.add_argument('--check', action='store_true', help='只检查，不写入')
     args = parser.parse_args()
     catalog = json.loads(CATALOG.read_text(encoding='utf-8'))
+    contexts = json.loads((CATALOG.parent / 'context-translations.json').read_text(encoding='utf-8'))
     documents, changed, count = {}, set(), 0
     for source, key, english in resources():
-        if english not in catalog:
+        override = contexts.get(source.relative_to(ROOT).as_posix(), {}).get(key)
+        if english not in catalog and override is None:
             continue
         target = localized_path(source)
         if target not in documents:
@@ -60,9 +62,11 @@ def main():
         text = documents[target]
         entries = {e.get('name'): e.findtext('value', '') for e in ET.fromstring(text).findall('data')}
         # 保留上游已完成的译文；不以跨页面词典覆盖上下文译法。
-        if key in entries and entries[key] != english and entries[key].strip():
+        if override is not None and entries.get(key) == override:
             continue
-        translation = catalog[english]
+        if override is None and key in entries and entries[key] != english and entries[key].strip():
+            continue
+        translation = override if override is not None else catalog[english]
         node = f'  <data name={quoteattr(key)} xml:space="preserve"><value>{escape(translation)}</value></data>'
         pattern = r'  <data\s+name="' + re.escape(key) + r'"[^>]*>.*?</data>'
         if key in entries:

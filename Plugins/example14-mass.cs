@@ -43,7 +43,7 @@ namespace mass
 
         public override bool Loaded()
         {
-            var rootbut = new ToolStripMenuItem("Mass");
+            var rootbut = new ToolStripMenuItem(MissionPlanner.Utilities.UiText.Translate("Mass"));
             //rootbut.Click += but_Click;
             ToolStripItemCollection col = Host.FDMenuMap.Items;
             col.Add(rootbut);

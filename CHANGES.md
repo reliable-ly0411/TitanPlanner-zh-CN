@@ -1,3 +1,22 @@
+## Field selection layout
+
+The field-selection dialog keeps compact name/value columns fully inside the available width, scrolls extra fields vertically, and provides full-text tips for abbreviated labels. Selection callbacks retain the original field keys.
+
+## SD card formatting confirmation
+
+Formatting the flight controller SD card requires explicit confirmation, with Cancel selected by default.
+
+## Enhanced Chinese display
+
+The HUD and toolbar show the current flight mode in Chinese above a smaller original English line in enhanced Simplified Chinese. Long labels fit their reserved area; unknown modes retain their source text. Turtle is labelled 翻正自救, separately from Flip; Plane Autoland is labelled 自动着陆 and Rover Dock is labelled 自动停靠.
+
+New Simplified Chinese profiles default to Bing Satellite. Saved map selections and provider coordinate projections are preserved.
+
+Mission altitude references, bundled plugin menu entries and dashboard descriptions use localized display text while retaining protocol values and field keys. Dashboard field selection shows the original identifier beside its description. Vibration axes and mission altitude headers use context-specific labels.
+## Desktop appearance preferences
+
+The settings include a separate window icon and startup image page with previews, independent default resets, and persistent per-user imports. Window icons update during the session; startup images appear on the next launch. The startup footer identifies the modifier as lyy0405 and retains Michael Oborne and the TitanPlanner upstream credit. EXE, installer and existing shortcut icons retain their build-time identity.
+
 ## TitanPlanner-zh-CN upstream synchronization (2026-10-19)
 
 Merged Titan-Dynamics/TitanPlanner master through `08602f654562`, preserving both Chinese variants, the fork's dependency fixes, Windows validation, and Chinese ZIP/MSI packaging. Ported enhanced Chinese display strings to the replacement 3D map settings and reconciled the new offline-map and directory-deletion flows. The inherited 32-bit MAVLink and terrain tests run with the fork's offline Windows regression suite. The Linux build retains both GMap drawing targets to separate shim-based library types from desktop GDI+, and uses the fork's patched Skia native version. Re-encoded all seven application icon frames losslessly as uncompressed DIBs with transparency masks so Mono can load the same Titan artwork. The splash screen references that shared icon instead of retaining a duplicate PNG-compressed copy. The Linux runtime smoke test now exercises the Titan themed action tabs and setpoint controls under enhanced Chinese with an explicitly selected map in its isolated profile. Dashboard defaults, saved arrangements and reset operations use explicit grid cells so Mono does not read uncomputed layout positions while layout is suspended. The runtime test verifies all 15 default cells plus save/reload/reset behavior. Property-grid theme colors now detect the optional category-splitter API at runtime, retaining Windows styling while allowing Mono startup.
@@ -12,10 +31,18 @@ What this fork adds on top of upstream [ArduPilot/MissionPlanner](https://github
 
 ---
 
+# Simulation layout
+
+The simulation screen keeps location and heading controls reachable in smaller windows, wraps advanced options and vehicle choices, and scrolls when the available height is limited.
+
 # Branding & Theming
 
+## Localized brand links
+
+The top-right transparent logo preserves the supplied artwork and offers independent ArduPilot and GitHub links with keyboard access. Keyboard focus is indicated below the active half, keeping the artwork continuous during interaction. It stays visible as pages, menu visibility and window sizes change. Dark toolbar backgrounds use a thin neutral contour around the original black ink, with proportional gaps beside the connection button and window edge. Narrow windows keep the logo together in the menu overflow and retain the connection controls on the toolbar.
+
 ## Titan Dynamics System Theme
-A new bundled theme (`titandynamics.mpsystheme`) is set as the default for new installs. Theming also covers controls upstream leaves unthemed — `ListBox`, `PropertyGrid`, `MessagesList`, status tab, menu-bar icons, the Splash form, and toast notifications.
+The localized edition defaults to Mission Planner’s green `BurntKermit` theme for new installs. The bundled Titan Dynamics theme remains selectable; existing theme preferences are preserved. Theming also covers controls upstream leaves unthemed — `ListBox`, `PropertyGrid`, `MessagesList`, status tab, menu-bar icons, the Splash form, and toast notifications.
 
 ## Dark Windows Title Bars
 Native Windows title bars now follow the application theme rather than always being light.
@@ -250,7 +277,7 @@ The WPOverlay2 rendering pipeline with its MissionStyleEditor, `MissionSegmentiz
 - Animated zoom on the maps: the mouse wheel, zoom slider, zoom box and zoom buttons ease to the new level, about the centre of the view
 - An **(i)** button in the DATA map's corner toggles the legend of the vehicle's lines (Current Heading, Direction to WP, Target Heading, Ground Track)
 - With several vehicles connected, the ones not selected are drawn at half opacity without their lines; Config > Planner's secondary display style can show them solid or hide them
-- Clean pixel-perfect bottom-bar layout
+- Map footer options stay vertically aligned, size to the current font and wrap within narrow map panes
 - Auto-pan on parameter button swap
 
 ---
@@ -382,3 +409,7 @@ The fork tracks `upstream/master` and currently includes upstream as of 2026-10-
 - tlog playback selects the vehicle rather than the recording GCS; the PLAN home box shows altitude in display units
 - COM port lists survive misbehaving Bluetooth drivers; signed driver for Pixhawk 6C
 - SkiaSharp 3 on the desktop and faster drawing on Linux/Mono; Altitude Angel is removed
+
+## Localized branding
+
+- Upper-right brand image provides separate ArduPilot and localization-maintainer GitHub links.

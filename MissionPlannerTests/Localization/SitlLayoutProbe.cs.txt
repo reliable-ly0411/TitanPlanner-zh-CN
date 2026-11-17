@@ -1,0 +1,51 @@
+using System;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Windows.Forms;
+class SitlLayoutProbe {
+ static int assertions;
+ static void Check(bool value,string message) { assertions++; if(!value) throw new Exception(message); }
+ static Control Find(Control c,string name) { if(c.Name==name)return c; foreach(Control child in c.Controls){Control found=Find(child,name);if(found!=null)return found;}return null; }
+ static void CheckChildren(Control parent) {
+  foreach(Control child in parent.Controls) {
+   Check(child.Width>0&&child.Height>0,"collapsed control: "+child.Name);
+   Check(child.Left>=0&&child.Top>=0&&child.Right<=parent.ClientSize.Width+1&&child.Bottom<=parent.ClientSize.Height+1,"clipped child: "+child.Name+" in "+parent.Name+" "+child.Bounds+" / "+parent.ClientSize);
+   CheckChildren(child);
+  }
+ }
+ [STAThread] static int Main(string[] args) {
+  try {
+   Check(Environment.GetEnvironmentVariable("CI")=="true" || System.Diagnostics.Process.GetCurrentProcess().SessionId==0,"Use an isolated test session");
+   string root=Path.GetFullPath(args[0]), output=Path.GetFullPath(args[1]); Directory.CreateDirectory(output);
+   CultureInfo.CurrentUICulture=CultureInfo.GetCultureInfo(args[2]);
+   AppDomain.CurrentDomain.AssemblyResolve += delegate(object sender,ResolveEventArgs e) {string p=Path.Combine(root,new AssemblyName(e.Name).Name+".dll");return File.Exists(p)?Assembly.LoadFrom(p):null;};
+   Assembly utils=Assembly.LoadFrom(Path.Combine(root,"MissionPlanner.Utilities.dll"));
+   utils.GetType("MissionPlanner.Utilities.Settings").GetField("CustomUserDataDirectory").SetValue(null,Path.Combine(output,"isolated-user-data"));
+   Assembly main=Assembly.LoadFrom(Path.Combine(root,"MissionPlanner.exe"));
+   Application.EnableVisualStyles();
+   using(var form=new Form()) using(var view=(Control)Activator.CreateInstance(main.GetType("MissionPlanner.GCSViews.SITL",true))) {
+    form.AutoScaleMode=AutoScaleMode.None; view.Dock=DockStyle.Fill; form.Controls.Add(view); form.Show();
+    var host=(ScrollableControl)Find(view,"sitlLayoutRoot"); Check(host!=null&&host.AutoScroll,"scrollable SITL root missing");
+    var options=Find(view,"groupBox3");var advanced=Find(view,"groupBox4");var vehicles=Find(view,"groupBox2");
+    var heading=(NumericUpDown)Find(view,"NUM_heading");heading.Value=123;
+    var locations=(ComboBox)Find(view,"cmb_location");Check(locations.Items.Count>0,"location list empty");object savedLocation=locations.SelectedItem;
+    foreach(int width in new[]{640,800,1024,1920,640}) {
+     host.AutoScrollPosition=Point.Empty; form.ClientSize=new Size(width,480);form.PerformLayout();view.PerformLayout();host.PerformLayout();Application.DoEvents();
+     Check(options.Width>=options.Controls.Cast<Control>().Max(c=>c.Right),"location controls collapsed");
+     Check(!options.Bounds.IntersectsWith(advanced.Bounds),"options and advanced overlap");
+     Check(vehicles.Top>=Math.Max(options.Bottom,advanced.Bottom),"firmware overlaps settings");
+     CheckChildren(options); CheckChildren(advanced); CheckChildren(vehicles);
+     Check(host.DisplayRectangle.Height>=vehicles.Bottom,"scroll extent misses firmware");
+     host.ScrollControlIntoView(options);Application.DoEvents();Check(options.Top>=0&&options.Bottom<=host.ClientSize.Height,"options cannot be scrolled into view");
+     Check(heading.Value==123&&Object.Equals(locations.SelectedItem,savedLocation),"resize changed simulation configuration");
+     using(var bitmap=new Bitmap(form.ClientSize.Width,form.ClientSize.Height)){form.DrawToBitmap(bitmap,new Rectangle(Point.Empty,bitmap.Size));bitmap.Save(Path.Combine(output,"sitl-"+width+".png"),ImageFormat.Png);}
+    }
+   }
+   Console.WriteLine("SITL layout assertions: "+assertions);return 0;
+  }catch(Exception ex){Console.Error.WriteLine(ex);return 1;}
+ }
+}

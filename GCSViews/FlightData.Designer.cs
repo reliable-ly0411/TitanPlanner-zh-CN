@@ -187,7 +187,11 @@ namespace MissionPlanner.GCSViews
             this.lbl_hdop = new MissionPlanner.Controls.MyLabel();
             this.lbl_sats = new MissionPlanner.Controls.MyLabel();
             this.gMapControl1 = new MissionPlanner.Controls.myGMAP();
+#if LIB
             this.panel1 = new System.Windows.Forms.Panel();
+#else
+            this.panel1 = new System.Windows.Forms.FlowLayoutPanel();
+#endif
             this.coords1 = new MissionPlanner.Controls.Coords();
             this.CHK_autopan = new System.Windows.Forms.CheckBox();
             this.CB_tuning = new System.Windows.Forms.CheckBox();
@@ -2716,7 +2720,11 @@ namespace MissionPlanner.GCSViews
         private AGaugeApp.AGauge Gspeed;
         private AGaugeApp.AGauge Gvspeed;
         private System.Windows.Forms.TableLayoutPanel tableMap;
+#if LIB
         private System.Windows.Forms.Panel panel1;
+#else
+        private System.Windows.Forms.FlowLayoutPanel panel1;
+#endif
         private System.Windows.Forms.NumericUpDown Zoomlevel;
         private Label label1;
         private System.Windows.Forms.CheckBox CHK_autopan;

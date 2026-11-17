@@ -1,0 +1,29 @@
+NEGATIVE bridge-source=4f3f4610a32be571849c0dc2146010b6ab650308:Utilities/DesktopAppearance.cs
+NEGATIVE expected-exit=1 actual-exit=1
+NEGATIVE failure=main window absent from OpenForms kept original icon after import
+POSITIVE expected-exit=0 actual-exit=0
+PASS DefaultsDoNotCreateFiles
+PASS ImportsSurviveFreshStoreAndRemovedSources
+PASS ResetsAreIndependentAndPreserveImportsAndUserData
+PASS InvalidInputNeverCommitsSelection
+PASS OversizedImageHeadersAndFilesAreRejected
+PASS MissingAndCorruptCopiesFallbackIndependentlyWithoutRewriting
+PASS UnsafeOrBrokenManifestFallsBackAndPreservesEvidence
+PASS SaveLockFailurePreservesCommittedState
+PASS ReplacementsKeepBackupsAndDoNotLeaveTemporaryManifests
+PASS AllDocumentedImageFormatsLoadWithoutSourceLocks
+PASS EveryIconFrameIsValidated
+PASS PngCompressed256PixelIcoIsSupported
+PASS Dib256PixelIcoIsSupported
+PASS SeparateInstancesPreserveTheOtherSelection
+PASS MainWindowOutsideOpenFormsReceivesCustomAndDefaultIcons
+PASS NullOrDisposedMainDoesNotBlockOtherWindows
+PASS window-refresh-tests=2 native-WM_GETICON=Windows-only
+PASS store-tests=14 ui-assertions=473 drawingDpi=96 (font stress is not Windows DPI)
+PASS fresh-process=seed assertions=0
+PASS fresh-process=verify assertions=3
+PASS fresh-process=damage assertions=0
+PASS fresh-process=fallback assertions=5
+PASS fresh-process=reset assertions=0
+PASS fresh-process=defaults assertions=4
+Windows-only WM_GETICON assertions were not executed on Mono; native verification remains pending.

@@ -29,7 +29,7 @@ namespace MapIconDesc
 
         public override bool Init()
         {
-            var but = new ToolStripMenuItem("Change icon Description");
+            var but = new ToolStripMenuItem(MissionPlanner.Utilities.UiText.Translate("Change icon Description"));
             but.Click += but_Click;
             ToolStripItemCollection col = Host.FDMenuMap.Items;
             col.Add(but);

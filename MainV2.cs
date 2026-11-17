@@ -756,13 +756,8 @@ namespace MissionPlanner
 
 
 
-            if (Settings.Instance["theme"] == null)
-            {
-                if (File.Exists($"{running_directory}custom.mpsystheme"))
-                    Settings.Instance["theme"] = "custom.mpsystheme";
-                else
-                    Settings.Instance["theme"] = "titandynamics.mpsystheme";
-            }
+            Settings.Instance["theme"] = ThemeManager.SelectStartupTheme(
+                Settings.Instance["theme"], File.Exists($"{running_directory}custom.mpsystheme"));
 
             ThemeManager.LoadTheme(Settings.Instance["theme"]);
 
@@ -1161,11 +1156,20 @@ namespace MissionPlanner
                 this.Icon = ThemeManager.FormIcon;
             }
 
+#if !LIB
+            MenuArduPilot.Click -= MenuArduPilot_Click;
+            var brandLinks = BrandLogoLinks.Configure(MainMenu, MenuArduPilot, OpenBrandUrl, toolStripConnectionControl, MenuConnect);
+            brandLinks.MouseLeave += (sender, args) =>
+            {
+                if (autoHideToolStripMenuItem.Checked) MainMenu_MouseLeave(sender, args);
+            };
+#else
             var logoImage = ThemeManager.IsDarkTheme
                 ? Properties.Resources.TD_MP
                 : Properties.Resources.TD_MP_light;
             MenuArduPilot.Image = new Bitmap(logoImage, (int)(200), 31);
             MenuArduPilot.Width = MenuArduPilot.Image.Width;
+#endif
 
             Application.DoEvents();
 
@@ -4999,6 +5003,9 @@ namespace MissionPlanner
         {
             foreach (ToolStripItem item in MainMenu.Items)
             {
+#if !LIB
+                if (BrandLogoLinks.PreserveSurface(item)) continue;
+#endif
                 if (selected == item)
                 {
                     item.BackColor = ThemeManager.ControlBGColor;
@@ -5049,9 +5056,14 @@ namespace MissionPlanner
 
         private void MenuArduPilot_Click(object sender, EventArgs e)
         {
+            OpenBrandUrl("https://ardupilot.org");
+        }
+
+        private void OpenBrandUrl(string url)
+        {
             try
             {
-                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo("https://titandynamics.aero") { UseShellExecute = true });
+                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(url) { UseShellExecute = true });
             }
             catch
             {

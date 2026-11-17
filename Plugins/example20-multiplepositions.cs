@@ -41,7 +41,7 @@ namespace MissionPlanner.plugins
 
         public override bool Init()
         {
-            var rootbut = new ToolStripMenuItem("Setup other positions");
+            var rootbut = new ToolStripMenuItem(MissionPlanner.Utilities.UiText.Translate("Setup other positions"));
             rootbut.Click += but_Click;
             ToolStripItemCollection col = Host.FDMenuMap.Items;
             col.Add(rootbut);

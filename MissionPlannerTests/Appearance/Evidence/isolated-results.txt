@@ -1,0 +1,21 @@
+PASS DefaultsDoNotCreateFiles
+PASS ImportsSurviveFreshStoreAndRemovedSources
+PASS ResetsAreIndependentAndPreserveImportsAndUserData
+PASS InvalidInputNeverCommitsSelection
+PASS OversizedImageHeadersAndFilesAreRejected
+PASS MissingAndCorruptCopiesFallbackIndependentlyWithoutRewriting
+PASS UnsafeOrBrokenManifestFallsBackAndPreservesEvidence
+PASS SaveLockFailurePreservesCommittedState
+PASS ReplacementsKeepBackupsAndDoNotLeaveTemporaryManifests
+PASS AllDocumentedImageFormatsLoadWithoutSourceLocks
+PASS EveryIconFrameIsValidated
+PASS PngCompressed256PixelIcoIsSupported
+PASS Dib256PixelIcoIsSupported
+PASS SeparateInstancesPreserveTheOtherSelection
+PASS store-tests=14 ui-assertions=468 drawingDpi=96 (font stress is not Windows DPI)
+PASS fresh-process=seed assertions=0
+PASS fresh-process=verify assertions=3
+PASS fresh-process=damage assertions=0
+PASS fresh-process=fallback assertions=5
+PASS fresh-process=reset assertions=0
+PASS fresh-process=defaults assertions=4

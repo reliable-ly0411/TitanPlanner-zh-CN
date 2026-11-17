@@ -254,6 +254,11 @@ namespace MissionPlanner.GCSViews
                     }
                 }
 
+#if !LIB
+                if (MainV2.DisplayConfiguration.displayPlannerSettings)
+                    AddBackstageViewPage(typeof(ConfigAppearance), UiText.Translate("Window icon and startup image"));
+#endif
+
                 // Add custrom pages set up by plugins
                 foreach (var item in pluginViewPages)
                 {

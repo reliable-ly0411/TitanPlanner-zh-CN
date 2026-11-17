@@ -34,7 +34,7 @@ namespace MissionPlanner.plugins
 
         public override bool Init()
         {
-            var rootbut = new ToolStripMenuItem("Share to API");
+            var rootbut = new ToolStripMenuItem(MissionPlanner.Utilities.UiText.Translate("Share to API"));
             rootbut.Click += but_Click;
             ToolStripItemCollection col = Host.FDMenuMap.Items;
             col.Add(rootbut);

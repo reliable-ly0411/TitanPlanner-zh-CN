@@ -1,0 +1,7 @@
+frame=0, elapsedMs=128, utc=2026-11-16T19:11:44.4771869Z, bounds={X=8,Y=31,Width=992,Height=648}, hash=5E9700028B479FF81CDDA10DB4F070E4CB64036B50154CD44AA813563670F24A, probe=Color [A=255, R=255, G=0, B=255]
+frame=1, elapsedMs=253, utc=2026-11-16T19:11:44.6022983Z, bounds={X=8,Y=31,Width=992,Height=648}, hash=5E9700028B479FF81CDDA10DB4F070E4CB64036B50154CD44AA813563670F24A, probe=Color [A=255, R=255, G=0, B=255]
+screenDC mapMode=1, viewportOrigin={X=0,Y=0}, windowOrigin={X=0,Y=0}, LPtoDP(origin)={X=8,Y=31}, sourceOrigin={X=8,Y=31}, LPtoDP(end)={X=1000,Y=679}
+screenDC HORZRES=1024, VERTRES=768, DESKTOPHORZRES=1024, DESKTOPVERTRES=768, LOGPIXELS=96x96
+native GetPixel before=#FF00FF
+native GetPixel after=#FF00FF
+frame bounds={X=8,Y=31,Width=992,Height=648}, bitmap size={Width=992, Height=648}, bitmapDpi=96x96

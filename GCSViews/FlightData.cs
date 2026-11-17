@@ -443,12 +443,17 @@ namespace MissionPlanner.GCSViews
             CB_3dmap.CheckedChanged += CB_3dmap_CheckedChanged;
 
             panel1.Controls.Add(CB_3dmap);
+#if !LIB
+            MapFooterLayout.Configure(tableMap, panel1, coords1, CB_tuning, CB_params, CB_3dmap, CHK_autopan);
+#else
             Position3DMapCheckbox();
             panel1.Resize += (s, e) => Position3DMapCheckbox();
+#endif
 
             // Restore saved state
         }
 
+#if LIB
         private void Position3DMapCheckbox()
         {
             if (CB_3dmap == null || CB_params == null || CHK_autopan == null)
@@ -457,6 +462,8 @@ namespace MissionPlanner.GCSViews
             CB_3dmap.Location = new Point(CB_params.Right + 10, CB_params.Top);
             CHK_autopan.Location = new Point(CB_3dmap.Right + 10, CHK_autopan.Top);
         }
+
+#endif
 
         private void SaveSplitRatio(SplitContainer split, string settingsKey)
         {
@@ -2386,8 +2393,15 @@ namespace MissionPlanner.GCSViews
             {
                  try
                 {
-                    //p1 and p2 must be 1 to initate SD card format
-                    MainV2.comPort.doCommandInt(MainV2.comPort.MAV.sysid, MainV2.comPort.MAV.compid, MAVLink.MAV_CMD.STORAGE_FORMAT, 1, 1, 0, 0, 0, 0, 0);
+                    StorageFormatConfirmation.Execute(
+                        () => MissionPlanner.MsgBox.CustomMessageBox.ShowDestructiveConfirmation(
+                            UiText.Translate("Formatting the flight controller SD card will delete all data on the card. Continue?"),
+                            UiText.Translate("Format SD card")),
+                        () =>
+                        {
+                            // p1 and p2 must be 1 to initiate SD card format.
+                            MainV2.comPort.doCommandInt(MainV2.comPort.MAV.sysid, MainV2.comPort.MAV.compid, MAVLink.MAV_CMD.STORAGE_FORMAT, 1, 1, 0, 0, 0, 0, 0);
+                        });
                     return;
                 }
                 catch
@@ -2460,7 +2474,7 @@ namespace MissionPlanner.GCSViews
             }
 
             if (
-                CustomMessageBox.Show(UiText.Translate("Are you sure you want to do ") + flightDataActions1.CMB_action.Text + " ?", UiText.Translate("Action"),
+                CustomMessageBox.Show(UiText.Translate("Are you sure you want to do ") + FlightDataActions.DisplayCommandLabel(flightDataActions1.CMB_action.Text) + " ?", UiText.Translate("Action"),
                     MessageBoxButtons.YesNo) == (int) DialogResult.Yes)
             {
                 try
@@ -3957,7 +3971,7 @@ namespace MissionPlanner.GCSViews
                 }
 
                 // percent
-                flightDataActions1.modifyandSetSpeed.ButtonText = "Apply";
+                flightDataActions1.modifyandSetSpeed.ButtonText = UiText.Translate("Apply");
             }
 
             try

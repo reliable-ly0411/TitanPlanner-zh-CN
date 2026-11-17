@@ -829,5 +829,8 @@
   "USB ID": "USB 标识",
   "Board ID": "板卡 ID",
   "Bootloader ID": "引导程序 ID",
-  "Please pick a file to download and upload (.apj)": "请选择要下载并上传的文件（.apj）"
+  "Please pick a file to download and upload (.apj)": "请选择要下载并上传的文件（.apj）",
+  "Offline Maps": "离线地图",
+  "Open Log Folder": "打开日志文件夹",
+  "Open the folder where downloaded logs are saved.": "打开已下载日志的保存文件夹。"
 }

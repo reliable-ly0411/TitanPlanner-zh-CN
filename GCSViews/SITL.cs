@@ -114,6 +114,9 @@ namespace MissionPlanner.GCSViews
         public SITL()
         {
             InitializeComponent();
+#if !LIB
+            ConfigureResponsiveLayout();
+#endif
 
             if (!Directory.Exists(sitldirectory))
                 Directory.CreateDirectory(sitldirectory);
@@ -121,10 +124,10 @@ namespace MissionPlanner.GCSViews
             // Populate the version selection box
             var versionSelect = new Dictionary<string, APFirmware.RELEASE_TYPES?>()
             {
-                { "Latest (Dev)", APFirmware.RELEASE_TYPES.DEV },
-                { "Beta", APFirmware.RELEASE_TYPES.BETA },
-                { "Stable", APFirmware.RELEASE_TYPES.OFFICIAL },
-                { "Skip Download", null }
+                { UiText.Translate("Latest (Dev)"), APFirmware.RELEASE_TYPES.DEV },
+                { UiText.Translate("Beta"), APFirmware.RELEASE_TYPES.BETA },
+                { UiText.Translate("Stable"), APFirmware.RELEASE_TYPES.OFFICIAL },
+                { UiText.Translate("Skip Download"), null }
             };
             cmb_version.DataSource = new BindingSource(versionSelect, null);
             cmb_version.DisplayMember = "Key";
@@ -135,6 +138,95 @@ namespace MissionPlanner.GCSViews
             LoadSavedLocations();
             PopulateLocationDropdown();
         }
+
+
+#if !LIB
+        // Resource anchors were designed at 1853 px: anchoring the 382 px
+        // location group to both sides makes its width collapse on small windows.
+        private void ConfigureResponsiveLayout()
+        {
+            var host = new Panel { Name = "sitlLayoutRoot", Dock = DockStyle.Fill, AutoScroll = true };
+            var advanced = new FlowLayoutPanel { Dock = DockStyle.Fill, WrapContents = true, AutoSize = true };
+            var vehicles = new FlowLayoutPanel { Dock = DockStyle.Fill, WrapContents = true, AutoSize = true };
+            int gap = Math.Max(6, Font.Height / 2);
+            int optionsWidth = Math.Max(groupBox3.Width, groupBox3.Controls.Cast<Control>().Max(c => c.Right) + gap * 2);
+            int optionsHeight = Math.Max(groupBox3.Height, groupBox3.Controls.Cast<Control>().Max(c => c.Bottom) + gap * 2);
+            Action<Control, Control> addField = (label, input) =>
+            {
+                var field = new FlowLayoutPanel { AutoSize = true, AutoSizeMode = AutoSizeMode.GrowAndShrink,
+                    WrapContents = false, Margin = new Padding(gap) };
+                label.Anchor = AnchorStyles.None;
+                input.Anchor = AnchorStyles.None;
+                field.Controls.Add(label);
+                field.Controls.Add(input);
+                advanced.Controls.Add(field);
+            };
+            addField(label9, cmb_version);
+            addField(label2, num_simspeed);
+            addField(label7, cmb_model);
+            addField(label8, txt_cmdline);
+            foreach (Control control in new Control[] { chk_wipe, but_swarmseq, but_swarmlink, but_swarmplane, but_swarmrover })
+            {
+                control.Anchor = AnchorStyles.None;
+                control.Margin = new Padding(gap);
+                advanced.Controls.Add(control);
+            }
+            groupBox4.Controls.Add(advanced);
+            Control[] pictures = { pictureBoxplane, pictureBoxrover, pictureBoxquad, pictureBoxheli };
+            Control[] captions = { label6, label5, label4, label3 };
+            for (int i = 0; i < pictures.Length; i++)
+            {
+                var vehicle = new FlowLayoutPanel { AutoSize = true, AutoSizeMode = AutoSizeMode.GrowAndShrink,
+                    FlowDirection = FlowDirection.TopDown, WrapContents = false, Margin = new Padding(gap) };
+                pictures[i].Anchor = AnchorStyles.None;
+                captions[i].Anchor = AnchorStyles.None;
+                vehicle.Controls.Add(pictures[i]);
+                vehicle.Controls.Add(captions[i]);
+                vehicles.Controls.Add(vehicle);
+            }
+            panel1.Controls.Clear();
+            groupBox2.Controls.Remove(panel1);
+            groupBox2.Controls.Add(vehicles);
+            foreach (Control group in new Control[] { groupBox1, groupBox3, groupBox4, groupBox2 })
+            {
+                group.Dock = DockStyle.None;
+                group.Anchor = AnchorStyles.Top | AnchorStyles.Left;
+                host.Controls.Add(group);
+            }
+            Controls.Add(host);
+            bool arranging = false;
+            host.Layout += delegate
+            {
+                if (arranging) return;
+                arranging = true;
+                try
+                {
+                    int width = Math.Max(optionsWidth, host.ClientSize.Width - SystemInformation.VerticalScrollBarWidth - gap * 2);
+                    int x = gap + host.AutoScrollPosition.X;
+                    int y = gap + host.AutoScrollPosition.Y;
+                    int mapHeight = Math.Max(Font.Height * 10, host.ClientSize.Height / 2);
+                    groupBox1.SetBounds(x, y, width, mapHeight);
+                    y += mapHeight + gap;
+                    bool beside = width >= optionsWidth + 500 + gap;
+                    groupBox3.SetBounds(x, y, optionsWidth, optionsHeight);
+                    groupBox4.Width = beside ? width - optionsWidth - gap : width;
+                    int advancedHeight = advanced.GetPreferredSize(new System.Drawing.Size(groupBox4.DisplayRectangle.Width, 0)).Height
+                        + groupBox4.Height - groupBox4.DisplayRectangle.Height;
+                    groupBox4.SetBounds(beside ? x + optionsWidth + gap : x,
+                        beside ? y : y + optionsHeight + gap, groupBox4.Width, advancedHeight);
+                    y = Math.Max(groupBox3.Bottom, groupBox4.Bottom) + gap;
+                    groupBox2.Width = width;
+                    int vehicleHeight = vehicles.GetPreferredSize(new System.Drawing.Size(groupBox2.DisplayRectangle.Width, 0)).Height
+                        + groupBox2.Height - groupBox2.DisplayRectangle.Height;
+                    groupBox2.SetBounds(x, y, width, vehicleHeight);
+                    host.AutoScrollMinSize = new System.Drawing.Size(optionsWidth + gap * 2,
+                        groupBox2.Bottom - host.AutoScrollPosition.Y + gap);
+                }
+                finally { arranging = false; }
+            };
+            host.PerformLayout();
+        }
+#endif
 
         /// <summary>
         /// Loads saved locations from Settings
@@ -739,7 +831,7 @@ namespace MissionPlanner.GCSViews
 
                 Uri fullurl = new Uri(url, filename);
 
-                var load = Common.LoadingBox("Downloading", "Downloading sitl software");
+                var load = Common.LoadingBox(UiText.Translate("Downloading"), UiText.Translate("Downloading sitl software"));
 
                 var t1 = Download.getFilefromNetAsync(fullurl.ToString(),
                     sitldirectory + Path.GetFileNameWithoutExtension(filename) + ".exe");

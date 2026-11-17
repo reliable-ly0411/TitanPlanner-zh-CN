@@ -9,6 +9,42 @@ namespace MissionPlanner.Utilities.Tests
     [TestClass]
     public class ThemeManagerTests
     {
+        [TestMethod]
+        public void DefaultThemeUsesMissionPlannerGreen()
+        {
+            var theme = new ThemeColorTable();
+            theme.InitColors();
+            Assert.AreEqual("BurntKermit.mpsystheme", theme.strThemeName);
+            var accent = theme.colors.Find(color => color.strVariableName == "BannerColor2");
+            Assert.IsNotNull(accent);
+            Assert.AreEqual(148, (int)accent.clrColor.R);
+            Assert.AreEqual(193, (int)accent.clrColor.G);
+            Assert.AreEqual(31, (int)accent.clrColor.B);
+        }
+
+        [TestMethod]
+        public void CleanProfileUsesGreenTheme()
+        {
+            Assert.AreEqual("BurntKermit.mpsystheme", ThemeManager.SelectStartupTheme(null, false));
+        }
+
+        [TestMethod]
+        public void CleanProfileRetainsCustomPackageThemePriority()
+        {
+            Assert.AreEqual("custom.mpsystheme", ThemeManager.SelectStartupTheme(null, true));
+        }
+
+        [DataTestMethod]
+        [DataRow("TitanDynamics.mpsystheme")]
+        [DataRow("BurntKermit.mpsystheme")]
+        [DataRow("HighContrast.mpsystheme")]
+        [DataRow("personal.mpusertheme")]
+        public void ExistingPreferenceIsNeverReplacedByNewDefault(string savedTheme)
+        {
+            Assert.AreEqual(savedTheme, ThemeManager.SelectStartupTheme(savedTheme, false));
+            Assert.AreEqual(savedTheme, ThemeManager.SelectStartupTheme(savedTheme, true));
+        }
+
         [DllImport("user32.dll")]
         static extern uint GetGuiResources(IntPtr process, uint flags);
 

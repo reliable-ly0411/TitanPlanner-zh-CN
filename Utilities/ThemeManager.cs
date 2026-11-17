@@ -64,7 +64,7 @@ namespace MissionPlanner.Utilities
         {
             iconSet = IconSet.BurnKermitIconSet;
             terminalTheming = true;
-            strThemeName = "titandynamics.mpsystheme";
+            strThemeName = "BurntKermit.mpsystheme";
 
             colors.Add("Background", Color.FromArgb(0x26, 0x27, 0x28), "BGColor");						// This changes the colour of the main menu background
             colors.Add("Control Background", Color.FromArgb(0x43, 0x44, 0x45), "ControlBGColor");		// This changes the colour of the sub menu backgrounds
@@ -215,6 +215,10 @@ namespace MissionPlanner.Utilities
         {
             get
             {
+#if !LIB
+                var custom = DesktopAppearance.WindowIcon;
+                if (custom != null) return custom;
+#endif
                 var source = Program.IconFile as Bitmap;
                 if (source == null)
                     return null;
@@ -376,6 +380,12 @@ namespace MissionPlanner.Utilities
             }
         }
 
+
+        // Select only; loading and persistence remain in the existing startup flow.
+        public static string SelectStartupTheme(string savedTheme, bool hasCustomTheme)
+        {
+            return savedTheme ?? (hasCustomTheme ? "custom.mpsystheme" : "BurntKermit.mpsystheme");
+        }
 
         public static void LoadTheme(string strThemeName)
         {

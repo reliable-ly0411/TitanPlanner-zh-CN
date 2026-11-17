@@ -248,13 +248,17 @@ namespace MissionPlanner.GCSViews
 
             CMB_altmode.DisplayMember = "Value";
             CMB_altmode.ValueMember = "Key";
-            CMB_altmode.DataSource = EnumTranslator.EnumToList<altmode>();
+            CMB_altmode.DataSource = EnumTranslator.EnumToList<altmode>()
+                .Select(item => new KeyValuePair<int, string>(item.Key, UiText.Translate(item.Value))).ToList();
 
             //set default
-            CMB_altmode.SelectedItem = altmode.Relative;
+            CMB_altmode.SelectedValue = (int)altmode.Relative;
 
             cmb_missiontype.DataSource = new List<MAVLink.MAV_MISSION_TYPE>()
                 {MAVLink.MAV_MISSION_TYPE.MISSION, MAVLink.MAV_MISSION_TYPE.FENCE, MAVLink.MAV_MISSION_TYPE.RALLY};
+
+            cmb_missiontype.FormattingEnabled = true;
+            cmb_missiontype.Format += (sender, args) => args.Value = UiText.Translate(args.ListItem.ToString());
 
             updateCMDParams();
 
@@ -267,7 +271,8 @@ namespace MissionPlanner.GCSViews
             Commands.Columns[Delete.Index].CellTemplate.Value = "X";
             Frame.DisplayMember = "Value";
             Frame.ValueMember = "Key";
-            Frame.DataSource = EnumTranslator.EnumToList<altmode>();
+            Frame.DataSource = EnumTranslator.EnumToList<altmode>()
+                .Select(item => new KeyValuePair<int, string>(item.Key, UiText.Translate(item.Value))).ToList();
 
             updateMapType(null, null);
 
@@ -7634,15 +7639,17 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             {
                 if (L10N.ConfigLang.IsChildOf(CultureInfo.GetCultureInfo("zh-Hans")))
                 {
-                    CustomMessageBox.Show(
-                        "亲爱的中国用户，为保证地图使用正常，已为您将默认地图自动切换到具有中国特色的【谷歌中国卫星地图】！\r\n与默认【谷歌卫星地图】的区别：使用.cn服务器，加入火星坐标修正\r\n如果您所在的地区仍然无法使用，天书同时推荐必应或高德地图，其它地图由于没有加入坐标修正功能，为确保飞行安全，请谨慎选择",
-                        "默认地图已被切换");
-
                     try
                     {
-                        var index = GMapProviders.List.FindIndex(x => (x.Name == "谷歌中国卫星地图"));
+                        var index = GMapProviders.List.FindIndex(x => x == GMapProviders.BingSatelliteMap);
 
-                        if (index != -1) comboBoxMapType.SelectedIndex = index;
+                        if (index != -1)
+                        {
+                            comboBoxMapType.SelectedIndex = index;
+                            CustomMessageBox.Show(
+                                "默认使用必应卫星地图，可在地图类型中更改。",
+                                "默认地图");
+                        }
                     }
                     catch (Exception ex)
                     {
