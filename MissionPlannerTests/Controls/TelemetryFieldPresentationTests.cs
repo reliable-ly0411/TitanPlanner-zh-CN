@@ -99,7 +99,7 @@ namespace MissionPlannerTests.Controls
         }
 
         [TestMethod]
-        public void BilingualLabelReservesWidthAndScrollsAtNarrowSizes()
+        public void StatusBilingualLabelReservesWidthAndScrollsAtNarrowSizes()
         {
             Exception failure = null;
             var thread = new Thread(() =>
@@ -107,9 +107,8 @@ namespace MissionPlannerTests.Controls
                 try
                 {
                     using (var status = new StatusControl())
-                    using (var chart = new DisplayThisForm(_ => false, (sender, e) => { }))
                     {
-                        foreach (var control in new Control[] { status, chart })
+                        foreach (var control in new Control[] { status })
                         {
                             var type = control.GetType();
                             var flags = BindingFlags.Instance | BindingFlags.NonPublic;

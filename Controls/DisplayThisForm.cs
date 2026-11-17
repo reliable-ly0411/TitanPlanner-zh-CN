@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
 using MissionPlanner.ArduPilot;
@@ -13,45 +14,45 @@ namespace MissionPlanner.Controls
         private readonly Func<string, bool> _isChecked;
         private readonly EventHandler _checkChangedHandler;
         private readonly MouseEventHandler _mouseDownHandler;
-
+        private readonly bool _scrollbarsInsideClient = Type.GetType("Mono.Runtime") != null;
+        private readonly ToolTip _toolTip = new ToolTip { AutoPopDelay = 15000, ShowAlways = true };
+        private readonly List<DisplayRow> _layoutRows = new List<DisplayRow>();
         private PlaceholderTextBox _searchBox;
         private DoubleBufferedPanel _contentPanel;
         private List<DisplayItem> _allItems;
         private List<DisplayItem> _filteredItems;
         private Timer _updateTimer;
-        private Font _boldFont;
         private Font _normalFont;
         private Font _headerFont;
-
         private int _rowHeight = 18;
         private int _padding = 10;
         private int _checkboxSize = 14;
         private int _checkboxMargin = 4;
-        private int _nameWidth = 140;
+        // Intrinsic measurements; each displayed column has its own bounded cells.
+        private int _intrinsicNameWidth = 140;
         private int _valueWidth = 80;
+        private int _nameValueGap = 8;
         private int _columnGap = 20;
+        private bool _updatingLayout;
+        private bool _resourcesDisposed;
+        private bool _mouseInside;
+        private DisplayItem _hoveredItem;
+        private string _hoveredHeader;
 
-        private DisplayItem _hoveredItem = null;
-
-        public DisplayThisForm(
-            Func<string, bool> isChecked,
-            EventHandler checkChangedHandler,
+        public DisplayThisForm(Func<string, bool> isChecked, EventHandler checkChangedHandler,
             MouseEventHandler mouseDownHandler = null)
         {
             _isChecked = isChecked;
             _checkChangedHandler = checkChangedHandler;
             _mouseDownHandler = mouseDownHandler;
-
             _allItems = new List<DisplayItem>();
             _filteredItems = new List<DisplayItem>();
-
             InitializeComponent();
             SetupControls();
         }
 
         private void SetupControls()
         {
-            // Search box at top
             _searchBox = new PlaceholderTextBox();
             _searchBox.Dock = DockStyle.Top;
             _searchBox.Font = new Font(this.Font.FontFamily, 10);
@@ -61,7 +62,6 @@ namespace MissionPlanner.Controls
             _searchBox.MinimumSize = new Size(0, 28);
             _searchBox.Height = 28;
 
-            // Content panel
             _contentPanel = new DoubleBufferedPanel();
             _contentPanel.Dock = DockStyle.Fill;
             _contentPanel.AutoScroll = true;
@@ -69,27 +69,24 @@ namespace MissionPlanner.Controls
             _contentPanel.MouseClick += ContentPanel_MouseClick;
             _contentPanel.MouseMove += ContentPanel_MouseMove;
             _contentPanel.MouseLeave += ContentPanel_MouseLeave;
-
-            // Add controls - order matters for docking
+            _contentPanel.ClientSizeChanged += (sender, e) => UpdateScrollSize();
+            _contentPanel.Scroll += (sender, e) => ClearHover();
             this.Controls.Add(_contentPanel);
             this.Controls.Add(_searchBox);
 
-            _updateTimer = new Timer();
-            _updateTimer.Interval = 200;
+            _updateTimer = new Timer { Interval = 200 };
             _updateTimer.Tick += UpdateTimer_Tick;
+            this.Disposed += (sender, e) => DisposeResources();
         }
 
         private void DisplayThisForm_Load(object sender, EventArgs e)
         {
-            // Set form size to 70% of screen
             var screen = Screen.FromControl(this);
             this.Width = (int)(screen.WorkingArea.Width * 0.7);
             this.Height = (int)(screen.WorkingArea.Height * 0.7);
             this.CenterToScreen();
-
             BuildItemList();
             _updateTimer.Start();
-
             ThemeManager.ApplyThemeTo(this);
             ApplyTheme();
         }
@@ -97,203 +94,221 @@ namespace MissionPlanner.Controls
         private void BuildItemList()
         {
             _allItems.Clear();
-
             object thisBoxed = MainV2.comPort.MAV.cs;
             Type test = thisBoxed.GetType();
-
             foreach (var field in test.GetProperties())
             {
                 object fieldValue = field.GetValue(thisBoxed, null);
-                if (fieldValue == null)
+                if (fieldValue == null || !fieldValue.IsNumber())
                     continue;
-
-                if (!fieldValue.IsNumber())
-                    continue;
-
                 string group = CurrentState.GetGroupText(field.Name);
                 if (string.IsNullOrEmpty(group)) group = "Other";
-
                 string displayName = TelemetryFieldPresentation.FieldLabel(field.Name);
                 if (field.Name.Contains("customfield"))
                 {
                     if (CurrentState.custom_field_names.ContainsKey(field.Name))
-                    {
                         displayName = CurrentState.custom_field_names[field.Name];
-                    }
                     else
-                    {
-                        continue; // Skip unnamed custom fields
-                    }
+                        continue;
                 }
-
                 _allItems.Add(new DisplayItem
                 {
-                    Name = field.Name,
-                    DisplayName = displayName,
-                    Group = group,
+                    Name = field.Name, DisplayName = displayName, Group = group,
                     GroupLabel = TelemetryFieldPresentation.GroupLabel(group),
-                    Value = fieldValue?.ToString() ?? "",
-                    IsChecked = _isChecked(field.Name)
+                    Value = fieldValue?.ToString() ?? "", IsChecked = _isChecked(field.Name)
                 });
             }
-
-            // Sort by group, then by display name
             _allItems = _allItems.OrderBy(f => f.Group).ThenBy(f => f.DisplayName).ToList();
-            _filteredItems = _allItems;
-
-            // Set up autocomplete
             _searchBox.SetAutoCompleteSource(_allItems.SelectMany(x => new[] { x.Name, x.DisplayName }).Distinct().ToList());
+            SearchBox_TextChanged(this, EventArgs.Empty);
+        }
 
-            UpdateScrollSize();
-            _contentPanel.Invalidate();
+        private void EnsureFonts()
+        {
+            if (_normalFont != null) return;
+            _normalFont = new Font(this.Font, FontStyle.Regular);
+            _headerFont = new Font(this.Font.FontFamily, this.Font.SizeInPoints + 1, FontStyle.Bold);
+        }
+
+        private Size ViewportSize()
+        {
+            var size = _contentPanel.ClientSize;
+            if (_scrollbarsInsideClient)
+            {
+                if (_contentPanel.HorizontalScroll.Visible)
+                    size.Height = Math.Max(0, size.Height - SystemInformation.HorizontalScrollBarHeight);
+                if (_contentPanel.VerticalScroll.Visible)
+                    size.Width = Math.Max(0, size.Width - SystemInformation.VerticalScrollBarWidth);
+            }
+            return size;
+        }
+
+        private List<DisplayColumn> BuildColumns(int capacity)
+        {
+            var columns = new List<DisplayColumn>();
+            DisplayColumn column = null;
+            string group = null;
+            foreach (var item in _filteredItems)
+            {
+                bool newGroup = column == null || item.Group != group;
+                if (column == null || column.Rows.Count >= capacity ||
+                    (newGroup && column.Rows.Count >= capacity - 1))
+                {
+                    column = new DisplayColumn();
+                    columns.Add(column);
+                }
+                if (newGroup || column.Rows.Count == 0)
+                    column.Rows.Add(new DisplayRow { IsHeader = true, Item = item,
+                        FullText = item.GroupLabel ?? item.Group ?? "" });
+                column.Rows.Add(new DisplayRow { Item = item, FullText = item.DisplayName ?? item.Name ?? "" });
+                group = item.Group;
+            }
+            return columns;
         }
 
         private void UpdateScrollSize()
         {
-            if (_contentPanel == null || _filteredItems == null)
+            if (_contentPanel == null || _filteredItems == null || _updatingLayout || _resourcesDisposed)
                 return;
-
-            if (_filteredItems.Count == 0)
+            _updatingLayout = true;
+            try
             {
-                _contentPanel.AutoScrollMinSize = Size.Empty;
-                return;
-            }
-
-            using (var graphics = _contentPanel.CreateGraphics())
-            using (var headerFont = new Font(this.Font.FontFamily, this.Font.Size + 1, FontStyle.Bold))
-            {
-                _nameWidth = 140;
-                foreach (var item in _allItems)
+                EnsureFonts();
+                using (var graphics = _contentPanel.CreateGraphics())
                 {
-                    _nameWidth = Math.Max(_nameWidth, (int)Math.Ceiling(graphics.MeasureString(item.DisplayName, this.Font).Width) + 8);
-                    _nameWidth = Math.Max(_nameWidth, (int)Math.Ceiling(graphics.MeasureString(item.GroupLabel, headerFont).Width) + 8);
+                    float scale = Math.Max(_normalFont.GetHeight(graphics), _headerFont.GetHeight(graphics)) / 13f;
+                    _padding = Math.Max(1, (int)Math.Ceiling(8 * scale));
+                    _checkboxSize = Math.Max(1, (int)Math.Ceiling(14 * scale));
+                    _checkboxMargin = Math.Max(1, (int)Math.Ceiling(4 * scale));
+                    _nameValueGap = Math.Max(1, (int)Math.Ceiling(8 * scale));
+                    _columnGap = Math.Max(1, (int)Math.Ceiling(20 * scale));
+                    _rowHeight = Math.Max(_checkboxSize + 4, (int)Math.Ceiling(17 * scale));
+                    int minimumValue = (int)Math.Ceiling(50 * scale);
+                    int maximumName = (int)Math.Ceiling(graphics.MeasureString("MMMMMMMMMMMMMMMM", _normalFont).Width);
+                    var names = _filteredItems.ToDictionary(item => item,
+                        item => (int)Math.Ceiling(graphics.MeasureString(item.DisplayName ?? item.Name ?? "", _normalFont).Width) + 8);
+                    var values = _filteredItems.ToDictionary(item => item,
+                        item => Math.Max(minimumValue, (int)Math.Ceiling(graphics.MeasureString(item.Value ?? "", _normalFont).Width) + 2));
+                    _intrinsicNameWidth = names.Count == 0 ? 0 : names.Values.Max();
+                    _valueWidth = values.Count == 0 ? minimumValue : values.Values.Max();
+                    int headers = _filteredItems.Select(item => item.Group).Distinct().Count();
+                    var viewport = _contentPanel.Size;
+                    for (int pass = 0; pass < 4; pass++)
+                    {
+                        _layoutRows.Clear();
+                        if (_filteredItems.Count == 0)
+                        {
+                            _contentPanel.AutoScrollMinSize = Size.Empty;
+                            break;
+                        }
+                        int innerWidth = Math.Max(1, viewport.Width - _padding * 2);
+                        int nameLimit = NameLimit(innerWidth, _valueWidth, maximumName);
+                        int estimatedWidth = _checkboxSize + _checkboxMargin + Math.Min(_intrinsicNameWidth, nameLimit) + _nameValueGap + _valueWidth;
+                        int count = Math.Max(1, Math.Min(_filteredItems.Count, (innerWidth + _columnGap) / (estimatedWidth + _columnGap)));
+                        // Fit complete columns to the width. Extra fields extend downwards,
+                        // with repeated headers when a group continues in another column.
+                        int low = 2, high = Math.Max(2, _filteredItems.Count + headers);
+                        while (low < high)
+                        {
+                            int mid = (low + high) / 2;
+                            if (BuildColumns(mid).Count <= count) high = mid;
+                            else low = mid + 1;
+                        }
+                        var columns = BuildColumns(low);
+                        int x = _padding, bottom = _padding;
+                        foreach (var column in columns)
+                        {
+                            int valueWidth = column.Rows.Where(row => !row.IsHeader).Max(row => values[row.Item]);
+                            int nameWidth = Math.Min(column.Rows.Where(row => !row.IsHeader).Max(row => names[row.Item]),
+                                NameLimit(innerWidth, valueWidth, maximumName));
+                            int width = _checkboxSize + _checkboxMargin + nameWidth + _nameValueGap + valueWidth;
+                            int y = _padding;
+                            foreach (var row in column.Rows)
+                            {
+                                row.Bounds = new Rectangle(x, y, width, _rowHeight);
+                                if (row.IsHeader)
+                                    row.NameBounds = row.Bounds;
+                                else
+                                {
+                                    row.CheckBounds = new Rectangle(x, y + (_rowHeight - _checkboxSize) / 2, _checkboxSize, _checkboxSize);
+                                    row.NameBounds = new Rectangle(x + _checkboxSize + _checkboxMargin, y, nameWidth, _rowHeight);
+                                    row.ValueBounds = new Rectangle(row.NameBounds.Right + _nameValueGap, y, valueWidth, _rowHeight);
+                                    row.Item.Bounds = row.Bounds;
+                                }
+                                row.Label = FitLabel(row.FullText, row.IsHeader ? _headerFont : _normalFont, row.NameBounds.Width, graphics);
+                                _layoutRows.Add(row);
+                                y += _rowHeight;
+                            }
+                            bottom = Math.Max(bottom, y);
+                            x += width + _columnGap;
+                        }
+                        _contentPanel.AutoScrollMinSize = new Size(x - _columnGap + _padding, bottom + _padding);
+                        if (ViewportSize() == viewport) break;
+                        viewport = ViewportSize();
+                    }
                 }
-                _rowHeight = Math.Max(18, (int)Math.Ceiling(headerFont.GetHeight(graphics)) + 4);
             }
-            int availableHeight = _contentPanel.ClientSize.Height;
+            finally { _updatingLayout = false; }
+            _contentPanel.Invalidate();
+            if (_mouseInside)
+                UpdateHover(RowAtPoint(_contentPanel.PointToClient(Cursor.Position)));
+        }
 
-            int rowsPerColumn = Math.Max(1, (availableHeight - _padding * 2) / _rowHeight);
-            int columnWidth = _checkboxSize + _checkboxMargin + _nameWidth + _valueWidth + _columnGap;
-            // Match painting exactly, including a group header wrapping before its first item.
-            int column = 0;
-            int lastOccupiedColumn = 0;
-            int row = 0;
-            string group = null;
-            foreach (var item in _filteredItems)
+        private int NameLimit(int width, int valueWidth, int maximumName)
+        {
+            return Math.Max(_rowHeight * 3, Math.Min(maximumName,
+                width - _checkboxSize - _checkboxMargin - _nameValueGap - valueWidth));
+        }
+
+        private static string FitLabel(string text, Font font, int width, Graphics graphics)
+        {
+            int lineEnd = text.IndexOfAny(new[] { '\r', '\n' });
+            if (lineEnd < 0 && graphics.MeasureString(text, font).Width <= width) return text;
+            if (lineEnd >= 0) text = text.Substring(0, lineEnd);
+            var elements = StringInfo.ParseCombiningCharacters(text);
+            int low = 0, high = elements.Length;
+            while (low < high)
             {
-                if (item.Group != group)
-                {
-                    group = item.Group;
-                    if (row > 0 && row >= rowsPerColumn - 1) { column++; row = 0; }
-                    lastOccupiedColumn = column;
-                    if (++row >= rowsPerColumn) { column++; row = 0; }
-                }
-                lastOccupiedColumn = column;
-                if (++row >= rowsPerColumn) { column++; row = 0; }
+                int mid = (low + high + 1) / 2;
+                int end = mid == elements.Length ? text.Length : elements[mid];
+                if (graphics.MeasureString(text.Substring(0, end) + "…", font).Width <= width) low = mid;
+                else high = mid - 1;
             }
-            int numColumns = lastOccupiedColumn + 1;
-
-            int totalWidth = _padding + (numColumns * columnWidth) + _padding;
-            _contentPanel.AutoScrollMinSize = new Size(totalWidth, 0);
+            return text.Substring(0, low == elements.Length ? text.Length : elements[low]) + "…";
         }
 
         private void ContentPanel_Paint(object sender, PaintEventArgs e)
         {
-            if (_filteredItems.Count == 0)
-                return;
-
-            if (_boldFont == null || _boldFont.FontFamily != this.Font.FontFamily)
-            {
-                _boldFont = new Font(this.Font.FontFamily, this.Font.Size, FontStyle.Bold);
-                _normalFont = new Font(this.Font.FontFamily, this.Font.Size, FontStyle.Regular);
-                _headerFont = new Font(this.Font.FontFamily, this.Font.Size + 1, FontStyle.Bold);
-            }
-
+            if (_resourcesDisposed) return;
+            EnsureFonts();
             var g = e.Graphics;
             g.TranslateTransform(_contentPanel.AutoScrollPosition.X, _contentPanel.AutoScrollPosition.Y);
             g.Clear(_contentPanel.BackColor);
-
-            int availableHeight = _contentPanel.ClientSize.Height;
-            int rowsPerColumn = Math.Max(1, (availableHeight - _padding * 2) / _rowHeight);
-            int columnWidth = _checkboxSize + _checkboxMargin + _nameWidth + _valueWidth + _columnGap;
-
-            int x = _padding;
-            int y = _padding;
-            int rowInColumn = 0;
-
             using (var headerBrush = new SolidBrush(ThemeManager.BannerColor2))
             using (var nameBrush = new SolidBrush(_contentPanel.ForeColor))
             using (var valueBrush = new SolidBrush(Color.Gray))
             using (var checkPen = new Pen(_contentPanel.ForeColor, 1))
-            using (var checkFillBrush = new SolidBrush(Color.Green))
+            using (var checkFill = new SolidBrush(Color.Green))
             using (var hoverBrush = new SolidBrush(Color.FromArgb(40, 128, 128, 128)))
+            using (var format = new StringFormat { FormatFlags = StringFormatFlags.NoWrap, Trimming = StringTrimming.EllipsisCharacter })
             {
-                string currentGroup = null;
-
-                foreach (var item in _filteredItems)
+                foreach (var row in _layoutRows)
                 {
-                    // Draw group header if group changed
-                    if (item.Group != currentGroup)
+                    if (row.IsHeader)
                     {
-                        currentGroup = item.Group;
-
-                        // Check if we need to wrap to next column
-                        if (rowInColumn > 0 && rowInColumn >= rowsPerColumn - 1)
-                        {
-                            x += columnWidth;
-                            y = _padding;
-                            rowInColumn = 0;
-                        }
-
-                        // Draw header
-                        g.DrawString(item.GroupLabel, _headerFont, headerBrush, x, y);
-                        y += _rowHeight;
-                        rowInColumn++;
-
-                        // Check column wrap again after header
-                        if (rowInColumn >= rowsPerColumn)
-                        {
-                            x += columnWidth;
-                            y = _padding;
-                            rowInColumn = 0;
-                        }
+                        g.DrawString(row.Label, _headerFont, headerBrush, row.NameBounds, format);
+                        continue;
                     }
-
-                    // Store item bounds for hit testing
-                    item.Bounds = new Rectangle(x, y, columnWidth - _columnGap, _rowHeight);
-
-                    // Draw hover highlight
-                    if (item == _hoveredItem)
+                    if (row.Item == _hoveredItem) g.FillRectangle(hoverBrush, row.Bounds);
+                    g.DrawRectangle(checkPen, row.CheckBounds);
+                    if (row.Item.IsChecked)
                     {
-                        g.FillRectangle(hoverBrush, item.Bounds);
+                        var inside = row.CheckBounds;
+                        inside.Inflate(-2, -2);
+                        g.FillRectangle(checkFill, inside);
                     }
-
-                    // Draw checkbox
-                    var checkRect = new Rectangle(x, y + (_rowHeight - _checkboxSize) / 2, _checkboxSize, _checkboxSize);
-                    g.DrawRectangle(checkPen, checkRect);
-                    if (item.IsChecked)
-                    {
-                        var innerRect = new Rectangle(checkRect.X + 2, checkRect.Y + 2, checkRect.Width - 4, checkRect.Height - 4);
-                        g.FillRectangle(checkFillBrush, innerRect);
-                    }
-
-                    // Draw name
-                    int textX = x + _checkboxSize + _checkboxMargin;
-                    g.DrawString(item.DisplayName, _normalFont, nameBrush, textX, y);
-
-                    // Draw value
-                    g.DrawString(item.Value, _normalFont, valueBrush, textX + _nameWidth, y);
-
-                    y += _rowHeight;
-                    rowInColumn++;
-
-                    // Column wrap
-                    if (rowInColumn >= rowsPerColumn)
-                    {
-                        x += columnWidth;
-                        y = _padding;
-                        rowInColumn = 0;
-                    }
+                    g.DrawString(row.Label, _normalFont, nameBrush, row.NameBounds, format);
+                    g.DrawString(row.Item.Value ?? "", _normalFont, valueBrush, row.ValueBounds, format);
                 }
             }
         }
@@ -301,144 +316,144 @@ namespace MissionPlanner.Controls
         private void ContentPanel_MouseClick(object sender, MouseEventArgs e)
         {
             var item = GetItemAtPoint(e.Location);
-            if (item != null)
-            {
-                item.IsChecked = !item.IsChecked;
+            if (item == null) return;
+            item.IsChecked = !item.IsChecked;
+            var fakeCheckbox = new CheckBox { Name = item.Name, Text = item.DisplayName, Checked = item.IsChecked, Tag = "custom" };
+            if (e.Button == MouseButtons.Right && _mouseDownHandler != null)
+                _mouseDownHandler(fakeCheckbox, e);
+            _checkChangedHandler?.Invoke(fakeCheckbox, EventArgs.Empty);
+            fakeCheckbox.Dispose();
+            _contentPanel.Invalidate();
+        }
 
-                // Create a fake checkbox to pass to the handler
-                var fakeCheckbox = new CheckBox
-                {
-                    Name = item.Name,
-                    Text = item.DisplayName,
-                    Checked = item.IsChecked,
-                    Tag = "custom"
-                };
+        private DisplayRow RowAtPoint(Point point)
+        {
+            point.Offset(-_contentPanel.AutoScrollPosition.X, -_contentPanel.AutoScrollPosition.Y);
+            return _layoutRows.FirstOrDefault(row => row.Bounds.Contains(point));
+        }
 
-                if (e.Button == MouseButtons.Right && _mouseDownHandler != null)
-                {
-                    _mouseDownHandler(fakeCheckbox, e);
-                }
+        private DisplayItem GetItemAtPoint(Point point)
+        {
+            var row = RowAtPoint(point);
+            return row == null || row.IsHeader ? null : row.Item;
+        }
 
-                _checkChangedHandler?.Invoke(fakeCheckbox, EventArgs.Empty);
-                fakeCheckbox.Dispose();
+        private void UpdateHover(DisplayRow row)
+        {
+            if (_resourcesDisposed) return;
+            var item = row == null || row.IsHeader ? null : row.Item;
+            var header = row != null && row.IsHeader ? row.FullText : null;
+            if (item == _hoveredItem && header == _hoveredHeader) return;
+            _hoveredItem = item;
+            _hoveredHeader = header;
+            _contentPanel.Cursor = item != null ? Cursors.Hand : Cursors.Default;
+            _toolTip.SetToolTip(_contentPanel, item == null ? header : (item.DisplayName ?? item.Name) + Environment.NewLine + item.Value);
+            _contentPanel.Invalidate();
+        }
 
-                _contentPanel.Invalidate();
-            }
+        private void ClearHover()
+        {
+            if (_resourcesDisposed || _contentPanel == null) return;
+            _hoveredItem = null;
+            _hoveredHeader = null;
+            _toolTip.SetToolTip(_contentPanel, null);
+            _contentPanel.Cursor = Cursors.Default;
+            _contentPanel.Invalidate();
         }
 
         private void ContentPanel_MouseMove(object sender, MouseEventArgs e)
         {
-            var item = GetItemAtPoint(e.Location);
-            if (item != _hoveredItem)
-            {
-                _hoveredItem = item;
-                _contentPanel.Cursor = item != null ? Cursors.Hand : Cursors.Default;
-                _contentPanel.Invalidate();
-            }
+            _mouseInside = true;
+            UpdateHover(RowAtPoint(e.Location));
         }
 
         private void ContentPanel_MouseLeave(object sender, EventArgs e)
         {
-            if (_hoveredItem != null)
-            {
-                _hoveredItem = null;
-                _contentPanel.Invalidate();
-            }
-        }
-
-        private DisplayItem GetItemAtPoint(Point pt)
-        {
-            // Adjust for scroll position
-            pt.X -= _contentPanel.AutoScrollPosition.X;
-            pt.Y -= _contentPanel.AutoScrollPosition.Y;
-
-            foreach (var item in _filteredItems)
-            {
-                if (item.Bounds.Contains(pt))
-                    return item;
-            }
-            return null;
+            _mouseInside = false;
+            ClearHover();
         }
 
         private void UpdateTimer_Tick(object sender, EventArgs e)
         {
-            if (!this.Visible)
-                return;
-
+            if (!this.Visible) return;
             try
             {
                 var cs = MainV2.comPort.MAV.cs;
                 bool changed = false;
-
                 foreach (var item in _allItems)
                 {
                     var prop = typeof(CurrentState).GetProperty(item.Name);
-                    if (prop != null)
-                    {
-                        var val = prop.GetValue(cs)?.ToString() ?? "";
-                        if (item.Value != val)
-                        {
-                            item.Value = val;
-                            changed = true;
-                        }
-                    }
+                    if (prop == null) continue;
+                    var val = prop.GetValue(cs)?.ToString() ?? "";
+                    if (item.Value != val) { item.Value = val; changed = true; }
                 }
-
                 if (changed)
                 {
-                    _contentPanel.Invalidate();
+                    // Keep click targets stable for ordinary live samples. A wider
+                    // value still triggers measurement and a new reachable extent.
+                    bool outgrown;
+                    using (var graphics = _contentPanel.CreateGraphics())
+                        outgrown = _layoutRows.Any(row => !row.IsHeader &&
+                            graphics.MeasureString(row.Item.Value ?? "", _normalFont).Width + 2 > row.ValueBounds.Width);
+                    if (outgrown) UpdateScrollSize();
+                    else _contentPanel.Invalidate();
                 }
             }
-            catch
-            {
-                // Ignore errors during update
-            }
+            catch { }
         }
 
         private void SearchBox_TextChanged(object sender, EventArgs e)
         {
-            var searchText = _searchBox.Text.Trim();
-
-            if (string.IsNullOrEmpty(searchText))
-            {
-                _filteredItems = _allItems;
-            }
-            else
-            {
-                _filteredItems = _allItems.Where(x =>
-                    TelemetryFieldPresentation.Matches(searchText, x.DisplayName, x.Name, x.Group, x.GroupLabel)).ToList();
-            }
-
+            var text = _searchBox.Text.Trim();
+            _filteredItems = string.IsNullOrEmpty(text) ? _allItems : _allItems.Where(item =>
+                TelemetryFieldPresentation.Matches(text, item.DisplayName, item.Name, item.Group, item.GroupLabel)).ToList();
+            ClearHover();
             UpdateScrollSize();
-            _contentPanel.Invalidate();
+            _contentPanel.AutoScrollPosition = Point.Empty;
         }
 
-        protected override void OnResize(EventArgs e)
+        protected override void OnFontChanged(EventArgs e)
         {
-            base.OnResize(e);
+            base.OnFontChanged(e);
+            _normalFont?.Dispose();
+            _headerFont?.Dispose();
+            _normalFont = null;
+            _headerFont = null;
             UpdateScrollSize();
-            _contentPanel?.Invalidate();
         }
+
+#if !LIB
+        protected override void OnDpiChangedAfterParent(EventArgs e)
+        {
+            base.OnDpiChangedAfterParent(e);
+            UpdateScrollSize();
+        }
+#endif
 
         private void ApplyTheme()
         {
             this.BackColor = ThemeManager.BGColor;
             _searchBox?.ApplyTheme();
-            if (_contentPanel != null)
-            {
-                _contentPanel.BackColor = ThemeManager.BGColor;
-                _contentPanel.ForeColor = ThemeManager.TextColor;
-                _contentPanel.Invalidate();
-            }
+            if (_contentPanel == null) return;
+            _contentPanel.BackColor = ThemeManager.BGColor;
+            _contentPanel.ForeColor = ThemeManager.TextColor;
+            _contentPanel.Invalidate();
+        }
+
+        private void DisposeResources()
+        {
+            if (_resourcesDisposed) return;
+            _resourcesDisposed = true;
+            _updateTimer?.Stop();
+            _updateTimer?.Dispose();
+            _normalFont?.Dispose();
+            _headerFont?.Dispose();
+            _toolTip.Dispose();
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
-            _updateTimer?.Stop();
-            _updateTimer?.Dispose();
-            _boldFont?.Dispose();
-            _normalFont?.Dispose();
-            _headerFont?.Dispose();
+            DisposeResources();
             base.OnFormClosing(e);
         }
 
@@ -453,14 +468,25 @@ namespace MissionPlanner.Controls
             public Rectangle Bounds { get; set; }
         }
 
+        private class DisplayRow
+        {
+            public DisplayItem Item;
+            public bool IsHeader;
+            public string FullText, Label;
+            public Rectangle Bounds, NameBounds, ValueBounds, CheckBounds;
+        }
+
+        private class DisplayColumn
+        {
+            public readonly List<DisplayRow> Rows = new List<DisplayRow>();
+        }
+
         private class DoubleBufferedPanel : Panel
         {
             public DoubleBufferedPanel()
             {
                 this.DoubleBuffered = true;
-                this.SetStyle(ControlStyles.AllPaintingInWmPaint |
-                              ControlStyles.UserPaint |
-                              ControlStyles.OptimizedDoubleBuffer, true);
+                this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer, true);
                 this.UpdateStyles();
             }
         }

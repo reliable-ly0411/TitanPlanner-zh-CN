@@ -1,0 +1,20 @@
+using System;
+using System.Linq;
+using System.Reflection;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+class Runner {
+ [STAThread] static int Main() {
+  int passed=0, failed=0;
+  foreach(var type in Assembly.GetExecutingAssembly().GetTypes().Where(t=>t.IsDefined(typeof(TestClassAttribute),true)))
+  foreach(var method in type.GetMethods().Where(m=>m.IsDefined(typeof(TestMethodAttribute),true))) {
+   var rows=method.GetCustomAttributes(typeof(DataRowAttribute),true).Cast<DataRowAttribute>().Select(r=>r.Data).ToList();
+   if(rows.Count==0) rows.Add(new object[0]);
+   foreach(var row in rows) {
+    string name=method.Name+"("+string.Join(",",row.Select(x=>Convert.ToString(x)).ToArray())+")";
+    try { method.Invoke(Activator.CreateInstance(type),row); Console.WriteLine("PASS "+name); passed++; }
+    catch(Exception ex) { Console.WriteLine("FAIL "+name+"\n"+(ex.InnerException??ex)); failed++; }
+   }
+  }
+  Console.WriteLine("RESULT passed="+passed+" failed="+failed); return failed==0?0:1;
+ }
+}
