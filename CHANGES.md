@@ -4,7 +4,7 @@ Formatting the flight controller SD card requires explicit confirmation, with Ca
 
 ## Enhanced Chinese display
 
-The HUD and toolbar show the current flight mode in Chinese above a smaller original English line in enhanced Simplified Chinese. Long labels fit their reserved area; unknown modes retain their source text. Turtle is labelled 翻正自救, separately from Flip.
+The HUD and toolbar show the current flight mode in Chinese above a smaller original English line in enhanced Simplified Chinese. Long labels fit their reserved area; unknown modes retain their source text. Turtle is labelled 翻正自救, separately from Flip; Plane Autoland is labelled 自动着陆 and Rover Dock is labelled 自动停靠.
 
 New Simplified Chinese profiles default to Bing Satellite. Saved map selections and provider coordinate projections are preserved.
 

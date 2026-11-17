@@ -100,6 +100,16 @@ internal static class NativeModeProbe
             var copterMode = mavlink.GetType("MAVLink+COPTER_MODE", true);
             Check(Convert.ToInt32(Enum.Parse(copterMode, "TURTLE")) == 28, "Turtle protocol value");
             Check(Convert.ToInt32(Enum.Parse(copterMode, "FLIP")) == 14, "Flip protocol value");
+            var planeMode = mavlink.GetType("MAVLink+PLANE_MODE", true);
+            Check(Convert.ToInt32(Enum.Parse(planeMode, "AUTOLAND")) == 26, "Plane Autoland protocol value");
+            var autoland = fromMode.Invoke(null, new object[] { "Autoland" });
+            Check((string)Get(autoland, "Primary") == (enhanced ? "自动着陆" : "Autoland"), "Plane Autoland display");
+            Check((string)Get(autoland, "Secondary") == (enhanced ? "Autoland" : ""), "Plane Autoland source text");
+            var roverMode = mavlink.GetType("MAVLink+ROVER_MODE", true);
+            Check(Convert.ToInt32(Enum.Parse(roverMode, "DOCK")) == 8, "Rover Dock protocol value");
+            var dock = fromMode.Invoke(null, new object[] { "Dock" });
+            Check((string)Get(dock, "Primary") == (enhanced ? "自动停靠" : "Dock"), "Rover Dock display");
+            Check((string)Get(dock, "Secondary") == (enhanced ? "Dock" : ""), "Rover Dock source text");
             Check((string)Get(fromMode.Invoke(null, new object[] { "Turtle" }), "Primary") ==
                 (enhanced ? "翻正自救" : "Turtle"), "Turtle display");
 
@@ -114,7 +124,7 @@ internal static class NativeModeProbe
                 {
                     button.Font = font;
                     button.Size = new Size(width, 42);
-                    foreach (var raw in new[] { "RTL", "Loiter To QLAND", "Turtle", "PLUGIN_MODE_WITH_A_VERY_LONG_UNKNOWN_NAME" })
+                    foreach (var raw in new[] { "RTL", "Loiter To QLAND", "Turtle", "Autoland", "Dock", "PLUGIN_MODE_WITH_A_VERY_LONG_UNKNOWN_NAME" })
                     {
                         button.Text = raw; Set(button, "CurrentMode", raw);
                         object layout;
@@ -190,7 +200,7 @@ internal static class NativeModeProbe
                     Check((bool)Get(hud, "displayicons"), "Expected the fork's icon HUD");
                     Set(hud, "gpsfix2", gps2);
                     hud.Size = new Size(width, width * 3 / 4);
-                    foreach (var raw in new[] { "RTL", "Loiter To QLAND", "Turtle", "PLUGIN_LONG_UNKNOWN_MODE" })
+                    foreach (var raw in new[] { "RTL", "Loiter To QLAND", "Turtle", "Autoland", "Dock", "PLUGIN_LONG_UNKNOWN_MODE" })
                     {
                         Set(hud, "mode", raw);
                         using (var bitmap = new Bitmap(hud.Width, hud.Height))

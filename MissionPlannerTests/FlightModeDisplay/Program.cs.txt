@@ -52,7 +52,8 @@ internal static class ModeDisplayChecks
                 CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo(culture);
                 bool enhanced = culture == "zh-CN";
                 foreach (var raw in new[] { "Auto", "RTL", "Althold", "AltHold", "Guided Nogps",
-                    "Loiter To QLAND", "QSTABILIZE", "Turtle", "TURTLE", "Flip" })
+                    "Loiter To QLAND", "QSTABILIZE", "Turtle", "TURTLE", "Flip",
+                    "Autoland", "AUTOLAND", "AutoLand", "Dock", "DOCK" })
                 {
                     var display = FlightModeDisplay.FromMode(raw);
                     Check(display.Primary == (enhanced ? UiText.Translate(raw) : raw), culture + ": " + raw);
@@ -80,6 +81,10 @@ internal static class ModeDisplayChecks
             CultureInfo.CurrentUICulture = new CultureInfo("zh-CN");
             Check(FlightModeDisplay.FromMode("Turtle").Primary == "翻正自救", "Turtle translation");
             Check(FlightModeDisplay.FromMode("Flip").Primary == "翻转", "Flip must stay distinct");
+            foreach (var name in new[] { "Autoland", "AUTOLAND", "AutoLand" })
+                Check(FlightModeDisplay.FromMode(name).Primary == "自动着陆", "Plane AUTOLAND translation: " + name);
+            foreach (var name in new[] { "Dock", "DOCK" })
+                Check(FlightModeDisplay.FromMode(name).Primary == "自动停靠", "Rover DOCK translation: " + name);
             for (int i = 0; i < 500; i++)
             {
                 CultureInfo.CurrentUICulture = new CultureInfo(i % 2 == 0 ? "zh-CN" : "en-US");
