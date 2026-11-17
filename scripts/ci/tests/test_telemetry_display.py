@@ -52,13 +52,18 @@ class TelemetryDisplayTest(unittest.TestCase):
         self.assertIn('Name = field.Name,', chart)
         self.assertIn('IsChecked = _isChecked(field.Name)', chart)
         self.assertIn('Name = item.Name,', chart)
+        # Status retains the legacy renderer; field selection now renders measured rows.
+        self.assertIn('TelemetryFieldPresentation.Matches(searchText', status)
+        self.assertIn('g.DrawString(item.DisplayName,', status)
+        self.assertIn('TelemetryFieldPresentation.Matches(text, item.DisplayName, item.Name, item.Group, item.GroupLabel)', chart)
+        self.assertIn('g.DrawString(row.Label, _normalFont, nameBrush, row.NameBounds, format)', chart)
+        self.assertIn('g.DrawString(row.Item.Value ?? "", _normalFont, valueBrush, row.ValueBounds, format)', chart)
+        self.assertIn('_contentPanel.AutoScrollPosition = Point.Empty;', chart)
         for source in (status, chart):
-            self.assertIn('TelemetryFieldPresentation.Matches(searchText', source)
-            self.assertIn('g.DrawString(item.DisplayName,', source)
             self.assertIn('MeasureString(item.DisplayName', source)
             self.assertIn('GetHeight(graphics)', source)
             self.assertIn('_contentPanel.AutoScrollMinSize', source)
-        self.assertIn('lastOccupiedColumn + 1', chart)
+        self.assertIn('new Size(x - _columnGap + _padding, bottom + _padding)', chart)
 
     def test_group_catalog_does_not_reuse_distance_terrain(self):
         catalog = json.loads((ROOT / 'localization/zh-Hans/code-translations.json').read_text())
