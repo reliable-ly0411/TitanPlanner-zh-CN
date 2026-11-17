@@ -274,7 +274,7 @@ The WPOverlay2 rendering pipeline with its MissionStyleEditor, `MissionSegmentiz
 - Animated zoom on the maps: the mouse wheel, zoom slider, zoom box and zoom buttons ease to the new level, about the centre of the view
 - An **(i)** button in the DATA map's corner toggles the legend of the vehicle's lines (Current Heading, Direction to WP, Target Heading, Ground Track)
 - With several vehicles connected, the ones not selected are drawn at half opacity without their lines; Config > Planner's secondary display style can show them solid or hide them
-- Clean pixel-perfect bottom-bar layout
+- Map footer options stay vertically aligned, size to the current font and wrap within narrow map panes
 - Auto-pan on parameter button swap
 
 ---
