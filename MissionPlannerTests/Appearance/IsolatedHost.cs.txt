@@ -1,0 +1,214 @@
+// Hosts the production store, bridge, settings page and splash, with no vehicle or full application startup.
+// The runner supplies the real ThemeManager.FormIcon source fragment and real UiText satellite resources.
+using System;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Threading;
+using System.Windows.Forms;
+using MissionPlanner.Utilities;
+using MissionPlannerTests.Utilities;
+
+namespace Microsoft.VisualStudio.TestTools.UnitTesting
+{
+    [AttributeUsage(AttributeTargets.Class)] public class TestClassAttribute : Attribute { }
+    [AttributeUsage(AttributeTargets.Method)] public class TestMethodAttribute : Attribute { }
+    public static class Assert
+    {
+        public static void IsTrue(bool value, string message = null) { if (!value) throw new Exception(message ?? "Expected true"); }
+        public static void IsFalse(bool value) { IsTrue(!value); }
+        public static void IsNull(object value) { IsTrue(value == null); }
+        public static void IsNotNull(object value) { IsTrue(value != null); }
+        public static void AreEqual<T>(T expected, T actual, string message = null) { if (!object.Equals(expected, actual)) throw new Exception(message ?? "Expected " + expected + "; actual " + actual); }
+        public static void AreSame(object expected, object actual) { IsTrue(object.ReferenceEquals(expected, actual)); }
+        public static void Fail(string message) { throw new Exception(message); }
+        public static void ThrowsException<T>(Action action) where T : Exception
+        { try { action(); } catch (T) { return; } throw new Exception("Expected " + typeof(T).Name); }
+    }
+    public static class CollectionAssert
+    {
+        public static void AreEqual(byte[] expected, byte[] actual)
+        { Assert.IsTrue(expected.SequenceEqual(actual)); }
+    }
+}
+namespace MissionPlanner.Controls { public class MyUserControl : UserControl { } }
+namespace MissionPlanner
+{
+    public static class Program { public static Image IconFile = SystemIcons.Application.ToBitmap(); }
+    // Only the authoritative Form reference is needed; the real MainV2 constructor starts vehicle/map subsystems.
+    public class MainV2 : Form
+    {
+        public static MainV2 instance;
+        public MainV2() { instance = this; }
+    }
+}
+namespace MissionPlanner.Utilities
+{
+    public static class Settings
+    {
+        public static string UserDirectory;
+        public static string GetUserDataDirectory() { return UserDirectory; }
+    }
+}
+internal static class AppearanceIsolatedHost
+{
+    private static int assertions;
+    private static void Check(bool value, string message)
+    { assertions++; if (!value) throw new Exception(message); }
+    private static Control[] Descendants(Control root)
+    { return new[] { root }.Concat(root.Controls.Cast<Control>().SelectMany(Descendants)).ToArray(); }
+
+    private static void PersistencePhase(string output, string phase)
+    {
+        string directory = Path.Combine(Settings.UserDirectory, "appearance");
+        if (phase == "seed")
+        {
+            var icon = AppearanceAssetStoreTests.IconFile(output);
+            var image = AppearanceAssetStoreTests.ImageFile(output, ".png", Color.White);
+            DesktopAppearance.Import(AppearanceAsset.WindowIcon, icon);
+            DesktopAppearance.Import(AppearanceAsset.StartupImage, image);
+            File.Delete(icon); File.Delete(image);
+            File.WriteAllText(Path.Combine(output, "manifest-snapshot.xml"), File.ReadAllText(Path.Combine(directory, "settings.xml")));
+        }
+        else if (phase == "damage")
+        {
+            foreach (var path in Directory.GetFiles(directory, "*.ico")) File.WriteAllText(path, "synthetic damage");
+            foreach (var path in Directory.GetFiles(directory, "*.png")) File.Delete(path);
+        }
+        else if (phase == "reset")
+        {
+            DesktopAppearance.RestoreDefault(AppearanceAsset.WindowIcon);
+            DesktopAppearance.RestoreDefault(AppearanceAsset.StartupImage);
+        }
+        else
+        {
+            bool custom = phase == "verify";
+            Check(custom == (DesktopAppearance.WindowIcon != null), "fresh-process icon selection wrong");
+            string warning;
+            using (var image = DesktopAppearance.Store.LoadStartupImage(out warning))
+                Check(custom == (image != null), "fresh-process startup selection wrong");
+            if (phase == "fallback")
+            {
+                Check(DesktopAppearance.IconWarning != null && warning != null, "fallback not reported");
+                Check(File.ReadAllText(Path.Combine(directory, "settings.xml")) == File.ReadAllText(Path.Combine(output, "manifest-snapshot.xml")), "fallback changed manifest");
+            }
+            if (phase == "defaults") Check(DesktopAppearance.IconWarning == null && warning == null, "default still warns");
+            using (var splash = new MissionPlanner.Splash())
+            {
+                var picture = Descendants(splash).OfType<PictureBox>().Single();
+                Check(custom == (picture.Image.Width == 80 && picture.Image.Height == 40), "fresh splash image wrong");
+            }
+        }
+        Console.WriteLine("PASS fresh-process=" + phase + " assertions=" + assertions);
+    }
+
+    [STAThread]
+    private static int Main(string[] args)
+    {
+        try
+        {
+            string output = Path.GetFullPath(args[0]); Directory.CreateDirectory(output);
+            Settings.UserDirectory = Path.Combine(output, "synthetic-user-data");
+            if (args.Length > 1) { PersistencePhase(output, args[1]); return 0; }
+            var tests = new AppearanceAssetStoreTests(); int passed = 0;
+            foreach (var method in tests.GetType().GetMethods().Where(m => m.GetCustomAttributes(typeof(Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute), false).Length != 0))
+            {
+                try { method.Invoke(tests, null); passed++; Console.WriteLine("PASS " + method.Name); }
+                catch (TargetInvocationException ex) { throw new Exception(method.Name, ex.InnerException); }
+            }
+            Application.EnableVisualStyles();
+            var originalIcon = ThemeManager.FormIcon;
+            string source = AppearanceAssetStoreTests.IconFile(output);
+            try
+            {
+                using (var mainWindow = new MissionPlanner.MainV2())
+                using (var form = new Form())
+                {
+                    mainWindow.Icon = originalIcon;
+                    var handle = mainWindow.Handle;
+                    form.Icon = originalIcon; form.Show();
+                    Check(!Application.OpenForms.Cast<Form>().Contains(mainWindow), "fixture main unexpectedly in OpenForms");
+                    DesktopAppearance.Import(AppearanceAsset.WindowIcon, source);
+                    Check(object.ReferenceEquals(form.Icon, ThemeManager.FormIcon), "open form did not receive custom icon");
+                    Check(object.ReferenceEquals(mainWindow.Icon, ThemeManager.FormIcon), "main window absent from OpenForms kept original icon after import");
+                    Check(!object.ReferenceEquals(originalIcon, form.Icon), "custom icon ignored");
+                    Check(!Application.OpenForms.Cast<Form>().Contains(mainWindow), "main unexpectedly entered OpenForms before reset");
+                    DesktopAppearance.RestoreDefault(AppearanceAsset.WindowIcon);
+                    Check(object.ReferenceEquals(originalIcon, mainWindow.Icon), "main window absent from OpenForms did not restore default icon");
+                    Check(object.ReferenceEquals(originalIcon, form.Icon), "default icon not restored");
+                    Check(!Application.OpenForms.Cast<Form>().Contains(mainWindow), "reset unexpectedly registered the main window");
+                }
+            }
+            finally { MissionPlanner.MainV2.instance = null; }
+            var refreshTests = new WindowIconRefreshTests(); int refreshPassed = 0;
+            foreach (var method in refreshTests.GetType().GetMethods().Where(m => m.GetCustomAttributes(typeof(Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute), false).Length != 0))
+            {
+                try { method.Invoke(refreshTests, null); refreshPassed++; Console.WriteLine("PASS " + method.Name); }
+                catch (TargetInvocationException ex) { throw new Exception(method.Name, ex.InnerException); }
+            }
+            Console.WriteLine("PASS window-refresh-tests=" + refreshPassed + " native-WM_GETICON=Windows-only");
+            foreach (string culture in new[] { "zh-CN", "zh-Hans", "en-US" })
+            {
+                Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.GetCultureInfo(culture);
+                using (var form = new Form())
+                using (var page = new MissionPlanner.GCSViews.ConfigurationView.ConfigAppearance())
+                {
+                    form.AutoScaleMode = AutoScaleMode.None; page.Dock = DockStyle.Fill; form.Controls.Add(page); form.Show();
+                    DesktopAppearance.Import(AppearanceAsset.WindowIcon, source);
+                    Descendants(page).OfType<Button>().Single(b => b.Text == UiText.Translate("Restore default icon")).PerformClick();
+                    Check(DesktopAppearance.WindowIcon == null, "restore icon button did not reset selection");
+                    DesktopAppearance.Import(AppearanceAsset.StartupImage, AppearanceAssetStoreTests.ImageFile(output, ".png", Color.White));
+                    Descendants(page).OfType<Button>().Single(b => b.Text == UiText.Translate("Restore default startup image")).PerformClick();
+                    string resetWarning;
+                    using (var resetImage = DesktopAppearance.Store.LoadStartupImage(out resetWarning))
+                        Check(resetImage == null && resetWarning == null, "restore startup button did not reset selection");
+                    foreach (int width in new[] { 320, 640, 1024 })
+                    foreach (float scale in new[] { 1f, 1.5f, 2f })
+                    {
+                        form.ClientSize = new Size(width, 720);
+                        page.Font = new Font(SystemFonts.DefaultFont.FontFamily, SystemFonts.DefaultFont.Size * scale);
+                        Application.DoEvents();
+                        foreach (var label in Descendants(page).OfType<Label>())
+                        {
+                            Check(label.Width <= page.ClientSize.Width, "label exceeds viewport");
+                            Check(label.Height >= label.PreferredHeight, "label text is clipped");
+                        }
+                        var last = Descendants(page).OfType<Label>().Last();
+                        page.ScrollControlIntoView(last); Application.DoEvents();
+                        var position = page.PointToClient(last.PointToScreen(Point.Empty));
+                        Check(position.Y >= 0 && position.Y + last.Height <= page.ClientSize.Height,
+                            "last status label is not reachable by scrolling");
+                        page.AutoScrollPosition = Point.Empty;
+                    }
+                    using (var image = new Bitmap(form.Width, form.Height))
+                    { form.DrawToBitmap(image, new Rectangle(Point.Empty, image.Size)); image.Save(Path.Combine(output, "settings-" + culture + ".png")); }
+                }
+                foreach (var color in new[] { Color.Black, Color.White })
+                {
+                    DesktopAppearance.Import(AppearanceAsset.StartupImage, AppearanceAssetStoreTests.ImageFile(output, ".png", color));
+                    using (var splash = new MissionPlanner.Splash())
+                    {
+                        splash.TopMost = false; splash.Show(); Application.DoEvents();
+                        var controls = Descendants(splash);
+                        var credit = controls.OfType<Label>().Single(l => l.Text.Contains("lyy0405"));
+                        Check(credit.Text.Contains("Michael Oborne"), "original author credit missing");
+                        Check(controls.OfType<Label>().Any(l => l.Text.Contains("Mohammad Adib")), "upstream credit missing");
+                        Check(credit.ForeColor.ToArgb() == Color.White.ToArgb(), "credit text not white");
+                        Check(credit.Parent.BackColor.ToArgb() == Color.FromArgb(32, 32, 32).ToArgb(), "credit has no opaque contrast panel");
+                        Check(credit.Height >= credit.PreferredHeight, "credit text clipped");
+                        foreach (var label in credit.Parent.Controls.Cast<Control>())
+                            Check(label.Bottom <= credit.Parent.ClientSize.Height - credit.Parent.Padding.Bottom, "footer clips label");
+                        var picture = controls.OfType<PictureBox>().Single();
+                        Check(picture.Image.Width == 80 && picture.Image.Height == 40, "custom image not used by splash");
+                        using (var image = new Bitmap(splash.Width, splash.Height))
+                        { splash.DrawToBitmap(image, new Rectangle(Point.Empty, image.Size)); image.Save(Path.Combine(output, "splash-" + culture + "-" + color.Name + ".png")); }
+                    }
+                }
+            }
+            Console.WriteLine("PASS store-tests=" + passed + " ui-assertions=" + assertions + " drawingDpi=96 (font stress is not Windows DPI)");
+            return 0;
+        }
+        catch (Exception ex) { Console.Error.WriteLine(ex); return 1; }
+    }
+}

@@ -992,6 +992,22 @@
     <value>不限</value>
     <comment>"Any"</comment>
   </data>
+  <data name="43cef73c36415fce32682251ae2e5d1d8cef183d9ba3e097d0d3927fad5a0e17" xml:space="preserve">
+    <value>外观设置不可用，已回退默认外观。</value>
+    <comment>"Appearance preferences unavailable; using defaults."</comment>
+  </data>
+  <data name="87544ac8037df5868373f51f61679edc0b52ca4c12c442dd32a078a02e37faba" xml:space="preserve">
+    <value>外观已保存。窗口图标立即生效；启动图片下次启动生效。</value>
+    <comment>"Appearance saved. Window icons apply now; startup image applies on next startup."</comment>
+  </data>
+  <data name="69441e8a5ee12506a9e4e002e4e8cdcb54ea37bbd9d8b4c742672dc00676bb6a" xml:space="preserve">
+    <value>外观已保存，暂时无法显示预览。</value>
+    <comment>"Appearance saved; preview unavailable."</comment>
+  </data>
+  <data name="19c1a9e399471ea14be79d116c90651c710a0f41c7fe86bba0042cd0fd848c48" xml:space="preserve">
+    <value>外观已保存；若窗口图标未刷新，请重新打开该窗口。</value>
+    <comment>"Appearance saved; reopen any window whose icon did not refresh."</comment>
+  </data>
   <data name="31e392d1c0378beca611de66c0f4c71cba29159905cc54242d9bddee5b23d851" xml:space="preserve">
     <value>应用</value>
     <comment>"Apply"</comment>
@@ -1907,13 +1923,33 @@
     <value>正在检查更新</value>
     <comment>"Checking for Updates"</comment>
   </data>
+  <data name="a6c6baaa66b0b20ada587ee077306d12744d0ae4a5da65ce4daa61dd71b3617d" xml:space="preserve">
+    <value>选择 ICO…</value>
+    <comment>"Choose ICO..."</comment>
+  </data>
+  <data name="c9cee54968f135010ca64a8776805ca08e66dbf045aa3a36f07fbe325412c107" xml:space="preserve">
+    <value>请选择 PNG、JPEG 或 BMP 图片，最大 16 MiB，每边最多 4096 像素。</value>
+    <comment>"Choose a PNG, JPEG or BMP image (up to 16 MiB and 4096 pixels per side)."</comment>
+  </data>
   <data name="63f993e5c35b4facfd02052187cecd097ed65dec602bced64f60788c1cb172d0" xml:space="preserve">
     <value>请选择采集设备和格式</value>
     <comment>"Choose a capture device and format"</comment>
   </data>
+  <data name="c0a2e26079942647c6b2098e044f78bf32b0e8f98f3879d201c5a9f8a6fbd648" xml:space="preserve">
+    <value>请选择有效的 ICO 文件，每帧 1–256 像素。</value>
+    <comment>"Choose a valid ICO file with frames from 1 to 256 pixels."</comment>
+  </data>
+  <data name="fee6af354792692b5022cf3592d88d1cacea518f07b8ecc35e3a5091fbd41fd4" xml:space="preserve">
+    <value>请选择 ICO 文件，最大 4 MiB。</value>
+    <comment>"Choose an ICO file (up to 4 MiB)."</comment>
+  </data>
   <data name="a5e459267230d67a7aea26f9c10c81bcab65dcf83a614927be795284db7dd5a3" xml:space="preserve">
     <value>选择接收机输出 RTCM 消息的时间间隔。数值越小，数据速率越高。</value>
     <comment>"Choose how often RTCM messages are output by the receiver. Lower values result in a higher data rate."</comment>
+  </data>
+  <data name="213b51a057c4b14b66846141fd0a4c8985e24f24278dca0abbba79a30ee1c19b" xml:space="preserve">
+    <value>选择启动图片…</value>
+    <comment>"Choose startup image..."</comment>
   </data>
   <data name="33dc0bbe2467cd195997080f28485ba25d433ca5471f462069489d5fba56eea5" xml:space="preserve">
     <value>选择 RTCM 消息的详细程度。数值越大，数据速率越高。</value>
@@ -2380,6 +2416,14 @@ Ctrl+O 从文件加载</value>
     <value>自定义格式，例如 "0.0" 或 "m:ss"</value>
     <comment>"Custom format specifier, e.g. \"0.0\" or \"m:ss\""</comment>
   </data>
+  <data name="50a1bce7377409aef69a303bffd647aeaf75c22b53a6f82d80037de5858f4940" xml:space="preserve">
+    <value>自定义图标不可用，已回退默认图标。</value>
+    <comment>"Custom icon unavailable; using default."</comment>
+  </data>
+  <data name="13c8af6b4af15a4bf195478d09dcbd2cd723fa0b445e273d2ce20194b7e9ff9c" xml:space="preserve">
+    <value>自定义启动图片不可用，已回退默认图片。</value>
+    <comment>"Custom startup image unavailable; using default."</comment>
+  </data>
   <data name="c5276e27afba47df67704ededdb5cf2cfaaf0a9d7d1be1eabb0d4087dd2b724b" xml:space="preserve">
     <value>自定义</value>
     <comment>"Customize"</comment>
@@ -2459,6 +2503,10 @@ Ctrl+O 从文件加载</value>
   <data name="1db75cc9c25f715d21509707bdbb9fd37031fcc47490b0ca187aff877f91e372" xml:space="preserve">
     <value>默认日志目录</value>
     <comment>"Default Log Dir"</comment>
+  </data>
+  <data name="e56acda1baa39197ed01cf5288b9ee2e666d34361ceee8da32b68114b5bc426f" xml:space="preserve">
+    <value>上方显示当前默认或已保存的外观。</value>
+    <comment>"Default or saved appearance is shown above."</comment>
   </data>
   <data name="199702c3a0b38e341fca04d844b8062378f36afeda46cbc809ae600ec29be865" xml:space="preserve">
     <value>延迟 (ms)</value>
@@ -2948,6 +2996,10 @@ Ctrl+O 从文件加载</value>
   <data name="69dd129ca5f32c87eacb205528e9aeaa7f00e9100e22539b5cb1a7fae89e5b78" xml:space="preserve">
     <value>电调类型：</value>
     <comment>"ESC Type:"</comment>
+  </data>
+  <data name="821ad6c2da96e0e86d1413a28fb3473c27cf5ab9c746d1760b78030fcce9239a" xml:space="preserve">
+    <value>EXE、安装器与资源管理器图标需重新构建。已有或固定的快捷方式保留自身图标，需另行更换或重建；Windows 任务栏可能保留图标缓存。</value>
+    <comment>"EXE, installer and Explorer icons require a rebuild. Existing or pinned shortcuts keep their own icons; change or recreate them separately. Windows may retain a cached taskbar icon."</comment>
   </data>
   <data name="4e2cd851cfdab8b554b71408d984989127f1db0430f647c711863c42d20f39e7" xml:space="preserve">
     <value>东向位置</value>
@@ -4659,6 +4711,10 @@ Ctrl+O 从文件加载</value>
     <value>HUD 标题</value>
     <comment>"Hud Header"</comment>
   </data>
+  <data name="273813b214de14ae3313988c0cd93209c77e273177f0bec22a86d7161622e9d9" xml:space="preserve">
+    <value>ICO：最大 4 MiB，每帧 1–256 像素，最多 64 帧。窗口图标立即生效，重启后保留。</value>
+    <comment>"ICO: up to 4 MiB, 1-256 pixels per frame (up to 64 frames). Window icons apply now and on restart."</comment>
+  </data>
   <data name="383d6d72e8c92e5329164432c1c9614af4c50e24eb76a779539f3eebb6320e73" xml:space="preserve">
     <value>命令的 ID 编号</value>
     <comment>"ID number of the command"</comment>
@@ -4723,6 +4779,10 @@ Ctrl+O 从文件加载</value>
     <value>影像宽度 [像素]</value>
     <comment>"Image Width [Pixels]"</comment>
   </data>
+  <data name="cd10c7e03650b0c1840a107010b0f2aca70deacc4c564fb64e455a41ce2afacc" xml:space="preserve">
+    <value>图片文件超过体积限制或内容为空。</value>
+    <comment>"Image file exceeds the size limit or is empty."</comment>
+  </data>
   <data name="2cff9baabf56ca002610e113bc94deb6ededddfc3c130365b6e88ed5195bf774" xml:space="preserve">
     <value>导入</value>
     <comment>"Import"</comment>
@@ -4766,6 +4826,10 @@ Ctrl+O 从文件加载</value>
   <data name="5c59225c66af01b77a8a0358a0c335e16543877a5d61ba1a866df10b65ef6701" xml:space="preserve">
     <value>允许区域和禁入区域（左侧圆形图标），</value>
     <comment>"Inclusion and Exclusion areas (round circle to the left),"</comment>
+  </data>
+  <data name="a0a049316a040e4af3c5d208985454e0c2a61610cdf1443034f3fd1eec645c6e" xml:space="preserve">
+    <value>图片文件不完整。</value>
+    <comment>"Incomplete image file."</comment>
   </data>
   <data name="170322a32f3c35b2c61576a5553d352d7b3c8ae7086dab78f15fc891a28c067c" xml:space="preserve">
     <value>信息</value>
@@ -4885,6 +4949,18 @@ Ctrl+O 从文件加载</value>
   <data name="c16b6fd4a106cd3a45f3b37e1f827a06a608d59100fb4c34fe414afd997a8b6c" xml:space="preserve">
     <value>起飞点或航点高度无效</value>
     <comment>"Invalid Home or wp Alt"</comment>
+  </data>
+  <data name="8d814d0a5df16ab0e875b218ac6aefbfc2108dca3ff646ac1fd44d4ea5ab6624" xml:space="preserve">
+    <value>ICO 帧目录无效。</value>
+    <comment>"Invalid ICO directory."</comment>
+  </data>
+  <data name="9b946872d9476bbaba05e912780fa9f7773f5fb93801e4818edefdb156a72e22" xml:space="preserve">
+    <value>ICO 图像帧尺寸无效。</value>
+    <comment>"Invalid ICO frame dimensions."</comment>
+  </data>
+  <data name="1c6bea2fa7072edfc4fb56c81ead06c92e3d78963ff3dae5f0806b11d73d69f6" xml:space="preserve">
+    <value>ICO 图像帧无效。</value>
+    <comment>"Invalid ICO frame."</comment>
   </data>
   <data name="7332c09ad5daa80006543a31d8cac34b86ce59f21eb568841e2487f00148c757" xml:space="preserve">
     <value>经纬度无效，请修正</value>
@@ -6576,6 +6652,10 @@ Mission Planner 需要收到 2 个有效心跳包后才会连接。</value>
     <value>请务必阅读！</value>
     <comment>"PLEASE READ IT !"</comment>
   </data>
+  <data name="7c27ea2fcd2ae11dc2c768c07919c27a56bc5ca365f3dd220ee29e438ef310d2" xml:space="preserve">
+    <value>PNG、JPEG 或 BMP：最大 16 MiB，每边最多 4096 像素。完整显示图片，保持比例，不裁切；下次启动生效。</value>
+    <comment>"PNG, JPEG or BMP: up to 16 MiB, 4096 pixels per side. The full image is fitted without cropping. Applies on next startup."</comment>
+  </data>
   <data name="97bb4dfad15defb0441fa0178d55ed7809aaf0fa36e7e9b956343c73950d741c" xml:space="preserve">
     <value>兴趣点</value>
     <comment>"POI"</comment>
@@ -7747,6 +7827,14 @@ ffdshow
   <data name="cf2038f04cff298148a3604eebe9f0132f7400762cc67111bc50ac04a5bc2397" xml:space="preserve">
     <value>恢复主题</value>
     <comment>"Restore Theme"</comment>
+  </data>
+  <data name="64fa0a70fbe38192130b13ad7a7d2ad02de6b4813b837e53aa13940369d21e0e" xml:space="preserve">
+    <value>恢复默认图标</value>
+    <comment>"Restore default icon"</comment>
+  </data>
+  <data name="53cb69bddcec9a9e5b4b7b2d207998761c9269ae045bbebb86474d4527d13ea1" xml:space="preserve">
+    <value>恢复默认启动图片</value>
+    <comment>"Restore default startup image"</comment>
   </data>
   <data name="7f00310ebcf7eb164a7abdcf76c18b6ecc14721a95509c46b0621920231e7df1" xml:space="preserve">
     <value>继续任务</value>
@@ -9201,6 +9289,10 @@ Acc：当前测定位置的精度
     <value>加载的 HEX 文件无效，请重试。</value>
     <comment>"The hex file loaded is invalid, please try again."</comment>
   </data>
+  <data name="39416ea18a33340641013b0707393d00b1c55098cff954d9d57af3732089f93a" xml:space="preserve">
+    <value>图片实际格式与扩展名不符，或图片内容不完整。</value>
+    <comment>"The image format does not match its file extension."</comment>
+  </data>
   <data name="7fdc5e6fac23f11db0a0d1a8aa9d7a145ef4b2b1579f6b031cf7eb553f197e58" xml:space="preserve">
     <value>地图中尚无可下载区域。</value>
     <comment>"The map has no area to download yet."</comment>
@@ -9265,6 +9357,14 @@ Acc：当前测定位置的精度
   <data name="5c5238042c129dbd6f9e45f928988a260941947b058567df6900da469f577a99" xml:space="preserve">
     <value>热气流盘旋</value>
     <comment>"Thermal"</comment>
+  </data>
+  <data name="30da67930b96712dad0eeb2e0ee72ef8f2f6c68d2763018b6bf406d38d896224" xml:space="preserve">
+    <value>这些外观设置用于当前用户的所有配置档。导入副本单独保存，保留原文件、日志与飞行设置。</value>
+    <comment>"These preferences apply to this user's profiles. Imported copies are saved separately; original files, logs and flight settings are preserved."</comment>
+  </data>
+  <data name="2110ffc72f0936e4be0d0443074cdbf02cc34ba81484135db4ba3c1fd6393ce4" xml:space="preserve">
+    <value>Mono 不支持此 ICO 图像帧，请使用 32 位 DIB 或 PNG 帧。</value>
+    <comment>"This ICO frame is unsupported on Mono. Use a 32-bit DIB or PNG frame."</comment>
   </data>
   <data name="1e1408509d7650d3c207cd8e31fcad3ff2f89ef176b08c03ace3db0c4b5596f5" xml:space="preserve">
     <value>此端口似乎是 CAN 端口，请使用 DroneCAN 页面</value>
@@ -9632,6 +9732,10 @@ Acc：当前测定位置的精度
     <value>无法检查更新：服务器返回的版本信息无效。</value>
     <comment>"Unable to check for updates: Invalid version information from server."</comment>
   </data>
+  <data name="94050c36eb713ab424d96c8b2a2d921ba1827347c69085b5697fcdf4af975ef1" xml:space="preserve">
+    <value>无法保存外观，保留原有选择。</value>
+    <comment>"Unable to save appearance. Previous selection is unchanged."</comment>
+  </data>
   <data name="7e7cb3b82f656d31dcc82032418bb6108fb5d815cee7564431e552d39613b376" xml:space="preserve">
     <value>无法设置参数 </value>
     <comment>"Unable to set parameter "</comment>
@@ -9772,6 +9876,10 @@ Acc：当前测定位置的精度
     <value>上传航点失败： </value>
     <comment>"Upload wps failed "</comment>
   </data>
+  <data name="05a5cbf1b895fb92f398a2705f52f1ebb3009b4863a610dae9cf4da913e4f5dd" xml:space="preserve">
+    <value>上游 TitanPlanner：Mohammad Adib</value>
+    <comment>"Upstream TitanPlanner: Mohammad Adib"</comment>
+  </data>
   <data name="f8f340e81789f1f31a3c597b3c2ba372352e61762c3306ad4b5a4d02dfd9fdcd" xml:space="preserve">
     <value>上游更新可能覆盖此汉化版本。更新前请备份当前安装目录。</value>
     <comment>"Upstream updates may replace this Chinese build. Back up your installation before updating."</comment>
@@ -9823,6 +9931,10 @@ Acc：当前测定位置的精度
   <data name="0d315717471eeb767ee6ca311beea8671b53ad5aae75d08f0bd3d38a1ba17b26" xml:space="preserve">
     <value>使用外部 NMEA GPS，并根据其位置向飞行器发送引导模式航点</value>
     <comment>"Use an external NMEA gps and send guided mode waypoints to the MAV based on that location"</comment>
+  </data>
+  <data name="6a06bacbe52cfa2f77dac98579d0d46bc68b3ae6ad9714169db10f83ea8f86a8" xml:space="preserve">
+    <value>请使用拥有使用权限的图片。恢复默认会保留已导入的副本和设置备份。</value>
+    <comment>"Use images you have permission to use. Restoring defaults preserves imported copies and preference backups."</comment>
   </data>
   <data name="706a03cb1705f6831964a469d55fbedd35f594684161f8fad7e9527717976849" xml:space="preserve">
     <value>仅使用高于此油门百分比的数据。</value>
@@ -10142,6 +10254,10 @@ http://www.magnetic-declination.com/</value>
     <value>风速 (speed)</value>
     <comment>"Wind Velocity (speed)"</comment>
   </data>
+  <data name="680e0d1fb096f045c3d144856ebc424c295799760bb59b6923de9dc13ffaddf1" xml:space="preserve">
+    <value>窗口图标与启动画面</value>
+    <comment>"Window icon and startup image"</comment>
+  </data>
   <data name="3404644e01177ee996b69247aa3967e7a3f66702c5ff0f7270591e8d9622183b" xml:space="preserve">
     <value>清除</value>
     <comment>"Wipe"</comment>
@@ -10433,6 +10549,10 @@ http://www.magnetic-declination.com/</value>
   <data name="1d25d3e738fb40ec4e8c211d469ef0510f2aeabb4a3c092012f3670485197255" xml:space="preserve">
     <value>作者 Michael Oborne | 修改者 Mohammad Adib</value>
     <comment>"by Michael Oborne | Modified by Mohammad Adib"</comment>
+  </data>
+  <data name="9eef7edef564d80c1e21896b34f3f2313afe6c998fb34e58dc174b90cb27ec07" xml:space="preserve">
+    <value>作者 Michael Oborne | 修改者 lyy0405</value>
+    <comment>"by Michael Oborne | Modified by lyy0405"</comment>
   </data>
   <data name="e152337e4e85aa3e81482f0ce329aec7bfad531413fe53fef84f1f0d4165caee" xml:space="preserve">
     <value>校准</value>
