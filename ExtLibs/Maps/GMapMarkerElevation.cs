@@ -153,8 +153,9 @@ namespace MissionPlanner.Maps
                     int len = (int)g2.MeasureString(scaleLow.ToString() + "m", new Font("Arial", 8)).Width;
                     g2.DrawString(scaleLow.ToString() + "m", new Font("Arial", 8), new SolidBrush(Color.White), 255 - len + 2, 0);
                     //Write text at center
-                    len = (int)g2.MeasureString(scaleText, new Font("Arial", 7)).Width;
-                    g2.DrawString(scaleText, new Font("Arial", 7), new SolidBrush(Color.Black), 127 - len / 2, 0);
+                    var title = MissionPlanner.Utilities.MapGpsPresentation.ScaleTitle(scaleText);
+                    len = (int)g2.MeasureString(title, new Font("Arial", 7)).Width;
+                    g2.DrawString(title, new Font("Arial", 7), new SolidBrush(Color.Black), 127 - len / 2, 0);
 
                 }
 

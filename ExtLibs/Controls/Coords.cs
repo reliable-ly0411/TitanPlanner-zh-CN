@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using GeoUtility.GeoSystem;
+using MissionPlanner.Utilities;
 
 namespace MissionPlanner.Controls
 {
@@ -88,7 +89,54 @@ namespace MissionPlanner.Controls
             InitializeComponent();
             this.DoubleBuffered = true;
             CMB_coordsystem.DataSource = Enum.GetNames(typeof(CoordsSystems));
+            if (MapGpsPresentation.Enhanced)
+                ConfigureCoordinateDisplay();
             AltSource = "";
+        }
+
+        private void ConfigureCoordinateDisplay()
+        {
+            if (components == null)
+                components = new Container();
+            var help = new ToolTip(components);
+            var combo = CMB_coordsystem;
+            // Leave the editable/closed Text and existing System getter/setter raw for coordinate conversion.
+            int rowHeight = combo.ItemHeight;
+            combo.DrawMode = DrawMode.OwnerDrawFixed;
+            combo.ItemHeight = rowHeight;
+            const TextFormatFlags flags = TextFormatFlags.SingleLine | TextFormatFlags.NoPrefix;
+            combo.DrawItem += (sender, e) =>
+            {
+                e.DrawBackground();
+                if (e.Index >= 0 && e.Index < combo.Items.Count)
+                {
+                    var raw = combo.GetItemText(combo.Items[e.Index]);
+                    var label = (e.State & DrawItemState.ComboBoxEdit) != 0 ? raw : MapGpsPresentation.CoordinateLabel(raw);
+                    TextRenderer.DrawText(e.Graphics, label, combo.Font, e.Bounds, e.ForeColor,
+                        flags | TextFormatFlags.VerticalCenter | TextFormatFlags.EndEllipsis);
+                }
+                e.DrawFocusRectangle();
+            };
+            combo.DropDown += (sender, e) =>
+            {
+                int width = combo.Width;
+                using (var graphics = combo.CreateGraphics())
+                {
+                    var pad = SystemInformation.VerticalScrollBarWidth + (int)Math.Ceiling(12 * graphics.DpiX / 96);
+                    foreach (var item in combo.Items)
+                        width = Math.Max(width, TextRenderer.MeasureText(graphics, MapGpsPresentation.CoordinateLabel(combo.GetItemText(item)),
+                            combo.Font, Size.Empty, flags).Width + pad);
+                }
+                combo.DropDownWidth = Math.Min(width, Screen.FromControl(combo).WorkingArea.Width);
+            };
+            Action updateHelp = () =>
+            {
+                var raw = combo.Text;
+                var label = MapGpsPresentation.CoordinateLabel(raw);
+                help.SetToolTip(combo, label == raw ? null : label);
+            };
+            combo.TextChanged += (sender, e) => updateHelp();
+            updateHelp();
         }
 
         protected override void OnPaint(PaintEventArgs e)
