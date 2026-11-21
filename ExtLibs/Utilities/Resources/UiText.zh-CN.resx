@@ -12,6 +12,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="18c0d876889ee347d4a8d83fe7db3168e476546f9e3a6de13b4dd2cef547f1e9" xml:space="preserve">
+    <value>格式化 SD 卡</value>
+    <comment>"Format SD card"</comment>
+  </data>
+  <data name="31abc10b59f52f4db653e0e92f56e633d5292d7a8cbda438dbc7066b74ae7e2f" xml:space="preserve">
+    <value>格式化飞控 SD 卡将删除卡内全部数据。是否继续？</value>
+    <comment>"Formatting the flight controller SD card will delete all data on the card. Continue?"</comment>
+  </data>
   <data name="7deaafc7bd3093df27c4c08bc6a62766825583a6fb7c01a6843a3f8449d606ee" xml:space="preserve">
     <value>	将 {0}_ACCZ_P 设为 MOT_THST_HOVER
 	将 {0}_ACCZ_I 设为 2*MOT_THST_HOVER</value>
