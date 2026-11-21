@@ -1,0 +1,439 @@
+{
+  "schema_version": 1,
+  "source": {
+    "repository": "ArduPilot/mavlink",
+    "commit": "288b907c384a892c8519bfe271682424b1e1a3a0",
+    "files": [
+      "message_definitions/v1.0/common.xml",
+      "message_definitions/v1.0/ardupilotmega.xml"
+    ]
+  },
+  "commands": [
+    {
+      "id": 16,
+      "name": "MAV_CMD_NAV_WAYPOINT",
+      "short": "WAYPOINT",
+      "zh": "航点"
+    },
+    {
+      "id": 17,
+      "name": "MAV_CMD_NAV_LOITER_UNLIM",
+      "short": "LOITER_UNLIM",
+      "zh": "无限盘旋"
+    },
+    {
+      "id": 18,
+      "name": "MAV_CMD_NAV_LOITER_TURNS",
+      "short": "LOITER_TURNS",
+      "zh": "按圈数盘旋"
+    },
+    {
+      "id": 19,
+      "name": "MAV_CMD_NAV_LOITER_TIME",
+      "short": "LOITER_TIME",
+      "zh": "定时盘旋"
+    },
+    {
+      "id": 20,
+      "name": "MAV_CMD_NAV_RETURN_TO_LAUNCH",
+      "short": "RETURN_TO_LAUNCH",
+      "zh": "返航"
+    },
+    {
+      "id": 21,
+      "name": "MAV_CMD_NAV_LAND",
+      "short": "LAND",
+      "zh": "降落"
+    },
+    {
+      "id": 22,
+      "name": "MAV_CMD_NAV_TAKEOFF",
+      "short": "TAKEOFF",
+      "zh": "起飞"
+    },
+    {
+      "id": 30,
+      "name": "MAV_CMD_NAV_CONTINUE_AND_CHANGE_ALT",
+      "short": "CONTINUE_AND_CHANGE_ALT",
+      "zh": "继续并改变高度"
+    },
+    {
+      "id": 31,
+      "name": "MAV_CMD_NAV_LOITER_TO_ALT",
+      "short": "LOITER_TO_ALT",
+      "zh": "盘旋至目标高度"
+    },
+    {
+      "id": 36,
+      "name": "MAV_CMD_NAV_ARC_WAYPOINT",
+      "short": "ARC_WAYPOINT",
+      "zh": "圆弧航点"
+    },
+    {
+      "id": 82,
+      "name": "MAV_CMD_NAV_SPLINE_WAYPOINT",
+      "short": "SPLINE_WAYPOINT",
+      "zh": "样条航点"
+    },
+    {
+      "id": 83,
+      "name": "MAV_CMD_NAV_ALTITUDE_WAIT",
+      "short": "ALTITUDE_WAIT",
+      "zh": "等待高度"
+    },
+    {
+      "id": 84,
+      "name": "MAV_CMD_NAV_VTOL_TAKEOFF",
+      "short": "VTOL_TAKEOFF",
+      "zh": "垂直起飞"
+    },
+    {
+      "id": 85,
+      "name": "MAV_CMD_NAV_VTOL_LAND",
+      "short": "VTOL_LAND",
+      "zh": "垂直降落"
+    },
+    {
+      "id": 92,
+      "name": "MAV_CMD_NAV_GUIDED_ENABLE",
+      "short": "GUIDED_ENABLE",
+      "zh": "启用引导模式"
+    },
+    {
+      "id": 93,
+      "name": "MAV_CMD_NAV_DELAY",
+      "short": "DELAY",
+      "zh": "等待"
+    },
+    {
+      "id": 94,
+      "name": "MAV_CMD_NAV_PAYLOAD_PLACE",
+      "short": "PAYLOAD_PLACE",
+      "zh": "放置载荷"
+    },
+    {
+      "id": 112,
+      "name": "MAV_CMD_CONDITION_DELAY",
+      "short": "CONDITION_DELAY",
+      "zh": "条件延时"
+    },
+    {
+      "id": 114,
+      "name": "MAV_CMD_CONDITION_DISTANCE",
+      "short": "CONDITION_DISTANCE",
+      "zh": "条件距离"
+    },
+    {
+      "id": 115,
+      "name": "MAV_CMD_CONDITION_YAW",
+      "short": "CONDITION_YAW",
+      "zh": "条件偏航"
+    },
+    {
+      "id": 177,
+      "name": "MAV_CMD_DO_JUMP",
+      "short": "DO_JUMP",
+      "zh": "跳转航点"
+    },
+    {
+      "id": 178,
+      "name": "MAV_CMD_DO_CHANGE_SPEED",
+      "short": "DO_CHANGE_SPEED",
+      "zh": "改变速度"
+    },
+    {
+      "id": 179,
+      "name": "MAV_CMD_DO_SET_HOME",
+      "short": "DO_SET_HOME",
+      "zh": "设置起飞点"
+    },
+    {
+      "id": 181,
+      "name": "MAV_CMD_DO_SET_RELAY",
+      "short": "DO_SET_RELAY",
+      "zh": "设置继电器"
+    },
+    {
+      "id": 182,
+      "name": "MAV_CMD_DO_REPEAT_RELAY",
+      "short": "DO_REPEAT_RELAY",
+      "zh": "重复控制继电器"
+    },
+    {
+      "id": 183,
+      "name": "MAV_CMD_DO_SET_SERVO",
+      "short": "DO_SET_SERVO",
+      "zh": "设置舵机"
+    },
+    {
+      "id": 184,
+      "name": "MAV_CMD_DO_REPEAT_SERVO",
+      "short": "DO_REPEAT_SERVO",
+      "zh": "重复控制舵机"
+    },
+    {
+      "id": 188,
+      "name": "MAV_CMD_DO_RETURN_PATH_START",
+      "short": "DO_RETURN_PATH_START",
+      "zh": "返航路径起点"
+    },
+    {
+      "id": 189,
+      "name": "MAV_CMD_DO_LAND_START",
+      "short": "DO_LAND_START",
+      "zh": "着陆航段起点"
+    },
+    {
+      "id": 191,
+      "name": "MAV_CMD_DO_GO_AROUND",
+      "short": "DO_GO_AROUND",
+      "zh": "复飞"
+    },
+    {
+      "id": 193,
+      "name": "MAV_CMD_DO_PAUSE_CONTINUE",
+      "short": "DO_PAUSE_CONTINUE",
+      "zh": "暂停或继续"
+    },
+    {
+      "id": 194,
+      "name": "MAV_CMD_DO_SET_REVERSE",
+      "short": "DO_SET_REVERSE",
+      "zh": "设置反向行驶"
+    },
+    {
+      "id": 195,
+      "name": "MAV_CMD_DO_SET_ROI_LOCATION",
+      "short": "DO_SET_ROI_LOCATION",
+      "zh": "设置兴趣点位置"
+    },
+    {
+      "id": 197,
+      "name": "MAV_CMD_DO_SET_ROI_NONE",
+      "short": "DO_SET_ROI_NONE",
+      "zh": "取消兴趣点"
+    },
+    {
+      "id": 201,
+      "name": "MAV_CMD_DO_SET_ROI",
+      "short": "DO_SET_ROI",
+      "zh": "设置兴趣点"
+    },
+    {
+      "id": 202,
+      "name": "MAV_CMD_DO_DIGICAM_CONFIGURE",
+      "short": "DO_DIGICAM_CONFIGURE",
+      "zh": "配置相机"
+    },
+    {
+      "id": 203,
+      "name": "MAV_CMD_DO_DIGICAM_CONTROL",
+      "short": "DO_DIGICAM_CONTROL",
+      "zh": "控制相机"
+    },
+    {
+      "id": 205,
+      "name": "MAV_CMD_DO_MOUNT_CONTROL",
+      "short": "DO_MOUNT_CONTROL",
+      "zh": "控制云台"
+    },
+    {
+      "id": 206,
+      "name": "MAV_CMD_DO_SET_CAM_TRIGG_DIST",
+      "short": "DO_SET_CAM_TRIGG_DIST",
+      "zh": "设置相机触发距离"
+    },
+    {
+      "id": 207,
+      "name": "MAV_CMD_DO_FENCE_ENABLE",
+      "short": "DO_FENCE_ENABLE",
+      "zh": "启用围栏"
+    },
+    {
+      "id": 208,
+      "name": "MAV_CMD_DO_PARACHUTE",
+      "short": "DO_PARACHUTE",
+      "zh": "控制降落伞"
+    },
+    {
+      "id": 210,
+      "name": "MAV_CMD_DO_INVERTED_FLIGHT",
+      "short": "DO_INVERTED_FLIGHT",
+      "zh": "倒飞设置"
+    },
+    {
+      "id": 211,
+      "name": "MAV_CMD_DO_GRIPPER",
+      "short": "DO_GRIPPER",
+      "zh": "控制抓取器"
+    },
+    {
+      "id": 212,
+      "name": "MAV_CMD_DO_AUTOTUNE_ENABLE",
+      "short": "DO_AUTOTUNE_ENABLE",
+      "zh": "启用自动调参"
+    },
+    {
+      "id": 213,
+      "name": "MAV_CMD_NAV_SET_YAW_SPEED",
+      "short": "SET_YAW_SPEED",
+      "zh": "设置偏航速度"
+    },
+    {
+      "id": 215,
+      "name": "MAV_CMD_DO_SET_RESUME_REPEAT_DIST",
+      "short": "DO_SET_RESUME_REPEAT_DIST",
+      "zh": "设置恢复任务回退距离"
+    },
+    {
+      "id": 216,
+      "name": "MAV_CMD_DO_SPRAYER",
+      "short": "DO_SPRAYER",
+      "zh": "控制喷洒器"
+    },
+    {
+      "id": 217,
+      "name": "MAV_CMD_DO_SEND_SCRIPT_MESSAGE",
+      "short": "DO_SEND_SCRIPT_MESSAGE",
+      "zh": "发送脚本消息"
+    },
+    {
+      "id": 218,
+      "name": "MAV_CMD_DO_AUX_FUNCTION",
+      "short": "DO_AUX_FUNCTION",
+      "zh": "执行辅助功能"
+    },
+    {
+      "id": 222,
+      "name": "MAV_CMD_DO_GUIDED_LIMITS",
+      "short": "DO_GUIDED_LIMITS",
+      "zh": "引导模式限制"
+    },
+    {
+      "id": 223,
+      "name": "MAV_CMD_DO_ENGINE_CONTROL",
+      "short": "DO_ENGINE_CONTROL",
+      "zh": "控制发动机"
+    },
+    {
+      "id": 531,
+      "name": "MAV_CMD_SET_CAMERA_ZOOM",
+      "short": "SET_CAMERA_ZOOM",
+      "zh": "设置相机变焦"
+    },
+    {
+      "id": 532,
+      "name": "MAV_CMD_SET_CAMERA_FOCUS",
+      "short": "SET_CAMERA_FOCUS",
+      "zh": "设置相机对焦"
+    },
+    {
+      "id": 534,
+      "name": "MAV_CMD_SET_CAMERA_SOURCE",
+      "short": "SET_CAMERA_SOURCE",
+      "zh": "设置相机图像源"
+    },
+    {
+      "id": 600,
+      "name": "MAV_CMD_JUMP_TAG",
+      "short": "JUMP_TAG",
+      "zh": "跳转标签标记"
+    },
+    {
+      "id": 601,
+      "name": "MAV_CMD_DO_JUMP_TAG",
+      "short": "DO_JUMP_TAG",
+      "zh": "跳转标签"
+    },
+    {
+      "id": 1000,
+      "name": "MAV_CMD_DO_GIMBAL_MANAGER_PITCHYAW",
+      "short": "DO_GIMBAL_MANAGER_PITCHYAW",
+      "zh": "云台俯仰与偏航"
+    },
+    {
+      "id": 2000,
+      "name": "MAV_CMD_IMAGE_START_CAPTURE",
+      "short": "IMAGE_START_CAPTURE",
+      "zh": "开始拍照"
+    },
+    {
+      "id": 2001,
+      "name": "MAV_CMD_IMAGE_STOP_CAPTURE",
+      "short": "IMAGE_STOP_CAPTURE",
+      "zh": "停止拍照"
+    },
+    {
+      "id": 2500,
+      "name": "MAV_CMD_VIDEO_START_CAPTURE",
+      "short": "VIDEO_START_CAPTURE",
+      "zh": "开始录像"
+    },
+    {
+      "id": 2501,
+      "name": "MAV_CMD_VIDEO_STOP_CAPTURE",
+      "short": "VIDEO_STOP_CAPTURE",
+      "zh": "停止录像"
+    },
+    {
+      "id": 3000,
+      "name": "MAV_CMD_DO_VTOL_TRANSITION",
+      "short": "DO_VTOL_TRANSITION",
+      "zh": "垂直起降模式转换"
+    },
+    {
+      "id": 5000,
+      "name": "MAV_CMD_NAV_FENCE_RETURN_POINT",
+      "short": "FENCE_RETURN_POINT",
+      "zh": "围栏返回点"
+    },
+    {
+      "id": 5001,
+      "name": "MAV_CMD_NAV_FENCE_POLYGON_VERTEX_INCLUSION",
+      "short": "FENCE_POLYGON_VERTEX_INCLUSION",
+      "zh": "允许区域多边形顶点"
+    },
+    {
+      "id": 5002,
+      "name": "MAV_CMD_NAV_FENCE_POLYGON_VERTEX_EXCLUSION",
+      "short": "FENCE_POLYGON_VERTEX_EXCLUSION",
+      "zh": "禁入区域多边形顶点"
+    },
+    {
+      "id": 5003,
+      "name": "MAV_CMD_NAV_FENCE_CIRCLE_INCLUSION",
+      "short": "FENCE_CIRCLE_INCLUSION",
+      "zh": "允许区域圆形"
+    },
+    {
+      "id": 5004,
+      "name": "MAV_CMD_NAV_FENCE_CIRCLE_EXCLUSION",
+      "short": "FENCE_CIRCLE_EXCLUSION",
+      "zh": "禁入区域圆形"
+    },
+    {
+      "id": 5100,
+      "name": "MAV_CMD_NAV_RALLY_POINT",
+      "short": "RALLY_POINT",
+      "zh": "集结点"
+    },
+    {
+      "id": 42600,
+      "name": "MAV_CMD_DO_WINCH",
+      "short": "DO_WINCH",
+      "zh": "控制绞盘"
+    },
+    {
+      "id": 42702,
+      "name": "MAV_CMD_NAV_SCRIPT_TIME",
+      "short": "SCRIPT_TIME",
+      "zh": "定时脚本"
+    },
+    {
+      "id": 42703,
+      "name": "MAV_CMD_NAV_ATTITUDE_TIME",
+      "short": "ATTITUDE_TIME",
+      "zh": "定时姿态"
+    }
+  ]
+}

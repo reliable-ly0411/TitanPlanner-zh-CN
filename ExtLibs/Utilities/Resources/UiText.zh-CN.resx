@@ -5885,6 +5885,1014 @@ Ctrl+O 从文件加载</value>
     <value>任务样式编辑器</value>
     <comment>"Mission Style Editor"</comment>
   </data>
+  <data name="344a601265c5804cb7a2bcfcfe5819a02bbf2d11365184379c9fffbca6525a9d" xml:space="preserve">
+    <value>等待高度或下降速度</value>
+    <comment>"Mission command: ALTITUDE_WAIT"</comment>
+  </data>
+  <data name="1fbd8182482c6f9f84b0cde738ff775a98e653d8c850dfda6d82feae8708a679" xml:space="preserve">
+    <value>圆弧航点</value>
+    <comment>"Mission command: ARC_WAYPOINT"</comment>
+  </data>
+  <data name="bcc9f1e1b2f18ea104a9756651df39f833e8d3cc215a0075939a1de0e3c8d27a" xml:space="preserve">
+    <value>定时姿态</value>
+    <comment>"Mission command: ATTITUDE_TIME"</comment>
+  </data>
+  <data name="486e33172aaf8b0e83f1d51944b85a44ff75ecebcd8a571f87faa351428f7bfd" xml:space="preserve">
+    <value>条件延时</value>
+    <comment>"Mission command: CONDITION_DELAY"</comment>
+  </data>
+  <data name="4d48dca3338cd8489eda0d9152c090b1b565807a05c3818a9e5290559bcc2458" xml:space="preserve">
+    <value>条件距离</value>
+    <comment>"Mission command: CONDITION_DISTANCE"</comment>
+  </data>
+  <data name="470d9d4cb797f07069d0aca709bb977e636cc98c9c8a4759f375e740553f60de" xml:space="preserve">
+    <value>条件偏航</value>
+    <comment>"Mission command: CONDITION_YAW"</comment>
+  </data>
+  <data name="0101feebbfc508eea0734554bfb93f4bb87b35c4e47bd295c63e1f7859f4c7e5" xml:space="preserve">
+    <value>继续并改变高度</value>
+    <comment>"Mission command: CONTINUE_AND_CHANGE_ALT"</comment>
+  </data>
+  <data name="6d4cf85753095d105a0529e007200219e089a4a8c2ee4f5c85b9d3fa049c2011" xml:space="preserve">
+    <value>等待</value>
+    <comment>"Mission command: DELAY"</comment>
+  </data>
+  <data name="3250450778eef17096298f0f786d2f06de7a92076ac16eedee684886ff0e9a83" xml:space="preserve">
+    <value>设置自动调参开关</value>
+    <comment>"Mission command: DO_AUTOTUNE_ENABLE"</comment>
+  </data>
+  <data name="7d09bffa0c8ad516978990e1ee55720447e761ffe3f4886400348ab74ab0f202" xml:space="preserve">
+    <value>执行辅助功能</value>
+    <comment>"Mission command: DO_AUX_FUNCTION"</comment>
+  </data>
+  <data name="0bb735787c12f64a9119f107c784017ec637d56f4d44bc6318bd59b104f9ceea" xml:space="preserve">
+    <value>改变速度</value>
+    <comment>"Mission command: DO_CHANGE_SPEED"</comment>
+  </data>
+  <data name="7593513d014e8c69e89ebb95d73edbb1f4e98339ea72dcc625d472c4573a2f83" xml:space="preserve">
+    <value>配置相机</value>
+    <comment>"Mission command: DO_DIGICAM_CONFIGURE"</comment>
+  </data>
+  <data name="a91b4d8031b10599859127749589fec8b10be51452c8b745dd4c0344ff2c0f31" xml:space="preserve">
+    <value>控制相机</value>
+    <comment>"Mission command: DO_DIGICAM_CONTROL"</comment>
+  </data>
+  <data name="ca258ea8678547b6ebfb125f58699b04889e8fb489d3d1460ac986b88c8ab7dc" xml:space="preserve">
+    <value>控制发动机</value>
+    <comment>"Mission command: DO_ENGINE_CONTROL"</comment>
+  </data>
+  <data name="ad480689a4c5a58639a932ce5a5f40560ae485d39e1a6ddc2c5448408a7ed5ae" xml:space="preserve">
+    <value>设置围栏启用状态</value>
+    <comment>"Mission command: DO_FENCE_ENABLE"</comment>
+  </data>
+  <data name="0491070b2c67c72de2972bcb9a69fd3848fb4f1426b91c58222a24a5a889db98" xml:space="preserve">
+    <value>云台俯仰与偏航</value>
+    <comment>"Mission command: DO_GIMBAL_MANAGER_PITCHYAW"</comment>
+  </data>
+  <data name="2759b3b039ee24f005668c301b5f34d4cdc2f2bfcc836160341f7af06a86afd9" xml:space="preserve">
+    <value>复飞</value>
+    <comment>"Mission command: DO_GO_AROUND"</comment>
+  </data>
+  <data name="b9e3b22d39bf19a681aba14dd6a383154b3aea098f02fcbe43d0be441663b2f5" xml:space="preserve">
+    <value>控制抓取器</value>
+    <comment>"Mission command: DO_GRIPPER"</comment>
+  </data>
+  <data name="bbf1d01f4589cedb05477be2e9e83d3f77b8cee66873a23f61bd9363d7bd9512" xml:space="preserve">
+    <value>引导模式限制</value>
+    <comment>"Mission command: DO_GUIDED_LIMITS"</comment>
+  </data>
+  <data name="9d6e6c01b193f153684b318ab94713b0d8fc2f23926c58609a6debbb1839ae0a" xml:space="preserve">
+    <value>倒飞设置</value>
+    <comment>"Mission command: DO_INVERTED_FLIGHT"</comment>
+  </data>
+  <data name="805b8b04131f19767f774ae675363c53ac228c9fe4814f8bfc71a4c334c76562" xml:space="preserve">
+    <value>跳转任务项</value>
+    <comment>"Mission command: DO_JUMP"</comment>
+  </data>
+  <data name="54a25100dc593f341b52f294adac1ed7466c102bdfa2849bb00f46e7e7bc31f4" xml:space="preserve">
+    <value>跳转标签</value>
+    <comment>"Mission command: DO_JUMP_TAG"</comment>
+  </data>
+  <data name="6800933f412dc32d41c188773a5121d5a1ca5d4c5069983ce03026c9152ff989" xml:space="preserve">
+    <value>着陆航段起点</value>
+    <comment>"Mission command: DO_LAND_START"</comment>
+  </data>
+  <data name="052ced39868b4e566f5aa1a47be7afc869202e514ac9dc418a5550ef0613868f" xml:space="preserve">
+    <value>控制云台</value>
+    <comment>"Mission command: DO_MOUNT_CONTROL"</comment>
+  </data>
+  <data name="9d08618df25a0f44dbc10da5ca691299475d9d6ad3405b2ccd3e47f4d2c9b0db" xml:space="preserve">
+    <value>控制降落伞</value>
+    <comment>"Mission command: DO_PARACHUTE"</comment>
+  </data>
+  <data name="51e2bd757b0d029659646d86c5ec03689daafe034cae10e10d76402e245b32e1" xml:space="preserve">
+    <value>暂停或继续</value>
+    <comment>"Mission command: DO_PAUSE_CONTINUE"</comment>
+  </data>
+  <data name="a07b62d093b5648af8cf7e50deccf04f1a8fde64ddc831bdb14a50a49cbb3f63" xml:space="preserve">
+    <value>重复控制继电器</value>
+    <comment>"Mission command: DO_REPEAT_RELAY"</comment>
+  </data>
+  <data name="c59798e81151c764a9eb55c2f5cede6dd837eb17f0874c710a0ca305be9caf7d" xml:space="preserve">
+    <value>重复控制舵机</value>
+    <comment>"Mission command: DO_REPEAT_SERVO"</comment>
+  </data>
+  <data name="f7cdddadb73acf48d314d35c2882636c92388c03e3aef3937dab0098ed7748ac" xml:space="preserve">
+    <value>返航路径起点</value>
+    <comment>"Mission command: DO_RETURN_PATH_START"</comment>
+  </data>
+  <data name="5c01f8b59342264a4bee524cc05af4a82430861a0d997728744cd59f223a8825" xml:space="preserve">
+    <value>发送脚本消息</value>
+    <comment>"Mission command: DO_SEND_SCRIPT_MESSAGE"</comment>
+  </data>
+  <data name="aff3a35d7cb2c57b679e0398d2c403f93ec9ed8fa8a3b18ceeae9a993dcbc8aa" xml:space="preserve">
+    <value>设置相机触发距离</value>
+    <comment>"Mission command: DO_SET_CAM_TRIGG_DIST"</comment>
+  </data>
+  <data name="ae9a868ef4432c122c8a414d1668e145dbd7b75f29e3e550936422cddfc9dc9c" xml:space="preserve">
+    <value>设置返航点</value>
+    <comment>"Mission command: DO_SET_HOME"</comment>
+  </data>
+  <data name="5289341fb6717c4f05b98f2d4c8aed162683e4ea61c4f734db1df77fe9690b19" xml:space="preserve">
+    <value>设置继电器</value>
+    <comment>"Mission command: DO_SET_RELAY"</comment>
+  </data>
+  <data name="90f5b8be77dc2796c1e71e11484934a956b6229ecc9981806043b21fb77170fd" xml:space="preserve">
+    <value>设置恢复任务回退距离</value>
+    <comment>"Mission command: DO_SET_RESUME_REPEAT_DIST"</comment>
+  </data>
+  <data name="23e10cd5caed34a482093e60da4787b90fc9fc98414796a02359a19b0b0c3592" xml:space="preserve">
+    <value>设置反向行驶</value>
+    <comment>"Mission command: DO_SET_REVERSE"</comment>
+  </data>
+  <data name="452c623a222a82025d311630a8d51d4aed6295f7cbfbba359cf3ae410e6473e3" xml:space="preserve">
+    <value>设置兴趣点</value>
+    <comment>"Mission command: DO_SET_ROI"</comment>
+  </data>
+  <data name="b2171778f7f893607deee4f8c5a0bbe87d1b6324efb909f007b2a220e28906fe" xml:space="preserve">
+    <value>设置兴趣点位置</value>
+    <comment>"Mission command: DO_SET_ROI_LOCATION"</comment>
+  </data>
+  <data name="dc85d1b174339025c459933e9ebe6a6b5d0fa2a4b4e56aec19871f43abb84b48" xml:space="preserve">
+    <value>取消兴趣点</value>
+    <comment>"Mission command: DO_SET_ROI_NONE"</comment>
+  </data>
+  <data name="1f305f120ee349d547cd6256e58bf819812642187ea3a46511b2ea097b43cdf6" xml:space="preserve">
+    <value>设置舵机</value>
+    <comment>"Mission command: DO_SET_SERVO"</comment>
+  </data>
+  <data name="71f9e2c96ce23834fddfa024fa42218bf9dc614a8214118e8dae32756650bb42" xml:space="preserve">
+    <value>控制喷洒器</value>
+    <comment>"Mission command: DO_SPRAYER"</comment>
+  </data>
+  <data name="dc0f1fd926583d41cd7e458429f1401ea9f4053abd134a00222509e93906f76a" xml:space="preserve">
+    <value>垂直起降模式转换</value>
+    <comment>"Mission command: DO_VTOL_TRANSITION"</comment>
+  </data>
+  <data name="e70664831aeb0b06a7da9d396b65b040d44604fbadb53c2b4f317f38743588b0" xml:space="preserve">
+    <value>控制绞盘</value>
+    <comment>"Mission command: DO_WINCH"</comment>
+  </data>
+  <data name="fbef46ec08c509bac47d471a537bbdc351b70c544269a3d983bc6ec93ba8cd14" xml:space="preserve">
+    <value>禁入区域圆形</value>
+    <comment>"Mission command: FENCE_CIRCLE_EXCLUSION"</comment>
+  </data>
+  <data name="245f9acf321ce664a6d60e51e67c338fb07f422e2a0711107a9344a2d7995086" xml:space="preserve">
+    <value>允许区域圆形</value>
+    <comment>"Mission command: FENCE_CIRCLE_INCLUSION"</comment>
+  </data>
+  <data name="6e3d9ea664630a02d246427b24812508f461f51ab8660877ed74d9d1287c0c28" xml:space="preserve">
+    <value>禁入区域多边形顶点</value>
+    <comment>"Mission command: FENCE_POLYGON_VERTEX_EXCLUSION"</comment>
+  </data>
+  <data name="d97f19cae1f60d5e1e94a2926edcd0eaa023617c345d9585379b23db48170f66" xml:space="preserve">
+    <value>允许区域多边形顶点</value>
+    <comment>"Mission command: FENCE_POLYGON_VERTEX_INCLUSION"</comment>
+  </data>
+  <data name="7587de9096faf7464f7e778444b54b4323e089ecd42259bbd2d5cbfc9a5dcd7b" xml:space="preserve">
+    <value>围栏返回点</value>
+    <comment>"Mission command: FENCE_RETURN_POINT"</comment>
+  </data>
+  <data name="2b2b0a645e5da02dcd8fed2ede667fee056e848f6b667f600a005e3446d9e250" xml:space="preserve">
+    <value>设置引导控制开关</value>
+    <comment>"Mission command: GUIDED_ENABLE"</comment>
+  </data>
+  <data name="aa3848f07ff5e74753ed65becdf09794e9910fef54d5cbc0bb3d0116d79a93ad" xml:space="preserve">
+    <value>开始拍照</value>
+    <comment>"Mission command: IMAGE_START_CAPTURE"</comment>
+  </data>
+  <data name="7b5808f48d7599be40c29df8ba184bb0fa9600a22b05b004560e09350be617d4" xml:space="preserve">
+    <value>停止拍照</value>
+    <comment>"Mission command: IMAGE_STOP_CAPTURE"</comment>
+  </data>
+  <data name="66a6d771a0928ed271225fe63a8250a1e916353acb7cc29ce85c5522faeb5e55" xml:space="preserve">
+    <value>跳转标签标记</value>
+    <comment>"Mission command: JUMP_TAG"</comment>
+  </data>
+  <data name="dc7d27aafa67bfde61f2310cc72e1f2cf39b257d48a9d7991cd1415ed7725675" xml:space="preserve">
+    <value>降落</value>
+    <comment>"Mission command: LAND"</comment>
+  </data>
+  <data name="e5bf5e484ccccd764e741d656c4604b1476e41b58510149f6e4278fe0b35fe8a" xml:space="preserve">
+    <value>定时盘旋</value>
+    <comment>"Mission command: LOITER_TIME"</comment>
+  </data>
+  <data name="ad114db8ee3bc4b8dfe0216bbedec2eebc916d1113667987b61b2ad42e56a8fa" xml:space="preserve">
+    <value>盘旋至目标高度</value>
+    <comment>"Mission command: LOITER_TO_ALT"</comment>
+  </data>
+  <data name="5a2be46cde27131035f696fba300e5fea413bea966ef2f278cb6dd1df5b8aa0b" xml:space="preserve">
+    <value>按圈数盘旋</value>
+    <comment>"Mission command: LOITER_TURNS"</comment>
+  </data>
+  <data name="d22e42b62594632d4db91bd2f006e7b18d0bd98706af707ba7da42fa5b00705c" xml:space="preserve">
+    <value>无限盘旋</value>
+    <comment>"Mission command: LOITER_UNLIM"</comment>
+  </data>
+  <data name="777c4dbc2b8cb1b11963f5302c98eb13c80b6742cf438641b8cb1d592d845abf" xml:space="preserve">
+    <value>条件延时</value>
+    <comment>"Mission command: MAV_CMD_CONDITION_DELAY"</comment>
+  </data>
+  <data name="e2d12e43d9164548e0cd7f1feb0ddbbe3997ecd82d5e0034c0d9f7542ed8905a" xml:space="preserve">
+    <value>条件距离</value>
+    <comment>"Mission command: MAV_CMD_CONDITION_DISTANCE"</comment>
+  </data>
+  <data name="ad821d20c21106d99afa6925655e83b4290d11f8c5fa6f3e3d5f103a4125c88d" xml:space="preserve">
+    <value>条件偏航</value>
+    <comment>"Mission command: MAV_CMD_CONDITION_YAW"</comment>
+  </data>
+  <data name="2be2d599d1c0b543165df672d05a978a6ec57dd6b9a000b3729e31a572fd34e1" xml:space="preserve">
+    <value>设置自动调参开关</value>
+    <comment>"Mission command: MAV_CMD_DO_AUTOTUNE_ENABLE"</comment>
+  </data>
+  <data name="767d0fd4df74d244ec36008e096281b8e1a385e4a236fd56cb0441dc781b2444" xml:space="preserve">
+    <value>执行辅助功能</value>
+    <comment>"Mission command: MAV_CMD_DO_AUX_FUNCTION"</comment>
+  </data>
+  <data name="b96e7c1d56ac219cb4f164d9de86aa979abea2ddc95b046086b1904882932c77" xml:space="preserve">
+    <value>改变速度</value>
+    <comment>"Mission command: MAV_CMD_DO_CHANGE_SPEED"</comment>
+  </data>
+  <data name="8e1a7311ececde89b0771a0701d106c16e7a2719f23787e00976b355a9cce813" xml:space="preserve">
+    <value>配置相机</value>
+    <comment>"Mission command: MAV_CMD_DO_DIGICAM_CONFIGURE"</comment>
+  </data>
+  <data name="6084397578e491162cd15743919519c42fd76485bf7356b2f7e44cd945cb82b8" xml:space="preserve">
+    <value>控制相机</value>
+    <comment>"Mission command: MAV_CMD_DO_DIGICAM_CONTROL"</comment>
+  </data>
+  <data name="8b41a8cd606f526104d2ef16e05d870388f4b5821025077f361720b3f8c05981" xml:space="preserve">
+    <value>控制发动机</value>
+    <comment>"Mission command: MAV_CMD_DO_ENGINE_CONTROL"</comment>
+  </data>
+  <data name="f8ebeecf68a41a4d09331e6311128f7effe3f7e8ccc59dfa8457088dd468983e" xml:space="preserve">
+    <value>设置围栏启用状态</value>
+    <comment>"Mission command: MAV_CMD_DO_FENCE_ENABLE"</comment>
+  </data>
+  <data name="27f6fec992db3cbc663ed9fa72587fdc1ba650910aab54fe56f4aa1f3c62fcbe" xml:space="preserve">
+    <value>云台俯仰与偏航</value>
+    <comment>"Mission command: MAV_CMD_DO_GIMBAL_MANAGER_PITCHYAW"</comment>
+  </data>
+  <data name="94f71f202801ba4c21225abe11f99f7c8f6989bb2d4430fb7b05f0ec8fb25dbd" xml:space="preserve">
+    <value>复飞</value>
+    <comment>"Mission command: MAV_CMD_DO_GO_AROUND"</comment>
+  </data>
+  <data name="2f22c2078ecf7eeedce65f81db406c048b345b603f17bda5ac2859d44f2d0ba0" xml:space="preserve">
+    <value>控制抓取器</value>
+    <comment>"Mission command: MAV_CMD_DO_GRIPPER"</comment>
+  </data>
+  <data name="a7376b68ada29ca6d281dd18139676be79da6ce14345baf2675408bcc24d2f08" xml:space="preserve">
+    <value>引导模式限制</value>
+    <comment>"Mission command: MAV_CMD_DO_GUIDED_LIMITS"</comment>
+  </data>
+  <data name="fa9cadb4d6fc077d129a8cef32b10ce96f90231207a2724319c818c5dd410020" xml:space="preserve">
+    <value>倒飞设置</value>
+    <comment>"Mission command: MAV_CMD_DO_INVERTED_FLIGHT"</comment>
+  </data>
+  <data name="fff8bdd155ad5b966530eccf60523836b94cd32ac926fcf0a02e5d65e2685a01" xml:space="preserve">
+    <value>跳转任务项</value>
+    <comment>"Mission command: MAV_CMD_DO_JUMP"</comment>
+  </data>
+  <data name="101608ff16cb691061849c4b1efe172a0d49398702bb4ee1ba3c63658683ae3a" xml:space="preserve">
+    <value>跳转标签</value>
+    <comment>"Mission command: MAV_CMD_DO_JUMP_TAG"</comment>
+  </data>
+  <data name="37171401fa7c8c5cbedbb40f7d75c1b72b98eb9bc7fa3e3431ee03a5c384abd1" xml:space="preserve">
+    <value>着陆航段起点</value>
+    <comment>"Mission command: MAV_CMD_DO_LAND_START"</comment>
+  </data>
+  <data name="a9eea2290790187be65e01cdba7dce3e4db69bf4052d2a2a8de51f4a039c3970" xml:space="preserve">
+    <value>控制云台</value>
+    <comment>"Mission command: MAV_CMD_DO_MOUNT_CONTROL"</comment>
+  </data>
+  <data name="ac4191cce3ba81312649d3d97ab5a5fa5a30927701d11e9513b8c2e732fe88ec" xml:space="preserve">
+    <value>控制降落伞</value>
+    <comment>"Mission command: MAV_CMD_DO_PARACHUTE"</comment>
+  </data>
+  <data name="74828b8ffb67e39a69c03c50378d12e7028effd5cb150362baa4fc3d59f1e2e5" xml:space="preserve">
+    <value>暂停或继续</value>
+    <comment>"Mission command: MAV_CMD_DO_PAUSE_CONTINUE"</comment>
+  </data>
+  <data name="f2af86bbcb59fab7aea54d799355aede72f42b3643b292366208d9e3887d19ca" xml:space="preserve">
+    <value>重复控制继电器</value>
+    <comment>"Mission command: MAV_CMD_DO_REPEAT_RELAY"</comment>
+  </data>
+  <data name="f775f0b535c00a6ea65782989ecfb64da0109a4984f233c5bf0dc0f3afd62e7f" xml:space="preserve">
+    <value>重复控制舵机</value>
+    <comment>"Mission command: MAV_CMD_DO_REPEAT_SERVO"</comment>
+  </data>
+  <data name="1744c1c001d6fa2cbff5d944ea810d35ee70ee9c309b52349f6c555ef7b7833d" xml:space="preserve">
+    <value>返航路径起点</value>
+    <comment>"Mission command: MAV_CMD_DO_RETURN_PATH_START"</comment>
+  </data>
+  <data name="6f5c9d31cdac0a7bcf0b79b2c384baa5d46fa4bec9bc8c080193f78bb0ac6613" xml:space="preserve">
+    <value>发送脚本消息</value>
+    <comment>"Mission command: MAV_CMD_DO_SEND_SCRIPT_MESSAGE"</comment>
+  </data>
+  <data name="3b889e033f26a83e2a038954d4427f436c04be1a5b07875c24ebdce6d57ac53a" xml:space="preserve">
+    <value>设置相机触发距离</value>
+    <comment>"Mission command: MAV_CMD_DO_SET_CAM_TRIGG_DIST"</comment>
+  </data>
+  <data name="156db751a66e09db38a4fc8848e8d05697faea0e4ef9eaa3166c1bc4ed979378" xml:space="preserve">
+    <value>设置返航点</value>
+    <comment>"Mission command: MAV_CMD_DO_SET_HOME"</comment>
+  </data>
+  <data name="30bbcdf58aef063b36f222f54ff7149667467f8410c8a3c5772db867358851d6" xml:space="preserve">
+    <value>设置继电器</value>
+    <comment>"Mission command: MAV_CMD_DO_SET_RELAY"</comment>
+  </data>
+  <data name="6918345c924415d7f2f0b7547ae1e9992006d7de6ef6de36638a93428e414e6c" xml:space="preserve">
+    <value>设置恢复任务回退距离</value>
+    <comment>"Mission command: MAV_CMD_DO_SET_RESUME_REPEAT_DIST"</comment>
+  </data>
+  <data name="c94c4a70cba8a2dbef18a06cd57b5950f4a866c38fe1e3f51f02b691c55e19db" xml:space="preserve">
+    <value>设置反向行驶</value>
+    <comment>"Mission command: MAV_CMD_DO_SET_REVERSE"</comment>
+  </data>
+  <data name="cc9b235b6f268448a65c4cd42184da1f40b9c2ee3b8fc49286aa1e632199aaec" xml:space="preserve">
+    <value>设置兴趣点</value>
+    <comment>"Mission command: MAV_CMD_DO_SET_ROI"</comment>
+  </data>
+  <data name="b5ef8646cc9f40e363c6aafb80c0b19ffeb13705088e1197bae4f072c858164a" xml:space="preserve">
+    <value>设置兴趣点位置</value>
+    <comment>"Mission command: MAV_CMD_DO_SET_ROI_LOCATION"</comment>
+  </data>
+  <data name="2f9a759b717cd059619a9ef74cc2ab9c953430e4414747728bdb04467f4ab07b" xml:space="preserve">
+    <value>取消兴趣点</value>
+    <comment>"Mission command: MAV_CMD_DO_SET_ROI_NONE"</comment>
+  </data>
+  <data name="d322c9ed2055ac11ba3bc306fd387b1bf2343d66ce3f3755e8fe06c8eb2ba2f8" xml:space="preserve">
+    <value>设置舵机</value>
+    <comment>"Mission command: MAV_CMD_DO_SET_SERVO"</comment>
+  </data>
+  <data name="3f1076c818bc0897114aefb0dfa10dd9d43a76460781250108e92cb5e2181a33" xml:space="preserve">
+    <value>控制喷洒器</value>
+    <comment>"Mission command: MAV_CMD_DO_SPRAYER"</comment>
+  </data>
+  <data name="866838ac8ad4b1493d45c8e74dc097f1c6c5e81c35fb6594c665d012bf9d657c" xml:space="preserve">
+    <value>垂直起降模式转换</value>
+    <comment>"Mission command: MAV_CMD_DO_VTOL_TRANSITION"</comment>
+  </data>
+  <data name="6bfefcb86f2300c8db3924ba9a841a999fab0fa0293f76009da2314a756e8490" xml:space="preserve">
+    <value>控制绞盘</value>
+    <comment>"Mission command: MAV_CMD_DO_WINCH"</comment>
+  </data>
+  <data name="58a44790673a311ff11f87becbf90ba33572be42acdcbd4c4e1ea27225f7e187" xml:space="preserve">
+    <value>开始拍照</value>
+    <comment>"Mission command: MAV_CMD_IMAGE_START_CAPTURE"</comment>
+  </data>
+  <data name="830e9f400f78763474726d557152cc417975f99308a88de3e6e89ecb27e1e492" xml:space="preserve">
+    <value>停止拍照</value>
+    <comment>"Mission command: MAV_CMD_IMAGE_STOP_CAPTURE"</comment>
+  </data>
+  <data name="8e60a8c3fa660091c04b0a8e0a95d6dd6b5480ee41643bdfb3a0e41b8653a703" xml:space="preserve">
+    <value>跳转标签标记</value>
+    <comment>"Mission command: MAV_CMD_JUMP_TAG"</comment>
+  </data>
+  <data name="225fc948035d6866fb1451a170cae28b2ad130dbd4ec342ac6c01d37f39a60a2" xml:space="preserve">
+    <value>等待高度或下降速度</value>
+    <comment>"Mission command: MAV_CMD_NAV_ALTITUDE_WAIT"</comment>
+  </data>
+  <data name="d0b8a0593edbe72a98b7b0ae7457c7099a689d28e485cf4c9924e82e8ef5600f" xml:space="preserve">
+    <value>圆弧航点</value>
+    <comment>"Mission command: MAV_CMD_NAV_ARC_WAYPOINT"</comment>
+  </data>
+  <data name="10fcd839c1fbd226df47f2f40995705930491b23333207a134affe599808f843" xml:space="preserve">
+    <value>定时姿态</value>
+    <comment>"Mission command: MAV_CMD_NAV_ATTITUDE_TIME"</comment>
+  </data>
+  <data name="87ae923a64e9c3977085f85ca07e6c886d9e68cc93d8f1bb04f7c551cc48e189" xml:space="preserve">
+    <value>继续并改变高度</value>
+    <comment>"Mission command: MAV_CMD_NAV_CONTINUE_AND_CHANGE_ALT"</comment>
+  </data>
+  <data name="2d6a37d507306bf8d2ceeef6e44437aa752f7e13eaaf90cbea27d509374ac4a5" xml:space="preserve">
+    <value>等待</value>
+    <comment>"Mission command: MAV_CMD_NAV_DELAY"</comment>
+  </data>
+  <data name="10a613bff5555337e309c246f744bb4b38ac0ab744e45480447caddc68e86a6c" xml:space="preserve">
+    <value>禁入区域圆形</value>
+    <comment>"Mission command: MAV_CMD_NAV_FENCE_CIRCLE_EXCLUSION"</comment>
+  </data>
+  <data name="7ec2e1fdfddc8ef633c9a73413d6709981a3d7bdccdcc1c40181c7979b48e68a" xml:space="preserve">
+    <value>允许区域圆形</value>
+    <comment>"Mission command: MAV_CMD_NAV_FENCE_CIRCLE_INCLUSION"</comment>
+  </data>
+  <data name="b7e3978bb6d3abfaa0550f26d267753faa2eeaacc23cebefbd5c8d8394eaf29f" xml:space="preserve">
+    <value>禁入区域多边形顶点</value>
+    <comment>"Mission command: MAV_CMD_NAV_FENCE_POLYGON_VERTEX_EXCLUSION"</comment>
+  </data>
+  <data name="5fbbeb3b06b651e6b84435f9e289c57ad8e1094a62ea7873bd49dd771e321607" xml:space="preserve">
+    <value>允许区域多边形顶点</value>
+    <comment>"Mission command: MAV_CMD_NAV_FENCE_POLYGON_VERTEX_INCLUSION"</comment>
+  </data>
+  <data name="960239d39eea734bec6d4fae66f109382854fa29663cda062df0e06117fc82fd" xml:space="preserve">
+    <value>围栏返回点</value>
+    <comment>"Mission command: MAV_CMD_NAV_FENCE_RETURN_POINT"</comment>
+  </data>
+  <data name="44ce80a2b27c69aa23920c5452b5a95f6fa8d5ac0857624f0e720def1eb701c7" xml:space="preserve">
+    <value>设置引导控制开关</value>
+    <comment>"Mission command: MAV_CMD_NAV_GUIDED_ENABLE"</comment>
+  </data>
+  <data name="bdedf03db3d45ea923595556e2854360b19e8caeb5d5f34e4e3f5a3dffc27b9b" xml:space="preserve">
+    <value>降落</value>
+    <comment>"Mission command: MAV_CMD_NAV_LAND"</comment>
+  </data>
+  <data name="6b6985bfbd955748f3522a2dfd01f879a07a80e6c454bd372e2f771e2850b2d7" xml:space="preserve">
+    <value>定时盘旋</value>
+    <comment>"Mission command: MAV_CMD_NAV_LOITER_TIME"</comment>
+  </data>
+  <data name="bb51ad8cf10eb92d244ea228ef84294a588afb0696d2d5e267fe0ad7444f5c65" xml:space="preserve">
+    <value>盘旋至目标高度</value>
+    <comment>"Mission command: MAV_CMD_NAV_LOITER_TO_ALT"</comment>
+  </data>
+  <data name="00fbd0eb1e150f7bfc6e6b264cc0852b3259187eb5cd57d8cfc19d4c8145b056" xml:space="preserve">
+    <value>按圈数盘旋</value>
+    <comment>"Mission command: MAV_CMD_NAV_LOITER_TURNS"</comment>
+  </data>
+  <data name="7d42021c69afe8f6e2a6be5347b6a138dc2aba6acd3e88466727036eb2b2a85d" xml:space="preserve">
+    <value>无限盘旋</value>
+    <comment>"Mission command: MAV_CMD_NAV_LOITER_UNLIM"</comment>
+  </data>
+  <data name="ad9f5e434ca9eedaa5868b7de420629c832650966a4d913463ae48b64e6f830c" xml:space="preserve">
+    <value>放置载荷</value>
+    <comment>"Mission command: MAV_CMD_NAV_PAYLOAD_PLACE"</comment>
+  </data>
+  <data name="7890b2ec0645dd1f35be441cad968ce3dd496d6cf4520fc21e68a14444a8cadd" xml:space="preserve">
+    <value>集结点</value>
+    <comment>"Mission command: MAV_CMD_NAV_RALLY_POINT"</comment>
+  </data>
+  <data name="ba3700102ecd8ba02b6561a1f0a1065ab496e6db0e69fc16b44ea1b8dd4674f2" xml:space="preserve">
+    <value>返航</value>
+    <comment>"Mission command: MAV_CMD_NAV_RETURN_TO_LAUNCH"</comment>
+  </data>
+  <data name="4fcd217fae03cf49be0cdc08fbd1c469c78d707616bd0d7ffa920c0a6224702a" xml:space="preserve">
+    <value>脚本任务（等待完成）</value>
+    <comment>"Mission command: MAV_CMD_NAV_SCRIPT_TIME"</comment>
+  </data>
+  <data name="917e00074dfd4b668c065d59f67ba5b36464e97d80fdbfe9129e882d48121022" xml:space="preserve">
+    <value>设置航向与行驶速度</value>
+    <comment>"Mission command: MAV_CMD_NAV_SET_YAW_SPEED"</comment>
+  </data>
+  <data name="670511a6a825a6b694382461321e31c6f776430c443dbace34c732def3e3ba01" xml:space="preserve">
+    <value>样条航点</value>
+    <comment>"Mission command: MAV_CMD_NAV_SPLINE_WAYPOINT"</comment>
+  </data>
+  <data name="ca59895945fa06280e51c5bb53a0c033af51511b9d84473a4cdcb781865e793a" xml:space="preserve">
+    <value>起飞</value>
+    <comment>"Mission command: MAV_CMD_NAV_TAKEOFF"</comment>
+  </data>
+  <data name="09716d528d5947cd0c5d1b6bbfbfc23663974a49bc704502e0e42c78052e854d" xml:space="preserve">
+    <value>垂直降落</value>
+    <comment>"Mission command: MAV_CMD_NAV_VTOL_LAND"</comment>
+  </data>
+  <data name="63fa3cc9c91f7980e2d88a81c19892cedde6951df683e74789a0906f8f226aab" xml:space="preserve">
+    <value>垂直起飞</value>
+    <comment>"Mission command: MAV_CMD_NAV_VTOL_TAKEOFF"</comment>
+  </data>
+  <data name="2f33174d5291bae79b609060d9275741d448b0f57686635b6812e82d88ed165b" xml:space="preserve">
+    <value>航点</value>
+    <comment>"Mission command: MAV_CMD_NAV_WAYPOINT"</comment>
+  </data>
+  <data name="beb77ee3d392782824cabdc17d20ceb0e8304e793fe64860f022eef26060b6fd" xml:space="preserve">
+    <value>设置相机对焦</value>
+    <comment>"Mission command: MAV_CMD_SET_CAMERA_FOCUS"</comment>
+  </data>
+  <data name="d554e93d4b92cbc331cc4ca5da91c49ea5c597756e3260716e04f2a98937bbec" xml:space="preserve">
+    <value>设置相机图像源</value>
+    <comment>"Mission command: MAV_CMD_SET_CAMERA_SOURCE"</comment>
+  </data>
+  <data name="df07e014cef2b671189bd9789ca582acb3686cfa8ad8abd27e367c8400c391bc" xml:space="preserve">
+    <value>设置相机变焦</value>
+    <comment>"Mission command: MAV_CMD_SET_CAMERA_ZOOM"</comment>
+  </data>
+  <data name="cf6e6ff9ef4d18f91bb2589d8726c285263c4d6579d6409a23fba533a8335052" xml:space="preserve">
+    <value>开始录像</value>
+    <comment>"Mission command: MAV_CMD_VIDEO_START_CAPTURE"</comment>
+  </data>
+  <data name="cd553f54dfa15ec05cb36b0d8b165286c8bd4bedecbde4924713570dee871628" xml:space="preserve">
+    <value>停止录像</value>
+    <comment>"Mission command: MAV_CMD_VIDEO_STOP_CAPTURE"</comment>
+  </data>
+  <data name="eb9a606ec1de0f1317511105a09ccb4c204175586f0b3169fa65f5ddec490888" xml:space="preserve">
+    <value>放置载荷</value>
+    <comment>"Mission command: PAYLOAD_PLACE"</comment>
+  </data>
+  <data name="f46c2e2a04d3e2e103c37a5f16227b666b0f03920f6b8d52e0883b289c015989" xml:space="preserve">
+    <value>集结点</value>
+    <comment>"Mission command: RALLY_POINT"</comment>
+  </data>
+  <data name="ef61b8c779089b45cb20ff195bb437228f5781fef17203bcde77585b1ee0fda7" xml:space="preserve">
+    <value>返航</value>
+    <comment>"Mission command: RETURN_TO_LAUNCH"</comment>
+  </data>
+  <data name="1c224817752e5fbde4a640dbb60ed6fbeb0dec6b723370cdabc132aa506f7f91" xml:space="preserve">
+    <value>脚本任务（等待完成）</value>
+    <comment>"Mission command: SCRIPT_TIME"</comment>
+  </data>
+  <data name="7246c3a740e3b19e43f1ea3122de621de646c55fbd2031b7024c137207db4558" xml:space="preserve">
+    <value>设置相机对焦</value>
+    <comment>"Mission command: SET_CAMERA_FOCUS"</comment>
+  </data>
+  <data name="d24b135edc9c7ba8e82d186f82a08c63787a7cafffb391e5fcb9523caaa44f0b" xml:space="preserve">
+    <value>设置相机图像源</value>
+    <comment>"Mission command: SET_CAMERA_SOURCE"</comment>
+  </data>
+  <data name="f99d6a5e7451be3f699422bd56876a34e6d489beae2807c31864d13009cb854c" xml:space="preserve">
+    <value>设置相机变焦</value>
+    <comment>"Mission command: SET_CAMERA_ZOOM"</comment>
+  </data>
+  <data name="984565d32fa3eb8b46e8bc9e26cf1dd68986cbf1752d872ee2b8c6a043787467" xml:space="preserve">
+    <value>设置航向与行驶速度</value>
+    <comment>"Mission command: SET_YAW_SPEED"</comment>
+  </data>
+  <data name="f4d0780130eb81cdd01736addb6c37efaa214253c6f07e1b2642e6e48b4001ec" xml:space="preserve">
+    <value>样条航点</value>
+    <comment>"Mission command: SPLINE_WAYPOINT"</comment>
+  </data>
+  <data name="cb31a033b04e6e743565757ecb5bcb9d8fea424a50a0f6c214ebc0c5003a9a47" xml:space="preserve">
+    <value>起飞</value>
+    <comment>"Mission command: TAKEOFF"</comment>
+  </data>
+  <data name="e884268095270ead917f657936be714142c9524a9fd18cca5e515edc42a027da" xml:space="preserve">
+    <value>未知命令</value>
+    <comment>"Mission command: UNKNOWN"</comment>
+  </data>
+  <data name="eafd0864e6d8dcb08578fbd65dec01b9a725467f5f1382af6af94d3be37f519a" xml:space="preserve">
+    <value>开始录像</value>
+    <comment>"Mission command: VIDEO_START_CAPTURE"</comment>
+  </data>
+  <data name="4261fd76827c79a41e0beaa12222d4c7fac1232a9842a6776bfb19a1d29bc556" xml:space="preserve">
+    <value>停止录像</value>
+    <comment>"Mission command: VIDEO_STOP_CAPTURE"</comment>
+  </data>
+  <data name="86e547dfaac9f243167729b72a4b7274a48858e94bfda9384ab10f61a788cba4" xml:space="preserve">
+    <value>垂直降落</value>
+    <comment>"Mission command: VTOL_LAND"</comment>
+  </data>
+  <data name="21d8052d285622ba7f9b9aae14def8299248582adb7a62b57ac4b83186587f2a" xml:space="preserve">
+    <value>垂直起飞</value>
+    <comment>"Mission command: VTOL_TAKEOFF"</comment>
+  </data>
+  <data name="1673367eb8a9fd228bbb3a0d50365266aab697f02164f4b2f11a4c137ae26033" xml:space="preserve">
+    <value>航点</value>
+    <comment>"Mission command: WAYPOINT"</comment>
+  </data>
+  <data name="91c3f2867a54335e2494d20446e391a8f4c1c3e789fef4587894a841e423b5dd" xml:space="preserve">
+    <value>0=绝对,1=相对</value>
+    <comment>"Mission parameter: 0=Abs,1=Rel"</comment>
+  </data>
+  <data name="0debc2a5ac18c60bbff20ea44888dede2874189f4193c0c024b351c082840dbb" xml:space="preserve">
+    <value>0=正常, 1=倒飞</value>
+    <comment>"Mission parameter: 0=normal, 1=inverted"</comment>
+  </data>
+  <data name="3585ba7d01958ebfe938d7a908a5c372259aa392b52b74b4071762c757a64e8f" xml:space="preserve">
+    <value>1=切线航迹</value>
+    <comment>"Mission parameter: 1=XTrack Tangent"</comment>
+  </data>
+  <data name="59d1dd871b6aa36d270621a7e5251aabc3324a62d197c7767f4115abfe2cbf14" xml:space="preserve">
+    <value>中止高度</value>
+    <comment>"Mission parameter: Abort Alt"</comment>
+  </data>
+  <data name="fc199360e038df3cda66ab29b34cfc7c1f07a77f15c47812c606bb75fdbec400" xml:space="preserve">
+    <value>接受半径</value>
+    <comment>"Mission parameter: Acc radius"</comment>
+  </data>
+  <data name="b394ac83deef2c5cb203ea048ee3adc910386dba85204077195e9dd749e05548" xml:space="preserve">
+    <value>高度</value>
+    <comment>"Mission parameter: Alt"</comment>
+  </data>
+  <data name="a915ef1093ab01e14c682881bf841c8a8a1c73a5168c729f783c861bc1fad0b2" xml:space="preserve">
+    <value>光圈</value>
+    <comment>"Mission parameter: Aperture"</comment>
+  </data>
+  <data name="22ecd5e75913e51333cd99f2aef7d33db5d1c9909b9a5d5e696c874d591352da" xml:space="preserve">
+    <value>圆弧角度</value>
+    <comment>"Mission parameter: Arc Angle"</comment>
+  </data>
+  <data name="8cc5be1353af124dfe61111778ba3ff8bb06a47afb568e79a9efeed5dc7084f8" xml:space="preserve">
+    <value>辅助功能</value>
+    <comment>"Mission parameter: AuxFunction"</comment>
+  </data>
+  <data name="343a32cfaf844bf1bad6e069dcc75e215e5656a8bf5d6b4a4cfa2bc728b83b71" xml:space="preserve">
+    <value>爬升率</value>
+    <comment>"Mission parameter: ClimbRate"</comment>
+  </data>
+  <data name="eebd24eaf088a6fc2906d9ef290faef6656490c9a24bf0c6a7c85da073302ef5" xml:space="preserve">
+    <value>冷启动</value>
+    <comment>"Mission parameter: Cold Start"</comment>
+  </data>
+  <data name="c1a33c1fb4c4bf0598a207abe634d0109d6e3b38f931001897e697ed2a3fd9ce" xml:space="preserve">
+    <value>命令 ID</value>
+    <comment>"Mission parameter: CommandID"</comment>
+  </data>
+  <data name="dbdb6fe7278f155872470598a89385febf0495a1c00cd34a853c45eea2b447b8" xml:space="preserve">
+    <value>当前位置(1)/指定位置(0)</value>
+    <comment>"Mission parameter: Current(1)/Spec(0)"</comment>
+  </data>
+  <data name="2fb9bce2b4cf54f004d5fa9d0758f46ce300aa4ca0f32e77c87ae328cb92758e" xml:space="preserve">
+    <value>角度</value>
+    <comment>"Mission parameter: Deg"</comment>
+  </data>
+  <data name="7cf088d8e35e51af1bb651399338d7b1b286ff264ac6fcbe79a38cb44f72943b" xml:space="preserve">
+    <value>延时</value>
+    <comment>"Mission parameter: Delay"</comment>
+  </data>
+  <data name="3e5b11c026e4239eeb89decd3ee017fa6fe3abd49dfbd422826f944aff512b19" xml:space="preserve">
+    <value>延时 (s)</value>
+    <comment>"Mission parameter: Delay (s)"</comment>
+  </data>
+  <data name="f71375f68cee6b60b7f8d5f7dea6e624f19b94b80298c5def1fe1c38c3c54cc7" xml:space="preserve">
+    <value>下降速率</value>
+    <comment>"Mission parameter: Descent rate"</comment>
+  </data>
+  <data name="3d0f1f83fa4af147a68217ae296d3995b4840196074a7315d72b96615cf24133" xml:space="preserve">
+    <value>方向 1=顺时针</value>
+    <comment>"Mission parameter: Dir 1=CW"</comment>
+  </data>
+  <data name="2cd491057cb4320b2c3ae1b738f68ffeb8288f52e7266978000f7f0856a5338c" xml:space="preserve">
+    <value>方向 (0=正向,1=反向)</value>
+    <comment>"Mission parameter: Direction (0=F,1=R)"</comment>
+  </data>
+  <data name="ddc29290278ab1e36dea12822d0ea01e8dc99663584bf6b77a76a00ca83f7bbb" xml:space="preserve">
+    <value>禁用(0)/启用(1)/仅禁用下界(2)</value>
+    <comment>"Mission parameter: Disable(0)/Enable(1)/Disable Floor Only(2)"</comment>
+  </data>
+  <data name="79bf674dbd5006e1690fe86d338811704aec2652deb34d76903ebdf7babbbfc7" xml:space="preserve">
+    <value>距离 (m)</value>
+    <comment>"Mission parameter: Dist (m)"</comment>
+  </data>
+  <data name="869257f5d87a75010448f6b10931d205f7e7807fe71e1ddd6f0f898b7f57cb12" xml:space="preserve">
+    <value>距离(m)</value>
+    <comment>"Mission parameter: Distance(m)"</comment>
+  </data>
+  <data name="4a4c3bdebf7cc2a8c3ff62379c3d443eda565139febf90787d67955989f1949b" xml:space="preserve">
+    <value>启用(1)/释放(2)</value>
+    <comment>"Mission parameter: Enable(1)/Release(2)"</comment>
+  </data>
+  <data name="7f4451db960d92bb390a5bde456177db5613c52a1a311f254c469ea01df4a14b" xml:space="preserve">
+    <value>曝光模式</value>
+    <comment>"Mission parameter: ExposureMode"</comment>
+  </data>
+  <data name="a43ae6401132ce2eaf292d49e3ec655d9beeb2f85b46864465e851bfad7abf74" xml:space="preserve">
+    <value>标志</value>
+    <comment>"Mission parameter: Flags"</comment>
+  </data>
+  <data name="57523d6ba2171f6ea304ad011c2728b4706f0f0ee615f2746310b50a6530e467" xml:space="preserve">
+    <value>对焦锁定</value>
+    <comment>"Mission parameter: Focus Lock"</comment>
+  </data>
+  <data name="5a10b8ee89fb0bf2c35098077f473298d7cd06d25c52210eba3bd594d42db272" xml:space="preserve">
+    <value>云台 ID</value>
+    <comment>"Mission parameter: Gimbal Id"</comment>
+  </data>
+  <data name="5c186ac557529db01a1251031a92670cd426d142a61498d659abf76da7ededc0" xml:space="preserve">
+    <value>抓取器编号</value>
+    <comment>"Mission parameter: Gripper No"</comment>
+  </data>
+  <data name="adb9e5efd76f432e49378019689aea323567789356ed9d53e2fec5b2e95ee784" xml:space="preserve">
+    <value>高度延迟</value>
+    <comment>"Mission parameter: Height Delay"</comment>
+  </data>
+  <data name="4e32dcca0beb7ece648337fa9f42ce3e5c481d3ec105d24e46dd9dcc44bb464b" xml:space="preserve">
+    <value>UTC 小时 (或 -1)</value>
+    <comment>"Mission parameter: Hour UTC (or -1)"</comment>
+  </data>
+  <data name="00dfcb6bb864ca0ac3695da6f5068f3bc4da649cebf3b2e926df68ba8a45628c" xml:space="preserve">
+    <value>ID</value>
+    <comment>"Mission parameter: ID"</comment>
+  </data>
+  <data name="ffdbea24838c4af157eb874ab2ddbece3fe5cf949215a51fe48fe8836329cdbe" xml:space="preserve">
+    <value>ISO</value>
+    <comment>"Mission parameter: ISO"</comment>
+  </data>
+  <data name="f69a05ed5ce1d2319d6ae72be98b3f969aeab326e5b8fc0c551cf7397096de13" xml:space="preserve">
+    <value>编号</value>
+    <comment>"Mission parameter: Id"</comment>
+  </data>
+  <data name="dabac0a33c2d2f5fa42fd0acd3d9f7373a285dc497ba69342ea3804ca18034c5" xml:space="preserve">
+    <value>间隔</value>
+    <comment>"Mission parameter: Interval"</comment>
+  </data>
+  <data name="f4275df1120efe017da56b803c63df52a0bfbc5ed97531883da38128ab4604d9" xml:space="preserve">
+    <value>纬度</value>
+    <comment>"Mission parameter: Lat"</comment>
+  </data>
+  <data name="1fc8944baac5e9ae4233000b7dea2b89ce55990a289b8136d6e4add0b2b44339" xml:space="preserve">
+    <value>经度</value>
+    <comment>"Mission parameter: Long"</comment>
+  </data>
+  <data name="afcff693c7310ae617758b91449c1bf1f9e3730ede69de0dfeab6f78cd38de48" xml:space="preserve">
+    <value>UTC 分钟 (或 -1)</value>
+    <comment>"Mission parameter: Minute UTC (or -1)"</comment>
+  </data>
+  <data name="cd938adfbc81f877248ea1fa36db83100efbaa74f34890daa6804e63ed87fac2" xml:space="preserve">
+    <value>模式</value>
+    <comment>"Mission parameter: Mode"</comment>
+  </data>
+  <data name="d72e05c7764f17d5473a640dfe5bfd00a9c2ee9d0610003aa45edb71e4a82714" xml:space="preserve">
+    <value>P1</value>
+    <comment>"Mission parameter: P1"</comment>
+  </data>
+  <data name="d2542669ef63c2caf6ab30a089538ebfd49e4460e93844c73583b0ebdf1a55ab" xml:space="preserve">
+    <value>P2</value>
+    <comment>"Mission parameter: P2"</comment>
+  </data>
+  <data name="909619d9805433a582b3e6907a6430307bc9411a99b6e52bc7a62c00e3e44ee8" xml:space="preserve">
+    <value>P3</value>
+    <comment>"Mission parameter: P3"</comment>
+  </data>
+  <data name="302247673b0b145acb2e473c46b3e2d96057457762a44c9b88f5f1277c5fefde" xml:space="preserve">
+    <value>PWM</value>
+    <comment>"Mission parameter: PWM"</comment>
+  </data>
+  <data name="10c5a6b6b588b2dee817ad7d0ef5a8dbae580b1706a911bd048bc2c90e9c23be" xml:space="preserve">
+    <value>飞越距离</value>
+    <comment>"Mission parameter: Pass by dist"</comment>
+  </data>
+  <data name="7b38c4f4b1fa65da9b24cd0028aa2a168509bc4bb8c1861535f140d946b3900c" xml:space="preserve">
+    <value>俯仰</value>
+    <comment>"Mission parameter: Pitch"</comment>
+  </data>
+  <data name="3000e51d209f8735117608bd81f4011eee9358255ae5c485e43661e3d5fdfa02" xml:space="preserve">
+    <value>俯仰角</value>
+    <comment>"Mission parameter: Pitch Angle"</comment>
+  </data>
+  <data name="df8f5207a96757e9cf9c0ef6549328fe506bf134af1e7b595c315559d07f51af" xml:space="preserve">
+    <value>俯仰速率</value>
+    <comment>"Mission parameter: Pitch Rate"</comment>
+  </data>
+  <data name="438716cc0a77676018a60527c8609e0ae4d5d77b8caa5575e31137afe189a2a6" xml:space="preserve">
+    <value>顶点数</value>
+    <comment>"Mission parameter: Points"</comment>
+  </data>
+  <data name="9af713265607a9f47622567c806b432e3acbeec2dfdae31c0e82c362db45f1b3" xml:space="preserve">
+    <value>主镜头(1:RGB,2:IR,3:NDVI,4:广角)</value>
+    <comment>"Mission parameter: Primary(1:RGB,2:IR,3:NDVI,4:Wide)"</comment>
+  </data>
+  <data name="59c33316527342268591201b2be90cd5daf3629bfcd89efae2de847e6b03fbd5" xml:space="preserve">
+    <value>半径</value>
+    <comment>"Mission parameter: Radius"</comment>
+  </data>
+  <data name="e1d2c871dc3cf2dad57ff057ee65f0836bf88f65d8cb62092d850d48b68d6786" xml:space="preserve">
+    <value>半径 (m)</value>
+    <comment>"Mission parameter: Radius (m)"</comment>
+  </data>
+  <data name="5ea3ec8e852e5fffa041a829ef22c4d503832f332091cd6468116b0a7195ecce" xml:space="preserve">
+    <value>继电器编号</value>
+    <comment>"Mission parameter: Relay No"</comment>
+  </data>
+  <data name="cf1acaf129d2dd40e94ea643bf417837de6075437f9428f42d664e9dc2bff02e" xml:space="preserve">
+    <value>重复次数</value>
+    <comment>"Mission parameter: Repeat"</comment>
+  </data>
+  <data name="fc2c2515b72d0f5c461d5f74c7faaa079ddcc0d7781bc51e48620bebdf02a843" xml:space="preserve">
+    <value>重复次数</value>
+    <comment>"Mission parameter: Repeat#"</comment>
+  </data>
+  <data name="fcb0af38d3b58f2ec2d381558f9d117557018c449c452deeb1b0908e03c591cf" xml:space="preserve">
+    <value>横滚</value>
+    <comment>"Mission parameter: Roll"</comment>
+  </data>
+  <data name="5851c4c7f94f8040a395570126ec89824eff3eaa4c6ccef24bc2eb99c53b8401" xml:space="preserve">
+    <value>UTC 秒</value>
+    <comment>"Mission parameter: Second UTC"</comment>
+  </data>
+  <data name="2b42e11190bcadc3a8892f968252764efe0efb092859119ec2c29994f441a5c0" xml:space="preserve">
+    <value>次镜头(1:RGB,2:IR,3:NDVI,4:广角)</value>
+    <comment>"Mission parameter: Secondary(1:RGB,2:IR,3:NDVI,4:Wide)"</comment>
+  </data>
+  <data name="a7ca71dfd0b4902a14b410c4c31216b18649eae2080740c4341b25356bce4ce4" xml:space="preserve">
+    <value>秒数 (或 -1)</value>
+    <comment>"Mission parameter: Seconds (or -1)"</comment>
+  </data>
+  <data name="b84a1d9e72d7ec50e7555328b6835b637fe0e4c890437fcaf7d7d5563fd41933" xml:space="preserve">
+    <value>舵机编号</value>
+    <comment>"Mission parameter: Ser No"</comment>
+  </data>
+  <data name="13b11cec24527727d1b616c76e2db35b5edc8f5306f8336f9d2bade0540a4119" xml:space="preserve">
+    <value>会话控制</value>
+    <comment>"Mission parameter: Session Control"</comment>
+  </data>
+  <data name="a61e9ac129667f8ca811174c8ab65d56a957bdc4c266304559ecf5537a671846" xml:space="preserve">
+    <value>快门命令</value>
+    <comment>"Mission parameter: Shutter Cmd"</comment>
+  </data>
+  <data name="202b6f210aaf8067dc82a09931b6f5670638363c2847871ef1dde3b939dd3033" xml:space="preserve">
+    <value>快门速度</value>
+    <comment>"Mission parameter: Shutter Speed"</comment>
+  </data>
+  <data name="ffdc1fd123bf71b0f6fab063cff0b73da61f4837e637b9a0495d9e9daa2346f7" xml:space="preserve">
+    <value>速度 (m/s)</value>
+    <comment>"Mission parameter: Speed (m/s)"</comment>
+  </data>
+  <data name="d9187ff6a38f0dcdfa26d60b45e0c568af6dd3eb782e020777e301e5c93fb45c" xml:space="preserve">
+    <value>速度 deg/s</value>
+    <comment>"Mission parameter: Speed deg/s"</comment>
+  </data>
+  <data name="8866b54a986e28d244a4d179c652cdfcf5125535d7cbf2c35c3994e4decf642c" xml:space="preserve">
+    <value>速度 m/s</value>
+    <comment>"Mission parameter: Speed m/s"</comment>
+  </data>
+  <data name="0c7ad4fa7c0690aedd55129c8a8b46945ab2e054ab68eee9fca83e6ccb66988d" xml:space="preserve">
+    <value>速度(0..1)</value>
+    <comment>"Mission parameter: Speed(0..1)"</comment>
+  </data>
+  <data name="e1228f077f611c91aac193ee1ec74f91051599b9f53ee7e5606ce04ad56c78f2" xml:space="preserve">
+    <value>启用喷洒器</value>
+    <comment>"Mission parameter: Sprayer Enable"</comment>
+  </data>
+  <data name="defb1941c7e1719444fc0f37665ff0025865023933034fc65ce26fa177fc9be2" xml:space="preserve">
+    <value>启动发动机</value>
+    <comment>"Mission parameter: Start Engine"</comment>
+  </data>
+  <data name="b6306f51602ef34d871cb0dabfc07e20418f45027a26833c0128ea4232841ad3" xml:space="preserve">
+    <value>视频流 ID</value>
+    <comment>"Mission parameter: StreamId"</comment>
+  </data>
+  <data name="f380053af6f1fa437a6077489031d1ccbf1c53ef185b8626bb1ca8d23d5efe89" xml:space="preserve">
+    <value>开关位置</value>
+    <comment>"Mission parameter: SwitchPosition"</comment>
+  </data>
+  <data name="ea17fa7a889f67416b68bc0b4afc4bd0e0fd0ea8bd2e60863a450bd6b8753156" xml:space="preserve">
+    <value>标签</value>
+    <comment>"Mission parameter: Tag"</comment>
+  </data>
+  <data name="b58bbe58037e875938a7f0540f049a722122238f5a6a711b6fb57b1931ed9174" xml:space="preserve">
+    <value>油门(%)</value>
+    <comment>"Mission parameter: Throttle(%)"</comment>
+  </data>
+  <data name="3becc505c37eaf971abd7268452f4e44a584f3fffe8a2baa10d294449bf29fe0" xml:space="preserve">
+    <value>时间 (sec)</value>
+    <comment>"Mission parameter: Time (sec)"</comment>
+  </data>
+  <data name="e3600c37e32b53d9e1fbfd9985be25b77bea2703a9fab3aaabe4e7826fa838b2" xml:space="preserve">
+    <value>时间 s</value>
+    <comment>"Mission parameter: Time s"</comment>
+  </data>
+  <data name="40488ff933c38d775c028160f82484473b40b5f6b0a7167db2ff3fb1c5a165bc" xml:space="preserve">
+    <value>照片总数</value>
+    <comment>"Mission parameter: Total Images"</comment>
+  </data>
+  <data name="035b1d422e4733353427bf9c9da846b022b6a3a210fb4c9d83098a8fb5ce2a5b" xml:space="preserve">
+    <value>圈数</value>
+    <comment>"Mission parameter: Turns"</comment>
+  </data>
+  <data name="bd52f1ef7db36c93cddc3533c77c9cab9e71c45efe97f950cf159be53cb182fe" xml:space="preserve">
+    <value>类型</value>
+    <comment>"Mission parameter: Type"</comment>
+  </data>
+  <data name="1dbdd4421a72c22368fa2cc2700fb94e5e7111f8b1766309fc0e15b0c458111c" xml:space="preserve">
+    <value>类型 (0:水平,2:上升,3:下降)</value>
+    <comment>"Mission parameter: Type (0:horiz,2:up,3:down)"</comment>
+  </data>
+  <data name="3859b888d28e9cc6e9192fe2691efac923a33d39ee7ae881c9ca20dc3d565ab4" xml:space="preserve">
+    <value>类型 (0=空速 1=地速)</value>
+    <comment>"Mission parameter: Type (0=as 1=gs)"</comment>
+  </data>
+  <data name="e1049a58ff0d683b360bb78565dafc22dae6a0d9f6918e4c345b71895abe2833" xml:space="preserve">
+    <value>数值</value>
+    <comment>"Mission parameter: Value"</comment>
+  </data>
+  <data name="90a4a4cdbdb1684d105406ee793eacd02a36da182f646546b867c6a382b83871" xml:space="preserve">
+    <value>航点编号</value>
+    <comment>"Mission parameter: WP #"</comment>
+  </data>
+  <data name="601be394a8ca0618bf0ac1fbaa1ecc99732e6ea727005f5a7c80320b93f5d5a0" xml:space="preserve">
+    <value>摆动时间</value>
+    <comment>"Mission parameter: Wiggle time"</comment>
+  </data>
+  <data name="7b0c0ae9585ace9401da0b98a9aedd172499f42856a59477df4730df8b1f144e" xml:space="preserve">
+    <value>偏航</value>
+    <comment>"Mission parameter: Yaw"</comment>
+  </data>
+  <data name="d1dab827db59ff72a44ee45ed9cdfa57d9aa80a7b37adb90e39cba517caaf19e" xml:space="preserve">
+    <value>偏航角</value>
+    <comment>"Mission parameter: Yaw Angle"</comment>
+  </data>
+  <data name="4353efd288657dae8e9fc2d979934d9897ae75e7c30265fff0bd902a09da2e54" xml:space="preserve">
+    <value>偏航速率</value>
+    <comment>"Mission parameter: Yaw Rate"</comment>
+  </data>
+  <data name="8f9bfd30228fd33681d45be4f0a3078729da45195c3cbf57db0c331e392d74cf" xml:space="preserve">
+    <value>变焦位置</value>
+    <comment>"Mission parameter: Zoom Position"</comment>
+  </data>
+  <data name="d84a4b8933579c927a76461214da5105f0924d65f383d3896fa89ae431a16bd7" xml:space="preserve">
+    <value>变焦步长</value>
+    <comment>"Mission parameter: Zoom Step"</comment>
+  </data>
+  <data name="b2b318a79ae93754c18f2b1e5f2c96cee1dbb6511a5d9e7c00d7a6fe92541710" xml:space="preserve">
+    <value>动作</value>
+    <comment>"Mission parameter: action"</comment>
+  </data>
+  <data name="6e74f7cca00024e7079b2828360c23745b6add4dcb12bd32eece86553f05b579" xml:space="preserve">
+    <value>角度(CD)</value>
+    <comment>"Mission parameter: angle(CD)"</comment>
+  </data>
+  <data name="4a1312fbd9f6379f3856a67e86ac2958aa911128e617806dff06ddd9a9166b36" xml:space="preserve">
+    <value>参数1</value>
+    <comment>"Mission parameter: arg1"</comment>
+  </data>
+  <data name="5849c1ee429cae9e39093e9775f2aea61c878eceb2a579a95010bea6e904aefb" xml:space="preserve">
+    <value>参数2</value>
+    <comment>"Mission parameter: arg2"</comment>
+  </data>
+  <data name="3d5d7fe2879fedb057aa507ace12553ab5c700e531c23e7988cf72c4051c698f" xml:space="preserve">
+    <value>参数3</value>
+    <comment>"Mission parameter: arg3"</comment>
+  </data>
+  <data name="e4cd60416e7b9d75be0bb978527943197bfefbc7b8e39919bac1b9e60f80cfe1" xml:space="preserve">
+    <value>参数4</value>
+    <comment>"Mission parameter: arg4"</comment>
+  </data>
+  <data name="147db52c37064b6bf418c6bc8fbd170384b54b564c093dbaf23c6363f929fc23" xml:space="preserve">
+    <value>命令</value>
+    <comment>"Mission parameter: command"</comment>
+  </data>
+  <data name="69821bfc9c901a1aba505fd4a767e22daaeec68bfaa3a6d02489b4b4564991f0" xml:space="preserve">
+    <value>命令 ID</value>
+    <comment>"Mission parameter: commandId"</comment>
+  </data>
+  <data name="3ba974550c5cb96fa63d940bf5a956790f87b77d7b8dac44081c02936cae8b1b" xml:space="preserve">
+    <value>释放(0)/抓取(1)</value>
+    <comment>"Mission parameter: drop(0)/grab(1)"</comment>
+  </data>
+  <data name="6833fdadd482c5d61a60089ec97a5dee436b205ff8de46d8de68dd97015acd19" xml:space="preserve">
+    <value>启用</value>
+    <comment>"Mission parameter: enable"</comment>
+  </data>
+  <data name="4291dc6e95a379d8426105d225f98e30c2cccd2d2647ff6489ef99d6a25a5bad" xml:space="preserve">
+    <value>长度</value>
+    <comment>"Mission parameter: length"</comment>
+  </data>
+  <data name="24c84d1249a2d2be610a8160cc9cf03fedd0536ef19040b47e1f87f5e45dc93f" xml:space="preserve">
+    <value>最高高度</value>
+    <comment>"Mission parameter: max alt"</comment>
+  </data>
+  <data name="fbd6f793b3953788c697ae2a83156195921c4f6491b9d36041a9703fed9c3fee" xml:space="preserve">
+    <value>最大下降距离</value>
+    <comment>"Mission parameter: max descent"</comment>
+  </data>
+  <data name="e3b4ba025397f8d1aea0402325d16d08425de0e8d2e0f9bc21acb5a8b3fe4595" xml:space="preserve">
+    <value>最大距离</value>
+    <comment>"Mission parameter: max dist"</comment>
+  </data>
+  <data name="d0b5e08f42ec356786e4927836643b7a5cc0151f2e9d9a4d966f81c3b0ea7f43" xml:space="preserve">
+    <value>最低高度</value>
+    <comment>"Mission parameter: min alt"</comment>
+  </data>
+  <data name="e54acfd5f485de0830dc12e5f962b6c68b256d8cee8cc04e4a1484195afe48ba" xml:space="preserve">
+    <value>模式 (3=多旋翼/4=固定翼)</value>
+    <comment>"Mission parameter: mode (3=mc/4=plane)"</comment>
+  </data>
+  <data name="a6769717a2ee8ef64859753b4f55b3caa9f90e32bb8e2c6b2ccfbc0b478ef66c" xml:space="preserve">
+    <value>关闭(0)/开启(1)</value>
+    <comment>"Mission parameter: off(0)/on(1)"</comment>
+  </data>
+  <data name="d6ed4094ecd66b147c7c8ae02959c416e877a0b2f1f4f7a823e41d0992ecff53" xml:space="preserve">
+    <value>开启=1/关闭=0</value>
+    <comment>"Mission parameter: on=1/off=0"</comment>
+  </data>
+  <data name="2cd041604da4d6760ee90a6ab66dd19e7020a7d76ba49a8fff29b8def68129b1" xml:space="preserve">
+    <value>速率</value>
+    <comment>"Mission parameter: rate"</comment>
+  </data>
+  <data name="5c9c21092bf0eb0e2f83c76e8cf89e219b7c51bfe73b039b032c91539b1e75a7" xml:space="preserve">
+    <value>参数未定义</value>
+    <comment>"Mission parameter: setme"</comment>
+  </data>
+  <data name="fd357cef1f0ae1f9b014ddae8feecebd5f97d0fb8174d68762bc5f65a4267b6f" xml:space="preserve">
+    <value>超时</value>
+    <comment>"Mission parameter: timeout"</comment>
+  </data>
+  <data name="271f2d0ad87830ba26f25964ef4871c52592da83f97a30404f6f451562b0469b" xml:space="preserve">
+    <value>超时 S</value>
+    <comment>"Mission parameter: timeout S"</comment>
+  </data>
+  <data name="6280b5521f3e2e0c12ea38a6bc066de3b4115f01e0e91a3e2372714c3d1c66d3" xml:space="preserve">
+    <value>绞盘编号</value>
+    <comment>"Mission parameter: winch no"</comment>
+  </data>
   <data name="b12c7045eb12866afa145e5b0d71547f523fc8f913446a6fe634d01729e656da" xml:space="preserve">
     <value>开始任务</value>
     <comment>"Mission_Start"</comment>

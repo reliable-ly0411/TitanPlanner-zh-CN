@@ -64,6 +64,11 @@ namespace MissionPlanner.GCSViews
         public FlightPlanner()
         {
             InitializeComponent();
+            // Configure the column before its first data source. Items.Count caches a
+            // CurrencyManager on the template; setting members again after that can
+            // dereference the template's missing DataGridView during startup/reload.
+            Command.DisplayMember = "Value";
+            Command.ValueMember = "Key";
             Init();
         }
 
@@ -260,6 +265,14 @@ namespace MissionPlanner.GCSViews
             cmb_missiontype.FormattingEnabled = true;
             cmb_missiontype.Format += (sender, args) => args.Value = UiText.Translate(args.ListItem.ToString());
 
+            Commands.CellMouseEnter += (sender, e) =>
+            {
+                if (e.RowIndex >= 0 && e.ColumnIndex == Command.Index)
+                {
+                    var cell = Commands[Command.Index, e.RowIndex];
+                    cell.ToolTipText = MissionCommandDisplay.CommandName(cell.Value as string);
+                }
+            };
             updateCMDParams();
 
             foreach (DataGridViewColumn commandsColumn in Commands.Columns)
@@ -1175,7 +1188,7 @@ namespace MissionPlanner.GCSViews
 
 
             DataGridViewTextBoxCell cell;
-            if (alt == -2 && Commands.Columns[Alt.Index].HeaderText.ToString().StartsWith("Alt"))
+            if (alt == -2 && RawColumnHeader(Alt.Index).StartsWith("Alt"))
             {
                 if (CHK_verifyheight.Checked &&
                     (altmode) CMB_altmode.SelectedValue != altmode.Terrain) //Drag with verifyheight // use srtm data
@@ -1204,21 +1217,21 @@ namespace MissionPlanner.GCSViews
                 }
             }
 
-            if (Commands.Columns[Lat.Index].HeaderText.Equals("Lat"))
+            if (RawColumnHeader(Lat.Index).Equals("Lat"))
             {
                 cell = Commands.Rows[selectedrow].Cells[Lat.Index] as DataGridViewTextBoxCell;
                 cell.Value = lat.ToString("0.0000000");
                 cell.DataGridView.EndEdit();
             }
 
-            if (Commands.Columns[Lon.Index].HeaderText.Equals("Long"))
+            if (RawColumnHeader(Lon.Index).Equals("Long"))
             {
                 cell = Commands.Rows[selectedrow].Cells[Lon.Index] as DataGridViewTextBoxCell;
                 cell.Value = lng.ToString("0.0000000");
                 cell.DataGridView.EndEdit();
             }
 
-            if (alt != -1 && alt != -2 && Commands.Columns[Alt.Index].HeaderText.ToString().StartsWith("Alt"))
+            if (alt != -1 && alt != -2 && RawColumnHeader(Alt.Index).StartsWith("Alt"))
             {
                 cell = Commands.Rows[selectedrow].Cells[Alt.Index] as DataGridViewTextBoxCell;
 
@@ -1305,7 +1318,7 @@ namespace MissionPlanner.GCSViews
             convertFromGeographic(lat, lng);
 
             // Add more for other params
-            if (Commands.Columns[Param1.Index].HeaderText.Equals("Delay") && p1 != -1)
+            if (RawColumnHeader(Param1.Index).Equals("Delay") && p1 != -1)
             {
                 cell = Commands.Rows[selectedrow].Cells[Param1.Index] as DataGridViewTextBoxCell;
                 cell.Value = p1;
@@ -2366,17 +2379,28 @@ namespace MissionPlanner.GCSViews
         {
             try
             {
-                if (cmdParamNames.ContainsKey(command))
-                    for (int i = 1; i <= 7; i++)
-                        Commands.Columns[i].HeaderText = cmdParamNames[command][i - 1];
-                else
-                    for (int i = 1; i <= 7; i++)
-                        Commands.Columns[i].HeaderText = "setme";
+                string[] names;
+                cmdParamNames.TryGetValue(command, out names);
+                for (int i = 1; i <= 7; i++)
+                {
+                    var rawHeader = names == null ? "setme" : names[i - 1] ?? "";
+                    var column = Commands.Columns[i];
+                    // Map editing must use the canonical metadata, never the translated header.
+                    column.Tag = rawHeader;
+                    column.HeaderText = MissionCommandDisplay.ParameterHeader(rawHeader);
+                    column.ToolTipText = column.HeaderText == rawHeader
+                        ? rawHeader : column.HeaderText + "\n" + rawHeader;
+                }
             }
             catch (Exception ex)
             {
                 CustomMessageBox.Show(ex.ToString());
             }
+        }
+
+        private string RawColumnHeader(int columnIndex)
+        {
+            return Commands.Columns[columnIndex].Tag as string ?? "";
         }
 
         public void chk_grid_CheckedChanged(object sender, EventArgs e)
@@ -2688,6 +2712,12 @@ namespace MissionPlanner.GCSViews
                 ((ComboBox) e.Control).SelectionChangeCommitted += Commands_SelectionChangeCommitted;
                 ((ComboBox) e.Control).ForeColor = Color.White;
                 ((ComboBox) e.Control).BackColor = Color.FromArgb(0x43, 0x44, 0x45);
+#if !LIB
+                if (Commands.CurrentCell.ColumnIndex == Command.Index)
+                    MissionCommandDropDown.Configure(temp, (DataGridViewComboBoxCell)Commands.CurrentCell);
+                else
+                    MissionCommandDropDown.Detach(temp);
+#endif
                 Debug.WriteLine("Setting event handle");
             }
         }
@@ -2704,21 +2734,9 @@ namespace MissionPlanner.GCSViews
             try
             {
                 selectedrow = e.RowIndex;
-                string option = Commands[Command.Index, selectedrow].EditedFormattedValue.ToString();
-                string cmd;
-                try
-                {
-                    if (Commands[Command.Index, selectedrow].Value != null)
-                        cmd = Commands[Command.Index, selectedrow].Value.ToString();
-                    else
-                        cmd = option;
-                }
-                catch
-                {
-                    cmd = option;
-                }
-
-                //Console.WriteLine("editformat " + option + " value " + cmd);
+                var cmd = Commands[Command.Index, selectedrow].Value as string;
+                if (cmd == null)
+                    return;
                 ChangeColumnHeader(cmd);
 
                 if (cmd == "WAYPOINT")
@@ -2749,7 +2767,6 @@ namespace MissionPlanner.GCSViews
             if (cell.Value == null)
             {
                 cell.Value = "WAYPOINT";
-                cell.DropDownWidth = 200;
                 Commands.Rows[e.RowIndex].Cells[Delete.Index].Value = "X";
                 if (!quickadd)
                 {
@@ -2825,18 +2842,21 @@ namespace MissionPlanner.GCSViews
 
         private void Commands_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            // update row headers
+            var command = ((ComboBox)sender).SelectedValue as string;
+            if (command == null) // Frame is also a combo box; its values are numeric.
+                return;
+            // Only the bound key participates in command logic.
             ((ComboBox) sender).ForeColor = Color.White;
-            ChangeColumnHeader(((ComboBox) sender).Text);
+            ChangeColumnHeader(command);
                 try
             {
                 //Put cmdID to a TAG, in case user delete the command from the list and it must change back to UNKNOWN
-                if (((ComboBox)sender).Text != "UNKNOWN")
+                if (command != "UNKNOWN")
                 {
-                    Commands.Rows[selectedrow].Cells[Command.Index].Tag = getCmdID(((ComboBox)sender).Text);
+                    Commands.Rows[selectedrow].Cells[Command.Index].Tag = getCmdID(command);
                 }
                 // default takeoff to non 0 alt
-                if (((ComboBox) sender).Text == "TAKEOFF")
+                if (command == "TAKEOFF")
                 {
                     if (Commands.Rows[selectedrow].Cells[Alt.Index].Value != null &&
                         Commands.Rows[selectedrow].Cells[Alt.Index].Value.ToString() == "0")
@@ -2852,21 +2872,21 @@ namespace MissionPlanner.GCSViews
                 }
 
                 // default land to 0
-                if (((ComboBox) sender).Text == "LAND")
+                if (command == "LAND")
                 {
                     if (Commands.Rows[selectedrow].Cells[Alt.Index].Value != null)
                         Commands.Rows[selectedrow].Cells[Alt.Index].Value = "0";
                 }
 
                 // default to take shot
-                if (((ComboBox) sender).Text == "DO_DIGICAM_CONTROL")
+                if (command == "DO_DIGICAM_CONTROL")
                 {
                     if (Commands.Rows[selectedrow].Cells[Lat.Index].Value != null &&
                         Commands.Rows[selectedrow].Cells[Lat.Index].Value.ToString() == "0")
                         Commands.Rows[selectedrow].Cells[Lat.Index].Value = (1).ToString();
                 }
 
-                if (((ComboBox) sender).Text == "UNKNOWN")
+                if (command == "UNKNOWN")
                 {
                     string cmdid = "-1";
                     if (InputBox.Show(UiText.Translate("Mavlink ID"), UiText.Translate("Please enter the command ID"), ref cmdid) == DialogResult.OK)
@@ -7541,7 +7561,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
 
             cmds.Add("UNKNOWN");
 
-            Command.DataSource = cmds;
+            Command.DataSource = MissionCommandDisplay.CreateOptions(cmds);
 
             log.InfoFormat("Command item count {0} orig list {1}", Command.Items.Count, cmds.Count);
 

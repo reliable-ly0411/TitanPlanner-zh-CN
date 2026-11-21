@@ -4,9 +4,13 @@
     <TargetFramework>net8.0</TargetFramework>
     <RootNamespace>MissionPlanner.Utilities</RootNamespace>
     <EnableDefaultEmbeddedResourceItems>false</EnableDefaultEmbeddedResourceItems>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Program.cs.txt" Link="Program.cs" />
+    <Compile Include="MissionCommandChecks.cs.txt" Link="MissionCommandChecks.cs" />
+    <Compile Include="../../ExtLibs/Utilities/Mission/MissionCommandDisplay.cs" Link="MissionCommandDisplay.cs" />
+    <Content Include="../../mavcmd.xml" Link="mavcmd.xml" CopyToOutputDirectory="PreserveNewest" />
     <Compile Include="../../ExtLibs/Utilities/UiText.cs" Link="UiText.cs" />
     <EmbeddedResource Include="../../ExtLibs/Utilities/Resources/UiText.resx" Link="Resources/UiText.resx" />
     <EmbeddedResource Include="../../ExtLibs/Utilities/Resources/UiText.zh-CN.resx" Link="Resources/UiText.zh-CN.resx" />

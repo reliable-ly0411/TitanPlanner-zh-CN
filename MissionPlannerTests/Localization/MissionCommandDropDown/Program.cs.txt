@@ -1,0 +1,149 @@
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices;
+using System.Windows.Forms;
+using System.Xml.Linq;
+using MissionPlanner.Controls;
+using MissionPlanner.Utilities;
+
+internal static class MissionCommandDropDownProbe
+{
+    private const TextFormatFlags Flags = TextFormatFlags.NoPadding | TextFormatFlags.NoPrefix | TextFormatFlags.SingleLine;
+    private static int assertions, cases;
+    private static void Check(bool condition, string message)
+    {
+        assertions++;
+        if (!condition) throw new InvalidOperationException(message);
+    }
+
+    [STAThread]
+    private static int Main()
+    {
+        try
+        {
+            Check(Environment.OSVersion.Platform == PlatformID.Win32NT, "This is a Windows native-popup regression; it must not be reported as executed on other platforms.");
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            var commands = XDocument.Load(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "mavcmd.xml"))
+                .Root.Elements().SelectMany(firmware => firmware.Elements()).Select(command => command.Name.LocalName).Distinct()
+                .Concat(new[] { "FENCE_RETURN_POINT", "FENCE_POLYGON_VERTEX_INCLUSION", "FENCE_POLYGON_VERTEX_EXCLUSION",
+                    "FENCE_CIRCLE_INCLUSION", "FENCE_CIRCLE_EXCLUSION", "RALLY_POINT", "UNKNOWN" }).ToArray();
+            foreach (var language in new[] { "zh-CN", "en-US" })
+            foreach (int fontScale in new[] { 100, 125, 150, 200 })
+            {
+                CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo(language);
+                foreach (bool rightEdge in new[] { false, true }) Run(commands, fontScale, rightEdge, false);
+                Run(commands, fontScale, true, true);
+            }
+            Console.WriteLine("Native dropdown: " + cases + " cases, " + assertions + " assertions passed. Font scaling is a stress test; rerun at each real Windows DPI setting for DPI acceptance.");
+            return 0;
+        }
+        catch (Exception exception) { Console.Error.WriteLine(exception); return 1; }
+    }
+
+    private static void Run(string[] commands, int fontScale, bool rightEdge, bool extraWide)
+    {
+        var area = Screen.PrimaryScreen.WorkingArea;
+        using (var font = new Font("Microsoft Sans Serif", 8.25f * fontScale / 100))
+        using (var host = new Form { StartPosition = FormStartPosition.Manual, AutoScaleMode = AutoScaleMode.None,
+            ClientSize = new Size(Math.Min(360, area.Width - 40), 180), ShowInTaskbar = false })
+        using (var grid = new DataGridView { Dock = DockStyle.Fill, AllowUserToAddRows = false,
+            RowHeadersVisible = false, ColumnHeadersVisible = false, Font = font })
+        {
+            var choices = MissionCommandDisplay.CreateOptions(commands);
+            if (extraWide) choices.Add(new KeyValuePair<string, string>("TP_LONG", new string('W', Math.Max(80, area.Width / 4)) + " (完整中文说明)"));
+            var column = new DataGridViewComboBoxColumn { Name = "Command", DisplayMember = "Value", ValueMember = "Key", Width = 190 };
+            column.DataSource = choices;
+            var frameColumn = new DataGridViewComboBoxColumn { Name = "Frame", DisplayMember = "Value", ValueMember = "Key", Width = 100 };
+            frameColumn.DataSource = new[] { new KeyValuePair<int, string>(3, "Relative") };
+            grid.Columns.Add(column); grid.Columns.Add(frameColumn);
+            grid.RowTemplate.Height = font.Height + 10;
+            grid.Rows.Add("WAYPOINT", 3);
+            var cell = (DataGridViewComboBoxCell)grid.Rows[0].Cells[0];
+            cell.DropDownWidth = 200; // The old per-row value that overrode the measured editor width.
+            grid.EditingControlShowing += (sender, e) =>
+            {
+                var editor = e.Control as ComboBox;
+                if (editor == null) return;
+                if (grid.CurrentCell.ColumnIndex == 0) MissionCommandDropDown.Configure(editor, (DataGridViewComboBoxCell)grid.CurrentCell);
+                else MissionCommandDropDown.Detach(editor);
+            };
+            host.Controls.Add(grid);
+            host.Location = new Point(rightEdge ? area.Right - host.Width - 2 : area.Left + 2, area.Top + Math.Max(2, area.Height / 4));
+            host.Show(); Application.DoEvents();
+            grid.CurrentCell = cell;
+            Check(grid.BeginEdit(true), "Could not begin native command-cell editing.");
+            var combo = grid.EditingControl as ComboBox;
+            Check(combo != null, "Command editor missing.");
+            for (int opening = 0; opening < 2; opening++)
+            {
+                combo.DroppedDown = true;
+                Application.DoEvents(); Application.DoEvents();
+                var info = new ComboInfo { Size = Marshal.SizeOf(typeof(ComboInfo)) };
+                Check(GetComboBoxInfo(combo.Handle, ref info), "GetComboBoxInfo failed.");
+                Check(IsWindowVisible(info.List), "Native list is not visible.");
+                NativeRect rectangle, client;
+                Check(GetWindowRect(info.List, out rectangle), "Native list bounds unavailable.");
+                Check(GetClientRect(info.List, out client), "Native list client size unavailable.");
+                var currentArea = Screen.FromControl(combo).WorkingArea;
+                Check(rectangle.Left >= currentArea.Left && rectangle.Right <= currentArea.Right &&
+                    rectangle.Top >= currentArea.Top && rectangle.Bottom <= currentArea.Bottom, "Native popup exceeds the monitor working area.");
+                Check(cell.DropDownWidth == combo.DropDownWidth, "Cell and editor width disagree after opening.");
+                using (var graphics = combo.CreateGraphics())
+                {
+                    int padding = Math.Max(1, (int)Math.Ceiling(3 * graphics.DpiX / 96));
+                    int border = Math.Max(1, (int)Math.Ceiling(2 * graphics.DpiX / 96));
+                    int scroll = Math.Max(SystemInformation.VerticalScrollBarWidth, (int)Math.Ceiling(17 * graphics.DpiX / 96));
+                    int content = Math.Max(1, combo.DropDownWidth - scroll - 2 * padding - 2 * border);
+                    int lineHeight = TextRenderer.MeasureText(graphics, "Ag国", combo.Font, Size.Empty, Flags).Height;
+                    Check(client.Right - client.Left >= content + 2 * padding, "Actual native client is narrower than the text layout.");
+                    for (int i = 0; i < choices.Count; i++)
+                    {
+                        var lines = MissionCommandDropDown.Lines(graphics, combo.Font, choices[i].Value, content);
+                        Check(string.Concat(lines) == choices[i].Value, "Wrapping lost command-label characters.");
+                        foreach (var line in lines)
+                            Check(TextRenderer.MeasureText(graphics, line, combo.Font, Size.Empty, Flags).Width <= content,
+                                "A rendered line exceeds the actual native text area.");
+                        int nativeHeight = (int)SendMessage(combo.Handle, 0x0154, (IntPtr)i, IntPtr.Zero); // CB_GETITEMHEIGHT
+                        Check(nativeHeight >= lines.Count * lineHeight + 2 * padding, "Native row clips the wrapped label.");
+                        Check(choices[i].Key == ((KeyValuePair<string, string>)combo.Items[i]).Key, "Command key changed.");
+                    }
+                    Console.WriteLine("culture=" + CultureInfo.CurrentUICulture.Name + " fontScale=" + fontScale +
+                        " dpi=" + graphics.DpiX + " right=" + rightEdge + " wrap=" + extraWide +
+                        " opening=" + opening + " popup=" + (rectangle.Right - rectangle.Left) + "x" + (rectangle.Bottom - rectangle.Top));
+                }
+                combo.DroppedDown = false;
+            }
+            combo.SelectedValue = "DO_GIMBAL_MANAGER_PITCHYAW";
+            Check(grid.EndEdit(), "Could not commit command choice.");
+            Check(cell.Value.ToString() == "DO_GIMBAL_MANAGER_PITCHYAW", "Committed command is not the original key.");
+            grid.CurrentCell = grid.Rows[0].Cells[1];
+            Check(grid.BeginEdit(true), "Could not edit altitude-frame choice.");
+            var frameEditor = (ComboBox)grid.EditingControl;
+            Check(frameEditor.DrawMode == DrawMode.Normal, "Mission drawing leaked into the altitude-frame editor.");
+            Check((int)frameEditor.SelectedValue == 3, "Altitude-frame value changed.");
+            grid.EndEdit(); host.Close();
+            cases++;
+        }
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    private struct NativeRect { internal int Left, Top, Right, Bottom; }
+    [StructLayout(LayoutKind.Sequential)]
+    private struct ComboInfo
+    {
+        internal int Size;
+        internal NativeRect Item, Button;
+        internal int ButtonState;
+        internal IntPtr Combo, Edit, List;
+    }
+    [DllImport("user32.dll")] private static extern bool GetComboBoxInfo(IntPtr combo, ref ComboInfo info);
+    [DllImport("user32.dll")] private static extern bool GetWindowRect(IntPtr window, out NativeRect rectangle);
+    [DllImport("user32.dll")] private static extern bool GetClientRect(IntPtr window, out NativeRect rectangle);
+    [DllImport("user32.dll")] private static extern bool IsWindowVisible(IntPtr window);
+    [DllImport("user32.dll")] private static extern IntPtr SendMessage(IntPtr window, int message, IntPtr wParam, IntPtr lParam);
+}

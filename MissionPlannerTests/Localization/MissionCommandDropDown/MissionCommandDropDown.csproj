@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>MissionPlanner.Utilities</RootNamespace>
+    <TargetFramework>net472</TargetFramework>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <EnableDefaultEmbeddedResourceItems>false</EnableDefaultEmbeddedResourceItems>
+    <ApplicationManifest>../../../Properties/app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs.txt" Link="Program.cs" />
+    <Compile Include="../../../Controls/MissionCommandDropDown.cs" Link="MissionCommandDropDown.cs" />
+    <Compile Include="../../../ExtLibs/Utilities/Mission/MissionCommandDisplay.cs" Link="MissionCommandDisplay.cs" />
+    <Compile Include="../../../ExtLibs/Utilities/UiText.cs" Link="UiText.cs" />
+    <EmbeddedResource Include="../../../ExtLibs/Utilities/Resources/UiText.resx" Link="Resources/UiText.resx" />
+    <EmbeddedResource Include="../../../ExtLibs/Utilities/Resources/UiText.zh-CN.resx" Link="Resources/UiText.zh-CN.resx" />
+    <EmbeddedResource Include="../../../ExtLibs/Utilities/Resources/UiText.zh-Hans.resx" Link="Resources/UiText.zh-Hans.resx" />
+    <Content Include="../../../mavcmd.xml" Link="mavcmd.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Drawing" />
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="all" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "status": "reviewed_inputs_not_applied",
+  "corrections": [
+    {
+      "id": 213,
+      "short": "SET_YAW_SPEED",
+      "full_name": "MAV_CMD_NAV_SET_YAW_SPEED",
+      "expected_translation": "设置偏航速度",
+      "replacement": "设置航向与行驶速度",
+      "reason": "参数分别为角度（deg）和行驶速度（m/s），不是偏航角速度；Rover 按绝对/相对航向执行。"
+    },
+    {
+      "id": 179,
+      "short": "DO_SET_HOME",
+      "full_name": "MAV_CMD_DO_SET_HOME",
+      "expected_translation": "设置起飞点",
+      "replacement": "设置返航点",
+      "reason": "HOME 可设为当前位置或指定位置，不一定是最初起飞地点。"
+    },
+    {
+      "id": 177,
+      "short": "DO_JUMP",
+      "full_name": "MAV_CMD_DO_JUMP",
+      "expected_translation": "跳转航点",
+      "replacement": "跳转任务项",
+      "reason": "目标为任务序号，不能限定为位置航点。"
+    },
+    {
+      "id": 212,
+      "short": "DO_AUTOTUNE_ENABLE",
+      "full_name": "MAV_CMD_DO_AUTOTUNE_ENABLE",
+      "expected_translation": "启用自动调参",
+      "replacement": "设置自动调参开关",
+      "reason": "同一命令包含启用和禁用，具体轴和可用性由固件决定。"
+    },
+    {
+      "id": 207,
+      "short": "DO_FENCE_ENABLE",
+      "full_name": "MAV_CMD_DO_FENCE_ENABLE",
+      "expected_translation": "启用围栏",
+      "replacement": "设置围栏启用状态",
+      "reason": "既可启用，也可禁用或仅禁用高度下界，不能只写启用。"
+    },
+    {
+      "id": 92,
+      "short": "GUIDED_ENABLE",
+      "full_name": "MAV_CMD_NAV_GUIDED_ENABLE",
+      "expected_translation": "启用引导模式",
+      "replacement": "设置引导控制开关",
+      "reason": "包含移交与结束外部引导控制，不是单向启用。"
+    },
+    {
+      "id": 83,
+      "short": "ALTITUDE_WAIT",
+      "full_name": "MAV_CMD_NAV_ALTITUDE_WAIT",
+      "expected_translation": "等待高度",
+      "replacement": "等待高度或下降速度",
+      "reason": "任一指定高度/下降速度条件可结束等待，用于高空气球等场景，不是普通高度保持。"
+    },
+    {
+      "id": 42702,
+      "short": "SCRIPT_TIME",
+      "full_name": "MAV_CMD_NAV_SCRIPT_TIME",
+      "expected_translation": "定时脚本",
+      "replacement": "脚本任务（等待完成）",
+      "reason": "NAV 脚本任务等待脚本完成或超时，不等同于周期性定时运行脚本。"
+    }
+  ]
+}
