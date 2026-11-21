@@ -1609,7 +1609,7 @@ namespace MissionPlanner.Controls
             // "Pin All" under the configured modes: pins them all to the toolbar
             _pinAllCheck = new CheckBox
             {
-                Text = "Pin All",
+                Text = UiText.Translate("Pin All"),
                 AutoSize = false,
                 Width = RowWidth,
                 Height = 24,
@@ -1778,7 +1778,7 @@ namespace MissionPlanner.Controls
             // the top title gets room from the popup's edge
             return new Label
             {
-                Text = text,
+                Text = UiText.Translate(text),
                 AutoSize = false,
                 Width = RowWidth,
                 Height = 20,
@@ -1810,7 +1810,8 @@ namespace MissionPlanner.Controls
             // Mode name label
             var modeLabel = new Label
             {
-                Text = mode.Value,
+                Text = FlightModeDisplay.EnglishThenChinese(mode.Value),
+                UseMnemonic = false,
                 AutoSize = false,
                 Left = 0,
                 Width = 200,
@@ -1824,6 +1825,13 @@ namespace MissionPlanner.Controls
                 Tag = mode.Value // Keep original for mode setting
             };
 
+            // Preserve the existing horizontal action columns, but make the text row tall
+            // enough for the translated label to wrap rather than hide either language.
+            var textBounds = new Size(modeLabel.Width - modeLabel.Padding.Horizontal, int.MaxValue);
+            var textHeight = TextRenderer.MeasureText(modeLabel.Text, modeLabel.Font, textBounds,
+                TextFormatFlags.WordBreak | TextFormatFlags.NoPrefix).Height;
+            row.Height = modeLabel.Height = Math.Max(row.Height, textHeight + 4);
+
             // Pin button - diamond indicator (pins the mode to the toolbar)
             var pinLabel = new Label
             {
@@ -1831,7 +1839,7 @@ namespace MissionPlanner.Controls
                 AutoSize = false,
                 Left = 208,
                 Width = 28,
-                Height = 28,
+                Height = row.Height,
                 TextAlign = ContentAlignment.MiddleCenter,
                 ForeColor = isPinned ? _greenColor : _grayColor,
                 BackColor = Color.Transparent,
@@ -1890,7 +1898,7 @@ namespace MissionPlanner.Controls
                     AutoSize = false,
                     Left = 236,
                     Width = 28,
-                    Height = 28,
+                    Height = row.Height,
                     TextAlign = ContentAlignment.MiddleCenter,
                     ForeColor = isFavorite ? _goldColor : _grayColor,
                     BackColor = Color.Transparent,
