@@ -8,8 +8,9 @@ permissions:
 jobs:
   windows-waypoint:
     runs-on: windows-2022
-    timeout-minutes: 15
+    timeout-minutes: 25
     env:
+      CI: 'true'
       PRODUCT_SHA: '642cc6213285a3c14802a67d29f6361ca78149ba'
       PRODUCT_TREE: '7de176f46ed863d33f9731eebd47c3bd207d23a6'
       DOTNET_CLI_TELEMETRY_OPTOUT: '1'
@@ -23,7 +24,7 @@ jobs:
         with:
           ref: ${{ env.PRODUCT_SHA }}
           persist-credentials: false
-          submodules: false
+          submodules: true
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
         with:
           python-version: '3.12'
@@ -60,9 +61,41 @@ jobs:
           dotnet run --project MissionPlannerTests/Localization/MissionCommandDropDown/MissionCommandDropDown.csproj -c Release | tee "$RUNNER_TEMP/waypoint-popup.log"
           popup=$(sed -nE 's/^Native dropdown: 24 cases, ([0-9]+) assertions passed\..*$/\1/p' "$RUNNER_TEMP/waypoint-popup.log")
           test "$popup" -ge 14065
+      - name: Build only the exact Windows Release application
+        shell: pwsh
+        run: |
+          ./scripts/localization/build_windows.ps1 -OutputDirectory "$env:RUNNER_TEMP\TitanPlanner-release"
+      - name: Execute all six existing real-planner regressions, no transport
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $build = Join-Path $env:RUNNER_TEMP 'TitanPlanner-release'
+          $result = Join-Path $env:RUNNER_TEMP 'waypoint-constructor-results'
+          New-Item -ItemType Directory -Path $result -Force | Out-Null
+          dotnet test MissionPlannerTests\MissionPlannerTests.csproj -c Release -m:2 `
+            "-p:TitanPlannerOutputDirectory=$($build.TrimEnd('\'))\" `
+            -p:GenerateResourceUsePreserializedResources=true -p:GenerateSerializationAssemblies=Off `
+            --filter 'FullyQualifiedName~MissionPlannerTests.GCSViews.FlightPlannerCommandTranslationTests' `
+            --logger 'trx;LogFileName=waypoint-constructor.trx' --results-directory $result `
+            -- RunConfiguration.TestSessionTimeout=180000
+          if ($LASTEXITCODE -ne 0) { throw "Real-planner regressions failed: $LASTEXITCODE" }
+          [xml]$trx = Get-Content -LiteralPath (Join-Path $result 'waypoint-constructor.trx') -Raw
+          $cases = @($trx.SelectNodes("//*[local-name()='UnitTestResult']"))
+          if ($cases.Count -ne 6) { throw "Expected six executed cases, got $($cases.Count)" }
+          if (@($cases | Where-Object { $_.outcome -ne 'Passed' }).Count -ne 0) { throw 'A case failed or was skipped' }
+          if (@($cases.executionId | Sort-Object -Unique).Count -ne 6) { throw 'Execution identifiers are not unique' }
+          $constructors = @($cases | Where-Object { $_.testName -like '*RealConstructorAndRepeatedCommandRefreshPreserveBindingMembers*' })
+          if ($constructors.Count -ne 3) { throw "Expected all three constructor culture cases, got $($constructors.Count)" }
+          foreach ($method in @('TranslatedCellsPreserveMissionIdsParametersFramesJsonAndMavlinkPayloads', 'ChineseHeadersPreserveMapCoordinatesAltitudeDelayAndNonCoordinateParameters', 'ChineseSelectionRetainsTakeoffLandAndCameraDefaultsAndIgnoresFrameLabels')) {
+            if (@($cases | Where-Object { $_.testName -like "*$method*" }).Count -ne 1) { throw "Missing or duplicate case: $method" }
+          }
+          $cases | ForEach-Object { Write-Output "$($_.outcome): $($_.testName)" }
+          Write-Output "REAL_FLIGHTPLANNER_CASES=$($cases.Count) CONSTRUCTOR_LOCALES=$($constructors.Count) PRODUCT_SHA=$env:PRODUCT_SHA"
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         if: always()
         with:
           name: waypoint-642cc621-windows-logs
-          path: ${{ runner.temp }}/waypoint-*.log
+          path: |
+            ${{ runner.temp }}/waypoint-*.log
+            ${{ runner.temp }}/waypoint-constructor-results/
           if-no-files-found: warn
