@@ -40,9 +40,18 @@ namespace Shortcuts
             return true;
         }
 
+        private static string ExampleText(string original)
+        {
+            if (System.Globalization.CultureInfo.CurrentUICulture.Name != "zh-CN")
+                return original;
+            string key = "Flight Planner sample menu: " + original;
+            string text = UiText.Translate(key);
+            return text == key ? original : text;
+        }
+
         public override bool Loaded()
         {
-            but = new ToolStripMenuItem("Fix mission top/bottom");
+            but = new ToolStripMenuItem(ExampleText("Fix mission top/bottom"));
             but.Click += but_Click;
             ToolStripItemCollection col = Host.FPMenuMap.Items;
             col.Add(but);
@@ -64,10 +73,10 @@ namespace Shortcuts
 
         void but_Click(object sender, EventArgs e)
         {
-            CustomMessageBox.Show("This is a sample plugin\nSee the source in the plugins folder");
+            CustomMessageBox.Show(ExampleText("This is a sample plugin\nSee the source in the plugins folder"));
 
 			string angle = "0";
-            InputBox.Show("Enter Angle", "This will be the heading", ref angle);
+            InputBox.Show(ExampleText("Enter Angle"), ExampleText("This will be the heading"), ref angle);
 		    int angle_in_number = Int32.Parse(angle);
 			
 			Host.InsertWP(0, MAVLink.MAV_CMD.DO_SET_SERVO, 9, angle_in_number, 0, 0, 0, 0, 0);
