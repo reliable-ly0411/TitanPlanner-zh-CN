@@ -41,6 +41,15 @@ namespace mass
             return true;
         }
 
+        private static string MapMenuText(string original)
+        {
+            if (System.Globalization.CultureInfo.CurrentUICulture.Name != "zh-CN")
+                return original;
+            string key = "Flight Data mass menu: " + original;
+            string text = UiText.Translate(key);
+            return text == key ? original : text;
+        }
+
         public override bool Loaded()
         {
             var rootbut = new ToolStripMenuItem(MissionPlanner.Utilities.UiText.Translate("Mass"));
@@ -48,7 +57,7 @@ namespace mass
             ToolStripItemCollection col = Host.FDMenuMap.Items;
             col.Add(rootbut);
 
-            var but = new ToolStripMenuItem("Arm");
+            var but = new ToolStripMenuItem(MapMenuText("Arm"));
             but.Click += (s, e) => {
                 Parallel.ForEach(MainV2.Comports, mav =>
                 {
@@ -61,7 +70,7 @@ namespace mass
             };
             rootbut.DropDownItems.Add(but);
 
-            but = new ToolStripMenuItem("Arm(Force)");
+            but = new ToolStripMenuItem(MapMenuText("Arm(Force)"));
             but.Click += (s, e) => {
                 Parallel.ForEach(MainV2.Comports, mav => {
                     try
@@ -72,7 +81,7 @@ namespace mass
             };
             rootbut.DropDownItems.Add(but);
 
-            but = new ToolStripMenuItem("GUIDED");
+            but = new ToolStripMenuItem(MapMenuText("GUIDED"));
             but.Click += (s, e) => {
                 Parallel.ForEach(MainV2.Comports, mav => {
                     try
@@ -84,7 +93,7 @@ namespace mass
             };
             rootbut.DropDownItems.Add(but);
 
-            but = new ToolStripMenuItem("AUTO");
+            but = new ToolStripMenuItem(MapMenuText("AUTO"));
             but.Click += (s, e) => {
                 Parallel.ForEach(MainV2.Comports, mav => {
                     try
@@ -96,7 +105,7 @@ namespace mass
             };
             rootbut.DropDownItems.Add(but);
 
-            but = new ToolStripMenuItem("TAKEOFF");
+            but = new ToolStripMenuItem(MapMenuText("TAKEOFF"));
             but.Click += (s, e) => {
                 Parallel.ForEach(MainV2.Comports, mav => {
                     try
@@ -108,7 +117,7 @@ namespace mass
             };
             rootbut.DropDownItems.Add(but);
 
-            but = new ToolStripMenuItem("TakeOff (2m)");
+            but = new ToolStripMenuItem(MapMenuText("TakeOff (2m)"));
             but.Click += (s, e) => {
                 Parallel.ForEach(MainV2.Comports, mav => {
                     try
@@ -121,7 +130,7 @@ namespace mass
             };
             rootbut.DropDownItems.Add(but);
 
-            but = new ToolStripMenuItem("Fly To");
+            but = new ToolStripMenuItem(MapMenuText("Fly To"));
             but.Click += (s, e) => {
                 Parallel.ForEach(MainV2.Comports, mav => {
                     try
