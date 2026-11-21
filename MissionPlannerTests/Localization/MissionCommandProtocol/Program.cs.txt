@@ -1,0 +1,84 @@
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Xml.Linq;
+using MissionPlanner.Utilities;
+using Newtonsoft.Json;
+
+// The valid-file parser must never need a UI. Invalid fixtures fail immediately.
+namespace MissionPlanner.Utilities
+{
+    internal static class CustomMessageBox
+    {
+        public static void Show(string message) { throw new InvalidOperationException(message); }
+    }
+}
+
+internal static class MissionCommandProtocolChecks
+{
+    private static int assertions;
+    private static void Equal<T>(T expected, T actual)
+    {
+        assertions++;
+        if (!EqualityComparer<T>.Default.Equals(expected, actual))
+            throw new Exception($"Mission protocol: expected [{expected}], got [{actual}]");
+    }
+
+    private static void SameItem(Locationwp expected, Locationwp actual)
+    {
+        Equal(expected.id, actual.id); Equal(expected.frame, actual.frame);
+        Equal(expected.p1, actual.p1); Equal(expected.p2, actual.p2);
+        Equal(expected.p3, actual.p3); Equal(expected.p4, actual.p4);
+        Equal(expected.lat, actual.lat); Equal(expected.lng, actual.lng); Equal(expected.alt, actual.alt);
+    }
+
+    private static void Main()
+    {
+        var commands = XDocument.Load(Path.Combine(AppContext.BaseDirectory, "mavcmd.xml"))
+            .Root.Elements().SelectMany(firmware => firmware.Elements())
+            .Select(command => command.Name.LocalName).Distinct()
+            .Concat(new[] { "FENCE_RETURN_POINT", "FENCE_POLYGON_VERTEX_INCLUSION",
+                "FENCE_POLYGON_VERTEX_EXCLUSION", "FENCE_CIRCLE_INCLUSION",
+                "FENCE_CIRCLE_EXCLUSION", "RALLY_POINT", "UNKNOWN", "TP_CUSTOM_60000" }).ToArray();
+        var baseline = new Dictionary<string, string[]>();
+        foreach (var language in new[] { "en-US", "zh-CN", "zh-Hans", "zh-CN" })
+        foreach (var numbers in new[] { "en-US", "de-DE" })
+        {
+            CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo(language);
+            CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo(numbers);
+            foreach (var option in MissionCommandDisplay.CreateOptions(commands))
+            foreach (byte frame in new byte[] { 0, 3, 10 })
+            {
+                ushort id = option.Key == "UNKNOWN" ? (ushort)60001 : option.Key == "TP_CUSTOM_60000" ? (ushort)60000
+                    : (ushort)(MAVLink.MAV_CMD)Enum.Parse(typeof(MAVLink.MAV_CMD), option.Key);
+                var item = new Locationwp { id = id, frame = frame, p1 = 1.25f, p2 = -2.5f,
+                    p3 = 3.75f, p4 = -4.5f, lat = 1.125, lng = -2.25, alt = 50.5f };
+                var root = MissionFile.ConvertFromLocationwps(new List<Locationwp> { new Locationwp(), item }, frame);
+                var json = JsonConvert.SerializeObject(root);
+                var reopened = JsonConvert.DeserializeObject<MissionFile.RootObject>(json);
+                SameItem(item, MissionFile.ConvertFromMissionItem(reopened.mission.items.Single()));
+                MAVLink.mavlink_mission_item_t floatPacket = item;
+                MAVLink.mavlink_mission_item_int_t intPacket = item;
+                var output = new[] { json, Convert.ToBase64String(MavlinkUtil.StructureToByteArray(floatPacket)),
+                    Convert.ToBase64String(MavlinkUtil.StructureToByteArray(intPacket)) };
+                var key = option.Key + ":" + frame;
+                if (!baseline.ContainsKey(key)) baseline[key] = output;
+                for (int i = 0; i < output.Length; i++) Equal(baseline[key][i], output[i]);
+            }
+            // Exercise the actual QGC WPL parser with a synthetic, invariant-culture fixture.
+            var path = Path.Combine(Path.GetTempPath(), "mission-display-" + Guid.NewGuid().ToString("N") + ".waypoints");
+            try
+            {
+                File.WriteAllText(path, "QGC WPL 110\n0\t1\t3\t16\t1.25\t-2.5\t3.75\t-4.5\t1.125\t-2.25\t50.5\t1\n");
+                var loaded = WaypointFile.ReadWaypointFile(path).Single();
+                SameItem(new Locationwp { id = 16, frame = 3, p1 = 1.25f, p2 = -2.5f, p3 = 3.75f,
+                    p4 = -4.5f, lat = 1.125, lng = -2.25, alt = 50.5f }, loaded);
+            }
+            finally { File.Delete(path); }
+        }
+        Console.WriteLine($"Mission protocol runtime: {assertions} assertions passed; {commands.Length} keys; " +
+            "JSON and both MAVLink mission payloads identical across UI and numeric cultures; WPL parser preserved values.");
+    }
+}

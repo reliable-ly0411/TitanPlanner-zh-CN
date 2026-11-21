@@ -1,0 +1,78 @@
+using System;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Xml.Linq;
+using MissionPlanner.Utilities;
+
+internal static class MissionCommandChecks
+{
+    internal static int Run()
+    {
+        int assertions = 0;
+        Action<string, string> equal = (expected, actual) =>
+        {
+            assertions++;
+            if (expected != actual)
+                throw new Exception($"Mission display: expected [{expected}], got [{actual}]");
+        };
+        var xml = XDocument.Load(Path.Combine(AppContext.BaseDirectory, "mavcmd.xml"));
+        var commands = xml.Root.Elements().SelectMany(firmware => firmware.Elements())
+            .Select(command => command.Name.LocalName).Distinct()
+            .Concat(new[] { "FENCE_RETURN_POINT", "FENCE_POLYGON_VERTEX_INCLUSION",
+                "FENCE_POLYGON_VERTEX_EXCLUSION", "FENCE_CIRCLE_INCLUSION",
+                "FENCE_CIRCLE_EXCLUSION", "RALLY_POINT", "UNKNOWN" }).ToArray();
+        var headers = xml.Root.Elements().SelectMany(firmware => firmware.Elements())
+            .SelectMany(command => command.Elements()).Select(parameter => parameter.Value).Distinct()
+            .Concat(new[] { "Points", "Radius (m)", "setme" }).ToArray();
+        var previousUi = CultureInfo.CurrentUICulture;
+        var previousNumbers = CultureInfo.CurrentCulture;
+        try
+        {
+            foreach (var numberCulture in new[] { "en-US", "de-DE" })
+            {
+                CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo(numberCulture);
+                foreach (var language in new[] { "zh-CN", "en-US", "zh-Hans", "zh-SG", "zh-CN" })
+                {
+                    CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo(language);
+                    bool enhanced = language == "zh-CN";
+                    var options = MissionCommandDisplay.CreateOptions(commands);
+                    equal(commands.Length.ToString(), options.Count.ToString());
+                    for (int i = 0; i < commands.Length; i++)
+                    {
+                        equal(commands[i], options[i].Key);
+                        var expected = enhanced
+                            ? commands[i] + " (" + UiText.Translate("Mission command: " + commands[i]) + ")"
+                            : commands[i];
+                        equal(expected, options[i].Value);
+                    }
+                    foreach (var header in headers)
+                        equal(enhanced && header != "" ? UiText.Translate("Mission parameter: " + header) : header,
+                            MissionCommandDisplay.ParameterHeader(header));
+                    foreach (var unit in new[] { "m", "ft", "Meters", "Feet", "m/s", "mph", "knots" })
+                        equal((enhanced ? "高度" : "Alt") + " (" + unit + ")",
+                            MissionCommandDisplay.ParameterHeader("Alt (" + unit + ")"));
+                    equal(enhanced ? "WAYPOINT (航点)" : "WAYPOINT", MissionCommandDisplay.CommandName("WAYPOINT"));
+                    equal(enhanced ? "类型 (0=空速 1=地速)" : "Type (0=as 1=gs)",
+                        MissionCommandDisplay.ParameterHeader("Type (0=as 1=gs)"));
+                    equal(enhanced ? "模式 (3=多旋翼/4=固定翼)" : "mode (3=mc/4=plane)",
+                        MissionCommandDisplay.ParameterHeader("mode (3=mc/4=plane)"));
+                    equal("TP_CUSTOM_60000", MissionCommandDisplay.CommandName("TP_CUSTOM_60000"));
+                    equal("waypoint", MissionCommandDisplay.CommandName("waypoint"));
+                    equal("Custom label (custom unit)", MissionCommandDisplay.ParameterHeader("Custom label (custom unit)"));
+                    equal("", MissionCommandDisplay.ParameterHeader(""));
+                    equal(null, MissionCommandDisplay.ParameterHeader(null));
+                    equal(null, MissionCommandDisplay.CommandName(null));
+                    equal(numberCulture, CultureInfo.CurrentCulture.Name);
+                }
+            }
+        }
+        finally
+        {
+            CultureInfo.CurrentUICulture = previousUi;
+            CultureInfo.CurrentCulture = previousNumbers;
+        }
+        Console.WriteLine($"Mission display runtime: {assertions} assertions passed; {commands.Length} command keys.");
+        return assertions;
+    }
+}

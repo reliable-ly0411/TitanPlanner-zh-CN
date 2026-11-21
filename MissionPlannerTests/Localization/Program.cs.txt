@@ -73,6 +73,7 @@ internal static class Program
             Equal(entry.Value, UiText.Translate(entry.Key));
         Equal("暂停", UiText.Translate("Pause"));
         Equal("播放", UiText.Translate("Play"));
+        assertions += MissionCommandChecks.Run();
         Console.WriteLine($"Localization runtime: {assertions} assertions passed.");
     }
 }

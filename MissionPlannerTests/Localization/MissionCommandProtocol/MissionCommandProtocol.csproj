@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>MissionPlanner.Utilities</RootNamespace>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <EnableDefaultEmbeddedResourceItems>false</EnableDefaultEmbeddedResourceItems>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs.txt" Link="Program.cs" />
+    <Compile Include="../../../ExtLibs/Utilities/UiText.cs" Link="UiText.cs" />
+    <Compile Include="../../../ExtLibs/Utilities/Mission/MissionCommandDisplay.cs" Link="MissionCommandDisplay.cs" />
+    <Compile Include="../../../ExtLibs/Utilities/locationwp.cs" Link="locationwp.cs" />
+    <Compile Include="../../../ExtLibs/Utilities/MissionFile.cs" Link="MissionFile.cs" />
+    <Compile Include="../../../ExtLibs/Mavlink/Mavlink.cs" Link="Mavlink.cs" />
+    <Compile Include="../../../ExtLibs/Mavlink/MavlinkParse.cs" Link="MavlinkParse.cs" />
+    <Compile Include="../../../ExtLibs/Mavlink/MavlinkCRC.cs" Link="MavlinkCRC.cs" />
+    <Compile Include="../../../ExtLibs/Mavlink/MavlinkUtil.cs" Link="MavlinkUtil.cs" />
+    <Compile Include="../../../ExtLibs/Mavlink/MavlinkHeader.cs" Link="MavlinkHeader.cs" />
+    <Compile Include="../../../ExtLibs/Mavlink/MAVLinkMessage.cs" Link="MAVLinkMessage.cs" />
+    <EmbeddedResource Include="../../../ExtLibs/Utilities/Resources/UiText.resx" Link="Resources/UiText.resx" />
+    <EmbeddedResource Include="../../../ExtLibs/Utilities/Resources/UiText.zh-CN.resx" Link="Resources/UiText.zh-CN.resx" />
+    <EmbeddedResource Include="../../../ExtLibs/Utilities/Resources/UiText.zh-Hans.resx" Link="Resources/UiText.zh-Hans.resx" />
+    <Content Include="../../../mavcmd.xml" Link="mavcmd.xml" CopyToOutputDirectory="PreserveNewest" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="log4net" Version="3.3.2" />
+  </ItemGroup>
+</Project>
