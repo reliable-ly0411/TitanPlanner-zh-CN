@@ -1,0 +1,68 @@
+name: Isolated Windows waypoint checks for PR 33
+on:
+  push:
+    branches: [ci/waypoint-exact-642cc621-windows]
+    paths: [.github/workflows/waypoint-exact-642cc621-windows.yml]
+permissions:
+  contents: read
+jobs:
+  windows-waypoint:
+    runs-on: windows-2022
+    timeout-minutes: 15
+    env:
+      PRODUCT_SHA: '642cc6213285a3c14802a67d29f6361ca78149ba'
+      PRODUCT_TREE: '7de176f46ed863d33f9731eebd47c3bd207d23a6'
+      DOTNET_CLI_TELEMETRY_OPTOUT: '1'
+      PYTHONDONTWRITEBYTECODE: '1'
+      PYTHONUTF8: '1'
+      GIT_CONFIG_COUNT: '1'
+      GIT_CONFIG_KEY_0: core.autocrlf
+      GIT_CONFIG_VALUE_0: 'false'
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ env.PRODUCT_SHA }}
+          persist-credentials: false
+          submodules: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68
+        with:
+          dotnet-version: '8.0.x'
+      - name: Verify exact product and unchanged regenerated resources
+        shell: bash
+        run: |
+          set -euo pipefail
+          git log -1 --format='%H %T'
+          test "$(git rev-parse HEAD)" = "$PRODUCT_SHA"
+          test "$(git rev-parse 'HEAD^{tree}')" = "$PRODUCT_TREE"
+          test "$(git hash-object --no-filters localization/zh-Hans/code-translations.json)" = 26af770ed3097125a4e2fafa753d2fb38c542445
+          test "$(git hash-object --no-filters ExtLibs/Utilities/Resources/UiText.zh-CN.resx)" = 99ea6cee454c91df62917c4bb31f6fd8dd45b3d3
+          test "$(git hash-object --no-filters mavcmd.xml)" = e88d531e0cbcd4619735c3a30b85967fda00b710
+          test -z "$(git status --porcelain)"
+          python scripts/localization/merge_mission_command_additions.py --apply
+          test -z "$(git status --porcelain)"
+      - name: Run bilingual display and synthetic mission JSON, MAVLink and WPL
+        shell: bash
+        run: |
+          set -euo pipefail
+          dotnet run --project MissionPlannerTests/Localization/Localization.csproj -c Release | tee "$RUNNER_TEMP/waypoint-display.log"
+          display=$(sed -nE 's/^Mission display runtime: ([0-9]+) assertions passed; 70 command keys\.[[:space:]]*$/\1/p' "$RUNNER_TEMP/waypoint-display.log")
+          test "$display" -ge 2680
+          dotnet run --project MissionPlannerTests/Localization/MissionCommandProtocol/MissionCommandProtocol.csproj -c Release | tee "$RUNNER_TEMP/waypoint-protocol.log"
+          protocol=$(sed -nE 's/^Mission protocol runtime: ([0-9]+) assertions passed; 71 keys; JSON and both MAVLink mission payloads identical across UI and numeric cultures; WPL parser preserved values\.[[:space:]]*$/\1/p' "$RUNNER_TEMP/waypoint-protocol.log")
+          test "$protocol" -ge 20520
+      - name: Run all 24 native WinForms waypoint dropdown cases
+        shell: bash
+        run: |
+          set -euo pipefail
+          dotnet run --project MissionPlannerTests/Localization/MissionCommandDropDown/MissionCommandDropDown.csproj -c Release | tee "$RUNNER_TEMP/waypoint-popup.log"
+          popup=$(sed -nE 's/^Native dropdown: 24 cases, ([0-9]+) assertions passed\..*$/\1/p' "$RUNNER_TEMP/waypoint-popup.log")
+          test "$popup" -ge 14065
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        if: always()
+        with:
+          name: waypoint-642cc621-windows-logs
+          path: ${{ runner.temp }}/waypoint-*.log
+          if-no-files-found: warn
