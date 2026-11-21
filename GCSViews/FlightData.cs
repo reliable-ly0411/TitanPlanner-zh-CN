@@ -2386,8 +2386,15 @@ namespace MissionPlanner.GCSViews
             {
                  try
                 {
-                    //p1 and p2 must be 1 to initate SD card format
-                    MainV2.comPort.doCommandInt(MainV2.comPort.MAV.sysid, MainV2.comPort.MAV.compid, MAVLink.MAV_CMD.STORAGE_FORMAT, 1, 1, 0, 0, 0, 0, 0);
+                    StorageFormatConfirmation.Execute(
+                        () => MissionPlanner.MsgBox.CustomMessageBox.ShowDestructiveConfirmation(
+                            UiText.Translate("Formatting the flight controller SD card will delete all data on the card. Continue?"),
+                            UiText.Translate("Format SD card")),
+                        () =>
+                        {
+                            // p1 and p2 must be 1 to initiate SD card format.
+                            MainV2.comPort.doCommandInt(MainV2.comPort.MAV.sysid, MainV2.comPort.MAV.compid, MAVLink.MAV_CMD.STORAGE_FORMAT, 1, 1, 0, 0, 0, 0, 0);
+                        });
                     return;
                 }
                 catch

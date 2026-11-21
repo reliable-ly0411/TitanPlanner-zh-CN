@@ -1445,5 +1445,7 @@
   "Comparing this build with the releases...": "正在比较当前构建与发布版本…",
   "Couldn't compare this build with the releases.": "无法比较当前构建与发布版本。",
   "Running Chinese fork {0}. Check this fork’s Releases for updates.": "正在运行中文分支 {0}。请到本分支发布页面检查更新。",
-  "Keyboard Shortcuts": "键盘快捷键"
+  "Keyboard Shortcuts": "键盘快捷键",
+  "Formatting the flight controller SD card will delete all data on the card. Continue?": "格式化飞控 SD 卡将删除卡内全部数据。是否继续？",
+  "Format SD card": "格式化 SD 卡"
 }

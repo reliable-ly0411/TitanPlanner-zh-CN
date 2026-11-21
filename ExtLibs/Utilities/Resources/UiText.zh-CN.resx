@@ -3447,9 +3447,17 @@ Ctrl+O 从文件加载</value>
     <value>格式</value>
     <comment>"Format"</comment>
   </data>
+  <data name="18c0d876889ee347d4a8d83fe7db3168e476546f9e3a6de13b4dd2cef547f1e9" xml:space="preserve">
+    <value>格式化 SD 卡</value>
+    <comment>"Format SD card"</comment>
+  </data>
   <data name="26cf152fceea79fa1c95718f1361157c4f7e7d574f04171060e93daf60ad84e3" xml:space="preserve">
     <value>格式说明符，例如 "0.00" 或 "m:ss"</value>
     <comment>"Format specifier, e.g. \"0.00\" or \"m:ss\""</comment>
+  </data>
+  <data name="31abc10b59f52f4db653e0e92f56e633d5292d7a8cbda438dbc7066b74ae7e2f" xml:space="preserve">
+    <value>格式化飞控 SD 卡将删除卡内全部数据。是否继续？</value>
+    <comment>"Formatting the flight controller SD card will delete all data on the card. Continue?"</comment>
   </data>
   <data name="8959b7d1b1417f31d6bebfe3ec32e522107fca93ae599c39200c8cb2165b1fdd" xml:space="preserve">
     <value>转发器错误 </value>
