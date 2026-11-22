@@ -592,7 +592,7 @@ namespace MissionPlanner.GCSViews
                 StartSITL(await exepath, "+",
                     BuildHomeLocation(markeroverlay.Markers[0].Position, (int) NUM_heading.Value,
                         await HomeAltitudeAsync(markeroverlay.Markers[0].Position)), "",
-                    (int) num_simspeed.Value);
+                    (int) num_simspeed.Value, isCopter: true);
             }
             catch (Exception ex)
             {
@@ -867,7 +867,7 @@ namespace MissionPlanner.GCSViews
             return sitldirectory + Path.GetFileNameWithoutExtension(filename) + ".exe";
         }
 
-        private async Task<string> GetDefaultConfig(string model)
+        private async Task<string> GetLegacyDefaultConfig(string model)
         {
             if (await Download.getFilefromNetAsync(
                     "https://raw.githubusercontent.com/ArduPilot/ardupilot/master/Tools/autotest/sim_vehicle.py",
@@ -888,6 +888,27 @@ namespace MissionPlanner.GCSViews
                 }
             }
 
+            return "";
+        }
+
+        // The menu uses a lower-case x; the ArduCopter catalog key is case-sensitive.
+        // Do not normalize the simulator token or the per-model state directory.
+        internal static string SitlCopterCatalogKey(string model, bool isCopter)
+        {
+            return isCopter && model == "x" ? "X" : model;
+        }
+
+        private async Task<string> GetDefaultConfig(string model, bool isCopter = false)
+        {
+            var catalogKey = SitlCopterCatalogKey(model, isCopter);
+            var preferCopterCatalog = catalogKey != model;
+            if (!preferCopterCatalog)
+            {
+                var legacyConfig = await GetLegacyDefaultConfig(model).ConfigureAwait(false);
+                if (!string.IsNullOrEmpty(legacyConfig))
+                    return legacyConfig;
+            }
+
             if (await Download.getFilefromNetAsync(
                     "https://firmware.ardupilot.org/Tools/MissionPlanner/vehicleinfo.py",
                     sitldirectory + "vehicleinfo.py").ConfigureAwait(false) || File.Exists(sitldirectory + "vehicleinfo.py"))
@@ -903,21 +924,24 @@ namespace MissionPlanner.GCSViews
                         var obj = (JObject) serializer.Deserialize(reader);
 
                         if (obj == null)
-                            return "";
+                            return preferCopterCatalog ? await GetLegacyDefaultConfig(model).ConfigureAwait(false) : "";
 
                         foreach (var fwtype in obj)
                         {
                             var frames = fwtype.Value["frames"];
 
-                            if (frames == null)
+                            if (frames == null || (preferCopterCatalog && fwtype.Key != "ArduCopter"))
                                 continue;
 
-                            var config = frames[model];
+                            var config = frames[catalogKey];
 
                             if (config == null)
                                 continue;
 
                             var configs = config["default_params_filename"];
+
+                            if (preferCopterCatalog && configs == null)
+                                break;
 
                             if (configs is JValue)
                             {
@@ -961,7 +985,7 @@ namespace MissionPlanner.GCSViews
                     Console.WriteLine(ex.ToString());
                 }
             }
-            return "";
+            return preferCopterCatalog ? await GetLegacyDefaultConfig(model).ConfigureAwait(false) : "";
         }
 
         void cleanupJson(string filename)
@@ -1013,7 +1037,7 @@ namespace MissionPlanner.GCSViews
             return "";
         }
 
-        private async void StartSITL(string exepath, string model, string homelocation, string extraargs = "", int speedup = 1)
+        private async void StartSITL(string exepath, string model, string homelocation, string extraargs = "", int speedup = 1, bool isCopter = false)
         {
 
             //If we got null, it means that the verison selection box was canceled.
@@ -1051,7 +1075,7 @@ namespace MissionPlanner.GCSViews
             if (cmb_model.Text != "")
                 model = cmb_model.Text;
 
-            var config = await GetDefaultConfig(model);
+            var config = await GetDefaultConfig(model, isCopter);
 
             if (!string.IsNullOrEmpty(config))
                 extraargs += @" --defaults """ + config + @"""";
