@@ -1237,6 +1237,35 @@ namespace MissionPlanner
         [DisplayText("Mode")]
         public string mode { get; set; }
 
+        private string _reportedArduSubMode;
+        public string ModeDisplayText => _reportedArduSubMode ?? mode;
+
+        // Presentation only. Exact ArduPilot c69185e3: ArduSub/mode.h Number and name().
+        // Do not populate Common.getModesList: that list is also used to send mode changes.
+        private static string ArduSubHeartbeatModeName(MAVLink.mavlink_heartbeat_t heartbeat)
+        {
+            if (heartbeat.type != (byte)MAVLink.MAV_TYPE.SUBMARINE ||
+                heartbeat.autopilot != (byte)MAVLink.MAV_AUTOPILOT.ARDUPILOTMEGA ||
+                (heartbeat.base_mode & (byte)MAVLink.MAV_MODE_FLAG.CUSTOM_MODE_ENABLED) == 0)
+                return null;
+
+            switch (heartbeat.custom_mode)
+            {
+                case 0: return "Stabilize";
+                case 1: return "Acro";
+                case 2: return "Depth Hold";
+                case 3: return "Auto";
+                case 4: return "Guided";
+                case 7: return "Circle";
+                case 9: return "Surface";
+                case 16: return "Position Hold";
+                case 19: return "Manual";
+                case 20: return "Motor Detection";
+                case 21: return "Surftrak";
+                default: return null;
+            }
+        }
+
         [DisplayFieldName("climbrate.Field")]
         [DisplayText("ClimbRate (speed)")]
         [GroupText("Position")]
@@ -3042,6 +3071,8 @@ namespace MissionPlanner
 
                                 var oldmode = mode;
 
+                                _reportedArduSubMode = ArduSubHeartbeatModeName(hb);
+
                                 if ((hb.base_mode & (byte)MAVLink.MAV_MODE_FLAG.CUSTOM_MODE_ENABLED) != 0)
                                     // prevent running thsi unless we have to
                                     if (_mode != hb.custom_mode)
@@ -4542,6 +4573,7 @@ namespace MissionPlanner
             {
                 mode = "Unknown";
                 _mode = 99999;
+                _reportedArduSubMode = null;
                 messages = new List<(DateTime time, string message, byte severity)>();
                 useLocation = false;
                 rateattitude = rateattitudebackup;

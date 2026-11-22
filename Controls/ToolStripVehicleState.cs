@@ -26,6 +26,7 @@ namespace MissionPlanner.Controls
         private Label _gpsDopLabel;
         private GpsStatusPopup _gpsPopup;
         private string _lastMode = "";
+        private string _lastModeDisplayText = "";
         private bool _lastArmedState = false;
         private bool _lastConnectionState = false;
         private float _lastSatCount = -1;
@@ -1008,18 +1009,20 @@ namespace MissionPlanner.Controls
 
                     // Update mode
                     string currentMode = cs?.mode ?? "---";
+                    string modeDisplayText = cs?.ModeDisplayText ?? currentMode;
 
-                    if (currentMode != _lastMode)
+                    if (currentMode != _lastMode || modeDisplayText != _lastModeDisplayText)
                     {
                         _lastMode = currentMode;
+                        _lastModeDisplayText = modeDisplayText;
 
                         if (_modeDropdown.InvokeRequired)
                         {
-                            _modeDropdown.BeginInvoke((Action)(() => UpdateModeDisplay(currentMode)));
+                            _modeDropdown.BeginInvoke((Action)(() => UpdateModeDisplay(currentMode, modeDisplayText)));
                         }
                         else
                         {
-                            UpdateModeDisplay(currentMode);
+                            UpdateModeDisplay(currentMode, modeDisplayText);
                         }
                     }
 
@@ -1118,6 +1121,7 @@ namespace MissionPlanner.Controls
             {
                 // Reset state when disconnected
                 _lastMode = "";
+                _lastModeDisplayText = "";
                 _lastArmedState = false;
                 _lastSatCount = -1;
                 _lastGpsStatus = -1;
@@ -1137,9 +1141,9 @@ namespace MissionPlanner.Controls
             }
         }
 
-        private void UpdateModeDisplay(string mode)
+        private void UpdateModeDisplay(string mode, string displayText)
         {
-            _modeDropdown.Text = string.IsNullOrEmpty(mode) ? "---" : mode;
+            _modeDropdown.Text = string.IsNullOrEmpty(displayText) ? "---" : displayText;
             _modeDropdown.CurrentMode = mode; // Keep original for comparison
             _modeDropdown.RefreshPopupIfOpen();
             UpdateContainerWidth();
