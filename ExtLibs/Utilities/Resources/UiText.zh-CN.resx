@@ -5675,6 +5675,18 @@ Ctrl+O 从文件加载</value>
     <value>切换地图失败，请先尝试缩小地图。</value>
     <comment>"Map change failed. try zooming out first."</comment>
   </data>
+  <data name="90dc247f3962bc757ddfa1ee62b76f55c0c4dce60364458041e071e7d4a93ecb" xml:space="preserve">
+    <value>经纬度</value>
+    <comment>"Map coordinates: GEO"</comment>
+  </data>
+  <data name="33af0db8840eff4757cac365b4d575472cdba2af15dac3ac7d724c2e261ed431" xml:space="preserve">
+    <value>军用格网坐标</value>
+    <comment>"Map coordinates: MGRS"</comment>
+  </data>
+  <data name="b904f7586edf5812a6ce7aa6dc35e1bf49e639b75e4caddecf05f6216d82237b" xml:space="preserve">
+    <value>通用横轴墨卡托</value>
+    <comment>"Map coordinates: UTM"</comment>
+  </data>
   <data name="65fa3ade0b55f8af7268529c5164be8b054cb86bc34e5aec9da8f1b71786946e" xml:space="preserve">
     <value>当前航向</value>
     <comment>"Map legend: Current Heading"</comment>

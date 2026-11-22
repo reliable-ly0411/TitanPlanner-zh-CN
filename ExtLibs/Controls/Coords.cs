@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using GeoUtility.GeoSystem;
+using System.Globalization;
+using MissionPlanner.Utilities;
 
 namespace MissionPlanner.Controls
 {
@@ -88,7 +90,79 @@ namespace MissionPlanner.Controls
             InitializeComponent();
             this.DoubleBuffered = true;
             CMB_coordsystem.DataSource = Enum.GetNames(typeof(CoordsSystems));
+            if (CultureInfo.CurrentUICulture.Name == "zh-CN")
+                ConfigureCoordinateHelp();
             AltSource = "";
+        }
+
+        private static string CoordinateMenuLabel(string raw)
+        {
+            if (CultureInfo.CurrentUICulture.Name != "zh-CN" ||
+                (raw != "GEO" && raw != "UTM" && raw != "MGRS"))
+                return raw;
+
+            var key = "Map coordinates: " + raw;
+            var local = UiText.Translate(key);
+            return local == key ? raw : raw + " · " + local;
+        }
+
+        private void ConfigureCoordinateHelp()
+        {
+            if (components == null)
+                components = new Container();
+            var help = new ToolTip(components);
+            var combo = CMB_coordsystem;
+            // WinForms forwards mouse movement from the native edit child to this ComboBox.
+            // Present one delayed hint for both the edit field and the arrow, without owner draw.
+            var hover = new Timer(components) { Interval = 400 };
+            bool shown = false;
+            bool disposed = false;
+            hover.Disposed += (sender, e) => disposed = true;
+            Func<bool> canShow = () => !disposed && combo.IsHandleCreated && combo.Visible &&
+                !combo.DroppedDown && Form.ActiveForm != null && combo.FindForm() == Form.ActiveForm &&
+                combo.ClientRectangle.Contains(combo.PointToClient(Cursor.Position));
+            Action cancel = () =>
+            {
+                if (disposed)
+                    return;
+                hover.Stop();
+                if (shown && combo.IsHandleCreated && !combo.IsDisposed && !combo.Disposing)
+                    help.Hide(combo);
+                shown = false;
+            };
+            Action arm = () =>
+            {
+                if (canShow() && !hover.Enabled && !shown &&
+                    CoordinateMenuLabel(combo.Text) != combo.Text)
+                    hover.Start();
+            };
+            hover.Tick += (sender, e) =>
+            {
+                hover.Stop();
+                if (!canShow())
+                    return;
+                string raw = combo.Text;
+                string text = CoordinateMenuLabel(raw);
+                if (text == raw)
+                    return;
+                help.Show(text, combo, new Point(0, combo.ClientSize.Height), 4000);
+                shown = true;
+            };
+            combo.MouseMove += (sender, e) => arm();
+            combo.MouseLeave += (sender, e) =>
+            {
+                if (!canShow())
+                    cancel();
+            };
+            combo.TextChanged += (sender, e) => { cancel(); arm(); };
+            combo.DropDown += (sender, e) => cancel();
+            combo.KeyDown += (sender, e) => cancel();
+            combo.VisibleChanged += (sender, e) =>
+            {
+                if (!combo.Visible)
+                    cancel();
+            };
+            combo.HandleDestroyed += (sender, e) => cancel();
         }
 
         protected override void OnPaint(PaintEventArgs e)
