@@ -1,6 +1,7 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
+using MissionPlanner.Utilities;
 
 namespace MissionPlanner.Controls
 {
@@ -87,9 +88,19 @@ namespace MissionPlanner.Controls
             g.SmoothingMode = smoothing;
         }
 
+        private static string Localize(string original)
+        {
+            if (System.Globalization.CultureInfo.CurrentUICulture.Name != "zh-CN")
+                return original;
+            string key = "Map legend: " + original;
+            string text = UiText.Translate(key);
+            return text == key ? original : text;
+        }
+
         void DrawLegend(Graphics g, Rectangle button)
         {
-            float textWidth = Entries.Max(e => g.MeasureString(e.Text, LegendFont).Width);
+            var labels = Entries.Select(e => (Text: Localize(e.Text), Color: e.Color)).ToArray();
+            float textWidth = labels.Max(e => g.MeasureString(e.Text, LegendFont).Width);
             float width = Pad + SwatchWidth + 8 + textWidth + Pad;
             float height = 2 * Pad + Entries.Length * RowHeight - 4;
             var panel = new RectangleF(button.Right - width, button.Top - Gap - height, width, height);
@@ -106,7 +117,7 @@ namespace MissionPlanner.Controls
             float y = panel.Top + Pad - 2;
             using (var text = new SolidBrush(Color.FromArgb(232, 236, 241)))
             {
-                foreach (var entry in Entries)
+                foreach (var entry in labels)
                 {
                     float mid = y + RowHeight / 2f;
 

@@ -2186,5 +2186,11 @@
   "Mission command: MAV_CMD_NAV_RALLY_POINT": "集结点",
   "Mission command: MAV_CMD_DO_WINCH": "控制绞盘",
   "Mission command: MAV_CMD_NAV_SCRIPT_TIME": "脚本任务（等待完成）",
-  "Mission command: MAV_CMD_NAV_ATTITUDE_TIME": "定时姿态"
+  "Mission command: MAV_CMD_NAV_ATTITUDE_TIME": "定时姿态",
+  "Map legend: Current Heading": "当前航向",
+  "Map legend: Direction to WP": "航点方位",
+  "Map legend: Target Heading": "目标航向",
+  "Map legend: Ground Track": "地面航迹",
+  "Map altitude scale: Rel to Terrain": "相对地形高度",
+  "Map altitude scale: Elevation (AMSL)": "海拔高度（AMSL）"
 }

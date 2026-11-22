@@ -5663,9 +5663,33 @@ Ctrl+O 从文件加载</value>
     <value>地图缩放：</value>
     <comment>"Map Zoom:"</comment>
   </data>
+  <data name="d1ff6ec133967786e030885525bc9dcdaaec6b7cd5f5156067e233673640b3f6" xml:space="preserve">
+    <value>海拔高度（AMSL）</value>
+    <comment>"Map altitude scale: Elevation (AMSL)"</comment>
+  </data>
+  <data name="790ef932cd366b11a39cdc37c434aac2a63f6dfdf570d6339a15f6792fdafbf2" xml:space="preserve">
+    <value>相对地形高度</value>
+    <comment>"Map altitude scale: Rel to Terrain"</comment>
+  </data>
   <data name="efe5efb2659df7e01621568e5b6cb0de3ab9663618ccca21f01b839748ff476a" xml:space="preserve">
     <value>切换地图失败，请先尝试缩小地图。</value>
     <comment>"Map change failed. try zooming out first."</comment>
+  </data>
+  <data name="65fa3ade0b55f8af7268529c5164be8b054cb86bc34e5aec9da8f1b71786946e" xml:space="preserve">
+    <value>当前航向</value>
+    <comment>"Map legend: Current Heading"</comment>
+  </data>
+  <data name="cc86d39da87468a58391bb9be4cc4c0d94120e8ce48f95f6cccadb017cd9d16d" xml:space="preserve">
+    <value>航点方位</value>
+    <comment>"Map legend: Direction to WP"</comment>
+  </data>
+  <data name="9312cc30188bd459e1abdd82055edb6ec3eb9e1c713a6b06913dd2b1a70e626f" xml:space="preserve">
+    <value>地面航迹</value>
+    <comment>"Map legend: Ground Track"</comment>
+  </data>
+  <data name="718c775ea8254d2f7520dd8167f2f4e07290d5e2b9f1c546372c23873272a638" xml:space="preserve">
+    <value>目标航向</value>
+    <comment>"Map legend: Target Heading"</comment>
   </data>
   <data name="ccb083afb8a59e634641773acef42aa9b8a6a097a526805d2bbb5a76a58cc081" xml:space="preserve">
     <value>地图来源</value>
