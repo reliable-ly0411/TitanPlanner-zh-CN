@@ -1,0 +1,147 @@
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Windows.Forms;
+
+internal static class ParameterTableProbe
+{
+    static int assertions;
+    static void Check(bool ok, string message) { assertions++; if (!ok) throw new Exception(message); }
+    static object Property(object value, string name) { return value.GetType().GetProperty(name).GetValue(value, null); }
+    static byte[] Resource(Assembly assembly, string name)
+    {
+        using (var input = assembly.GetManifestResourceStream("MissionPlanner.Utilities.ParameterDescriptions." + name + ".xml"))
+        using (var output = new MemoryStream()) { Check(input != null, "embedded resource: " + name); input.CopyTo(output); return output.ToArray(); }
+    }
+    static void CheckStockLocale(Type viewType, string locale)
+    {
+        CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo(locale);
+        var fields = BindingFlags.Static | BindingFlags.NonPublic;
+        var flags = BindingFlags.Instance | BindingFlags.NonPublic;
+        object catalog = viewType.GetField("DescriptionCatalog", fields).GetValue(null);
+        object store = viewType.GetField("DescriptionStore", fields).GetValue(null);
+        Check(!(bool)Property(catalog, "IsValueCreated") && !(bool)Property(store, "IsValueCreated"),
+            locale + ": enhanced resources started cold");
+        using (var view = (Control)Activator.CreateInstance(viewType))
+        {
+            viewType.GetMethod("PrepareParameterDescriptions", flags).Invoke(view, new object[0]);
+            Check(viewType.GetField("_descriptionSession", flags).GetValue(view) == null, locale + ": stock view has no enhanced session");
+            var column = (DataGridViewColumn)viewType.GetField("Desc", flags).GetValue(view);
+            Check(!column.HeaderText.Contains("双击展开") && !column.HeaderText.Contains("double-click to expand"),
+                locale + ": stock description header unchanged");
+            var original = new List<KeyValuePair<int, string>> { new KeyValuePair<int, string>(-1, "Stock Choice") };
+            var options = viewType.GetMethod("BilingualParameterOptions", flags).Invoke(view, new object[] { "Q_RTL_MODE", original });
+            Check(Object.ReferenceEquals(original, options), locale + ": original list and numeric keys retained");
+            Check(!((bool)viewType.GetMethod("MatchesParameterDescription", flags).Invoke(view,
+                new object[] { "WP_RADIUS", new System.Text.RegularExpressions.Regex("航点") })),
+                locale + ": no invisible translated search label");
+        }
+        Check(!(bool)Property(catalog, "IsValueCreated") && !(bool)Property(store, "IsValueCreated"),
+            locale + ": stock view did not open enhanced resources or create exact-version store");
+    }
+
+    [STAThread]
+    static int Main(string[] args)
+    {
+        try
+        {
+            Check(Environment.GetEnvironmentVariable("CI") == "true" || System.Diagnostics.Process.GetCurrentProcess().SessionId == 0,
+                "Run the UI probe in an isolated test session, not on the active desktop.");
+            var root = Path.GetFullPath(args[0]); var results = Path.GetFullPath(args[1]); Directory.CreateDirectory(results);
+            AppDomain.CurrentDomain.AssemblyResolve += delegate(object sender, ResolveEventArgs e)
+            {
+                var path = Path.Combine(root, new AssemblyName(e.Name).Name + ".dll"); return File.Exists(path) ? Assembly.LoadFrom(path) : null;
+            };
+            CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+            CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo("zh-CN");
+            Application.EnableVisualStyles();
+            var utils = Assembly.LoadFrom(Path.Combine(root, "MissionPlanner.Utilities.dll"));
+            utils.GetType("MissionPlanner.Utilities.Settings").GetField("CustomUserDataDirectory").SetValue(null, Path.Combine(results, "isolated-profile"));
+            var contextType = utils.GetType("MissionPlanner.Utilities.ParameterDescriptionContext", true);
+            var context = contextType.GetMethod("TryCreate").Invoke(null, new object[] { "ArduPlane", "ArduPlane V4.6.3", new Version(4, 6, 3, 255) });
+            var storeType = utils.GetType("MissionPlanner.Utilities.ParameterDescriptionStore", true);
+            var store = Activator.CreateInstance(storeType, new object[] { Path.Combine(results, "unused-cache"), Resource(utils, "official"), null, null });
+            var snapshot = storeType.GetMethod("Bundled").Invoke(store, new object[] { context });
+            var catalogType = utils.GetType("MissionPlanner.Utilities.ParameterDescriptionCatalog", true);
+            var catalog = Activator.CreateInstance(catalogType, new object[] { Resource(utils, "zh-CN") });
+            var text = catalogType.GetMethod("Present").Invoke(catalog, new object[] { snapshot, "WP_RADIUS", true });
+            var english = (string)Property(snapshot.GetType().GetMethod("Find").Invoke(snapshot, new object[] { "WP_RADIUS" }), "English");
+            var main = Assembly.LoadFrom(Path.Combine(root, "MissionPlanner.exe"));
+            var viewType = main.GetType("MissionPlanner.GCSViews.ConfigurationView.ConfigRawParams", true);
+            foreach (var locale in new[] { "en-US", "zh-Hans", "zh-TW", "zh-SG", "ja-JP" })
+                CheckStockLocale(viewType, locale);
+            CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo("zh-CN");
+            using (var form = new Form()) using (var view = (Control)Activator.CreateInstance(viewType))
+            {
+                var flags = BindingFlags.Instance | BindingFlags.NonPublic;
+                var grid = (DataGridView)viewType.GetField("Params", flags).GetValue(view);
+                // These fixtures never activate a link, enter an editor or run the application's write handlers.
+                grid.RowEnter -= (DataGridViewCellEventHandler)Delegate.CreateDelegate(typeof(DataGridViewCellEventHandler), view, viewType.GetMethod("Params_RowEnter", flags));
+                grid.CellValueChanged -= (DataGridViewCellEventHandler)Delegate.CreateDelegate(typeof(DataGridViewCellEventHandler), view, viewType.GetMethod("Params_CellValueChanged", flags));
+                form.AutoScaleMode = AutoScaleMode.None; view.Dock = DockStyle.Fill; form.Controls.Add(view); form.ClientSize = new Size(1024, 740); form.Show();
+                grid.Rows.Clear();
+                foreach (var name in new[] { "WP_RADIUS", "NOT_TRANSLATED" })
+                {
+                    int index = grid.Rows.Add(); var row = grid.Rows[index];
+                    foreach (DataGridViewCell cell in row.Cells) cell.Value = cell.OwningColumn.Name == "Fav" ? (object)false : "";
+                    row.Cells["Command"].Value = name; row.Cells["Value"].Value = "123.5"; row.Cells["Default_value"].Value = "NaN";
+                }
+                var sessionType = viewType.GetNestedType("DescriptionSession", BindingFlags.NonPublic);
+                var session = Activator.CreateInstance(sessionType, true);
+                sessionType.GetField("Context", flags).SetValue(session, context);
+                sessionType.GetField("Snapshot", flags).SetValue(session, snapshot);
+                sessionType.GetField("Chinese", flags).SetValue(session, true);
+                viewType.GetField("_descriptionSession", flags).SetValue(view, session);
+                var filter = viewType.GetMethod("filterList", flags); grid.CurrentCell = null;
+                // The description cell is still empty: Chinese search must inspect metadata for unseen rows.
+                foreach (var query in new[] { "航点", "航", "maximum distance" })
+                {
+                    filter.Invoke(view, new object[] { query });
+                    Check(grid.Rows[0].Visible && !grid.Rows[1].Visible, "search all metadata, including unrendered rows: " + query);
+                }
+                filter.Invoke(view, new object[] { "[" });
+                filter.Invoke(view, new object[] { "" });
+                var apply = viewType.GetMethod("ApplyParameterDescriptionToRow", flags);
+                apply.Invoke(view, new object[] { grid.Rows[0], text });
+                Check(grid.AutoSizeRowsMode == DataGridViewAutoSizeRowsMode.DisplayedCellsExceptHeaders, "visible rows size to complete text");
+                foreach (var scale in new[] { 1.0f, 1.25f, 1.5f, 2.0f })
+                using (var font = new Font(SystemFonts.MessageBoxFont.FontFamily, 9f * scale))
+                {
+                    grid.Font = font; grid.DefaultCellStyle.Font = font; grid.RowsDefaultCellStyle.Font = font;
+                    foreach (var width in new[] { 640, 1024, 1600 })
+                    {
+                        form.ClientSize = new Size(width, 740); form.PerformLayout(); view.PerformLayout(); Application.DoEvents();
+                        grid.AutoResizeRows(DataGridViewAutoSizeRowsMode.DisplayedCellsExceptHeaders);
+                        var row = grid.Rows[0]; var preferred = row.GetPreferredHeight(row.Index, DataGridViewAutoSizeRowMode.AllCellsExceptHeader, true);
+                        Check(row.Height >= preferred, "full preferred row height at width/font " + width + "/" + scale);
+                        Check(((string)row.Cells["Desc"].Value).StartsWith(english, StringComparison.Ordinal), "original English is complete and first");
+                        Check((string)row.Cells["Value"].Value == "123.5", "layout does not edit parameter value");
+                        using (var details = (Form)viewType.GetMethod("CreateParameterDescriptionDetails", flags).Invoke(view, new object[] { row }))
+                        {
+                            var body = details.Controls.OfType<RichTextBox>().Single();
+                            Check(body.ReadOnly && body.Text.Contains(english) && body.Text.Contains("航点"), "scrollable read-only complete text for oversized rows");
+                        }
+                        if (scale == 1.0f || scale == 1.5f)
+                        using (var bitmap = new Bitmap(form.Width, form.Height))
+                        {
+                            form.DrawToBitmap(bitmap, new Rectangle(Point.Empty, form.Size));
+                            bitmap.Save(Path.Combine(results, "parameter-table-" + width + "-font-" + scale.ToString("0.00", CultureInfo.InvariantCulture) + ".png"), ImageFormat.Png);
+                        }
+                    }
+                }
+                var source = new List<KeyValuePair<int, string>> { new KeyValuePair<int, string>(0, "Disabled"), new KeyValuePair<int, string>(1, "Enabled"), new KeyValuePair<int, string>(2, "VTOL approach"), new KeyValuePair<int, string>(3, "QRTL Always") };
+                var translated = (List<KeyValuePair<int, string>>)viewType.GetMethod("BilingualParameterOptions", flags).Invoke(view, new object[] { "Q_RTL_MODE", source });
+                Check(translated.Select(p => p.Key).SequenceEqual(source.Select(p => p.Key)), "dropdown numeric keys unchanged");
+                Check(translated[2].Value.StartsWith("VTOL approach / "), "dropdown retains English and adds Chinese");
+            }
+            Console.WriteLine("Parameter table UI: " + assertions + " assertions passed (font scaling; actual Windows DPI must be checked separately).");
+            return 0;
+        }
+        catch (Exception e) { Console.WriteLine(e); return 1; }
+    }
+}

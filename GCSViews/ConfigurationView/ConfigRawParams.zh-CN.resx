@@ -216,4 +216,6 @@
   <data name="chk_none_default.Text" xml:space="preserve"><value>非默认值</value></data>
   <data name="Default_value.HeaderText" xml:space="preserve"><value>默认</value></data>
   <data name="Fav.HeaderText" xml:space="preserve"><value>收藏</value></data>
+  <data name="ParameterTreeRoot.Text" xml:space="preserve"><value>全部</value></data>
+  <data name="SearchPlaceholder.Text" xml:space="preserve"><value>搜索</value></data>
 </root>

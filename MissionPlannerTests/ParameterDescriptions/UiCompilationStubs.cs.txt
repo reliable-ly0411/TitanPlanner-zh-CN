@@ -1,0 +1,27 @@
+using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
+namespace MissionPlanner {
+ public static class MainV2 { public static Port comPort = new Port(); }
+ public class Port { public Vehicle MAV = new Vehicle(); }
+ public class Vehicle { public State cs = new State(); public string VersionString = ""; }
+ public class State { public string firmware = "ArduPlane"; public Version version = new Version(4,6,3,255); }
+}
+namespace MissionPlanner.Utilities {
+ public static class Settings { public static string GetUserDataDirectory() { return "/tmp/unused"; } }
+ public static class ParameterMetaDataConstants { public const string Description="Description", Range="Range", Values="Values", Units="Units"; }
+ public static class ParameterMetaDataRepository { public static string GetParameterMetaData(string name,string field,string firmware) { return ""; } }
+}
+namespace MissionPlanner.GCSViews.ConfigurationView {
+ public partial class ConfigRawParams : UserControl {
+  private DataGridView Params = new DataGridView();
+  private DataGridViewColumn Desc = new DataGridViewTextBoxColumn(),Options = new DataGridViewTextBoxColumn(),Units = new DataGridViewTextBoxColumn(),Command = new DataGridViewTextBoxColumn(),Value = new DataGridViewTextBoxColumn();
+  private static bool startup;
+  private readonly HashSet<string> _metadataLoaded = new HashSet<string>();
+  private TextBox txt_search = new TextBox();
+  private static Logger log = new Logger();
+  private void filterList(string value) { }
+  private void ScheduleVisibleMetadataLoad() { }
+ }
+ public class Logger { public void Error(string text,Exception ex) { } }
+}

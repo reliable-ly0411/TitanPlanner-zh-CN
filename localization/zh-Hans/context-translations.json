@@ -5,5 +5,9 @@
   },
   "GCSViews/FlightPlanner.resx": {
     "Frame.HeaderText": "高度基准"
+  },
+  "GCSViews/ConfigurationView/ConfigRawParams.resx": {
+    "ParameterTreeRoot.Text": "全部",
+    "SearchPlaceholder.Text": "搜索"
   }
 }

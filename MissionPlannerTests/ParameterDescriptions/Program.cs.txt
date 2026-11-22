@@ -1,0 +1,233 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net.Http;
+using System.Reflection;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Xml.Linq;
+using MissionPlanner.Utilities;
+
+internal static class Program
+{
+    private static int assertions;
+    private static void Check(bool ok, string message) { assertions++; if (!ok) throw new Exception(message); }
+    private static byte[] Bytes(string text) { return Encoding.UTF8.GetBytes(text); }
+    private static byte[] Resource(string name)
+    {
+        using (var input = Assembly.GetExecutingAssembly().GetManifestResourceStream("MissionPlanner.Utilities.ParameterDescriptions." + name + ".xml"))
+        using (var output = new MemoryStream()) { input.CopyTo(output); return output.ToArray(); }
+    }
+    private static string Firmware(string family)
+    {
+        return new Dictionary<string, string> { { "Copter", "ArduCopter2" }, { "Plane", "ArduPlane" } }[family];
+    }
+    private static ParameterDescriptionContext Context(string family, string version, string sha = null)
+    {
+        var text = (family == "Copter" ? "ArduCopter" : "ArduPlane") + " V" + version + (sha == null ? "" : " (" + sha.Substring(0, 8) + ")");
+        return ParameterDescriptionContext.TryCreate(Firmware(family), text, new Version(version + ".255"));
+    }
+    private static void Rejects(Action action, string message)
+    {
+        try { action(); } catch (Exception e) when (e is InvalidDataException || e is System.Xml.XmlException) { Check(true, message); return; }
+        Check(false, message);
+    }
+    private static async Task MainAsync(string[] args)
+    {
+        var bundle = Resource("official"); var catalog = new ParameterDescriptionCatalog(Resource("zh-CN"));
+        var bundled = new ParameterDescriptionStore("unused", bundle);
+        var releases = XDocument.Parse(Encoding.UTF8.GetString(bundle)).Root.Elements("release").ToArray();
+        Check(releases.Length == 6, "six pinned release subsets");
+        foreach (var release in releases)
+        {
+            var family = (string)release.Attribute("family"); var version = (string)release.Attribute("version");
+            var context = Context(family, version, (string)release.Attribute("gitSha"));
+            Check(context != null, "stable release identity");
+            var snapshot = bundled.Bundled(context);
+            Check(snapshot != null && snapshot.Partial && snapshot.MatchesReportedBuild, "offline bundle matches the reported release/build");
+            Check(snapshot.Count == (family == "Copter" ? 37 : version == "4.7.1" ? 53 : 51), "reviewed exact-version record count");
+            foreach (var p in release.Descendants("param"))
+            {
+                var name = ((string)p.Attribute("name")).Split(':').Last(); var english = (string)p.Attribute("documentation");
+                var record = snapshot.Find(name); var text = catalog.Present(snapshot, name, true);
+                Check(record.Name == name && record.English == english, "parameter name and English preserved: " + name);
+                Check(text.Description.StartsWith(english, StringComparison.Ordinal) && text.Description.Contains("中文说明："), "English precedes Chinese: " + name);
+                Check(!text.Description.Contains("待复核"), "fingerprint agrees with reviewed catalog: " + name);
+                Check(catalog.Present(snapshot, name, false).Description == english, "other languages retain English: " + name);
+                var units = p.Elements("field").FirstOrDefault(f => (string)f.Attribute("name") == "Units");
+                Check(text.Units == (units == null ? "" : units.Value), "units unchanged: " + name);
+                foreach (var value in p.Elements("values").Elements("value"))
+                {
+                    var prefix = (string)value.Attribute("code") + ": " + value.Value;
+                    if (name == "WP_YAW_BEHAVIOR" || name == "Q_RTL_MODE")
+                        Check(text.Options.Contains(prefix + " / "), "existing bilingual enum preserves code/English: " + name);
+                    else
+                        Check(text.Options.Split('\n').Contains(prefix), "untranslated enum preserves exact code/English: " + name);
+                }
+                foreach (var bit in p.Elements("bitmask").Elements("bit"))
+                    Check(text.Options.Split('\n').Contains("bit " + (string)bit.Attribute("code") + ": " + bit.Value), "untranslated bit label/code preserved: " + name);
+                bool recordPending;
+                Check(catalog.Chinese(context, name, "Description", null, record.English + " changed", out recordPending, record.Fingerprint) == null && recordPending,
+                    "every record rejects changed English: " + name);
+                Check(catalog.Chinese(context, name, "Description", null, record.English, out recordPending, "changed-record") == null && recordPending,
+                    "every record rejects changed source fields: " + name);
+            }
+            Check(catalog.Present(snapshot, "NOT_A_PARAMETER", true) == null, "missing translation falls back");
+            Check(bundled.Bundled(Context(family, version, "deadbeef0123456789")) .MatchesReportedBuild == false, "custom build is not an exact official match");
+            var xml = new XElement(release.Element("paramfile")); var original = xml.ToString();
+            var first = xml.Descendants("param").First(); var firstName = ((string)first.Attribute("name")).Split(':').Last();
+            bool pending;
+            var firstRecord = snapshot.Find(firstName);
+            var oldChinese = catalog.Chinese(context, firstName, "Description", null, firstRecord.English, out pending, firstRecord.Fingerprint);
+            first.SetAttributeValue("documentation", "Changed English description.");
+            var changed = ParameterDescriptionSnapshot.Parse(Bytes(xml.ToString()), context);
+            var review = catalog.Present(changed, firstName, true);
+            Check(review.Description.StartsWith("Changed English description.", StringComparison.Ordinal) && review.Description.Contains("待复核"), "changed English remains first and requires review");
+            Check(!review.Description.Contains(oldChinese), "old Chinese is not claimed for changed English");
+            xml = XElement.Parse(original); first = xml.Descendants("param").First();
+            first.Add(new XElement("field", new XAttribute("name", "NewCondition"), "changed"));
+            Check(catalog.Present(ParameterDescriptionSnapshot.Parse(Bytes(xml.ToString()), context), firstName, true).Description.Contains("待复核"), "changed metadata conditions invalidate notes");
+            xml = XElement.Parse(original); first = xml.Descendants("param").First();
+            var duplicate = new XElement(first); duplicate.SetAttributeValue("documentation", "A different backend definition."); first.AddAfterSelf(duplicate);
+            var ambiguous = ParameterDescriptionSnapshot.Parse(Bytes(xml.ToString()), context);
+            Check(ambiguous.Find(firstName).Ambiguous, "duplicate conflicting definitions detected");
+            Check(catalog.Present(ambiguous, firstName, true).Description.StartsWith(firstRecord.English, StringComparison.Ordinal) && catalog.Present(ambiguous, firstName, true).Description.Contains("多个定义"), "English precedes conflict notice");
+            Check(!catalog.Present(ambiguous, firstName, true).Description.Contains(oldChinese), "no arbitrary first-match Chinese for duplicates");
+            xml = XElement.Parse(original); first = xml.Descendants("param").First();
+            duplicate = new XElement(first);
+            var attributes = duplicate.Attributes().Reverse().ToArray(); duplicate.RemoveAttributes(); duplicate.Add(attributes);
+            first.AddAfterSelf(duplicate);
+            Check(!ParameterDescriptionSnapshot.Parse(Bytes(xml.ToString()), context).Find(firstName).Ambiguous, "attribute order alone does not create a backend conflict");
+            if (args.Length == 2 && args[0] == "--source-directory")
+            {
+                var raw = File.ReadAllBytes(Path.Combine(args[1], family + "-" + version + ".xml"));
+                Check(ParameterDescriptionCatalog.Hash(raw) == (string)release.Attribute("sourceSha256"), "full official source digest");
+                var full = ParameterDescriptionSnapshot.Parse(raw, context, false, null, (string)release.Attribute("gitSha"));
+                foreach (var p in release.Descendants("param"))
+                {
+                    var name = ((string)p.Attribute("name")).Split(':').Last();
+                    Check(full.Find(name).Fingerprint == snapshot.Find(name).Fingerprint, "bundle equals original official record: " + name);
+                }
+            }
+        }
+        foreach (var version in new[] { "ArduCopter V4.6.3-dev", "ArduCopter V4.6.3-rc1", "ArduCopter V4.6.3beta", "ArduCopter V4.6.3-custom", "Blimp V4.6.3", "", "ArduPlane V4.6.3" })
+            Check(ParameterDescriptionContext.TryCreate("ArduCopter2", version, null) == null, "unknown/pre-release/other family stays English: " + version);
+        Check(ParameterDescriptionContext.TryCreate("ArduCopter2", "ArduCopter V4.6.3", new Version(4, 6, 3, 0)) == null, "encoded dev type rejected");
+        Check(ParameterDescriptionContext.TryCreate("ArduCopter2", "ArduCopter V4.6.3", new Version(4, 5, 7, 255)) == null, "disagreeing version signals rejected");
+        Check(ParameterDescriptionContext.TryCreate("Other", "ArduCopter V4.6.3", null) == null, "unknown firmware rejected");
+        Check(ParameterDescriptionContext.TryCreate("ArduRover", "Rover V4.6.3", null).Family == "Rover", "Rover metadata family");
+        Check(ParameterDescriptionContext.TryCreate("ArduSub", "ArduSub V4.5.1", null).Family == "Sub", "Sub metadata family");
+        Check(ParameterDescriptionContext.TryCreate("ArduTracker", "AntennaTracker V4.5.1", null).Family == "Tracker", "Tracker metadata family");
+        var copter = Context("Copter", "4.6.3"); var plane = Context("Plane", "4.6.3");
+        Check(bundled.Bundled(copter).Find("RTL_ALT").Range == "30 300000", "4.6 Copter range remains original centimeters");
+        Check(bundled.Bundled(Context("Copter", "4.7.1")).Find("RTL_ALT_M").Range == "0.30 3000", "4.7 renamed parameter retains meters");
+        Check(bundled.Bundled(Context("Copter", "4.7.1")).Find("RTL_ALT") == null, "no fabricated cross-version alias");
+        Check(catalog.Present(bundled.Bundled(plane), "WP_RADIUS", true).SearchText.Contains("航点"), "Chinese search text is independent of visible rows");
+        Check(!catalog.Present(bundled.Bundled(plane), "WP_RADIUS", false).SearchText.Contains("航点"), "original language has no enhanced Chinese search text");
+        Check(catalog.Present(bundled.Bundled(copter), "LOIT_BRK_JERK", true).SearchText.Contains("解除制动"), "new Chinese searchable before any parameter row renders");
+        Check(!catalog.Present(bundled.Bundled(copter), "LOIT_BRK_JERK", false).SearchText.Contains("解除制动"), "new Chinese search does not leak to original language");
+        Check(bundled.Bundled(Context("Copter", "4.7.1")).Find("LOIT_BRK_JERK") == null, "old jerk name is not aliased into new version");
+        Check(catalog.Present(bundled.Bundled(Context("Copter", "4.7.1")), "LOIT_BRK_JRK_M", true).Description.Contains("米/秒³"), "new jerk name uses meters not centimeters");
+        Check(bundled.Bundled(null) == null, "unknown context has no offline Chinese bundle");
+        Check(bundled.Bundled(Context("Copter", "4.7.2")) == null && bundled.Bundled(Context("Plane", "4.7.2")) == null, "unverified 4.7.2 remains held");
+        Check(bundled.Bundled(Context("Copter", "4.4.4")) == null, "unsupported version has no invented bundle");
+        Check(bundled.Bundled(Context("Copter", "4.7.3")) == null, "a reported 4.7.3 cannot silently use a 4.7.2/stable or 4.7.1 bundle");
+        var data = releases.First(r => (string)r.Attribute("family") == "Copter" && (string)r.Attribute("version") == "4.6.3").Element("paramfile").ToString();
+        Rejects(() => ParameterDescriptionSnapshot.Parse(Bytes(data), plane), "another vehicle cannot populate the cache");
+        Rejects(() => ParameterDescriptionSnapshot.Parse(Bytes(data.Replace("Copter-4.6.3", "Copter-4.5.7")), copter), "another release rejected");
+        Rejects(() => ParameterDescriptionSnapshot.Parse(Bytes("<!DOCTYPE x [<!ENTITY a SYSTEM 'file:///etc/passwd'>]><paramfile>&a;</paramfile>"), copter), "DTD rejected");
+        var mismatched = ParameterDescriptionSnapshot.Parse(Bytes(data), Context("Copter", "4.6.3", "deadbeef12345678"));
+        Check(catalog.Present(mismatched, "RTL_ALT", true) == null, "build mismatch does not translate");
+        var numeric = XElement.Parse(data); var values = numeric.Descendants("param").First(p => ((string)p.Attribute("name")).EndsWith(":WP_YAW_BEHAVIOR")).Element("values");
+        values.Add(new XElement("value", new XAttribute("code", "0.6"), "Strict"));
+        var decimals = ParameterDescriptionSnapshot.Parse(Bytes(numeric.ToString()), copter);
+        Check(decimals.Find("WP_YAW_BEHAVIOR").Values.Last().Code == "0.6", "display does not coerce decimal enum codes to integers");
+        Check(catalog.Present(decimals, "WP_YAW_BEHAVIOR", true).Description.Contains("待复核"), "enum changes invalidate source notes");
+        var missing = XElement.Parse(data);
+        var unreviewed = missing.Descendants("param").First();
+        unreviewed.SetAttributeValue("name", "ArduCopter:NEW_REVIEW_TEST");
+        var unreviewedEnglish = (string)unreviewed.Attribute("documentation");
+        var unreviewedText = catalog.Present(ParameterDescriptionSnapshot.Parse(Bytes(missing.ToString()), copter), "NEW_REVIEW_TEST", true);
+        Check(unreviewedText.Description.StartsWith(unreviewedEnglish, StringComparison.Ordinal) && unreviewedText.Description.Contains("暂无已审阅"), "unreviewed Chinese is marked after the untouched English");
+
+        var temp = Path.Combine(Path.GetTempPath(), "parameter-descriptions-" + Guid.NewGuid().ToString("N"));
+        try
+        {
+            var now = DateTime.UtcNow; int requests = 0;
+            Func<Uri, CancellationToken, Task<byte[]>> online = (uri, token) => { requests++; Check(uri == copter.SourceUri, "only the exact official release URL is fetched"); return Task.FromResult(Bytes(data)); };
+            var store = new ParameterDescriptionStore(temp, bundle, online, () => now);
+            var first = await store.LoadAsync(copter);
+            Check(first.Origin == "network" && requests == 1, "valid download");
+            await Task.WhenAll(store.LoadAsync(copter), store.LoadAsync(copter));
+            Check(requests == 1, "fresh version-scoped cache, including concurrent callers");
+            var path = Path.Combine(temp, "Copter", "4.6.3", first.SourceSha256 + ".apm.pdef.xml"); var goodHash = ParameterDescriptionCatalog.Hash(File.ReadAllBytes(path));
+            now = now.AddDays(8);
+            var offline = new ParameterDescriptionStore(temp, bundle, (uri, token) => Task.FromException<byte[]>(new HttpRequestException("offline")), () => now);
+            var fallback = await offline.LoadAsync(copter);
+            Check(!fallback.Partial && fallback.Origin.Contains("unavailable"), "offline uses last good exact-version cache");
+            Check(ParameterDescriptionCatalog.Hash(File.ReadAllBytes(path)) == goodHash, "failure preserves good cache bytes");
+            var bad = new ParameterDescriptionStore(temp, bundle, (uri, token) => Task.FromResult(Bytes("<broken>")), () => now);
+            Check((await bad.LoadAsync(copter)).Find("RTL_ALT") != null, "invalid response falls back to good cache");
+            Check(ParameterDescriptionCatalog.Hash(File.ReadAllBytes(path)) == goodHash, "invalid response never replaces good XML");
+            Check((await offline.LoadAsync(plane)).Partial, "cold offline Plane uses its own subset");
+            Check(await offline.LoadAsync(null) == null, "unknown firmware does not fetch");
+            Check(await offline.LoadAsync(Context("Copter", "4.4.4")) == null, "unsupported cold offline version remains English");
+            var reported473 = Context("Copter", "4.7.3");
+            var wrongStable = new ParameterDescriptionStore(temp, bundle, (uri, token) =>
+            {
+                Check(uri.AbsoluteUri.Contains("/Copter/stable-4.7.3/"), "request uses the actual reported version, never the moving stable alias");
+                return Task.FromResult(Bytes(data.Replace("Copter-4.6.3", "Copter-4.7.2")));
+            }, () => now);
+            Check(await wrongStable.LoadAsync(reported473) == null, "4.7.2 metadata cannot describe a reported 4.7.3");
+            Check(!Directory.Exists(Path.Combine(temp, "Copter", "4.7.3")), "mismatched stable release is not cached as 4.7.3");
+            var updatedData = data.Replace("minimum alt above", "minimum altitude above");
+            var updated = new ParameterDescriptionStore(temp, bundle, (uri, token) => Task.FromResult(Bytes(updatedData)), () => now);
+            var newer = await updated.LoadAsync(copter);
+            Check(newer.SourceSha256 != first.SourceSha256, "new English source receives a distinct cache fingerprint");
+            Check(File.Exists(path), "previous source revision is retained");
+            Check(File.Exists(Path.Combine(temp, "Copter", "4.6.3", newer.SourceSha256 + ".apm.pdef.xml")), "new source revision has its own cache file");
+            Check(catalog.Present(newer, "RTL_ALT", true).Description.Contains("待复核"), "new source cannot inherit old Chinese approval");
+            var pointer = Path.Combine(temp, "Copter", "4.6.3", "current.txt");
+            var identity = File.ReadAllText(pointer);
+            File.WriteAllText(pointer, identity.Replace(copter.SourceUri.AbsoluteUri, "https://example.invalid/stable/apm.pdef.xml"));
+            Check((await offline.LoadAsync(copter)).Partial, "a cache pointer from another source is not accepted");
+            File.WriteAllText(pointer, identity);
+            File.WriteAllText(Path.Combine(temp, "Copter", "4.6.3", newer.SourceSha256 + ".apm.pdef.xml"), "<corrupted/>");
+            Check((await offline.LoadAsync(copter)).Partial, "cached bytes must match the source fingerprint");
+            int fallbackRequests = 0;
+            var fallbackStore = new ParameterDescriptionStore(Path.Combine(temp, "exact-fallback"), bundle, (uri, token) =>
+            {
+                fallbackRequests++;
+                return uri == copter.SourceUri ? Task.FromException<byte[]>(new HttpRequestException("versioned index has a gap")) : Task.FromResult(Bytes(data));
+            }, () => now);
+            var resolved = await fallbackStore.LoadAsync(copter);
+            Check(fallbackRequests == 2 && resolved.HasReleaseProvenance && resolved.SourceUri == copter.SourceUris[1], "verified release-specific firmware metadata fills index gaps");
+            Check(catalog.Present(resolved, "RTL_ALT", true).Source.Contains(copter.SourceUris[1].AbsoluteUri), "display reports the source actually selected");
+            var fromFallbackCache = await fallbackStore.LoadAsync(copter);
+            Check(fallbackRequests == 2 && fromFallbackCache.SourceUri == copter.SourceUris[1], "cache preserves the resolved source URL");
+            var withoutProvenance = XElement.Parse(data); withoutProvenance.Element("firmware").Remove();
+            var unproven = new ParameterDescriptionStore(Path.Combine(temp, "unproven-fallback"), bundle, (uri, token) =>
+                uri == reported473.SourceUri ? Task.FromException<byte[]>(new HttpRequestException("404")) : Task.FromResult(Bytes(withoutProvenance.ToString())), () => now);
+            Check(await unproven.LoadAsync(reported473) == null, "fallback URL alone cannot prove the firmware version");
+            var exactRelease = releases.Single(r => (string)r.Attribute("family") == "Copter" && (string)r.Attribute("version") == "4.6.3");
+            var reportedBuild = Context("Copter", "4.6.3", (string)exactRelease.Attribute("gitSha"));
+            var conflictingPrimary = data.Replace((string)exactRelease.Attribute("gitSha"), "deadbeef0123456789abcdef0123456789abcdef01");
+            var buildFallback = new ParameterDescriptionStore(Path.Combine(temp, "build-fallback"), bundle, (uri, token) =>
+                Task.FromResult(Bytes(uri == reportedBuild.SourceUri ? conflictingPrimary : data)), () => now);
+            Check((await buildFallback.LoadAsync(reportedBuild)).MatchesReportedBuild, "a mismatched primary build does not hide a matching alternate source");
+            File.WriteAllText(Path.Combine(temp, "blocked"), "not a directory");
+            var unwritable = new ParameterDescriptionStore(Path.Combine(temp, "blocked"), bundle, online, () => now);
+            Check((await unwritable.LoadAsync(copter)).Find("RTL_ALT") != null, "cache write failure does not suppress valid English data");
+        }
+        finally { if (Directory.Exists(temp)) Directory.Delete(temp, true); }
+        Console.WriteLine("Parameter descriptions: " + assertions + " assertions passed.");
+    }
+    private static int Main(string[] args)
+    {
+        try { MainAsync(args).GetAwaiter().GetResult(); return 0; }
+        catch (Exception e) { Console.WriteLine(e); return 1; }
+    }
+}

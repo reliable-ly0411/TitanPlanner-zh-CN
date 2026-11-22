@@ -1,0 +1,2585 @@
+<?xml version='1.0' encoding='utf-8'?>
+<parameterDescriptionBundle schemaVersion="1" license="GPL-3.0-or-later">
+  <release family="Copter" version="4.5.7" sourceUrl="https://autotest.ardupilot.org/Parameters/versioned/Copter/stable-4.5.7/apm.pdef.xml" sourceSha256="61599e773eadeba781d69c124aff3acfbeea884b2a159d9ca6f7891f379513c9" gitSha="2a3dc4b7bf2507120f7378a7b2fde73185e0c325">
+    <paramfile>
+      <firmware git_tag="Copter-4.5.7" git_sha="2a3dc4b7bf2507120f7378a7b2fde73185e0c325" />
+      <vehicles>
+        <parameters name="ArduCopter">
+          <param humanName="RTL Altitude" name="ArduCopter:RTL_ALT" documentation="The minimum alt above home the vehicle will climb to before returning.  If the vehicle is flying higher than this value it will return at its current altitude." user="Standard">
+            <field name="Units">cm</field>
+            <field name="UnitText">centimeters</field>
+            <field name="Range">200 300000</field>
+            <field name="Increment">1</field>
+          </param>
+          <param humanName="RTL Final Altitude" name="ArduCopter:RTL_ALT_FINAL" documentation="This is the altitude the vehicle will move to as the final stage of Returning to Launch or after completing a mission.  Set to zero to land." user="Standard">
+            <field name="Units">cm</field>
+            <field name="UnitText">centimeters</field>
+            <field name="Range">0 1000</field>
+            <field name="Increment">1</field>
+          </param>
+          <param humanName="RTL loiter time" name="ArduCopter:RTL_LOIT_TIME" documentation="Time (in milliseconds) to loiter above home before beginning final descent" user="Standard">
+            <field name="Units">ms</field>
+            <field name="UnitText">milliseconds</field>
+            <field name="Range">0 60000</field>
+            <field name="Increment">1000</field>
+          </param>
+          <param humanName="Yaw behaviour during missions" name="ArduCopter:WP_YAW_BEHAVIOR" documentation="Determines how the autopilot controls the yaw during missions and RTL" user="Standard">
+            <values>
+              <value code="0">Never change yaw</value>
+              <value code="1">Face next waypoint</value>
+              <value code="2">Face next waypoint except RTL</value>
+              <value code="3">Face along GPS course</value>
+            </values>
+          </param>
+          <param humanName="Pilot maximum vertical speed ascending" name="ArduCopter:PILOT_SPEED_UP" documentation="The maximum vertical ascending velocity the pilot may request in cm/s" user="Standard">
+            <field name="Units">cm/s</field>
+            <field name="UnitText">centimeters per second</field>
+            <field name="Range">50 500</field>
+            <field name="Increment">10</field>
+          </param>
+          <param humanName="Flight Mode 1" name="ArduCopter:FLTMODE1" documentation="Flight mode when pwm of Flightmode channel(FLTMODE_CH) is &lt;= 1230" user="Standard">
+            <values>
+              <value code="0">Stabilize</value>
+              <value code="1">Acro</value>
+              <value code="2">AltHold</value>
+              <value code="3">Auto</value>
+              <value code="4">Guided</value>
+              <value code="5">Loiter</value>
+              <value code="6">RTL</value>
+              <value code="7">Circle</value>
+              <value code="9">Land</value>
+              <value code="11">Drift</value>
+              <value code="13">Sport</value>
+              <value code="14">Flip</value>
+              <value code="15">AutoTune</value>
+              <value code="16">PosHold</value>
+              <value code="17">Brake</value>
+              <value code="18">Throw</value>
+              <value code="19">Avoid_ADSB</value>
+              <value code="20">Guided_NoGPS</value>
+              <value code="21">Smart_RTL</value>
+              <value code="22">FlowHold</value>
+              <value code="23">Follow</value>
+              <value code="24">ZigZag</value>
+              <value code="25">SystemID</value>
+              <value code="26">Heli_Autorotate</value>
+              <value code="27">Auto RTL</value>
+            </values>
+          </param>
+          <param humanName="Flight Mode 2" name="ArduCopter:FLTMODE2" documentation="Flight mode when pwm of Flightmode channel(FLTMODE_CH) is &gt;1230, &lt;= 1360" user="Standard">
+            <values>
+              <value code="0">Stabilize</value>
+              <value code="1">Acro</value>
+              <value code="2">AltHold</value>
+              <value code="3">Auto</value>
+              <value code="4">Guided</value>
+              <value code="5">Loiter</value>
+              <value code="6">RTL</value>
+              <value code="7">Circle</value>
+              <value code="9">Land</value>
+              <value code="11">Drift</value>
+              <value code="13">Sport</value>
+              <value code="14">Flip</value>
+              <value code="15">AutoTune</value>
+              <value code="16">PosHold</value>
+              <value code="17">Brake</value>
+              <value code="18">Throw</value>
+              <value code="19">Avoid_ADSB</value>
+              <value code="20">Guided_NoGPS</value>
+              <value code="21">Smart_RTL</value>
+              <value code="22">FlowHold</value>
+              <value code="23">Follow</value>
+              <value code="24">ZigZag</value>
+              <value code="25">SystemID</value>
+              <value code="26">Heli_Autorotate</value>
+              <value code="27">Auto RTL</value>
+            </values>
+          </param>
+          <param humanName="Flight Mode 3" name="ArduCopter:FLTMODE3" documentation="Flight mode when pwm of Flightmode channel(FLTMODE_CH) is &gt;1360, &lt;= 1490" user="Standard">
+            <values>
+              <value code="0">Stabilize</value>
+              <value code="1">Acro</value>
+              <value code="2">AltHold</value>
+              <value code="3">Auto</value>
+              <value code="4">Guided</value>
+              <value code="5">Loiter</value>
+              <value code="6">RTL</value>
+              <value code="7">Circle</value>
+              <value code="9">Land</value>
+              <value code="11">Drift</value>
+              <value code="13">Sport</value>
+              <value code="14">Flip</value>
+              <value code="15">AutoTune</value>
+              <value code="16">PosHold</value>
+              <value code="17">Brake</value>
+              <value code="18">Throw</value>
+              <value code="19">Avoid_ADSB</value>
+              <value code="20">Guided_NoGPS</value>
+              <value code="21">Smart_RTL</value>
+              <value code="22">FlowHold</value>
+              <value code="23">Follow</value>
+              <value code="24">ZigZag</value>
+              <value code="25">SystemID</value>
+              <value code="26">Heli_Autorotate</value>
+              <value code="27">Auto RTL</value>
+            </values>
+          </param>
+          <param humanName="Flight Mode 4" name="ArduCopter:FLTMODE4" documentation="Flight mode when pwm of Flightmode channel(FLTMODE_CH) is &gt;1490, &lt;= 1620" user="Standard">
+            <values>
+              <value code="0">Stabilize</value>
+              <value code="1">Acro</value>
+              <value code="2">AltHold</value>
+              <value code="3">Auto</value>
+              <value code="4">Guided</value>
+              <value code="5">Loiter</value>
+              <value code="6">RTL</value>
+              <value code="7">Circle</value>
+              <value code="9">Land</value>
+              <value code="11">Drift</value>
+              <value code="13">Sport</value>
+              <value code="14">Flip</value>
+              <value code="15">AutoTune</value>
+              <value code="16">PosHold</value>
+              <value code="17">Brake</value>
+              <value code="18">Throw</value>
+              <value code="19">Avoid_ADSB</value>
+              <value code="20">Guided_NoGPS</value>
+              <value code="21">Smart_RTL</value>
+              <value code="22">FlowHold</value>
+              <value code="23">Follow</value>
+              <value code="24">ZigZag</value>
+              <value code="25">SystemID</value>
+              <value code="26">Heli_Autorotate</value>
+              <value code="27">Auto RTL</value>
+            </values>
+          </param>
+          <param humanName="Flight Mode 5" name="ArduCopter:FLTMODE5" documentation="Flight mode when pwm of Flightmode channel(FLTMODE_CH) is &gt;1620, &lt;= 1749" user="Standard">
+            <values>
+              <value code="0">Stabilize</value>
+              <value code="1">Acro</value>
+              <value code="2">AltHold</value>
+              <value code="3">Auto</value>
+              <value code="4">Guided</value>
+              <value code="5">Loiter</value>
+              <value code="6">RTL</value>
+              <value code="7">Circle</value>
+              <value code="9">Land</value>
+              <value code="11">Drift</value>
+              <value code="13">Sport</value>
+              <value code="14">Flip</value>
+              <value code="15">AutoTune</value>
+              <value code="16">PosHold</value>
+              <value code="17">Brake</value>
+              <value code="18">Throw</value>
+              <value code="19">Avoid_ADSB</value>
+              <value code="20">Guided_NoGPS</value>
+              <value code="21">Smart_RTL</value>
+              <value code="22">FlowHold</value>
+              <value code="23">Follow</value>
+              <value code="24">ZigZag</value>
+              <value code="25">SystemID</value>
+              <value code="26">Heli_Autorotate</value>
+              <value code="27">Auto RTL</value>
+            </values>
+          </param>
+          <param humanName="Flight Mode 6" name="ArduCopter:FLTMODE6" documentation="Flight mode when pwm of Flightmode channel(FLTMODE_CH) is &gt;=1750" user="Standard">
+            <values>
+              <value code="0">Stabilize</value>
+              <value code="1">Acro</value>
+              <value code="2">AltHold</value>
+              <value code="3">Auto</value>
+              <value code="4">Guided</value>
+              <value code="5">Loiter</value>
+              <value code="6">RTL</value>
+              <value code="7">Circle</value>
+              <value code="9">Land</value>
+              <value code="11">Drift</value>
+              <value code="13">Sport</value>
+              <value code="14">Flip</value>
+              <value code="15">AutoTune</value>
+              <value code="16">PosHold</value>
+              <value code="17">Brake</value>
+              <value code="18">Throw</value>
+              <value code="19">Avoid_ADSB</value>
+              <value code="20">Guided_NoGPS</value>
+              <value code="21">Smart_RTL</value>
+              <value code="22">FlowHold</value>
+              <value code="23">Follow</value>
+              <value code="24">ZigZag</value>
+              <value code="25">SystemID</value>
+              <value code="26">Heli_Autorotate</value>
+              <value code="27">Auto RTL</value>
+            </values>
+          </param>
+          <param humanName="Flightmode channel" name="ArduCopter:FLTMODE_CH" documentation="RC Channel to use for flight mode control" user="Advanced">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="5">Channel5</value>
+              <value code="6">Channel6</value>
+              <value code="7">Channel7</value>
+              <value code="8">Channel8</value>
+              <value code="9">Channel9</value>
+              <value code="10">Channel 10</value>
+              <value code="11">Channel 11</value>
+              <value code="12">Channel 12</value>
+              <value code="13">Channel 13</value>
+              <value code="14">Channel 14</value>
+              <value code="15">Channel 15</value>
+            </values>
+          </param>
+          <param humanName="Land alt low" name="ArduCopter:LAND_ALT_LOW" documentation="Altitude during Landing at which vehicle slows to LAND_SPEED" user="Advanced">
+            <field name="Units">cm</field>
+            <field name="UnitText">centimeters</field>
+            <field name="Range">100 10000</field>
+            <field name="Increment">10</field>
+          </param>
+          <param humanName="Land speed high" name="ArduCopter:LAND_SPEED_HIGH" documentation="The descent speed for the first stage of landing in cm/s. If this is zero then WPNAV_SPEED_DN is used" user="Standard">
+            <field name="Units">cm/s</field>
+            <field name="UnitText">centimeters per second</field>
+            <field name="Range">0 500</field>
+            <field name="Increment">10</field>
+          </param>
+          <param humanName="Pilot vertical acceleration" name="ArduCopter:PILOT_ACCEL_Z" documentation="The vertical acceleration used when pilot is controlling the altitude" user="Standard">
+            <field name="Units">cm/s/s</field>
+            <field name="UnitText">centimeters per square second</field>
+            <field name="Range">50 500</field>
+            <field name="Increment">10</field>
+          </param>
+          <param humanName="Pilot maximum vertical speed descending" name="ArduCopter:PILOT_SPEED_DN" documentation="The maximum vertical descending velocity the pilot may request in cm/s.  If 0 PILOT_SPEED_UP value is used." user="Standard">
+            <field name="Units">cm/s</field>
+            <field name="UnitText">centimeters per second</field>
+            <field name="Range">0 500</field>
+            <field name="Increment">10</field>
+          </param>
+          <param humanName="RTL minimum climb" name="ArduCopter:RTL_CLIMB_MIN" documentation="The vehicle will climb this many cm during the initial climb portion of the RTL" user="Standard">
+            <field name="Units">cm</field>
+            <field name="UnitText">centimeters</field>
+            <field name="Range">0 3000</field>
+            <field name="Increment">10</field>
+          </param>
+          <param humanName="RTL speed" name="ArduCopter:RTL_SPEED" documentation="Defines the speed in cm/s which the aircraft will attempt to maintain horizontally while flying home. If this is set to zero, WPNAV_SPEED will be used instead." user="Standard">
+            <field name="Units">cm/s</field>
+            <field name="UnitText">centimeters per second</field>
+            <field name="Range">0 2000</field>
+            <field name="Increment">50</field>
+          </param>
+        </parameters>
+      </vehicles>
+      <libraries>
+        <parameters name="WPNAV_">
+          <param humanName="Waypoint Horizontal Speed Target" name="WPNAV_SPEED" documentation="Defines the speed in cm/s which the aircraft will attempt to maintain horizontally during a WP mission" user="Standard">
+            <field name="Units">cm/s</field>
+            <field name="UnitText">centimeters per second</field>
+            <field name="Range">20 2000</field>
+            <field name="Increment">50</field>
+          </param>
+          <param humanName="Waypoint Acceleration " name="WPNAV_ACCEL" documentation="Defines the horizontal acceleration in cm/s/s used during missions" user="Standard">
+            <field name="Units">cm/s/s</field>
+            <field name="UnitText">centimeters per square second</field>
+            <field name="Range">50 500</field>
+            <field name="Increment">10</field>
+          </param>
+          <param humanName="Waypoint Vertical Acceleration" name="WPNAV_ACCEL_Z" documentation="Defines the vertical acceleration in cm/s/s used during missions" user="Standard">
+            <field name="Units">cm/s/s</field>
+            <field name="UnitText">centimeters per square second</field>
+            <field name="Range">50 500</field>
+            <field name="Increment">10</field>
+          </param>
+          <param humanName="Waypoint Radius" name="WPNAV_RADIUS" documentation="Defines the distance from a waypoint, that when crossed indicates the wp has been hit." user="Standard">
+            <field name="Units">cm</field>
+            <field name="UnitText">centimeters</field>
+            <field name="Range">5 1000</field>
+            <field name="Increment">1</field>
+          </param>
+          <param humanName="Waypoint Descent Speed Target" name="WPNAV_SPEED_DN" documentation="Defines the speed in cm/s which the aircraft will attempt to maintain while descending during a WP mission" user="Standard">
+            <field name="Units">cm/s</field>
+            <field name="UnitText">centimeters per second</field>
+            <field name="Range">10 500</field>
+            <field name="Increment">10</field>
+          </param>
+          <param humanName="Waypoint Climb Speed Target" name="WPNAV_SPEED_UP" documentation="Defines the speed in cm/s which the aircraft will attempt to maintain while climbing during a WP mission" user="Standard">
+            <field name="Units">cm/s</field>
+            <field name="UnitText">centimeters per second</field>
+            <field name="Range">10 1000</field>
+            <field name="Increment">50</field>
+          </param>
+        </parameters>
+        <parameters name="ATC_">
+          <param humanName="Pitch axis angle controller P gain" name="ATC_ANG_PIT_P" documentation="Pitch axis angle controller P gain.  Converts the error between the desired pitch angle and actual angle to a desired pitch rate" user="Standard">
+            <field name="Range">3.000 12.000</field>
+          </param>
+          <param humanName="Roll axis angle controller P gain" name="ATC_ANG_RLL_P" documentation="Roll axis angle controller P gain.  Converts the error between the desired roll angle and actual angle to a desired roll rate" user="Standard">
+            <field name="Range">3.000 12.000</field>
+          </param>
+          <param humanName="Yaw axis angle controller P gain" name="ATC_ANG_YAW_P" documentation="Yaw axis angle controller P gain.  Converts the error between the desired yaw angle and actual angle to a desired yaw rate" user="Standard">
+            <field name="Range">3.000 12.000</field>
+          </param>
+        </parameters>
+        <parameters name="INS">
+          <param humanName="Accel filter cutoff frequency" name="INS_ACCEL_FILTER" documentation="Filter cutoff frequency for accelerometers. This can be set to a lower value to try to cope with very high vibration levels in aircraft. A value of zero means no filtering (not recommended!)" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 256</field>
+          </param>
+          <param humanName="Gyro filter cutoff frequency" name="INS_GYRO_FILTER" documentation="Filter cutoff frequency for gyroscopes. This can be set to a lower value to try to cope with very high vibration levels in aircraft. A value of zero means no filtering (not recommended!)" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 256</field>
+          </param>
+        </parameters>
+        <parameters name="LOG">
+          <param humanName="Enable logging while disarmed" name="LOG_DISARMED" documentation="If LOG_DISARMED is set to 1 then logging will be enabled at all times including when disarmed. Logging before arming can make for very large logfiles but can help a lot when tracking down startup issues and is necessary if logging of EKF replay data is selected via the LOG_REPLAY parameter. If LOG_DISARMED is set to 2, then logging will be enabled when disarmed, but not if a USB connection is detected. This can be used to prevent unwanted data logs being generated when the vehicle is connected via USB for log downloading or parameter changes. If LOG_DISARMED is set to 3 then logging will happen while disarmed, but if the vehicle never arms then the logs using the filesystem backend will be discarded on the next boot." user="Standard">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+              <value code="2">Disabled on USB connection</value>
+              <value code="3">Discard log on reboot if never armed</value>
+            </values>
+          </param>
+          <param humanName="Enable logging of information needed for Replay" name="LOG_REPLAY" documentation="If LOG_REPLAY is set to 1 then the EKF2 and EKF3 state estimators will log detailed information needed for diagnosing problems with the Kalman filter. LOG_DISARMED must be set to 1 or 2 or else the log will not contain the pre-flight data required for replay testing of the EKF's. It is suggested that you also raise LOG_FILE_BUFSIZE to give more buffer space for logging and use a high quality microSD card to ensure no sensor data is lost." user="Standard">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+        </parameters>
+        <parameters name="LOIT_">
+          <param humanName="Loiter pilot angle max" name="LOIT_ANG_MAX" documentation="Loiter maximum pilot requested lean angle. Set to zero for 2/3 of PSC_ANGLE_MAX/ANGLE_MAX. The maximum vehicle lean angle is still limited by PSC_ANGLE_MAX/ANGLE_MAX" user="Advanced">
+            <field name="Units">deg</field>
+            <field name="UnitText">degrees</field>
+            <field name="Range">0 45</field>
+            <field name="Increment">1</field>
+          </param>
+          <param humanName="Loiter brake start delay (in seconds)" name="LOIT_BRK_DELAY" documentation="Loiter brake start delay (in seconds)" user="Advanced">
+            <field name="Units">s</field>
+            <field name="UnitText">seconds</field>
+            <field name="Range">0 2</field>
+            <field name="Increment">0.1</field>
+          </param>
+          <param humanName="Loiter maximum correction acceleration" name="LOIT_ACC_MAX" documentation="Loiter maximum correction acceleration in cm/s/s.  Higher values cause the copter to correct position errors more aggressively." user="Advanced">
+            <field name="Units">cm/s/s</field>
+            <field name="UnitText">centimeters per square second</field>
+            <field name="Range">100 981</field>
+            <field name="Increment">1</field>
+          </param>
+          <param humanName="Loiter braking acceleration" name="LOIT_BRK_ACCEL" documentation="Loiter braking acceleration in cm/s/s. Higher values stop the copter more quickly when the stick is centered." user="Advanced">
+            <field name="Units">cm/s/s</field>
+            <field name="UnitText">centimeters per square second</field>
+            <field name="Range">25 250</field>
+            <field name="Increment">1</field>
+          </param>
+          <param humanName="Loiter braking jerk" name="LOIT_BRK_JERK" documentation="Loiter braking jerk in cm/s/s/s. Higher values will remove braking faster if the pilot moves the sticks during a braking maneuver." user="Advanced">
+            <field name="Units">cm/s/s/s</field>
+            <field name="UnitText">centimeters per cubic second</field>
+            <field name="Range">500 5000</field>
+            <field name="Increment">1</field>
+          </param>
+          <param humanName="Loiter Horizontal Maximum Speed" name="LOIT_SPEED" documentation="Defines the maximum speed in cm/s which the aircraft will travel horizontally while in loiter mode" user="Standard">
+            <field name="Units">cm/s</field>
+            <field name="UnitText">centimeters per second</field>
+            <field name="Range">20 3500</field>
+            <field name="Increment">50</field>
+          </param>
+        </parameters>
+      </libraries>
+    </paramfile>
+  </release>
+  <release family="Copter" version="4.6.3" sourceUrl="https://autotest.ardupilot.org/Parameters/versioned/Copter/stable-4.6.3/apm.pdef.xml" sourceSha256="e6375727b7a05a0c820b7b5c3e28c755d52c1e6da6b4506682d1dd3b19552190" gitSha="92b0cd788ec29406f26c6f9c31d5ceedbd1cc538">
+    <paramfile>
+      <firmware git_tag="Copter-4.6.3" git_sha="92b0cd788ec29406f26c6f9c31d5ceedbd1cc538" />
+      <vehicles>
+        <parameters name="ArduCopter">
+          <param humanName="RTL Altitude" name="ArduCopter:RTL_ALT" documentation="The minimum alt above home the vehicle will climb to before returning.  If the vehicle is flying higher than this value it will return at its current altitude." user="Standard">
+            <field name="Units">cm</field>
+            <field name="UnitText">centimeters</field>
+            <field name="Range">30 300000</field>
+            <field name="Increment">1</field>
+          </param>
+          <param humanName="RTL Final Altitude" name="ArduCopter:RTL_ALT_FINAL" documentation="This is the altitude the vehicle will move to as the final stage of Returning to Launch or after completing a mission.  Set to zero to land." user="Standard">
+            <field name="Units">cm</field>
+            <field name="UnitText">centimeters</field>
+            <field name="Range">0 1000</field>
+            <field name="Increment">1</field>
+          </param>
+          <param humanName="RTL loiter time" name="ArduCopter:RTL_LOIT_TIME" documentation="Time (in milliseconds) to loiter above home before beginning final descent" user="Standard">
+            <field name="Units">ms</field>
+            <field name="UnitText">milliseconds</field>
+            <field name="Range">0 60000</field>
+            <field name="Increment">1000</field>
+          </param>
+          <param humanName="Yaw behaviour during missions" name="ArduCopter:WP_YAW_BEHAVIOR" documentation="Determines how the autopilot controls the yaw during missions and RTL" user="Standard">
+            <values>
+              <value code="0">Never change yaw</value>
+              <value code="1">Face next waypoint</value>
+              <value code="2">Face next waypoint except RTL</value>
+              <value code="3">Face along GPS course</value>
+            </values>
+          </param>
+          <param humanName="Pilot maximum vertical speed ascending" name="ArduCopter:PILOT_SPEED_UP" documentation="The maximum vertical ascending velocity the pilot may request in cm/s" user="Standard">
+            <field name="Units">cm/s</field>
+            <field name="UnitText">centimeters per second</field>
+            <field name="Range">50 500</field>
+            <field name="Increment">10</field>
+          </param>
+          <param humanName="Flight Mode 1" name="ArduCopter:FLTMODE1" documentation="Flight mode when pwm of Flightmode channel(FLTMODE_CH) is &lt;= 1230" user="Standard">
+            <values>
+              <value code="0">Stabilize</value>
+              <value code="1">Acro</value>
+              <value code="2">AltHold</value>
+              <value code="3">Auto</value>
+              <value code="4">Guided</value>
+              <value code="5">Loiter</value>
+              <value code="6">RTL</value>
+              <value code="7">Circle</value>
+              <value code="9">Land</value>
+              <value code="11">Drift</value>
+              <value code="13">Sport</value>
+              <value code="14">Flip</value>
+              <value code="15">AutoTune</value>
+              <value code="16">PosHold</value>
+              <value code="17">Brake</value>
+              <value code="18">Throw</value>
+              <value code="19">Avoid_ADSB</value>
+              <value code="20">Guided_NoGPS</value>
+              <value code="21">Smart_RTL</value>
+              <value code="22">FlowHold</value>
+              <value code="23">Follow</value>
+              <value code="24">ZigZag</value>
+              <value code="25">SystemID</value>
+              <value code="26">Heli_Autorotate</value>
+              <value code="27">Auto RTL</value>
+              <value code="28">Turtle</value>
+            </values>
+          </param>
+          <param humanName="Flight Mode 2" name="ArduCopter:FLTMODE2" documentation="Flight mode when pwm of Flightmode channel(FLTMODE_CH) is &gt;1230, &lt;= 1360" user="Standard">
+            <values>
+              <value code="0">Stabilize</value>
+              <value code="1">Acro</value>
+              <value code="2">AltHold</value>
+              <value code="3">Auto</value>
+              <value code="4">Guided</value>
+              <value code="5">Loiter</value>
+              <value code="6">RTL</value>
+              <value code="7">Circle</value>
+              <value code="9">Land</value>
+              <value code="11">Drift</value>
+              <value code="13">Sport</value>
+              <value code="14">Flip</value>
+              <value code="15">AutoTune</value>
+              <value code="16">PosHold</value>
+              <value code="17">Brake</value>
+              <value code="18">Throw</value>
+              <value code="19">Avoid_ADSB</value>
+              <value code="20">Guided_NoGPS</value>
+              <value code="21">Smart_RTL</value>
+              <value code="22">FlowHold</value>
+              <value code="23">Follow</value>
+              <value code="24">ZigZag</value>
+              <value code="25">SystemID</value>
+              <value code="26">Heli_Autorotate</value>
+              <value code="27">Auto RTL</value>
+              <value code="28">Turtle</value>
+            </values>
+          </param>
+          <param humanName="Flight Mode 3" name="ArduCopter:FLTMODE3" documentation="Flight mode when pwm of Flightmode channel(FLTMODE_CH) is &gt;1360, &lt;= 1490" user="Standard">
+            <values>
+              <value code="0">Stabilize</value>
+              <value code="1">Acro</value>
+              <value code="2">AltHold</value>
+              <value code="3">Auto</value>
+              <value code="4">Guided</value>
+              <value code="5">Loiter</value>
+              <value code="6">RTL</value>
+              <value code="7">Circle</value>
+              <value code="9">Land</value>
+              <value code="11">Drift</value>
+              <value code="13">Sport</value>
+              <value code="14">Flip</value>
+              <value code="15">AutoTune</value>
+              <value code="16">PosHold</value>
+              <value code="17">Brake</value>
+              <value code="18">Throw</value>
+              <value code="19">Avoid_ADSB</value>
+              <value code="20">Guided_NoGPS</value>
+              <value code="21">Smart_RTL</value>
+              <value code="22">FlowHold</value>
+              <value code="23">Follow</value>
+              <value code="24">ZigZag</value>
+              <value code="25">SystemID</value>
+              <value code="26">Heli_Autorotate</value>
+              <value code="27">Auto RTL</value>
+              <value code="28">Turtle</value>
+            </values>
+          </param>
+          <param humanName="Flight Mode 4" name="ArduCopter:FLTMODE4" documentation="Flight mode when pwm of Flightmode channel(FLTMODE_CH) is &gt;1490, &lt;= 1620" user="Standard">
+            <values>
+              <value code="0">Stabilize</value>
+              <value code="1">Acro</value>
+              <value code="2">AltHold</value>
+              <value code="3">Auto</value>
+              <value code="4">Guided</value>
+              <value code="5">Loiter</value>
+              <value code="6">RTL</value>
+              <value code="7">Circle</value>
+              <value code="9">Land</value>
+              <value code="11">Drift</value>
+              <value code="13">Sport</value>
+              <value code="14">Flip</value>
+              <value code="15">AutoTune</value>
+              <value code="16">PosHold</value>
+              <value code="17">Brake</value>
+              <value code="18">Throw</value>
+              <value code="19">Avoid_ADSB</value>
+              <value code="20">Guided_NoGPS</value>
+              <value code="21">Smart_RTL</value>
+              <value code="22">FlowHold</value>
+              <value code="23">Follow</value>
+              <value code="24">ZigZag</value>
+              <value code="25">SystemID</value>
+              <value code="26">Heli_Autorotate</value>
+              <value code="27">Auto RTL</value>
+              <value code="28">Turtle</value>
+            </values>
+          </param>
+          <param humanName="Flight Mode 5" name="ArduCopter:FLTMODE5" documentation="Flight mode when pwm of Flightmode channel(FLTMODE_CH) is &gt;1620, &lt;= 1749" user="Standard">
+            <values>
+              <value code="0">Stabilize</value>
+              <value code="1">Acro</value>
+              <value code="2">AltHold</value>
+              <value code="3">Auto</value>
+              <value code="4">Guided</value>
+              <value code="5">Loiter</value>
+              <value code="6">RTL</value>
+              <value code="7">Circle</value>
+              <value code="9">Land</value>
+              <value code="11">Drift</value>
+              <value code="13">Sport</value>
+              <value code="14">Flip</value>
+              <value code="15">AutoTune</value>
+              <value code="16">PosHold</value>
+              <value code="17">Brake</value>
+              <value code="18">Throw</value>
+              <value code="19">Avoid_ADSB</value>
+              <value code="20">Guided_NoGPS</value>
+              <value code="21">Smart_RTL</value>
+              <value code="22">FlowHold</value>
+              <value code="23">Follow</value>
+              <value code="24">ZigZag</value>
+              <value code="25">SystemID</value>
+              <value code="26">Heli_Autorotate</value>
+              <value code="27">Auto RTL</value>
+              <value code="28">Turtle</value>
+            </values>
+          </param>
+          <param humanName="Flight Mode 6" name="ArduCopter:FLTMODE6" documentation="Flight mode when pwm of Flightmode channel(FLTMODE_CH) is &gt;=1750" user="Standard">
+            <values>
+              <value code="0">Stabilize</value>
+              <value code="1">Acro</value>
+              <value code="2">AltHold</value>
+              <value code="3">Auto</value>
+              <value code="4">Guided</value>
+              <value code="5">Loiter</value>
+              <value code="6">RTL</value>
+              <value code="7">Circle</value>
+              <value code="9">Land</value>
+              <value code="11">Drift</value>
+              <value code="13">Sport</value>
+              <value code="14">Flip</value>
+              <value code="15">AutoTune</value>
+              <value code="16">PosHold</value>
+              <value code="17">Brake</value>
+              <value code="18">Throw</value>
+              <value code="19">Avoid_ADSB</value>
+              <value code="20">Guided_NoGPS</value>
+              <value code="21">Smart_RTL</value>
+              <value code="22">FlowHold</value>
+              <value code="23">Follow</value>
+              <value code="24">ZigZag</value>
+              <value code="25">SystemID</value>
+              <value code="26">Heli_Autorotate</value>
+              <value code="27">Auto RTL</value>
+              <value code="28">Turtle</value>
+            </values>
+          </param>
+          <param humanName="Flightmode channel" name="ArduCopter:FLTMODE_CH" documentation="RC Channel to use for flight mode control" user="Advanced">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="5">Channel5</value>
+              <value code="6">Channel6</value>
+              <value code="7">Channel7</value>
+              <value code="8">Channel8</value>
+              <value code="9">Channel9</value>
+              <value code="10">Channel 10</value>
+              <value code="11">Channel 11</value>
+              <value code="12">Channel 12</value>
+              <value code="13">Channel 13</value>
+              <value code="14">Channel 14</value>
+              <value code="15">Channel 15</value>
+            </values>
+          </param>
+          <param humanName="Land alt low" name="ArduCopter:LAND_ALT_LOW" documentation="Altitude during Landing at which vehicle slows to LAND_SPEED" user="Advanced">
+            <field name="Units">cm</field>
+            <field name="UnitText">centimeters</field>
+            <field name="Range">100 10000</field>
+            <field name="Increment">10</field>
+          </param>
+          <param humanName="Land speed high" name="ArduCopter:LAND_SPEED_HIGH" documentation="The descent speed for the first stage of landing in cm/s. If this is zero then WPNAV_SPEED_DN is used" user="Standard">
+            <field name="Units">cm/s</field>
+            <field name="UnitText">centimeters per second</field>
+            <field name="Range">0 500</field>
+            <field name="Increment">10</field>
+          </param>
+          <param humanName="Pilot vertical acceleration" name="ArduCopter:PILOT_ACCEL_Z" documentation="The vertical acceleration used when pilot is controlling the altitude" user="Standard">
+            <field name="Units">cm/s/s</field>
+            <field name="UnitText">centimeters per square second</field>
+            <field name="Range">50 500</field>
+            <field name="Increment">10</field>
+          </param>
+          <param humanName="Pilot maximum vertical speed descending" name="ArduCopter:PILOT_SPEED_DN" documentation="The maximum vertical descending velocity the pilot may request in cm/s.  If 0 PILOT_SPEED_UP value is used." user="Standard">
+            <field name="Units">cm/s</field>
+            <field name="UnitText">centimeters per second</field>
+            <field name="Range">0 500</field>
+            <field name="Increment">10</field>
+          </param>
+          <param humanName="RTL minimum climb" name="ArduCopter:RTL_CLIMB_MIN" documentation="The vehicle will climb this many cm during the initial climb portion of the RTL" user="Standard">
+            <field name="Units">cm</field>
+            <field name="UnitText">centimeters</field>
+            <field name="Range">0 3000</field>
+            <field name="Increment">10</field>
+          </param>
+          <param humanName="RTL speed" name="ArduCopter:RTL_SPEED" documentation="Defines the speed in cm/s which the aircraft will attempt to maintain horizontally while flying home. If this is set to zero, WPNAV_SPEED will be used instead." user="Standard">
+            <field name="Units">cm/s</field>
+            <field name="UnitText">centimeters per second</field>
+            <field name="Range">0 2000</field>
+            <field name="Increment">50</field>
+          </param>
+        </parameters>
+      </vehicles>
+      <libraries>
+        <parameters name="WPNAV_">
+          <param humanName="Waypoint Horizontal Speed Target" name="WPNAV_SPEED" documentation="Defines the speed in cm/s which the aircraft will attempt to maintain horizontally during a WP mission" user="Standard">
+            <field name="Units">cm/s</field>
+            <field name="UnitText">centimeters per second</field>
+            <field name="Range">10 2000</field>
+            <field name="Increment">50</field>
+          </param>
+          <param humanName="Waypoint Acceleration " name="WPNAV_ACCEL" documentation="Defines the horizontal acceleration in cm/s/s used during missions" user="Standard">
+            <field name="Units">cm/s/s</field>
+            <field name="UnitText">centimeters per square second</field>
+            <field name="Range">50 500</field>
+            <field name="Increment">10</field>
+          </param>
+          <param humanName="Waypoint Vertical Acceleration" name="WPNAV_ACCEL_Z" documentation="Defines the vertical acceleration in cm/s/s used during missions" user="Standard">
+            <field name="Units">cm/s/s</field>
+            <field name="UnitText">centimeters per square second</field>
+            <field name="Range">50 500</field>
+            <field name="Increment">10</field>
+          </param>
+          <param humanName="Waypoint Radius" name="WPNAV_RADIUS" documentation="Defines the distance from a waypoint, that when crossed indicates the wp has been hit." user="Standard">
+            <field name="Units">cm</field>
+            <field name="UnitText">centimeters</field>
+            <field name="Range">5 1000</field>
+            <field name="Increment">1</field>
+          </param>
+          <param humanName="Waypoint Descent Speed Target" name="WPNAV_SPEED_DN" documentation="Defines the speed in cm/s which the aircraft will attempt to maintain while descending during a WP mission" user="Standard">
+            <field name="Units">cm/s</field>
+            <field name="UnitText">centimeters per second</field>
+            <field name="Range">10 500</field>
+            <field name="Increment">10</field>
+          </param>
+          <param humanName="Waypoint Climb Speed Target" name="WPNAV_SPEED_UP" documentation="Defines the speed in cm/s which the aircraft will attempt to maintain while climbing during a WP mission" user="Standard">
+            <field name="Units">cm/s</field>
+            <field name="UnitText">centimeters per second</field>
+            <field name="Range">10 1000</field>
+            <field name="Increment">50</field>
+          </param>
+        </parameters>
+        <parameters name="ATC_">
+          <param humanName="Pitch axis angle controller P gain" name="ATC_ANG_PIT_P" documentation="Pitch axis angle controller P gain.  Converts the error between the desired pitch angle and actual angle to a desired pitch rate" user="Standard">
+            <field name="Range">3.000 12.000</field>
+          </param>
+          <param humanName="Roll axis angle controller P gain" name="ATC_ANG_RLL_P" documentation="Roll axis angle controller P gain.  Converts the error between the desired roll angle and actual angle to a desired roll rate" user="Standard">
+            <field name="Range">3.000 12.000</field>
+          </param>
+          <param humanName="Yaw axis angle controller P gain" name="ATC_ANG_YAW_P" documentation="Yaw axis angle controller P gain.  Converts the error between the desired yaw angle and actual angle to a desired yaw rate" user="Standard">
+            <field name="Range">3.000 12.000</field>
+          </param>
+        </parameters>
+        <parameters name="INS">
+          <param humanName="Accel filter cutoff frequency" name="INS_ACCEL_FILTER" documentation="Filter cutoff frequency for accelerometers. This can be set to a lower value to try to cope with very high vibration levels in aircraft. A value of zero means no filtering (not recommended!)" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 256</field>
+          </param>
+          <param humanName="Gyro filter cutoff frequency" name="INS_GYRO_FILTER" documentation="Filter cutoff frequency for gyroscopes. This can be set to a lower value to try to cope with very high vibration levels in aircraft. A value of zero means no filtering (not recommended!)" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 256</field>
+          </param>
+        </parameters>
+        <parameters name="LOG">
+          <param humanName="Enable logging while disarmed" name="LOG_DISARMED" documentation="If LOG_DISARMED is set to 1 then logging will be enabled at all times including when disarmed. Logging before arming can make for very large logfiles but can help a lot when tracking down startup issues and is necessary if logging of EKF replay data is selected via the LOG_REPLAY parameter. If LOG_DISARMED is set to 2, then logging will be enabled when disarmed, but not if a USB connection is detected. This can be used to prevent unwanted data logs being generated when the vehicle is connected via USB for log downloading or parameter changes. If LOG_DISARMED is set to 3 then logging will happen while disarmed, but if the vehicle never arms then the logs using the filesystem backend will be discarded on the next boot." user="Standard">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+              <value code="2">Disabled on USB connection</value>
+              <value code="3">Discard log on reboot if never armed</value>
+            </values>
+          </param>
+          <param humanName="Enable logging of information needed for Replay" name="LOG_REPLAY" documentation="If LOG_REPLAY is set to 1 then the EKF2 and EKF3 state estimators will log detailed information needed for diagnosing problems with the Kalman filter. LOG_DISARMED must be set to 1 or 2 or else the log will not contain the pre-flight data required for replay testing of the EKF's. It is suggested that you also raise LOG_FILE_BUFSIZE to give more buffer space for logging and use a high quality microSD card to ensure no sensor data is lost." user="Standard">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+        </parameters>
+        <parameters name="LOIT_">
+          <param humanName="Loiter pilot angle max" name="LOIT_ANG_MAX" documentation="Loiter maximum pilot requested lean angle. Set to zero for 2/3 of PSC_ANGLE_MAX/ANGLE_MAX. The maximum vehicle lean angle is still limited by PSC_ANGLE_MAX/ANGLE_MAX" user="Advanced">
+            <field name="Units">deg</field>
+            <field name="UnitText">degrees</field>
+            <field name="Range">0 45</field>
+            <field name="Increment">1</field>
+          </param>
+          <param humanName="Loiter brake start delay (in seconds)" name="LOIT_BRK_DELAY" documentation="Loiter brake start delay (in seconds)" user="Advanced">
+            <field name="Units">s</field>
+            <field name="UnitText">seconds</field>
+            <field name="Range">0 2</field>
+            <field name="Increment">0.1</field>
+          </param>
+          <param humanName="Loiter maximum correction acceleration" name="LOIT_ACC_MAX" documentation="Loiter maximum correction acceleration in cm/s/s.  Higher values cause the copter to correct position errors more aggressively." user="Advanced">
+            <field name="Units">cm/s/s</field>
+            <field name="UnitText">centimeters per square second</field>
+            <field name="Range">100 981</field>
+            <field name="Increment">1</field>
+          </param>
+          <param humanName="Loiter braking acceleration" name="LOIT_BRK_ACCEL" documentation="Loiter braking acceleration in cm/s/s. Higher values stop the copter more quickly when the stick is centered." user="Advanced">
+            <field name="Units">cm/s/s</field>
+            <field name="UnitText">centimeters per square second</field>
+            <field name="Range">25 250</field>
+            <field name="Increment">1</field>
+          </param>
+          <param humanName="Loiter braking jerk" name="LOIT_BRK_JERK" documentation="Loiter braking jerk in cm/s/s/s. Higher values will remove braking faster if the pilot moves the sticks during a braking maneuver." user="Advanced">
+            <field name="Units">cm/s/s/s</field>
+            <field name="UnitText">centimeters per cubic second</field>
+            <field name="Range">500 5000</field>
+            <field name="Increment">1</field>
+          </param>
+          <param humanName="Loiter Horizontal Maximum Speed" name="LOIT_SPEED" documentation="Defines the maximum speed in cm/s which the aircraft will travel horizontally while in loiter mode" user="Standard">
+            <field name="Units">cm/s</field>
+            <field name="UnitText">centimeters per second</field>
+            <field name="Range">20 3500</field>
+            <field name="Increment">50</field>
+          </param>
+        </parameters>
+      </libraries>
+    </paramfile>
+  </release>
+  <release family="Copter" version="4.7.1" sourceUrl="https://autotest.ardupilot.org/Parameters/versioned/Copter/stable-4.7.1/apm.pdef.xml" sourceSha256="9e5e674c6029bd9f680540c62119086c26991d3ba586c585f4e98484036c0518" gitSha="dbe792162d06cab66c3475fd5556bf7a120f119e">
+    <paramfile>
+      <firmware git_tag="Copter-4.7.1" git_sha="dbe792162d06cab66c3475fd5556bf7a120f119e" />
+      <vehicles>
+        <parameters name="ArduCopter">
+          <param humanName="RTL loiter time" name="ArduCopter:RTL_LOIT_TIME" documentation="Time (in milliseconds) to loiter above home before beginning final descent" user="Standard">
+            <field name="Units">ms</field>
+            <field name="UnitText">milliseconds</field>
+            <field name="Range">0 60000</field>
+            <field name="Increment">1000</field>
+          </param>
+          <param humanName="Yaw behaviour during missions" name="ArduCopter:WP_YAW_BEHAVIOR" documentation="Determines how the autopilot controls the yaw during missions and RTL" user="Standard">
+            <values>
+              <value code="0">Never change yaw</value>
+              <value code="1">Face next waypoint</value>
+              <value code="2">Face next waypoint except RTL</value>
+              <value code="3">Face along GPS course</value>
+            </values>
+          </param>
+          <param humanName="Pilot maximum vertical speed ascending" name="ArduCopter:PILOT_SPD_UP" documentation="The maximum vertical ascending velocity the pilot may request in m/s" user="Standard">
+            <field name="Units">m/s</field>
+            <field name="UnitText">meters per second</field>
+            <field name="Range">0.5 5</field>
+            <field name="Increment">0.1</field>
+          </param>
+          <param humanName="Flight Mode 1" name="ArduCopter:FLTMODE1" documentation="Flight mode when pwm of Flightmode channel(FLTMODE_CH) is &lt;= 1230" user="Standard">
+            <values>
+              <value code="0">Stabilize</value>
+              <value code="1">Acro</value>
+              <value code="2">AltHold</value>
+              <value code="3">Auto</value>
+              <value code="4">Guided</value>
+              <value code="5">Loiter</value>
+              <value code="6">RTL</value>
+              <value code="7">Circle</value>
+              <value code="9">Land</value>
+              <value code="11">Drift</value>
+              <value code="13">Sport</value>
+              <value code="14">Flip</value>
+              <value code="15">AutoTune</value>
+              <value code="16">PosHold</value>
+              <value code="17">Brake</value>
+              <value code="18">Throw</value>
+              <value code="19">Avoid_ADSB</value>
+              <value code="20">Guided_NoGPS</value>
+              <value code="21">Smart_RTL</value>
+              <value code="22">FlowHold</value>
+              <value code="23">Follow</value>
+              <value code="24">ZigZag</value>
+              <value code="25">SystemID</value>
+              <value code="26">Heli_Autorotate</value>
+              <value code="27">Auto RTL</value>
+              <value code="28">Turtle</value>
+            </values>
+          </param>
+          <param humanName="Flight Mode 2" name="ArduCopter:FLTMODE2" documentation="Flight mode when pwm of Flightmode channel(FLTMODE_CH) is &gt;1230, &lt;= 1360" user="Standard">
+            <values>
+              <value code="0">Stabilize</value>
+              <value code="1">Acro</value>
+              <value code="2">AltHold</value>
+              <value code="3">Auto</value>
+              <value code="4">Guided</value>
+              <value code="5">Loiter</value>
+              <value code="6">RTL</value>
+              <value code="7">Circle</value>
+              <value code="9">Land</value>
+              <value code="11">Drift</value>
+              <value code="13">Sport</value>
+              <value code="14">Flip</value>
+              <value code="15">AutoTune</value>
+              <value code="16">PosHold</value>
+              <value code="17">Brake</value>
+              <value code="18">Throw</value>
+              <value code="19">Avoid_ADSB</value>
+              <value code="20">Guided_NoGPS</value>
+              <value code="21">Smart_RTL</value>
+              <value code="22">FlowHold</value>
+              <value code="23">Follow</value>
+              <value code="24">ZigZag</value>
+              <value code="25">SystemID</value>
+              <value code="26">Heli_Autorotate</value>
+              <value code="27">Auto RTL</value>
+              <value code="28">Turtle</value>
+            </values>
+          </param>
+          <param humanName="Flight Mode 3" name="ArduCopter:FLTMODE3" documentation="Flight mode when pwm of Flightmode channel(FLTMODE_CH) is &gt;1360, &lt;= 1490" user="Standard">
+            <values>
+              <value code="0">Stabilize</value>
+              <value code="1">Acro</value>
+              <value code="2">AltHold</value>
+              <value code="3">Auto</value>
+              <value code="4">Guided</value>
+              <value code="5">Loiter</value>
+              <value code="6">RTL</value>
+              <value code="7">Circle</value>
+              <value code="9">Land</value>
+              <value code="11">Drift</value>
+              <value code="13">Sport</value>
+              <value code="14">Flip</value>
+              <value code="15">AutoTune</value>
+              <value code="16">PosHold</value>
+              <value code="17">Brake</value>
+              <value code="18">Throw</value>
+              <value code="19">Avoid_ADSB</value>
+              <value code="20">Guided_NoGPS</value>
+              <value code="21">Smart_RTL</value>
+              <value code="22">FlowHold</value>
+              <value code="23">Follow</value>
+              <value code="24">ZigZag</value>
+              <value code="25">SystemID</value>
+              <value code="26">Heli_Autorotate</value>
+              <value code="27">Auto RTL</value>
+              <value code="28">Turtle</value>
+            </values>
+          </param>
+          <param humanName="Flight Mode 4" name="ArduCopter:FLTMODE4" documentation="Flight mode when pwm of Flightmode channel(FLTMODE_CH) is &gt;1490, &lt;= 1620" user="Standard">
+            <values>
+              <value code="0">Stabilize</value>
+              <value code="1">Acro</value>
+              <value code="2">AltHold</value>
+              <value code="3">Auto</value>
+              <value code="4">Guided</value>
+              <value code="5">Loiter</value>
+              <value code="6">RTL</value>
+              <value code="7">Circle</value>
+              <value code="9">Land</value>
+              <value code="11">Drift</value>
+              <value code="13">Sport</value>
+              <value code="14">Flip</value>
+              <value code="15">AutoTune</value>
+              <value code="16">PosHold</value>
+              <value code="17">Brake</value>
+              <value code="18">Throw</value>
+              <value code="19">Avoid_ADSB</value>
+              <value code="20">Guided_NoGPS</value>
+              <value code="21">Smart_RTL</value>
+              <value code="22">FlowHold</value>
+              <value code="23">Follow</value>
+              <value code="24">ZigZag</value>
+              <value code="25">SystemID</value>
+              <value code="26">Heli_Autorotate</value>
+              <value code="27">Auto RTL</value>
+              <value code="28">Turtle</value>
+            </values>
+          </param>
+          <param humanName="Flight Mode 5" name="ArduCopter:FLTMODE5" documentation="Flight mode when pwm of Flightmode channel(FLTMODE_CH) is &gt;1620, &lt;= 1749" user="Standard">
+            <values>
+              <value code="0">Stabilize</value>
+              <value code="1">Acro</value>
+              <value code="2">AltHold</value>
+              <value code="3">Auto</value>
+              <value code="4">Guided</value>
+              <value code="5">Loiter</value>
+              <value code="6">RTL</value>
+              <value code="7">Circle</value>
+              <value code="9">Land</value>
+              <value code="11">Drift</value>
+              <value code="13">Sport</value>
+              <value code="14">Flip</value>
+              <value code="15">AutoTune</value>
+              <value code="16">PosHold</value>
+              <value code="17">Brake</value>
+              <value code="18">Throw</value>
+              <value code="19">Avoid_ADSB</value>
+              <value code="20">Guided_NoGPS</value>
+              <value code="21">Smart_RTL</value>
+              <value code="22">FlowHold</value>
+              <value code="23">Follow</value>
+              <value code="24">ZigZag</value>
+              <value code="25">SystemID</value>
+              <value code="26">Heli_Autorotate</value>
+              <value code="27">Auto RTL</value>
+              <value code="28">Turtle</value>
+            </values>
+          </param>
+          <param humanName="Flight Mode 6" name="ArduCopter:FLTMODE6" documentation="Flight mode when pwm of Flightmode channel(FLTMODE_CH) is &gt;=1750" user="Standard">
+            <values>
+              <value code="0">Stabilize</value>
+              <value code="1">Acro</value>
+              <value code="2">AltHold</value>
+              <value code="3">Auto</value>
+              <value code="4">Guided</value>
+              <value code="5">Loiter</value>
+              <value code="6">RTL</value>
+              <value code="7">Circle</value>
+              <value code="9">Land</value>
+              <value code="11">Drift</value>
+              <value code="13">Sport</value>
+              <value code="14">Flip</value>
+              <value code="15">AutoTune</value>
+              <value code="16">PosHold</value>
+              <value code="17">Brake</value>
+              <value code="18">Throw</value>
+              <value code="19">Avoid_ADSB</value>
+              <value code="20">Guided_NoGPS</value>
+              <value code="21">Smart_RTL</value>
+              <value code="22">FlowHold</value>
+              <value code="23">Follow</value>
+              <value code="24">ZigZag</value>
+              <value code="25">SystemID</value>
+              <value code="26">Heli_Autorotate</value>
+              <value code="27">Auto RTL</value>
+              <value code="28">Turtle</value>
+            </values>
+          </param>
+          <param humanName="Flightmode channel" name="ArduCopter:FLTMODE_CH" documentation="RC Channel to use for flight mode control" user="Advanced">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="5">Channel5</value>
+              <value code="6">Channel6</value>
+              <value code="7">Channel7</value>
+              <value code="8">Channel8</value>
+              <value code="9">Channel9</value>
+              <value code="10">Channel 10</value>
+              <value code="11">Channel 11</value>
+              <value code="12">Channel 12</value>
+              <value code="13">Channel 13</value>
+              <value code="14">Channel 14</value>
+              <value code="15">Channel 15</value>
+            </values>
+          </param>
+          <param humanName="Pilot vertical acceleration" name="ArduCopter:PILOT_ACC_Z" documentation="The vertical acceleration used when pilot is controlling the altitude" user="Standard">
+            <field name="Units">m/s/s</field>
+            <field name="UnitText">meters per square second</field>
+            <field name="Range">0.5 5</field>
+            <field name="Increment">0.1</field>
+          </param>
+          <param humanName="Pilot maximum vertical speed descending" name="ArduCopter:PILOT_SPD_DN" documentation="The maximum vertical descending velocity the pilot may request in m/s.  If 0 PILOT_SPD_UP value is used." user="Standard">
+            <field name="Units">m/s</field>
+            <field name="UnitText">meters per second</field>
+            <field name="Range">0 5</field>
+            <field name="Increment">0.1</field>
+          </param>
+        </parameters>
+      </vehicles>
+      <libraries>
+        <parameters name="RTL_">
+          <param humanName="RTL Altitude" name="RTL_ALT_M" documentation="The minimum alt above home the vehicle will climb to before returning. If the vehicle is flying higher than this value it will return at its current altitude." user="Standard">
+            <field name="Units">m</field>
+            <field name="UnitText">meters</field>
+            <field name="Range">0.30 3000</field>
+            <field name="Increment">0.1</field>
+          </param>
+          <param humanName="RTL Final Altitude" name="RTL_ALT_FINAL_M" documentation="Altitude the vehicle will move to as the final stage of Returning to Launch or after completing a mission. Set to zero to land." user="Standard">
+            <field name="Units">m</field>
+            <field name="UnitText">meters</field>
+            <field name="Range">0 10</field>
+            <field name="Increment">0.1</field>
+          </param>
+          <param humanName="RTL minimum climb" name="RTL_CLIMB_MIN_M" documentation="The vehicle will climb this many meters during the initial climb portion of the RTL" user="Standard">
+            <field name="Units">m</field>
+            <field name="UnitText">meters</field>
+            <field name="Range">0 30</field>
+            <field name="Increment">0.1</field>
+          </param>
+          <param humanName="RTL speed" name="RTL_SPEED_MS" documentation="The speed in m/s which the aircraft will attempt to maintain horizontally while flying home. If this is set to zero, WP_SPD will be used instead." user="Standard">
+            <field name="Units">m/s</field>
+            <field name="UnitText">meters per second</field>
+            <field name="Range">0 20</field>
+            <field name="Increment">0.5</field>
+          </param>
+        </parameters>
+        <parameters name="WP_">
+          <param humanName="Waypoint Horizontal Speed Target" name="WP_SPD" documentation="Speed in m/s which the aircraft will attempt to maintain horizontally during a WP mission" user="Standard">
+            <field name="Units">m/s</field>
+            <field name="UnitText">meters per second</field>
+            <field name="Range">0.10 20.00</field>
+            <field name="Increment">0.10</field>
+          </param>
+          <param humanName="Waypoint Acceleration" name="WP_ACC" documentation="Horizontal acceleration in m/s/s used during missions" user="Standard">
+            <field name="Units">m/s/s</field>
+            <field name="UnitText">meters per square second</field>
+            <field name="Range">0.50 5.00</field>
+            <field name="Increment">0.10</field>
+          </param>
+          <param humanName="Waypoint Vertical Acceleration" name="WP_ACC_Z" documentation="Vertical acceleration in m/s/s used during missions" user="Standard">
+            <field name="Units">m/s/s</field>
+            <field name="UnitText">meters per square second</field>
+            <field name="Range">0.50 5.00</field>
+            <field name="Increment">0.10</field>
+          </param>
+          <param humanName="Waypoint Radius" name="WP_RADIUS_M" documentation="Distance from a waypoint, that when crossed indicates the wp has been reached." user="Standard">
+            <field name="Units">m</field>
+            <field name="UnitText">meters</field>
+            <field name="Range">0.05 10.00</field>
+            <field name="Increment">0.01</field>
+          </param>
+          <param humanName="Waypoint Descent Speed Target" name="WP_SPD_DN" documentation="Speed in m/s which the aircraft will attempt to maintain while descending during a WP mission" user="Standard">
+            <field name="Units">m/s</field>
+            <field name="UnitText">meters per second</field>
+            <field name="Range">0.10 10.00</field>
+            <field name="Increment">0.10</field>
+          </param>
+          <param humanName="Waypoint Climb Speed Target" name="WP_SPD_UP" documentation="Speed in m/s which the aircraft will attempt to maintain while climbing during a WP mission" user="Standard">
+            <field name="Units">m/s</field>
+            <field name="UnitText">meters per second</field>
+            <field name="Range">0.10 10.00</field>
+            <field name="Increment">0.10</field>
+          </param>
+        </parameters>
+        <parameters name="ATC_">
+          <param humanName="Pitch axis angle controller P gain" name="ATC_ANG_PIT_P" documentation="Pitch axis angle controller P gain.  Converts the error between the desired pitch angle and actual angle to a desired pitch rate" user="Standard">
+            <field name="Range">3.000 12.000</field>
+            <field name="Increment">0.01</field>
+          </param>
+          <param humanName="Roll axis angle controller P gain" name="ATC_ANG_RLL_P" documentation="Roll axis angle controller P gain.  Converts the error between the desired roll angle and actual angle to a desired roll rate" user="Standard">
+            <field name="Range">3.000 12.000</field>
+            <field name="Increment">0.01</field>
+          </param>
+          <param humanName="Yaw axis angle controller P gain" name="ATC_ANG_YAW_P" documentation="Yaw axis angle controller P gain.  Converts the error between the desired yaw angle and actual angle to a desired yaw rate" user="Standard">
+            <field name="Range">3.000 12.000</field>
+            <field name="Increment">0.01</field>
+          </param>
+        </parameters>
+        <parameters name="INS">
+          <param humanName="Accel filter cutoff frequency" name="INS_ACCEL_FILTER" documentation="Filter cutoff frequency for accelerometers. This can be set to a lower value to try to cope with very high vibration levels in aircraft. A value of zero means no filtering (not recommended!)" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 256</field>
+          </param>
+          <param humanName="Gyro filter cutoff frequency" name="INS_GYRO_FILTER" documentation="Filter cutoff frequency for gyroscopes. This can be set to a lower value to try to cope with very high vibration levels in aircraft. A value of zero means no filtering (not recommended!)" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 256</field>
+          </param>
+        </parameters>
+        <parameters name="LOG">
+          <param humanName="Enable logging while disarmed" name="LOG_DISARMED" documentation="If LOG_DISARMED is set to 1 then logging will be enabled at all times including when disarmed. Logging before arming can make for very large logfiles but can help a lot when tracking down startup issues and is necessary if logging of EKF replay data is selected via the LOG_REPLAY parameter. If LOG_DISARMED is set to 2, then logging will be enabled when disarmed, but not if a USB connection is detected. This can be used to prevent unwanted data logs being generated when the vehicle is connected via USB for log downloading or parameter changes. If LOG_DISARMED is set to 3 then logging will happen while disarmed, but if the vehicle never arms then the logs using the filesystem backend will be discarded on the next boot." user="Standard">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+              <value code="2">Disabled on USB connection</value>
+              <value code="3">Discard log on reboot if never armed</value>
+            </values>
+          </param>
+          <param humanName="Enable logging of information needed for Replay" name="LOG_REPLAY" documentation="If LOG_REPLAY is set to 1 then the EKF2 and EKF3 state estimators will log detailed information needed for diagnosing problems with the Kalman filter. LOG_DISARMED must be set to 1 or 2 or else the log will not contain the pre-flight data required for replay testing of the EKF's. It is suggested that you also raise LOG_FILE_BUFSIZE to give more buffer space for logging and use a high quality microSD card to ensure no sensor data is lost." user="Standard">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+        </parameters>
+        <parameters name="LOIT_">
+          <param humanName="Loiter pilot angle max" name="LOIT_ANG_MAX" documentation="Loiter maximum pilot requested lean angle. Set to zero for 2/3 of PSC_ANGLE_MAX/ATC_ANGLE_MAX. The maximum vehicle lean angle is still limited by PSC_ANGLE_MAX/ATC_ANGLE_MAX" user="Advanced">
+            <field name="Units">deg</field>
+            <field name="UnitText">degrees</field>
+            <field name="Range">0 45</field>
+            <field name="Increment">1</field>
+          </param>
+          <param humanName="Loiter brake start delay (in seconds)" name="LOIT_BRK_DELAY" documentation="Loiter brake start delay (in seconds)" user="Advanced">
+            <field name="Units">s</field>
+            <field name="UnitText">seconds</field>
+            <field name="Range">0 2</field>
+            <field name="Increment">0.1</field>
+          </param>
+          <param humanName="Loiter maximum correction acceleration" name="LOIT_ACC_MAX_M" documentation="Loiter maximum correction acceleration in m/s/s.  Higher values cause the copter to correct position errors more aggressively." user="Advanced">
+            <field name="Units">m/s/s</field>
+            <field name="UnitText">meters per square second</field>
+            <field name="Range">1 9.81</field>
+            <field name="Increment">0.01</field>
+          </param>
+          <param humanName="Loiter braking acceleration" name="LOIT_BRK_ACC_M" documentation="Loiter braking acceleration in m/s/s. Higher values stop the copter more quickly when the stick is centered." user="Advanced">
+            <field name="Units">m/s/s</field>
+            <field name="UnitText">meters per square second</field>
+            <field name="Range">0.25 2.5</field>
+            <field name="Increment">0.01</field>
+          </param>
+          <param humanName="Loiter braking jerk" name="LOIT_BRK_JRK_M" documentation="Loiter braking jerk in m/s/s/s. Higher values will remove braking faster if the pilot moves the sticks during a braking maneuver." user="Advanced">
+            <field name="Units">m/s/s/s</field>
+            <field name="UnitText">meters per cubic second</field>
+            <field name="Range">5 50</field>
+            <field name="Increment">0.01</field>
+          </param>
+          <param humanName="Loiter Horizontal Maximum Speed" name="LOIT_SPEED_MS" documentation="Defines the maximum speed in m/s which the aircraft will travel horizontally while in loiter mode" user="Standard">
+            <field name="Units">m/s</field>
+            <field name="UnitText">meters per second</field>
+            <field name="Range">0.20 35</field>
+            <field name="Increment">0.05</field>
+          </param>
+        </parameters>
+        <parameters name="LAND_">
+          <param humanName="Land alt low" name="LAND_ALT_LOW_M" documentation="Altitude during Landing at which vehicle slows to LAND_SPD_MS" user="Advanced">
+            <field name="Units">m</field>
+            <field name="UnitText">meters</field>
+            <field name="Range">1 100</field>
+            <field name="Increment">0.1</field>
+          </param>
+          <param humanName="Land speed high" name="LAND_SPD_HIGH_MS" documentation="The descent speed for the first stage of landing in m/s. If this is zero then WP_SPD_DN is used" user="Standard">
+            <field name="Units">m/s</field>
+            <field name="UnitText">meters per second</field>
+            <field name="Range">0 5</field>
+            <field name="Increment">0.1</field>
+          </param>
+        </parameters>
+      </libraries>
+    </paramfile>
+  </release>
+  <release family="Plane" version="4.5.7" sourceUrl="https://autotest.ardupilot.org/Parameters/versioned/Plane/stable-4.5.7/apm.pdef.xml" sourceSha256="4abf0156f5c68d61fe0efef5f24daefc31754ee1ddf6cd8e70b01aff300bfa83" gitSha="0358a9c210bc6c965006f5d6029239b7033616df">
+    <paramfile>
+      <firmware git_tag="Plane-4.5.7" git_sha="0358a9c210bc6c965006f5d6029239b7033616df" />
+      <vehicles>
+        <parameters name="ArduPlane">
+          <param humanName="Waypoint Radius" name="ArduPlane:WP_RADIUS" documentation="Defines the maximum distance from a waypoint that when crossed indicates the waypoint may be complete. To avoid the aircraft looping around the waypoint in case it misses by more than the WP_RADIUS an additional check is made to see if the aircraft has crossed a &quot;finish line&quot; passing through the waypoint and perpendicular to the flight path from the previous waypoint. If that finish line is crossed then the waypoint is considered complete. Note that the navigation controller may decide to turn later than WP_RADIUS before a waypoint, based on how sharp the turn is and the speed of the aircraft. It is safe to set WP_RADIUS much larger than the usual turn radius of your aircraft and the navigation controller will work out when to turn. If you set WP_RADIUS too small then you will tend to overshoot the turns." user="Standard">
+            <field name="Units">m</field>
+            <field name="UnitText">meters</field>
+            <field name="Range">1 32767</field>
+            <field name="Increment">1</field>
+          </param>
+          <param humanName="Target cruise airspeed" name="ArduPlane:AIRSPEED_CRUISE" documentation="Target cruise airspeed in m/s in automatic throttle modes. Value is as an indicated (calibrated/apparent) airspeed." user="Standard">
+            <field name="Units">m/s</field>
+            <field name="UnitText">meters per second</field>
+          </param>
+          <param humanName="RTL altitude" name="ArduPlane:RTL_ALTITUDE" documentation="Target altitude above home for RTL mode. Maintains current altitude if set to -1. Rally point altitudes are used if plane does not return to home." user="Standard">
+            <field name="Units">m</field>
+            <field name="UnitText">meters</field>
+          </param>
+          <param humanName="Maximum Airspeed" name="ArduPlane:AIRSPEED_MAX" documentation="Maximum airspeed demanded in automatic throttle modes. Should be set slightly less than level flight speed at THR_MAX and also at least 50% above AIRSPEED_MIN to allow for accurate TECS altitude control." user="Standard">
+            <field name="Units">m/s</field>
+            <field name="UnitText">meters per second</field>
+            <field name="Range">5 100</field>
+            <field name="Increment">1</field>
+          </param>
+          <param humanName="Minimum Airspeed" name="ArduPlane:AIRSPEED_MIN" documentation="Minimum airspeed demanded in automatic throttle modes. Should be set to 20% higher than level flight stall speed." user="Standard">
+            <field name="Units">m/s</field>
+            <field name="UnitText">meters per second</field>
+            <field name="Range">5 100</field>
+            <field name="Increment">1</field>
+          </param>
+          <param humanName="FlightMode1" name="ArduPlane:FLTMODE1" documentation="Flight mode for switch position 1 (910 to 1230 and above 2049)" user="Standard">
+            <values>
+              <value code="0">Manual</value>
+              <value code="1">CIRCLE</value>
+              <value code="2">STABILIZE</value>
+              <value code="3">TRAINING</value>
+              <value code="4">ACRO</value>
+              <value code="5">FBWA</value>
+              <value code="6">FBWB</value>
+              <value code="7">CRUISE</value>
+              <value code="8">AUTOTUNE</value>
+              <value code="10">Auto</value>
+              <value code="11">RTL</value>
+              <value code="12">Loiter</value>
+              <value code="13">TAKEOFF</value>
+              <value code="14">AVOID_ADSB</value>
+              <value code="15">Guided</value>
+              <value code="17">QSTABILIZE</value>
+              <value code="18">QHOVER</value>
+              <value code="19">QLOITER</value>
+              <value code="20">QLAND</value>
+              <value code="21">QRTL</value>
+              <value code="22">QAUTOTUNE</value>
+              <value code="23">QACRO</value>
+              <value code="24">THERMAL</value>
+              <value code="25">Loiter to QLand</value>
+            </values>
+          </param>
+          <param humanName="FlightMode2" name="ArduPlane:FLTMODE2" documentation="Flight mode for switch position 2 (1231 to 1360)" user="Standard">
+            <values>
+              <value code="0">Manual</value>
+              <value code="1">CIRCLE</value>
+              <value code="2">STABILIZE</value>
+              <value code="3">TRAINING</value>
+              <value code="4">ACRO</value>
+              <value code="5">FBWA</value>
+              <value code="6">FBWB</value>
+              <value code="7">CRUISE</value>
+              <value code="8">AUTOTUNE</value>
+              <value code="10">Auto</value>
+              <value code="11">RTL</value>
+              <value code="12">Loiter</value>
+              <value code="13">TAKEOFF</value>
+              <value code="14">AVOID_ADSB</value>
+              <value code="15">Guided</value>
+              <value code="17">QSTABILIZE</value>
+              <value code="18">QHOVER</value>
+              <value code="19">QLOITER</value>
+              <value code="20">QLAND</value>
+              <value code="21">QRTL</value>
+              <value code="22">QAUTOTUNE</value>
+              <value code="23">QACRO</value>
+              <value code="24">THERMAL</value>
+              <value code="25">Loiter to QLand</value>
+            </values>
+          </param>
+          <param humanName="FlightMode3" name="ArduPlane:FLTMODE3" documentation="Flight mode for switch position 3 (1361 to 1490)" user="Standard">
+            <values>
+              <value code="0">Manual</value>
+              <value code="1">CIRCLE</value>
+              <value code="2">STABILIZE</value>
+              <value code="3">TRAINING</value>
+              <value code="4">ACRO</value>
+              <value code="5">FBWA</value>
+              <value code="6">FBWB</value>
+              <value code="7">CRUISE</value>
+              <value code="8">AUTOTUNE</value>
+              <value code="10">Auto</value>
+              <value code="11">RTL</value>
+              <value code="12">Loiter</value>
+              <value code="13">TAKEOFF</value>
+              <value code="14">AVOID_ADSB</value>
+              <value code="15">Guided</value>
+              <value code="17">QSTABILIZE</value>
+              <value code="18">QHOVER</value>
+              <value code="19">QLOITER</value>
+              <value code="20">QLAND</value>
+              <value code="21">QRTL</value>
+              <value code="22">QAUTOTUNE</value>
+              <value code="23">QACRO</value>
+              <value code="24">THERMAL</value>
+              <value code="25">Loiter to QLand</value>
+            </values>
+          </param>
+          <param humanName="FlightMode4" name="ArduPlane:FLTMODE4" documentation="Flight mode for switch position 4 (1491 to 1620)" user="Standard">
+            <values>
+              <value code="0">Manual</value>
+              <value code="1">CIRCLE</value>
+              <value code="2">STABILIZE</value>
+              <value code="3">TRAINING</value>
+              <value code="4">ACRO</value>
+              <value code="5">FBWA</value>
+              <value code="6">FBWB</value>
+              <value code="7">CRUISE</value>
+              <value code="8">AUTOTUNE</value>
+              <value code="10">Auto</value>
+              <value code="11">RTL</value>
+              <value code="12">Loiter</value>
+              <value code="13">TAKEOFF</value>
+              <value code="14">AVOID_ADSB</value>
+              <value code="15">Guided</value>
+              <value code="17">QSTABILIZE</value>
+              <value code="18">QHOVER</value>
+              <value code="19">QLOITER</value>
+              <value code="20">QLAND</value>
+              <value code="21">QRTL</value>
+              <value code="22">QAUTOTUNE</value>
+              <value code="23">QACRO</value>
+              <value code="24">THERMAL</value>
+              <value code="25">Loiter to QLand</value>
+            </values>
+          </param>
+          <param humanName="FlightMode5" name="ArduPlane:FLTMODE5" documentation="Flight mode for switch position 5 (1621 to 1749)" user="Standard">
+            <values>
+              <value code="0">Manual</value>
+              <value code="1">CIRCLE</value>
+              <value code="2">STABILIZE</value>
+              <value code="3">TRAINING</value>
+              <value code="4">ACRO</value>
+              <value code="5">FBWA</value>
+              <value code="6">FBWB</value>
+              <value code="7">CRUISE</value>
+              <value code="8">AUTOTUNE</value>
+              <value code="10">Auto</value>
+              <value code="11">RTL</value>
+              <value code="12">Loiter</value>
+              <value code="13">TAKEOFF</value>
+              <value code="14">AVOID_ADSB</value>
+              <value code="15">Guided</value>
+              <value code="17">QSTABILIZE</value>
+              <value code="18">QHOVER</value>
+              <value code="19">QLOITER</value>
+              <value code="20">QLAND</value>
+              <value code="21">QRTL</value>
+              <value code="22">QAUTOTUNE</value>
+              <value code="23">QACRO</value>
+              <value code="24">THERMAL</value>
+              <value code="25">Loiter to QLand</value>
+            </values>
+          </param>
+          <param humanName="FlightMode6" name="ArduPlane:FLTMODE6" documentation="Flight mode for switch position 6 (1750 to 2049)" user="Standard">
+            <values>
+              <value code="0">Manual</value>
+              <value code="1">CIRCLE</value>
+              <value code="2">STABILIZE</value>
+              <value code="3">TRAINING</value>
+              <value code="4">ACRO</value>
+              <value code="5">FBWA</value>
+              <value code="6">FBWB</value>
+              <value code="7">CRUISE</value>
+              <value code="8">AUTOTUNE</value>
+              <value code="10">Auto</value>
+              <value code="11">RTL</value>
+              <value code="12">Loiter</value>
+              <value code="13">TAKEOFF</value>
+              <value code="14">AVOID_ADSB</value>
+              <value code="15">Guided</value>
+              <value code="17">QSTABILIZE</value>
+              <value code="18">QHOVER</value>
+              <value code="19">QLOITER</value>
+              <value code="20">QLAND</value>
+              <value code="21">QRTL</value>
+              <value code="22">QAUTOTUNE</value>
+              <value code="23">QACRO</value>
+              <value code="24">THERMAL</value>
+              <value code="25">Loiter to QLand</value>
+            </values>
+          </param>
+          <param humanName="Flightmode channel" name="ArduPlane:FLTMODE_CH" documentation="RC Channel to use for flight mode control" user="Advanced">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Channel 1</value>
+              <value code="2">Channel 2</value>
+              <value code="3">Channel 3</value>
+              <value code="4">Channel 4</value>
+              <value code="5">Channel 5</value>
+              <value code="6">Channel 6</value>
+              <value code="7">Channel 7</value>
+              <value code="8">Channel 8</value>
+              <value code="9">Channel 9</value>
+              <value code="10">Channel 10</value>
+              <value code="11">Channel 11</value>
+              <value code="12">Channel 12</value>
+              <value code="13">Channel 13</value>
+              <value code="14">Channel 14</value>
+              <value code="15">Channel 15</value>
+              <value code="16">Channel 16</value>
+            </values>
+          </param>
+          <param humanName="Maximum Pitch Angle" name="ArduPlane:PTCH_LIM_MAX_DEG" documentation="Maximum pitch up angle commanded in modes with stabilized limits." user="Standard">
+            <field name="Units">deg</field>
+            <field name="UnitText">degrees</field>
+            <field name="Range">0 90</field>
+            <field name="Increment">10</field>
+          </param>
+          <param humanName="Minimum Pitch Angle" name="ArduPlane:PTCH_LIM_MIN_DEG" documentation="Maximum pitch down angle commanded in modes with stabilized limits" user="Standard">
+            <field name="Units">deg</field>
+            <field name="UnitText">degrees</field>
+            <field name="Range">-90 0</field>
+            <field name="Increment">10</field>
+          </param>
+          <param humanName="RTL minimum climb" name="ArduPlane:RTL_CLIMB_MIN" documentation="The vehicle will climb this many m during the initial climb portion of the RTL. During this time the roll will be limited to LEVEL_ROLL_LIMIT degrees." user="Standard">
+            <field name="Units">m</field>
+            <field name="UnitText">meters</field>
+            <field name="Range">0 30</field>
+            <field name="Increment">1</field>
+          </param>
+          <param humanName="RTL loiter radius" name="ArduPlane:RTL_RADIUS" documentation="Defines the radius of the loiter circle when in RTL mode. If this is zero then WP_LOITER_RAD is used. If the radius is negative then a counter-clockwise is used. If positive then a clockwise loiter is used." user="Standard">
+            <field name="Units">m</field>
+            <field name="UnitText">meters</field>
+            <field name="Range">-32767 32767</field>
+            <field name="Increment">1</field>
+          </param>
+          <param humanName="Maximum Throttle" name="ArduPlane:THR_MAX" documentation="Maximum throttle percentage used in all modes except manual, provided THR_PASS_STAB is not set." user="Standard">
+            <field name="Units">%</field>
+            <field name="UnitText">percent</field>
+            <field name="Range">0 100</field>
+            <field name="Increment">1</field>
+          </param>
+          <param humanName="Minimum Throttle" name="ArduPlane:THR_MIN" documentation="Minimum throttle percentage used in all modes except manual, provided THR_PASS_STAB is not set. Negative values allow reverse thrust if hardware supports it." user="Standard">
+            <field name="Units">%</field>
+            <field name="UnitText">percent</field>
+            <field name="Range">-100 100</field>
+            <field name="Increment">1</field>
+          </param>
+          <param humanName="Throttle slew rate" name="ArduPlane:THR_SLEWRATE" documentation="Maximum change in throttle percentage per second. Lower limit  based on 1 microsend of servo increase per loop. Divide SCHED_LOOP_RATE by approximately 10 to determine minimum achievable value." user="Standard">
+            <field name="Units">%/s</field>
+            <field name="UnitText">percent per second</field>
+            <field name="Range">0 127</field>
+            <field name="Increment">1</field>
+          </param>
+          <param humanName="Throttle cruise percentage" name="ArduPlane:TRIM_THROTTLE" documentation="Target percentage of throttle to apply for flight in automatic throttle modes and throttle percentage that maintains AIRSPEED_CRUISE. Caution: low battery voltages at the end of flights may require higher throttle to maintain airspeed." user="Standard">
+            <field name="Units">%</field>
+            <field name="UnitText">percent</field>
+            <field name="Range">0 100</field>
+            <field name="Increment">1</field>
+          </param>
+          <param humanName="Waypoint Loiter Radius" name="ArduPlane:WP_LOITER_RAD" documentation="Defines the distance from the waypoint center, the plane will maintain during a loiter. If you set this value to a negative number then the default loiter direction will be counter-clockwise instead of clockwise." user="Standard">
+            <field name="Units">m</field>
+            <field name="UnitText">meters</field>
+            <field name="Range">-32767 32767</field>
+            <field name="Increment">1</field>
+          </param>
+          <param humanName="Waypoint Maximum Radius" name="ArduPlane:WP_MAX_RADIUS" documentation="Sets the maximum distance to a waypoint for the waypoint to be considered complete. This overrides the &quot;cross the finish line&quot; logic that is normally used to consider a waypoint complete. For normal AUTO behaviour this parameter should be set to zero. Using a non-zero value is only recommended when it is critical that the aircraft does approach within the given radius, and should loop around until it has done so. This can cause the aircraft to loop forever if its turn radius is greater than the maximum radius set." user="Standard">
+            <field name="Units">m</field>
+            <field name="UnitText">meters</field>
+            <field name="Range">0 32767</field>
+            <field name="Increment">1</field>
+          </param>
+        </parameters>
+      </vehicles>
+      <libraries>
+        <parameters name="Q_">
+          <param humanName="QRTL return altitude" name="Q_RTL_ALT" documentation="The altitude which QRTL mode heads to initially" user="Standard">
+            <field name="Units">m</field>
+            <field name="UnitText">meters</field>
+            <field name="Range">1 200</field>
+            <field name="Increment">1</field>
+          </param>
+          <param humanName="VTOL RTL mode" name="Q_RTL_MODE" documentation="If this is set to 1 then an RTL will change to QRTL when within RTL_RADIUS meters of the RTL destination, VTOL approach: vehicle will RTL at RTL alt and circle with a radius of Q_FW_LND_APR_RAD down to Q_RTL_ALT and then transition into the wind and QRTL, see 'AUTO VTOL Landing', QRTL Always: do a QRTL instead of RTL" user="Standard">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+              <value code="2">VTOL approach</value>
+              <value code="3">QRTL Always</value>
+            </values>
+          </param>
+          <param humanName="Land final speed" name="Q_LAND_FINAL_SPD" documentation="The descent speed for the final stage of landing in m/s" user="Standard">
+            <field name="Units">m/s</field>
+            <field name="UnitText">meters per second</field>
+            <field name="Range">0.3 2</field>
+            <field name="Increment">0.1</field>
+          </param>
+          <param humanName="Pilot vertical acceleration" name="Q_PILOT_ACCEL_Z" documentation="The vertical acceleration used when pilot is controlling the altitude" user="Standard">
+            <field name="Units">m/s/s</field>
+            <field name="UnitText">meters per square second</field>
+            <field name="Range">0.5 5</field>
+            <field name="Increment">0.1</field>
+          </param>
+          <param humanName="Pilot maximum vertical speed down" name="Q_PILOT_SPD_DN" documentation="The maximum vertical velocity the pilot may request in m/s going down. If 0, uses Q_PILOT_SPD_UP value." user="Standard">
+            <field name="Units">m/s</field>
+            <field name="UnitText">meters per second</field>
+            <field name="Range">0.5 5</field>
+            <field name="Increment">0.1</field>
+          </param>
+          <param humanName="Pilot maximum vertical speed up" name="Q_PILOT_SPD_UP" documentation="The maximum ascending vertical velocity the pilot may request in m/s" user="Standard">
+            <field name="Units">m/s</field>
+            <field name="UnitText">meters per second</field>
+            <field name="Range">0.5 5</field>
+            <field name="Increment">0.1</field>
+          </param>
+        </parameters>
+        <parameters name="Q_WP_">
+          <param humanName="Waypoint Horizontal Speed Target" name="Q_WP_SPEED" documentation="Defines the speed in cm/s which the aircraft will attempt to maintain horizontally during a WP mission" user="Standard">
+            <field name="Units">cm/s</field>
+            <field name="UnitText">centimeters per second</field>
+            <field name="Range">20 2000</field>
+            <field name="Increment">50</field>
+          </param>
+          <param humanName="Waypoint Acceleration " name="Q_WP_ACCEL" documentation="Defines the horizontal acceleration in cm/s/s used during missions" user="Standard">
+            <field name="Units">cm/s/s</field>
+            <field name="UnitText">centimeters per square second</field>
+            <field name="Range">50 500</field>
+            <field name="Increment">10</field>
+          </param>
+          <param humanName="Waypoint Vertical Acceleration" name="Q_WP_ACCEL_Z" documentation="Defines the vertical acceleration in cm/s/s used during missions" user="Standard">
+            <field name="Units">cm/s/s</field>
+            <field name="UnitText">centimeters per square second</field>
+            <field name="Range">50 500</field>
+            <field name="Increment">10</field>
+          </param>
+          <param humanName="Waypoint Radius" name="Q_WP_RADIUS" documentation="Defines the distance from a waypoint, that when crossed indicates the wp has been hit." user="Standard">
+            <field name="Units">cm</field>
+            <field name="UnitText">centimeters</field>
+            <field name="Range">5 1000</field>
+            <field name="Increment">1</field>
+          </param>
+          <param humanName="Waypoint Descent Speed Target" name="Q_WP_SPEED_DN" documentation="Defines the speed in cm/s which the aircraft will attempt to maintain while descending during a WP mission" user="Standard">
+            <field name="Units">cm/s</field>
+            <field name="UnitText">centimeters per second</field>
+            <field name="Range">10 500</field>
+            <field name="Increment">10</field>
+          </param>
+          <param humanName="Waypoint Climb Speed Target" name="Q_WP_SPEED_UP" documentation="Defines the speed in cm/s which the aircraft will attempt to maintain while climbing during a WP mission" user="Standard">
+            <field name="Units">cm/s</field>
+            <field name="UnitText">centimeters per second</field>
+            <field name="Range">10 1000</field>
+            <field name="Increment">50</field>
+          </param>
+        </parameters>
+        <parameters name="INS">
+          <param humanName="Accel filter cutoff frequency" name="INS_ACCEL_FILTER" documentation="Filter cutoff frequency for accelerometers. This can be set to a lower value to try to cope with very high vibration levels in aircraft. A value of zero means no filtering (not recommended!)" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 256</field>
+          </param>
+          <param humanName="Gyro filter cutoff frequency" name="INS_GYRO_FILTER" documentation="Filter cutoff frequency for gyroscopes. This can be set to a lower value to try to cope with very high vibration levels in aircraft. A value of zero means no filtering (not recommended!)" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 256</field>
+          </param>
+        </parameters>
+        <parameters name="LOG">
+          <param humanName="Enable logging while disarmed" name="LOG_DISARMED" documentation="If LOG_DISARMED is set to 1 then logging will be enabled at all times including when disarmed. Logging before arming can make for very large logfiles but can help a lot when tracking down startup issues and is necessary if logging of EKF replay data is selected via the LOG_REPLAY parameter. If LOG_DISARMED is set to 2, then logging will be enabled when disarmed, but not if a USB connection is detected. This can be used to prevent unwanted data logs being generated when the vehicle is connected via USB for log downloading or parameter changes. If LOG_DISARMED is set to 3 then logging will happen while disarmed, but if the vehicle never arms then the logs using the filesystem backend will be discarded on the next boot." user="Standard">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+              <value code="2">Disabled on USB connection</value>
+              <value code="3">Discard log on reboot if never armed</value>
+            </values>
+          </param>
+          <param humanName="Enable logging of information needed for Replay" name="LOG_REPLAY" documentation="If LOG_REPLAY is set to 1 then the EKF2 and EKF3 state estimators will log detailed information needed for diagnosing problems with the Kalman filter. LOG_DISARMED must be set to 1 or 2 or else the log will not contain the pre-flight data required for replay testing of the EKF's. It is suggested that you also raise LOG_FILE_BUFSIZE to give more buffer space for logging and use a high quality microSD card to ensure no sensor data is lost." user="Standard">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+        </parameters>
+        <parameters name="NAVL1_">
+          <param humanName="L1 control damping ratio" name="NAVL1_DAMPING" documentation="Damping ratio for L1 control. Increase this in increments of 0.05 if you are getting overshoot in path tracking. You should not need a value below 0.7 or above 0.85." user="Advanced">
+            <field name="Range">0.6 1.0</field>
+            <field name="Increment">0.05</field>
+          </param>
+          <param humanName="Loiter Radius Bank Angle Limit" name="NAVL1_LIM_BANK" documentation="The sealevel bank angle limit for a continous loiter. (Used to calculate airframe loading limits at higher altitudes). Setting to 0, will instead just scale the loiter radius directly" user="Advanced">
+            <field name="Units">deg</field>
+            <field name="UnitText">degrees</field>
+            <field name="Range">0 89</field>
+          </param>
+          <param humanName="L1 control period" name="NAVL1_PERIOD" documentation="Period in seconds of L1 tracking loop. This parameter is the primary control for agressiveness of turns in auto mode. This needs to be larger for less responsive airframes. The default of 20 is quite conservative, but for most RC aircraft will lead to reasonable flight. For smaller more agile aircraft a value closer to 15 is appropriate, or even as low as 10 for some very agile aircraft. When tuning, change this value in small increments, as a value that is much too small (say 5 or 10 below the right value) can lead to very radical turns, and a risk of stalling." user="Standard">
+            <field name="Units">s</field>
+            <field name="UnitText">seconds</field>
+            <field name="Range">1 60</field>
+            <field name="Increment">1</field>
+          </param>
+        </parameters>
+        <parameters name="Q_LOIT_">
+          <param humanName="Loiter pilot angle max" name="Q_LOIT_ANG_MAX" documentation="Loiter maximum pilot requested lean angle. Set to zero for 2/3 of Q_P_ANGLE_MAX/Q_ANGLE_MAX. The maximum vehicle lean angle is still limited by Q_P_ANGLE_MAX/Q_ANGLE_MAX" user="Advanced">
+            <field name="Units">deg</field>
+            <field name="UnitText">degrees</field>
+            <field name="Range">0 45</field>
+            <field name="Increment">1</field>
+          </param>
+          <param humanName="Loiter brake start delay (in seconds)" name="Q_LOIT_BRK_DELAY" documentation="Loiter brake start delay (in seconds)" user="Advanced">
+            <field name="Units">s</field>
+            <field name="UnitText">seconds</field>
+            <field name="Range">0 2</field>
+            <field name="Increment">0.1</field>
+          </param>
+          <param humanName="Loiter maximum correction acceleration" name="Q_LOIT_ACC_MAX" documentation="Loiter maximum correction acceleration in cm/s/s.  Higher values cause the copter to correct position errors more aggressively." user="Advanced">
+            <field name="Units">cm/s/s</field>
+            <field name="UnitText">centimeters per square second</field>
+            <field name="Range">100 981</field>
+            <field name="Increment">1</field>
+          </param>
+          <param humanName="Loiter braking acceleration" name="Q_LOIT_BRK_ACCEL" documentation="Loiter braking acceleration in cm/s/s. Higher values stop the copter more quickly when the stick is centered." user="Advanced">
+            <field name="Units">cm/s/s</field>
+            <field name="UnitText">centimeters per square second</field>
+            <field name="Range">25 250</field>
+            <field name="Increment">1</field>
+          </param>
+          <param humanName="Loiter braking jerk" name="Q_LOIT_BRK_JERK" documentation="Loiter braking jerk in cm/s/s/s. Higher values will remove braking faster if the pilot moves the sticks during a braking maneuver." user="Advanced">
+            <field name="Units">cm/s/s/s</field>
+            <field name="UnitText">centimeters per cubic second</field>
+            <field name="Range">500 5000</field>
+            <field name="Increment">1</field>
+          </param>
+          <param humanName="Loiter Horizontal Maximum Speed" name="Q_LOIT_SPEED" documentation="Defines the maximum speed in cm/s which the aircraft will travel horizontally while in loiter mode" user="Standard">
+            <field name="Units">cm/s</field>
+            <field name="UnitText">centimeters per second</field>
+            <field name="Range">20 3500</field>
+            <field name="Increment">50</field>
+          </param>
+        </parameters>
+        <parameters name="TECS_">
+          <param humanName="Controller pitch damping" name="TECS_PTCH_DAMP" documentation="Damping gain for pitch control from TECS control.  Increasing may correct for oscillations in speed and height, but too much may cause additional oscillation and degraded control." user="Advanced">
+            <field name="Range">0.1 1.0</field>
+            <field name="Increment">0.1</field>
+          </param>
+          <param humanName="Maximum Descent Rate (metres/sec)" name="TECS_SINK_MAX" documentation="Maximum demanded descent rate. Do not set higher than the vertical speed the aircraft can maintain at THR_MIN, TECS_PITCH_MIN, and AIRSPEED_MAX." user="Standard">
+            <field name="Increment">0.1</field>
+            <field name="Range">0.0 20.0</field>
+          </param>
+          <param humanName="Controller throttle damping" name="TECS_THR_DAMP" documentation="Damping gain for throttle demand loop. Increase to add throttle activity to dampen oscillations in speed and height." user="Advanced">
+            <field name="Range">0.1 1.0</field>
+            <field name="Increment">0.1</field>
+          </param>
+          <param humanName="Controller time constant (sec)" name="TECS_TIME_CONST" documentation="Time constant of the TECS control algorithm. Small values make faster altitude corrections but can cause overshoot and aggressive behavior." user="Advanced">
+            <field name="Range">3.0 10.0</field>
+            <field name="Increment">0.2</field>
+          </param>
+        </parameters>
+      </libraries>
+    </paramfile>
+  </release>
+  <release family="Plane" version="4.6.3" sourceUrl="https://autotest.ardupilot.org/Parameters/versioned/Plane/stable-4.6.3/apm.pdef.xml" sourceSha256="154e7bd4c38a75cc09e7109a4b7cfaa7f7a6fbf03125cfe6a849032f3b8389aa" gitSha="3fc7011a7d3dc047cbb17d8bd98ee94577d144c6">
+    <paramfile>
+      <firmware git_tag="Plane-4.6.3" git_sha="3fc7011a7d3dc047cbb17d8bd98ee94577d144c6" />
+      <vehicles>
+        <parameters name="ArduPlane">
+          <param humanName="Waypoint Radius" name="ArduPlane:WP_RADIUS" documentation="Defines the maximum distance from a waypoint that when crossed indicates the waypoint may be complete. To avoid the aircraft looping around the waypoint in case it misses by more than the WP_RADIUS an additional check is made to see if the aircraft has crossed a &quot;finish line&quot; passing through the waypoint and perpendicular to the flight path from the previous waypoint. If that finish line is crossed then the waypoint is considered complete. Note that the navigation controller may decide to turn later than WP_RADIUS before a waypoint, based on how sharp the turn is and the speed of the aircraft. It is safe to set WP_RADIUS much larger than the usual turn radius of your aircraft and the navigation controller will work out when to turn. If you set WP_RADIUS too small then you will tend to overshoot the turns." user="Standard">
+            <field name="Units">m</field>
+            <field name="UnitText">meters</field>
+            <field name="Range">1 32767</field>
+            <field name="Increment">1</field>
+          </param>
+          <param humanName="Target cruise airspeed" name="ArduPlane:AIRSPEED_CRUISE" documentation="Target cruise airspeed in m/s in automatic throttle modes. Value is as an indicated (calibrated/apparent) airspeed." user="Standard">
+            <field name="Units">m/s</field>
+            <field name="UnitText">meters per second</field>
+          </param>
+          <param humanName="RTL altitude" name="ArduPlane:RTL_ALTITUDE" documentation="Target altitude above home for RTL mode. Maintains current altitude if set to -1. Rally point altitudes are used if plane does not return to home." user="Standard">
+            <field name="Units">m</field>
+            <field name="UnitText">meters</field>
+          </param>
+          <param humanName="Maximum Airspeed" name="ArduPlane:AIRSPEED_MAX" documentation="Maximum airspeed demanded in automatic throttle modes. Should be set slightly less than level flight speed at THR_MAX and also at least 50% above AIRSPEED_MIN to allow for accurate TECS altitude control." user="Standard">
+            <field name="Units">m/s</field>
+            <field name="UnitText">meters per second</field>
+            <field name="Range">5 100</field>
+            <field name="Increment">1</field>
+          </param>
+          <param humanName="Minimum Airspeed" name="ArduPlane:AIRSPEED_MIN" documentation="Minimum airspeed demanded in automatic throttle modes. Should be set to 20% higher than level flight stall speed." user="Standard">
+            <field name="Units">m/s</field>
+            <field name="UnitText">meters per second</field>
+            <field name="Range">5 100</field>
+            <field name="Increment">1</field>
+          </param>
+          <param humanName="FlightMode1" name="ArduPlane:FLTMODE1" documentation="Flight mode for switch position 1 (910 to 1230 and above 2049)" user="Standard">
+            <values>
+              <value code="0">Manual</value>
+              <value code="1">CIRCLE</value>
+              <value code="2">STABILIZE</value>
+              <value code="3">TRAINING</value>
+              <value code="4">ACRO</value>
+              <value code="5">FBWA</value>
+              <value code="6">FBWB</value>
+              <value code="7">CRUISE</value>
+              <value code="8">AUTOTUNE</value>
+              <value code="10">Auto</value>
+              <value code="11">RTL</value>
+              <value code="12">Loiter</value>
+              <value code="13">TAKEOFF</value>
+              <value code="14">AVOID_ADSB</value>
+              <value code="15">Guided</value>
+              <value code="17">QSTABILIZE</value>
+              <value code="18">QHOVER</value>
+              <value code="19">QLOITER</value>
+              <value code="20">QLAND</value>
+              <value code="21">QRTL</value>
+              <value code="22">QAUTOTUNE</value>
+              <value code="23">QACRO</value>
+              <value code="24">THERMAL</value>
+              <value code="25">Loiter to QLand</value>
+            </values>
+          </param>
+          <param humanName="FlightMode2" name="ArduPlane:FLTMODE2" documentation="Flight mode for switch position 2 (1231 to 1360)" user="Standard">
+            <values>
+              <value code="0">Manual</value>
+              <value code="1">CIRCLE</value>
+              <value code="2">STABILIZE</value>
+              <value code="3">TRAINING</value>
+              <value code="4">ACRO</value>
+              <value code="5">FBWA</value>
+              <value code="6">FBWB</value>
+              <value code="7">CRUISE</value>
+              <value code="8">AUTOTUNE</value>
+              <value code="10">Auto</value>
+              <value code="11">RTL</value>
+              <value code="12">Loiter</value>
+              <value code="13">TAKEOFF</value>
+              <value code="14">AVOID_ADSB</value>
+              <value code="15">Guided</value>
+              <value code="17">QSTABILIZE</value>
+              <value code="18">QHOVER</value>
+              <value code="19">QLOITER</value>
+              <value code="20">QLAND</value>
+              <value code="21">QRTL</value>
+              <value code="22">QAUTOTUNE</value>
+              <value code="23">QACRO</value>
+              <value code="24">THERMAL</value>
+              <value code="25">Loiter to QLand</value>
+            </values>
+          </param>
+          <param humanName="FlightMode3" name="ArduPlane:FLTMODE3" documentation="Flight mode for switch position 3 (1361 to 1490)" user="Standard">
+            <values>
+              <value code="0">Manual</value>
+              <value code="1">CIRCLE</value>
+              <value code="2">STABILIZE</value>
+              <value code="3">TRAINING</value>
+              <value code="4">ACRO</value>
+              <value code="5">FBWA</value>
+              <value code="6">FBWB</value>
+              <value code="7">CRUISE</value>
+              <value code="8">AUTOTUNE</value>
+              <value code="10">Auto</value>
+              <value code="11">RTL</value>
+              <value code="12">Loiter</value>
+              <value code="13">TAKEOFF</value>
+              <value code="14">AVOID_ADSB</value>
+              <value code="15">Guided</value>
+              <value code="17">QSTABILIZE</value>
+              <value code="18">QHOVER</value>
+              <value code="19">QLOITER</value>
+              <value code="20">QLAND</value>
+              <value code="21">QRTL</value>
+              <value code="22">QAUTOTUNE</value>
+              <value code="23">QACRO</value>
+              <value code="24">THERMAL</value>
+              <value code="25">Loiter to QLand</value>
+            </values>
+          </param>
+          <param humanName="FlightMode4" name="ArduPlane:FLTMODE4" documentation="Flight mode for switch position 4 (1491 to 1620)" user="Standard">
+            <values>
+              <value code="0">Manual</value>
+              <value code="1">CIRCLE</value>
+              <value code="2">STABILIZE</value>
+              <value code="3">TRAINING</value>
+              <value code="4">ACRO</value>
+              <value code="5">FBWA</value>
+              <value code="6">FBWB</value>
+              <value code="7">CRUISE</value>
+              <value code="8">AUTOTUNE</value>
+              <value code="10">Auto</value>
+              <value code="11">RTL</value>
+              <value code="12">Loiter</value>
+              <value code="13">TAKEOFF</value>
+              <value code="14">AVOID_ADSB</value>
+              <value code="15">Guided</value>
+              <value code="17">QSTABILIZE</value>
+              <value code="18">QHOVER</value>
+              <value code="19">QLOITER</value>
+              <value code="20">QLAND</value>
+              <value code="21">QRTL</value>
+              <value code="22">QAUTOTUNE</value>
+              <value code="23">QACRO</value>
+              <value code="24">THERMAL</value>
+              <value code="25">Loiter to QLand</value>
+            </values>
+          </param>
+          <param humanName="FlightMode5" name="ArduPlane:FLTMODE5" documentation="Flight mode for switch position 5 (1621 to 1749)" user="Standard">
+            <values>
+              <value code="0">Manual</value>
+              <value code="1">CIRCLE</value>
+              <value code="2">STABILIZE</value>
+              <value code="3">TRAINING</value>
+              <value code="4">ACRO</value>
+              <value code="5">FBWA</value>
+              <value code="6">FBWB</value>
+              <value code="7">CRUISE</value>
+              <value code="8">AUTOTUNE</value>
+              <value code="10">Auto</value>
+              <value code="11">RTL</value>
+              <value code="12">Loiter</value>
+              <value code="13">TAKEOFF</value>
+              <value code="14">AVOID_ADSB</value>
+              <value code="15">Guided</value>
+              <value code="17">QSTABILIZE</value>
+              <value code="18">QHOVER</value>
+              <value code="19">QLOITER</value>
+              <value code="20">QLAND</value>
+              <value code="21">QRTL</value>
+              <value code="22">QAUTOTUNE</value>
+              <value code="23">QACRO</value>
+              <value code="24">THERMAL</value>
+              <value code="25">Loiter to QLand</value>
+            </values>
+          </param>
+          <param humanName="FlightMode6" name="ArduPlane:FLTMODE6" documentation="Flight mode for switch position 6 (1750 to 2049)" user="Standard">
+            <values>
+              <value code="0">Manual</value>
+              <value code="1">CIRCLE</value>
+              <value code="2">STABILIZE</value>
+              <value code="3">TRAINING</value>
+              <value code="4">ACRO</value>
+              <value code="5">FBWA</value>
+              <value code="6">FBWB</value>
+              <value code="7">CRUISE</value>
+              <value code="8">AUTOTUNE</value>
+              <value code="10">Auto</value>
+              <value code="11">RTL</value>
+              <value code="12">Loiter</value>
+              <value code="13">TAKEOFF</value>
+              <value code="14">AVOID_ADSB</value>
+              <value code="15">Guided</value>
+              <value code="17">QSTABILIZE</value>
+              <value code="18">QHOVER</value>
+              <value code="19">QLOITER</value>
+              <value code="20">QLAND</value>
+              <value code="21">QRTL</value>
+              <value code="22">QAUTOTUNE</value>
+              <value code="23">QACRO</value>
+              <value code="24">THERMAL</value>
+              <value code="25">Loiter to QLand</value>
+            </values>
+          </param>
+          <param humanName="Flightmode channel" name="ArduPlane:FLTMODE_CH" documentation="RC Channel to use for flight mode control" user="Advanced">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Channel 1</value>
+              <value code="2">Channel 2</value>
+              <value code="3">Channel 3</value>
+              <value code="4">Channel 4</value>
+              <value code="5">Channel 5</value>
+              <value code="6">Channel 6</value>
+              <value code="7">Channel 7</value>
+              <value code="8">Channel 8</value>
+              <value code="9">Channel 9</value>
+              <value code="10">Channel 10</value>
+              <value code="11">Channel 11</value>
+              <value code="12">Channel 12</value>
+              <value code="13">Channel 13</value>
+              <value code="14">Channel 14</value>
+              <value code="15">Channel 15</value>
+              <value code="16">Channel 16</value>
+            </values>
+          </param>
+          <param humanName="Maximum Pitch Angle" name="ArduPlane:PTCH_LIM_MAX_DEG" documentation="Maximum pitch up angle commanded in modes with stabilized limits." user="Standard">
+            <field name="Units">deg</field>
+            <field name="UnitText">degrees</field>
+            <field name="Range">0 90</field>
+            <field name="Increment">1</field>
+          </param>
+          <param humanName="Minimum Pitch Angle" name="ArduPlane:PTCH_LIM_MIN_DEG" documentation="Maximum pitch down angle commanded in modes with stabilized limits" user="Standard">
+            <field name="Units">deg</field>
+            <field name="UnitText">degrees</field>
+            <field name="Range">-90 0</field>
+            <field name="Increment">1</field>
+          </param>
+          <param humanName="RTL minimum climb" name="ArduPlane:RTL_CLIMB_MIN" documentation="The vehicle will climb this many m during the initial climb portion of the RTL. During this time the roll will be limited to LEVEL_ROLL_LIMIT degrees." user="Standard">
+            <field name="Units">m</field>
+            <field name="UnitText">meters</field>
+            <field name="Range">0 30</field>
+            <field name="Increment">1</field>
+          </param>
+          <param humanName="RTL loiter radius" name="ArduPlane:RTL_RADIUS" documentation="Defines the radius of the loiter circle when in RTL mode. If this is zero then WP_LOITER_RAD is used. If the radius is negative then a counter-clockwise is used. If positive then a clockwise loiter is used." user="Standard">
+            <field name="Units">m</field>
+            <field name="UnitText">meters</field>
+            <field name="Range">-32767 32767</field>
+            <field name="Increment">1</field>
+          </param>
+          <param humanName="Maximum Throttle" name="ArduPlane:THR_MAX" documentation="Maximum throttle percentage used in all modes except manual, provided THR_PASS_STAB is not set." user="Standard">
+            <field name="Units">%</field>
+            <field name="UnitText">percent</field>
+            <field name="Range">0 100</field>
+            <field name="Increment">1</field>
+          </param>
+          <param humanName="Minimum Throttle" name="ArduPlane:THR_MIN" documentation="Minimum throttle percentage used in all modes except manual, provided THR_PASS_STAB is not set. Negative values allow reverse thrust if hardware supports it." user="Standard">
+            <field name="Units">%</field>
+            <field name="UnitText">percent</field>
+            <field name="Range">-100 100</field>
+            <field name="Increment">1</field>
+          </param>
+          <param humanName="Throttle slew rate" name="ArduPlane:THR_SLEWRATE" documentation="Maximum change in throttle percentage per second. Lower limit  based on 1 microsend of servo increase per loop. Divide SCHED_LOOP_RATE by approximately 10 to determine minimum achievable value." user="Standard">
+            <field name="Units">%/s</field>
+            <field name="UnitText">percent per second</field>
+            <field name="Range">0 127</field>
+            <field name="Increment">1</field>
+          </param>
+          <param humanName="Throttle cruise percentage" name="ArduPlane:TRIM_THROTTLE" documentation="Target percentage of throttle to apply for flight in automatic throttle modes and throttle percentage that maintains AIRSPEED_CRUISE. Caution: low battery voltages at the end of flights may require higher throttle to maintain airspeed." user="Standard">
+            <field name="Units">%</field>
+            <field name="UnitText">percent</field>
+            <field name="Range">0 100</field>
+            <field name="Increment">1</field>
+          </param>
+          <param humanName="Waypoint Loiter Radius" name="ArduPlane:WP_LOITER_RAD" documentation="Defines the distance from the waypoint center, the plane will maintain during a loiter. If you set this value to a negative number then the default loiter direction will be counter-clockwise instead of clockwise." user="Standard">
+            <field name="Units">m</field>
+            <field name="UnitText">meters</field>
+            <field name="Range">-32767 32767</field>
+            <field name="Increment">1</field>
+          </param>
+          <param humanName="Waypoint Maximum Radius" name="ArduPlane:WP_MAX_RADIUS" documentation="Sets the maximum distance to a waypoint for the waypoint to be considered complete. This overrides the &quot;cross the finish line&quot; logic that is normally used to consider a waypoint complete. For normal AUTO behaviour this parameter should be set to zero. Using a non-zero value is only recommended when it is critical that the aircraft does approach within the given radius, and should loop around until it has done so. This can cause the aircraft to loop forever if its turn radius is greater than the maximum radius set." user="Standard">
+            <field name="Units">m</field>
+            <field name="UnitText">meters</field>
+            <field name="Range">0 32767</field>
+            <field name="Increment">1</field>
+          </param>
+        </parameters>
+      </vehicles>
+      <libraries>
+        <parameters name="Q_">
+          <param humanName="QRTL return altitude" name="Q_RTL_ALT" documentation="The altitude which QRTL mode heads to initially" user="Standard">
+            <field name="Units">m</field>
+            <field name="UnitText">meters</field>
+            <field name="Range">1 200</field>
+            <field name="Increment">1</field>
+          </param>
+          <param humanName="VTOL RTL mode" name="Q_RTL_MODE" documentation="If this is set to 1 then an RTL will change to QRTL when within RTL_RADIUS meters of the RTL destination, VTOL approach: vehicle will RTL at RTL alt and circle with a radius of Q_FW_LND_APR_RAD down to Q_RTL_ALT and then transition into the wind and QRTL, see 'AUTO VTOL Landing', QRTL Always: do a QRTL instead of RTL" user="Standard">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+              <value code="2">VTOL approach</value>
+              <value code="3">QRTL Always</value>
+            </values>
+          </param>
+          <param humanName="Land final speed" name="Q_LAND_FINAL_SPD" documentation="The descent speed for the final stage of landing in m/s" user="Standard">
+            <field name="Units">m/s</field>
+            <field name="UnitText">meters per second</field>
+            <field name="Range">0.3 2</field>
+            <field name="Increment">0.1</field>
+          </param>
+          <param humanName="Pilot vertical acceleration" name="Q_PILOT_ACCEL_Z" documentation="The vertical acceleration used when pilot is controlling the altitude" user="Standard">
+            <field name="Units">m/s/s</field>
+            <field name="UnitText">meters per square second</field>
+            <field name="Range">0.5 5</field>
+            <field name="Increment">0.1</field>
+          </param>
+          <param humanName="Pilot maximum vertical speed down" name="Q_PILOT_SPD_DN" documentation="The maximum vertical velocity the pilot may request in m/s going down. If 0, uses Q_PILOT_SPD_UP value." user="Standard">
+            <field name="Units">m/s</field>
+            <field name="UnitText">meters per second</field>
+            <field name="Range">0.5 5</field>
+            <field name="Increment">0.1</field>
+          </param>
+          <param humanName="Pilot maximum vertical speed up" name="Q_PILOT_SPD_UP" documentation="The maximum ascending vertical velocity the pilot may request in m/s" user="Standard">
+            <field name="Units">m/s</field>
+            <field name="UnitText">meters per second</field>
+            <field name="Range">0.5 5</field>
+            <field name="Increment">0.1</field>
+          </param>
+        </parameters>
+        <parameters name="Q_WP_">
+          <param humanName="Waypoint Horizontal Speed Target" name="Q_WP_SPEED" documentation="Defines the speed in cm/s which the aircraft will attempt to maintain horizontally during a WP mission" user="Standard">
+            <field name="Units">cm/s</field>
+            <field name="UnitText">centimeters per second</field>
+            <field name="Range">10 2000</field>
+            <field name="Increment">50</field>
+          </param>
+          <param humanName="Waypoint Acceleration " name="Q_WP_ACCEL" documentation="Defines the horizontal acceleration in cm/s/s used during missions" user="Standard">
+            <field name="Units">cm/s/s</field>
+            <field name="UnitText">centimeters per square second</field>
+            <field name="Range">50 500</field>
+            <field name="Increment">10</field>
+          </param>
+          <param humanName="Waypoint Vertical Acceleration" name="Q_WP_ACCEL_Z" documentation="Defines the vertical acceleration in cm/s/s used during missions" user="Standard">
+            <field name="Units">cm/s/s</field>
+            <field name="UnitText">centimeters per square second</field>
+            <field name="Range">50 500</field>
+            <field name="Increment">10</field>
+          </param>
+          <param humanName="Waypoint Radius" name="Q_WP_RADIUS" documentation="Defines the distance from a waypoint, that when crossed indicates the wp has been hit." user="Standard">
+            <field name="Units">cm</field>
+            <field name="UnitText">centimeters</field>
+            <field name="Range">5 1000</field>
+            <field name="Increment">1</field>
+          </param>
+          <param humanName="Waypoint Descent Speed Target" name="Q_WP_SPEED_DN" documentation="Defines the speed in cm/s which the aircraft will attempt to maintain while descending during a WP mission" user="Standard">
+            <field name="Units">cm/s</field>
+            <field name="UnitText">centimeters per second</field>
+            <field name="Range">10 500</field>
+            <field name="Increment">10</field>
+          </param>
+          <param humanName="Waypoint Climb Speed Target" name="Q_WP_SPEED_UP" documentation="Defines the speed in cm/s which the aircraft will attempt to maintain while climbing during a WP mission" user="Standard">
+            <field name="Units">cm/s</field>
+            <field name="UnitText">centimeters per second</field>
+            <field name="Range">10 1000</field>
+            <field name="Increment">50</field>
+          </param>
+        </parameters>
+        <parameters name="INS">
+          <param humanName="Accel filter cutoff frequency" name="INS_ACCEL_FILTER" documentation="Filter cutoff frequency for accelerometers. This can be set to a lower value to try to cope with very high vibration levels in aircraft. A value of zero means no filtering (not recommended!)" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 256</field>
+          </param>
+          <param humanName="Gyro filter cutoff frequency" name="INS_GYRO_FILTER" documentation="Filter cutoff frequency for gyroscopes. This can be set to a lower value to try to cope with very high vibration levels in aircraft. A value of zero means no filtering (not recommended!)" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 256</field>
+          </param>
+        </parameters>
+        <parameters name="LOG">
+          <param humanName="Enable logging while disarmed" name="LOG_DISARMED" documentation="If LOG_DISARMED is set to 1 then logging will be enabled at all times including when disarmed. Logging before arming can make for very large logfiles but can help a lot when tracking down startup issues and is necessary if logging of EKF replay data is selected via the LOG_REPLAY parameter. If LOG_DISARMED is set to 2, then logging will be enabled when disarmed, but not if a USB connection is detected. This can be used to prevent unwanted data logs being generated when the vehicle is connected via USB for log downloading or parameter changes. If LOG_DISARMED is set to 3 then logging will happen while disarmed, but if the vehicle never arms then the logs using the filesystem backend will be discarded on the next boot." user="Standard">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+              <value code="2">Disabled on USB connection</value>
+              <value code="3">Discard log on reboot if never armed</value>
+            </values>
+          </param>
+          <param humanName="Enable logging of information needed for Replay" name="LOG_REPLAY" documentation="If LOG_REPLAY is set to 1 then the EKF2 and EKF3 state estimators will log detailed information needed for diagnosing problems with the Kalman filter. LOG_DISARMED must be set to 1 or 2 or else the log will not contain the pre-flight data required for replay testing of the EKF's. It is suggested that you also raise LOG_FILE_BUFSIZE to give more buffer space for logging and use a high quality microSD card to ensure no sensor data is lost." user="Standard">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+        </parameters>
+        <parameters name="NAVL1_">
+          <param humanName="L1 control damping ratio" name="NAVL1_DAMPING" documentation="Damping ratio for L1 control. Increase this in increments of 0.05 if you are getting overshoot in path tracking. You should not need a value below 0.7 or above 0.85." user="Advanced">
+            <field name="Range">0.6 1.0</field>
+            <field name="Increment">0.05</field>
+          </param>
+          <param humanName="Loiter Radius Bank Angle Limit" name="NAVL1_LIM_BANK" documentation="The sealevel bank angle limit for a continous loiter. (Used to calculate airframe loading limits at higher altitudes). Setting to 0, will instead just scale the loiter radius directly" user="Advanced">
+            <field name="Units">deg</field>
+            <field name="UnitText">degrees</field>
+            <field name="Range">0 89</field>
+          </param>
+          <param humanName="L1 control period" name="NAVL1_PERIOD" documentation="Period in seconds of L1 tracking loop. This parameter is the primary control for agressiveness of turns in auto mode. This needs to be larger for less responsive airframes. The default is quite conservative, but for most RC aircraft will lead to reasonable flight. For smaller more agile aircraft a value closer to 15 is appropriate, or even as low as 10 for some very agile aircraft. When tuning, change this value in small increments, as a value that is much too small (say 5 or 10 below the right value) can lead to very radical turns, and a risk of stalling." user="Standard">
+            <field name="Units">s</field>
+            <field name="UnitText">seconds</field>
+            <field name="Range">1 60</field>
+            <field name="Increment">1</field>
+          </param>
+        </parameters>
+        <parameters name="Q_LOIT_">
+          <param humanName="Loiter pilot angle max" name="Q_LOIT_ANG_MAX" documentation="Loiter maximum pilot requested lean angle. Set to zero for 2/3 of Q_P_ANGLE_MAX/Q_ANGLE_MAX. The maximum vehicle lean angle is still limited by Q_P_ANGLE_MAX/Q_ANGLE_MAX" user="Advanced">
+            <field name="Units">deg</field>
+            <field name="UnitText">degrees</field>
+            <field name="Range">0 45</field>
+            <field name="Increment">1</field>
+          </param>
+          <param humanName="Loiter brake start delay (in seconds)" name="Q_LOIT_BRK_DELAY" documentation="Loiter brake start delay (in seconds)" user="Advanced">
+            <field name="Units">s</field>
+            <field name="UnitText">seconds</field>
+            <field name="Range">0 2</field>
+            <field name="Increment">0.1</field>
+          </param>
+          <param humanName="Loiter maximum correction acceleration" name="Q_LOIT_ACC_MAX" documentation="Loiter maximum correction acceleration in cm/s/s.  Higher values cause the copter to correct position errors more aggressively." user="Advanced">
+            <field name="Units">cm/s/s</field>
+            <field name="UnitText">centimeters per square second</field>
+            <field name="Range">100 981</field>
+            <field name="Increment">1</field>
+          </param>
+          <param humanName="Loiter braking acceleration" name="Q_LOIT_BRK_ACCEL" documentation="Loiter braking acceleration in cm/s/s. Higher values stop the copter more quickly when the stick is centered." user="Advanced">
+            <field name="Units">cm/s/s</field>
+            <field name="UnitText">centimeters per square second</field>
+            <field name="Range">25 250</field>
+            <field name="Increment">1</field>
+          </param>
+          <param humanName="Loiter braking jerk" name="Q_LOIT_BRK_JERK" documentation="Loiter braking jerk in cm/s/s/s. Higher values will remove braking faster if the pilot moves the sticks during a braking maneuver." user="Advanced">
+            <field name="Units">cm/s/s/s</field>
+            <field name="UnitText">centimeters per cubic second</field>
+            <field name="Range">500 5000</field>
+            <field name="Increment">1</field>
+          </param>
+          <param humanName="Loiter Horizontal Maximum Speed" name="Q_LOIT_SPEED" documentation="Defines the maximum speed in cm/s which the aircraft will travel horizontally while in loiter mode" user="Standard">
+            <field name="Units">cm/s</field>
+            <field name="UnitText">centimeters per second</field>
+            <field name="Range">20 3500</field>
+            <field name="Increment">50</field>
+          </param>
+        </parameters>
+        <parameters name="TECS_">
+          <param humanName="Controller pitch damping" name="TECS_PTCH_DAMP" documentation="Damping gain for pitch control from TECS control.  Increasing may correct for oscillations in speed and height, but too much may cause additional oscillation and degraded control." user="Advanced">
+            <field name="Range">0.1 1.0</field>
+            <field name="Increment">0.1</field>
+          </param>
+          <param humanName="Maximum Descent Rate (metres/sec)" name="TECS_SINK_MAX" documentation="Maximum demanded descent rate. Do not set higher than the vertical speed the aircraft can maintain at THR_MIN, TECS_PITCH_MIN, and AIRSPEED_MAX." user="Standard">
+            <field name="Increment">0.1</field>
+            <field name="Range">0.0 20.0</field>
+          </param>
+          <param humanName="Controller throttle damping" name="TECS_THR_DAMP" documentation="Damping gain for throttle demand loop. Increase to add throttle activity to dampen oscillations in speed and height." user="Advanced">
+            <field name="Range">0.1 1.0</field>
+            <field name="Increment">0.1</field>
+          </param>
+          <param humanName="Controller time constant (sec)" name="TECS_TIME_CONST" documentation="Time constant of the TECS control algorithm. Small values make faster altitude corrections but can cause overshoot and aggressive behavior." user="Advanced">
+            <field name="Range">3.0 10.0</field>
+            <field name="Increment">0.2</field>
+          </param>
+        </parameters>
+      </libraries>
+    </paramfile>
+  </release>
+  <release family="Plane" version="4.7.1" sourceUrl="https://autotest.ardupilot.org/Parameters/versioned/Plane/stable-4.7.1/apm.pdef.xml" sourceSha256="924fdf56b972719bde381082adb29fd415731aa8cd899ec111eb4a5eda5192d6" gitSha="dbe792162d06cab66c3475fd5556bf7a120f119e">
+    <paramfile>
+      <firmware git_tag="Plane-4.7.1" git_sha="dbe792162d06cab66c3475fd5556bf7a120f119e" />
+      <vehicles>
+        <parameters name="ArduPlane">
+          <param humanName="Waypoint Radius" name="ArduPlane:WP_RADIUS" documentation="Defines the maximum distance from a waypoint that when crossed indicates the waypoint may be complete. To avoid the aircraft looping around the waypoint in case it misses by more than the WP_RADIUS an additional check is made to see if the aircraft has crossed a &quot;finish line&quot; passing through the waypoint and perpendicular to the flight path from the previous waypoint. If that finish line is crossed then the waypoint is considered complete. Note that the navigation controller may decide to turn later than WP_RADIUS before a waypoint, based on how sharp the turn is and the speed of the aircraft. It is safe to set WP_RADIUS much larger than the usual turn radius of your aircraft and the navigation controller will work out when to turn. If you set WP_RADIUS too small then you will tend to overshoot the turns." user="Standard">
+            <field name="Units">m</field>
+            <field name="UnitText">meters</field>
+            <field name="Range">1 32767</field>
+            <field name="Increment">1</field>
+          </param>
+          <param humanName="Target cruise airspeed" name="ArduPlane:AIRSPEED_CRUISE" documentation="Target cruise airspeed in m/s in automatic throttle modes. Value is as an indicated (calibrated/apparent) airspeed." user="Standard">
+            <field name="Units">m/s</field>
+            <field name="UnitText">meters per second</field>
+          </param>
+          <param humanName="RTL altitude" name="ArduPlane:RTL_ALTITUDE" documentation="Target altitude above home for RTL mode. Maintains current altitude if set to -1. Rally point altitudes are used if plane does not return to home." user="Standard">
+            <field name="Units">m</field>
+            <field name="UnitText">meters</field>
+          </param>
+          <param humanName="Maximum Airspeed" name="ArduPlane:AIRSPEED_MAX" documentation="Maximum airspeed demanded in automatic throttle modes. Should be set slightly less than level flight speed at THR_MAX and also at least 50% above AIRSPEED_MIN to allow for accurate TECS altitude control." user="Standard">
+            <field name="Units">m/s</field>
+            <field name="UnitText">meters per second</field>
+            <field name="Range">5 100</field>
+            <field name="Increment">1</field>
+          </param>
+          <param humanName="Minimum Airspeed" name="ArduPlane:AIRSPEED_MIN" documentation="Minimum airspeed demanded in automatic throttle modes. Should be set to 20% higher than level flight stall speed." user="Standard">
+            <field name="Units">m/s</field>
+            <field name="UnitText">meters per second</field>
+            <field name="Range">5 100</field>
+            <field name="Increment">1</field>
+          </param>
+          <param humanName="FlightMode1" name="ArduPlane:FLTMODE1" documentation="Flight mode for switch position 1 (910 to 1230 and above 2049)" user="Standard">
+            <values>
+              <value code="0">Manual</value>
+              <value code="1">CIRCLE</value>
+              <value code="2">STABILIZE</value>
+              <value code="3">TRAINING</value>
+              <value code="4">ACRO</value>
+              <value code="5">FBWA</value>
+              <value code="6">FBWB</value>
+              <value code="7">CRUISE</value>
+              <value code="8">AUTOTUNE</value>
+              <value code="10">Auto</value>
+              <value code="11">RTL</value>
+              <value code="12">Loiter</value>
+              <value code="13">TAKEOFF</value>
+              <value code="14">AVOID_ADSB</value>
+              <value code="15">Guided</value>
+              <value code="17">QSTABILIZE</value>
+              <value code="18">QHOVER</value>
+              <value code="19">QLOITER</value>
+              <value code="20">QLAND</value>
+              <value code="21">QRTL</value>
+              <value code="22">QAUTOTUNE</value>
+              <value code="23">QACRO</value>
+              <value code="24">THERMAL</value>
+              <value code="25">Loiter to QLand</value>
+              <value code="26">AUTOLAND</value>
+            </values>
+          </param>
+          <param humanName="FlightMode2" name="ArduPlane:FLTMODE2" documentation="Flight mode for switch position 2 (1231 to 1360)" user="Standard">
+            <values>
+              <value code="0">Manual</value>
+              <value code="1">CIRCLE</value>
+              <value code="2">STABILIZE</value>
+              <value code="3">TRAINING</value>
+              <value code="4">ACRO</value>
+              <value code="5">FBWA</value>
+              <value code="6">FBWB</value>
+              <value code="7">CRUISE</value>
+              <value code="8">AUTOTUNE</value>
+              <value code="10">Auto</value>
+              <value code="11">RTL</value>
+              <value code="12">Loiter</value>
+              <value code="13">TAKEOFF</value>
+              <value code="14">AVOID_ADSB</value>
+              <value code="15">Guided</value>
+              <value code="17">QSTABILIZE</value>
+              <value code="18">QHOVER</value>
+              <value code="19">QLOITER</value>
+              <value code="20">QLAND</value>
+              <value code="21">QRTL</value>
+              <value code="22">QAUTOTUNE</value>
+              <value code="23">QACRO</value>
+              <value code="24">THERMAL</value>
+              <value code="25">Loiter to QLand</value>
+              <value code="26">AUTOLAND</value>
+            </values>
+          </param>
+          <param humanName="FlightMode3" name="ArduPlane:FLTMODE3" documentation="Flight mode for switch position 3 (1361 to 1490)" user="Standard">
+            <values>
+              <value code="0">Manual</value>
+              <value code="1">CIRCLE</value>
+              <value code="2">STABILIZE</value>
+              <value code="3">TRAINING</value>
+              <value code="4">ACRO</value>
+              <value code="5">FBWA</value>
+              <value code="6">FBWB</value>
+              <value code="7">CRUISE</value>
+              <value code="8">AUTOTUNE</value>
+              <value code="10">Auto</value>
+              <value code="11">RTL</value>
+              <value code="12">Loiter</value>
+              <value code="13">TAKEOFF</value>
+              <value code="14">AVOID_ADSB</value>
+              <value code="15">Guided</value>
+              <value code="17">QSTABILIZE</value>
+              <value code="18">QHOVER</value>
+              <value code="19">QLOITER</value>
+              <value code="20">QLAND</value>
+              <value code="21">QRTL</value>
+              <value code="22">QAUTOTUNE</value>
+              <value code="23">QACRO</value>
+              <value code="24">THERMAL</value>
+              <value code="25">Loiter to QLand</value>
+              <value code="26">AUTOLAND</value>
+            </values>
+          </param>
+          <param humanName="FlightMode4" name="ArduPlane:FLTMODE4" documentation="Flight mode for switch position 4 (1491 to 1620)" user="Standard">
+            <values>
+              <value code="0">Manual</value>
+              <value code="1">CIRCLE</value>
+              <value code="2">STABILIZE</value>
+              <value code="3">TRAINING</value>
+              <value code="4">ACRO</value>
+              <value code="5">FBWA</value>
+              <value code="6">FBWB</value>
+              <value code="7">CRUISE</value>
+              <value code="8">AUTOTUNE</value>
+              <value code="10">Auto</value>
+              <value code="11">RTL</value>
+              <value code="12">Loiter</value>
+              <value code="13">TAKEOFF</value>
+              <value code="14">AVOID_ADSB</value>
+              <value code="15">Guided</value>
+              <value code="17">QSTABILIZE</value>
+              <value code="18">QHOVER</value>
+              <value code="19">QLOITER</value>
+              <value code="20">QLAND</value>
+              <value code="21">QRTL</value>
+              <value code="22">QAUTOTUNE</value>
+              <value code="23">QACRO</value>
+              <value code="24">THERMAL</value>
+              <value code="25">Loiter to QLand</value>
+              <value code="26">AUTOLAND</value>
+            </values>
+          </param>
+          <param humanName="FlightMode5" name="ArduPlane:FLTMODE5" documentation="Flight mode for switch position 5 (1621 to 1749)" user="Standard">
+            <values>
+              <value code="0">Manual</value>
+              <value code="1">CIRCLE</value>
+              <value code="2">STABILIZE</value>
+              <value code="3">TRAINING</value>
+              <value code="4">ACRO</value>
+              <value code="5">FBWA</value>
+              <value code="6">FBWB</value>
+              <value code="7">CRUISE</value>
+              <value code="8">AUTOTUNE</value>
+              <value code="10">Auto</value>
+              <value code="11">RTL</value>
+              <value code="12">Loiter</value>
+              <value code="13">TAKEOFF</value>
+              <value code="14">AVOID_ADSB</value>
+              <value code="15">Guided</value>
+              <value code="17">QSTABILIZE</value>
+              <value code="18">QHOVER</value>
+              <value code="19">QLOITER</value>
+              <value code="20">QLAND</value>
+              <value code="21">QRTL</value>
+              <value code="22">QAUTOTUNE</value>
+              <value code="23">QACRO</value>
+              <value code="24">THERMAL</value>
+              <value code="25">Loiter to QLand</value>
+              <value code="26">AUTOLAND</value>
+            </values>
+          </param>
+          <param humanName="FlightMode6" name="ArduPlane:FLTMODE6" documentation="Flight mode for switch position 6 (1750 to 2049)" user="Standard">
+            <values>
+              <value code="0">Manual</value>
+              <value code="1">CIRCLE</value>
+              <value code="2">STABILIZE</value>
+              <value code="3">TRAINING</value>
+              <value code="4">ACRO</value>
+              <value code="5">FBWA</value>
+              <value code="6">FBWB</value>
+              <value code="7">CRUISE</value>
+              <value code="8">AUTOTUNE</value>
+              <value code="10">Auto</value>
+              <value code="11">RTL</value>
+              <value code="12">Loiter</value>
+              <value code="13">TAKEOFF</value>
+              <value code="14">AVOID_ADSB</value>
+              <value code="15">Guided</value>
+              <value code="17">QSTABILIZE</value>
+              <value code="18">QHOVER</value>
+              <value code="19">QLOITER</value>
+              <value code="20">QLAND</value>
+              <value code="21">QRTL</value>
+              <value code="22">QAUTOTUNE</value>
+              <value code="23">QACRO</value>
+              <value code="24">THERMAL</value>
+              <value code="25">Loiter to QLand</value>
+              <value code="26">AUTOLAND</value>
+            </values>
+          </param>
+          <param humanName="Flightmode channel" name="ArduPlane:FLTMODE_CH" documentation="RC Channel to use for flight mode control" user="Advanced">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Channel 1</value>
+              <value code="2">Channel 2</value>
+              <value code="3">Channel 3</value>
+              <value code="4">Channel 4</value>
+              <value code="5">Channel 5</value>
+              <value code="6">Channel 6</value>
+              <value code="7">Channel 7</value>
+              <value code="8">Channel 8</value>
+              <value code="9">Channel 9</value>
+              <value code="10">Channel 10</value>
+              <value code="11">Channel 11</value>
+              <value code="12">Channel 12</value>
+              <value code="13">Channel 13</value>
+              <value code="14">Channel 14</value>
+              <value code="15">Channel 15</value>
+              <value code="16">Channel 16</value>
+            </values>
+          </param>
+          <param humanName="Maximum Pitch Angle" name="ArduPlane:PTCH_LIM_MAX_DEG" documentation="Maximum pitch up angle commanded in modes with stabilized limits." user="Standard">
+            <field name="Units">deg</field>
+            <field name="UnitText">degrees</field>
+            <field name="Range">0 90</field>
+            <field name="Increment">1</field>
+          </param>
+          <param humanName="Minimum Pitch Angle" name="ArduPlane:PTCH_LIM_MIN_DEG" documentation="Maximum pitch down angle commanded in modes with stabilized limits" user="Standard">
+            <field name="Units">deg</field>
+            <field name="UnitText">degrees</field>
+            <field name="Range">-90 0</field>
+            <field name="Increment">1</field>
+          </param>
+          <param humanName="RTL minimum climb" name="ArduPlane:RTL_CLIMB_MIN" documentation="The vehicle will climb this many m during the initial climb portion of the RTL. During this time the roll will be limited to LEVEL_ROLL_LIMIT degrees." user="Standard">
+            <field name="Units">m</field>
+            <field name="UnitText">meters</field>
+            <field name="Range">0 30</field>
+            <field name="Increment">1</field>
+          </param>
+          <param humanName="RTL loiter radius" name="ArduPlane:RTL_RADIUS" documentation="Defines the radius of the loiter circle when in RTL mode. If this is zero then WP_LOITER_RAD is used. If the radius is negative then a counter-clockwise is used. If positive then a clockwise loiter is used. For quadplanes with Q_RTL_MODE set to 1 (Enabled), this value is used to set the minimum radius at which the plane will transition from fixed-wing to VTOL mode for landing." user="Standard">
+            <field name="Units">m</field>
+            <field name="UnitText">meters</field>
+            <field name="Range">-32767 32767</field>
+            <field name="Increment">1</field>
+          </param>
+          <param humanName="Maximum Throttle" name="ArduPlane:THR_MAX" documentation="Maximum throttle percentage used in all modes except manual, provided THR_PASS_STAB is not set." user="Standard">
+            <field name="Units">%</field>
+            <field name="UnitText">percent</field>
+            <field name="Range">0 100</field>
+            <field name="Increment">1</field>
+          </param>
+          <param humanName="Minimum Throttle" name="ArduPlane:THR_MIN" documentation="Minimum throttle percentage used in all modes except manual, provided THR_PASS_STAB is not set. Negative values allow reverse thrust if hardware supports it." user="Standard">
+            <field name="Units">%</field>
+            <field name="UnitText">percent</field>
+            <field name="Range">-100 100</field>
+            <field name="Increment">1</field>
+          </param>
+          <param humanName="Throttle slew rate" name="ArduPlane:THR_SLEWRATE" documentation="Maximum change in throttle percentage per second. Lower limit  based on 1 microsend of servo increase per loop. Divide SCHED_LOOP_RATE by approximately 10 to determine minimum achievable value." user="Standard">
+            <field name="Units">%/s</field>
+            <field name="UnitText">percent per second</field>
+            <field name="Range">0 127</field>
+            <field name="Increment">1</field>
+          </param>
+          <param humanName="Throttle cruise percentage" name="ArduPlane:TRIM_THROTTLE" documentation="Target percentage of throttle to apply for flight in automatic throttle modes and throttle percentage that maintains AIRSPEED_CRUISE. Caution: low battery voltages at the end of flights may require higher throttle to maintain airspeed." user="Standard">
+            <field name="Units">%</field>
+            <field name="UnitText">percent</field>
+            <field name="Range">0 100</field>
+            <field name="Increment">1</field>
+          </param>
+          <param humanName="Waypoint Loiter Radius" name="ArduPlane:WP_LOITER_RAD" documentation="Defines the distance from the waypoint center, the plane will maintain during a loiter. If you set this value to a negative number then the default loiter direction will be counter-clockwise instead of clockwise. If this value is too close to zero, the achieved loiter radius will be determined by ROLL_LIMIT_DEG." user="Standard">
+            <field name="Units">m</field>
+            <field name="UnitText">meters</field>
+            <field name="Range">-32767 32767</field>
+            <field name="Increment">1</field>
+          </param>
+          <param humanName="Waypoint Maximum Radius" name="ArduPlane:WP_MAX_RADIUS" documentation="Sets the maximum distance to a waypoint for the waypoint to be considered complete. This overrides the &quot;cross the finish line&quot; logic that is normally used to consider a waypoint complete. For normal AUTO behaviour this parameter should be set to zero. Using a non-zero value is only recommended when it is critical that the aircraft does approach within the given radius, and should loop around until it has done so. This can cause the aircraft to loop forever if its turn radius is greater than the maximum radius set." user="Standard">
+            <field name="Units">m</field>
+            <field name="UnitText">meters</field>
+            <field name="Range">0 32767</field>
+            <field name="Increment">1</field>
+          </param>
+        </parameters>
+      </vehicles>
+      <libraries>
+        <parameters name="Q_">
+          <param humanName="QRTL return altitude" name="Q_RTL_ALT" documentation="The altitude which QRTL mode heads to initially" user="Standard">
+            <field name="Units">m</field>
+            <field name="UnitText">meters</field>
+            <field name="Range">1 200</field>
+            <field name="Increment">1</field>
+          </param>
+          <param humanName="VTOL RTL mode" name="Q_RTL_MODE" documentation="If this is set to 1 then an RTL will change to QRTL when within RTL_RADIUS meters of the RTL destination, VTOL approach: vehicle will RTL at RTL alt and circle with a radius of Q_FW_LND_APR_RAD down to Q_RTL_ALT and then transition into the wind and QRTL, see 'AUTO VTOL Landing', QRTL Always: do a QRTL instead of RTL" user="Standard">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+              <value code="2">VTOL approach</value>
+              <value code="3">QRTL Always</value>
+            </values>
+          </param>
+          <param humanName="Land final speed" name="Q_LAND_FINAL_SPD" documentation="The descent speed for the final stage of landing in m/s" user="Standard">
+            <field name="Units">m/s</field>
+            <field name="UnitText">meters per second</field>
+            <field name="Range">0.3 2</field>
+            <field name="Increment">0.1</field>
+          </param>
+          <param humanName="Pilot vertical acceleration" name="Q_PILOT_ACCEL_Z" documentation="The vertical acceleration used when pilot is controlling the altitude" user="Standard">
+            <field name="Units">m/s/s</field>
+            <field name="UnitText">meters per square second</field>
+            <field name="Range">0.5 5</field>
+            <field name="Increment">0.1</field>
+          </param>
+          <param humanName="Pilot maximum vertical speed down" name="Q_PILOT_SPD_DN" documentation="The maximum vertical velocity the pilot may request in m/s going down. If 0, uses Q_PILOT_SPD_UP value." user="Standard">
+            <field name="Units">m/s</field>
+            <field name="UnitText">meters per second</field>
+            <field name="Range">0.5 5</field>
+            <field name="Increment">0.1</field>
+          </param>
+          <param humanName="Pilot maximum vertical speed up" name="Q_PILOT_SPD_UP" documentation="The maximum ascending vertical velocity the pilot may request in m/s" user="Standard">
+            <field name="Units">m/s</field>
+            <field name="UnitText">meters per second</field>
+            <field name="Range">0.5 5</field>
+            <field name="Increment">0.1</field>
+          </param>
+          <param humanName="Land final altitude" name="Q_LAND_FINAL_ALT" documentation="The altitude at which we should switch to Q_LAND_FINAL_SPD descent rate" user="Standard">
+            <field name="Units">m</field>
+            <field name="UnitText">meters</field>
+            <field name="Range">0.5 50</field>
+            <field name="Increment">0.1</field>
+          </param>
+        </parameters>
+        <parameters name="Q_WP_">
+          <param humanName="Waypoint Horizontal Speed Target" name="Q_WP_SPD" documentation="Speed in m/s which the aircraft will attempt to maintain horizontally during a WP mission" user="Standard">
+            <field name="Units">m/s</field>
+            <field name="UnitText">meters per second</field>
+            <field name="Range">0.10 20.00</field>
+            <field name="Increment">0.10</field>
+          </param>
+          <param humanName="Waypoint Acceleration" name="Q_WP_ACC" documentation="Horizontal acceleration in m/s/s used during missions" user="Standard">
+            <field name="Units">m/s/s</field>
+            <field name="UnitText">meters per square second</field>
+            <field name="Range">0.50 5.00</field>
+            <field name="Increment">0.10</field>
+          </param>
+          <param humanName="Waypoint Vertical Acceleration" name="Q_WP_ACC_Z" documentation="Vertical acceleration in m/s/s used during missions" user="Standard">
+            <field name="Units">m/s/s</field>
+            <field name="UnitText">meters per square second</field>
+            <field name="Range">0.50 5.00</field>
+            <field name="Increment">0.10</field>
+          </param>
+          <param humanName="Waypoint Radius" name="Q_WP_RADIUS_M" documentation="Distance from a waypoint, that when crossed indicates the wp has been reached." user="Standard">
+            <field name="Units">m</field>
+            <field name="UnitText">meters</field>
+            <field name="Range">0.05 10.00</field>
+            <field name="Increment">0.01</field>
+          </param>
+          <param humanName="Waypoint Descent Speed Target" name="Q_WP_SPD_DN" documentation="Speed in m/s which the aircraft will attempt to maintain while descending during a WP mission" user="Standard">
+            <field name="Units">m/s</field>
+            <field name="UnitText">meters per second</field>
+            <field name="Range">0.10 10.00</field>
+            <field name="Increment">0.10</field>
+          </param>
+          <param humanName="Waypoint Climb Speed Target" name="Q_WP_SPD_UP" documentation="Speed in m/s which the aircraft will attempt to maintain while climbing during a WP mission" user="Standard">
+            <field name="Units">m/s</field>
+            <field name="UnitText">meters per second</field>
+            <field name="Range">0.10 10.00</field>
+            <field name="Increment">0.10</field>
+          </param>
+        </parameters>
+        <parameters name="INS">
+          <param humanName="Accel filter cutoff frequency" name="INS_ACCEL_FILTER" documentation="Filter cutoff frequency for accelerometers. This can be set to a lower value to try to cope with very high vibration levels in aircraft. A value of zero means no filtering (not recommended!)" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 256</field>
+          </param>
+          <param humanName="Gyro filter cutoff frequency" name="INS_GYRO_FILTER" documentation="Filter cutoff frequency for gyroscopes. This can be set to a lower value to try to cope with very high vibration levels in aircraft. A value of zero means no filtering (not recommended!)" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 256</field>
+          </param>
+        </parameters>
+        <parameters name="LOG">
+          <param humanName="Enable logging while disarmed" name="LOG_DISARMED" documentation="If LOG_DISARMED is set to 1 then logging will be enabled at all times including when disarmed. Logging before arming can make for very large logfiles but can help a lot when tracking down startup issues and is necessary if logging of EKF replay data is selected via the LOG_REPLAY parameter. If LOG_DISARMED is set to 2, then logging will be enabled when disarmed, but not if a USB connection is detected. This can be used to prevent unwanted data logs being generated when the vehicle is connected via USB for log downloading or parameter changes. If LOG_DISARMED is set to 3 then logging will happen while disarmed, but if the vehicle never arms then the logs using the filesystem backend will be discarded on the next boot." user="Standard">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+              <value code="2">Disabled on USB connection</value>
+              <value code="3">Discard log on reboot if never armed</value>
+            </values>
+          </param>
+          <param humanName="Enable logging of information needed for Replay" name="LOG_REPLAY" documentation="If LOG_REPLAY is set to 1 then the EKF2 and EKF3 state estimators will log detailed information needed for diagnosing problems with the Kalman filter. LOG_DISARMED must be set to 1 or 2 or else the log will not contain the pre-flight data required for replay testing of the EKF's. It is suggested that you also raise LOG_FILE_BUFSIZE to give more buffer space for logging and use a high quality microSD card to ensure no sensor data is lost." user="Standard">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+        </parameters>
+        <parameters name="NAVL1_">
+          <param humanName="L1 control damping ratio" name="NAVL1_DAMPING" documentation="Damping ratio for L1 control. Increase this in increments of 0.05 if you are getting overshoot in path tracking. You should not need a value below 0.7 or above 0.85." user="Advanced">
+            <field name="Range">0.6 1.0</field>
+            <field name="Increment">0.05</field>
+          </param>
+          <param humanName="Loiter Radius Bank Angle Limit" name="NAVL1_LIM_BANK" documentation="The sealevel bank angle limit for a continuous loiter. (Used to calculate airframe loading limits at higher altitudes). Setting to 0, will instead just scale the loiter radius directly" user="Advanced">
+            <field name="Units">deg</field>
+            <field name="UnitText">degrees</field>
+            <field name="Range">0 89</field>
+          </param>
+          <param humanName="L1 control period" name="NAVL1_PERIOD" documentation="Period in seconds of L1 tracking loop. This parameter is the primary control for aggressiveness of turns in auto mode. This needs to be larger for less responsive airframes. The default is quite conservative, but for most RC aircraft will lead to reasonable flight. For smaller more agile aircraft a value closer to 15 is appropriate, or even as low as 10 for some very agile aircraft. When tuning, change this value in small increments, as a value that is much too small (say 5 or 10 below the right value) can lead to very radical turns, and a risk of stalling." user="Standard">
+            <field name="Units">s</field>
+            <field name="UnitText">seconds</field>
+            <field name="Range">1 60</field>
+            <field name="Increment">1</field>
+          </param>
+        </parameters>
+        <parameters name="Q_LOIT_">
+          <param humanName="Loiter pilot angle max" name="Q_LOIT_ANG_MAX" documentation="Loiter maximum pilot requested lean angle. Set to zero for 2/3 of Q_P_ANGLE_MAX/Q_A_ANGLE_MAX. The maximum vehicle lean angle is still limited by Q_P_ANGLE_MAX/Q_A_ANGLE_MAX" user="Advanced">
+            <field name="Units">deg</field>
+            <field name="UnitText">degrees</field>
+            <field name="Range">0 45</field>
+            <field name="Increment">1</field>
+          </param>
+          <param humanName="Loiter brake start delay (in seconds)" name="Q_LOIT_BRK_DELAY" documentation="Loiter brake start delay (in seconds)" user="Advanced">
+            <field name="Units">s</field>
+            <field name="UnitText">seconds</field>
+            <field name="Range">0 2</field>
+            <field name="Increment">0.1</field>
+          </param>
+          <param humanName="Loiter maximum correction acceleration" name="Q_LOIT_ACC_MAX_M" documentation="Loiter maximum correction acceleration in m/s/s.  Higher values cause the copter to correct position errors more aggressively." user="Advanced">
+            <field name="Units">m/s/s</field>
+            <field name="UnitText">meters per square second</field>
+            <field name="Range">1 9.81</field>
+            <field name="Increment">0.01</field>
+          </param>
+          <param humanName="Loiter braking acceleration" name="Q_LOIT_BRK_ACC_M" documentation="Loiter braking acceleration in m/s/s. Higher values stop the copter more quickly when the stick is centered." user="Advanced">
+            <field name="Units">m/s/s</field>
+            <field name="UnitText">meters per square second</field>
+            <field name="Range">0.25 2.5</field>
+            <field name="Increment">0.01</field>
+          </param>
+          <param humanName="Loiter braking jerk" name="Q_LOIT_BRK_JRK_M" documentation="Loiter braking jerk in m/s/s/s. Higher values will remove braking faster if the pilot moves the sticks during a braking maneuver." user="Advanced">
+            <field name="Units">m/s/s/s</field>
+            <field name="UnitText">meters per cubic second</field>
+            <field name="Range">5 50</field>
+            <field name="Increment">0.01</field>
+          </param>
+          <param humanName="Loiter Horizontal Maximum Speed" name="Q_LOIT_SPEED_MS" documentation="Defines the maximum speed in m/s which the aircraft will travel horizontally while in loiter mode" user="Standard">
+            <field name="Units">m/s</field>
+            <field name="UnitText">meters per second</field>
+            <field name="Range">0.20 35</field>
+            <field name="Increment">0.05</field>
+          </param>
+        </parameters>
+        <parameters name="TECS_">
+          <param humanName="Controller pitch damping" name="TECS_PTCH_DAMP" documentation="Damping gain for pitch control from TECS control.  Increasing may correct for oscillations in speed and height, but too much may cause additional oscillation and degraded control." user="Advanced">
+            <field name="Range">0.1 1.0</field>
+            <field name="Increment">0.1</field>
+          </param>
+          <param humanName="Maximum Descent Rate (metres/sec)" name="TECS_SINK_MAX" documentation="Maximum demanded descent rate. Do not set higher than the vertical speed the aircraft can maintain at THR_MIN, TECS_PITCH_MIN, and AIRSPEED_MAX." user="Standard">
+            <field name="Increment">0.1</field>
+            <field name="Range">0.0 20.0</field>
+          </param>
+          <param humanName="Controller throttle damping" name="TECS_THR_DAMP" documentation="Damping gain for throttle demand loop. Increase to add throttle activity to dampen oscillations in speed and height." user="Advanced">
+            <field name="Range">0.1 1.0</field>
+            <field name="Increment">0.1</field>
+          </param>
+          <param humanName="Controller time constant (sec)" name="TECS_TIME_CONST" documentation="Time constant of the TECS control algorithm. Small values make faster altitude corrections but can cause overshoot and aggressive behavior." user="Advanced">
+            <field name="Range">3.0 10.0</field>
+            <field name="Increment">0.2</field>
+          </param>
+          <param humanName="Weighting applied to speed control" name="TECS_SPDWEIGHT" documentation="Mixing of pitch and throttle correction for height and airspeed errors. Pitch controls altitude and throttle controls airspeed if set to 0. Pitch controls airspeed and throttle controls altitude if set to 2 (good for gliders). Blended if set to 1." user="Advanced">
+            <field name="Range">0.0 2.0</field>
+            <field name="Increment">0.1</field>
+          </param>
+        </parameters>
+      </libraries>
+    </paramfile>
+  </release>
+</parameterDescriptionBundle>

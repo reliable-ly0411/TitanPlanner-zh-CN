@@ -1,0 +1,1035 @@
+<?xml version='1.0' encoding='utf-8'?>
+<parameterTranslations schemaVersion="1" locale="zh-CN" license="GPL-3.0-or-later">
+  <translation family="Copter" parameter="RTL_ALT" field="Description" versions="4.5.7" englishSha256="8818f673b5df46c1c4e88cc3b8606d3419de106e41b4e856e8485e59a73453c7" recordSha256="b1b9b270288cf19c7d2e2cd5e6210e60b52871abe1f0858ea9653a044a38904a">
+    <english>The minimum alt above home the vehicle will climb to before returning.  If the vehicle is flying higher than this value it will return at its current altitude.</english>
+    <chinese>返航开始时的最低目标高度，单位为厘米，相对于 Home 点。当前位置低于该高度时先爬升；如果已经更高，则按当前高度返航。</chinese>
+  </translation>
+  <translation family="Copter" parameter="RTL_ALT_FINAL" field="Description" versions="4.5.7,4.6.3" englishSha256="03275fc0cfd4f950cb98f62e52b31c9c953928975fd0c868c8312d5f9f7229b2" recordSha256="eb00a5234e46d5a0db99fece879c4817547a5a3c83a03dbfc6debc3ab28dc0b6">
+    <english>This is the altitude the vehicle will move to as the final stage of Returning to Launch or after completing a mission.  Set to zero to land.</english>
+    <chinese>返航最后阶段或任务完成后到达的最终高度，单位为厘米。设为 0 表示降落。</chinese>
+  </translation>
+  <translation family="Copter" parameter="RTL_LOIT_TIME" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="7667e57df8057975594d51ee5f86838b49ba73924177f8be66b31211404111b6" recordSha256="c4d42ac6a67852e2645ba0bff225ed840261ea8a46b569ecc63ba6528e41ade9">
+    <english>Time (in milliseconds) to loiter above home before beginning final descent</english>
+    <chinese>返航到 Home 点上方后，在开始最后下降前的悬停等待时间，单位为毫秒。</chinese>
+  </translation>
+  <translation family="Copter" parameter="WP_YAW_BEHAVIOR" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="7908a3b2193ce2b77d0aa3111e143c3dcddfdea5ce0724bf8c5ef18bfaf099c7" recordSha256="3ee8729f1f4cd329a6f2ba45541a820571e81f745fba63fca17724cbda3d657a">
+    <english>Determines how the autopilot controls the yaw during missions and RTL</english>
+    <chinese>设置任务飞行及返航过程中，自动驾驶仪如何控制机头朝向（偏航）。各选项的区别见原始编号对应的中英文枚举。</chinese>
+  </translation>
+  <translation family="Copter" parameter="WP_YAW_BEHAVIOR" field="Value" versions="4.5.7,4.6.3,4.7.1" englishSha256="fd084211712be356a7397a8e610008cd1302cfe21409d3b51cfe53773ba70c8e" recordSha256="3ee8729f1f4cd329a6f2ba45541a820571e81f745fba63fca17724cbda3d657a" code="0">
+    <english>Never change yaw</english>
+    <chinese>不自动改变偏航朝向</chinese>
+  </translation>
+  <translation family="Copter" parameter="WP_YAW_BEHAVIOR" field="Value" versions="4.5.7,4.6.3,4.7.1" englishSha256="9cfef822aea14f0d22f2a93bc031e0b74d86a9ddbea0b39fac6d24be032b1a2b" recordSha256="3ee8729f1f4cd329a6f2ba45541a820571e81f745fba63fca17724cbda3d657a" code="1">
+    <english>Face next waypoint</english>
+    <chinese>朝向下一个航点</chinese>
+  </translation>
+  <translation family="Copter" parameter="WP_YAW_BEHAVIOR" field="Value" versions="4.5.7,4.6.3,4.7.1" englishSha256="cf72b6895fdba51736a96b360965d219e951c0f2f527108839a6c26e7694e4f0" recordSha256="3ee8729f1f4cd329a6f2ba45541a820571e81f745fba63fca17724cbda3d657a" code="2">
+    <english>Face next waypoint except RTL</english>
+    <chinese>朝向下一个航点，返航期间除外</chinese>
+  </translation>
+  <translation family="Copter" parameter="WP_YAW_BEHAVIOR" field="Value" versions="4.5.7,4.6.3,4.7.1" englishSha256="c7bb928cb9016aca5af44961cd99206616d7d5cec2a742f704de2b8f61bcffe9" recordSha256="3ee8729f1f4cd329a6f2ba45541a820571e81f745fba63fca17724cbda3d657a" code="3">
+    <english>Face along GPS course</english>
+    <chinese>沿 GPS 航迹方向</chinese>
+  </translation>
+  <translation family="Copter" parameter="PILOT_SPEED_UP" field="Description" versions="4.5.7,4.6.3" englishSha256="e042e39632616425bb1ddfa89d7bb9b85dec7008e9b274351683d8704c7e6e47" recordSha256="22bd3ef4c997b48d8bbd86c74d353e63857ff2f028c6cd3df96be311aff2dc82">
+    <english>The maximum vertical ascending velocity the pilot may request in cm/s</english>
+    <chinese>飞手可请求的最大垂直上升速度，单位为厘米/秒。</chinese>
+  </translation>
+  <translation family="Copter" parameter="WPNAV_SPEED" field="Description" versions="4.5.7" englishSha256="6e861853cda067eb63e5b42487a7894eb96c24ec0adaf31b80e1397a6271df30" recordSha256="1e43067ef95d67d22a5be0e97cc00a32642a014445ce7c98a29f0b9b34937f1a">
+    <english>Defines the speed in cm/s which the aircraft will attempt to maintain horizontally during a WP mission</english>
+    <chinese>航点任务中的目标水平速度，单位为厘米/秒；飞行器会尝试保持这一速度。</chinese>
+  </translation>
+  <translation family="Copter" parameter="RTL_ALT" field="Description" versions="4.6.3" englishSha256="8818f673b5df46c1c4e88cc3b8606d3419de106e41b4e856e8485e59a73453c7" recordSha256="e2445214043e2cb2fb72efb4a558c9491b63bd434f29a12df935eb07e5225c1d">
+    <english>The minimum alt above home the vehicle will climb to before returning.  If the vehicle is flying higher than this value it will return at its current altitude.</english>
+    <chinese>返航开始时的最低目标高度，单位为厘米，相对于 Home 点。当前位置低于该高度时先爬升；如果已经更高，则按当前高度返航。</chinese>
+  </translation>
+  <translation family="Copter" parameter="WPNAV_SPEED" field="Description" versions="4.6.3" englishSha256="6e861853cda067eb63e5b42487a7894eb96c24ec0adaf31b80e1397a6271df30" recordSha256="c44ce4cb4b66b5bc78eb543701a57950ac6eae7ea145252307f53bd3ccae895b">
+    <english>Defines the speed in cm/s which the aircraft will attempt to maintain horizontally during a WP mission</english>
+    <chinese>航点任务中的目标水平速度，单位为厘米/秒；飞行器会尝试保持这一速度。</chinese>
+  </translation>
+  <translation family="Copter" parameter="PILOT_SPD_UP" field="Description" versions="4.7.1" englishSha256="1a078282f5f26125ca1eaaebac15dbbb0ff40657b4a8db6bf2ea48b264d3edeb" recordSha256="9f79b8f94882de6155ad412503a40ab0fd6287b19948faff125715b60334aaac">
+    <english>The maximum vertical ascending velocity the pilot may request in m/s</english>
+    <chinese>飞手可请求的最大垂直上升速度，单位为米/秒。</chinese>
+  </translation>
+  <translation family="Copter" parameter="RTL_ALT_M" field="Description" versions="4.7.1" englishSha256="fe6ab390b4602037d82d1862cd8f16d938bb192df075545db9a65c48b2127988" recordSha256="f6e2f977e708f415700197d042486286700b14a5c464162ee39f9bb3b97bf635">
+    <english>The minimum alt above home the vehicle will climb to before returning. If the vehicle is flying higher than this value it will return at its current altitude.</english>
+    <chinese>返航开始时的最低目标高度，单位为米，相对于 Home 点。当前位置低于该高度时先爬升；如果已经更高，则按当前高度返航。</chinese>
+  </translation>
+  <translation family="Copter" parameter="RTL_ALT_FINAL_M" field="Description" versions="4.7.1" englishSha256="8ee02419da81cd6e8b1406933d9a056ba67f0ff2060a041ac05fcda4427ecf6e" recordSha256="64beae498e0743a05f0d671acc68d84a262e8c3c01f4cdc81c4ce7c8fe5c75c9">
+    <english>Altitude the vehicle will move to as the final stage of Returning to Launch or after completing a mission. Set to zero to land.</english>
+    <chinese>返航最后阶段或任务完成后到达的最终高度，单位为米。设为 0 表示降落。</chinese>
+  </translation>
+  <translation family="Copter" parameter="WP_SPD" field="Description" versions="4.7.1" englishSha256="a2606d7caa54c0d30f9460f5090692046ff1c4852ef16bd45e2223a1bc7562db" recordSha256="c9f4e42c3c50ddee4f71a0df5f4a613285a27e78078c24a27793caa1c3894766">
+    <english>Speed in m/s which the aircraft will attempt to maintain horizontally during a WP mission</english>
+    <chinese>航点任务中的目标水平速度，单位为米/秒；飞行器会尝试保持这一速度。</chinese>
+  </translation>
+  <translation family="Plane" parameter="WP_RADIUS" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="4334b7242e428e43a08eefb68be3f3a487d7ec36171aed33d924083ae5f1f54c" recordSha256="e8df3a2acd1822f6cf89d826f6150defc1aaa9dcafcbc495e843f4d432c1e285">
+    <english>Defines the maximum distance from a waypoint that when crossed indicates the waypoint may be complete. To avoid the aircraft looping around the waypoint in case it misses by more than the WP_RADIUS an additional check is made to see if the aircraft has crossed a "finish line" passing through the waypoint and perpendicular to the flight path from the previous waypoint. If that finish line is crossed then the waypoint is considered complete. Note that the navigation controller may decide to turn later than WP_RADIUS before a waypoint, based on how sharp the turn is and the speed of the aircraft. It is safe to set WP_RADIUS much larger than the usual turn radius of your aircraft and the navigation controller will work out when to turn. If you set WP_RADIUS too small then you will tend to overshoot the turns.</english>
+    <chinese>航点完成判定所用的距离阈值，单位为米。进入该距离后，航点可被判定为完成；即使没有进入该半径，越过经过航点、且垂直于上一段航线的“终点线”，也会被判定完成，以免飞机反复绕回。实际转弯时机还取决于转角和速度，不能把这个参数当作固定的转弯半径；设置过小容易冲过转弯位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="AIRSPEED_CRUISE" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="c5d3a87ef8c6efd1280c7e8338dd601c67019ebf75bf95ba9fc155aa6e732f63" recordSha256="48b8567cf91408ba5dae2efd5a84d3398640260004f07837c492f915512c73ca">
+    <english>Target cruise airspeed in m/s in automatic throttle modes. Value is as an indicated (calibrated/apparent) airspeed.</english>
+    <chinese>自动油门模式下的目标巡航空速，单位为米/秒。这里使用的是指示（校准/表观）空速。</chinese>
+  </translation>
+  <translation family="Plane" parameter="RTL_ALTITUDE" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="f3dfded98cec380b461ee2efc3f69495a4e8929e1f0712896b09d4928cfc4c9d" recordSha256="ae69ecdfc382d03a3e891aa697f592a30c91ca60bdedc28120cd06de7b888dd2">
+    <english>Target altitude above home for RTL mode. Maintains current altitude if set to -1. Rally point altitudes are used if plane does not return to home.</english>
+    <chinese>RTL 返航的目标高度，单位为米，相对于 Home 点。设为 -1 时保持当前高度；若飞机返回的是 Rally 集结点而非 Home，则使用该集结点的高度。</chinese>
+  </translation>
+  <translation family="Plane" parameter="Q_RTL_ALT" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="4f111ab80ea3fcc7f3ccc876752a16fe3cdbd00bb6bce637d8d9f0868d492742" recordSha256="22659d0920e136b9717a2cc6d52f7d565a408610daf0bc8af28d9d4b31333344">
+    <english>The altitude which QRTL mode heads to initially</english>
+    <chinese>QRTL 模式最初飞向的目标高度，单位为米。原文仅说明这一阶段的目标，未在此条目中定义高度参考面。</chinese>
+  </translation>
+  <translation family="Plane" parameter="Q_RTL_MODE" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="2487a26a096a0885d548d5756129c2868c33ecf194356d43a5f813d22db24925" recordSha256="cf02a20b30b893e9d6b0c8916f4e458deb0b012226f4af12bd3ef13283cf951d">
+    <english>If this is set to 1 then an RTL will change to QRTL when within RTL_RADIUS meters of the RTL destination, VTOL approach: vehicle will RTL at RTL alt and circle with a radius of Q_FW_LND_APR_RAD down to Q_RTL_ALT and then transition into the wind and QRTL, see 'AUTO VTOL Landing', QRTL Always: do a QRTL instead of RTL</english>
+    <chinese>设置固定翼 RTL 与垂直起降 QRTL 的衔接方式。1：进入距返航目标 RTL_RADIUS 米范围后，从 RTL 转为 QRTL。2：先以 RTL 高度返航，再以 Q_FW_LND_APR_RAD 为半径盘旋下降到 Q_RTL_ALT，随后迎风转换并执行 QRTL（参见官方 AUTO VTOL Landing）。3：始终以 QRTL 代替 RTL。0：不启用该切换选项。</chinese>
+  </translation>
+  <translation family="Plane" parameter="Q_RTL_MODE" field="Value" versions="4.5.7,4.6.3,4.7.1" englishSha256="75081b593d15cf6e631971bc6768723f593b88b172477e40ae7d363e4829816d" recordSha256="cf02a20b30b893e9d6b0c8916f4e458deb0b012226f4af12bd3ef13283cf951d" code="0">
+    <english>Disabled</english>
+    <chinese>禁用此切换选项</chinese>
+  </translation>
+  <translation family="Plane" parameter="Q_RTL_MODE" field="Value" versions="4.5.7,4.6.3,4.7.1" englishSha256="92c1cdfdf4cb9cf6fcca962f206de36fd5d60db1178bc9461052f8de703a0e06" recordSha256="cf02a20b30b893e9d6b0c8916f4e458deb0b012226f4af12bd3ef13283cf951d" code="1">
+    <english>Enabled</english>
+    <chinese>启用近目标切换</chinese>
+  </translation>
+  <translation family="Plane" parameter="Q_RTL_MODE" field="Value" versions="4.5.7,4.6.3,4.7.1" englishSha256="3a86089a23069ab5d0028840e88cdaca6084e8af675fda1c2511dc41b1fb65a1" recordSha256="cf02a20b30b893e9d6b0c8916f4e458deb0b012226f4af12bd3ef13283cf951d" code="2">
+    <english>VTOL approach</english>
+    <chinese>垂直起降进近</chinese>
+  </translation>
+  <translation family="Plane" parameter="Q_RTL_MODE" field="Value" versions="4.5.7,4.6.3,4.7.1" englishSha256="9290c6b9dd17158b2d327c942e0ae4b8a350435a89bdf5f9d15747d5c95d9eaf" recordSha256="cf02a20b30b893e9d6b0c8916f4e458deb0b012226f4af12bd3ef13283cf951d" code="3">
+    <english>QRTL Always</english>
+    <chinese>始终使用 QRTL</chinese>
+  </translation>
+  <translation family="Plane" parameter="Q_WP_SPEED" field="Description" versions="4.5.7" englishSha256="6e861853cda067eb63e5b42487a7894eb96c24ec0adaf31b80e1397a6271df30" recordSha256="58ba74ed613c2081fa4eedc55039daa56e67a9033421f0db4f870d0ec0556ba3">
+    <english>Defines the speed in cm/s which the aircraft will attempt to maintain horizontally during a WP mission</english>
+    <chinese>垂直起降航点任务中的目标水平速度，单位为厘米/秒；飞行器会尝试保持这一速度。</chinese>
+  </translation>
+  <translation family="Plane" parameter="Q_WP_SPEED" field="Description" versions="4.6.3" englishSha256="6e861853cda067eb63e5b42487a7894eb96c24ec0adaf31b80e1397a6271df30" recordSha256="48660f5916ff85fab56bc5a09645527cfdd55c1a9df1e6d5ba810360f95edc71">
+    <english>Defines the speed in cm/s which the aircraft will attempt to maintain horizontally during a WP mission</english>
+    <chinese>垂直起降航点任务中的目标水平速度，单位为厘米/秒；飞行器会尝试保持这一速度。</chinese>
+  </translation>
+  <translation family="Plane" parameter="Q_WP_SPD" field="Description" versions="4.7.1" englishSha256="a2606d7caa54c0d30f9460f5090692046ff1c4852ef16bd45e2223a1bc7562db" recordSha256="aec0ed3d2f2568e0e57c2228c240ad178f946fa899f0f0726bc00e8f0d3aac27">
+    <english>Speed in m/s which the aircraft will attempt to maintain horizontally during a WP mission</english>
+    <chinese>垂直起降航点任务中的目标水平速度，单位为米/秒；飞行器会尝试保持这一速度。</chinese>
+  </translation>
+  <translation family="Copter" parameter="ATC_ANG_PIT_P" field="Description" versions="4.5.7" englishSha256="2af83a465bb4126dfb29314633d2242597101b743ec5ca40edc2d3f30cc39180" recordSha256="6b86094c3363e83bf1056934f2b012a92e8bb908857392a2e651a3f3d86dc9a1">
+    <english>Pitch axis angle controller P gain.  Converts the error between the desired pitch angle and actual angle to a desired pitch rate</english>
+    <chinese>俯仰角度控制器的比例（P）增益：将目标角度与实际角度的偏差转换成目标俯仰角速度。</chinese>
+  </translation>
+  <translation family="Copter" parameter="ATC_ANG_RLL_P" field="Description" versions="4.5.7" englishSha256="f5c9424a754cabec2b5049ea216dac51c9c79bb8d1ac248f89128efa7fe50699" recordSha256="ad91307b262f26a2b0e3b839dcae9ccdf0fdb13a9d0a0c6ffb2c52a8449df9a4">
+    <english>Roll axis angle controller P gain.  Converts the error between the desired roll angle and actual angle to a desired roll rate</english>
+    <chinese>横滚角度控制器的比例（P）增益：将目标角度与实际角度的偏差转换成目标横滚角速度。</chinese>
+  </translation>
+  <translation family="Copter" parameter="ATC_ANG_YAW_P" field="Description" versions="4.5.7" englishSha256="54031833a36e84bd8e595863f85db7c526e182af12dc6ab0f5917a4e851a739b" recordSha256="a651d21761585f348dd568c8b4b48e5eaa3f5be4c9da78506c9193d5126aa1cc">
+    <english>Yaw axis angle controller P gain.  Converts the error between the desired yaw angle and actual angle to a desired yaw rate</english>
+    <chinese>偏航角度控制器的比例（P）增益：将目标角度与实际角度的偏差转换成目标偏航角速度。</chinese>
+  </translation>
+  <translation family="Copter" parameter="FLTMODE1" field="Description" versions="4.5.7" englishSha256="abb32486eea800846607500f1b351f090f6dd14bd21b2287db284524f983ed4e" recordSha256="b3f77db0d0d0f93958d83db5a3a8545a0a611b54a4aa90bc4f5c03926579ba38">
+    <english>Flight mode when pwm of Flightmode channel(FLTMODE_CH) is &lt;= 1230</english>
+    <chinese>飞行模式通道 FLTMODE_CH 的 PWM ≤ 1230 时使用的飞行模式。</chinese>
+  </translation>
+  <translation family="Copter" parameter="FLTMODE2" field="Description" versions="4.5.7" englishSha256="f5b431479d81ca13257c823b5ff2d42342e6946b7e0f8e6c3f0afa0dbc666a08" recordSha256="94767b27dd3be47bebbf7f72dca1f722876f961d8776732bb906f0dd5d52db10">
+    <english>Flight mode when pwm of Flightmode channel(FLTMODE_CH) is &gt;1230, &lt;= 1360</english>
+    <chinese>飞行模式通道 FLTMODE_CH 的 PWM &gt; 1230 且 ≤ 1360 时使用的飞行模式。</chinese>
+  </translation>
+  <translation family="Copter" parameter="FLTMODE3" field="Description" versions="4.5.7" englishSha256="2b0a89e25b932fd75b207b5c7e66cabdc173d843ee60b0c05aed3a6823a04528" recordSha256="7c051b65e2593d34eecc66404637ac51c6c2db513cb9f3dc0a37b557b23f5cb9">
+    <english>Flight mode when pwm of Flightmode channel(FLTMODE_CH) is &gt;1360, &lt;= 1490</english>
+    <chinese>飞行模式通道 FLTMODE_CH 的 PWM &gt; 1360 且 ≤ 1490 时使用的飞行模式。</chinese>
+  </translation>
+  <translation family="Copter" parameter="FLTMODE4" field="Description" versions="4.5.7" englishSha256="8791864b8d0113453e0aa642916476aaec5586789a2dea74b3ac3a169033760b" recordSha256="cce4a5c143a250873d75338472f4173bed1e3493f05b08178453f0dde39546f6">
+    <english>Flight mode when pwm of Flightmode channel(FLTMODE_CH) is &gt;1490, &lt;= 1620</english>
+    <chinese>飞行模式通道 FLTMODE_CH 的 PWM &gt; 1490 且 ≤ 1620 时使用的飞行模式。</chinese>
+  </translation>
+  <translation family="Copter" parameter="FLTMODE5" field="Description" versions="4.5.7" englishSha256="552b61f48a8fe4f03037e5a4ae1399890e7b9b53fe13ef6f1f5bde21d3af3d2c" recordSha256="3cd26ad4358303ebb48344da3787ba3d7f73151686bdd5dd46476ca21b5f50a1">
+    <english>Flight mode when pwm of Flightmode channel(FLTMODE_CH) is &gt;1620, &lt;= 1749</english>
+    <chinese>飞行模式通道 FLTMODE_CH 的 PWM &gt; 1620 且 ≤ 1749 时使用的飞行模式。</chinese>
+  </translation>
+  <translation family="Copter" parameter="FLTMODE6" field="Description" versions="4.5.7" englishSha256="8637b59ece6cb8c3684592e213367bbbaf9732913499793e45dd3af3da942d37" recordSha256="51afe533b7424e20693f361d3c2772ff5615b6970fa2408603d9253670cd71f9">
+    <english>Flight mode when pwm of Flightmode channel(FLTMODE_CH) is &gt;=1750</english>
+    <chinese>飞行模式通道 FLTMODE_CH 的 PWM ≥ 1750 时使用的飞行模式。</chinese>
+  </translation>
+  <translation family="Copter" parameter="FLTMODE_CH" field="Description" versions="4.5.7" englishSha256="c7f9004f8637a4555630b00eefe8c4422c531aa13584a75e1349897bf525e453" recordSha256="aef0c25e4a8ab4a4b4e6a39d77d61f291f05cce252c1a4b68b094a2d18b6632c">
+    <english>RC Channel to use for flight mode control</english>
+    <chinese>选择用于切换飞行模式的遥控通道。</chinese>
+  </translation>
+  <translation family="Copter" parameter="INS_ACCEL_FILTER" field="Description" versions="4.5.7" englishSha256="1e7fd67468dfb2c6b52585c3eca4788a6deda519bc012de00b33f1b427cbc376" recordSha256="9393f4ef6d370e36a24e5491029be918a1b55ee30d442ca34a1dcd3e1737ab34">
+    <english>Filter cutoff frequency for accelerometers. This can be set to a lower value to try to cope with very high vibration levels in aircraft. A value of zero means no filtering (not recommended!)</english>
+    <chinese>加速度计低通滤波的截止频率。降低该值可尝试缓解高振动的影响；设为 0 表示不滤波，官方不建议这样设置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="INS_GYRO_FILTER" field="Description" versions="4.5.7" englishSha256="84dece625e0d6631e5934fadf5eb47dce57c229483f3a105ccf92c63c2997d2a" recordSha256="c67bbe0e383c0c39915d26ec5f72b6e8f17a01252fe0016a740ab57965b4d1b7">
+    <english>Filter cutoff frequency for gyroscopes. This can be set to a lower value to try to cope with very high vibration levels in aircraft. A value of zero means no filtering (not recommended!)</english>
+    <chinese>陀螺仪低通滤波的截止频率。降低该值可尝试缓解高振动的影响；设为 0 表示不滤波，官方不建议这样设置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="LOG_DISARMED" field="Description" versions="4.5.7" englishSha256="306c480a75161b85a8ee48e99d48a11dac16255375adfe60b34150c13b22021e" recordSha256="16802fe8a387398fb7730f1c4fb9ce0a1ddd6ab7ef811658b93b95417d86b1b4">
+    <english>If LOG_DISARMED is set to 1 then logging will be enabled at all times including when disarmed. Logging before arming can make for very large logfiles but can help a lot when tracking down startup issues and is necessary if logging of EKF replay data is selected via the LOG_REPLAY parameter. If LOG_DISARMED is set to 2, then logging will be enabled when disarmed, but not if a USB connection is detected. This can be used to prevent unwanted data logs being generated when the vehicle is connected via USB for log downloading or parameter changes. If LOG_DISARMED is set to 3 then logging will happen while disarmed, but if the vehicle never arms then the logs using the filesystem backend will be discarded on the next boot.</english>
+    <chinese>控制未解锁时的日志记录。1：包括未解锁阶段在内始终记录，有助于排查启动问题，但日志可能很大；使用 LOG_REPLAY 记录 EKF 重放数据时需要飞行前记录。2：未解锁时记录，但检测到 USB 连接时不记录，可避免下载日志或改参数时产生无用日志。3：未解锁时记录，但若本次运行始终没有解锁，文件系统后端的这些日志会在下次启动时丢弃。</chinese>
+  </translation>
+  <translation family="Copter" parameter="LOG_REPLAY" field="Description" versions="4.5.7" englishSha256="af4d5c2e1dccc5b7550d242a7343b73057b99652fee757ee7e552b5e19ac67d8" recordSha256="ca015b469df9d92021e1f6233ce045f771cdea5be6411c555e89c4ef6d81d426">
+    <english>If LOG_REPLAY is set to 1 then the EKF2 and EKF3 state estimators will log detailed information needed for diagnosing problems with the Kalman filter. LOG_DISARMED must be set to 1 or 2 or else the log will not contain the pre-flight data required for replay testing of the EKF's. It is suggested that you also raise LOG_FILE_BUFSIZE to give more buffer space for logging and use a high quality microSD card to ensure no sensor data is lost.</english>
+    <chinese>设为 1 时，EKF2 和 EKF3 会记录诊断卡尔曼滤波问题所需的详细数据。LOG_DISARMED 还须设为 1 或 2，否则缺少重放测试需要的飞行前数据。官方建议增大 LOG_FILE_BUFSIZE，并使用优质 microSD 卡，避免传感器数据丢失。</chinese>
+  </translation>
+  <translation family="Copter" parameter="LOIT_ANG_MAX" field="Description" versions="4.5.7" englishSha256="3558bf7a755302ac64f530b38cf00b015016c7438c0d393942072ffcd60a3520" recordSha256="5e6c95dee6b1584dc023d5c07ee3c475dc0184220c4dc34d5e363e8065ed5d4a">
+    <english>Loiter maximum pilot requested lean angle. Set to zero for 2/3 of PSC_ANGLE_MAX/ANGLE_MAX. The maximum vehicle lean angle is still limited by PSC_ANGLE_MAX/ANGLE_MAX</english>
+    <chinese>Loiter 模式中飞手可请求的最大倾斜角。设为 0 时使用 PSC_ANGLE_MAX/ANGLE_MAX 的 2/3；飞行器实际最大倾斜角仍受 PSC_ANGLE_MAX/ANGLE_MAX 限制。</chinese>
+  </translation>
+  <translation family="Copter" parameter="LOIT_BRK_DELAY" field="Description" versions="4.5.7" englishSha256="bb52348faa1975b4a145849df7e6943b3e612ca42a472ac97d1ddea68789aad3" recordSha256="4d9731a6cb66086007733a8679953446d05995f31f7a02d77dcd559da76dba3d">
+    <english>Loiter brake start delay (in seconds)</english>
+    <chinese>Loiter 模式开始制动前的延迟，单位为秒。</chinese>
+  </translation>
+  <translation family="Copter" parameter="LAND_ALT_LOW" field="Description" versions="4.5.7" englishSha256="b8f085a1caab9468f084640f773a78200a321967d310172a2f0b355ee7b37488" recordSha256="2ed70fd08f0e4486b216766aac9be16b7b81f81d685fd562d170ef4e1bad522c">
+    <english>Altitude during Landing at which vehicle slows to LAND_SPEED</english>
+    <chinese>降落时下降到此高度后，减速到 LAND_SPEED。</chinese>
+  </translation>
+  <translation family="Copter" parameter="LAND_SPEED_HIGH" field="Description" versions="4.5.7" englishSha256="b976984d930ecac1bbf098cf33a0bb7000e25c54f530c0afe3d3ab1e67e9e8d0" recordSha256="b451d57ba8dfaeb2a92ffccc2311b98d1755b39d3648f812638224334d9ff55f">
+    <english>The descent speed for the first stage of landing in cm/s. If this is zero then WPNAV_SPEED_DN is used</english>
+    <chinese>降落第一阶段的下降速度，单位为厘米/秒。设为 0 时使用 WPNAV_SPEED_DN。</chinese>
+  </translation>
+  <translation family="Copter" parameter="LOIT_ACC_MAX" field="Description" versions="4.5.7" englishSha256="be70dcf5f474fbe50bc36ebcb781ffc6ea63a855f9d44d07987bd4e4626ad8d6" recordSha256="cc2132de640fde8908d98fd4f26da4cbe20322c7bcba00fda0a78bafa66fedf7">
+    <english>Loiter maximum correction acceleration in cm/s/s.  Higher values cause the copter to correct position errors more aggressively.</english>
+    <chinese>Loiter 位置修正的最大加速度，单位为厘米/秒²。增大该值会更积极地修正位置偏差。</chinese>
+  </translation>
+  <translation family="Copter" parameter="LOIT_BRK_ACCEL" field="Description" versions="4.5.7" englishSha256="5408ab20723671247b544e6c51c370961f70fae2d6984edc8da64fcb1e6ee3c1" recordSha256="ab119205d92544e2d151668d948695c15a3752e8bd7efa42cbdb7df30558c1b4">
+    <english>Loiter braking acceleration in cm/s/s. Higher values stop the copter more quickly when the stick is centered.</english>
+    <chinese>Loiter 制动加速度，单位为厘米/秒²。增大该值可在摇杆回中后更快停止运动。</chinese>
+  </translation>
+  <translation family="Copter" parameter="LOIT_BRK_JERK" field="Description" versions="4.5.7" englishSha256="e2ec90c7917617638b3385b086b24524d2b2ee72c544645c98293216d975a7ff" recordSha256="eca1bde3efd049c6c19d89ee99aadcd032ad638c476278a6f76736509a681ea8">
+    <english>Loiter braking jerk in cm/s/s/s. Higher values will remove braking faster if the pilot moves the sticks during a braking maneuver.</english>
+    <chinese>Loiter 制动加加速度（加速度变化率），单位为厘米/秒³。制动过程中若飞手再次移动摇杆，较大值会更快解除制动。</chinese>
+  </translation>
+  <translation family="Copter" parameter="LOIT_SPEED" field="Description" versions="4.5.7" englishSha256="954c0cab10004a187631b379484b52850406c6a09aa6a565936fdce5f9364d8f" recordSha256="920adaaab16d1a94b8b8767803b515ae33731bd1b0f20e0458fb18e571f2f2df">
+    <english>Defines the maximum speed in cm/s which the aircraft will travel horizontally while in loiter mode</english>
+    <chinese>Loiter 模式允许的最大水平速度，单位为厘米/秒。</chinese>
+  </translation>
+  <translation family="Copter" parameter="PILOT_ACCEL_Z" field="Description" versions="4.5.7" englishSha256="eb689fbf8c5e2f7d75cbe654419f92da5974f1149f074ad0afd8b5b926159ab6" recordSha256="764aeed166adf00e8ace7837cb1657f5752e0537fc4cc2b4f1717d85e1e2f4c9">
+    <english>The vertical acceleration used when pilot is controlling the altitude</english>
+    <chinese>飞手控制高度时使用的垂直加速度。</chinese>
+  </translation>
+  <translation family="Copter" parameter="PILOT_SPEED_DN" field="Description" versions="4.5.7" englishSha256="0f4f31bff1e3cedf480d9fafa2cb45b011a5d6862dfcc5f30efbf19a7efc8788" recordSha256="76f76f2724b99ca88a333b1729aa3c6116e75beb74c9b2b9b16a7714a26e897a">
+    <english>The maximum vertical descending velocity the pilot may request in cm/s.  If 0 PILOT_SPEED_UP value is used.</english>
+    <chinese>飞手可请求的最大垂直下降速度，单位为厘米/秒。设为 0 时沿用 PILOT_SPEED_UP。</chinese>
+  </translation>
+  <translation family="Copter" parameter="RTL_CLIMB_MIN" field="Description" versions="4.5.7" englishSha256="834c493d1b44b7e558196e2786db755c3de6c89f26ad667f60d1fdbb5122612d" recordSha256="c6f719968986f8a77527bcf18897c7849b9b8780d3de753638c437e316bc4a4e">
+    <english>The vehicle will climb this many cm during the initial climb portion of the RTL</english>
+    <chinese>返航最初爬升阶段需爬升的高度增量，单位为厘米。</chinese>
+  </translation>
+  <translation family="Copter" parameter="RTL_SPEED" field="Description" versions="4.5.7" englishSha256="921288eb43d6bb7d3d49e8532d00dc656c81345fddb462a27e7bfc26083d9594" recordSha256="c57db5278635b51248faa06d965b26fe52878ef6d2ac66a919dc1a373b254cf0">
+    <english>Defines the speed in cm/s which the aircraft will attempt to maintain horizontally while flying home. If this is set to zero, WPNAV_SPEED will be used instead.</english>
+    <chinese>返航途中的目标水平速度，单位为厘米/秒。设为 0 时使用 WPNAV_SPEED。</chinese>
+  </translation>
+  <translation family="Copter" parameter="WPNAV_ACCEL" field="Description" versions="4.5.7" englishSha256="d90eece816b46b0b08768ef5c3b61985f89aa4b99226834163dff79c674f6511" recordSha256="aab0842ed600f79a7e620fc61c84aea372a0cd8e3c74bbc317db6b83fd4efd84">
+    <english>Defines the horizontal acceleration in cm/s/s used during missions</english>
+    <chinese>任务飞行使用的水平加速度，单位为厘米/秒²。</chinese>
+  </translation>
+  <translation family="Copter" parameter="WPNAV_ACCEL_Z" field="Description" versions="4.5.7" englishSha256="d621a5d6eafe768abadaed51070307b369870ba24478adf9deacca5ac3eabb80" recordSha256="1f41e83447fddf335151ac81f059b28ae2825b5387f795cb8c17024f27c8205e">
+    <english>Defines the vertical acceleration in cm/s/s used during missions</english>
+    <chinese>任务飞行使用的垂直加速度，单位为厘米/秒²。</chinese>
+  </translation>
+  <translation family="Copter" parameter="WPNAV_RADIUS" field="Description" versions="4.5.7" englishSha256="6bc0ced8e9a4b85e387f566ff3fee75354248f930e1ce0cffbefe77c6d4815fe" recordSha256="f4594b2677476f999abc0baa6cd3b466220f4b8dfbf207acdaf993471984462d">
+    <english>Defines the distance from a waypoint, that when crossed indicates the wp has been hit.</english>
+    <chinese>航点到达判定的距离阈值；进入该距离即认为到达此航点。</chinese>
+  </translation>
+  <translation family="Copter" parameter="WPNAV_SPEED_DN" field="Description" versions="4.5.7" englishSha256="435eb2745ecf83ec7e126a2dc41306f9f67476b9344310cadf2c4cbad6ad8b24" recordSha256="36d90cd8028a232580a749b5727fc177c80b5d6d091deedb3f09a4e81071bbe9">
+    <english>Defines the speed in cm/s which the aircraft will attempt to maintain while descending during a WP mission</english>
+    <chinese>航点任务中的目标下降速度，单位为厘米/秒；飞行器会尝试保持此速度。</chinese>
+  </translation>
+  <translation family="Copter" parameter="WPNAV_SPEED_UP" field="Description" versions="4.5.7" englishSha256="267dab94f3875820db829bc4b056ae0516f98b7df7d480b4d692ca588cea22b4" recordSha256="7055c9ddf5761513d642b42b24b1f1f50c754fa5642ff4d3c5dc99c3649f6511">
+    <english>Defines the speed in cm/s which the aircraft will attempt to maintain while climbing during a WP mission</english>
+    <chinese>航点任务中的目标爬升速度，单位为厘米/秒；飞行器会尝试保持此速度。</chinese>
+  </translation>
+  <translation family="Copter" parameter="ATC_ANG_PIT_P" field="Description" versions="4.6.3" englishSha256="2af83a465bb4126dfb29314633d2242597101b743ec5ca40edc2d3f30cc39180" recordSha256="6b86094c3363e83bf1056934f2b012a92e8bb908857392a2e651a3f3d86dc9a1">
+    <english>Pitch axis angle controller P gain.  Converts the error between the desired pitch angle and actual angle to a desired pitch rate</english>
+    <chinese>俯仰角度控制器的比例（P）增益：将目标角度与实际角度的偏差转换成目标俯仰角速度。</chinese>
+  </translation>
+  <translation family="Copter" parameter="ATC_ANG_RLL_P" field="Description" versions="4.6.3" englishSha256="f5c9424a754cabec2b5049ea216dac51c9c79bb8d1ac248f89128efa7fe50699" recordSha256="ad91307b262f26a2b0e3b839dcae9ccdf0fdb13a9d0a0c6ffb2c52a8449df9a4">
+    <english>Roll axis angle controller P gain.  Converts the error between the desired roll angle and actual angle to a desired roll rate</english>
+    <chinese>横滚角度控制器的比例（P）增益：将目标角度与实际角度的偏差转换成目标横滚角速度。</chinese>
+  </translation>
+  <translation family="Copter" parameter="ATC_ANG_YAW_P" field="Description" versions="4.6.3" englishSha256="54031833a36e84bd8e595863f85db7c526e182af12dc6ab0f5917a4e851a739b" recordSha256="a651d21761585f348dd568c8b4b48e5eaa3f5be4c9da78506c9193d5126aa1cc">
+    <english>Yaw axis angle controller P gain.  Converts the error between the desired yaw angle and actual angle to a desired yaw rate</english>
+    <chinese>偏航角度控制器的比例（P）增益：将目标角度与实际角度的偏差转换成目标偏航角速度。</chinese>
+  </translation>
+  <translation family="Copter" parameter="FLTMODE1" field="Description" versions="4.6.3" englishSha256="abb32486eea800846607500f1b351f090f6dd14bd21b2287db284524f983ed4e" recordSha256="e277235081f59166d420907b1695bfa5e5e4e8f618494d6b2d1a12527fc8997f">
+    <english>Flight mode when pwm of Flightmode channel(FLTMODE_CH) is &lt;= 1230</english>
+    <chinese>飞行模式通道 FLTMODE_CH 的 PWM ≤ 1230 时使用的飞行模式。</chinese>
+  </translation>
+  <translation family="Copter" parameter="FLTMODE2" field="Description" versions="4.6.3" englishSha256="f5b431479d81ca13257c823b5ff2d42342e6946b7e0f8e6c3f0afa0dbc666a08" recordSha256="922b0217d7d9757d572db87d121c65077be0b9cc3a2e50518e389a0c43d06381">
+    <english>Flight mode when pwm of Flightmode channel(FLTMODE_CH) is &gt;1230, &lt;= 1360</english>
+    <chinese>飞行模式通道 FLTMODE_CH 的 PWM &gt; 1230 且 ≤ 1360 时使用的飞行模式。</chinese>
+  </translation>
+  <translation family="Copter" parameter="FLTMODE3" field="Description" versions="4.6.3" englishSha256="2b0a89e25b932fd75b207b5c7e66cabdc173d843ee60b0c05aed3a6823a04528" recordSha256="434440d602789ee947830186abb19537c6970e04ce5669ac636b820796ac1240">
+    <english>Flight mode when pwm of Flightmode channel(FLTMODE_CH) is &gt;1360, &lt;= 1490</english>
+    <chinese>飞行模式通道 FLTMODE_CH 的 PWM &gt; 1360 且 ≤ 1490 时使用的飞行模式。</chinese>
+  </translation>
+  <translation family="Copter" parameter="FLTMODE4" field="Description" versions="4.6.3" englishSha256="8791864b8d0113453e0aa642916476aaec5586789a2dea74b3ac3a169033760b" recordSha256="15c4537b132ee7648031d4b29e9625f61c106e70e4e7780bd796d90582d55a9e">
+    <english>Flight mode when pwm of Flightmode channel(FLTMODE_CH) is &gt;1490, &lt;= 1620</english>
+    <chinese>飞行模式通道 FLTMODE_CH 的 PWM &gt; 1490 且 ≤ 1620 时使用的飞行模式。</chinese>
+  </translation>
+  <translation family="Copter" parameter="FLTMODE5" field="Description" versions="4.6.3" englishSha256="552b61f48a8fe4f03037e5a4ae1399890e7b9b53fe13ef6f1f5bde21d3af3d2c" recordSha256="56ad1ce3a9d99f1d575d2d57e02fce117323691e4bc0d2ed8f073b12ccca9a13">
+    <english>Flight mode when pwm of Flightmode channel(FLTMODE_CH) is &gt;1620, &lt;= 1749</english>
+    <chinese>飞行模式通道 FLTMODE_CH 的 PWM &gt; 1620 且 ≤ 1749 时使用的飞行模式。</chinese>
+  </translation>
+  <translation family="Copter" parameter="FLTMODE6" field="Description" versions="4.6.3" englishSha256="8637b59ece6cb8c3684592e213367bbbaf9732913499793e45dd3af3da942d37" recordSha256="fef950a9cd063cf2257c0cfaf29de7297faaf581ae0c4841dfbcda0a3eb2d024">
+    <english>Flight mode when pwm of Flightmode channel(FLTMODE_CH) is &gt;=1750</english>
+    <chinese>飞行模式通道 FLTMODE_CH 的 PWM ≥ 1750 时使用的飞行模式。</chinese>
+  </translation>
+  <translation family="Copter" parameter="FLTMODE_CH" field="Description" versions="4.6.3" englishSha256="c7f9004f8637a4555630b00eefe8c4422c531aa13584a75e1349897bf525e453" recordSha256="aef0c25e4a8ab4a4b4e6a39d77d61f291f05cce252c1a4b68b094a2d18b6632c">
+    <english>RC Channel to use for flight mode control</english>
+    <chinese>选择用于切换飞行模式的遥控通道。</chinese>
+  </translation>
+  <translation family="Copter" parameter="INS_ACCEL_FILTER" field="Description" versions="4.6.3" englishSha256="1e7fd67468dfb2c6b52585c3eca4788a6deda519bc012de00b33f1b427cbc376" recordSha256="9393f4ef6d370e36a24e5491029be918a1b55ee30d442ca34a1dcd3e1737ab34">
+    <english>Filter cutoff frequency for accelerometers. This can be set to a lower value to try to cope with very high vibration levels in aircraft. A value of zero means no filtering (not recommended!)</english>
+    <chinese>加速度计低通滤波的截止频率。降低该值可尝试缓解高振动的影响；设为 0 表示不滤波，官方不建议这样设置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="INS_GYRO_FILTER" field="Description" versions="4.6.3" englishSha256="84dece625e0d6631e5934fadf5eb47dce57c229483f3a105ccf92c63c2997d2a" recordSha256="c67bbe0e383c0c39915d26ec5f72b6e8f17a01252fe0016a740ab57965b4d1b7">
+    <english>Filter cutoff frequency for gyroscopes. This can be set to a lower value to try to cope with very high vibration levels in aircraft. A value of zero means no filtering (not recommended!)</english>
+    <chinese>陀螺仪低通滤波的截止频率。降低该值可尝试缓解高振动的影响；设为 0 表示不滤波，官方不建议这样设置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="LOG_DISARMED" field="Description" versions="4.6.3" englishSha256="306c480a75161b85a8ee48e99d48a11dac16255375adfe60b34150c13b22021e" recordSha256="16802fe8a387398fb7730f1c4fb9ce0a1ddd6ab7ef811658b93b95417d86b1b4">
+    <english>If LOG_DISARMED is set to 1 then logging will be enabled at all times including when disarmed. Logging before arming can make for very large logfiles but can help a lot when tracking down startup issues and is necessary if logging of EKF replay data is selected via the LOG_REPLAY parameter. If LOG_DISARMED is set to 2, then logging will be enabled when disarmed, but not if a USB connection is detected. This can be used to prevent unwanted data logs being generated when the vehicle is connected via USB for log downloading or parameter changes. If LOG_DISARMED is set to 3 then logging will happen while disarmed, but if the vehicle never arms then the logs using the filesystem backend will be discarded on the next boot.</english>
+    <chinese>控制未解锁时的日志记录。1：包括未解锁阶段在内始终记录，有助于排查启动问题，但日志可能很大；使用 LOG_REPLAY 记录 EKF 重放数据时需要飞行前记录。2：未解锁时记录，但检测到 USB 连接时不记录，可避免下载日志或改参数时产生无用日志。3：未解锁时记录，但若本次运行始终没有解锁，文件系统后端的这些日志会在下次启动时丢弃。</chinese>
+  </translation>
+  <translation family="Copter" parameter="LOG_REPLAY" field="Description" versions="4.6.3" englishSha256="af4d5c2e1dccc5b7550d242a7343b73057b99652fee757ee7e552b5e19ac67d8" recordSha256="ca015b469df9d92021e1f6233ce045f771cdea5be6411c555e89c4ef6d81d426">
+    <english>If LOG_REPLAY is set to 1 then the EKF2 and EKF3 state estimators will log detailed information needed for diagnosing problems with the Kalman filter. LOG_DISARMED must be set to 1 or 2 or else the log will not contain the pre-flight data required for replay testing of the EKF's. It is suggested that you also raise LOG_FILE_BUFSIZE to give more buffer space for logging and use a high quality microSD card to ensure no sensor data is lost.</english>
+    <chinese>设为 1 时，EKF2 和 EKF3 会记录诊断卡尔曼滤波问题所需的详细数据。LOG_DISARMED 还须设为 1 或 2，否则缺少重放测试需要的飞行前数据。官方建议增大 LOG_FILE_BUFSIZE，并使用优质 microSD 卡，避免传感器数据丢失。</chinese>
+  </translation>
+  <translation family="Copter" parameter="LOIT_ANG_MAX" field="Description" versions="4.6.3" englishSha256="3558bf7a755302ac64f530b38cf00b015016c7438c0d393942072ffcd60a3520" recordSha256="5e6c95dee6b1584dc023d5c07ee3c475dc0184220c4dc34d5e363e8065ed5d4a">
+    <english>Loiter maximum pilot requested lean angle. Set to zero for 2/3 of PSC_ANGLE_MAX/ANGLE_MAX. The maximum vehicle lean angle is still limited by PSC_ANGLE_MAX/ANGLE_MAX</english>
+    <chinese>Loiter 模式中飞手可请求的最大倾斜角。设为 0 时使用 PSC_ANGLE_MAX/ANGLE_MAX 的 2/3；飞行器实际最大倾斜角仍受 PSC_ANGLE_MAX/ANGLE_MAX 限制。</chinese>
+  </translation>
+  <translation family="Copter" parameter="LOIT_BRK_DELAY" field="Description" versions="4.6.3" englishSha256="bb52348faa1975b4a145849df7e6943b3e612ca42a472ac97d1ddea68789aad3" recordSha256="4d9731a6cb66086007733a8679953446d05995f31f7a02d77dcd559da76dba3d">
+    <english>Loiter brake start delay (in seconds)</english>
+    <chinese>Loiter 模式开始制动前的延迟，单位为秒。</chinese>
+  </translation>
+  <translation family="Copter" parameter="LAND_ALT_LOW" field="Description" versions="4.6.3" englishSha256="b8f085a1caab9468f084640f773a78200a321967d310172a2f0b355ee7b37488" recordSha256="2ed70fd08f0e4486b216766aac9be16b7b81f81d685fd562d170ef4e1bad522c">
+    <english>Altitude during Landing at which vehicle slows to LAND_SPEED</english>
+    <chinese>降落时下降到此高度后，减速到 LAND_SPEED。</chinese>
+  </translation>
+  <translation family="Copter" parameter="LAND_SPEED_HIGH" field="Description" versions="4.6.3" englishSha256="b976984d930ecac1bbf098cf33a0bb7000e25c54f530c0afe3d3ab1e67e9e8d0" recordSha256="b451d57ba8dfaeb2a92ffccc2311b98d1755b39d3648f812638224334d9ff55f">
+    <english>The descent speed for the first stage of landing in cm/s. If this is zero then WPNAV_SPEED_DN is used</english>
+    <chinese>降落第一阶段的下降速度，单位为厘米/秒。设为 0 时使用 WPNAV_SPEED_DN。</chinese>
+  </translation>
+  <translation family="Copter" parameter="LOIT_ACC_MAX" field="Description" versions="4.6.3" englishSha256="be70dcf5f474fbe50bc36ebcb781ffc6ea63a855f9d44d07987bd4e4626ad8d6" recordSha256="cc2132de640fde8908d98fd4f26da4cbe20322c7bcba00fda0a78bafa66fedf7">
+    <english>Loiter maximum correction acceleration in cm/s/s.  Higher values cause the copter to correct position errors more aggressively.</english>
+    <chinese>Loiter 位置修正的最大加速度，单位为厘米/秒²。增大该值会更积极地修正位置偏差。</chinese>
+  </translation>
+  <translation family="Copter" parameter="LOIT_BRK_ACCEL" field="Description" versions="4.6.3" englishSha256="5408ab20723671247b544e6c51c370961f70fae2d6984edc8da64fcb1e6ee3c1" recordSha256="ab119205d92544e2d151668d948695c15a3752e8bd7efa42cbdb7df30558c1b4">
+    <english>Loiter braking acceleration in cm/s/s. Higher values stop the copter more quickly when the stick is centered.</english>
+    <chinese>Loiter 制动加速度，单位为厘米/秒²。增大该值可在摇杆回中后更快停止运动。</chinese>
+  </translation>
+  <translation family="Copter" parameter="LOIT_BRK_JERK" field="Description" versions="4.6.3" englishSha256="e2ec90c7917617638b3385b086b24524d2b2ee72c544645c98293216d975a7ff" recordSha256="eca1bde3efd049c6c19d89ee99aadcd032ad638c476278a6f76736509a681ea8">
+    <english>Loiter braking jerk in cm/s/s/s. Higher values will remove braking faster if the pilot moves the sticks during a braking maneuver.</english>
+    <chinese>Loiter 制动加加速度（加速度变化率），单位为厘米/秒³。制动过程中若飞手再次移动摇杆，较大值会更快解除制动。</chinese>
+  </translation>
+  <translation family="Copter" parameter="LOIT_SPEED" field="Description" versions="4.6.3" englishSha256="954c0cab10004a187631b379484b52850406c6a09aa6a565936fdce5f9364d8f" recordSha256="920adaaab16d1a94b8b8767803b515ae33731bd1b0f20e0458fb18e571f2f2df">
+    <english>Defines the maximum speed in cm/s which the aircraft will travel horizontally while in loiter mode</english>
+    <chinese>Loiter 模式允许的最大水平速度，单位为厘米/秒。</chinese>
+  </translation>
+  <translation family="Copter" parameter="PILOT_ACCEL_Z" field="Description" versions="4.6.3" englishSha256="eb689fbf8c5e2f7d75cbe654419f92da5974f1149f074ad0afd8b5b926159ab6" recordSha256="764aeed166adf00e8ace7837cb1657f5752e0537fc4cc2b4f1717d85e1e2f4c9">
+    <english>The vertical acceleration used when pilot is controlling the altitude</english>
+    <chinese>飞手控制高度时使用的垂直加速度。</chinese>
+  </translation>
+  <translation family="Copter" parameter="PILOT_SPEED_DN" field="Description" versions="4.6.3" englishSha256="0f4f31bff1e3cedf480d9fafa2cb45b011a5d6862dfcc5f30efbf19a7efc8788" recordSha256="76f76f2724b99ca88a333b1729aa3c6116e75beb74c9b2b9b16a7714a26e897a">
+    <english>The maximum vertical descending velocity the pilot may request in cm/s.  If 0 PILOT_SPEED_UP value is used.</english>
+    <chinese>飞手可请求的最大垂直下降速度，单位为厘米/秒。设为 0 时沿用 PILOT_SPEED_UP。</chinese>
+  </translation>
+  <translation family="Copter" parameter="RTL_CLIMB_MIN" field="Description" versions="4.6.3" englishSha256="834c493d1b44b7e558196e2786db755c3de6c89f26ad667f60d1fdbb5122612d" recordSha256="c6f719968986f8a77527bcf18897c7849b9b8780d3de753638c437e316bc4a4e">
+    <english>The vehicle will climb this many cm during the initial climb portion of the RTL</english>
+    <chinese>返航最初爬升阶段需爬升的高度增量，单位为厘米。</chinese>
+  </translation>
+  <translation family="Copter" parameter="RTL_SPEED" field="Description" versions="4.6.3" englishSha256="921288eb43d6bb7d3d49e8532d00dc656c81345fddb462a27e7bfc26083d9594" recordSha256="c57db5278635b51248faa06d965b26fe52878ef6d2ac66a919dc1a373b254cf0">
+    <english>Defines the speed in cm/s which the aircraft will attempt to maintain horizontally while flying home. If this is set to zero, WPNAV_SPEED will be used instead.</english>
+    <chinese>返航途中的目标水平速度，单位为厘米/秒。设为 0 时使用 WPNAV_SPEED。</chinese>
+  </translation>
+  <translation family="Copter" parameter="WPNAV_ACCEL" field="Description" versions="4.6.3" englishSha256="d90eece816b46b0b08768ef5c3b61985f89aa4b99226834163dff79c674f6511" recordSha256="aab0842ed600f79a7e620fc61c84aea372a0cd8e3c74bbc317db6b83fd4efd84">
+    <english>Defines the horizontal acceleration in cm/s/s used during missions</english>
+    <chinese>任务飞行使用的水平加速度，单位为厘米/秒²。</chinese>
+  </translation>
+  <translation family="Copter" parameter="WPNAV_ACCEL_Z" field="Description" versions="4.6.3" englishSha256="d621a5d6eafe768abadaed51070307b369870ba24478adf9deacca5ac3eabb80" recordSha256="1f41e83447fddf335151ac81f059b28ae2825b5387f795cb8c17024f27c8205e">
+    <english>Defines the vertical acceleration in cm/s/s used during missions</english>
+    <chinese>任务飞行使用的垂直加速度，单位为厘米/秒²。</chinese>
+  </translation>
+  <translation family="Copter" parameter="WPNAV_RADIUS" field="Description" versions="4.6.3" englishSha256="6bc0ced8e9a4b85e387f566ff3fee75354248f930e1ce0cffbefe77c6d4815fe" recordSha256="f4594b2677476f999abc0baa6cd3b466220f4b8dfbf207acdaf993471984462d">
+    <english>Defines the distance from a waypoint, that when crossed indicates the wp has been hit.</english>
+    <chinese>航点到达判定的距离阈值；进入该距离即认为到达此航点。</chinese>
+  </translation>
+  <translation family="Copter" parameter="WPNAV_SPEED_DN" field="Description" versions="4.6.3" englishSha256="435eb2745ecf83ec7e126a2dc41306f9f67476b9344310cadf2c4cbad6ad8b24" recordSha256="36d90cd8028a232580a749b5727fc177c80b5d6d091deedb3f09a4e81071bbe9">
+    <english>Defines the speed in cm/s which the aircraft will attempt to maintain while descending during a WP mission</english>
+    <chinese>航点任务中的目标下降速度，单位为厘米/秒；飞行器会尝试保持此速度。</chinese>
+  </translation>
+  <translation family="Copter" parameter="WPNAV_SPEED_UP" field="Description" versions="4.6.3" englishSha256="267dab94f3875820db829bc4b056ae0516f98b7df7d480b4d692ca588cea22b4" recordSha256="7055c9ddf5761513d642b42b24b1f1f50c754fa5642ff4d3c5dc99c3649f6511">
+    <english>Defines the speed in cm/s which the aircraft will attempt to maintain while climbing during a WP mission</english>
+    <chinese>航点任务中的目标爬升速度，单位为厘米/秒；飞行器会尝试保持此速度。</chinese>
+  </translation>
+  <translation family="Copter" parameter="ATC_ANG_PIT_P" field="Description" versions="4.7.1" englishSha256="2af83a465bb4126dfb29314633d2242597101b743ec5ca40edc2d3f30cc39180" recordSha256="706b76b216110e36048b77217e32fc52d03885dca1e0df0eaa1c31e512267b7a">
+    <english>Pitch axis angle controller P gain.  Converts the error between the desired pitch angle and actual angle to a desired pitch rate</english>
+    <chinese>俯仰角度控制器的比例（P）增益：将目标角度与实际角度的偏差转换成目标俯仰角速度。</chinese>
+  </translation>
+  <translation family="Copter" parameter="ATC_ANG_RLL_P" field="Description" versions="4.7.1" englishSha256="f5c9424a754cabec2b5049ea216dac51c9c79bb8d1ac248f89128efa7fe50699" recordSha256="a358a205a91b5b056e6191b17140cd511985a95aae930f8b5f6f6b7ab31293dd">
+    <english>Roll axis angle controller P gain.  Converts the error between the desired roll angle and actual angle to a desired roll rate</english>
+    <chinese>横滚角度控制器的比例（P）增益：将目标角度与实际角度的偏差转换成目标横滚角速度。</chinese>
+  </translation>
+  <translation family="Copter" parameter="ATC_ANG_YAW_P" field="Description" versions="4.7.1" englishSha256="54031833a36e84bd8e595863f85db7c526e182af12dc6ab0f5917a4e851a739b" recordSha256="f17d3b24d99a9bf50acc81a07403b926faae16b637c0c867ffb3a50218a42252">
+    <english>Yaw axis angle controller P gain.  Converts the error between the desired yaw angle and actual angle to a desired yaw rate</english>
+    <chinese>偏航角度控制器的比例（P）增益：将目标角度与实际角度的偏差转换成目标偏航角速度。</chinese>
+  </translation>
+  <translation family="Copter" parameter="FLTMODE1" field="Description" versions="4.7.1" englishSha256="abb32486eea800846607500f1b351f090f6dd14bd21b2287db284524f983ed4e" recordSha256="e277235081f59166d420907b1695bfa5e5e4e8f618494d6b2d1a12527fc8997f">
+    <english>Flight mode when pwm of Flightmode channel(FLTMODE_CH) is &lt;= 1230</english>
+    <chinese>飞行模式通道 FLTMODE_CH 的 PWM ≤ 1230 时使用的飞行模式。</chinese>
+  </translation>
+  <translation family="Copter" parameter="FLTMODE2" field="Description" versions="4.7.1" englishSha256="f5b431479d81ca13257c823b5ff2d42342e6946b7e0f8e6c3f0afa0dbc666a08" recordSha256="922b0217d7d9757d572db87d121c65077be0b9cc3a2e50518e389a0c43d06381">
+    <english>Flight mode when pwm of Flightmode channel(FLTMODE_CH) is &gt;1230, &lt;= 1360</english>
+    <chinese>飞行模式通道 FLTMODE_CH 的 PWM &gt; 1230 且 ≤ 1360 时使用的飞行模式。</chinese>
+  </translation>
+  <translation family="Copter" parameter="FLTMODE3" field="Description" versions="4.7.1" englishSha256="2b0a89e25b932fd75b207b5c7e66cabdc173d843ee60b0c05aed3a6823a04528" recordSha256="434440d602789ee947830186abb19537c6970e04ce5669ac636b820796ac1240">
+    <english>Flight mode when pwm of Flightmode channel(FLTMODE_CH) is &gt;1360, &lt;= 1490</english>
+    <chinese>飞行模式通道 FLTMODE_CH 的 PWM &gt; 1360 且 ≤ 1490 时使用的飞行模式。</chinese>
+  </translation>
+  <translation family="Copter" parameter="FLTMODE4" field="Description" versions="4.7.1" englishSha256="8791864b8d0113453e0aa642916476aaec5586789a2dea74b3ac3a169033760b" recordSha256="15c4537b132ee7648031d4b29e9625f61c106e70e4e7780bd796d90582d55a9e">
+    <english>Flight mode when pwm of Flightmode channel(FLTMODE_CH) is &gt;1490, &lt;= 1620</english>
+    <chinese>飞行模式通道 FLTMODE_CH 的 PWM &gt; 1490 且 ≤ 1620 时使用的飞行模式。</chinese>
+  </translation>
+  <translation family="Copter" parameter="FLTMODE5" field="Description" versions="4.7.1" englishSha256="552b61f48a8fe4f03037e5a4ae1399890e7b9b53fe13ef6f1f5bde21d3af3d2c" recordSha256="56ad1ce3a9d99f1d575d2d57e02fce117323691e4bc0d2ed8f073b12ccca9a13">
+    <english>Flight mode when pwm of Flightmode channel(FLTMODE_CH) is &gt;1620, &lt;= 1749</english>
+    <chinese>飞行模式通道 FLTMODE_CH 的 PWM &gt; 1620 且 ≤ 1749 时使用的飞行模式。</chinese>
+  </translation>
+  <translation family="Copter" parameter="FLTMODE6" field="Description" versions="4.7.1" englishSha256="8637b59ece6cb8c3684592e213367bbbaf9732913499793e45dd3af3da942d37" recordSha256="fef950a9cd063cf2257c0cfaf29de7297faaf581ae0c4841dfbcda0a3eb2d024">
+    <english>Flight mode when pwm of Flightmode channel(FLTMODE_CH) is &gt;=1750</english>
+    <chinese>飞行模式通道 FLTMODE_CH 的 PWM ≥ 1750 时使用的飞行模式。</chinese>
+  </translation>
+  <translation family="Copter" parameter="FLTMODE_CH" field="Description" versions="4.7.1" englishSha256="c7f9004f8637a4555630b00eefe8c4422c531aa13584a75e1349897bf525e453" recordSha256="aef0c25e4a8ab4a4b4e6a39d77d61f291f05cce252c1a4b68b094a2d18b6632c">
+    <english>RC Channel to use for flight mode control</english>
+    <chinese>选择用于切换飞行模式的遥控通道。</chinese>
+  </translation>
+  <translation family="Copter" parameter="INS_ACCEL_FILTER" field="Description" versions="4.7.1" englishSha256="1e7fd67468dfb2c6b52585c3eca4788a6deda519bc012de00b33f1b427cbc376" recordSha256="9393f4ef6d370e36a24e5491029be918a1b55ee30d442ca34a1dcd3e1737ab34">
+    <english>Filter cutoff frequency for accelerometers. This can be set to a lower value to try to cope with very high vibration levels in aircraft. A value of zero means no filtering (not recommended!)</english>
+    <chinese>加速度计低通滤波的截止频率。降低该值可尝试缓解高振动的影响；设为 0 表示不滤波，官方不建议这样设置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="INS_GYRO_FILTER" field="Description" versions="4.7.1" englishSha256="84dece625e0d6631e5934fadf5eb47dce57c229483f3a105ccf92c63c2997d2a" recordSha256="c67bbe0e383c0c39915d26ec5f72b6e8f17a01252fe0016a740ab57965b4d1b7">
+    <english>Filter cutoff frequency for gyroscopes. This can be set to a lower value to try to cope with very high vibration levels in aircraft. A value of zero means no filtering (not recommended!)</english>
+    <chinese>陀螺仪低通滤波的截止频率。降低该值可尝试缓解高振动的影响；设为 0 表示不滤波，官方不建议这样设置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="LOG_DISARMED" field="Description" versions="4.7.1" englishSha256="306c480a75161b85a8ee48e99d48a11dac16255375adfe60b34150c13b22021e" recordSha256="16802fe8a387398fb7730f1c4fb9ce0a1ddd6ab7ef811658b93b95417d86b1b4">
+    <english>If LOG_DISARMED is set to 1 then logging will be enabled at all times including when disarmed. Logging before arming can make for very large logfiles but can help a lot when tracking down startup issues and is necessary if logging of EKF replay data is selected via the LOG_REPLAY parameter. If LOG_DISARMED is set to 2, then logging will be enabled when disarmed, but not if a USB connection is detected. This can be used to prevent unwanted data logs being generated when the vehicle is connected via USB for log downloading or parameter changes. If LOG_DISARMED is set to 3 then logging will happen while disarmed, but if the vehicle never arms then the logs using the filesystem backend will be discarded on the next boot.</english>
+    <chinese>控制未解锁时的日志记录。1：包括未解锁阶段在内始终记录，有助于排查启动问题，但日志可能很大；使用 LOG_REPLAY 记录 EKF 重放数据时需要飞行前记录。2：未解锁时记录，但检测到 USB 连接时不记录，可避免下载日志或改参数时产生无用日志。3：未解锁时记录，但若本次运行始终没有解锁，文件系统后端的这些日志会在下次启动时丢弃。</chinese>
+  </translation>
+  <translation family="Copter" parameter="LOG_REPLAY" field="Description" versions="4.7.1" englishSha256="af4d5c2e1dccc5b7550d242a7343b73057b99652fee757ee7e552b5e19ac67d8" recordSha256="ca015b469df9d92021e1f6233ce045f771cdea5be6411c555e89c4ef6d81d426">
+    <english>If LOG_REPLAY is set to 1 then the EKF2 and EKF3 state estimators will log detailed information needed for diagnosing problems with the Kalman filter. LOG_DISARMED must be set to 1 or 2 or else the log will not contain the pre-flight data required for replay testing of the EKF's. It is suggested that you also raise LOG_FILE_BUFSIZE to give more buffer space for logging and use a high quality microSD card to ensure no sensor data is lost.</english>
+    <chinese>设为 1 时，EKF2 和 EKF3 会记录诊断卡尔曼滤波问题所需的详细数据。LOG_DISARMED 还须设为 1 或 2，否则缺少重放测试需要的飞行前数据。官方建议增大 LOG_FILE_BUFSIZE，并使用优质 microSD 卡，避免传感器数据丢失。</chinese>
+  </translation>
+  <translation family="Copter" parameter="LOIT_ANG_MAX" field="Description" versions="4.7.1" englishSha256="143b3d06a11d39e83e5039a6c33abb10c7226f918b0b3db7a0aec019c363d747" recordSha256="6a3a66ebe7b452c5a729ad3965c71d5ea2e2c133ad97e22fe62d85a147395d85">
+    <english>Loiter maximum pilot requested lean angle. Set to zero for 2/3 of PSC_ANGLE_MAX/ATC_ANGLE_MAX. The maximum vehicle lean angle is still limited by PSC_ANGLE_MAX/ATC_ANGLE_MAX</english>
+    <chinese>Loiter 模式中飞手可请求的最大倾斜角。设为 0 时使用 PSC_ANGLE_MAX/ATC_ANGLE_MAX 的 2/3；飞行器实际最大倾斜角仍受 PSC_ANGLE_MAX/ATC_ANGLE_MAX 限制。</chinese>
+  </translation>
+  <translation family="Copter" parameter="LOIT_BRK_DELAY" field="Description" versions="4.7.1" englishSha256="bb52348faa1975b4a145849df7e6943b3e612ca42a472ac97d1ddea68789aad3" recordSha256="4d9731a6cb66086007733a8679953446d05995f31f7a02d77dcd559da76dba3d">
+    <english>Loiter brake start delay (in seconds)</english>
+    <chinese>Loiter 模式开始制动前的延迟，单位为秒。</chinese>
+  </translation>
+  <translation family="Copter" parameter="LAND_ALT_LOW_M" field="Description" versions="4.7.1" englishSha256="4e9daf68064f8597873dcbaefe414e8f5c3e8e8dc489ab40e78151887b775e2e" recordSha256="a36967141b2beb96d97f1fe84ef013bef8c015484abb78bcf9ef8292d0000b92">
+    <english>Altitude during Landing at which vehicle slows to LAND_SPD_MS</english>
+    <chinese>降落时下降到此高度后，减速到 LAND_SPD_MS。</chinese>
+  </translation>
+  <translation family="Copter" parameter="LAND_SPD_HIGH_MS" field="Description" versions="4.7.1" englishSha256="0af9d9d90fe79bbc686a6869a92f71fcf2c8cfbc2f9c4e1f5d75f805fd46ca21" recordSha256="7501ec19eae008cf8e3abcd13625bf4afe461c2834274dd82d787dcd63fe5a59">
+    <english>The descent speed for the first stage of landing in m/s. If this is zero then WP_SPD_DN is used</english>
+    <chinese>降落第一阶段的下降速度，单位为米/秒。设为 0 时使用 WP_SPD_DN。</chinese>
+  </translation>
+  <translation family="Copter" parameter="LOIT_ACC_MAX_M" field="Description" versions="4.7.1" englishSha256="f417ccb42017272bdf201f2b460848c8bbbab11954593cb9b771c8205fb4cd52" recordSha256="4efc446ae5acda004930b11d7391351bd1f863d30b2a1befdcaba96d9714d75e">
+    <english>Loiter maximum correction acceleration in m/s/s.  Higher values cause the copter to correct position errors more aggressively.</english>
+    <chinese>Loiter 位置修正的最大加速度，单位为米/秒²。增大该值会更积极地修正位置偏差。</chinese>
+  </translation>
+  <translation family="Copter" parameter="LOIT_BRK_ACC_M" field="Description" versions="4.7.1" englishSha256="856375db0889ebc5f8f3f36d1860693e849b8fd9269a7c481189b86c5b93763c" recordSha256="a0c2d4506b4f7c872186f4162e3390bcd6c683d7fd2da641430b24884b998e12">
+    <english>Loiter braking acceleration in m/s/s. Higher values stop the copter more quickly when the stick is centered.</english>
+    <chinese>Loiter 制动加速度，单位为米/秒²。增大该值可在摇杆回中后更快停止运动。</chinese>
+  </translation>
+  <translation family="Copter" parameter="LOIT_BRK_JRK_M" field="Description" versions="4.7.1" englishSha256="c553c15727d15bb4a5c37c368dcb8926dd091e838f38e506ec8dbd861ee3e44a" recordSha256="339bda619977881ef0738a38bb029e59451e06f98ade733b17010303a1fbe17b">
+    <english>Loiter braking jerk in m/s/s/s. Higher values will remove braking faster if the pilot moves the sticks during a braking maneuver.</english>
+    <chinese>Loiter 制动加加速度（加速度变化率），单位为米/秒³。制动过程中若飞手再次移动摇杆，较大值会更快解除制动。</chinese>
+  </translation>
+  <translation family="Copter" parameter="LOIT_SPEED_MS" field="Description" versions="4.7.1" englishSha256="779adb82835ca0b4b72d2b824d86a04da389facd70781a6de6f0bb85e0726f07" recordSha256="278095f1b1602b790cfeff1c59ba392e2b089f2894b9f9cc33f1e2fa422985fe">
+    <english>Defines the maximum speed in m/s which the aircraft will travel horizontally while in loiter mode</english>
+    <chinese>Loiter 模式允许的最大水平速度，单位为米/秒。</chinese>
+  </translation>
+  <translation family="Copter" parameter="PILOT_ACC_Z" field="Description" versions="4.7.1" englishSha256="eb689fbf8c5e2f7d75cbe654419f92da5974f1149f074ad0afd8b5b926159ab6" recordSha256="a1930c2291f78a22af3fff7708c2eb8700af86747c0798a75746986180b5a612">
+    <english>The vertical acceleration used when pilot is controlling the altitude</english>
+    <chinese>飞手控制高度时使用的垂直加速度。</chinese>
+  </translation>
+  <translation family="Copter" parameter="PILOT_SPD_DN" field="Description" versions="4.7.1" englishSha256="844da4b6730139ecbdb9ddae496d0a5c29ab747edc0a1f08eb73dc06d1ec2479" recordSha256="c978355576fc68ce05ab582356f2b94d5ece5eb511e5de6517c067867c6b93e9">
+    <english>The maximum vertical descending velocity the pilot may request in m/s.  If 0 PILOT_SPD_UP value is used.</english>
+    <chinese>飞手可请求的最大垂直下降速度，单位为米/秒。设为 0 时沿用 PILOT_SPD_UP。</chinese>
+  </translation>
+  <translation family="Copter" parameter="RTL_CLIMB_MIN_M" field="Description" versions="4.7.1" englishSha256="e61e9d800bc6ddfe2b92d486595ef14ca39bce8943abb1d1fd72f00e53385790" recordSha256="101dff7718b457e3b3b6f4813d93e32dd1531654119c9326955a6303e0adfa31">
+    <english>The vehicle will climb this many meters during the initial climb portion of the RTL</english>
+    <chinese>返航最初爬升阶段需爬升的高度增量，单位为米。</chinese>
+  </translation>
+  <translation family="Copter" parameter="RTL_SPEED_MS" field="Description" versions="4.7.1" englishSha256="20bec3bc6d337f71628573ec8f847142f8ad4e109fb7a6d561c055b97b3f2522" recordSha256="c379b4531d784f465eceb99f43541f7169ee1d6824324b86725832fb2cc06dbc">
+    <english>The speed in m/s which the aircraft will attempt to maintain horizontally while flying home. If this is set to zero, WP_SPD will be used instead.</english>
+    <chinese>返航途中的目标水平速度，单位为米/秒。设为 0 时使用 WP_SPD。</chinese>
+  </translation>
+  <translation family="Copter" parameter="WP_ACC" field="Description" versions="4.7.1" englishSha256="49a83b70aca34677d1ba78731f4e6b5c10b5de89d352e7551edcfaa43ec8899b" recordSha256="979edd78ff0d8337fa103a99df8a4c51f18bb71bb74c7f67bcea2be692a094fa">
+    <english>Horizontal acceleration in m/s/s used during missions</english>
+    <chinese>任务飞行使用的水平加速度，单位为米/秒²。</chinese>
+  </translation>
+  <translation family="Copter" parameter="WP_ACC_Z" field="Description" versions="4.7.1" englishSha256="d05927775bf17a4cf33d7f25a39a4313ed8d4019cea6c772b987ac7e6e538aa6" recordSha256="386f5f04f5ebd64516bc03211597e180d0d9ca3dc7db3e2c14e1304a89dc62fa">
+    <english>Vertical acceleration in m/s/s used during missions</english>
+    <chinese>任务飞行使用的垂直加速度，单位为米/秒²。</chinese>
+  </translation>
+  <translation family="Copter" parameter="WP_RADIUS_M" field="Description" versions="4.7.1" englishSha256="e54e891c661f0476ce966183f62fb3f511b13126b74e34e6faf76473aa03a233" recordSha256="f590fb95b85e9a5fb8d7eafc71797ec2332b7ee3fddef1bf6b70894095782e52">
+    <english>Distance from a waypoint, that when crossed indicates the wp has been reached.</english>
+    <chinese>航点到达判定的距离阈值；进入该距离即认为到达此航点。</chinese>
+  </translation>
+  <translation family="Copter" parameter="WP_SPD_DN" field="Description" versions="4.7.1" englishSha256="b2d0e31e9b8bc154f6c25244a40df40a088cee9b0cf16963b9af93e966e1212b" recordSha256="c98990ebd2aafa4cbced7947f448de9b0e759c6136f8c504317941a6b20a70be">
+    <english>Speed in m/s which the aircraft will attempt to maintain while descending during a WP mission</english>
+    <chinese>航点任务中的目标下降速度，单位为米/秒；飞行器会尝试保持此速度。</chinese>
+  </translation>
+  <translation family="Copter" parameter="WP_SPD_UP" field="Description" versions="4.7.1" englishSha256="1ebcf6f4a91e0f7d6eda7194440d4fc0b2f400a5416e642232bdb0d011aaf3d6" recordSha256="b44d4460794f84ebdb881c1147507028bde1cff9b51850f2b3b3a5755dd44789">
+    <english>Speed in m/s which the aircraft will attempt to maintain while climbing during a WP mission</english>
+    <chinese>航点任务中的目标爬升速度，单位为米/秒；飞行器会尝试保持此速度。</chinese>
+  </translation>
+  <translation family="Plane" parameter="AIRSPEED_MAX" field="Description" versions="4.5.7" englishSha256="fbf6c2c3e5de56fe01827da2e2a7978a5f5ac31f0aa027c4f23f3b6ecee8f558" recordSha256="2eb3fac01d8a57bd27a4d544db7bcd9eb14eb05cb5d8f23d529c4da504b7926f">
+    <english>Maximum airspeed demanded in automatic throttle modes. Should be set slightly less than level flight speed at THR_MAX and also at least 50% above AIRSPEED_MIN to allow for accurate TECS altitude control.</english>
+    <chinese>自动油门模式请求的最大空速。应略低于 THR_MAX 油门下的平飞速度，并至少比 AIRSPEED_MIN 高 50%，以保证 TECS 能准确控制高度。</chinese>
+  </translation>
+  <translation family="Plane" parameter="AIRSPEED_MIN" field="Description" versions="4.5.7" englishSha256="4127942fed79fc4bd461c211285ff3583084e2783e217d6259122bd3036c0a08" recordSha256="f3f7eff91aaaf1823a342b82b8be447cf4528b51450e8723b851615b216b734b">
+    <english>Minimum airspeed demanded in automatic throttle modes. Should be set to 20% higher than level flight stall speed.</english>
+    <chinese>自动油门模式请求的最小空速。官方建议比平飞失速速度高 20%。</chinese>
+  </translation>
+  <translation family="Plane" parameter="FLTMODE1" field="Description" versions="4.5.7" englishSha256="a9b63afb2f8927c658cbc0263823afc5501b58ec8f1bde2874f3214dc61035c8" recordSha256="efcbd77ac8bdf4f579fa3edcd47e4d9bfdbf26c8564fcd179c4ec22cd2511b5e">
+    <english>Flight mode for switch position 1 (910 to 1230 and above 2049)</english>
+    <chinese>飞行模式开关第 1 档使用的模式，对应 PWM 范围为 910～1230 或高于 2049。</chinese>
+  </translation>
+  <translation family="Plane" parameter="FLTMODE2" field="Description" versions="4.5.7" englishSha256="c2c4c8b1c823ca8f17fb8a6df2222674d28e95162a9ae896745569986d7e2a72" recordSha256="24cc71a29ea445fe959d08bae24a770a1072a77a5b4cd1442893436183e3d9d6">
+    <english>Flight mode for switch position 2 (1231 to 1360)</english>
+    <chinese>飞行模式开关第 2 档使用的模式，对应 PWM 范围为 1231～1360。</chinese>
+  </translation>
+  <translation family="Plane" parameter="FLTMODE3" field="Description" versions="4.5.7" englishSha256="20beef0d30047a9e7a7d4f1e055644920812147b6e5f468bd250aa44a4510c2d" recordSha256="5f2dcb27927724777c709c0991010dce67f68a459fd485354b30da279dcb9bd2">
+    <english>Flight mode for switch position 3 (1361 to 1490)</english>
+    <chinese>飞行模式开关第 3 档使用的模式，对应 PWM 范围为 1361～1490。</chinese>
+  </translation>
+  <translation family="Plane" parameter="FLTMODE4" field="Description" versions="4.5.7" englishSha256="6e397b2b6bc772dc9cf0e2c16f812b12a42850a0ff7bac5ddf484ff97626c674" recordSha256="0fc4959c343c13275478f4794af21c3a9cfa636e4fccd3d8c0cb12267f9f5f79">
+    <english>Flight mode for switch position 4 (1491 to 1620)</english>
+    <chinese>飞行模式开关第 4 档使用的模式，对应 PWM 范围为 1491～1620。</chinese>
+  </translation>
+  <translation family="Plane" parameter="FLTMODE5" field="Description" versions="4.5.7" englishSha256="db7d4c4e76ebfd7e364065552bbed8aed943a0fab545f8b10dc3134bc5afd3ce" recordSha256="2e5d9000d8300e22296c8b7bee10d86ab408d7b3323039a0cddb83b2cdf345fd">
+    <english>Flight mode for switch position 5 (1621 to 1749)</english>
+    <chinese>飞行模式开关第 5 档使用的模式，对应 PWM 范围为 1621～1749。</chinese>
+  </translation>
+  <translation family="Plane" parameter="FLTMODE6" field="Description" versions="4.5.7" englishSha256="724f725924ef329b8f8e385d1fa00b9ffd70f5f9c8359219948e40d6545a4404" recordSha256="ea452b4a536638710785a671649413d79105e01001191665b3879161d1662839">
+    <english>Flight mode for switch position 6 (1750 to 2049)</english>
+    <chinese>飞行模式开关第 6 档使用的模式，对应 PWM 范围为 1750～2049。</chinese>
+  </translation>
+  <translation family="Plane" parameter="FLTMODE_CH" field="Description" versions="4.5.7" englishSha256="c7f9004f8637a4555630b00eefe8c4422c531aa13584a75e1349897bf525e453" recordSha256="7b1870af3ae48b4192803053bf7aabe8915aa2dd627be0551ca3d7826011e486">
+    <english>RC Channel to use for flight mode control</english>
+    <chinese>选择用于切换飞行模式的遥控通道。</chinese>
+  </translation>
+  <translation family="Plane" parameter="INS_ACCEL_FILTER" field="Description" versions="4.5.7" englishSha256="1e7fd67468dfb2c6b52585c3eca4788a6deda519bc012de00b33f1b427cbc376" recordSha256="9393f4ef6d370e36a24e5491029be918a1b55ee30d442ca34a1dcd3e1737ab34">
+    <english>Filter cutoff frequency for accelerometers. This can be set to a lower value to try to cope with very high vibration levels in aircraft. A value of zero means no filtering (not recommended!)</english>
+    <chinese>加速度计低通滤波的截止频率。降低该值可尝试缓解高振动的影响；设为 0 表示不滤波，官方不建议这样设置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="INS_GYRO_FILTER" field="Description" versions="4.5.7" englishSha256="84dece625e0d6631e5934fadf5eb47dce57c229483f3a105ccf92c63c2997d2a" recordSha256="c67bbe0e383c0c39915d26ec5f72b6e8f17a01252fe0016a740ab57965b4d1b7">
+    <english>Filter cutoff frequency for gyroscopes. This can be set to a lower value to try to cope with very high vibration levels in aircraft. A value of zero means no filtering (not recommended!)</english>
+    <chinese>陀螺仪低通滤波的截止频率。降低该值可尝试缓解高振动的影响；设为 0 表示不滤波，官方不建议这样设置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="LOG_DISARMED" field="Description" versions="4.5.7" englishSha256="306c480a75161b85a8ee48e99d48a11dac16255375adfe60b34150c13b22021e" recordSha256="16802fe8a387398fb7730f1c4fb9ce0a1ddd6ab7ef811658b93b95417d86b1b4">
+    <english>If LOG_DISARMED is set to 1 then logging will be enabled at all times including when disarmed. Logging before arming can make for very large logfiles but can help a lot when tracking down startup issues and is necessary if logging of EKF replay data is selected via the LOG_REPLAY parameter. If LOG_DISARMED is set to 2, then logging will be enabled when disarmed, but not if a USB connection is detected. This can be used to prevent unwanted data logs being generated when the vehicle is connected via USB for log downloading or parameter changes. If LOG_DISARMED is set to 3 then logging will happen while disarmed, but if the vehicle never arms then the logs using the filesystem backend will be discarded on the next boot.</english>
+    <chinese>控制未解锁时的日志记录。1：包括未解锁阶段在内始终记录，有助于排查启动问题，但日志可能很大；使用 LOG_REPLAY 记录 EKF 重放数据时需要飞行前记录。2：未解锁时记录，但检测到 USB 连接时不记录，可避免下载日志或改参数时产生无用日志。3：未解锁时记录，但若本次运行始终没有解锁，文件系统后端的这些日志会在下次启动时丢弃。</chinese>
+  </translation>
+  <translation family="Plane" parameter="LOG_REPLAY" field="Description" versions="4.5.7" englishSha256="af4d5c2e1dccc5b7550d242a7343b73057b99652fee757ee7e552b5e19ac67d8" recordSha256="ca015b469df9d92021e1f6233ce045f771cdea5be6411c555e89c4ef6d81d426">
+    <english>If LOG_REPLAY is set to 1 then the EKF2 and EKF3 state estimators will log detailed information needed for diagnosing problems with the Kalman filter. LOG_DISARMED must be set to 1 or 2 or else the log will not contain the pre-flight data required for replay testing of the EKF's. It is suggested that you also raise LOG_FILE_BUFSIZE to give more buffer space for logging and use a high quality microSD card to ensure no sensor data is lost.</english>
+    <chinese>设为 1 时，EKF2 和 EKF3 会记录诊断卡尔曼滤波问题所需的详细数据。LOG_DISARMED 还须设为 1 或 2，否则缺少重放测试需要的飞行前数据。官方建议增大 LOG_FILE_BUFSIZE，并使用优质 microSD 卡，避免传感器数据丢失。</chinese>
+  </translation>
+  <translation family="Plane" parameter="NAVL1_DAMPING" field="Description" versions="4.5.7" englishSha256="caaa4950c8c084db825130763e39aba7adc91eaedf7a09ba1f6a98a12f8a5dbb" recordSha256="3cac6973ac3f6fc8a6ff6120379086392d3f4845cdd86ea511d6ed1c9246ef92">
+    <english>Damping ratio for L1 control. Increase this in increments of 0.05 if you are getting overshoot in path tracking. You should not need a value below 0.7 or above 0.85.</english>
+    <chinese>L1 航迹控制的阻尼比。如果跟踪航迹时出现超调，可每次增加 0.05 进行调整；官方说明通常不需要低于 0.7 或高于 0.85。</chinese>
+  </translation>
+  <translation family="Plane" parameter="NAVL1_LIM_BANK" field="Description" versions="4.5.7" englishSha256="159d9558e68f1383c06814483b87f88c3ed86d8434ffda843519b376581ee6c7" recordSha256="432e535cb63ba07168a0926b3daea9621fb466485cad280a956b6d7c57a6a01f">
+    <english>The sealevel bank angle limit for a continous loiter. (Used to calculate airframe loading limits at higher altitudes). Setting to 0, will instead just scale the loiter radius directly</english>
+    <chinese>连续盘旋在海平面处的倾侧角限制，用于计算高海拔时的机体载荷限制。设为 0 时改为直接缩放盘旋半径。</chinese>
+  </translation>
+  <translation family="Plane" parameter="NAVL1_PERIOD" field="Description" versions="4.5.7" englishSha256="1f07fa63f63f36db76f0e51674420a1e70ee0473f7b70b885e81fd2bb95f9139" recordSha256="0722875e22bf08e66aa6ff01635ea687dbd172c0f836172ccde89ed5e761bb1a">
+    <english>Period in seconds of L1 tracking loop. This parameter is the primary control for agressiveness of turns in auto mode. This needs to be larger for less responsive airframes. The default of 20 is quite conservative, but for most RC aircraft will lead to reasonable flight. For smaller more agile aircraft a value closer to 15 is appropriate, or even as low as 10 for some very agile aircraft. When tuning, change this value in small increments, as a value that is much too small (say 5 or 10 below the right value) can lead to very radical turns, and a risk of stalling.</english>
+    <chinese>L1 航迹跟踪环路的周期，单位为秒，是影响自动模式转弯响应强弱的主要参数。响应较慢的机体需要更大的值。官方原文的默认值 20 较保守。较小且灵活的飞机可使用接近 15 的值，十分灵活的机型甚至可能使用 10。调参应小步调整；周期过小（例如比合适值低 5 或 10）可能导致过于剧烈的转弯和失速风险。</chinese>
+  </translation>
+  <translation family="Plane" parameter="PTCH_LIM_MAX_DEG" field="Description" versions="4.5.7" englishSha256="a10552af836600bbae44b9595e65928e3bfdb6da8783cd329b531b79a87fde0e" recordSha256="b77cbcf83c1df20671f4b08ec3e3647124a2970ab858eb631891702bb5e1d9b8">
+    <english>Maximum pitch up angle commanded in modes with stabilized limits.</english>
+    <chinese>具有姿态稳定限制的模式中，允许请求的最大抬头俯仰角。</chinese>
+  </translation>
+  <translation family="Plane" parameter="PTCH_LIM_MIN_DEG" field="Description" versions="4.5.7" englishSha256="c0566de2f1d54e81e0bab45f002286ec0948a5a560b2eacd7ee7feb525ffd150" recordSha256="b224fd74884b6a63bdd37b15d2bc0f79d69f9d3c914995baa2c5375038d74858">
+    <english>Maximum pitch down angle commanded in modes with stabilized limits</english>
+    <chinese>具有姿态稳定限制的模式中，允许请求的最大低头俯仰角。</chinese>
+  </translation>
+  <translation family="Plane" parameter="Q_LAND_FINAL_SPD" field="Description" versions="4.5.7" englishSha256="7af0f299dddeb06351e0ead82d327b3c4c2ea2f0b9ac18005335fced54afa58b" recordSha256="887c117131a0d7583477caae381ae56dbcf4c166ee134425fb36b763746768e9">
+    <english>The descent speed for the final stage of landing in m/s</english>
+    <chinese>垂直起降降落最后阶段的下降速度，单位为米/秒。</chinese>
+  </translation>
+  <translation family="Plane" parameter="Q_LOIT_ANG_MAX" field="Description" versions="4.5.7" englishSha256="3b561bb484cb181f035e3181ad0acb73e465d15ebf55cb04965e9b6637051dc5" recordSha256="4a1ab03250715d82417671480a6cba842db3a8310da0f35d5931b3154fd1d82e">
+    <english>Loiter maximum pilot requested lean angle. Set to zero for 2/3 of Q_P_ANGLE_MAX/Q_ANGLE_MAX. The maximum vehicle lean angle is still limited by Q_P_ANGLE_MAX/Q_ANGLE_MAX</english>
+    <chinese>Loiter 模式中飞手可请求的最大倾斜角。设为 0 时使用 Q_P_ANGLE_MAX/Q_ANGLE_MAX 的 2/3；飞行器实际最大倾斜角仍受 Q_P_ANGLE_MAX/Q_ANGLE_MAX 限制。</chinese>
+  </translation>
+  <translation family="Plane" parameter="Q_LOIT_BRK_DELAY" field="Description" versions="4.5.7" englishSha256="bb52348faa1975b4a145849df7e6943b3e612ca42a472ac97d1ddea68789aad3" recordSha256="a6e57c584ab8767562524c025e88e288374cba55f6403efea670dcf9b73c23f7">
+    <english>Loiter brake start delay (in seconds)</english>
+    <chinese>垂直起降 Loiter 模式开始制动前的延迟，单位为秒。</chinese>
+  </translation>
+  <translation family="Plane" parameter="Q_PILOT_ACCEL_Z" field="Description" versions="4.5.7" englishSha256="eb689fbf8c5e2f7d75cbe654419f92da5974f1149f074ad0afd8b5b926159ab6" recordSha256="d4bb3a6e12eea47e363859b75ee9939bfbd4d1bd56c14c1a6edc116e30dd1581">
+    <english>The vertical acceleration used when pilot is controlling the altitude</english>
+    <chinese>垂直起降阶段由飞手控制高度时使用的垂直加速度。</chinese>
+  </translation>
+  <translation family="Plane" parameter="Q_PILOT_SPD_DN" field="Description" versions="4.5.7" englishSha256="01eede8f335c8b690efb71d9b67f950993d21af1a77011b09f61bc8af815894f" recordSha256="4ddf281d04c8c79eebb93fd41ce1dfd8f74ae36b6b8e4905cb1db8c2495a7336">
+    <english>The maximum vertical velocity the pilot may request in m/s going down. If 0, uses Q_PILOT_SPD_UP value.</english>
+    <chinese>垂直起降阶段飞手可请求的最大垂直下降速度，单位为米/秒。设为 0 时使用 Q_PILOT_SPD_UP。</chinese>
+  </translation>
+  <translation family="Plane" parameter="Q_PILOT_SPD_UP" field="Description" versions="4.5.7" englishSha256="4409ca25abc0a6b3f73633d35c6048ce54ee37be5a0ff4f270bf51bd46636fb7" recordSha256="8ebcded40b566c9b4ec395ee0cf2b7cb1eb60398407a525a4c258a46c7cb1980">
+    <english>The maximum ascending vertical velocity the pilot may request in m/s</english>
+    <chinese>垂直起降阶段飞手可请求的最大垂直上升速度，单位为米/秒。</chinese>
+  </translation>
+  <translation family="Plane" parameter="RTL_CLIMB_MIN" field="Description" versions="4.5.7" englishSha256="c28979bd1df45bc287f5f3d7f739853ffa6dcb51c8392f7ad04a62167317a8d6" recordSha256="42a032a47fa530b622fccdd72f7e2d8dda3e2107433a7662df2cdc33cb9223c2">
+    <english>The vehicle will climb this many m during the initial climb portion of the RTL. During this time the roll will be limited to LEVEL_ROLL_LIMIT degrees.</english>
+    <chinese>返航最初爬升阶段需爬升的高度增量，单位为米。这一阶段横滚角限制为 LEVEL_ROLL_LIMIT 度。</chinese>
+  </translation>
+  <translation family="Plane" parameter="RTL_RADIUS" field="Description" versions="4.5.7" englishSha256="c6383483844cfce2485482630f957c6201b548ec0b552bf0a5c69e0dd0917219" recordSha256="53c3a237efd2a43613934dad9eb0f63a9254981a12044379ef233821672c70f2">
+    <english>Defines the radius of the loiter circle when in RTL mode. If this is zero then WP_LOITER_RAD is used. If the radius is negative then a counter-clockwise is used. If positive then a clockwise loiter is used.</english>
+    <chinese>RTL 模式的盘旋半径。设为 0 时使用 WP_LOITER_RAD；负值表示逆时针，正值表示顺时针。</chinese>
+  </translation>
+  <translation family="Plane" parameter="TECS_PTCH_DAMP" field="Description" versions="4.5.7" englishSha256="a99285921bc008719811e0ed74f1e829dd74e6114b026ca904789026b92138c6" recordSha256="e98991771c6ae42d38e0ef027c501298b834bae85f051fd880dfe6b694988ec0">
+    <english>Damping gain for pitch control from TECS control.  Increasing may correct for oscillations in speed and height, but too much may cause additional oscillation and degraded control.</english>
+    <chinese>TECS 俯仰控制的阻尼增益。增大该值可能缓解速度和高度振荡，但过大反而可能增加振荡、降低控制效果。</chinese>
+  </translation>
+  <translation family="Plane" parameter="TECS_SINK_MAX" field="Description" versions="4.5.7" englishSha256="e8b9d8b78419a8dc18c54f10d962f6a80c848dede950bcbb5f5d81a156d1aa31" recordSha256="3ad263512e97cfd996ddf92e6f8dcca96491bc1f4a88e159ad98c0496c0f2666">
+    <english>Maximum demanded descent rate. Do not set higher than the vertical speed the aircraft can maintain at THR_MIN, TECS_PITCH_MIN, and AIRSPEED_MAX.</english>
+    <chinese>允许请求的最大下降率。不要高于飞机在 THR_MIN、TECS_PITCH_MIN 和 AIRSPEED_MAX 条件下能够维持的垂直下降速度。</chinese>
+  </translation>
+  <translation family="Plane" parameter="TECS_THR_DAMP" field="Description" versions="4.5.7" englishSha256="39b53fa8ace66cc3d6c5052c2799674d7bbbeab8fcba41c18ea13e133bd0c726" recordSha256="59a269b1e113ea1c71c29d63c47a4dcf80545dd94a6e723a18d1c6dee70680e1">
+    <english>Damping gain for throttle demand loop. Increase to add throttle activity to dampen oscillations in speed and height.</english>
+    <chinese>TECS 油门请求环路的阻尼增益。增大该值会增加油门调节活动，用于抑制速度和高度振荡。</chinese>
+  </translation>
+  <translation family="Plane" parameter="TECS_TIME_CONST" field="Description" versions="4.5.7" englishSha256="ce462391364ebd20e83c5738d182a3444a554aeacf5384e13952d78c3e559d15" recordSha256="fbc3422d866cf63e58399e343bd77468f11edb0144edf760ccae4873f9bdddd6">
+    <english>Time constant of the TECS control algorithm. Small values make faster altitude corrections but can cause overshoot and aggressive behavior.</english>
+    <chinese>TECS 控制算法的时间常数。较小的值会加快高度修正，但也可能引起超调和过于激烈的响应。</chinese>
+  </translation>
+  <translation family="Plane" parameter="THR_MAX" field="Description" versions="4.5.7" englishSha256="16906d9f7b2326a162ffa04308d6dab8da989e599d8ee348e5c190decd0ef5b4" recordSha256="e58e257958974684d9b7fc3c26b8a1d17a6c0274f1a47ba3fcf69e88eea7388c">
+    <english>Maximum throttle percentage used in all modes except manual, provided THR_PASS_STAB is not set.</english>
+    <chinese>未启用 THR_PASS_STAB 时，除 Manual 外各模式使用的最大油门百分比。</chinese>
+  </translation>
+  <translation family="Plane" parameter="THR_MIN" field="Description" versions="4.5.7" englishSha256="fd6bf89aab0b3b3cd2f085f487b00a2cc844b4b50c5c117aee49a310098e494c" recordSha256="edeff62511bda038c05ef11db659494e4912968bbe0fabd78f96492c91d52ba5">
+    <english>Minimum throttle percentage used in all modes except manual, provided THR_PASS_STAB is not set. Negative values allow reverse thrust if hardware supports it.</english>
+    <chinese>未启用 THR_PASS_STAB 时，除 Manual 外各模式使用的最小油门百分比。硬件支持反推时，负值允许反推。</chinese>
+  </translation>
+  <translation family="Plane" parameter="THR_SLEWRATE" field="Description" versions="4.5.7" englishSha256="0f7c952b7fa5cb8a8c836a9c5e73f971e7d39b1948c17a4b001c4eb846d1e948" recordSha256="fdf9497bc849a3601f3f9d66ed80ab4e6d904965bc5c288d8d344661ab88cc43">
+    <english>Maximum change in throttle percentage per second. Lower limit  based on 1 microsend of servo increase per loop. Divide SCHED_LOOP_RATE by approximately 10 to determine minimum achievable value.</english>
+    <chinese>每秒允许变化的最大油门百分比。可实现的最小变化率受每控制循环约 1 微秒舵机输出增量限制，可用 SCHED_LOOP_RATE 除以约 10 估算这一最小值。</chinese>
+  </translation>
+  <translation family="Plane" parameter="TRIM_THROTTLE" field="Description" versions="4.5.7" englishSha256="bb8b304f75398da8dc47d8cb0949a522d58fb304b6da8ebba983456f0c22f14f" recordSha256="06bc4b4c4e05c477c9b56be6501d7673d2a0e4eb1c6c91455ef508e1c25125a2">
+    <english>Target percentage of throttle to apply for flight in automatic throttle modes and throttle percentage that maintains AIRSPEED_CRUISE. Caution: low battery voltages at the end of flights may require higher throttle to maintain airspeed.</english>
+    <chinese>自动油门模式的目标油门百分比，也是维持 AIRSPEED_CRUISE 所需的油门百分比。注意：飞行末段电池电压降低时，可能需要更高油门才能保持空速。</chinese>
+  </translation>
+  <translation family="Plane" parameter="WP_LOITER_RAD" field="Description" versions="4.5.7" englishSha256="09276e86c988929312bd5019b993a860499527a032e0c3faecbfe732f73b7b19" recordSha256="1ec59b07b59b39f47b0935aa01c31c19dc7aadc42d041fa059d7e4a95dedb54f">
+    <english>Defines the distance from the waypoint center, the plane will maintain during a loiter. If you set this value to a negative number then the default loiter direction will be counter-clockwise instead of clockwise.</english>
+    <chinese>飞机盘旋时与航点中心保持的距离。设为负数时，默认盘旋方向由顺时针改为逆时针。</chinese>
+  </translation>
+  <translation family="Plane" parameter="WP_MAX_RADIUS" field="Description" versions="4.5.7" englishSha256="f5302ce338d4cce8d14ff12e033c081635a1d3cb823bcdc6cdad2f9ed0890e22" recordSha256="ec5839d3a8cb06003d750d5bfc18811af0dd36324c19d78a3289701b7706d806">
+    <english>Sets the maximum distance to a waypoint for the waypoint to be considered complete. This overrides the "cross the finish line" logic that is normally used to consider a waypoint complete. For normal AUTO behaviour this parameter should be set to zero. Using a non-zero value is only recommended when it is critical that the aircraft does approach within the given radius, and should loop around until it has done so. This can cause the aircraft to loop forever if its turn radius is greater than the maximum radius set.</english>
+    <chinese>航点完成判定的最大距离。非零值会覆盖通常的“越过终点线即完成”逻辑，要求飞机确实进入此半径，否则继续绕回。正常 AUTO 行为应设为 0；仅在必须接近航点时使用非零值。若飞机转弯半径大于所设半径，可能一直绕圈而无法完成该航点。</chinese>
+  </translation>
+  <translation family="Plane" parameter="Q_LOIT_ACC_MAX" field="Description" versions="4.5.7" englishSha256="be70dcf5f474fbe50bc36ebcb781ffc6ea63a855f9d44d07987bd4e4626ad8d6" recordSha256="e25387cfc5a8b7d4b658a3abe0d5563ba8e098bcb80f072d5857bfbdc4d1d5c4">
+    <english>Loiter maximum correction acceleration in cm/s/s.  Higher values cause the copter to correct position errors more aggressively.</english>
+    <chinese>Loiter 位置修正的最大加速度，单位为厘米/秒²。增大该值会更积极地修正位置偏差。</chinese>
+  </translation>
+  <translation family="Plane" parameter="Q_LOIT_BRK_ACCEL" field="Description" versions="4.5.7" englishSha256="5408ab20723671247b544e6c51c370961f70fae2d6984edc8da64fcb1e6ee3c1" recordSha256="d71783371a72c934cf7b97760a504dcd980fb39bcb985b22712d2e8e61a2f2a1">
+    <english>Loiter braking acceleration in cm/s/s. Higher values stop the copter more quickly when the stick is centered.</english>
+    <chinese>Loiter 制动加速度，单位为厘米/秒²。增大该值可在摇杆回中后更快停止运动。</chinese>
+  </translation>
+  <translation family="Plane" parameter="Q_LOIT_BRK_JERK" field="Description" versions="4.5.7" englishSha256="e2ec90c7917617638b3385b086b24524d2b2ee72c544645c98293216d975a7ff" recordSha256="f94ea42bd1215b711076d9dfd86ec0ba25cb2a7cd35430226684a09eac8371b7">
+    <english>Loiter braking jerk in cm/s/s/s. Higher values will remove braking faster if the pilot moves the sticks during a braking maneuver.</english>
+    <chinese>Loiter 制动加加速度（加速度变化率），单位为厘米/秒³。制动过程中若飞手再次移动摇杆，较大值会更快解除制动。</chinese>
+  </translation>
+  <translation family="Plane" parameter="Q_LOIT_SPEED" field="Description" versions="4.5.7" englishSha256="954c0cab10004a187631b379484b52850406c6a09aa6a565936fdce5f9364d8f" recordSha256="eca3b8bad14f1b69e01488b023ee057a9d6e258a60f86a2fb1c3315e66d142c9">
+    <english>Defines the maximum speed in cm/s which the aircraft will travel horizontally while in loiter mode</english>
+    <chinese>Loiter 模式允许的最大水平速度，单位为厘米/秒。</chinese>
+  </translation>
+  <translation family="Plane" parameter="Q_WP_ACCEL" field="Description" versions="4.5.7" englishSha256="d90eece816b46b0b08768ef5c3b61985f89aa4b99226834163dff79c674f6511" recordSha256="d4b07991ab437768f9a0adcc0365cb3367aa3b5ab882167be1f511811450b3a8">
+    <english>Defines the horizontal acceleration in cm/s/s used during missions</english>
+    <chinese>任务飞行使用的水平加速度，单位为厘米/秒²。</chinese>
+  </translation>
+  <translation family="Plane" parameter="Q_WP_ACCEL_Z" field="Description" versions="4.5.7" englishSha256="d621a5d6eafe768abadaed51070307b369870ba24478adf9deacca5ac3eabb80" recordSha256="1c22699caf61be2b48f790c308a4f6bfb4f59626da75a6424136df59987235c2">
+    <english>Defines the vertical acceleration in cm/s/s used during missions</english>
+    <chinese>任务飞行使用的垂直加速度，单位为厘米/秒²。</chinese>
+  </translation>
+  <translation family="Plane" parameter="Q_WP_RADIUS" field="Description" versions="4.5.7" englishSha256="6bc0ced8e9a4b85e387f566ff3fee75354248f930e1ce0cffbefe77c6d4815fe" recordSha256="22573c24e3e88551e54638287817e8b1792c8cd3e354f20b50ce5515e5c1249c">
+    <english>Defines the distance from a waypoint, that when crossed indicates the wp has been hit.</english>
+    <chinese>航点到达判定的距离阈值；进入该距离即认为到达此航点。</chinese>
+  </translation>
+  <translation family="Plane" parameter="Q_WP_SPEED_DN" field="Description" versions="4.5.7" englishSha256="435eb2745ecf83ec7e126a2dc41306f9f67476b9344310cadf2c4cbad6ad8b24" recordSha256="c868efc8b28e99559f799183997e6f75564ba0946b74840605057e666b041d71">
+    <english>Defines the speed in cm/s which the aircraft will attempt to maintain while descending during a WP mission</english>
+    <chinese>航点任务中的目标下降速度，单位为厘米/秒；飞行器会尝试保持此速度。</chinese>
+  </translation>
+  <translation family="Plane" parameter="Q_WP_SPEED_UP" field="Description" versions="4.5.7" englishSha256="267dab94f3875820db829bc4b056ae0516f98b7df7d480b4d692ca588cea22b4" recordSha256="75c73aa63e9bc080d2fd11d16d264979e387ef35442d04267591fc6dc6598fff">
+    <english>Defines the speed in cm/s which the aircraft will attempt to maintain while climbing during a WP mission</english>
+    <chinese>航点任务中的目标爬升速度，单位为厘米/秒；飞行器会尝试保持此速度。</chinese>
+  </translation>
+  <translation family="Plane" parameter="AIRSPEED_MAX" field="Description" versions="4.6.3" englishSha256="fbf6c2c3e5de56fe01827da2e2a7978a5f5ac31f0aa027c4f23f3b6ecee8f558" recordSha256="2eb3fac01d8a57bd27a4d544db7bcd9eb14eb05cb5d8f23d529c4da504b7926f">
+    <english>Maximum airspeed demanded in automatic throttle modes. Should be set slightly less than level flight speed at THR_MAX and also at least 50% above AIRSPEED_MIN to allow for accurate TECS altitude control.</english>
+    <chinese>自动油门模式请求的最大空速。应略低于 THR_MAX 油门下的平飞速度，并至少比 AIRSPEED_MIN 高 50%，以保证 TECS 能准确控制高度。</chinese>
+  </translation>
+  <translation family="Plane" parameter="AIRSPEED_MIN" field="Description" versions="4.6.3" englishSha256="4127942fed79fc4bd461c211285ff3583084e2783e217d6259122bd3036c0a08" recordSha256="f3f7eff91aaaf1823a342b82b8be447cf4528b51450e8723b851615b216b734b">
+    <english>Minimum airspeed demanded in automatic throttle modes. Should be set to 20% higher than level flight stall speed.</english>
+    <chinese>自动油门模式请求的最小空速。官方建议比平飞失速速度高 20%。</chinese>
+  </translation>
+  <translation family="Plane" parameter="FLTMODE1" field="Description" versions="4.6.3" englishSha256="a9b63afb2f8927c658cbc0263823afc5501b58ec8f1bde2874f3214dc61035c8" recordSha256="efcbd77ac8bdf4f579fa3edcd47e4d9bfdbf26c8564fcd179c4ec22cd2511b5e">
+    <english>Flight mode for switch position 1 (910 to 1230 and above 2049)</english>
+    <chinese>飞行模式开关第 1 档使用的模式，对应 PWM 范围为 910～1230 或高于 2049。</chinese>
+  </translation>
+  <translation family="Plane" parameter="FLTMODE2" field="Description" versions="4.6.3" englishSha256="c2c4c8b1c823ca8f17fb8a6df2222674d28e95162a9ae896745569986d7e2a72" recordSha256="24cc71a29ea445fe959d08bae24a770a1072a77a5b4cd1442893436183e3d9d6">
+    <english>Flight mode for switch position 2 (1231 to 1360)</english>
+    <chinese>飞行模式开关第 2 档使用的模式，对应 PWM 范围为 1231～1360。</chinese>
+  </translation>
+  <translation family="Plane" parameter="FLTMODE3" field="Description" versions="4.6.3" englishSha256="20beef0d30047a9e7a7d4f1e055644920812147b6e5f468bd250aa44a4510c2d" recordSha256="5f2dcb27927724777c709c0991010dce67f68a459fd485354b30da279dcb9bd2">
+    <english>Flight mode for switch position 3 (1361 to 1490)</english>
+    <chinese>飞行模式开关第 3 档使用的模式，对应 PWM 范围为 1361～1490。</chinese>
+  </translation>
+  <translation family="Plane" parameter="FLTMODE4" field="Description" versions="4.6.3" englishSha256="6e397b2b6bc772dc9cf0e2c16f812b12a42850a0ff7bac5ddf484ff97626c674" recordSha256="0fc4959c343c13275478f4794af21c3a9cfa636e4fccd3d8c0cb12267f9f5f79">
+    <english>Flight mode for switch position 4 (1491 to 1620)</english>
+    <chinese>飞行模式开关第 4 档使用的模式，对应 PWM 范围为 1491～1620。</chinese>
+  </translation>
+  <translation family="Plane" parameter="FLTMODE5" field="Description" versions="4.6.3" englishSha256="db7d4c4e76ebfd7e364065552bbed8aed943a0fab545f8b10dc3134bc5afd3ce" recordSha256="2e5d9000d8300e22296c8b7bee10d86ab408d7b3323039a0cddb83b2cdf345fd">
+    <english>Flight mode for switch position 5 (1621 to 1749)</english>
+    <chinese>飞行模式开关第 5 档使用的模式，对应 PWM 范围为 1621～1749。</chinese>
+  </translation>
+  <translation family="Plane" parameter="FLTMODE6" field="Description" versions="4.6.3" englishSha256="724f725924ef329b8f8e385d1fa00b9ffd70f5f9c8359219948e40d6545a4404" recordSha256="ea452b4a536638710785a671649413d79105e01001191665b3879161d1662839">
+    <english>Flight mode for switch position 6 (1750 to 2049)</english>
+    <chinese>飞行模式开关第 6 档使用的模式，对应 PWM 范围为 1750～2049。</chinese>
+  </translation>
+  <translation family="Plane" parameter="FLTMODE_CH" field="Description" versions="4.6.3" englishSha256="c7f9004f8637a4555630b00eefe8c4422c531aa13584a75e1349897bf525e453" recordSha256="7b1870af3ae48b4192803053bf7aabe8915aa2dd627be0551ca3d7826011e486">
+    <english>RC Channel to use for flight mode control</english>
+    <chinese>选择用于切换飞行模式的遥控通道。</chinese>
+  </translation>
+  <translation family="Plane" parameter="INS_ACCEL_FILTER" field="Description" versions="4.6.3" englishSha256="1e7fd67468dfb2c6b52585c3eca4788a6deda519bc012de00b33f1b427cbc376" recordSha256="9393f4ef6d370e36a24e5491029be918a1b55ee30d442ca34a1dcd3e1737ab34">
+    <english>Filter cutoff frequency for accelerometers. This can be set to a lower value to try to cope with very high vibration levels in aircraft. A value of zero means no filtering (not recommended!)</english>
+    <chinese>加速度计低通滤波的截止频率。降低该值可尝试缓解高振动的影响；设为 0 表示不滤波，官方不建议这样设置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="INS_GYRO_FILTER" field="Description" versions="4.6.3" englishSha256="84dece625e0d6631e5934fadf5eb47dce57c229483f3a105ccf92c63c2997d2a" recordSha256="c67bbe0e383c0c39915d26ec5f72b6e8f17a01252fe0016a740ab57965b4d1b7">
+    <english>Filter cutoff frequency for gyroscopes. This can be set to a lower value to try to cope with very high vibration levels in aircraft. A value of zero means no filtering (not recommended!)</english>
+    <chinese>陀螺仪低通滤波的截止频率。降低该值可尝试缓解高振动的影响；设为 0 表示不滤波，官方不建议这样设置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="LOG_DISARMED" field="Description" versions="4.6.3" englishSha256="306c480a75161b85a8ee48e99d48a11dac16255375adfe60b34150c13b22021e" recordSha256="16802fe8a387398fb7730f1c4fb9ce0a1ddd6ab7ef811658b93b95417d86b1b4">
+    <english>If LOG_DISARMED is set to 1 then logging will be enabled at all times including when disarmed. Logging before arming can make for very large logfiles but can help a lot when tracking down startup issues and is necessary if logging of EKF replay data is selected via the LOG_REPLAY parameter. If LOG_DISARMED is set to 2, then logging will be enabled when disarmed, but not if a USB connection is detected. This can be used to prevent unwanted data logs being generated when the vehicle is connected via USB for log downloading or parameter changes. If LOG_DISARMED is set to 3 then logging will happen while disarmed, but if the vehicle never arms then the logs using the filesystem backend will be discarded on the next boot.</english>
+    <chinese>控制未解锁时的日志记录。1：包括未解锁阶段在内始终记录，有助于排查启动问题，但日志可能很大；使用 LOG_REPLAY 记录 EKF 重放数据时需要飞行前记录。2：未解锁时记录，但检测到 USB 连接时不记录，可避免下载日志或改参数时产生无用日志。3：未解锁时记录，但若本次运行始终没有解锁，文件系统后端的这些日志会在下次启动时丢弃。</chinese>
+  </translation>
+  <translation family="Plane" parameter="LOG_REPLAY" field="Description" versions="4.6.3" englishSha256="af4d5c2e1dccc5b7550d242a7343b73057b99652fee757ee7e552b5e19ac67d8" recordSha256="ca015b469df9d92021e1f6233ce045f771cdea5be6411c555e89c4ef6d81d426">
+    <english>If LOG_REPLAY is set to 1 then the EKF2 and EKF3 state estimators will log detailed information needed for diagnosing problems with the Kalman filter. LOG_DISARMED must be set to 1 or 2 or else the log will not contain the pre-flight data required for replay testing of the EKF's. It is suggested that you also raise LOG_FILE_BUFSIZE to give more buffer space for logging and use a high quality microSD card to ensure no sensor data is lost.</english>
+    <chinese>设为 1 时，EKF2 和 EKF3 会记录诊断卡尔曼滤波问题所需的详细数据。LOG_DISARMED 还须设为 1 或 2，否则缺少重放测试需要的飞行前数据。官方建议增大 LOG_FILE_BUFSIZE，并使用优质 microSD 卡，避免传感器数据丢失。</chinese>
+  </translation>
+  <translation family="Plane" parameter="NAVL1_DAMPING" field="Description" versions="4.6.3" englishSha256="caaa4950c8c084db825130763e39aba7adc91eaedf7a09ba1f6a98a12f8a5dbb" recordSha256="3cac6973ac3f6fc8a6ff6120379086392d3f4845cdd86ea511d6ed1c9246ef92">
+    <english>Damping ratio for L1 control. Increase this in increments of 0.05 if you are getting overshoot in path tracking. You should not need a value below 0.7 or above 0.85.</english>
+    <chinese>L1 航迹控制的阻尼比。如果跟踪航迹时出现超调，可每次增加 0.05 进行调整；官方说明通常不需要低于 0.7 或高于 0.85。</chinese>
+  </translation>
+  <translation family="Plane" parameter="NAVL1_LIM_BANK" field="Description" versions="4.6.3" englishSha256="159d9558e68f1383c06814483b87f88c3ed86d8434ffda843519b376581ee6c7" recordSha256="432e535cb63ba07168a0926b3daea9621fb466485cad280a956b6d7c57a6a01f">
+    <english>The sealevel bank angle limit for a continous loiter. (Used to calculate airframe loading limits at higher altitudes). Setting to 0, will instead just scale the loiter radius directly</english>
+    <chinese>连续盘旋在海平面处的倾侧角限制，用于计算高海拔时的机体载荷限制。设为 0 时改为直接缩放盘旋半径。</chinese>
+  </translation>
+  <translation family="Plane" parameter="NAVL1_PERIOD" field="Description" versions="4.6.3" englishSha256="9f51a5a5d4072825c84c8e9944bf1fde5af36d58f959873b247ce0099074dfc1" recordSha256="36ee937cf8866e413523d8a5399065450afd0276ccbe563251bef266b06db669">
+    <english>Period in seconds of L1 tracking loop. This parameter is the primary control for agressiveness of turns in auto mode. This needs to be larger for less responsive airframes. The default is quite conservative, but for most RC aircraft will lead to reasonable flight. For smaller more agile aircraft a value closer to 15 is appropriate, or even as low as 10 for some very agile aircraft. When tuning, change this value in small increments, as a value that is much too small (say 5 or 10 below the right value) can lead to very radical turns, and a risk of stalling.</english>
+    <chinese>L1 航迹跟踪环路的周期，单位为秒，是影响自动模式转弯响应强弱的主要参数。响应较慢的机体需要更大的值。默认值较保守。较小且灵活的飞机可使用接近 15 的值，十分灵活的机型甚至可能使用 10。调参应小步调整；周期过小（例如比合适值低 5 或 10）可能导致过于剧烈的转弯和失速风险。</chinese>
+  </translation>
+  <translation family="Plane" parameter="PTCH_LIM_MAX_DEG" field="Description" versions="4.6.3" englishSha256="a10552af836600bbae44b9595e65928e3bfdb6da8783cd329b531b79a87fde0e" recordSha256="205a0d87bcc822f7c017fc1cf89bdbf91b36439bb48a8896c0cf86c8a484ef45">
+    <english>Maximum pitch up angle commanded in modes with stabilized limits.</english>
+    <chinese>具有姿态稳定限制的模式中，允许请求的最大抬头俯仰角。</chinese>
+  </translation>
+  <translation family="Plane" parameter="PTCH_LIM_MIN_DEG" field="Description" versions="4.6.3" englishSha256="c0566de2f1d54e81e0bab45f002286ec0948a5a560b2eacd7ee7feb525ffd150" recordSha256="83bf076bc92aec9b15db9179074534883e6a47a4e1afb9c229f662ae345d495d">
+    <english>Maximum pitch down angle commanded in modes with stabilized limits</english>
+    <chinese>具有姿态稳定限制的模式中，允许请求的最大低头俯仰角。</chinese>
+  </translation>
+  <translation family="Plane" parameter="Q_LAND_FINAL_SPD" field="Description" versions="4.6.3" englishSha256="7af0f299dddeb06351e0ead82d327b3c4c2ea2f0b9ac18005335fced54afa58b" recordSha256="887c117131a0d7583477caae381ae56dbcf4c166ee134425fb36b763746768e9">
+    <english>The descent speed for the final stage of landing in m/s</english>
+    <chinese>垂直起降降落最后阶段的下降速度，单位为米/秒。</chinese>
+  </translation>
+  <translation family="Plane" parameter="Q_LOIT_ANG_MAX" field="Description" versions="4.6.3" englishSha256="3b561bb484cb181f035e3181ad0acb73e465d15ebf55cb04965e9b6637051dc5" recordSha256="4a1ab03250715d82417671480a6cba842db3a8310da0f35d5931b3154fd1d82e">
+    <english>Loiter maximum pilot requested lean angle. Set to zero for 2/3 of Q_P_ANGLE_MAX/Q_ANGLE_MAX. The maximum vehicle lean angle is still limited by Q_P_ANGLE_MAX/Q_ANGLE_MAX</english>
+    <chinese>Loiter 模式中飞手可请求的最大倾斜角。设为 0 时使用 Q_P_ANGLE_MAX/Q_ANGLE_MAX 的 2/3；飞行器实际最大倾斜角仍受 Q_P_ANGLE_MAX/Q_ANGLE_MAX 限制。</chinese>
+  </translation>
+  <translation family="Plane" parameter="Q_LOIT_BRK_DELAY" field="Description" versions="4.6.3" englishSha256="bb52348faa1975b4a145849df7e6943b3e612ca42a472ac97d1ddea68789aad3" recordSha256="a6e57c584ab8767562524c025e88e288374cba55f6403efea670dcf9b73c23f7">
+    <english>Loiter brake start delay (in seconds)</english>
+    <chinese>垂直起降 Loiter 模式开始制动前的延迟，单位为秒。</chinese>
+  </translation>
+  <translation family="Plane" parameter="Q_PILOT_ACCEL_Z" field="Description" versions="4.6.3" englishSha256="eb689fbf8c5e2f7d75cbe654419f92da5974f1149f074ad0afd8b5b926159ab6" recordSha256="d4bb3a6e12eea47e363859b75ee9939bfbd4d1bd56c14c1a6edc116e30dd1581">
+    <english>The vertical acceleration used when pilot is controlling the altitude</english>
+    <chinese>垂直起降阶段由飞手控制高度时使用的垂直加速度。</chinese>
+  </translation>
+  <translation family="Plane" parameter="Q_PILOT_SPD_DN" field="Description" versions="4.6.3" englishSha256="01eede8f335c8b690efb71d9b67f950993d21af1a77011b09f61bc8af815894f" recordSha256="4ddf281d04c8c79eebb93fd41ce1dfd8f74ae36b6b8e4905cb1db8c2495a7336">
+    <english>The maximum vertical velocity the pilot may request in m/s going down. If 0, uses Q_PILOT_SPD_UP value.</english>
+    <chinese>垂直起降阶段飞手可请求的最大垂直下降速度，单位为米/秒。设为 0 时使用 Q_PILOT_SPD_UP。</chinese>
+  </translation>
+  <translation family="Plane" parameter="Q_PILOT_SPD_UP" field="Description" versions="4.6.3" englishSha256="4409ca25abc0a6b3f73633d35c6048ce54ee37be5a0ff4f270bf51bd46636fb7" recordSha256="8ebcded40b566c9b4ec395ee0cf2b7cb1eb60398407a525a4c258a46c7cb1980">
+    <english>The maximum ascending vertical velocity the pilot may request in m/s</english>
+    <chinese>垂直起降阶段飞手可请求的最大垂直上升速度，单位为米/秒。</chinese>
+  </translation>
+  <translation family="Plane" parameter="RTL_CLIMB_MIN" field="Description" versions="4.6.3" englishSha256="c28979bd1df45bc287f5f3d7f739853ffa6dcb51c8392f7ad04a62167317a8d6" recordSha256="42a032a47fa530b622fccdd72f7e2d8dda3e2107433a7662df2cdc33cb9223c2">
+    <english>The vehicle will climb this many m during the initial climb portion of the RTL. During this time the roll will be limited to LEVEL_ROLL_LIMIT degrees.</english>
+    <chinese>返航最初爬升阶段需爬升的高度增量，单位为米。这一阶段横滚角限制为 LEVEL_ROLL_LIMIT 度。</chinese>
+  </translation>
+  <translation family="Plane" parameter="RTL_RADIUS" field="Description" versions="4.6.3" englishSha256="c6383483844cfce2485482630f957c6201b548ec0b552bf0a5c69e0dd0917219" recordSha256="53c3a237efd2a43613934dad9eb0f63a9254981a12044379ef233821672c70f2">
+    <english>Defines the radius of the loiter circle when in RTL mode. If this is zero then WP_LOITER_RAD is used. If the radius is negative then a counter-clockwise is used. If positive then a clockwise loiter is used.</english>
+    <chinese>RTL 模式的盘旋半径。设为 0 时使用 WP_LOITER_RAD；负值表示逆时针，正值表示顺时针。</chinese>
+  </translation>
+  <translation family="Plane" parameter="TECS_PTCH_DAMP" field="Description" versions="4.6.3" englishSha256="a99285921bc008719811e0ed74f1e829dd74e6114b026ca904789026b92138c6" recordSha256="e98991771c6ae42d38e0ef027c501298b834bae85f051fd880dfe6b694988ec0">
+    <english>Damping gain for pitch control from TECS control.  Increasing may correct for oscillations in speed and height, but too much may cause additional oscillation and degraded control.</english>
+    <chinese>TECS 俯仰控制的阻尼增益。增大该值可能缓解速度和高度振荡，但过大反而可能增加振荡、降低控制效果。</chinese>
+  </translation>
+  <translation family="Plane" parameter="TECS_SINK_MAX" field="Description" versions="4.6.3" englishSha256="e8b9d8b78419a8dc18c54f10d962f6a80c848dede950bcbb5f5d81a156d1aa31" recordSha256="3ad263512e97cfd996ddf92e6f8dcca96491bc1f4a88e159ad98c0496c0f2666">
+    <english>Maximum demanded descent rate. Do not set higher than the vertical speed the aircraft can maintain at THR_MIN, TECS_PITCH_MIN, and AIRSPEED_MAX.</english>
+    <chinese>允许请求的最大下降率。不要高于飞机在 THR_MIN、TECS_PITCH_MIN 和 AIRSPEED_MAX 条件下能够维持的垂直下降速度。</chinese>
+  </translation>
+  <translation family="Plane" parameter="TECS_THR_DAMP" field="Description" versions="4.6.3" englishSha256="39b53fa8ace66cc3d6c5052c2799674d7bbbeab8fcba41c18ea13e133bd0c726" recordSha256="59a269b1e113ea1c71c29d63c47a4dcf80545dd94a6e723a18d1c6dee70680e1">
+    <english>Damping gain for throttle demand loop. Increase to add throttle activity to dampen oscillations in speed and height.</english>
+    <chinese>TECS 油门请求环路的阻尼增益。增大该值会增加油门调节活动，用于抑制速度和高度振荡。</chinese>
+  </translation>
+  <translation family="Plane" parameter="TECS_TIME_CONST" field="Description" versions="4.6.3" englishSha256="ce462391364ebd20e83c5738d182a3444a554aeacf5384e13952d78c3e559d15" recordSha256="fbc3422d866cf63e58399e343bd77468f11edb0144edf760ccae4873f9bdddd6">
+    <english>Time constant of the TECS control algorithm. Small values make faster altitude corrections but can cause overshoot and aggressive behavior.</english>
+    <chinese>TECS 控制算法的时间常数。较小的值会加快高度修正，但也可能引起超调和过于激烈的响应。</chinese>
+  </translation>
+  <translation family="Plane" parameter="THR_MAX" field="Description" versions="4.6.3" englishSha256="16906d9f7b2326a162ffa04308d6dab8da989e599d8ee348e5c190decd0ef5b4" recordSha256="e58e257958974684d9b7fc3c26b8a1d17a6c0274f1a47ba3fcf69e88eea7388c">
+    <english>Maximum throttle percentage used in all modes except manual, provided THR_PASS_STAB is not set.</english>
+    <chinese>未启用 THR_PASS_STAB 时，除 Manual 外各模式使用的最大油门百分比。</chinese>
+  </translation>
+  <translation family="Plane" parameter="THR_MIN" field="Description" versions="4.6.3" englishSha256="fd6bf89aab0b3b3cd2f085f487b00a2cc844b4b50c5c117aee49a310098e494c" recordSha256="edeff62511bda038c05ef11db659494e4912968bbe0fabd78f96492c91d52ba5">
+    <english>Minimum throttle percentage used in all modes except manual, provided THR_PASS_STAB is not set. Negative values allow reverse thrust if hardware supports it.</english>
+    <chinese>未启用 THR_PASS_STAB 时，除 Manual 外各模式使用的最小油门百分比。硬件支持反推时，负值允许反推。</chinese>
+  </translation>
+  <translation family="Plane" parameter="THR_SLEWRATE" field="Description" versions="4.6.3" englishSha256="0f7c952b7fa5cb8a8c836a9c5e73f971e7d39b1948c17a4b001c4eb846d1e948" recordSha256="fdf9497bc849a3601f3f9d66ed80ab4e6d904965bc5c288d8d344661ab88cc43">
+    <english>Maximum change in throttle percentage per second. Lower limit  based on 1 microsend of servo increase per loop. Divide SCHED_LOOP_RATE by approximately 10 to determine minimum achievable value.</english>
+    <chinese>每秒允许变化的最大油门百分比。可实现的最小变化率受每控制循环约 1 微秒舵机输出增量限制，可用 SCHED_LOOP_RATE 除以约 10 估算这一最小值。</chinese>
+  </translation>
+  <translation family="Plane" parameter="TRIM_THROTTLE" field="Description" versions="4.6.3" englishSha256="bb8b304f75398da8dc47d8cb0949a522d58fb304b6da8ebba983456f0c22f14f" recordSha256="06bc4b4c4e05c477c9b56be6501d7673d2a0e4eb1c6c91455ef508e1c25125a2">
+    <english>Target percentage of throttle to apply for flight in automatic throttle modes and throttle percentage that maintains AIRSPEED_CRUISE. Caution: low battery voltages at the end of flights may require higher throttle to maintain airspeed.</english>
+    <chinese>自动油门模式的目标油门百分比，也是维持 AIRSPEED_CRUISE 所需的油门百分比。注意：飞行末段电池电压降低时，可能需要更高油门才能保持空速。</chinese>
+  </translation>
+  <translation family="Plane" parameter="WP_LOITER_RAD" field="Description" versions="4.6.3" englishSha256="09276e86c988929312bd5019b993a860499527a032e0c3faecbfe732f73b7b19" recordSha256="1ec59b07b59b39f47b0935aa01c31c19dc7aadc42d041fa059d7e4a95dedb54f">
+    <english>Defines the distance from the waypoint center, the plane will maintain during a loiter. If you set this value to a negative number then the default loiter direction will be counter-clockwise instead of clockwise.</english>
+    <chinese>飞机盘旋时与航点中心保持的距离。设为负数时，默认盘旋方向由顺时针改为逆时针。</chinese>
+  </translation>
+  <translation family="Plane" parameter="WP_MAX_RADIUS" field="Description" versions="4.6.3" englishSha256="f5302ce338d4cce8d14ff12e033c081635a1d3cb823bcdc6cdad2f9ed0890e22" recordSha256="ec5839d3a8cb06003d750d5bfc18811af0dd36324c19d78a3289701b7706d806">
+    <english>Sets the maximum distance to a waypoint for the waypoint to be considered complete. This overrides the "cross the finish line" logic that is normally used to consider a waypoint complete. For normal AUTO behaviour this parameter should be set to zero. Using a non-zero value is only recommended when it is critical that the aircraft does approach within the given radius, and should loop around until it has done so. This can cause the aircraft to loop forever if its turn radius is greater than the maximum radius set.</english>
+    <chinese>航点完成判定的最大距离。非零值会覆盖通常的“越过终点线即完成”逻辑，要求飞机确实进入此半径，否则继续绕回。正常 AUTO 行为应设为 0；仅在必须接近航点时使用非零值。若飞机转弯半径大于所设半径，可能一直绕圈而无法完成该航点。</chinese>
+  </translation>
+  <translation family="Plane" parameter="Q_LOIT_ACC_MAX" field="Description" versions="4.6.3" englishSha256="be70dcf5f474fbe50bc36ebcb781ffc6ea63a855f9d44d07987bd4e4626ad8d6" recordSha256="e25387cfc5a8b7d4b658a3abe0d5563ba8e098bcb80f072d5857bfbdc4d1d5c4">
+    <english>Loiter maximum correction acceleration in cm/s/s.  Higher values cause the copter to correct position errors more aggressively.</english>
+    <chinese>Loiter 位置修正的最大加速度，单位为厘米/秒²。增大该值会更积极地修正位置偏差。</chinese>
+  </translation>
+  <translation family="Plane" parameter="Q_LOIT_BRK_ACCEL" field="Description" versions="4.6.3" englishSha256="5408ab20723671247b544e6c51c370961f70fae2d6984edc8da64fcb1e6ee3c1" recordSha256="d71783371a72c934cf7b97760a504dcd980fb39bcb985b22712d2e8e61a2f2a1">
+    <english>Loiter braking acceleration in cm/s/s. Higher values stop the copter more quickly when the stick is centered.</english>
+    <chinese>Loiter 制动加速度，单位为厘米/秒²。增大该值可在摇杆回中后更快停止运动。</chinese>
+  </translation>
+  <translation family="Plane" parameter="Q_LOIT_BRK_JERK" field="Description" versions="4.6.3" englishSha256="e2ec90c7917617638b3385b086b24524d2b2ee72c544645c98293216d975a7ff" recordSha256="f94ea42bd1215b711076d9dfd86ec0ba25cb2a7cd35430226684a09eac8371b7">
+    <english>Loiter braking jerk in cm/s/s/s. Higher values will remove braking faster if the pilot moves the sticks during a braking maneuver.</english>
+    <chinese>Loiter 制动加加速度（加速度变化率），单位为厘米/秒³。制动过程中若飞手再次移动摇杆，较大值会更快解除制动。</chinese>
+  </translation>
+  <translation family="Plane" parameter="Q_LOIT_SPEED" field="Description" versions="4.6.3" englishSha256="954c0cab10004a187631b379484b52850406c6a09aa6a565936fdce5f9364d8f" recordSha256="eca3b8bad14f1b69e01488b023ee057a9d6e258a60f86a2fb1c3315e66d142c9">
+    <english>Defines the maximum speed in cm/s which the aircraft will travel horizontally while in loiter mode</english>
+    <chinese>Loiter 模式允许的最大水平速度，单位为厘米/秒。</chinese>
+  </translation>
+  <translation family="Plane" parameter="Q_WP_ACCEL" field="Description" versions="4.6.3" englishSha256="d90eece816b46b0b08768ef5c3b61985f89aa4b99226834163dff79c674f6511" recordSha256="d4b07991ab437768f9a0adcc0365cb3367aa3b5ab882167be1f511811450b3a8">
+    <english>Defines the horizontal acceleration in cm/s/s used during missions</english>
+    <chinese>任务飞行使用的水平加速度，单位为厘米/秒²。</chinese>
+  </translation>
+  <translation family="Plane" parameter="Q_WP_ACCEL_Z" field="Description" versions="4.6.3" englishSha256="d621a5d6eafe768abadaed51070307b369870ba24478adf9deacca5ac3eabb80" recordSha256="1c22699caf61be2b48f790c308a4f6bfb4f59626da75a6424136df59987235c2">
+    <english>Defines the vertical acceleration in cm/s/s used during missions</english>
+    <chinese>任务飞行使用的垂直加速度，单位为厘米/秒²。</chinese>
+  </translation>
+  <translation family="Plane" parameter="Q_WP_RADIUS" field="Description" versions="4.6.3" englishSha256="6bc0ced8e9a4b85e387f566ff3fee75354248f930e1ce0cffbefe77c6d4815fe" recordSha256="22573c24e3e88551e54638287817e8b1792c8cd3e354f20b50ce5515e5c1249c">
+    <english>Defines the distance from a waypoint, that when crossed indicates the wp has been hit.</english>
+    <chinese>航点到达判定的距离阈值；进入该距离即认为到达此航点。</chinese>
+  </translation>
+  <translation family="Plane" parameter="Q_WP_SPEED_DN" field="Description" versions="4.6.3" englishSha256="435eb2745ecf83ec7e126a2dc41306f9f67476b9344310cadf2c4cbad6ad8b24" recordSha256="c868efc8b28e99559f799183997e6f75564ba0946b74840605057e666b041d71">
+    <english>Defines the speed in cm/s which the aircraft will attempt to maintain while descending during a WP mission</english>
+    <chinese>航点任务中的目标下降速度，单位为厘米/秒；飞行器会尝试保持此速度。</chinese>
+  </translation>
+  <translation family="Plane" parameter="Q_WP_SPEED_UP" field="Description" versions="4.6.3" englishSha256="267dab94f3875820db829bc4b056ae0516f98b7df7d480b4d692ca588cea22b4" recordSha256="75c73aa63e9bc080d2fd11d16d264979e387ef35442d04267591fc6dc6598fff">
+    <english>Defines the speed in cm/s which the aircraft will attempt to maintain while climbing during a WP mission</english>
+    <chinese>航点任务中的目标爬升速度，单位为厘米/秒；飞行器会尝试保持此速度。</chinese>
+  </translation>
+  <translation family="Plane" parameter="AIRSPEED_MAX" field="Description" versions="4.7.1" englishSha256="fbf6c2c3e5de56fe01827da2e2a7978a5f5ac31f0aa027c4f23f3b6ecee8f558" recordSha256="2eb3fac01d8a57bd27a4d544db7bcd9eb14eb05cb5d8f23d529c4da504b7926f">
+    <english>Maximum airspeed demanded in automatic throttle modes. Should be set slightly less than level flight speed at THR_MAX and also at least 50% above AIRSPEED_MIN to allow for accurate TECS altitude control.</english>
+    <chinese>自动油门模式请求的最大空速。应略低于 THR_MAX 油门下的平飞速度，并至少比 AIRSPEED_MIN 高 50%，以保证 TECS 能准确控制高度。</chinese>
+  </translation>
+  <translation family="Plane" parameter="AIRSPEED_MIN" field="Description" versions="4.7.1" englishSha256="4127942fed79fc4bd461c211285ff3583084e2783e217d6259122bd3036c0a08" recordSha256="f3f7eff91aaaf1823a342b82b8be447cf4528b51450e8723b851615b216b734b">
+    <english>Minimum airspeed demanded in automatic throttle modes. Should be set to 20% higher than level flight stall speed.</english>
+    <chinese>自动油门模式请求的最小空速。官方建议比平飞失速速度高 20%。</chinese>
+  </translation>
+  <translation family="Plane" parameter="FLTMODE1" field="Description" versions="4.7.1" englishSha256="a9b63afb2f8927c658cbc0263823afc5501b58ec8f1bde2874f3214dc61035c8" recordSha256="5be6e3e9733b4caf5746bf61f1b01c949747eaa648b43ed250cf2168c15acf1e">
+    <english>Flight mode for switch position 1 (910 to 1230 and above 2049)</english>
+    <chinese>飞行模式开关第 1 档使用的模式，对应 PWM 范围为 910～1230 或高于 2049。</chinese>
+  </translation>
+  <translation family="Plane" parameter="FLTMODE2" field="Description" versions="4.7.1" englishSha256="c2c4c8b1c823ca8f17fb8a6df2222674d28e95162a9ae896745569986d7e2a72" recordSha256="ba30245227ca2621b77f2355dce531084d3c235aac53c5c5ea11eeb472bd20e3">
+    <english>Flight mode for switch position 2 (1231 to 1360)</english>
+    <chinese>飞行模式开关第 2 档使用的模式，对应 PWM 范围为 1231～1360。</chinese>
+  </translation>
+  <translation family="Plane" parameter="FLTMODE3" field="Description" versions="4.7.1" englishSha256="20beef0d30047a9e7a7d4f1e055644920812147b6e5f468bd250aa44a4510c2d" recordSha256="a68eaa788dd019012e6438ebd4cc9299de890e2ab06a49f523d22e3eaf1f091f">
+    <english>Flight mode for switch position 3 (1361 to 1490)</english>
+    <chinese>飞行模式开关第 3 档使用的模式，对应 PWM 范围为 1361～1490。</chinese>
+  </translation>
+  <translation family="Plane" parameter="FLTMODE4" field="Description" versions="4.7.1" englishSha256="6e397b2b6bc772dc9cf0e2c16f812b12a42850a0ff7bac5ddf484ff97626c674" recordSha256="6e2fccd0867c9d24bab57d7b158484a8376c7c4f8839562dfb19ef8ce7dfb63d">
+    <english>Flight mode for switch position 4 (1491 to 1620)</english>
+    <chinese>飞行模式开关第 4 档使用的模式，对应 PWM 范围为 1491～1620。</chinese>
+  </translation>
+  <translation family="Plane" parameter="FLTMODE5" field="Description" versions="4.7.1" englishSha256="db7d4c4e76ebfd7e364065552bbed8aed943a0fab545f8b10dc3134bc5afd3ce" recordSha256="ce6aaed9125596a9508a6677b7bf373750a087d605baa48725e4da0162c91bf2">
+    <english>Flight mode for switch position 5 (1621 to 1749)</english>
+    <chinese>飞行模式开关第 5 档使用的模式，对应 PWM 范围为 1621～1749。</chinese>
+  </translation>
+  <translation family="Plane" parameter="FLTMODE6" field="Description" versions="4.7.1" englishSha256="724f725924ef329b8f8e385d1fa00b9ffd70f5f9c8359219948e40d6545a4404" recordSha256="1d947891ceaeb431ed83454965963659a4c0dadc29ce98c5239df9414aa564ca">
+    <english>Flight mode for switch position 6 (1750 to 2049)</english>
+    <chinese>飞行模式开关第 6 档使用的模式，对应 PWM 范围为 1750～2049。</chinese>
+  </translation>
+  <translation family="Plane" parameter="FLTMODE_CH" field="Description" versions="4.7.1" englishSha256="c7f9004f8637a4555630b00eefe8c4422c531aa13584a75e1349897bf525e453" recordSha256="7b1870af3ae48b4192803053bf7aabe8915aa2dd627be0551ca3d7826011e486">
+    <english>RC Channel to use for flight mode control</english>
+    <chinese>选择用于切换飞行模式的遥控通道。</chinese>
+  </translation>
+  <translation family="Plane" parameter="INS_ACCEL_FILTER" field="Description" versions="4.7.1" englishSha256="1e7fd67468dfb2c6b52585c3eca4788a6deda519bc012de00b33f1b427cbc376" recordSha256="9393f4ef6d370e36a24e5491029be918a1b55ee30d442ca34a1dcd3e1737ab34">
+    <english>Filter cutoff frequency for accelerometers. This can be set to a lower value to try to cope with very high vibration levels in aircraft. A value of zero means no filtering (not recommended!)</english>
+    <chinese>加速度计低通滤波的截止频率。降低该值可尝试缓解高振动的影响；设为 0 表示不滤波，官方不建议这样设置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="INS_GYRO_FILTER" field="Description" versions="4.7.1" englishSha256="84dece625e0d6631e5934fadf5eb47dce57c229483f3a105ccf92c63c2997d2a" recordSha256="c67bbe0e383c0c39915d26ec5f72b6e8f17a01252fe0016a740ab57965b4d1b7">
+    <english>Filter cutoff frequency for gyroscopes. This can be set to a lower value to try to cope with very high vibration levels in aircraft. A value of zero means no filtering (not recommended!)</english>
+    <chinese>陀螺仪低通滤波的截止频率。降低该值可尝试缓解高振动的影响；设为 0 表示不滤波，官方不建议这样设置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="LOG_DISARMED" field="Description" versions="4.7.1" englishSha256="306c480a75161b85a8ee48e99d48a11dac16255375adfe60b34150c13b22021e" recordSha256="16802fe8a387398fb7730f1c4fb9ce0a1ddd6ab7ef811658b93b95417d86b1b4">
+    <english>If LOG_DISARMED is set to 1 then logging will be enabled at all times including when disarmed. Logging before arming can make for very large logfiles but can help a lot when tracking down startup issues and is necessary if logging of EKF replay data is selected via the LOG_REPLAY parameter. If LOG_DISARMED is set to 2, then logging will be enabled when disarmed, but not if a USB connection is detected. This can be used to prevent unwanted data logs being generated when the vehicle is connected via USB for log downloading or parameter changes. If LOG_DISARMED is set to 3 then logging will happen while disarmed, but if the vehicle never arms then the logs using the filesystem backend will be discarded on the next boot.</english>
+    <chinese>控制未解锁时的日志记录。1：包括未解锁阶段在内始终记录，有助于排查启动问题，但日志可能很大；使用 LOG_REPLAY 记录 EKF 重放数据时需要飞行前记录。2：未解锁时记录，但检测到 USB 连接时不记录，可避免下载日志或改参数时产生无用日志。3：未解锁时记录，但若本次运行始终没有解锁，文件系统后端的这些日志会在下次启动时丢弃。</chinese>
+  </translation>
+  <translation family="Plane" parameter="LOG_REPLAY" field="Description" versions="4.7.1" englishSha256="af4d5c2e1dccc5b7550d242a7343b73057b99652fee757ee7e552b5e19ac67d8" recordSha256="ca015b469df9d92021e1f6233ce045f771cdea5be6411c555e89c4ef6d81d426">
+    <english>If LOG_REPLAY is set to 1 then the EKF2 and EKF3 state estimators will log detailed information needed for diagnosing problems with the Kalman filter. LOG_DISARMED must be set to 1 or 2 or else the log will not contain the pre-flight data required for replay testing of the EKF's. It is suggested that you also raise LOG_FILE_BUFSIZE to give more buffer space for logging and use a high quality microSD card to ensure no sensor data is lost.</english>
+    <chinese>设为 1 时，EKF2 和 EKF3 会记录诊断卡尔曼滤波问题所需的详细数据。LOG_DISARMED 还须设为 1 或 2，否则缺少重放测试需要的飞行前数据。官方建议增大 LOG_FILE_BUFSIZE，并使用优质 microSD 卡，避免传感器数据丢失。</chinese>
+  </translation>
+  <translation family="Plane" parameter="NAVL1_DAMPING" field="Description" versions="4.7.1" englishSha256="caaa4950c8c084db825130763e39aba7adc91eaedf7a09ba1f6a98a12f8a5dbb" recordSha256="3cac6973ac3f6fc8a6ff6120379086392d3f4845cdd86ea511d6ed1c9246ef92">
+    <english>Damping ratio for L1 control. Increase this in increments of 0.05 if you are getting overshoot in path tracking. You should not need a value below 0.7 or above 0.85.</english>
+    <chinese>L1 航迹控制的阻尼比。如果跟踪航迹时出现超调，可每次增加 0.05 进行调整；官方说明通常不需要低于 0.7 或高于 0.85。</chinese>
+  </translation>
+  <translation family="Plane" parameter="NAVL1_LIM_BANK" field="Description" versions="4.7.1" englishSha256="23fed89cc0c99037e82040d60697a74d41ca4d59b62d3e7b69d1cd553854dadb" recordSha256="9af97b57795a2fc7133a644585f4957f4263253c7f9c0a0e6af50bd1aca5617b">
+    <english>The sealevel bank angle limit for a continuous loiter. (Used to calculate airframe loading limits at higher altitudes). Setting to 0, will instead just scale the loiter radius directly</english>
+    <chinese>连续盘旋在海平面处的倾侧角限制，用于计算高海拔时的机体载荷限制。设为 0 时改为直接缩放盘旋半径。</chinese>
+  </translation>
+  <translation family="Plane" parameter="NAVL1_PERIOD" field="Description" versions="4.7.1" englishSha256="8d19641137b33dd4efca2810c52dcd806d0721d9c262a31ea8f96a7573159aa0" recordSha256="66384618af31665debe7282866e6391af3751593ba427cf817e9e8783b1c0f9d">
+    <english>Period in seconds of L1 tracking loop. This parameter is the primary control for aggressiveness of turns in auto mode. This needs to be larger for less responsive airframes. The default is quite conservative, but for most RC aircraft will lead to reasonable flight. For smaller more agile aircraft a value closer to 15 is appropriate, or even as low as 10 for some very agile aircraft. When tuning, change this value in small increments, as a value that is much too small (say 5 or 10 below the right value) can lead to very radical turns, and a risk of stalling.</english>
+    <chinese>L1 航迹跟踪环路的周期，单位为秒，是影响自动模式转弯响应强弱的主要参数。响应较慢的机体需要更大的值。默认值较保守。较小且灵活的飞机可使用接近 15 的值，十分灵活的机型甚至可能使用 10。调参应小步调整；周期过小（例如比合适值低 5 或 10）可能导致过于剧烈的转弯和失速风险。</chinese>
+  </translation>
+  <translation family="Plane" parameter="PTCH_LIM_MAX_DEG" field="Description" versions="4.7.1" englishSha256="a10552af836600bbae44b9595e65928e3bfdb6da8783cd329b531b79a87fde0e" recordSha256="205a0d87bcc822f7c017fc1cf89bdbf91b36439bb48a8896c0cf86c8a484ef45">
+    <english>Maximum pitch up angle commanded in modes with stabilized limits.</english>
+    <chinese>具有姿态稳定限制的模式中，允许请求的最大抬头俯仰角。</chinese>
+  </translation>
+  <translation family="Plane" parameter="PTCH_LIM_MIN_DEG" field="Description" versions="4.7.1" englishSha256="c0566de2f1d54e81e0bab45f002286ec0948a5a560b2eacd7ee7feb525ffd150" recordSha256="83bf076bc92aec9b15db9179074534883e6a47a4e1afb9c229f662ae345d495d">
+    <english>Maximum pitch down angle commanded in modes with stabilized limits</english>
+    <chinese>具有姿态稳定限制的模式中，允许请求的最大低头俯仰角。</chinese>
+  </translation>
+  <translation family="Plane" parameter="Q_LAND_FINAL_SPD" field="Description" versions="4.7.1" englishSha256="7af0f299dddeb06351e0ead82d327b3c4c2ea2f0b9ac18005335fced54afa58b" recordSha256="887c117131a0d7583477caae381ae56dbcf4c166ee134425fb36b763746768e9">
+    <english>The descent speed for the final stage of landing in m/s</english>
+    <chinese>垂直起降降落最后阶段的下降速度，单位为米/秒。</chinese>
+  </translation>
+  <translation family="Plane" parameter="Q_LOIT_ANG_MAX" field="Description" versions="4.7.1" englishSha256="65cdc92f70ba8670041f7bc273e9f3a83a4be7df19cadce9859b29ffa403cd19" recordSha256="27547421aab4117d9f5857c634f68bb5dcac6249a4db82b767b66bdf7a99c33c">
+    <english>Loiter maximum pilot requested lean angle. Set to zero for 2/3 of Q_P_ANGLE_MAX/Q_A_ANGLE_MAX. The maximum vehicle lean angle is still limited by Q_P_ANGLE_MAX/Q_A_ANGLE_MAX</english>
+    <chinese>Loiter 模式中飞手可请求的最大倾斜角。设为 0 时使用 Q_P_ANGLE_MAX/Q_A_ANGLE_MAX 的 2/3；飞行器实际最大倾斜角仍受 Q_P_ANGLE_MAX/Q_A_ANGLE_MAX 限制。</chinese>
+  </translation>
+  <translation family="Plane" parameter="Q_LOIT_BRK_DELAY" field="Description" versions="4.7.1" englishSha256="bb52348faa1975b4a145849df7e6943b3e612ca42a472ac97d1ddea68789aad3" recordSha256="a6e57c584ab8767562524c025e88e288374cba55f6403efea670dcf9b73c23f7">
+    <english>Loiter brake start delay (in seconds)</english>
+    <chinese>垂直起降 Loiter 模式开始制动前的延迟，单位为秒。</chinese>
+  </translation>
+  <translation family="Plane" parameter="Q_PILOT_ACCEL_Z" field="Description" versions="4.7.1" englishSha256="eb689fbf8c5e2f7d75cbe654419f92da5974f1149f074ad0afd8b5b926159ab6" recordSha256="d4bb3a6e12eea47e363859b75ee9939bfbd4d1bd56c14c1a6edc116e30dd1581">
+    <english>The vertical acceleration used when pilot is controlling the altitude</english>
+    <chinese>垂直起降阶段由飞手控制高度时使用的垂直加速度。</chinese>
+  </translation>
+  <translation family="Plane" parameter="Q_PILOT_SPD_DN" field="Description" versions="4.7.1" englishSha256="01eede8f335c8b690efb71d9b67f950993d21af1a77011b09f61bc8af815894f" recordSha256="4ddf281d04c8c79eebb93fd41ce1dfd8f74ae36b6b8e4905cb1db8c2495a7336">
+    <english>The maximum vertical velocity the pilot may request in m/s going down. If 0, uses Q_PILOT_SPD_UP value.</english>
+    <chinese>垂直起降阶段飞手可请求的最大垂直下降速度，单位为米/秒。设为 0 时使用 Q_PILOT_SPD_UP。</chinese>
+  </translation>
+  <translation family="Plane" parameter="Q_PILOT_SPD_UP" field="Description" versions="4.7.1" englishSha256="4409ca25abc0a6b3f73633d35c6048ce54ee37be5a0ff4f270bf51bd46636fb7" recordSha256="8ebcded40b566c9b4ec395ee0cf2b7cb1eb60398407a525a4c258a46c7cb1980">
+    <english>The maximum ascending vertical velocity the pilot may request in m/s</english>
+    <chinese>垂直起降阶段飞手可请求的最大垂直上升速度，单位为米/秒。</chinese>
+  </translation>
+  <translation family="Plane" parameter="RTL_CLIMB_MIN" field="Description" versions="4.7.1" englishSha256="c28979bd1df45bc287f5f3d7f739853ffa6dcb51c8392f7ad04a62167317a8d6" recordSha256="42a032a47fa530b622fccdd72f7e2d8dda3e2107433a7662df2cdc33cb9223c2">
+    <english>The vehicle will climb this many m during the initial climb portion of the RTL. During this time the roll will be limited to LEVEL_ROLL_LIMIT degrees.</english>
+    <chinese>返航最初爬升阶段需爬升的高度增量，单位为米。这一阶段横滚角限制为 LEVEL_ROLL_LIMIT 度。</chinese>
+  </translation>
+  <translation family="Plane" parameter="RTL_RADIUS" field="Description" versions="4.7.1" englishSha256="85c94c2b471c7efcaa65bb39774d7432a22c08455e15016ae6a2a7414360bac9" recordSha256="129af070dae94bc6bce9e8abe0a61e7aa977d28b2a25eaa4d257c6b27e7d39d3">
+    <english>Defines the radius of the loiter circle when in RTL mode. If this is zero then WP_LOITER_RAD is used. If the radius is negative then a counter-clockwise is used. If positive then a clockwise loiter is used. For quadplanes with Q_RTL_MODE set to 1 (Enabled), this value is used to set the minimum radius at which the plane will transition from fixed-wing to VTOL mode for landing.</english>
+    <chinese>RTL 模式的盘旋半径。设为 0 时使用 WP_LOITER_RAD；负值表示逆时针，正值表示顺时针。对于 Q_RTL_MODE=1 的 QuadPlane，此值还设置从固定翼转换为 VTOL 降落的最小半径。</chinese>
+  </translation>
+  <translation family="Plane" parameter="TECS_PTCH_DAMP" field="Description" versions="4.7.1" englishSha256="a99285921bc008719811e0ed74f1e829dd74e6114b026ca904789026b92138c6" recordSha256="e98991771c6ae42d38e0ef027c501298b834bae85f051fd880dfe6b694988ec0">
+    <english>Damping gain for pitch control from TECS control.  Increasing may correct for oscillations in speed and height, but too much may cause additional oscillation and degraded control.</english>
+    <chinese>TECS 俯仰控制的阻尼增益。增大该值可能缓解速度和高度振荡，但过大反而可能增加振荡、降低控制效果。</chinese>
+  </translation>
+  <translation family="Plane" parameter="TECS_SINK_MAX" field="Description" versions="4.7.1" englishSha256="e8b9d8b78419a8dc18c54f10d962f6a80c848dede950bcbb5f5d81a156d1aa31" recordSha256="3ad263512e97cfd996ddf92e6f8dcca96491bc1f4a88e159ad98c0496c0f2666">
+    <english>Maximum demanded descent rate. Do not set higher than the vertical speed the aircraft can maintain at THR_MIN, TECS_PITCH_MIN, and AIRSPEED_MAX.</english>
+    <chinese>允许请求的最大下降率。不要高于飞机在 THR_MIN、TECS_PITCH_MIN 和 AIRSPEED_MAX 条件下能够维持的垂直下降速度。</chinese>
+  </translation>
+  <translation family="Plane" parameter="TECS_THR_DAMP" field="Description" versions="4.7.1" englishSha256="39b53fa8ace66cc3d6c5052c2799674d7bbbeab8fcba41c18ea13e133bd0c726" recordSha256="59a269b1e113ea1c71c29d63c47a4dcf80545dd94a6e723a18d1c6dee70680e1">
+    <english>Damping gain for throttle demand loop. Increase to add throttle activity to dampen oscillations in speed and height.</english>
+    <chinese>TECS 油门请求环路的阻尼增益。增大该值会增加油门调节活动，用于抑制速度和高度振荡。</chinese>
+  </translation>
+  <translation family="Plane" parameter="TECS_TIME_CONST" field="Description" versions="4.7.1" englishSha256="ce462391364ebd20e83c5738d182a3444a554aeacf5384e13952d78c3e559d15" recordSha256="fbc3422d866cf63e58399e343bd77468f11edb0144edf760ccae4873f9bdddd6">
+    <english>Time constant of the TECS control algorithm. Small values make faster altitude corrections but can cause overshoot and aggressive behavior.</english>
+    <chinese>TECS 控制算法的时间常数。较小的值会加快高度修正，但也可能引起超调和过于激烈的响应。</chinese>
+  </translation>
+  <translation family="Plane" parameter="THR_MAX" field="Description" versions="4.7.1" englishSha256="16906d9f7b2326a162ffa04308d6dab8da989e599d8ee348e5c190decd0ef5b4" recordSha256="e58e257958974684d9b7fc3c26b8a1d17a6c0274f1a47ba3fcf69e88eea7388c">
+    <english>Maximum throttle percentage used in all modes except manual, provided THR_PASS_STAB is not set.</english>
+    <chinese>未启用 THR_PASS_STAB 时，除 Manual 外各模式使用的最大油门百分比。</chinese>
+  </translation>
+  <translation family="Plane" parameter="THR_MIN" field="Description" versions="4.7.1" englishSha256="fd6bf89aab0b3b3cd2f085f487b00a2cc844b4b50c5c117aee49a310098e494c" recordSha256="edeff62511bda038c05ef11db659494e4912968bbe0fabd78f96492c91d52ba5">
+    <english>Minimum throttle percentage used in all modes except manual, provided THR_PASS_STAB is not set. Negative values allow reverse thrust if hardware supports it.</english>
+    <chinese>未启用 THR_PASS_STAB 时，除 Manual 外各模式使用的最小油门百分比。硬件支持反推时，负值允许反推。</chinese>
+  </translation>
+  <translation family="Plane" parameter="THR_SLEWRATE" field="Description" versions="4.7.1" englishSha256="0f7c952b7fa5cb8a8c836a9c5e73f971e7d39b1948c17a4b001c4eb846d1e948" recordSha256="fdf9497bc849a3601f3f9d66ed80ab4e6d904965bc5c288d8d344661ab88cc43">
+    <english>Maximum change in throttle percentage per second. Lower limit  based on 1 microsend of servo increase per loop. Divide SCHED_LOOP_RATE by approximately 10 to determine minimum achievable value.</english>
+    <chinese>每秒允许变化的最大油门百分比。可实现的最小变化率受每控制循环约 1 微秒舵机输出增量限制，可用 SCHED_LOOP_RATE 除以约 10 估算这一最小值。</chinese>
+  </translation>
+  <translation family="Plane" parameter="TRIM_THROTTLE" field="Description" versions="4.7.1" englishSha256="bb8b304f75398da8dc47d8cb0949a522d58fb304b6da8ebba983456f0c22f14f" recordSha256="06bc4b4c4e05c477c9b56be6501d7673d2a0e4eb1c6c91455ef508e1c25125a2">
+    <english>Target percentage of throttle to apply for flight in automatic throttle modes and throttle percentage that maintains AIRSPEED_CRUISE. Caution: low battery voltages at the end of flights may require higher throttle to maintain airspeed.</english>
+    <chinese>自动油门模式的目标油门百分比，也是维持 AIRSPEED_CRUISE 所需的油门百分比。注意：飞行末段电池电压降低时，可能需要更高油门才能保持空速。</chinese>
+  </translation>
+  <translation family="Plane" parameter="WP_LOITER_RAD" field="Description" versions="4.7.1" englishSha256="a84a2489ce3f5894d6256307256601ebe620ab35b257a76e66cbe491ec78d897" recordSha256="f2273b7dc535f19e343a8518adf3f990efc2f3ec828ba6590f57780eb47a85b4">
+    <english>Defines the distance from the waypoint center, the plane will maintain during a loiter. If you set this value to a negative number then the default loiter direction will be counter-clockwise instead of clockwise. If this value is too close to zero, the achieved loiter radius will be determined by ROLL_LIMIT_DEG.</english>
+    <chinese>飞机盘旋时与航点中心保持的距离。设为负数时，默认盘旋方向由顺时针改为逆时针。若数值过于接近 0，实际盘旋半径将由 ROLL_LIMIT_DEG 决定。</chinese>
+  </translation>
+  <translation family="Plane" parameter="WP_MAX_RADIUS" field="Description" versions="4.7.1" englishSha256="f5302ce338d4cce8d14ff12e033c081635a1d3cb823bcdc6cdad2f9ed0890e22" recordSha256="ec5839d3a8cb06003d750d5bfc18811af0dd36324c19d78a3289701b7706d806">
+    <english>Sets the maximum distance to a waypoint for the waypoint to be considered complete. This overrides the "cross the finish line" logic that is normally used to consider a waypoint complete. For normal AUTO behaviour this parameter should be set to zero. Using a non-zero value is only recommended when it is critical that the aircraft does approach within the given radius, and should loop around until it has done so. This can cause the aircraft to loop forever if its turn radius is greater than the maximum radius set.</english>
+    <chinese>航点完成判定的最大距离。非零值会覆盖通常的“越过终点线即完成”逻辑，要求飞机确实进入此半径，否则继续绕回。正常 AUTO 行为应设为 0；仅在必须接近航点时使用非零值。若飞机转弯半径大于所设半径，可能一直绕圈而无法完成该航点。</chinese>
+  </translation>
+  <translation family="Plane" parameter="Q_LOIT_ACC_MAX_M" field="Description" versions="4.7.1" englishSha256="f417ccb42017272bdf201f2b460848c8bbbab11954593cb9b771c8205fb4cd52" recordSha256="e67ee172a23d49e28f6f3bd83abb24b8c2f6a36b3a5b6ae60b9aad9195e36962">
+    <english>Loiter maximum correction acceleration in m/s/s.  Higher values cause the copter to correct position errors more aggressively.</english>
+    <chinese>Loiter 位置修正的最大加速度，单位为米/秒²。增大该值会更积极地修正位置偏差。</chinese>
+  </translation>
+  <translation family="Plane" parameter="Q_LOIT_BRK_ACC_M" field="Description" versions="4.7.1" englishSha256="856375db0889ebc5f8f3f36d1860693e849b8fd9269a7c481189b86c5b93763c" recordSha256="7e52c5b1d032611386257c69fb97277287d654d0b6bdd2b82f5894f1476aeab8">
+    <english>Loiter braking acceleration in m/s/s. Higher values stop the copter more quickly when the stick is centered.</english>
+    <chinese>Loiter 制动加速度，单位为米/秒²。增大该值可在摇杆回中后更快停止运动。</chinese>
+  </translation>
+  <translation family="Plane" parameter="Q_LOIT_BRK_JRK_M" field="Description" versions="4.7.1" englishSha256="c553c15727d15bb4a5c37c368dcb8926dd091e838f38e506ec8dbd861ee3e44a" recordSha256="27ea8835c98cf59ab00a3fc187435c9efcf1e6dd4c5049a6abd58a34b12f6b47">
+    <english>Loiter braking jerk in m/s/s/s. Higher values will remove braking faster if the pilot moves the sticks during a braking maneuver.</english>
+    <chinese>Loiter 制动加加速度（加速度变化率），单位为米/秒³。制动过程中若飞手再次移动摇杆，较大值会更快解除制动。</chinese>
+  </translation>
+  <translation family="Plane" parameter="Q_LOIT_SPEED_MS" field="Description" versions="4.7.1" englishSha256="779adb82835ca0b4b72d2b824d86a04da389facd70781a6de6f0bb85e0726f07" recordSha256="f7dd3d650846a0bd4ab0fb834a9b581b3731fc928313ba68006d205fcc3f0522">
+    <english>Defines the maximum speed in m/s which the aircraft will travel horizontally while in loiter mode</english>
+    <chinese>Loiter 模式允许的最大水平速度，单位为米/秒。</chinese>
+  </translation>
+  <translation family="Plane" parameter="Q_WP_ACC" field="Description" versions="4.7.1" englishSha256="49a83b70aca34677d1ba78731f4e6b5c10b5de89d352e7551edcfaa43ec8899b" recordSha256="e54be91ce7f5a735928bd4de45b83e46b006077965227b4d6d9be3dc8c8bf5d2">
+    <english>Horizontal acceleration in m/s/s used during missions</english>
+    <chinese>任务飞行使用的水平加速度，单位为米/秒²。</chinese>
+  </translation>
+  <translation family="Plane" parameter="Q_WP_ACC_Z" field="Description" versions="4.7.1" englishSha256="d05927775bf17a4cf33d7f25a39a4313ed8d4019cea6c772b987ac7e6e538aa6" recordSha256="05d85e9b61c244c49a73ba18e37dfe96a1ffec885b0dd7a315ed2d3787b061b0">
+    <english>Vertical acceleration in m/s/s used during missions</english>
+    <chinese>任务飞行使用的垂直加速度，单位为米/秒²。</chinese>
+  </translation>
+  <translation family="Plane" parameter="Q_WP_RADIUS_M" field="Description" versions="4.7.1" englishSha256="e54e891c661f0476ce966183f62fb3f511b13126b74e34e6faf76473aa03a233" recordSha256="55761bfbebd792ef7064c3199fd736a68b2e65dd176c3130f15f38f0f2d2902f">
+    <english>Distance from a waypoint, that when crossed indicates the wp has been reached.</english>
+    <chinese>航点到达判定的距离阈值；进入该距离即认为到达此航点。</chinese>
+  </translation>
+  <translation family="Plane" parameter="Q_WP_SPD_DN" field="Description" versions="4.7.1" englishSha256="b2d0e31e9b8bc154f6c25244a40df40a088cee9b0cf16963b9af93e966e1212b" recordSha256="53c5422a31ec5e0cd09b02cece1dd8ea4de39d7badf93950cb16c792b6bf1ef6">
+    <english>Speed in m/s which the aircraft will attempt to maintain while descending during a WP mission</english>
+    <chinese>航点任务中的目标下降速度，单位为米/秒；飞行器会尝试保持此速度。</chinese>
+  </translation>
+  <translation family="Plane" parameter="Q_WP_SPD_UP" field="Description" versions="4.7.1" englishSha256="1ebcf6f4a91e0f7d6eda7194440d4fc0b2f400a5416e642232bdb0d011aaf3d6" recordSha256="74fb0bcbbfa6142dd720be2b400137ca815bd6215fd7a83f307784557f3f2582">
+    <english>Speed in m/s which the aircraft will attempt to maintain while climbing during a WP mission</english>
+    <chinese>航点任务中的目标爬升速度，单位为米/秒；飞行器会尝试保持此速度。</chinese>
+  </translation>
+  <translation family="Plane" parameter="Q_LAND_FINAL_ALT" field="Description" versions="4.7.1" englishSha256="bbd72a516ad0311a89936f6844f5d634e3737e3c20380c6a66689931509dc6bf" recordSha256="1f8724f083bba8d7c73447b26fc8d743a53033646c545c7c86402bd69ac14cf1">
+    <english>The altitude at which we should switch to Q_LAND_FINAL_SPD descent rate</english>
+    <chinese>垂直起降降落中，切换到 Q_LAND_FINAL_SPD 下降速度的高度。</chinese>
+  </translation>
+  <translation family="Plane" parameter="TECS_SPDWEIGHT" field="Description" versions="4.7.1" englishSha256="a5e138ac69851de685571fa5807b9c53589468f7d1880ece1645b76748d77266" recordSha256="7ef9d458a5c36b467e9742d1d6448e7d5a0809e0bc1779f23bb10e9568b7c35b">
+    <english>Mixing of pitch and throttle correction for height and airspeed errors. Pitch controls altitude and throttle controls airspeed if set to 0. Pitch controls airspeed and throttle controls altitude if set to 2 (good for gliders). Blended if set to 1.</english>
+    <chinese>设置俯仰与油门对高度误差和空速误差的分工权重。0：俯仰控制高度、油门控制空速。2：俯仰控制空速、油门控制高度，适合滑翔机。1：两者混合。</chinese>
+  </translation>
+</parameterTranslations>

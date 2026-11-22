@@ -20,6 +20,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="../../localization/parameters/zh-CN.xml" LogicalName="MissionPlanner.Utilities.ParameterDescriptions.zh-CN.xml" />
+    <EmbeddedResource Include="../../localization/parameters/official-first-batch.xml" LogicalName="MissionPlanner.Utilities.ParameterDescriptions.official.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="UAVCAN\**" />
     <EmbeddedResource Remove="UAVCAN\**" />
     <None Remove="UAVCAN\**" />

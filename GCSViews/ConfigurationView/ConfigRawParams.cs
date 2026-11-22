@@ -59,6 +59,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
         public ConfigRawParams()
         {
             InitializeComponent();
+            InitializeParameterDescriptions();
             _metadataLoadTimer.Elapsed += MetadataLoadTimerOnElapsed;
             Params.Sorted += (s, e) => ScheduleVisibleMetadataLoad();
 
@@ -593,6 +594,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
 
         internal void processToScreen()
         {
+            PrepareParameterDescriptions();
             toolTip1.RemoveAll();
             Params.Rows.Clear();
             log.Info("processToScreen");
@@ -715,6 +717,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             if (Params == null || Params.IsDisposed || Params.Rows.Count == 0)
                 return;
 
+            PrepareParameterDescriptions();
             string firmware;
             try { firmware = MainV2.comPort.MAV.cs.firmware.ToString(); }
             catch { return; }
@@ -741,7 +744,13 @@ namespace MissionPlanner.GCSViews.ConfigurationView
 
             if (rowsToLoad.Count == 0) return;
 
-            Task.Run(() => LoadMetadataAndUpdateCells(rowsToLoad, firmware));
+            if (!UseEnhancedParameterDescriptions)
+            {
+                Task.Run(() => LoadMetadataAndUpdateCells(rowsToLoad, firmware));
+                return;
+            }
+            var session = _descriptionSession;
+            Task.Run(() => LoadEnhancedMetadataAndUpdateCells(rowsToLoad, firmware, session));
         }
 
         private void LoadMetadataAndUpdateCells(
@@ -803,7 +812,53 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                 {
                     Params.BeginInvoke((Action)(() =>
                     {
+                        if (UseEnhancedParameterDescriptions) return;
                         foreach (var u in updates) u();
+                    }));
+                }
+            }
+            catch { }
+        }
+
+        private void LoadEnhancedMetadataAndUpdateCells(
+            List<KeyValuePair<DataGridViewRow, string>> rowsToLoad, string firmware, DescriptionSession session)
+        {
+            // Build the cell-update closures off the UI thread, then apply in one batch.
+            var updates = new List<Action>(rowsToLoad.Count);
+            foreach (var kvp in rowsToLoad)
+            {
+                var row = kvp.Key;
+                var name = kvp.Value;
+                try
+                {
+                    var text = ReadParameterDescription(name, firmware, session);
+                    var capturedRow = row;
+                    updates.Add(() =>
+                    {
+                        if (!IsCurrentDescriptionSession(session)
+                            || capturedRow.DataGridView != Params || capturedRow.Cells[Command.Index].Value?.ToString() != name) return;
+                        ApplyParameterDescriptionToRow(capturedRow, text);
+                    });
+                }
+                catch (Exception ex)
+                {
+                    log.Error(ex);
+                }
+            }
+
+            if (updates.Count == 0) return;
+
+            try
+            {
+                if (Params.IsHandleCreated && !Params.IsDisposed)
+                {
+                    Params.BeginInvoke((Action)(() =>
+                    {
+                        if (IsDisposed || Params.IsDisposed || !IsCurrentDescriptionSession(session)) return;
+                        foreach (var u in updates) u();
+#if !LIB
+                        Params.AutoResizeRows(DataGridViewAutoSizeRowsMode.DisplayedCellsExceptHeaders);
+#endif
                     }));
                 }
             }
@@ -813,7 +868,8 @@ namespace MissionPlanner.GCSViews.ConfigurationView
         private void BuildTree()
         {
             treeView1.Nodes.Clear();
-            var currentNode = treeView1.Nodes.Add("All");
+            var labels = new ComponentResourceManager(typeof(ConfigRawParams));
+            var currentNode = treeView1.Nodes.Add(labels.GetString("ParameterTreeRoot.Text") ?? "All");
             string currentPrefix = "";
 
             // Get command names from the gridview
@@ -986,9 +1042,11 @@ namespace MissionPlanner.GCSViews.ConfigurationView
         {
             DateTime start = DateTime.Now;
             Params.Visible = false;
-            if (searchfor.Length >= 2 || searchfor.Length == 0)
+            if (searchfor.Length >= 2 || searchfor.Length == 0 || UseEnhancedParameterDescriptions)
             {
-                Regex filter = new Regex(searchfor.Replace("*", ".*").Replace("..*", ".*"), RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.Singleline);
+                Regex filter;
+                try { filter = new Regex(searchfor.Replace("*", ".*").Replace("..*", ".*"), RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.Singleline); }
+                catch (ArgumentException) { filter = new Regex(Regex.Escape(searchfor), RegexOptions.IgnoreCase | RegexOptions.Singleline); }
 
                 foreach (DataGridViewRow row in Params.Rows)
                 {
@@ -996,6 +1054,12 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                     if (name != filterPrefix.TrimEnd('_') && !name.StartsWith(filterPrefix))
                     {
                         row.Visible = false;
+                        continue;
+                    }
+                    // Search the complete versioned metadata, including rows that have never been scrolled into view.
+                    if (UseEnhancedParameterDescriptions && MatchesParameterDescription(name, filter))
+                    {
+                        row.Visible = true;
                         continue;
                     }
                     foreach (DataGridViewCell cell in row.Cells)
@@ -1181,6 +1245,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
 
         private void BUT_refreshTable_Click(object sender, EventArgs e)
         {
+            _descriptionSession = null;
             startup = true;
             processToScreen();
             startup = false;
@@ -1188,9 +1253,8 @@ namespace MissionPlanner.GCSViews.ConfigurationView
 
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            string txt = treeView1.SelectedNode.Text + "_";
-            if (txt == "All_") txt = "";
-            filterPrefix = txt;
+            // Root identity is independent of its localized caption. Child names remain raw parameter prefixes.
+            filterPrefix = e.Node.Parent == null ? "" : e.Node.Text + "_";
             FilterTimerOnElapsed(null, null);
         }
 
@@ -1286,7 +1350,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             {
                 ComboBox cmb = new ComboBox() { Dock = DockStyle.Fill };
                 cmb.DropDownStyle = ComboBoxStyle.DropDownList;
-                cmb.DataSource = options;
+                cmb.DataSource = UseEnhancedParameterDescriptions ? BilingualParameterOptions(param_name, options) : options;
                 cmb.DisplayMember = "Value";
                 cmb.ValueMember = "Key";
 
@@ -1423,7 +1487,8 @@ namespace MissionPlanner.GCSViews.ConfigurationView
 
         private void Params_RowHeightChanged(object sender, DataGridViewRowEventArgs e)
         {
-            if(e.Row == Params.CurrentRow || e.Row.Index + 1 == Params.CurrentRow.Index)
+            var currentRow = Params.CurrentRow;
+            if (currentRow != null && (e.Row == currentRow || e.Row.Index + 1 == currentRow.Index))
             {
                 optionsControlUpateBounds();
             }

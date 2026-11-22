@@ -333,7 +333,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             this.txt_search.ForeColor = System.Drawing.Color.White;
             this.txt_search.Name = "txt_search";
             this.txt_search.PlaceholderColor = System.Drawing.Color.Gray;
-            this.txt_search.PlaceholderText = "Search";
+            this.txt_search.PlaceholderText = resources.GetString("SearchPlaceholder.Text") ?? "Search";
             this.txt_search.TextChanged += new System.EventHandler(this.txt_search_TextChanged);
             // 
             // ConfigRawParams
