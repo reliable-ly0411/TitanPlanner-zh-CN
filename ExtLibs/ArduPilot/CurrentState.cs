@@ -4658,6 +4658,10 @@ namespace MissionPlanner
             //props
             foreach (var field in props)
             {
+                // This property feeds UI bindings, not the telemetry field inventory.
+                if (field.Name == nameof(ModeDisplayText))
+                    continue;
+
                 if (numbersonly)
                     if (!field.PropertyType.IsNumber())
                         continue;
