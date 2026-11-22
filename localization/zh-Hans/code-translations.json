@@ -2192,5 +2192,8 @@
   "Map legend: Target Heading": "目标航向",
   "Map legend: Ground Track": "地面航迹",
   "Map altitude scale: Rel to Terrain": "相对地形高度",
-  "Map altitude scale: Elevation (AMSL)": "海拔高度（AMSL）"
+  "Map altitude scale: Elevation (AMSL)": "海拔高度（AMSL）",
+  "Map coordinates: GEO": "经纬度",
+  "Map coordinates: UTM": "通用横轴墨卡托",
+  "Map coordinates: MGRS": "军用格网坐标"
 }
