@@ -3,12 +3,12 @@ using System.Collections.Generic;
 
 namespace MissionPlanner.Utilities
 {
-    public enum LoiterPresentation
+    public enum ModeMenuPresentation
     {
         Unspecified,
         Hover,
         Circle,
-        StationKeeping
+        Rover
     }
 
     /// <summary>Presentation only: the source mode remains available for commands and comparisons.</summary>
@@ -44,19 +44,25 @@ namespace MissionPlanner.Utilities
         };
 
         /// <summary>Top-bar menu label only; callers must keep the raw mode for dispatch.</summary>
-        public static string EnglishThenChinese(string mode, LoiterPresentation loiter = LoiterPresentation.Unspecified)
+        public static string EnglishThenChinese(string mode, ModeMenuPresentation presentation = ModeMenuPresentation.Unspecified)
         {
             if (string.IsNullOrEmpty(mode) || !KnownMenuModes.Contains(mode))
                 return mode;
 
-            if (string.Equals(mode, "Loiter", StringComparison.Ordinal)
-                && System.Globalization.CultureInfo.CurrentUICulture.Name == "zh-CN")
+            if (System.Globalization.CultureInfo.CurrentUICulture.Name == "zh-CN")
             {
-                switch (loiter)
+                if (presentation == ModeMenuPresentation.Rover
+                    && string.Equals(mode, "Acro", StringComparison.Ordinal))
+                    return mode + " · 转向率与速度控制";
+
+                if (string.Equals(mode, "Loiter", StringComparison.Ordinal))
                 {
-                    case LoiterPresentation.Hover: return mode + " · 定点悬停";
-                    case LoiterPresentation.Circle: return mode + " · 定点盘旋";
-                    case LoiterPresentation.StationKeeping: return mode + " · 定点驻留";
+                    switch (presentation)
+                    {
+                        case ModeMenuPresentation.Hover: return mode + " · 定点悬停";
+                        case ModeMenuPresentation.Circle: return mode + " · 定点盘旋";
+                        case ModeMenuPresentation.Rover: return mode + " · 定点驻留";
+                    }
                 }
             }
 
