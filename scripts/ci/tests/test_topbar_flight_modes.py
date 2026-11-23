@@ -66,7 +66,16 @@ class TopBarFlightModesTests(unittest.TestCase):
         self.assertIn("fltOrder.ContainsKey(m.Value)", self.menu)
         self.assertIn(".ThenBy(m => m.Value)", self.menu)
         self.assertGreaterEqual(self.menu.count("Tag = mode.Value"), 3)
-        self.assertEqual(2, self.menu.count("ModeSelected?.Invoke(this, mode.Value)"))
+        dispatch = self.menu.split("private void SelectModeRow(KeyboardModeRow row)", 1)[1].split("private sealed class", 1)[0]
+        self.assertIn("ModeSelected?.Invoke(this, (string)row.Tag)", dispatch)
+        self.assertEqual(1, self.menu.count("ModeSelected?.Invoke("))
+        self.assertIn("row.Click += (s, e) => SelectModeRow(row);", self.menu)
+        self.assertIn("modeLabel.Click += (s, e) => SelectModeRow(row);", self.menu)
+        keyboard = self.menu.split("if (keyData == Keys.Enter)", 1)[1].split("if (rows.Count == 0)", 1)[0]
+        self.assertIn("var index = rows.FindIndex(row => row.Focused);", self.menu)
+        self.assertIn("if (index < 0)", keyboard)
+        self.assertIn("SelectModeRow(rows[index]);", keyboard)
+        self.assertRegex(self.menu, r"new KeyboardModeRow\s*\{\s*Tag = mode.Value,")
         self.assertIn("PinToggled?.Invoke(this, mode.Value)", self.menu)
         self.assertIn("FavoriteToggled?.Invoke(this, mode.Value)", self.menu)
         self.assertIn("TextFormatFlags.WordBreak", self.menu)
