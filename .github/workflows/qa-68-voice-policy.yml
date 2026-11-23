@@ -1,0 +1,66 @@
+name: 'QA #68 isolated Windows voice selection policy'
+on:
+  push:
+    branches: [ci/titanplanner-68-voice-policy-671f26d1]
+    paths: [.github/workflows/qa-68-voice-policy.yml]
+permissions:
+  contents: read
+jobs:
+  fake-voice-tests:
+    runs-on: windows-2022
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: '671f26d1dc57b8b6773cee88b5b8ba4254b4eb40'
+          fetch-depth: 1
+          persist-credentials: false
+      - name: Compile candidate Csharp and run synthetic cases
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          if ((git rev-parse HEAD) -ne '671f26d1dc57b8b6773cee88b5b8ba4254b4eb40') { throw 'Unexpected reference' }
+          Add-Type -TypeDefinition @'
+          using System;
+          using System.Collections.Generic;
+          using System.Linq;
+          namespace MissionPlanner.Utilities {
+              internal static class EnhancedChineseSpeechPreference {
+                  internal static bool Enabled(bool windows, string culture) =>
+                      windows && string.Equals(culture, "zh-CN", StringComparison.OrdinalIgnoreCase);
+                  internal static string ResolveLocalVoice(bool windows, string culture,
+                      string saved, IEnumerable<string> enabledChineseNames) =>
+                      Enabled(windows, culture) && !string.IsNullOrWhiteSpace(saved)
+                          ? enabledChineseNames?.FirstOrDefault(n => string.Equals(n, saved, StringComparison.OrdinalIgnoreCase))
+                          : null;
+              }
+
+              public static class VoicePolicyFixture {
+                  private static int passed;
+                  private static void Assert(bool w, string c, string saved, string[] available, string expected) {
+                      var actual = EnhancedChineseSpeechPreference.ResolveLocalVoice(w, c, saved, available);
+                      if (actual != expected) throw new Exception("Voice policy assertion failed: " + c);
+                      passed++;
+                  }
+                  public static int Test() {
+                      var voices = new[] { "Fake Voice A", "Fake Voice B" };
+                      Assert(true, "zh-CN", "Fake Voice B", voices, "Fake Voice B");
+                      Assert(true, "ZH-cn", "fake voice a", voices, "Fake Voice A");
+                      Assert(true, "zh-Hans", "Fake Voice A", voices, null);
+                      Assert(true, "zh-TW", "Fake Voice A", voices, null);
+                      Assert(true, "en-US", "Fake Voice A", voices, null);
+                      Assert(false, "zh-CN", "Fake Voice A", voices, null);
+                      Assert(true, "zh-CN", "Missing voice", voices, null);
+                      Assert(true, "zh-CN", "Fake Voice A", null, null);
+                      Assert(true, "zh-CN", " ", voices, null);
+                      Assert(true, null, "Fake Voice A", voices, null);
+                      Assert(true, "zh-CN", null, voices, null);
+                      Assert(true, "zh-CN", "Fake Voice A", new string[0], null);
+                      return passed;
+                  }
+              }
+          }
+          '@
+          $count = [MissionPlanner.Utilities.VoicePolicyFixture]::Test()
+          if ($count -ne 12) { throw "Expected 12 cases, got $count" }
+          Write-Host "Csharp fake voice policy cases passed: $count"
