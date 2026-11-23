@@ -184,7 +184,11 @@ namespace MissionPlanner.Controls
                     _columnGap = Math.Max(1, (int)Math.Ceiling(20 * scale));
                     _rowHeight = Math.Max(_checkboxSize + 4, (int)Math.Ceiling(17 * scale));
                     int minimumValue = (int)Math.Ceiling(50 * scale);
-                    int maximumName = (int)Math.Ceiling(graphics.MeasureString("MMMMMMMMMMMMMMMM", _normalFont).Width);
+                    // Enhanced Chinese labels include both the original key and its translation.
+                    // Let the actual viewport, value width and inter-column gap size these labels.
+                    int maximumName = string.Equals(CultureInfo.CurrentUICulture.Name, "zh-CN", StringComparison.Ordinal)
+                        ? int.MaxValue
+                        : (int)Math.Ceiling(graphics.MeasureString("MMMMMMMMMMMMMMMM", _normalFont).Width);
                     var names = _filteredItems.ToDictionary(item => item,
                         item => (int)Math.Ceiling(graphics.MeasureString(item.DisplayName ?? item.Name ?? "", _normalFont).Width) + 8);
                     var values = _filteredItems.ToDictionary(item => item,
@@ -214,7 +218,7 @@ namespace MissionPlanner.Controls
                             if (BuildColumns(mid).Count <= count) high = mid;
                             else low = mid + 1;
                         }
-                        var columns = BuildColumns(low);
+                        var columns = BuildColumns(maximumName == int.MaxValue && count == 1 ? int.MaxValue : low);
                         int x = _padding, bottom = _padding;
                         foreach (var column in columns)
                         {
