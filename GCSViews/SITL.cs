@@ -28,7 +28,8 @@ namespace MissionPlanner.GCSViews
     {
         internal static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
-        // Default Woodley location (always available)
+        private const string SelectedLocationKey = "sitl_explicit_location_v1";
+        private const string WoodleyId = "builtin:woodley";
         private static readonly SITLLocation WoodleyLocation = new SITLLocation("Woodley", 34.174424, -118.480992, 324);
 
         // List of saved locations
@@ -52,10 +53,9 @@ namespace MissionPlanner.GCSViews
 
         GMapOverlay markeroverlay;
 
-        GMapMarkerWP homemarker = new GMapMarkerWP(new PointLatLng(-34.98106, 117.85201), "H");
+        GMapMarkerWP homemarker;
         bool isDragging = false;
         PointLatLng MouseDownStart;
-        bool _isInitializing = false;
 
         internal static UdpClient SITLSEND;
 
@@ -137,6 +137,7 @@ namespace MissionPlanner.GCSViews
             // Load saved locations and populate dropdown
             LoadSavedLocations();
             PopulateLocationDropdown();
+            cmb_location.SelectionChangeCommitted += LocationSelectionCommitted;
         }
 
 
@@ -266,54 +267,106 @@ namespace MissionPlanner.GCSViews
             }
         }
 
-        /// <summary>
-        /// Populates the location dropdown with Woodley (default) and saved locations
-        /// </summary>
-        private void PopulateLocationDropdown()
+        private static string LocationId(SITLLocation location) =>
+            ReferenceEquals(location, WoodleyLocation) ? WoodleyId : "custom:" + location.Name;
+
+        private static bool IsValidCoordinates(double lat, double lng) =>
+            lat >= -90 && lat <= 90 && lng >= -180 && lng <= 180;
+
+        private void PopulateLocationDropdown(SITLLocation selected = null)
         {
             cmb_location.Items.Clear();
-
-            // Always add Woodley as first option (default)
+            cmb_location.Items.Add(UiText.Translate("Please set a valid home location on the map first."));
             cmb_location.Items.Add(WoodleyLocation);
-
-            // Add saved locations
-            foreach (var loc in _savedLocations)
+            foreach (var location in _savedLocations)
             {
-                cmb_location.Items.Add(loc);
+                if (location != null && !string.IsNullOrWhiteSpace(location.Name) &&
+                    !location.Name.Equals(WoodleyLocation.Name, StringComparison.OrdinalIgnoreCase) &&
+                    IsValidCoordinates(location.Lat, location.Lng) &&
+                    location.Heading >= NUM_heading.Minimum && location.Heading <= NUM_heading.Maximum)
+                    cmb_location.Items.Add(location);
             }
-
-            // Select Woodley by default
-            cmb_location.SelectedIndex = 0;
+            cmb_location.SelectedIndex = selected != null && cmb_location.Items.Contains(selected)
+                ? cmb_location.Items.IndexOf(selected)
+                : 0;
+            UpdateRemoveButtonState();
         }
 
-        /// <summary>
-        /// Event handler for location dropdown selection change - loads the selected location
-        /// </summary>
-        private void cmb_location_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            // Skip loading during initialization to avoid race conditions
-            if (_isInitializing)
-                return;
+        private void cmb_location_SelectedIndexChanged(object sender, EventArgs e) => UpdateRemoveButtonState();
 
+        private void LocationSelectionCommitted(object sender, EventArgs e)
+        {
             if (cmb_location.SelectedItem is SITLLocation location)
             {
-                var newPos = new PointLatLng(location.Lat, location.Lng);
-
-                // Update heading
-                NUM_heading.Value = location.Heading;
-
-                // Move map and marker to the new location
-                myGMAP1.Position = newPos;
-                homemarker.Position = newPos;
-                myGMAP1.Zoom = 17;
-                myGMAP1.Invalidate();
-
-                // Save last selected location
-                Settings.Instance["sitl_last_location"] = location.Name;
+                SetNamedHome(location);
             }
+            else
+            {
+                ClearHome();
+                Settings.Instance[SelectedLocationKey] = "";
+            }
+        }
 
-            // Update remove button state when selection changes
-            UpdateRemoveButtonState();
+        private void SetNamedHome(SITLLocation location, bool persist = true)
+        {
+            NUM_heading.Value = location.Heading;
+            SetHome(new PointLatLng(location.Lat, location.Lng), true);
+            if (persist)
+                Settings.Instance[SelectedLocationKey] = LocationId(location);
+        }
+
+        private void SetManualHome(PointLatLng position, bool zoom)
+        {
+            SetHome(position, zoom);
+            cmb_location.SelectedIndex = 0;
+            Settings.Instance[SelectedLocationKey] = "";
+        }
+
+        private void SetHome(PointLatLng position, bool zoom)
+        {
+            EnsureHomeOverlay();
+            if (homemarker == null)
+            {
+                homemarker = new GMapMarkerWP(position, "H");
+                markeroverlay.Markers.Add(homemarker);
+            }
+            else
+            {
+                homemarker.Position = position;
+            }
+            if (zoom)
+            {
+                myGMAP1.Position = position;
+                myGMAP1.Zoom = 17;
+            }
+            myGMAP1.Invalidate();
+        }
+
+        private void ClearHome()
+        {
+            if (homemarker != null)
+                markeroverlay.Markers.Remove(homemarker);
+            homemarker = null;
+            myGMAP1.Invalidate();
+        }
+
+        private void EnsureHomeOverlay()
+        {
+            if (markeroverlay == null)
+            {
+                markeroverlay = new GMapOverlay("markers");
+                myGMAP1.Overlays.Add(markeroverlay);
+            }
+        }
+
+        private bool TryGetLaunchHome(out PointLatLng position, out int heading)
+        {
+            heading = (int)NUM_heading.Value;
+            position = homemarker == null ? default(PointLatLng) : homemarker.Position;
+            if (homemarker != null)
+                return true;
+            CustomMessageBox.Show(Strings.Invalid_home_location);
+            return false;
         }
 
         /// <summary>
@@ -331,16 +384,20 @@ namespace MissionPlanner.GCSViews
         /// </summary>
         private void addCustomLoc_Click(object sender, EventArgs e)
         {
-            // Get current marker position
-            var currentPos = homemarker.Position;
+            // An unset home is not implicitly the map center.
+            PointLatLng currentPos;
+            if (homemarker == null)
+            {
+                CustomMessageBox.Show(UiText.Translate("Please set a valid home location on the map first."), UiText.Translate("Invalid Location"));
+                return;
+            }
 
-            // Check if marker is off screen
+            currentPos = homemarker.Position;
             if (!IsPointOnScreen(currentPos))
             {
                 if (CustomMessageBox.Show(UiText.Translate("Place home at map center?"), UiText.Translate("Home Off Screen"), MessageBoxButtons.YesNo) == (int)DialogResult.Yes)
                 {
                     currentPos = myGMAP1.Position;
-                    homemarker.Position = currentPos;
                 }
                 else
                 {
@@ -348,7 +405,7 @@ namespace MissionPlanner.GCSViews
                 }
             }
 
-            if (currentPos.Lat == 0 && currentPos.Lng == 0)
+            if (!IsValidCoordinates(currentPos.Lat, currentPos.Lng))
             {
                 CustomMessageBox.Show(UiText.Translate("Please set a valid home location on the map first."), UiText.Translate("Invalid Location"));
                 return;
@@ -380,25 +437,15 @@ namespace MissionPlanner.GCSViews
             heading = Math.Max(0, Math.Min(360, heading));
 
             // Remove existing location with same name (if any)
-            _savedLocations.RemoveAll(l => l.Name.Equals(locationName, StringComparison.OrdinalIgnoreCase));
+            _savedLocations.RemoveAll(l => l != null && string.Equals(l.Name, locationName, StringComparison.OrdinalIgnoreCase));
 
             // Create and save the new location
             var newLocation = new SITLLocation(locationName, currentPos.Lat, currentPos.Lng, heading);
             _savedLocations.Add(newLocation);
             SaveLocations();
 
-            // Refresh dropdown and select the new location
-            PopulateLocationDropdown();
-
-            // Find and select the new location in dropdown
-            for (int i = 0; i < cmb_location.Items.Count; i++)
-            {
-                if (cmb_location.Items[i] is SITLLocation loc && loc.Name == newLocation.Name)
-                {
-                    cmb_location.SelectedIndex = i;
-                    break;
-                }
-            }
+            PopulateLocationDropdown(newLocation);
+            SetNamedHome(newLocation);
 
             CustomMessageBox.Show(UiText.Format($"Location '{locationName}' saved successfully."), UiText.Translate("Location Saved"));
 
@@ -411,43 +458,23 @@ namespace MissionPlanner.GCSViews
         /// </summary>
         private void removeCustomLoc_Click(object sender, EventArgs e)
         {
-            // Only allow removal if there's more than just Woodley
-            if (cmb_location.Items.Count <= 1)
-                return;
-
-            // Don't allow removing Woodley (index 0)
-            if (cmb_location.SelectedIndex == 0)
+            if (cmb_location.SelectedItem is SITLLocation location && _savedLocations.Contains(location))
             {
-                CustomMessageBox.Show(UiText.Translate("Cannot remove the default Woodley location."), UiText.Translate("Cannot Remove"));
-                return;
-            }
-
-            if (cmb_location.SelectedItem is SITLLocation location)
-            {
-                // Confirm removal
                 if (CustomMessageBox.Show(UiText.Format($"Remove location '{location.Name}'?"), UiText.Translate("Confirm Remove"), MessageBoxButtons.YesNo) != (int)DialogResult.Yes)
                     return;
 
-                // Remove from saved locations
-                _savedLocations.RemoveAll(l => l.Name == location.Name);
+                _savedLocations.Remove(location);
                 SaveLocations();
-
-                // Refresh dropdown and select Woodley
+                Settings.Instance[SelectedLocationKey] = "";
+                ClearHome();
                 PopulateLocationDropdown();
-                cmb_location.SelectedIndex = 0;
-
-                // Update remove button state
-                UpdateRemoveButtonState();
             }
         }
 
-        /// <summary>
-        /// Updates the enabled state of the remove button based on available locations
-        /// </summary>
         private void UpdateRemoveButtonState()
         {
-            // Disable if only Woodley exists, or if Woodley is selected
-            removeCustomLoc.Enabled = cmb_location.Items.Count > 1 && cmb_location.SelectedIndex > 0;
+            removeCustomLoc.Enabled = cmb_location.SelectedItem is SITLLocation location &&
+                                      _savedLocations.Contains(location);
         }
 
         /// <summary>
@@ -476,55 +503,48 @@ namespace MissionPlanner.GCSViews
                 }
                 else
                 {
-                    myGMAP1.Zoom = 17;
-                    // Move marker to the found location
-                    homemarker.Position = myGMAP1.Position;
-                    myGMAP1.Invalidate();
+                    SetManualHome(myGMAP1.Position, true);
                 }
             }
         }
 
         public void Activate()
         {
-            _isInitializing = true;
-
-            // Load last selected location from settings
-            string lastLocationName = Settings.Instance.GetString("sitl_last_location", "Woodley");
-            SITLLocation selectedLocation = WoodleyLocation;
-            int selectedIndex = 0;
-
-            for (int i = 0; i < cmb_location.Items.Count; i++)
-            {
-                if (cmb_location.Items[i] is SITLLocation loc && loc.Name == lastLocationName)
-                {
-                    selectedLocation = loc;
-                    selectedIndex = i;
-                    break;
-                }
-            }
-
-            // Set map and marker to the selected location
-            var pos = new PointLatLng(selectedLocation.Lat, selectedLocation.Lng);
-            homemarker.Position = pos;
-            NUM_heading.Value = selectedLocation.Heading;
-            cmb_location.SelectedIndex = selectedIndex;
-
             myGMAP1.MapProvider = GCSViews.FlightData.mymap.MapProvider;
             myGMAP1.MaxZoom = 22;
-            myGMAP1.Zoom = 17;
-            myGMAP1.Position = pos;
             myGMAP1.DisableFocusOnMouseEnter = true;
+            EnsureHomeOverlay();
 
-            markeroverlay = new GMapOverlay("markers");
-            myGMAP1.Overlays.Add(markeroverlay);
+            // Keep a map-click/search home when revisiting the SITL tab.
+            if (homemarker == null)
+            {
+                var savedId = Settings.Instance.GetString(SelectedLocationKey, null);
+                var namedItems = cmb_location.Items.OfType<SITLLocation>();
+                SITLLocation selected;
+                if (savedId == null)
+                {
+                    // The old name setting conflates automatic and explicit Woodley selection.
+                    var legacy = Settings.Instance.GetString("sitl_last_location", "");
+                    var matches = namedItems.Where(item => !ReferenceEquals(item, WoodleyLocation) && item.Name == legacy).ToArray();
+                    selected = matches.Length == 1 ? matches[0] : null;
+                }
+                else
+                {
+                    var matches = namedItems.Where(item => LocationId(item) == savedId).ToArray();
+                    selected = matches.Length == 1 ? matches[0] : null;
+                }
 
-            markeroverlay.Markers.Add(homemarker);
-
-            myGMAP1.Invalidate();
-
-            _isInitializing = false;
-
-            // Update remove button state
+                if (selected != null)
+                {
+                    cmb_location.SelectedItem = selected;
+                    SetNamedHome(selected, false);
+                }
+                else
+                {
+                    myGMAP1.Position = GCSViews.FlightData.mymap.Position;
+                    myGMAP1.Zoom = GCSViews.FlightData.mymap.Zoom;
+                }
+            }
             UpdateRemoveButtonState();
 
             Utilities.ThemeManager.ApplyThemeTo(this);
@@ -535,19 +555,15 @@ namespace MissionPlanner.GCSViews
         private async void pictureBoxplane_Click(object sender, EventArgs e)
         {
 
-            var exepath = CheckandGetSITLImage("ArduPlane.elf");
-
-            if (markeroverlay.Markers.Count == 0)
-            {
-                CustomMessageBox.Show(Strings.Invalid_home_location);
+            if (!TryGetLaunchHome(out var position, out var heading))
                 return;
-            }
+
+            var exepath = CheckandGetSITLImage("ArduPlane.elf");
 
             try
             {
                 StartSITL(await exepath, "plane",
-                    BuildHomeLocation(markeroverlay.Markers[0].Position, (int) NUM_heading.Value,
-                        await HomeAltitudeAsync(markeroverlay.Markers[0].Position)), "",
+                    BuildHomeLocation(position, heading, await HomeAltitudeAsync(position)), "",
                     (int) num_simspeed.Value);
             }
             catch (Exception ex)
@@ -558,18 +574,14 @@ namespace MissionPlanner.GCSViews
 
         private async void pictureBoxrover_Click(object sender, EventArgs e)
         {
-            if (markeroverlay.Markers.Count == 0)
-            {
-                CustomMessageBox.Show(Strings.Invalid_home_location);
+            if (!TryGetLaunchHome(out var position, out var heading))
                 return;
-            }
 
             var exepath = CheckandGetSITLImage("ArduRover.elf");
             try
             {
                 StartSITL(await exepath, "rover",
-                    BuildHomeLocation(markeroverlay.Markers[0].Position, (int) NUM_heading.Value,
-                        await HomeAltitudeAsync(markeroverlay.Markers[0].Position)), "",
+                    BuildHomeLocation(position, heading, await HomeAltitudeAsync(position)), "",
                     (int) num_simspeed.Value);
             }
             catch (Exception ex)
@@ -580,18 +592,14 @@ namespace MissionPlanner.GCSViews
 
         private async void pictureBoxquad_Click(object sender, EventArgs e)
         {
-            if (markeroverlay.Markers.Count == 0)
-            {
-                CustomMessageBox.Show(Strings.Invalid_home_location);
+            if (!TryGetLaunchHome(out var position, out var heading))
                 return;
-            }
 
             var exepath = CheckandGetSITLImage("ArduCopter.elf");
             try
             {
                 StartSITL(await exepath, "+",
-                    BuildHomeLocation(markeroverlay.Markers[0].Position, (int) NUM_heading.Value,
-                        await HomeAltitudeAsync(markeroverlay.Markers[0].Position)), "",
+                    BuildHomeLocation(position, heading, await HomeAltitudeAsync(position)), "",
                     (int) num_simspeed.Value);
             }
             catch (Exception ex)
@@ -602,18 +610,14 @@ namespace MissionPlanner.GCSViews
 
         private async void pictureBoxheli_Click(object sender, EventArgs e)
         {
-            if (markeroverlay.Markers.Count == 0)
-            {
-                CustomMessageBox.Show(Strings.Invalid_home_location);
+            if (!TryGetLaunchHome(out var position, out var heading))
                 return;
-            }
 
             var exepath = CheckandGetSITLImage("ArduHeli.elf");
             try
             {
                 StartSITL(await exepath, "heli",
-                    BuildHomeLocation(markeroverlay.Markers[0].Position, (int) NUM_heading.Value,
-                        await HomeAltitudeAsync(markeroverlay.Markers[0].Position)), "",
+                    BuildHomeLocation(position, heading, await HomeAltitudeAsync(position)), "",
                     (int) num_simspeed.Value);
             }
             catch (Exception ex)
@@ -1202,7 +1206,7 @@ namespace MissionPlanner.GCSViews
             // Only set marker on click (not drag)
             if (!isDragging && e.Button == MouseButtons.Left)
             {
-                homemarker.Position = myGMAP1.FromLocalToLatLng(e.X, e.Y);
+                SetManualHome(myGMAP1.FromLocalToLatLng(e.X, e.Y), false);
             }
             isDragging = false;
         }
@@ -1236,6 +1240,9 @@ namespace MissionPlanner.GCSViews
 
         public async Task StartSwarmSeperate(Firmwares firmware)
         {
+            if (!TryGetLaunchHome(out var position, out var heading))
+                return;
+
             var max = 10;
 
             if (InputBox.Show(UiText.Translate("how many?"), UiText.Translate("how many?"), ref max) != DialogResult.OK)
@@ -1287,20 +1294,20 @@ namespace MissionPlanner.GCSViews
                 else
                     extra += @" --defaults ""identity.parm"" ";
 
-                var home = new PointLatLngAlt(markeroverlay.Markers[0].Position).newpos((double)NUM_heading.Value, a * 4);
+                var home = new PointLatLngAlt(position).newpos(heading, a * 4);
 
                 if (max == a)
                 {
                     extra += String.Format(
 			" -M{4} -s1 --home {3} --instance {0} --serial0 tcp:0 {1} ",
-                        a, "", a + 1, BuildHomeLocation(home, (int)NUM_heading.Value, await HomeAltitudeAsync(home)), model);
+                        a, "", a + 1, BuildHomeLocation(home, heading, await HomeAltitudeAsync(home)), model);
                 }
                 else
                 {
                     extra += String.Format(
 			" -M{4} -s1 --home {3} --instance {0} --serial0 tcp:0 {1} ",
 			a, "" /*"--serial2 tcpclient:127.0.0.1:" + (5770 + 10 * a)*/, a + 1,
-                        BuildHomeLocation(home, (int)NUM_heading.Value, await HomeAltitudeAsync(home)), model);
+                        BuildHomeLocation(home, heading, await HomeAltitudeAsync(home)), model);
                 }
 
                 string simdir = sitldirectory + model + (a + 1) + Path.DirectorySeparatorChar;
@@ -1400,6 +1407,9 @@ SIM_DRIFT_TIME=0
 
         public async void StartSwarmChain()
         {
+            if (!TryGetLaunchHome(out var position, out var heading))
+                return;
+
             var max = 10;
 
             if (InputBox.Show(UiText.Translate("how many?"), UiText.Translate("how many?"), ref max) != DialogResult.OK)
@@ -1436,20 +1446,20 @@ SIM_DRIFT_TIME=0
                 else
                     extra += @" --defaults ""identity.parm"" ";
 
-                var home = new PointLatLngAlt(markeroverlay.Markers[0].Position).newpos((double)NUM_heading.Value, a * 4);
+                var home = new PointLatLngAlt(position).newpos(heading, a * 4);
 
                 if (max == a)
                 {
                     extra += String.Format(
 			" -M{4} -s1 --home {3} --instance {0} --serial0 tcp:0 {1} ",
-                        a, "", a + 1, BuildHomeLocation(home, (int)NUM_heading.Value, await HomeAltitudeAsync(home)), model);
+                        a, "", a + 1, BuildHomeLocation(home, heading, await HomeAltitudeAsync(home)), model);
                 }
                 else
                 {
                     extra += String.Format(
 			" -M{4} -s1 --home {3} --instance {0} --serial0 tcp:0 {1} ",
 			a, "--serial2 tcpclient:127.0.0.1:" + (5772 + 10 * a), a + 1,
-                        BuildHomeLocation(home, (int)NUM_heading.Value, await HomeAltitudeAsync(home)), model);
+                        BuildHomeLocation(home, heading, await HomeAltitudeAsync(home)), model);
                 }
 
                 string simdir = sitldirectory + model + (a + 1) + Path.DirectorySeparatorChar;
