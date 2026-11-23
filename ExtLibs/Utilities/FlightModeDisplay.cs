@@ -3,6 +3,14 @@ using System.Collections.Generic;
 
 namespace MissionPlanner.Utilities
 {
+    public enum LoiterPresentation
+    {
+        Unspecified,
+        Hover,
+        Circle,
+        StationKeeping
+    }
+
     /// <summary>Presentation only: the source mode remains available for commands and comparisons.</summary>
     public sealed class FlightModeDisplay
     {
@@ -36,10 +44,21 @@ namespace MissionPlanner.Utilities
         };
 
         /// <summary>Top-bar menu label only; callers must keep the raw mode for dispatch.</summary>
-        public static string EnglishThenChinese(string mode)
+        public static string EnglishThenChinese(string mode, LoiterPresentation loiter = LoiterPresentation.Unspecified)
         {
             if (string.IsNullOrEmpty(mode) || !KnownMenuModes.Contains(mode))
                 return mode;
+
+            if (string.Equals(mode, "Loiter", StringComparison.Ordinal)
+                && System.Globalization.CultureInfo.CurrentUICulture.Name == "zh-CN")
+            {
+                switch (loiter)
+                {
+                    case LoiterPresentation.Hover: return mode + " · 定点悬停";
+                    case LoiterPresentation.Circle: return mode + " · 定点盘旋";
+                    case LoiterPresentation.StationKeeping: return mode + " · 定点驻留";
+                }
+            }
 
             var display = FromMode(mode);
             return display.IsBilingual ? mode + " · " + display.Primary : mode;

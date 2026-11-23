@@ -17,10 +17,11 @@ class TopBarFlightModesTests(unittest.TestCase):
         cls.mavlink = (ROOT / "ExtLibs/Mavlink/Mavlink.cs").read_text(encoding="utf-8-sig")
         cls.params = ET.parse(ROOT / "ParameterMetaDataBackup.xml").getroot()
         cls.catalog = json.loads((ROOT / "localization/zh-Hans/code-translations.json").read_text(encoding="utf-8"))
-        cls.menu = (ROOT / "Controls/ToolStripVehicleState.cs").read_text(encoding="utf-8-sig").split(
+        cls.control = (ROOT / "Controls/ToolStripVehicleState.cs").read_text(encoding="utf-8-sig")
+        cls.menu = cls.control.split(
             "internal class ModeDropdownPopup : Form", 1)[1].split("internal class GpsStatusPopup : Form", 1)[0]
-        helper = (ROOT / "ExtLibs/Utilities/FlightModeDisplay.cs").read_text(encoding="utf-8")
-        cls.known = set(re.findall(r'"([^"]+)"', helper.split("KnownMenuModes =", 1)[1].split("};", 1)[0]))
+        cls.helper = (ROOT / "ExtLibs/Utilities/FlightModeDisplay.cs").read_text(encoding="utf-8")
+        cls.known = set(re.findall(r'"([^"]+)"', cls.helper.split("KnownMenuModes =", 1)[1].split("};", 1)[0]))
         cls.satellite = {v.attrib["name"]: v.findtext("value") for v in
                          ET.parse(ROOT / "ExtLibs/Utilities/Resources/UiText.zh-CN.resx").getroot().findall("data")}
 
@@ -61,8 +62,23 @@ class TopBarFlightModesTests(unittest.TestCase):
                 self.assertRegex(localized, r"[\u4e00-\u9fff]")
                 self.assertEqual(localized, self.satellite[hashlib.sha256(value.encode("utf-8")).hexdigest()])
 
+    def test_loiter_context_is_display_only(self):
+        show = self.control.split("private void ShowDropdown()", 1)[1].split("var screenPoint", 1)[0]
+        self.assertIn("var mav = MainV2.comPort?.MAV;", show)
+        self.assertIn("_popup.LoiterLabel = GetLoiterPresentation(mav?.cs?.firmware, mav?.aptype);", show)
+        self.assertIn("ArduPilot.Common.getModesList(mav)", show)
+        selector = self.control.split("internal static LoiterPresentation GetLoiterPresentation", 1)[1].split(
+            "private void ShowDropdown()", 1)[0]
+        self.assertIn("ArduPilot.Firmwares.ArduRover when vehicleType == MAVLink.MAV_TYPE.SURFACE_BOAT", selector)
+        self.assertIn("return LoiterPresentation.Unspecified;", selector)
+        secondary = self.helper.split("public static string EnglishThenChinese", 1)[1].split(
+            "public static FlightModeDisplay FromMode", 1)[0]
+        self.assertIn('string.Equals(mode, "Loiter", StringComparison.Ordinal)', secondary)
+        self.assertIn('CurrentUICulture.Name == "zh-CN"', secondary)
+        self.assertIn("!KnownMenuModes.Contains(mode)", secondary)
+
     def test_menu_keeps_raw_names_and_uses_bilingual_text_only_for_display(self):
-        self.assertEqual(1, self.menu.count("FlightModeDisplay.EnglishThenChinese(mode.Value)"))
+        self.assertEqual(1, self.menu.count("FlightModeDisplay.EnglishThenChinese(mode.Value, LoiterLabel)"))
         self.assertIn("fltOrder.ContainsKey(m.Value)", self.menu)
         self.assertIn(".ThenBy(m => m.Value)", self.menu)
         self.assertGreaterEqual(self.menu.count("Tag = mode.Value"), 3)
