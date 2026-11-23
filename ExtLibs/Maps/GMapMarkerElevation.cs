@@ -116,15 +116,6 @@ namespace MissionPlanner.Maps
             scaleLow = low;
             scaleText = text;
         }
-        private static string LocalizeScaleTitle(string original)
-        {
-            if (System.Globalization.CultureInfo.CurrentUICulture.Name != "zh-CN")
-                return original;
-            string key = "Map altitude scale: " + original;
-            string text = MissionPlanner.Utilities.UiText.Translate(key);
-            return text == key ? original : text;
-        }
-
         public override void OnRender(IGraphics g)
         {
             base.OnRender(g);
@@ -162,7 +153,7 @@ namespace MissionPlanner.Maps
                     int len = (int)g2.MeasureString(scaleLow.ToString() + "m", new Font("Arial", 8)).Width;
                     g2.DrawString(scaleLow.ToString() + "m", new Font("Arial", 8), new SolidBrush(Color.White), 255 - len + 2, 0);
                     //Write text at center
-                    var title = LocalizeScaleTitle(scaleText);
+                    var title = MissionPlanner.Utilities.MapGpsPresentation.ScaleTitle(scaleText);
                     len = (int)g2.MeasureString(title, new Font("Arial", 7)).Width;
                     g2.DrawString(title, new Font("Arial", 7), new SolidBrush(Color.Black), 127 - len / 2, 0);
 

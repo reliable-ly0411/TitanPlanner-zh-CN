@@ -184,6 +184,42 @@ internal static class AppearanceIsolatedHost
                     using (var image = new Bitmap(form.Width, form.Height))
                     { form.DrawToBitmap(image, new Rectangle(Point.Empty, image.Size)); image.Save(Path.Combine(output, "settings-" + culture + ".png")); }
                 }
+                using (var form = new Form())
+                using (var settings = new Panel { Dock = DockStyle.Fill, AutoScroll = true })
+                using (var appearanceGroup = new GroupBox { AutoSize = true, AutoSizeMode = AutoSizeMode.GrowAndShrink })
+                using (var embedded = new MissionPlanner.GCSViews.ConfigurationView.ConfigAppearance(embedded: true))
+                {
+                    form.AutoScaleMode = AutoScaleMode.None;
+                    form.ClientSize = new Size(700, 320);
+                    appearanceGroup.Controls.Add(embedded);
+                    settings.Controls.Add(appearanceGroup);
+                    form.Controls.Add(settings);
+                    form.Show();
+                    foreach (int width in new[] { 430, 700, 1100 })
+                    {
+                        form.ClientSize = new Size(width, 320);
+                        // ConfigPlanner.GroupColumnsPanel fixes each AutoSize group's width.
+                        appearanceGroup.MinimumSize = Size.Empty;
+                        appearanceGroup.MaximumSize = new Size(width - 25, 0);
+                        appearanceGroup.MinimumSize = new Size(width - 25, 0);
+                        appearanceGroup.Width = width - 25;
+                        Application.DoEvents();
+                        Check(!embedded.AutoScroll, "embedded appearance uses nested scrolling");
+                        Check(embedded.AutoSize, "embedded appearance does not size to its contents");
+                        Check(Descendants(embedded).OfType<PictureBox>().Count() == 2, "embedded previews are missing");
+                        Check(Descendants(embedded).OfType<Button>().Count() == 4, "embedded import/reset controls are missing");
+                        var last = Descendants(embedded).OfType<Label>().Last();
+                        settings.AutoScrollPosition = new Point(0, settings.DisplayRectangle.Height);
+                        Application.DoEvents();
+                        var position = settings.PointToClient(last.PointToScreen(Point.Empty));
+                        Check(position.Y >= 0 && position.Y + last.Height <= settings.ClientSize.Height,
+                            "embedded status is not reachable through its settings parent: " + culture + "/" + width +
+                            " outer=" + settings.DisplayRectangle + " view=" + settings.ClientSize + " group=" + appearanceGroup.Bounds +
+                            " embedded=" + embedded.Bounds + " last=" + last.Bounds + " scrollpos=" + settings.AutoScrollPosition +
+                            " relative=" + position);
+                    }
+                    Console.WriteLine("PASS embedded appearance " + culture);
+                }
                 foreach (var color in new[] { Color.Black, Color.White })
                 {
                     DesktopAppearance.Import(AppearanceAsset.StartupImage, AppearanceAssetStoreTests.ImageFile(output, ".png", color));

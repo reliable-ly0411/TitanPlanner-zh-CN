@@ -93,6 +93,9 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             layoutRoot.Controls.Add(CreateSpeechAndAudioGroup());
             layoutRoot.Controls.Add(CreateUpdatesGroup());
             layoutRoot.Controls.Add(CreateConfigurationGroup());
+#if !LIB
+            layoutRoot.Controls.Add(CreateDesktopAppearanceGroup());
+#endif
             layoutRoot.Controls.Add(CreateKeyboardShortcutsGroup());
 
             PrepareLayoutControls(layoutRoot);
@@ -284,6 +287,17 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             group.Controls.Add(table);
             return group;
         }
+
+#if !LIB
+        private Control CreateDesktopAppearanceGroup()
+        {
+            var group = CreateGroupBox("Window icon and startup image");
+            group.Name = "desktopAppearanceGroup";
+            group.Tag = GroupColumnsPanel.FullWidth;
+            group.Controls.Add(new ConfigAppearance(embedded: true));
+            return group;
+        }
+#endif
 
         private Control CreateConfigurationGroup()
         {

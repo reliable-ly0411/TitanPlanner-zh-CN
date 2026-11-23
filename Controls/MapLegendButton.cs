@@ -88,18 +88,9 @@ namespace MissionPlanner.Controls
             g.SmoothingMode = smoothing;
         }
 
-        private static string Localize(string original)
-        {
-            if (System.Globalization.CultureInfo.CurrentUICulture.Name != "zh-CN")
-                return original;
-            string key = "Map legend: " + original;
-            string text = UiText.Translate(key);
-            return text == key ? original : text;
-        }
-
         void DrawLegend(Graphics g, Rectangle button)
         {
-            var labels = Entries.Select(e => (Text: Localize(e.Text), Color: e.Color)).ToArray();
+            var labels = Entries.Select(e => (Text: MapGpsPresentation.LegendLabel(e.Text), Color: e.Color)).ToArray();
             float textWidth = labels.Max(e => g.MeasureString(e.Text, LegendFont).Width);
             float width = Pad + SwatchWidth + 8 + textWidth + Pad;
             float height = 2 * Pad + Entries.Length * RowHeight - 4;

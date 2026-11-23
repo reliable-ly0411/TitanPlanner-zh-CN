@@ -42,6 +42,15 @@ namespace leds
             return true;
         }
 
+        private static string MapMenuText(string original)
+        {
+            if (System.Globalization.CultureInfo.CurrentUICulture.Name != "zh-CN")
+                return original;
+            string key = "Flight Data LED menu: " + original;
+            string text = UiText.Translate(key);
+            return text == key ? original : text;
+        }
+
         public override bool Loaded()
         {
             var rootbut = new ToolStripMenuItem(MissionPlanner.Utilities.UiText.Translate("LED"));
@@ -49,42 +58,42 @@ namespace leds
             ToolStripItemCollection col = Host.FDMenuMap.Items;
             col.Add(rootbut);
 
-            var but = new ToolStripMenuItem("Red");
+            var but = new ToolStripMenuItem(MapMenuText("Red"));
             but.Click += (s, e) => {
                 var led = new MAVLink.mavlink_led_control_t(1, 1, 255, 0, 3, new byte[] { 255, 0, 0 });
                 MainV2.comPort.sendPacket(led, 1, 1);
             };
             rootbut.DropDownItems.Add(but);
 
-            but = new ToolStripMenuItem("Green");
+            but = new ToolStripMenuItem(MapMenuText("Green"));
             but.Click += (s, e) => {
                 var led = new MAVLink.mavlink_led_control_t(1, 1, 255, 0, 3, new byte[] { 0, 255, 0 });
                 MainV2.comPort.sendPacket(led, 1, 1);
             };
             rootbut.DropDownItems.Add(but);
 
-            but = new ToolStripMenuItem("Blue");
+            but = new ToolStripMenuItem(MapMenuText("Blue"));
             but.Click += (s, e) => {
                 var led = new MAVLink.mavlink_led_control_t(1, 1, 255, 0, 3, new byte[] { 0, 0, 255 });
                 MainV2.comPort.sendPacket(led, 1, 1);
             };
             rootbut.DropDownItems.Add(but);
 
-            but = new ToolStripMenuItem("White");
+            but = new ToolStripMenuItem(MapMenuText("White"));
             but.Click += (s, e) => {
                 var led = new MAVLink.mavlink_led_control_t(1, 1, 255, 0, 3, new byte[] { 255, 255, 255 });
                 MainV2.comPort.sendPacket(led, 1, 1);
             };
             rootbut.DropDownItems.Add(but);
 
-            but = new ToolStripMenuItem("Black");
+            but = new ToolStripMenuItem(MapMenuText("Black"));
             but.Click += (s, e) => {
                 var led = new MAVLink.mavlink_led_control_t(1, 1, 255, 0, 3, new byte[] { 0, 0, 0 });
                 MainV2.comPort.sendPacket(led, 1, 1);
             };
             rootbut.DropDownItems.Add(but);
 
-            but = new ToolStripMenuItem("Rainbow");
+            but = new ToolStripMenuItem(MapMenuText("Rainbow"));
             but.Click += (s, e) => {
                 for (float a = 0; a <= 1; a += 0.005f) {
                     var color = Rainbow(a);

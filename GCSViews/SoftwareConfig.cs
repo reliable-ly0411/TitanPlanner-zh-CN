@@ -6,6 +6,7 @@ using MissionPlanner.GCSViews.ConfigurationView;
 using MissionPlanner.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Reflection;
 using System.Windows.Forms;
 
@@ -14,6 +15,12 @@ namespace MissionPlanner.GCSViews
     public partial class SoftwareConfig : MyUserControl, IActivate
     {
         internal static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
+        internal static string PlannerSettingsTitle =>
+            CultureInfo.CurrentUICulture.Name == "zh-CN"
+                ? UiText.Translate("Ground station settings")
+                : Strings.Planner;
+
         private static string lastpagename = "";
         [Flags]
         public enum pageOptions
@@ -243,21 +250,16 @@ namespace MissionPlanner.GCSViews
 
                     if (MainV2.DisplayConfiguration.displayPlannerSettings)
                     {
-                        AddBackstageViewPage(typeof(ConfigPlanner), Strings.Planner);
+                        AddBackstageViewPage(typeof(ConfigPlanner), PlannerSettingsTitle);
                     }
                 }
                 else
                 {
                     if (MainV2.DisplayConfiguration.displayPlannerSettings)
                     {
-                        start = AddBackstageViewPage(typeof(ConfigPlanner), Strings.Planner);
+                        start = AddBackstageViewPage(typeof(ConfigPlanner), PlannerSettingsTitle);
                     }
                 }
-
-#if !LIB
-                if (MainV2.DisplayConfiguration.displayPlannerSettings)
-                    AddBackstageViewPage(typeof(ConfigAppearance), UiText.Translate("Window icon and startup image"));
-#endif
 
                 // Add custrom pages set up by plugins
                 foreach (var item in pluginViewPages)
