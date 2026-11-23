@@ -1,0 +1,144 @@
+using MissionPlanner.Controls;
+
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Globalization;
+
+using System.Windows.Forms;
+namespace TestSupport { internal static class Run { internal static readonly List<string> Writes = new List<string>(); } }
+namespace System.Windows.Forms {
+    [Flags] public enum AnchorStyles { Top=1, Bottom=2, Left=4, Right=8 }
+    public enum DockStyle { Fill }
+    public sealed class Padding { public Padding(int a,int b,int c,int d) {} }
+    public sealed class ColumnStyle {}
+    public sealed class RowStyle {}
+    public class Control {
+        public class Items : List<Control> { public void Add(Control c,int col,int row) { Add(c); } }
+        public readonly Items Controls = new Items();
+        public bool Enabled, AutoSize;
+        public string Name, Text;
+        public int Width, Height, TabIndex;
+        public Point Location;
+        public Size Size;
+        public Padding Padding;
+        public AnchorStyles Anchor;
+        public DockStyle Dock;
+        public Font Font;
+        public int Bottom { get { return Location.Y+Height; } }
+        public void SuspendLayout() {}
+        public void ResumeLayout() {}
+        public void ResumeLayout(bool perform) {}
+        public void PerformLayout() {}
+    }
+    public class TableLayoutPanel : Control {
+        public readonly List<ColumnStyle> ColumnStyles = new List<ColumnStyle>();
+        public readonly List<RowStyle> RowStyles = new List<RowStyle>();
+        public int ColumnCount, RowCount;
+    }
+    public class Panel : Control {}
+    public class Label : Control {}
+    public class CheckBox : Control {
+        bool check;
+        public event EventHandler CheckedChanged;
+        public bool Checked {
+            get { return check; }
+            set { if (check==value) return; check=value; if(CheckedChanged!=null) CheckedChanged(this, EventArgs.Empty); }
+        }
+        public void SimulateUserClick() { Checked = !Checked; }
+    }
+}
+namespace MissionPlanner {
+    public static class MainV2 { public static readonly FakePort comPort = new FakePort(); }
+    public class FakePort {
+        public int sysidcurrent = 4; public int compidcurrent = 5; public readonly FakeMav MAV = new FakeMav();
+        public bool setParam(int sysId, byte compId, string key, float value) { TestSupport.Run.Writes.Add(sysId+":"+compId+":"+key+":"+value); return true; }
+    }
+    public class FakeMav { public readonly FakeState cs = new FakeState(); }
+    public class FakeState { public string firmware = "mock"; }
+    public static class Strings { public const string ErrorSetValueFailed="failure: {0}", ERROR="error"; }
+    public static class CustomMessageBox { public static void Show(string x,string y) { throw new Exception(x); } }
+}
+namespace MissionPlanner.Controls {
+    public class MyUserControl : Control {}
+    public class MyLabel : Label { public bool resize; }
+    public delegate void EventValueChanged(object sender,string key,string value);
+}
+namespace MissionPlanner.Utilities {
+    public static class ParameterMetaDataConstants { public const string DisplayName="n", Description="d"; }
+    public static class ParameterMetaDataRepository {
+        public static string GetParameterMetaData(string k,string t,string f) { return t + ":" + k; }
+        public static List<KeyValuePair<int,string>> GetParameterBitMaskInt(string k, string f) {
+            return new List<KeyValuePair<int,string>> { new KeyValuePair<int,string>(0,"one"),new KeyValuePair<int,string>(1,"two"),new KeyValuePair<int,string>(2,"four") };
+        }
+    }
+}
+public static class MAVLink {
+    public enum MAV_PARAM_TYPE { REAL32, INT8, INT16, INT32 }
+    public class Item { public float Value; public MAV_PARAM_TYPE TypeAP; }
+    public class MAVLinkParamList : Dictionary<string,Item> {}
+}
+public static class Probe {
+    static readonly List<string> pending = new List<string>();
+    static int cases;
+    static void Control_ValueChanged(object sender,string key,string value) { pending.Add(key+":"+value); }
+    static MissionPlanner.Controls.MavlinkCheckBoxBitMask Init(float initial = 0) {
+        var ctl=new MissionPlanner.Controls.MavlinkCheckBoxBitMask();
+        var parameters=new MAVLink.MAVLinkParamList { { "SYNTHETIC_MASK", new MAVLink.Item{Value=initial,TypeAP=MAVLink.MAV_PARAM_TYPE.REAL32} } };
+        ctl.setup("SYNTHETIC_MASK", parameters);
+        return ctl;
+    }
+    static void Refresh(MissionPlanner.Controls.MavlinkCheckBoxBitMask ctl, float value) {
+        var items = new[]{ctl};
+        // Inject the exact three live reuse statements from ConfigFriendlyParams.cs here.
+        /*EXACT_REUSE*/
+    }
+    static void Clear() { TestSupport.Run.Writes.Clear(); pending.Clear(); }
+    static void Equal<T>(T actual,T expected,string name) {
+        if(!EqualityComparer<T>.Default.Equals(actual,expected)) throw new Exception(name+": expected="+expected+" observed="+actual);
+    }
+    static void Report(string name,float value,string expectedWrites,string expectedPending,MissionPlanner.Controls.MavlinkCheckBoxBitMask ctl) {
+        string w=string.Join(",",TestSupport.Run.Writes), p=string.Join(",",pending);
+        Equal(ctl.Value,value,name+" displayed");
+        Equal(w,expectedWrites,name+" writes");
+        Equal(p,expectedPending,name+" pending");
+        Console.WriteLine(name+" displayed="+ctl.Value+" writes=["+w+"] pending=["+p+"]");
+        cases++;
+    }
+    static int Main() {
+        try { RunCases(); return 0; }
+        catch (Exception error) { Console.Error.WriteLine(error.Message); return 1; }
+    }
+    static void RunCases() {
+        System.Threading.Thread.CurrentThread.CurrentCulture=CultureInfo.InvariantCulture;
+        Report("setup-nonzero",5,"","",Init(5));
+        var ctl=Init();
+        Report("setup",0,"","",ctl);
+        ctl.ValueChanged += Control_ValueChanged;
+        Refresh(ctl,7);
+        Report("reused-refresh-0-to-7",7,"","",ctl);
+        Clear();
+        Refresh(ctl,7);
+        Report("same-value-refresh",7,"","",ctl);
+        Clear();
+        Refresh(ctl,0);
+        Report("reused-refresh-7-to-0",0,"","",ctl);
+        Clear(); ctl.Value=3;
+        Report("refresh-with-subscriber",3,"","",ctl);
+        Clear(); ((CheckBox)ctl.panel1.Controls[2]).SimulateUserClick();
+        Report("user-toggle-with-subscriber",7,"","SYNTHETIC_MASK:7",ctl);
+        Clear(); ctl.ValueChanged -= Control_ValueChanged; ((CheckBox)ctl.panel1.Controls[1]).SimulateUserClick();
+        Report("user-toggle-without-subscriber",5,"4:5:SYNTHETIC_MASK:5","",ctl);
+        Clear(); ctl.ValueChanged += Control_ValueChanged;
+        var chk=(CheckBox)ctl.panel1.Controls[0]; EventHandler bad=(sender,e)=> {throw new InvalidOperationException("synthetic");};
+        chk.CheckedChanged+=bad;
+        bool seen=false;
+        try { ctl.Value=4; } catch(InvalidOperationException e){seen=(e.Message=="synthetic");}
+        chk.CheckedChanged-=bad;
+        Equal(seen,true,"external fault injected");
+        Report("setter-fault",4,"","",ctl);
+        Clear(); ((CheckBox)ctl.panel1.Controls[1]).SimulateUserClick();
+        Report("user-toggle-after-fault",6,"","SYNTHETIC_MASK:6",ctl);
+        Console.WriteLine("PASS cases="+cases);
+    }
+}
