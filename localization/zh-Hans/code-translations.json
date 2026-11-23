@@ -2243,6 +2243,8 @@
   "Map coordinates: MGRS": "军用格网坐标",
   "Flight Planner sample menu: Fix mission top/bottom": "调整任务首尾（示例）",
   "Flight Planner sample menu: This is a sample plugin\nSee the source in the plugins folder": "这是一个示例插件。\n源代码位于 plugins 文件夹。",
+  "Flight Planner sample menu: Enter a valid integer.": "请输入有效的整数。",
+  "Flight Planner sample menu: The mission command list is not ready.": "任务命令列表尚未就绪。",
   "Flight Planner sample menu: Enter Angle": "输入角度",
   "Flight Planner sample menu: This will be the heading": "此角度将作为航向。"
 }
