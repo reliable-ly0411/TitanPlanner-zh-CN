@@ -71,6 +71,18 @@ internal static class ModeDisplayChecks
                         LayoutChecks(display, area, hudFont * scale);
                     }
                 }
+                foreach (var raw in new[] { "Acro", "Althold", "Heli Autorotate", "Turtle", "Autoland",
+                    "Fly By Wire A", "Loiter Alt QLAND", "QSTABILIZE", "Dock", "Servo Test", "Auto: Landing",
+                    "Offboard Control", "Motordetect", "Surface", "Surftrak" })
+                {
+                    string menu = FlightModeDisplay.EnglishThenChinese(raw);
+                    Check(menu == (enhanced ? raw + " · " + UiText.Translate(raw) : raw), culture + ": " + raw);
+                    Check(!enhanced || menu != raw, "known mode must have bilingual menu text");
+                }
+                Check(FlightModeDisplay.EnglishThenChinese("Settings") == "Settings", "unrelated catalog entry");
+                Check(FlightModeDisplay.EnglishThenChinese("Unknown_Plugin_Mode") == "Unknown_Plugin_Mode", "custom mode");
+                Check(FlightModeDisplay.EnglishThenChinese("") == "", "empty menu text");
+                Check(FlightModeDisplay.EnglishThenChinese(null) == null, "null menu text");
                 var unknown = "PLUGIN_MODE_WITH_A_VERY_LONG_UNKNOWN_NAME_123";
                 Check(FlightModeDisplay.FromMode(unknown).Primary == unknown, "unknown text changed");
                 Check(!FlightModeDisplay.FromMode(unknown).IsBilingual, "unknown duplicated");

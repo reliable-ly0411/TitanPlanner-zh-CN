@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using GeoUtility.GeoSystem;
-using System.Globalization;
 using MissionPlanner.Utilities;
 
 namespace MissionPlanner.Controls
@@ -90,30 +89,19 @@ namespace MissionPlanner.Controls
             InitializeComponent();
             this.DoubleBuffered = true;
             CMB_coordsystem.DataSource = Enum.GetNames(typeof(CoordsSystems));
-            if (CultureInfo.CurrentUICulture.Name == "zh-CN")
+            if (MapGpsPresentation.Enhanced)
                 ConfigureCoordinateHelp();
             AltSource = "";
-        }
-
-        private static string CoordinateMenuLabel(string raw)
-        {
-            if (CultureInfo.CurrentUICulture.Name != "zh-CN" ||
-                (raw != "GEO" && raw != "UTM" && raw != "MGRS"))
-                return raw;
-
-            var key = "Map coordinates: " + raw;
-            var local = UiText.Translate(key);
-            return local == key ? raw : raw + " · " + local;
         }
 
         private void ConfigureCoordinateHelp()
         {
             if (components == null)
                 components = new Container();
-            var help = new ToolTip(components);
+            ToolTip help = null;
             var combo = CMB_coordsystem;
             // WinForms forwards mouse movement from the native edit child to this ComboBox.
-            // Present one delayed hint for both the edit field and the arrow, without owner draw.
+            // Present one delayed hint for both the raw edit field and the arrow.
             var hover = new Timer(components) { Interval = 400 };
             bool shown = false;
             bool disposed = false;
@@ -126,14 +114,16 @@ namespace MissionPlanner.Controls
                 if (disposed)
                     return;
                 hover.Stop();
-                if (shown && combo.IsHandleCreated && !combo.IsDisposed && !combo.Disposing)
-                    help.Hide(combo);
+                // Destroy the tracking popup before the native dropdown opens.
+                var currentHelp = help;
+                help = null;
+                currentHelp?.Dispose();
                 shown = false;
             };
             Action arm = () =>
             {
                 if (canShow() && !hover.Enabled && !shown &&
-                    CoordinateMenuLabel(combo.Text) != combo.Text)
+                    MapGpsPresentation.CoordinateLabel(combo.Text) != combo.Text)
                     hover.Start();
             };
             hover.Tick += (sender, e) =>
@@ -142,9 +132,10 @@ namespace MissionPlanner.Controls
                 if (!canShow())
                     return;
                 string raw = combo.Text;
-                string text = CoordinateMenuLabel(raw);
+                string text = MapGpsPresentation.CoordinateLabel(raw);
                 if (text == raw)
                     return;
+                help = new ToolTip(components);
                 help.Show(text, combo, new Point(0, combo.ClientSize.Height), 4000);
                 shown = true;
             };
@@ -163,6 +154,36 @@ namespace MissionPlanner.Controls
                     cancel();
             };
             combo.HandleDestroyed += (sender, e) => cancel();
+
+            // Leave the editable/closed Text and existing System getter/setter raw for coordinate conversion.
+            int rowHeight = combo.ItemHeight;
+            combo.DrawMode = DrawMode.OwnerDrawFixed;
+            combo.ItemHeight = rowHeight;
+            const TextFormatFlags flags = TextFormatFlags.SingleLine | TextFormatFlags.NoPrefix;
+            combo.DrawItem += (sender, e) =>
+            {
+                e.DrawBackground();
+                if (e.Index >= 0 && e.Index < combo.Items.Count)
+                {
+                    var raw = combo.GetItemText(combo.Items[e.Index]);
+                    var label = (e.State & DrawItemState.ComboBoxEdit) != 0 ? raw : MapGpsPresentation.CoordinateLabel(raw);
+                    TextRenderer.DrawText(e.Graphics, label, combo.Font, e.Bounds, e.ForeColor,
+                        flags | TextFormatFlags.VerticalCenter | TextFormatFlags.EndEllipsis);
+                }
+                e.DrawFocusRectangle();
+            };
+            combo.DropDown += (sender, e) =>
+            {
+                int width = combo.Width;
+                using (var graphics = combo.CreateGraphics())
+                {
+                    var pad = SystemInformation.VerticalScrollBarWidth + (int)Math.Ceiling(12 * graphics.DpiX / 96);
+                    foreach (var item in combo.Items)
+                        width = Math.Max(width, TextRenderer.MeasureText(graphics, MapGpsPresentation.CoordinateLabel(combo.GetItemText(item)),
+                            combo.Font, Size.Empty, flags).Width + pad);
+                }
+                combo.DropDownWidth = Math.Min(width, Screen.FromControl(combo).WorkingArea.Width);
+            };
         }
 
         protected override void OnPaint(PaintEventArgs e)
