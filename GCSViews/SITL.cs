@@ -898,6 +898,52 @@ namespace MissionPlanner.GCSViews
             return isCopter && model == "x" ? "X" : model;
         }
 
+        private async Task<string> ReadFreshCopterXDefault(string file)
+        {
+            // A never-used path avoids the downloader's Last-Modified/length cache shortcut.
+            var staged = Path.Combine(sitldirectory, Guid.NewGuid().ToString("N") + ".parm");
+            try
+            {
+                if (!await Download.getFilefromNetAsync(
+                        "https://raw.githubusercontent.com/ArduPilot/ardupilot/master/Tools/autotest/" + file,
+                        staged).ConfigureAwait(false) || !File.Exists(staged))
+                    throw new InvalidDataException("Copter X: unable to download required SITL defaults " + file +
+                        ". Check the connection and try again.");
+
+                var data = File.ReadAllText(staged);
+                if (string.IsNullOrWhiteSpace(data))
+                    throw new InvalidDataException("Copter X: downloaded SITL defaults are empty: " + file +
+                        ". Check the connection and try again.");
+                return data;
+            }
+            finally
+            {
+                try { File.Delete(staged); File.Delete(staged + ".new"); }
+                catch (IOException ex) { log.Error(ex); }
+                catch (UnauthorizedAccessException ex) { log.Error(ex); }
+            }
+        }
+
+        private async Task<string> BuildCopterXDefaults(JToken files)
+        {
+            var list = files as JArray ?? new JArray(files);
+            if (list.Count == 0)
+                throw new InvalidDataException("Copter X: the SITL catalog has an empty defaults list.");
+
+            var data = new System.Text.StringBuilder();
+            foreach (var token in list)
+            {
+                if (token.Type != JTokenType.String || string.IsNullOrWhiteSpace((string)token))
+                    throw new InvalidDataException("Copter X: the SITL catalog contains an invalid defaults entry.");
+                data.AppendLine();
+                data.Append(await ReadFreshCopterXDefault((string)token).ConfigureAwait(false));
+            }
+
+            var temp = Path.GetTempFileName();
+            File.WriteAllText(temp, data.ToString());
+            return temp;
+        }
+
         private async Task<string> GetDefaultConfig(string model, bool isCopter = false)
         {
             var catalogKey = SitlCopterCatalogKey(model, isCopter);
@@ -940,8 +986,12 @@ namespace MissionPlanner.GCSViews
 
                             var configs = config["default_params_filename"];
 
-                            if (preferCopterCatalog && configs == null)
-                                break;
+                            if (preferCopterCatalog)
+                            {
+                                if (configs == null)
+                                    throw new InvalidDataException("Copter X: the SITL catalog is missing its defaults list.");
+                                return await BuildCopterXDefaults(configs).ConfigureAwait(false);
+                            }
 
                             if (configs is JValue)
                             {
@@ -981,6 +1031,8 @@ namespace MissionPlanner.GCSViews
                 }
                 catch (Exception ex)
                 {
+                    if (preferCopterCatalog && ex is InvalidDataException)
+                        throw;
                     log.Error(ex);
                     Console.WriteLine(ex.ToString());
                 }
@@ -1075,7 +1127,18 @@ namespace MissionPlanner.GCSViews
             if (cmb_model.Text != "")
                 model = cmb_model.Text;
 
-            var config = await GetDefaultConfig(model, isCopter);
+            string config;
+            try
+            {
+                config = await GetDefaultConfig(model, isCopter);
+            }
+            catch (InvalidDataException ex)
+            {
+                if (!isCopter || model != "x")
+                    throw;
+                CustomMessageBox.Show(ex.Message, Strings.ERROR);
+                return;
+            }
 
             if (!string.IsNullOrEmpty(config))
                 extraargs += @" --defaults """ + config + @"""";
