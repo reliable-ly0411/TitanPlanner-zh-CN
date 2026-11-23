@@ -34,6 +34,7 @@ namespace MissionPlanner.Controls
         private int _nameValueGap = 8;
         private int _columnGap = 20;
         private bool _updatingLayout;
+        private bool _viewportLayoutQueued;
         private bool _resourcesDisposed;
         private bool _mouseInside;
         private DisplayItem _hoveredItem;
@@ -69,7 +70,7 @@ namespace MissionPlanner.Controls
             _contentPanel.MouseClick += ContentPanel_MouseClick;
             _contentPanel.MouseMove += ContentPanel_MouseMove;
             _contentPanel.MouseLeave += ContentPanel_MouseLeave;
-            _contentPanel.ClientSizeChanged += (sender, e) => UpdateScrollSize();
+            _contentPanel.ClientSizeChanged += (sender, e) => QueueViewportLayout();
             _contentPanel.Scroll += (sender, e) => ClearHover();
             this.Controls.Add(_contentPanel);
             this.Controls.Add(_searchBox);
@@ -164,6 +165,21 @@ namespace MissionPlanner.Controls
                 group = item.Group;
             }
             return columns;
+        }
+
+        private void QueueViewportLayout()
+        {
+            if (_viewportLayoutQueued || _updatingLayout || _resourcesDisposed || !_contentPanel.IsHandleCreated)
+                return;
+
+            // Defer scrollbar calculation until the parent has finished the resize layout.
+            _viewportLayoutQueued = true;
+            _contentPanel.BeginInvoke((Action)(() =>
+            {
+                _viewportLayoutQueued = false;
+                if (!_resourcesDisposed && !_contentPanel.IsDisposed)
+                    UpdateScrollSize();
+            }));
         }
 
         private void UpdateScrollSize()
