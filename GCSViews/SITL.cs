@@ -276,7 +276,9 @@ namespace MissionPlanner.GCSViews
         private void PopulateLocationDropdown(SITLLocation selected = null)
         {
             cmb_location.Items.Clear();
-            cmb_location.Items.Add(UiText.Translate("Please set a valid home location on the map first."));
+            cmb_location.Items.Add(string.Equals(CultureInfo.CurrentUICulture.Name, "zh-CN", StringComparison.OrdinalIgnoreCase)
+                ? "请先在地图选点"
+                : UiText.Translate("Please set a valid home location on the map first."));
             cmb_location.Items.Add(WoodleyLocation);
             foreach (var location in _savedLocations)
             {
