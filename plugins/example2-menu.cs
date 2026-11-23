@@ -75,10 +75,25 @@ namespace Shortcuts
         {
             CustomMessageBox.Show(ExampleText("This is a sample plugin\nSee the source in the plugins folder"));
 
-			string angle = "0";
-            InputBox.Show(ExampleText("Enter Angle"), ExampleText("This will be the heading"), ref angle);
-		    int angle_in_number = Int32.Parse(angle);
-			
+            string angle = "0";
+            if (InputBox.Show(ExampleText("Enter Angle"), ExampleText("This will be the heading"), ref angle) != DialogResult.OK)
+                return;
+
+            int angle_in_number;
+            if (!Int32.TryParse(angle, out angle_in_number))
+            {
+                CustomMessageBox.Show(ExampleText("Enter a valid integer."));
+                return;
+            }
+
+            // The existing sequence inserts into and removes from the planner's unbound command grid.
+            if (commands == null || commands.IsDisposed || commands.VirtualMode ||
+                commands.DataSource != null || commands.ColumnCount == 0)
+            {
+                CustomMessageBox.Show(ExampleText("The mission command list is not ready."));
+                return;
+            }
+
 			Host.InsertWP(0, MAVLink.MAV_CMD.DO_SET_SERVO, 9, angle_in_number, 0, 0, 0, 0, 0);
             Host.InsertWP(1, MAVLink.MAV_CMD.DO_SET_SERVO, 10, 1000, 0, 0, 0, 0, 0);
  

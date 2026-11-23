@@ -4090,9 +4090,17 @@ Ctrl+O 从文件加载</value>
     <value>输入角度</value>
     <comment>"Flight Planner sample menu: Enter Angle"</comment>
   </data>
+  <data name="156c7ec75aab9ef2d3804403483219c44e638431759033d6d9b3bbcb104474e3" xml:space="preserve">
+    <value>请输入有效的整数。</value>
+    <comment>"Flight Planner sample menu: Enter a valid integer."</comment>
+  </data>
   <data name="fdae195f02884ced25f178c860f392f5bea62858bb23a98f154aef4e85f0e2d1" xml:space="preserve">
     <value>调整任务首尾（示例）</value>
     <comment>"Flight Planner sample menu: Fix mission top/bottom"</comment>
+  </data>
+  <data name="54a321d8ae2bf4411d4aab57b041a61af07078f799b0525ba7e7b0c5565e019a" xml:space="preserve">
+    <value>任务命令列表尚未就绪。</value>
+    <comment>"Flight Planner sample menu: The mission command list is not ready."</comment>
   </data>
   <data name="58a9fa6911306b970d868280aa324d9588e5f9e304953f5803127cebbe377585" xml:space="preserve">
     <value>这是一个示例插件。
