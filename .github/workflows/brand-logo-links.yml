@@ -1,6 +1,9 @@
 name: Native Windows brand link checks
 on:
   push:
+    # Feature branches run the same check once through pull_request.
+    branches: [master, zh-CN, zh-CN-dev]
+    tags: ['**']
     paths:
       - Utilities/BrandLogoLinks.cs
       - Resources/LocalizedBrandLogo.png
