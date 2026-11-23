@@ -1437,34 +1437,34 @@ namespace MissionPlanner.Controls
             ShowDropdown();
         }
 
-        internal static LoiterPresentation GetLoiterPresentation(ArduPilot.Firmwares? firmware,
+        internal static ModeMenuPresentation GetModeMenuPresentation(ArduPilot.Firmwares? firmware,
             MAVLink.MAV_TYPE? vehicleType)
         {
             switch (firmware)
             {
                 case ArduPilot.Firmwares.ArduCopter2:
-                    return LoiterPresentation.Hover;
+                    return ModeMenuPresentation.Hover;
                 case ArduPilot.Firmwares.ArduPlane:
                     // QLOITER is a separate mode; LOITER operates in the fixed-wing profile.
-                    return LoiterPresentation.Circle;
-                case ArduPilot.Firmwares.ArduRover when vehicleType == MAVLink.MAV_TYPE.SURFACE_BOAT:
-                    return LoiterPresentation.StationKeeping;
+                    return ModeMenuPresentation.Circle;
+                case ArduPilot.Firmwares.ArduRover:
+                    return ModeMenuPresentation.Rover;
                 case ArduPilot.Firmwares.PX4:
                     switch (vehicleType)
                     {
                         case MAVLink.MAV_TYPE.FIXED_WING:
-                            return LoiterPresentation.Circle;
+                            return ModeMenuPresentation.Circle;
                         case MAVLink.MAV_TYPE.QUADROTOR:
                         case MAVLink.MAV_TYPE.COAXIAL:
                         case MAVLink.MAV_TYPE.HEXAROTOR:
                         case MAVLink.MAV_TYPE.OCTOROTOR:
                         case MAVLink.MAV_TYPE.TRICOPTER:
-                            return LoiterPresentation.Hover;
+                            return ModeMenuPresentation.Hover;
                     }
                     break;
             }
             // A PX4 VTOL's type alone does not identify its current flight phase.
-            return LoiterPresentation.Unspecified;
+            return ModeMenuPresentation.Unspecified;
         }
 
         private void ShowDropdown()
@@ -1505,7 +1505,7 @@ namespace MissionPlanner.Controls
             try
             {
                 var mav = MainV2.comPort?.MAV;
-                _popup.LoiterLabel = GetLoiterPresentation(mav?.cs?.firmware, mav?.aptype);
+                _popup.MenuPresentation = GetModeMenuPresentation(mav?.cs?.firmware, mav?.aptype);
                 var modesList = ArduPilot.Common.getModesList(mav);
                 _popup.SetModes(modesList);
             }
@@ -1619,7 +1619,7 @@ namespace MissionPlanner.Controls
 
         public string CurrentMode { get; set; } = "";
 
-        internal LoiterPresentation LoiterLabel { get; set; }
+        internal ModeMenuPresentation MenuPresentation { get; set; }
 
         public event EventHandler<string> ModeSelected;
         public event EventHandler<string> FavoriteToggled;
@@ -1945,7 +1945,7 @@ namespace MissionPlanner.Controls
             // Mode name label
             var modeLabel = new Label
             {
-                Text = FlightModeDisplay.EnglishThenChinese(mode.Value, LoiterLabel),
+                Text = FlightModeDisplay.EnglishThenChinese(mode.Value, MenuPresentation),
                 UseMnemonic = false,
                 AutoSize = false,
                 Left = 0,
