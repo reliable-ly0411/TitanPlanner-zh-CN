@@ -400,6 +400,14 @@ namespace MissionPlanner.Controls
         private int _batterycellcount = 0;
         private float _current = 0;
         private float _batteryremaining = 0;
+        private static string GetGpsStatusText(string legacy, float fix, bool secondary, bool icons)
+        {
+            if (icons || !MapGpsPresentation.Enhanced || !(fix >= 0 && fix <= 8) || fix != (int)fix)
+                return legacy;
+            var label = MapGpsPresentation.FixLabel((int)fix, compact: true);
+            return (secondary ? "GPS2: " : "GPS: ") + label;
+        }
+
         private float _gpsfix = 0;
         private float _gpshdop = 0;
         private float _gpsfix2 = 0;
@@ -3291,6 +3299,9 @@ namespace MissionPlanner.Controls
                             if (displayicons)
                                 icon = GetIcon(nameof(HUDT.unknown));
                         }
+
+                        // Enhance only the text path; the icon, colour and raw fix are unchanged.
+                        gps = GetGpsStatusText(gps, _fix, a == 1, displayicons);
 
                         // gps2
                         if (a == 1) gps = gps.Replace("GPS:", "GPS2:");
