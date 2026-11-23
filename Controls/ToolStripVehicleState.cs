@@ -1720,6 +1720,12 @@ namespace MissionPlanner.Controls
         {
             // Rebuild the list after the form is shown to ensure colors render properly
             RefreshModesList();
+            var rows = _modesPanel.Controls.OfType<KeyboardModeRow>().ToList();
+            var initial = rows.FirstOrDefault(row =>
+                string.Equals((string)row.Tag, CurrentMode, StringComparison.OrdinalIgnoreCase))
+                ?? rows.FirstOrDefault();
+            if (initial != null)
+                FocusModeRow(initial);
             _modesPanel.Invalidate(true);
             _scrollPanel.Invalidate(true);
             Invalidate(true);
@@ -1808,10 +1814,88 @@ namespace MissionPlanner.Controls
             };
         }
 
+        private void FocusModeRow(KeyboardModeRow row)
+        {
+            if (row.Focus())
+                _scrollPanel.ScrollControlIntoView(row);
+        }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == Keys.Escape)
+            {
+                Close();
+                return true;
+            }
+            if (keyData != Keys.Up && keyData != Keys.Down && keyData != Keys.Home
+                && keyData != Keys.End && keyData != Keys.Enter)
+                return base.ProcessCmdKey(ref msg, keyData);
+
+            var rows = _modesPanel.Controls.OfType<KeyboardModeRow>().ToList();
+            var index = rows.FindIndex(row => row.Focused);
+            if (keyData == Keys.Enter)
+            {
+                if (index < 0)
+                    return base.ProcessCmdKey(ref msg, keyData);
+                SelectModeRow(rows[index]);
+                return true;
+            }
+            if (rows.Count == 0)
+                return base.ProcessCmdKey(ref msg, keyData);
+
+            if (keyData == Keys.Home)
+                index = 0;
+            else if (keyData == Keys.End)
+                index = rows.Count - 1;
+            else if (keyData == Keys.Down)
+                index = Math.Min(index + 1, rows.Count - 1);
+            else
+                index = index < 0 ? rows.Count - 1 : Math.Max(index - 1, 0);
+
+            FocusModeRow(rows[index]);
+            return true;
+        }
+
+        private void SelectModeRow(KeyboardModeRow row)
+        {
+            ModeSelected?.Invoke(this, (string)row.Tag);
+        }
+
+        private sealed class KeyboardModeRow : Panel
+        {
+            public KeyboardModeRow()
+            {
+                SetStyle(ControlStyles.Selectable, true);
+                TabStop = true;
+            }
+
+            protected override void OnGotFocus(EventArgs e)
+            {
+                base.OnGotFocus(e);
+                Invalidate();
+            }
+
+            protected override void OnLostFocus(EventArgs e)
+            {
+                base.OnLostFocus(e);
+                Invalidate();
+            }
+
+            protected override void OnPaint(PaintEventArgs e)
+            {
+                base.OnPaint(e);
+                if (Focused && Width > 2 && Height > 2)
+                    ControlPaint.DrawFocusRectangle(e.Graphics,
+                        new Rectangle(1, 1, Width - 2, Height - 2));
+            }
+        }
+
         private Panel CreateModeRow(KeyValuePair<int, string> mode, bool showStar, bool showPin = true)
         {
-            var row = new Panel
+            var row = new KeyboardModeRow
             {
+                Tag = mode.Value,
+                TabIndex = _modesPanel.Controls.Count,
                 Width = RowWidth,
                 Height = 28,
                 Margin = new Padding(0, 1, 0, 1),
@@ -1895,8 +1979,8 @@ namespace MissionPlanner.Controls
             };
 
             // Click handlers
-            row.Click += (s, e) => ModeSelected?.Invoke(this, mode.Value);
-            modeLabel.Click += (s, e) => ModeSelected?.Invoke(this, mode.Value);
+            row.Click += (s, e) => SelectModeRow(row);
+            modeLabel.Click += (s, e) => SelectModeRow(row);
             pinLabel.Click += (s, e) => {
                 PinToggled?.Invoke(this, mode.Value);
             };
