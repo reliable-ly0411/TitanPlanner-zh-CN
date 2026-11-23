@@ -1,0 +1,149 @@
+name: AHRS2 display-only C# fixture
+on:
+  push:
+    branches: [ci/ahrs2-display-fixture]
+    paths: [.github/workflows/qa-ahrs2-display-fixture.yml]
+permissions:
+  contents: read
+jobs:
+  fixture:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: '7cee7a6c597763c65965587965ec86160920dc4d'
+          persist-credentials: false
+      - uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68
+        with:
+          dotnet-version: '8.0.428'
+      - shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "7cee7a6c597763c65965587965ec86160920dc4d"
+          python3 - <<'PY'
+          from pathlib import Path
+          s=Path('ExtLibs/ArduPilot/CurrentState.cs').read_text(encoding='utf-8-sig')
+          for key in ['roll','pitch','yaw','lat','lng','alt']:
+           assert f'ahrs2_{key} = ahrs2.' in s
+          assert 'ahrs2_alt = ahrs2.altitude;' in s
+          q=Path('Controls/QuickViewOptions.cs').read_text(encoding='utf-8-sig')
+          p=Path('Controls/DisplayThisForm.cs').read_text(encoding='utf-8-sig')
+          assert '!(fieldValue is bool)' in q
+          assert '!fieldValue.IsNumber()' in p
+          PY
+          cd "$RUNNER_TEMP"
+          mkdir ahrs2-fixture
+          cd ahrs2-fixture
+          printf '%s' '<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net8.0</TargetFramework></PropertyGroup></Project>' > Fixture.csproj
+          printf '%s' '<configuration><packageSources><clear /></packageSources></configuration>' > NuGet.Config
+          cat > Candidate.cs <<'CS'
+          using System;
+          using System.Globalization;
+          using MissionPlanner.ArduPilot;
+          using MissionPlanner.Utilities;
+          
+          namespace MissionPlanner.Controls
+          {
+              /// <summary>Display labels only; telemetry lookup and selection retain the original key.</summary>
+              public static class TelemetryFieldPresentation
+              {
+                  public static string FieldLabel(string key)
+                  {
+                      // Custom names are authored by the operator, not catalog entries.
+                      if (CurrentState.custom_field_names.TryGetValue(key, out var customName))
+                          return customName;
+                      if (!string.Equals(CultureInfo.CurrentUICulture.Name, "zh-CN", StringComparison.OrdinalIgnoreCase))
+                          return key;
+                      var description = EnhancedAhrs2Description(key) ?? CurrentState.GetDisplayText(key);
+                      // Attribute placeholders do not guarantee the units of every input path.
+                      // Keep the key and description, but never infer a physical unit from them.
+                      description = description.Replace(" (dist)", "").Replace(" (alt)", "")
+                          .Replace(" (speed)", "").Replace(" (speed/s)", "");
+                      // GLOBAL_POSITION_INT velocity components are centimetres/second on the wire
+                      // and stored as metres/second; the legacy attribute spells this ambiguously as ms.
+                      if (key == "vx" || key == "vy" || key == "vz")
+                          description = description.Replace("(ms)", "(m/s)");
+                      return Combine(key, description);
+                  }
+          
+                  // AHRS2 stores attitude and coordinates in degrees and the MSL altitude in metres.
+                  // Those values are not scaled by the user's distance or altitude unit preferences.
+                  private static string EnhancedAhrs2Description(string key)
+                  {
+                      if (!string.Equals(CultureInfo.CurrentUICulture.Name, "zh-CN", StringComparison.Ordinal))
+                          return null;
+                      switch (key)
+                      {
+                          case "ahrs2_roll": return "第二姿态解算横滚角（°）";
+                          case "ahrs2_pitch": return "第二姿态解算俯仰角（°）";
+                          case "ahrs2_yaw": return "第二姿态解算偏航角（°）";
+                          case "ahrs2_lat": return "第二姿态解算纬度（°）";
+                          case "ahrs2_lng": return "第二姿态解算经度（°）";
+                          case "ahrs2_alt": return "第二姿态解算海拔（m）";
+                          default: return null;
+                      }
+                  }
+          
+                  public static string QuickViewFieldLabel(string key, string legacyDescription)
+                  {
+                      var description = EnhancedAhrs2Description(key);
+                      if (description != null && !CurrentState.custom_field_names.ContainsKey(key))
+                          return Combine(key, description);
+                      return legacyDescription == key ? key : key + " (" + legacyDescription + ")";
+                  }
+          
+                  public static string Combine(string original, string description)
+                  {
+                      return string.IsNullOrWhiteSpace(description) || description == original
+                          ? original : original + " (" + description + ")";
+                  }
+          
+                  public static string GroupLabel(string group)
+                  {
+                      var source = "Telemetry group: " + group;
+                      var translated = UiText.Translate(source);
+                      return translated == source ? group : Combine(group, translated);
+                  }
+          
+                  public static bool Matches(string query, params string[] labels)
+                  {
+                      foreach (var label in labels)
+                          if (label != null && label.IndexOf(query ?? "", StringComparison.OrdinalIgnoreCase) >= 0)
+                              return true;
+                      return false;
+                  }
+              }
+          }
+          CS
+          cat > Program.cs <<'CS'
+          using System;
+          using System.Globalization;
+          using System.Collections.Generic;
+          using MissionPlanner.ArduPilot;
+          using MissionPlanner.Controls;
+          namespace MissionPlanner.ArduPilot {
+           public static class CurrentState {
+            public static Dictionary<string,string> custom_field_names = new();
+            public static string GetDisplayText(string key) => key;
+           }
+          }
+          namespace MissionPlanner.Utilities { public static class UiText { public static string Translate(string s) => s; } }
+          class Program {
+           static int n;
+           static void Eq(string a,string b) { n++; if(a!=b) throw new Exception($"{a} != {b}"); }
+           static void Main() {
+            var fields=new Dictionary<string,string>{{"ahrs2_roll","第二姿态解算横滚角（°）"},{"ahrs2_pitch","第二姿态解算俯仰角（°）"},{"ahrs2_yaw","第二姿态解算偏航角（°）"},{"ahrs2_lat","第二姿态解算纬度（°）"},{"ahrs2_lng","第二姿态解算经度（°）"},{"ahrs2_alt","第二姿态解算海拔（m）"}};
+            foreach(var locale in new[]{"zh-CN","zh-Hans","en-US"}) {
+             CultureInfo.CurrentUICulture=CultureInfo.GetCultureInfo(locale);
+             foreach(var pair in fields){var expect=locale=="zh-CN"?pair.Key+" ("+pair.Value+")":pair.Key; Eq(TelemetryFieldPresentation.FieldLabel(pair.Key),expect); Eq(TelemetryFieldPresentation.QuickViewFieldLabel(pair.Key,pair.Key),expect);}
+             Eq(TelemetryFieldPresentation.FieldLabel("unknown"),"unknown"); Eq(TelemetryFieldPresentation.QuickViewFieldLabel("armed","Armed"),"armed (Armed)");
+            }
+            CultureInfo.CurrentUICulture=CultureInfo.GetCultureInfo("zh-CN");
+            CurrentState.custom_field_names["ahrs2_alt"]="Alias";
+            Eq(TelemetryFieldPresentation.FieldLabel("ahrs2_alt"),"Alias");Eq(TelemetryFieldPresentation.QuickViewFieldLabel("ahrs2_alt","Alias"),"ahrs2_alt (Alias)");
+            Console.WriteLine($"PASS {n} actual C# display assertions (stub metadata entry, no app or device)");
+           }
+          }
+          CS
+          dotnet run --project Fixture.csproj
