@@ -7,6 +7,7 @@ using MissionPlanner.Controls;
 using System.IO;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.Globalization;
 using MissionPlanner;
 using System.Drawing;
 using GMap.NET.WindowsForms;
@@ -41,9 +42,37 @@ namespace hudonoff
 
         private string configname = "HudItems";
 
+        // Use the saved English values only as lookup keys; never persist these display labels.
+        private static string MenuLabel(string english)
+        {
+            if (!string.Equals(CultureInfo.CurrentUICulture.Name, "zh-CN", StringComparison.OrdinalIgnoreCase))
+                return english;
+
+            switch (english)
+            {
+                case "HUD Items": return "显示项目";
+                case "Heading": return "航向";
+                case "Speed": return "速度";
+                case "WP Distance": return "航点距离";
+                case "Wind": return "风况";
+                case "Alt": return "高度";
+                case "Connection": return "连接状态";
+                case "X-Track": return "航迹偏差";
+                case "Roll/Pitch": return "横滚／俯仰";
+                case "GPS": return "GPS 状态";
+                case "Battery": return "电池";
+                case "Battery2": return "第二电池";
+                case "EKF": return "EKF 状态";
+                case "Vibe": return "振动";
+                case "Prearm Status": return "解锁前检查状态";
+                case "AOA": return "迎角／侧滑角";
+                default: return english;
+            }
+        }
+
         public override bool Loaded()
         {
-            var rootbut = new ToolStripMenuItem("HUD Items");
+            var rootbut = new ToolStripMenuItem(MenuLabel("HUD Items"));
             ToolStripItemCollection col = Host.FDMenuHud.Items;
             col.Add(rootbut);
 
@@ -70,7 +99,7 @@ namespace hudonoff
 
             foreach (var item in items)
             {
-                var but = new ToolStripMenuItem(item.Value);
+                var but = new ToolStripMenuItem(MenuLabel(item.Value));
                 but.CheckOnClick = true;
                 but.Checked = true;
                 but.Click += (s,e)=>
