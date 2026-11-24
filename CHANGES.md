@@ -1,3 +1,5 @@
+Flight Data Status now fits adjacent name/value pairs into multiple groups when the viewport is wide enough.
+
 On Windows, the Actions tab uses its own scrollbar even when the compact Flight Data viewport is shorter than its content.
 
 ## Field selection layout

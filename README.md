@@ -1,3 +1,5 @@
+飞行数据状态页按可用宽度排列多列，参数值紧跟名称；窗口过窄时仍可单列滚动。
+
 Windows 紧凑窗口中的飞行数据操作页可使用内部滚动条查看下方控件。
 
 Enhanced Chinese includes an initial set of bilingual Copter and Plane/QuadPlane parameter descriptions, version-scoped offline metadata, and Chinese search. See [scope, sources and validation](docs/parameter-descriptions.zh-CN.md); unsupported or changed descriptions retain English.
