@@ -539,6 +539,9 @@ namespace MissionPlanner.GCSViews
             // Replace TabControl with ThemedTabStrip
             ReplaceTabControlWithThemedTabStrip();
 #if !LIB
+            // Actions owns its scrollbar; the docked viewport must fit even when the content is tall.
+            if (!MainV2.MONO)
+                flightDataActions1.MinimumSize = new Size(flightDataActions1.MinimumSize.Width, 0);
             SubMainLeft.SizeChanged += (sender, e) => QueueCompactHudBounds();
 #endif
 
