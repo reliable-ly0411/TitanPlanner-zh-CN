@@ -99,44 +99,71 @@ namespace MissionPlannerTests.Controls
         }
 
         [TestMethod]
-        public void StatusBilingualLabelReservesWidthAndScrollsAtNarrowSizes()
+        public void StatusBilingualLabelRemainsReadableAtNarrowSizes()
         {
             Exception failure = null;
             var thread = new Thread(() =>
             {
                 try
                 {
-                    using (var status = new StatusControl())
+                    using (var form = new Form { ClientSize = new Size(320, 480) })
+                    using (var status = new StatusControl { Dock = DockStyle.Fill })
                     {
-                        foreach (var control in new Control[] { status })
+                        form.Controls.Add(status);
+                        form.Show();
+                        var type = status.GetType();
+                        var flags = BindingFlags.Instance | BindingFlags.NonPublic;
+                        var list = (IList)type.GetField("_allItems", flags).GetValue(status);
+                        const string shortLabel = "airspeed (空速)";
+                        string longLabel = "alt (高度 / " + new string('W', 80) + ")";
+                        const string longValue = "-1234567890.123456789012345678901234567890123456789";
+                        list.Add(new StatusControl.StatusItem { Name = "airspeed", DisplayName = shortLabel, Value = "12.5" });
+                        list.Add(new StatusControl.StatusItem { Name = "alt", DisplayName = longLabel, Value = longValue });
+                        type.GetField("_filteredItems", flags).SetValue(status, list);
+                        foreach (var width in new[] { 320, 640, 1280 })
                         {
-                            var type = control.GetType();
-                            var flags = BindingFlags.Instance | BindingFlags.NonPublic;
-                            var list = (IList)type.GetField("_allItems", flags).GetValue(control);
-                            var itemType = list.GetType().GetGenericArguments()[0];
-                            var item = Activator.CreateInstance(itemType);
-                            itemType.GetProperty("Name").SetValue(item, "airspeed");
-                            itemType.GetProperty("DisplayName").SetValue(item, "airspeed (空速 / Airspeed long bilingual label)");
-                            itemType.GetProperty("Value").SetValue(item, "12.5");
-                            itemType.GetProperty("Group")?.SetValue(item, "Position");
-                            itemType.GetProperty("GroupLabel")?.SetValue(item, "Position (位置)");
-                            list.Add(item);
-                            type.GetField("_filteredItems", flags).SetValue(control, list);
-                            foreach (var width in new[] { 320, 640, 1280 })
+                            form.ClientSize = new Size(width, 480);
+                            type.GetMethod("UpdateScrollSize", flags).Invoke(status, null);
+                            Application.DoEvents();
+                            var panel = (Panel)type.GetField("_contentPanel", flags).GetValue(status);
+                            var columns = (IList)type.GetField("_columns", flags).GetValue(status);
+                            Assert.AreEqual(1, columns.Count);
+                            var column = columns[0];
+                            var columnType = column.GetType();
+                            int left = (int)columnType.GetField("Left").GetValue(column);
+                            int nameWidth = (int)columnType.GetField("NameWidth").GetValue(column);
+                            int valueWidth = (int)columnType.GetField("ValueWidth").GetValue(column);
+                            int columnWidth = (int)columnType.GetField("Width").GetValue(column);
+                            var labels = (string[])columnType.GetField("Labels").GetValue(column);
+                            int gap = (int)type.GetField("_nameValueGap", flags).GetValue(status);
+                            int padding = (int)type.GetField("_padding", flags).GetValue(status);
+                            int rowHeight = (int)type.GetField("_rowHeight", flags).GetValue(status);
+                            using (var graphics = panel.CreateGraphics())
+                            using (var bold = new Font(status.Font, FontStyle.Bold))
+                            using (var normal = new Font(status.Font, FontStyle.Regular))
                             {
-                                control.Size = new Size(width, 480);
-                                control.CreateControl();
-                                type.GetMethod("UpdateScrollSize", flags).Invoke(control, null);
-                                var panel = (Panel)type.GetField("_contentPanel", flags).GetValue(control);
-                                using (var graphics = panel.CreateGraphics())
-                                using (var font = new Font(control.Font, control is StatusControl ? FontStyle.Bold : FontStyle.Regular))
-                                {
-                                    int nameWidth = (int)type.GetField("_nameWidth", flags).GetValue(control);
-                                    var measured = graphics.MeasureString((string)itemType.GetProperty("DisplayName").GetValue(item), font).Width;
-                                    Assert.IsTrue(nameWidth >= Math.Ceiling(measured) + 8);
-                                    Assert.IsTrue(panel.AutoScrollMinSize.Width > nameWidth);
-                                }
+                                Assert.AreEqual(shortLabel, labels[0], "Short bilingual labels remain complete.");
+                                Assert.IsTrue(nameWidth < graphics.MeasureString(longLabel, bold).Width,
+                                    "A long label must not push every value away.");
+                                Assert.IsTrue(labels[1].EndsWith("…", StringComparison.Ordinal));
+                                Assert.IsTrue(graphics.MeasureString(labels[1], bold).Width <= nameWidth);
+                                Assert.IsTrue(valueWidth >= Math.Ceiling(graphics.MeasureString(longValue, normal).Width),
+                                    "Reserve the complete value rather than silently clipping it.");
                             }
+                            Assert.IsTrue(gap > 0 && gap < rowHeight);
+                            Assert.IsTrue(panel.AutoScrollMinSize.Width >= left + columnWidth + padding);
+                            panel.AutoScrollPosition = new Point(panel.AutoScrollMinSize.Width, 0);
+                            Assert.IsTrue(left + columnWidth + panel.AutoScrollPosition.X <= panel.ClientSize.Width,
+                                "Scrolling must expose the end of the value.");
+                            int x = Math.Max(0, left + nameWidth + gap + panel.AutoScrollPosition.X) + 1;
+                            int y = padding + rowHeight + 1;
+                            type.GetMethod("ContentPanel_MouseMove", flags).Invoke(status,
+                                new object[] { panel, new MouseEventArgs(MouseButtons.None, 0, x, y, 0) });
+                            var toolTip = (ToolTip)type.GetField("_toolTip", flags).GetValue(status);
+                            Assert.AreEqual(longLabel + Environment.NewLine + longValue, toolTip.GetToolTip(panel));
+                            Assert.AreEqual("airspeed", ((StatusControl.StatusItem)list[0]).Name);
+                            Assert.AreEqual("12.5", ((StatusControl.StatusItem)list[0]).Value);
+                            Assert.AreEqual(longValue, ((StatusControl.StatusItem)list[1]).Value);
                         }
                     }
                 }
