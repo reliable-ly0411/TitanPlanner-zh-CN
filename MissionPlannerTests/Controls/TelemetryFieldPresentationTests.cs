@@ -437,6 +437,38 @@ namespace MissionPlannerTests.Controls
         }
 
         [TestMethod]
+        public void DerivedTelemetryLabelsPreserveKeysAndLocale()
+        {
+            var previous = CultureInfo.CurrentUICulture;
+            try
+            {
+                foreach (var locale in new[] { "zh-CN", "zh-Hans", "en-US" })
+                {
+                    CultureInfo.CurrentUICulture = new CultureInfo(locale);
+                    foreach (var pair in new[] {
+                        Tuple.Create("capabilities", "上报的 MAVLink 协议能力标志位"),
+                        Tuple.Create("connected", "链路已打开或正在回放日志"),
+                        Tuple.Create("vehicleClass", "地面站识别的机型类别"),
+                        Tuple.Create("gimballat", "云台指向点纬度（°）"),
+                        Tuple.Create("gimballng", "云台指向点经度（°）"),
+                        Tuple.Create("timesincelastshot", "相邻两次相机触发记录的时间间隔（秒）"),
+                        Tuple.Create("linkqualitygcs", "地面站数据包接收质量（%）"),
+                    })
+                    {
+                        string label = TelemetryFieldPresentation.FieldLabel(pair.Item1);
+                        Assert.AreEqual(locale == "zh-CN" ? pair.Item1 + " (" + pair.Item2 + ")" : pair.Item1, label);
+                        Assert.IsTrue(TelemetryFieldPresentation.Matches(pair.Item1, label));
+                        if (locale == "zh-CN")
+                            Assert.IsTrue(TelemetryFieldPresentation.Matches(pair.Item2, label));
+                    }
+                    foreach (var key in new[] { "landed", "campointa", "GimbalPointFuture" })
+                        Assert.AreEqual(key, TelemetryFieldPresentation.FieldLabel(key));
+                }
+            }
+            finally { CultureInfo.CurrentUICulture = previous; }
+        }
+
+        [TestMethod]
         public void LabelsRetainKeysAndBilingualSearch()
         {
             var label = TelemetryFieldPresentation.Combine("airspeed", "空速");

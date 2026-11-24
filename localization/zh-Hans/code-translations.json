@@ -2324,5 +2324,12 @@
   "RPM sensor 1 speed (rpm)": "转速传感器 1 读数（rpm）",
   "RPM sensor 2 speed (rpm)": "转速传感器 2 读数（rpm）",
   "Autopilot hardware UID": "飞控硬件唯一标识",
-  "Reported landed state code": "上报的着陆状态代码"
+  "Reported landed state code": "上报的着陆状态代码",
+  "Reported MAVLink protocol capability flags": "上报的 MAVLink 协议能力标志位",
+  "Link open or log playback active": "链路已打开或正在回放日志",
+  "Ground station vehicle class": "地面站识别的机型类别",
+  "Gimbal point latitude (°)": "云台指向点纬度（°）",
+  "Gimbal point longitude (°)": "云台指向点经度（°）",
+  "Interval between camera trigger records (s)": "相邻两次相机触发记录的时间间隔（秒）",
+  "Ground station packet reception quality (%)": "地面站数据包接收质量（%）"
 }

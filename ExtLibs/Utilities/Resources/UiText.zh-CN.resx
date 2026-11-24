@@ -4607,6 +4607,14 @@ Ctrl+O 从文件加载</value>
     <value>云台视频</value>
     <comment>"Gimbal Video"</comment>
   </data>
+  <data name="84a2458903a1f9140b37cf3b51ed87d7b4bf35555c3c15a8d18b0f82806930d6" xml:space="preserve">
+    <value>云台指向点纬度（°）</value>
+    <comment>"Gimbal point latitude (°)"</comment>
+  </data>
+  <data name="7e2fe17c5631d720d2435d42939916ef8365f33b93d67a37a6616fe20c6c5eaa" xml:space="preserve">
+    <value>云台指向点经度（°）</value>
+    <comment>"Gimbal point longitude (°)"</comment>
+  </data>
   <data name="5da97b5d47088bd556ebad83010a125a53568c38327aa7efcb8c600b6ffa127d" xml:space="preserve">
     <value>云台视频控制设置</value>
     <comment>"GimbalVideoControlSettings"</comment>
@@ -4687,9 +4695,17 @@ Ctrl+O 从文件加载</value>
     <value>地面站计算的 EKF 健康指标</value>
     <comment>"Ground station EKF health indicator"</comment>
   </data>
+  <data name="9e76bc41832d5746361468f6457d99c8c6e520f891918f00c40fc8f5d4037a90" xml:space="preserve">
+    <value>地面站数据包接收质量（%）</value>
+    <comment>"Ground station packet reception quality (%)"</comment>
+  </data>
   <data name="ff27501553212286828f38d5d405f04c4c6462529530ddf126439bb2aba52206" xml:space="preserve">
     <value>地面站设置</value>
     <comment>"Ground station settings"</comment>
+  </data>
+  <data name="6a9ea7b2abbde11a60d434a8e97b180e5e10559f846128c895c0d8b898b6019c" xml:space="preserve">
+    <value>地面站识别的机型类别</value>
+    <comment>"Ground station vehicle class"</comment>
   </data>
   <data name="b054d2e48d3fcdb6b5d1f35d49419572c0404f2157d5b9b54980e9bc94764195" xml:space="preserve">
     <value>地面航迹角 (°)</value>
@@ -5227,6 +5243,10 @@ Ctrl+O 从文件加载</value>
     <value>间隔（秒）</value>
     <comment>"Interval (sec)"</comment>
   </data>
+  <data name="8b68d822157e783620ae4771ad22b22d0725d5ed071dc48259ad371be51c28e4" xml:space="preserve">
+    <value>相邻两次相机触发记录的时间间隔（秒）</value>
+    <comment>"Interval between camera trigger records (s)"</comment>
+  </data>
   <data name="e37bf2194d5fd7ea066b9ec0089d1bf9dacb9d135ba02cd7a635304a5931e99b" xml:space="preserve">
     <value>串口无效或已被占用</value>
     <comment>"Invalid ComPort or in use"</comment>
@@ -5547,6 +5567,10 @@ Ctrl+O 从文件加载</value>
   <data name="fae7fc579197dcc374dd2177a5d1480255df995e8f80c0b7e2a8805c2b6d7471" xml:space="preserve">
     <value>打开链接失败，请检查默认浏览器关联</value>
     <comment>"Link open failed. check your default webpage association"</comment>
+  </data>
+  <data name="7944fa9352603be9c8c1529f81174ce0fb435d03f4326a3900bf7550aae31651" xml:space="preserve">
+    <value>链路已打开或正在回放日志</value>
+    <comment>"Link open or log playback active"</comment>
   </data>
   <data name="3ba0bf7f68380fa4a7e2396156a3edd5409d5c7d63ba9491be658af4bbb84542" xml:space="preserve">
     <value>先听后发阈值</value>
@@ -9224,6 +9248,10 @@ VLAN 标记</value>
   <data name="6db78fd41955cadd6f5e0cbdea0deffcbb9e81bf99115017103f2fbe72d8a238" xml:space="preserve">
     <value>上报的 I²C 错误次数</value>
     <comment>"Reported I2C error count"</comment>
+  </data>
+  <data name="0674cafb36e22426d1db0ba36b45fb8b8cdc0a86aa6f1b027703b5f7c37a0e59" xml:space="preserve">
+    <value>上报的 MAVLink 协议能力标志位</value>
+    <comment>"Reported MAVLink protocol capability flags"</comment>
   </data>
   <data name="e44a4c841c176c151d5046cff78e8a718a84ba58de732b63bcb72e978297000c" xml:space="preserve">
     <value>上报的可用内存（字节）</value>
