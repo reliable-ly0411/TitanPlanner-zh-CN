@@ -79,6 +79,13 @@ namespace MissionPlanner.Controls
                 case "rpm2": return UiText.Translate("RPM sensor 2 speed (rpm)");
                 case "uid": return UiText.Translate("Autopilot hardware UID");
                 case "landed_state": return UiText.Translate("Reported landed state code");
+                case "capabilities": return UiText.Translate("Reported MAVLink protocol capability flags");
+                case "connected": return UiText.Translate("Link open or log playback active");
+                case "vehicleClass": return UiText.Translate("Ground station vehicle class");
+                case "gimballat": return UiText.Translate("Gimbal point latitude (°)");
+                case "gimballng": return UiText.Translate("Gimbal point longitude (°)");
+                case "timesincelastshot": return UiText.Translate("Interval between camera trigger records (s)");
+                case "linkqualitygcs": return UiText.Translate("Ground station packet reception quality (%)");
                 case "ter_load": return UiText.Translate("Terrain blocks loaded in memory");
                 case "ter_pend": return UiText.Translate("Terrain blocks awaiting receipt or disk read");
                 case "ter_space": return UiText.Translate("Terrain grid spacing");
