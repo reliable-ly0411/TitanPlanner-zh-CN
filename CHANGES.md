@@ -1,3 +1,5 @@
+Flight Data Status keeps neighboring columns close and steady for ordinary values while preserving full hover names and values.
+
 Flight Data Status packs groups using the widest rendered name/value pair, with a smaller gutter.
 
 Flight Data Status now fits adjacent name/value pairs into multiple groups when the viewport is wide enough.

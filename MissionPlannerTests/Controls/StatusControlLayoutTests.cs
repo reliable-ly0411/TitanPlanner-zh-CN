@@ -235,14 +235,15 @@ namespace MissionPlannerTests.Controls
                     Assert.IsFalse(panel.HorizontalScroll.Visible);
                     Assert.IsTrue(panel.VerticalScroll.Visible);
                     int gap = Field<int>(status, "_nameValueGap");
+                    int reserve = Field<int>(status, "_steadyValueWidth");
                     foreach (var column in columns)
                     {
                         int[] labelWidths = (int[])column.GetType().GetField("LabelWidths").GetValue(column);
                         Assert.IsTrue(labelWidths.Any(width => width < Column(column, "NameWidth") - 25),
                             "Short labels must not reserve the width of the longest label.");
                         int[] valueWidths = (int[])column.GetType().GetField("ValueWidths").GetValue(column);
-                        Assert.AreEqual(labelWidths.Zip(valueWidths, (label, value) => label + gap + value).Max(), Column(column, "Width"),
-                            "Group width is the widest rendered pair, not independent label and value maxima.");
+                        Assert.AreEqual(labelWidths.Zip(valueWidths, (label, value) => label + gap + Math.Max(reserve, value)).Max(), Column(column, "Width"),
+                            "Group width is the widest rendered pair, with a small reserve for steady updates.");
                     }
                     AssertLayout(status);
                 }
