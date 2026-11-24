@@ -42,6 +42,10 @@ namespace MissionPlanner.Controls
                 case "ahrs2_pitch": return UiText.Translate("Secondary AHRS pitch (°)");
                 case "ahrs2_roll": return UiText.Translate("Secondary AHRS roll (°)");
                 case "ahrs2_yaw": return UiText.Translate("Secondary AHRS yaw (°)");
+                case "ter_load": return UiText.Translate("Terrain blocks loaded in memory");
+                case "ter_pend": return UiText.Translate("Terrain blocks awaiting receipt or disk read");
+                case "ter_space": return UiText.Translate("Terrain grid spacing");
+                case "terrainactive": return UiText.Translate("Terrain subsystem present, enabled and healthy");
                 case "vibeclip0": return UiText.Translate("Accelerometer 1 clipping count");
                 case "vibeclip1": return UiText.Translate("Accelerometer 2 clipping count");
                 case "vibeclip2": return UiText.Translate("Accelerometer 3 clipping count");

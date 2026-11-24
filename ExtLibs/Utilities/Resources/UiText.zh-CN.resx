@@ -10595,6 +10595,22 @@ Acc：当前测定位置的精度
     <value>地面高程（GL）</value>
     <comment>"Terrain GL"</comment>
   </data>
+  <data name="c20539dd3860332bb3f5fa90ed8ab42dcbc9aa6bd6ca1c304f903982ef9723f4" xml:space="preserve">
+    <value>待接收或从磁盘读取的地形块数</value>
+    <comment>"Terrain blocks awaiting receipt or disk read"</comment>
+  </data>
+  <data name="13b84b0acb4f25ae4a022e3f4851ecd6df75ea7a16bb823ff95b192d4aa9e947" xml:space="preserve">
+    <value>内存中已加载的地形块数</value>
+    <comment>"Terrain blocks loaded in memory"</comment>
+  </data>
+  <data name="fe3e64a5115620e97207a8090a6340731dda9c87dd8a6ad977758db4ba79d433" xml:space="preserve">
+    <value>地形网格间距</value>
+    <comment>"Terrain grid spacing"</comment>
+  </data>
+  <data name="3b6008714d2add782db56eb279f2a589c48722f5545486d7c41353ca689075fa" xml:space="preserve">
+    <value>地形子系统存在、已启用且状态正常</value>
+    <comment>"Terrain subsystem present, enabled and healthy"</comment>
+  </data>
   <data name="af3ddd815af84ae581f631295b763f729697b8a8dc36e4b49b301ea423bc1500" xml:space="preserve">
     <value>第三</value>
     <comment>"Tertiary"</comment>
