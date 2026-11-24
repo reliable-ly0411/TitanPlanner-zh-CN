@@ -1,3 +1,5 @@
+Flight Data Status groups fill top to bottom and continue to the right, with native horizontal scrolling as in upstream.
+
 Flight Data Status keeps neighboring columns close and steady for ordinary values while preserving full hover names and values.
 
 Flight Data Status packs groups using the widest rendered name/value pair, with a smaller gutter.

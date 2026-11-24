@@ -114,7 +114,7 @@ namespace MissionPlanner.Controls
                     float scale = Math.Max(_boldFont.GetHeight(graphics), _normalFont.GetHeight(graphics)) / 13f;
                     _padding = Math.Max(1, (int)Math.Ceiling(8 * scale));
                     _nameValueGap = Math.Max(1, (int)Math.Ceiling(6 * scale));
-                    _columnGap = Math.Max(1, (int)Math.Ceiling(10 * scale));
+                    _columnGap = Math.Max(1, (int)Math.Ceiling(27 * scale));
                     _rowHeight = Math.Max(1, (int)Math.Ceiling(17 * scale));
                     _minimumValueWidth = (int)Math.Ceiling(50 * scale);
                     _steadyValueWidth = (int)Math.Ceiling(28 * scale);
@@ -131,28 +131,13 @@ namespace MissionPlanner.Controls
                         int rows = Math.Max(1, (viewport.Height - _padding * 2) / _rowHeight);
                         int nameLimit = Math.Max(_rowHeight * 3,
                             Math.Min((int)Math.Ceiling(240 * scale), (int)(viewport.Width * 0.55)));
-                        // Do not let one long off-screen label push neighboring groups away from
-                        // the many ordinary rows. Preserve the wider labels for single-group layouts.
+                        // Fill each group top to bottom, then continue right as in the upstream
+                        // Status tab. The native horizontal scrollbar reaches the remaining groups.
                         int groupNameLimit = _filteredItems.Count > rows
                             ? Math.Max(_rowHeight * 3, Math.Min(nameLimit, viewport.Width * 29 / 100))
                             : nameLimit;
-                        if (!BuildColumns(rows, groupNameLimit, viewport.Width, nameWidths, valueWidths, graphics, out var width, nameLimit))
-                        {
-                            // Try two complete columns with a shared vertical scroll range before
-                            // falling back to one. Only an intrinsically wide row needs horizontal scroll.
-                            int twoColumnRows = _filteredItems.Count / 2 + _filteredItems.Count % 2;
-                            if (twoColumnRows > rows &&
-                                (BuildColumns(twoColumnRows, groupNameLimit, viewport.Width, nameWidths, valueWidths, graphics, out width, nameLimit) ||
-                                 TryFitTwoColumns(twoColumnRows, groupNameLimit, viewport.Width, nameWidths, valueWidths, graphics, out width)))
-                            {
-                                rows = twoColumnRows;
-                            }
-                            else
-                            {
-                                rows = _filteredItems.Count;
-                                BuildColumns(rows, nameLimit, viewport.Width, nameWidths, valueWidths, graphics, out width);
-                            }
-                        }
+                        int width = BuildColumns(rows, groupNameLimit, viewport.Width, nameWidths, valueWidths,
+                            graphics, nameLimit);
                         int height = _padding * 2 + Math.Min(rows, _filteredItems.Count) * _rowHeight;
                         int scrollPageHeight = _contentPanel.ClientSize.Height;
                         if (_scrollbarsInsideClient && _contentPanel.HorizontalScroll.Visible)
@@ -170,31 +155,17 @@ namespace MissionPlanner.Controls
             finally { _updatingLayout = false; }
         }
 
-        private bool TryFitTwoColumns(int rows, int nameLimit, int availableWidth, int[] nameWidths,
-            int[] valueWidths, Graphics graphics, out int width)
-        {
-            width = 0;
-            // Allocate the spare width to names after reserving both columns' full measured
-            // values. Existing tooltip behavior exposes any labels that now need ellipsis.
-            int firstValue = Math.Max(_minimumValueWidth, valueWidths.Take(rows).Max());
-            int secondValue = Math.Max(_minimumValueWidth, valueWidths.Skip(rows).Max());
-            int labelWidth = Math.Min(nameLimit, (availableWidth - _padding * 2 - _columnGap -
-                _nameValueGap * 2 - firstValue - secondValue) / 2);
-            return labelWidth >= _rowHeight * 3 &&
-                BuildColumns(rows, labelWidth, availableWidth, nameWidths, valueWidths, graphics, out width);
-        }
-
-        private bool BuildColumns(int rows, int nameLimit, int availableWidth, int[] nameWidths,
-            int[] valueWidths, Graphics graphics, out int width, int trailingNameLimit = 0)
+        private int BuildColumns(int rows, int nameLimit, int availableWidth, int[] nameWidths,
+            int[] valueWidths, Graphics graphics, int trailingNameLimit)
         {
             _columns.Clear();
             int left = _padding;
-            width = 0;
+            int width = 0;
             for (int start = 0; start < _filteredItems.Count; start += rows)
             {
                 int count = Math.Min(rows, _filteredItems.Count - start);
                 // The last group has no following group to push away.
-                int labelLimit = trailingNameLimit > 0 && start + count == _filteredItems.Count
+                int labelLimit = start + count == _filteredItems.Count
                     ? trailingNameLimit : nameLimit;
                 var column = new StatusColumn { Start = start, Count = count, Left = left,
                     ValueWidth = _minimumValueWidth };
@@ -227,12 +198,10 @@ namespace MissionPlanner.Controls
                         column.LabelWidths[row] + _nameValueGap + Math.Max(_steadyValueWidth, column.ValueWidths[row]));
                 }
                 width = left + column.Width + _padding;
-                if (width > availableWidth && (start != 0 || count < _filteredItems.Count))
-                    return false;
                 _columns.Add(column);
                 left += column.Width + _columnGap;
             }
-            return true;
+            return width;
         }
 
         private static int MinimumScrollHeight(int contentHeight, int viewportHeight, int scrollPageHeight)
@@ -249,12 +218,11 @@ namespace MissionPlanner.Controls
         {
             // Native scrollbars and borders can shrink the drawable client area
             // without changing the panel's outer Size. Keep the row budget in
-            // client coordinates and retain the explicit scrollbar clearance:
-            // Mono paints bars inside its client; Windows keeps an extra gutter.
+            // client coordinates; only Mono draws its scrollbars inside the client.
             var size = _contentPanel.ClientSize;
-            if (_contentPanel.HorizontalScroll.Visible)
+            if (_scrollbarsInsideClient && _contentPanel.HorizontalScroll.Visible)
                 size.Height = Math.Max(0, size.Height - SystemInformation.HorizontalScrollBarHeight);
-            if (_contentPanel.VerticalScroll.Visible)
+            if (_scrollbarsInsideClient && _contentPanel.VerticalScroll.Visible)
                 size.Width = Math.Max(0, size.Width - SystemInformation.VerticalScrollBarWidth);
             return size;
         }
@@ -265,6 +233,8 @@ namespace MissionPlanner.Controls
                 return;
             EnsureFonts();
             var g = e.Graphics;
+            int leftEdge = -_contentPanel.AutoScrollPosition.X;
+            int rightEdge = leftEdge + _contentPanel.ClientSize.Width;
             g.TranslateTransform(_contentPanel.AutoScrollPosition.X, _contentPanel.AutoScrollPosition.Y);
             g.Clear(_contentPanel.BackColor);
 
@@ -275,6 +245,8 @@ namespace MissionPlanner.Controls
             {
                 foreach (var column in _columns)
                 {
+                    if (column.Left >= rightEdge) break;
+                    if (column.Left + column.Width <= leftEdge) continue;
                     for (int row = 0; row < column.Count; row++)
                     {
                         var item = _filteredItems[column.Start + row];
@@ -319,7 +291,6 @@ namespace MissionPlanner.Controls
             if (_columns.Count == 0)
                 return;
             var viewport = ViewportSize();
-            int previousWidth = _contentPanel.AutoScrollMinSize.Width;
             using (var graphics = _contentPanel.CreateGraphics())
             {
                 int left = _padding;
@@ -343,9 +314,7 @@ namespace MissionPlanner.Controls
             }
             // Mono can change bar visibility without raising ClientSizeChanged.
             // Ordinary samples only need new value widths, not name measurements.
-            if (ViewportSize() != viewport ||
-                ((_columns.Count == 1 || _contentPanel.HorizontalScroll.Visible) &&
-                 _contentPanel.AutoScrollMinSize.Width < previousWidth))
+            if (ViewportSize() != viewport)
                 UpdateScrollSize();
             _contentPanel.Invalidate();
         }
