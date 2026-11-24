@@ -2281,5 +2281,7 @@
   "Accelerometer 3 clipping count": "第 3 个加速度计削波次数",
   "X-axis vibration level": "X 轴振动水平",
   "Y-axis vibration level": "Y 轴振动水平",
-  "Z-axis vibration level": "Z 轴振动水平"
+  "Z-axis vibration level": "Z 轴振动水平",
+  "Battery ID {0} temperature (°C)": "电池 ID {0} 温度 (°C)",
+  "Battery ID {0} estimated time remaining (min)": "电池 ID {0} 预计剩余时间 (分钟)"
 }
