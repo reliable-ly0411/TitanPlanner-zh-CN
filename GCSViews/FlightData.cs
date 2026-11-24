@@ -538,6 +538,9 @@ namespace MissionPlanner.GCSViews
 
             // Replace TabControl with ThemedTabStrip
             ReplaceTabControlWithThemedTabStrip();
+#if !LIB
+            SubMainLeft.SizeChanged += (sender, e) => QueueCompactHudBounds();
+#endif
 
             instance = this;
 
@@ -1453,7 +1456,10 @@ namespace MissionPlanner.GCSViews
                 {
                     // Save all split ratios on app close
                     SaveSplitRatio(MainH, SettingsKeyMainH);
-                    SaveSplitRatio(SubMainLeft, SettingsKeySubMainLeft);
+#if !LIB
+                    if (!compactHudOriginalPadding.HasValue)
+#endif
+                        SaveSplitRatio(SubMainLeft, SettingsKeySubMainLeft);
                     SaveSplitRatio(splitContainer1, SettingsKeyMapBottom);
                     SaveSplitRatio(splitContainer2, SettingsKeyTuningParams);
                 }
@@ -4323,7 +4329,12 @@ namespace MissionPlanner.GCSViews
                 return;
 
             if(hud1.Parent == SubMainLeft.Panel1)
+            {
                 SubMainLeft.Panel1Collapsed = true;
+#if !LIB
+                RestoreCompactHudPadding();
+#endif
+            }
             Form dropout = new Form();
             dropout.Text = UiText.Translate("HUD Dropout");
             dropout.Size = new Size(hud1.Width, hud1.Height + 20);
@@ -4448,8 +4459,110 @@ namespace MissionPlanner.GCSViews
             combo.DropDownWidth = width;
         }
 
+#if !LIB
+        // Preserve the user's horizontal HUD/map split. Only letterbox the stock,
+        // attached left HUD when filling its natural aspect would hide the action tabs.
+        private Padding? compactHudOriginalPadding;
+        private bool applyingCompactHudBounds;
+
+        private bool compactHudBoundsQueued;
+
+        private void QueueCompactHudBounds()
+        {
+            if (MainV2.MONO || applyingCompactHudBounds || compactHudBoundsQueued ||
+                IsDisposed || !IsHandleCreated)
+                return;
+
+            compactHudBoundsQueued = true;
+            BeginInvoke(new Action(() =>
+            {
+                compactHudBoundsQueued = false;
+                if (!IsDisposed)
+                    ApplyCompactHudBounds();
+            }));
+        }
+
+        private static int CompactHudWidth(int availableWidth, int splitHeight,
+            int splitterWidth, double aspect, int dpi)
+        {
+            const int logicalTabReserve = 150; // tab header, inner padding, search and usable rows
+            const int logicalMinimumHud = 100;
+            int reserve = (int)Math.Ceiling(logicalTabReserve * dpi / 96.0);
+            int maxHeight = splitHeight - splitterWidth - reserve;
+            if (availableWidth <= 0 || maxHeight < logicalMinimumHud * dpi / 96.0 ||
+                (int)(availableWidth / aspect) <= maxHeight)
+                return availableWidth;
+            return Math.Min(availableWidth, (int)Math.Floor(maxHeight * aspect));
+        }
+
+        private void RestoreCompactHudPadding()
+        {
+            if (!compactHudOriginalPadding.HasValue)
+                return;
+            Padding original = compactHudOriginalPadding.Value;
+            compactHudOriginalPadding = null;
+            SubMainLeft.Panel1.Padding = original;
+        }
+
+        private bool ApplyCompactHudBounds()
+        {
+            if (applyingCompactHudBounds)
+                return true;
+            if (MainV2.MONO || _themedTabStrip == null || hud1 == null ||
+                hud1.Parent != SubMainLeft.Panel1 || hud1.Dock != DockStyle.Fill ||
+                SubMainLeft.Panel1Collapsed || SubMainLeft.Panel2Collapsed ||
+                SubMainLeft.Panel1MinSize != 0 || SubMainLeft.Panel2MinSize != 0)
+                return false;
+
+            var panel = SubMainLeft.Panel1;
+            Padding original = compactHudOriginalPadding ?? panel.Padding;
+            int availableWidth = panel.ClientSize.Width - original.Horizontal;
+            double aspect = hud1.SixteenXNine ? 1.777f : 1.333f;
+            int fittedWidth = CompactHudWidth(availableWidth, SubMainLeft.ClientSize.Height,
+                SubMainLeft.SplitterWidth, aspect, DeviceDpi);
+            bool compact = fittedWidth < availableWidth;
+            if (!compact && !compactHudOriginalPadding.HasValue)
+                return false;
+
+            applyingCompactHudBounds = true;
+            try
+            {
+                if (compact)
+                {
+                    compactHudOriginalPadding = original;
+                    int left = (availableWidth - fittedWidth) / 2;
+                    var inset = new Padding(original.Left + left, original.Top,
+                        original.Right + availableWidth - fittedWidth - left, original.Bottom);
+                    if (panel.Padding != inset)
+                        panel.Padding = inset;
+                }
+                else
+                {
+                    RestoreCompactHudPadding();
+                }
+
+                int target = Math.Max(0, Math.Min(SubMainLeft.ClientSize.Height - SubMainLeft.SplitterWidth,
+                    (int)(fittedWidth / aspect) + original.Vertical));
+                if (SubMainLeft.SplitterDistance != target)
+                    SubMainLeft.SplitterDistance = target;
+                panel.PerformLayout();
+                return true;
+            }
+            finally
+            {
+                applyingCompactHudBounds = false;
+            }
+        }
+#endif
+
+
         private void hud1_Resize(object sender, EventArgs e)
         {
+#if !LIB
+            QueueCompactHudBounds();
+            if (applyingCompactHudBounds || compactHudOriginalPadding.HasValue)
+                return;
+#endif
             Console.WriteLine("HUD resize " + hud1.Width + " " + hud1.Height); // +"\n"+ System.Environment.StackTrace);
 
             if (hud1.Parent == this.SubMainLeft.Panel1)
@@ -6694,6 +6807,9 @@ namespace MissionPlanner.GCSViews
                 hud1.Anchor = AnchorStyles.None;
                 MainH.Panel2.Controls.Add(hud1);
                 SubMainLeft.Panel1.Controls.Add(tableMap);
+#if !LIB
+                RestoreCompactHudPadding();
+#endif
                 tableMap.Dock = DockStyle.Fill;
                 // Center the HUD in the panel
                 CenterHudInPanel(MainH.Panel2);
@@ -6731,6 +6847,9 @@ namespace MissionPlanner.GCSViews
                 // HUD moving back to left - remove min size constraints
                 SubMainLeft.Panel1MinSize = 0;
                 SubMainLeft.Panel2MinSize = 0;
+#if !LIB
+                QueueCompactHudBounds();
+#endif
             }
         }
 

@@ -155,6 +155,8 @@ Replaced the dated FlightData tab bar with a modern themed strip and refreshed i
 ## Splits, Sizing & Defaults
 Split percentages on every divider in the main GUI persist across launches, with faster swap and resize behavior. New installs default to maximized window and ~50% HUD width. HUD vertically centers when swapped with the map.
 
+On compact Windows flight-data windows, the attached left HUD scales down without changing its aspect ratio or the saved map-divider position, leaving space for the Actions, Messages and Status tabs.
+
 ---
 
 # Parameters

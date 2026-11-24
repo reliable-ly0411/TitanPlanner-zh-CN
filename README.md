@@ -46,6 +46,8 @@ This fork implements every feature we've always yearned for with considerable UI
 
 **See [CHANGES.md](CHANGES.md) for the full list of features and fixes added in this fork.**
 
+On compact Windows screens, the default flight-data HUD leaves room for Actions, Messages and Status without moving the HUD/map divider.
+
 ---
 
 ## Installation
