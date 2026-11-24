@@ -112,8 +112,8 @@ namespace MissionPlanner.Controls
                     // Rendered font metrics include both DPI and user font changes.
                     float scale = Math.Max(_boldFont.GetHeight(graphics), _normalFont.GetHeight(graphics)) / 13f;
                     _padding = Math.Max(1, (int)Math.Ceiling(8 * scale));
-                    _nameValueGap = Math.Max(1, (int)Math.Ceiling(8 * scale));
-                    _columnGap = Math.Max(1, (int)Math.Ceiling(20 * scale));
+                    _nameValueGap = Math.Max(1, (int)Math.Ceiling(6 * scale));
+                    _columnGap = Math.Max(1, (int)Math.Ceiling(14 * scale));
                     _rowHeight = Math.Max(1, (int)Math.Ceiling(17 * scale));
                     _minimumValueWidth = (int)Math.Ceiling(50 * scale);
                     var nameWidths = _filteredItems.Select(item =>
@@ -135,7 +135,8 @@ namespace MissionPlanner.Controls
                             // falling back to one. Only an intrinsically wide row needs horizontal scroll.
                             int twoColumnRows = _filteredItems.Count / 2 + _filteredItems.Count % 2;
                             if (twoColumnRows > rows &&
-                                BuildColumns(twoColumnRows, nameLimit, viewport.Width, nameWidths, valueWidths, graphics, out width))
+                                (BuildColumns(twoColumnRows, nameLimit, viewport.Width, nameWidths, valueWidths, graphics, out width) ||
+                                 TryFitTwoColumns(twoColumnRows, nameLimit, viewport.Width, nameWidths, valueWidths, graphics, out width)))
                             {
                                 rows = twoColumnRows;
                             }
@@ -160,6 +161,20 @@ namespace MissionPlanner.Controls
                 _contentPanel.Invalidate();
             }
             finally { _updatingLayout = false; }
+        }
+
+        private bool TryFitTwoColumns(int rows, int nameLimit, int availableWidth, int[] nameWidths,
+            int[] valueWidths, Graphics graphics, out int width)
+        {
+            width = 0;
+            // Allocate the spare width to names after reserving both columns' full measured
+            // values. Existing tooltip behavior exposes any labels that now need ellipsis.
+            int firstValue = Math.Max(_minimumValueWidth, valueWidths.Take(rows).Max());
+            int secondValue = Math.Max(_minimumValueWidth, valueWidths.Skip(rows).Max());
+            int labelWidth = Math.Min(nameLimit, (availableWidth - _padding * 2 - _columnGap -
+                _nameValueGap * 2 - firstValue - secondValue) / 2);
+            return labelWidth >= _rowHeight * 3 &&
+                BuildColumns(rows, labelWidth, availableWidth, nameWidths, valueWidths, graphics, out width);
         }
 
         private bool BuildColumns(int rows, int nameLimit, int availableWidth, int[] nameWidths,
@@ -191,11 +206,14 @@ namespace MissionPlanner.Controls
                 if (width > availableWidth && (start != 0 || count < _filteredItems.Count))
                     return false;
                 column.Labels = new string[count];
+                column.LabelWidths = new int[count];
                 for (int row = 0; row < count; row++)
                 {
                     var item = _filteredItems[start + row];
                     column.Labels[row] = FitName(item.DisplayName ?? item.Name ?? "", nameWidths[start + row],
                         column.NameWidth, graphics);
+                    column.LabelWidths[row] = Math.Min(column.NameWidth, Math.Max(1,
+                        (int)Math.Ceiling(graphics.MeasureString(column.Labels[row], _boldFont).Width)));
                 }
                 _columns.Add(column);
                 left += column.Width + _columnGap;
@@ -250,9 +268,9 @@ namespace MissionPlanner.Controls
                         // Long names show an ellipsis and a full row tooltip; each
                         // group measures only its own filtered labels and values.
                         g.DrawString(column.Labels[row], _boldFont, nameBrush,
-                            new Rectangle(column.Left, y, column.NameWidth, _rowHeight), format);
+                            new Rectangle(column.Left, y, column.LabelWidths[row], _rowHeight), format);
                         g.DrawString(item.Value ?? "", _normalFont, valueBrush,
-                            new Rectangle(column.Left + column.NameWidth + _nameValueGap, y,
+                            new Rectangle(column.Left + column.LabelWidths[row] + _nameValueGap, y,
                                 column.ValueWidth, _rowHeight), format);
                     }
                 }
@@ -307,7 +325,8 @@ namespace MissionPlanner.Controls
             // Mono can change bar visibility without raising ClientSizeChanged.
             // Ordinary samples only need new value widths, not name measurements.
             if (ViewportSize() != viewport ||
-                (_contentPanel.HorizontalScroll.Visible && _contentPanel.AutoScrollMinSize.Width < previousWidth))
+                ((_columns.Count == 1 || _contentPanel.HorizontalScroll.Visible) &&
+                 _contentPanel.AutoScrollMinSize.Width < previousWidth))
                 UpdateScrollSize();
             _contentPanel.Invalidate();
         }
@@ -436,6 +455,7 @@ namespace MissionPlanner.Controls
         {
             public int Start, Count, Left, Width, NameWidth, ValueWidth;
             public string[] Labels;
+            public int[] LabelWidths;
         }
 
         private class DoubleBufferedPanel : Panel

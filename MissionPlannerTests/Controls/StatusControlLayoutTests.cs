@@ -214,6 +214,40 @@ namespace MissionPlannerTests.Controls
             });
         }
 
+        [TestMethod]
+        public void OrdinaryBilingualCatalogUsesTwoCompactGroupsWithAdjacentValues()
+        {
+            Sta(() =>
+            {
+                using (var form = new Form { ClientSize = new Size(616, 95), AutoScaleMode = AutoScaleMode.None })
+                using (var status = new StatusControl { Dock = DockStyle.Fill })
+                {
+                    form.Controls.Add(status);
+                    form.Show();
+                    for (int i = 0; i < 80; i++)
+                        Items(status).Add(new StatusControl.StatusItem { Name = "field" + i,
+                            DisplayName = i % 4 == 0 ? "Short " + i : "中英文标签 " + new string('W', 80),
+                            Value = "-123.125" });
+                    Reflow(status);
+                    var panel = Field<Panel>(status, "_contentPanel");
+                    var columns = Field<IList>(status, "_columns");
+                    Assert.AreEqual(2, columns.Count);
+                    Assert.IsFalse(panel.HorizontalScroll.Visible);
+                    Assert.IsTrue(panel.VerticalScroll.Visible);
+                    int gap = Field<int>(status, "_nameValueGap");
+                    foreach (var column in columns)
+                    {
+                        int[] labelWidths = (int[])column.GetType().GetField("LabelWidths").GetValue(column);
+                        Assert.IsTrue(labelWidths.Any(width => width < Column(column, "NameWidth") - 25),
+                            "Short labels must not reserve the width of the longest label.");
+                        Assert.IsTrue(labelWidths.All(width => width + gap + Column(column, "ValueWidth") <= Column(column, "Width")),
+                            "Every label and its adjacent value must fit within the group.");
+                    }
+                    AssertLayout(status);
+                }
+            });
+        }
+
         private static void AssertLayout(StatusControl status)
         {
             var panel = Field<Panel>(status, "_contentPanel");
