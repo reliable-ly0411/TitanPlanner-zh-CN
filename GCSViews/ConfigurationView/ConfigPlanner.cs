@@ -347,7 +347,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             ["Download the parameters again and reload the screen"] = "重新读取参数并刷新页面",
             ["Connect or disconnect"] = "连接或断开",
             ["Open the Tools window"] = "打开工具窗口",
-            ["Send the vehicle's position out as NMEA"] = "以 NMEA 格式输出飞行器位置",
+            ["Send the vehicle's position out as NMEA"] = "打开 NMEA 输出设置窗口",
             ["Open the DevOps tools"] = "打开开发运维工具",
             ["Open the spectrogram"] = "打开频谱图",
             ["Open the plugin manager"] = "打开插件管理器",
