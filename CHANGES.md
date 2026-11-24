@@ -39,6 +39,8 @@ What this fork adds on top of upstream [ArduPilot/MissionPlanner](https://github
 
 The simulation screen keeps location and heading controls reachable in smaller windows, wraps advanced options and vehicle choices, and scrolls when the available height is limited.
 
+The Copter x simulation preset uses its own catalog defaults. If a required defaults file is unavailable or empty, startup reports the file and stops.
+
 # Branding & Theming
 
 ## Localized brand links
