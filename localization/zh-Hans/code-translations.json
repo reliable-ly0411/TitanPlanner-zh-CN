@@ -2249,7 +2249,7 @@
   "Flight Planner sample menu: This will be the heading": "此角度将作为航向。",
   "CubeLan 8 port Switch": "CubeLan 八口交换机",
   "Port {0}\nCOS Enable": "端口 {0}\n启用 COS",
-  "Port {0}\nCOS High Priority": "端口 {0}\nCOS 高优先",
+  "Port {0}\nCOS High Priority": "COS {0}口\n高优先级",
   "Port {0}\nEEE Enable": "端口 {0}\n启用 EEE",
   "Port {0}\nVLAN Tagged": "端口 {0}\nVLAN 标记",
   "Port {0} to Port {1}": "{0} → {1}",

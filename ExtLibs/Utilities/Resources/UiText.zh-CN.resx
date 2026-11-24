@@ -8437,8 +8437,8 @@ ffdshow
     <comment>"Port {0}\nCOS Enable"</comment>
   </data>
   <data name="6aa3ff2af96df123b46eeaccaa0f465c6eea417fb00d2591c8f3fdacda87dfbc" xml:space="preserve">
-    <value>端口 {0}
-COS 高优先</value>
+    <value>COS {0}口
+高优先级</value>
     <comment>"Port {0}\nCOS High Priority"</comment>
   </data>
   <data name="70f4f801c9a4957c87e51bab5c6dbe6ff290025a32e1f840fb70d3f5f94f19f8" xml:space="preserve">
