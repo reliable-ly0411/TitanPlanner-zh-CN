@@ -3017,6 +3017,22 @@ Ctrl+O 从文件加载</value>
     <value>电调类型：</value>
     <comment>"ESC Type:"</comment>
   </data>
+  <data name="c6e846081c2b2532f02ae96175fcd7c707ec727c505aa670bb3b22f83e729afa" xml:space="preserve">
+    <value>电调 {0} 电流 (A)</value>
+    <comment>"ESC {0} current (A)"</comment>
+  </data>
+  <data name="e5430c5218877fea7985473c09e659b4fa8d1128d40391fc79a2c44983f32ac9" xml:space="preserve">
+    <value>电调 {0} 电气转速 (eRPM)</value>
+    <comment>"ESC {0} electrical RPM"</comment>
+  </data>
+  <data name="47f049b430607a7443603c30a55c03e7691e965d942e6ab063ecf3ab1d411e45" xml:space="preserve">
+    <value>电调 {0} 温度 (°C)</value>
+    <comment>"ESC {0} temperature (°C)"</comment>
+  </data>
+  <data name="ffb847f7715c8d49ccad7d3d0abf3263b37a7995f252bab23c4dd0036a058ad7" xml:space="preserve">
+    <value>电调 {0} 电压 (V)</value>
+    <comment>"ESC {0} voltage (V)"</comment>
+  </data>
   <data name="821ad6c2da96e0e86d1413a28fb3473c27cf5ab9c746d1760b78030fcce9239a" xml:space="preserve">
     <value>EXE、安装器与资源管理器图标需重新构建。已有或固定的快捷方式保留自身图标，需另行更换或重建；Windows 任务栏可能保留图标缓存。</value>
     <comment>"EXE, installer and Explorer icons require a rebuild. Existing or pinned shortcuts keep their own icons; change or recreate them separately. Windows may retain a cached taskbar icon."</comment>
@@ -4462,6 +4478,26 @@ Ctrl+O 从文件加载</value>
   <data name="3ff2c64a53559b95aa24aba0fb1dd02f28255979fadcc27ee4dc080305ceb431" xml:space="preserve">
     <value>生成密钥</value>
     <comment>"Generate Key"</comment>
+  </data>
+  <data name="a9d162ebccd19a70f781ddf7a8f7d473c1fc6e67c79158433c40e60a87b2d20f" xml:space="preserve">
+    <value>发电机侧母线电压 (V)</value>
+    <comment>"Generator bus voltage (V)"</comment>
+  </data>
+  <data name="0dd651c9fe15c754d6aaa3a0451da096d976b65650c5307532e9b441ab9e41f8" xml:space="preserve">
+    <value>发电机负载电流 (A)</value>
+    <comment>"Generator load current (A)"</comment>
+  </data>
+  <data name="4ae8a37c2ffb2c3e08e51a2bf3490aca73a567e57cc8a473045089cc68171f1c" xml:space="preserve">
+    <value>发电机本次运行时间 (s)</value>
+    <comment>"Generator run time since restart (s)"</comment>
+  </data>
+  <data name="95ec084da5db7975bcebd1b9512b681a34456db7e9f040a73e2b957bea92671d" xml:space="preserve">
+    <value>发电机转速 (rpm)</value>
+    <comment>"Generator speed (rpm)"</comment>
+  </data>
+  <data name="da706797faa6738813863c6844142c5b47bef3b7f9685dc8a2214bae2d6e0604" xml:space="preserve">
+    <value>发电机状态标志</value>
+    <comment>"Generator status flags"</comment>
   </data>
   <data name="c748ff517cf3ffa6128fb000e2468c38248a43c51369ed29a192813b2457febe" xml:space="preserve">
     <value>影像地理配准</value>
@@ -9437,6 +9473,30 @@ gps_point：跟踪单个地面点</value>
     <value>备用</value>
     <comment>"Secondary"</comment>
   </data>
+  <data name="22ea075b4cd423753863d6d8d474d369edd49d82cab476cd8c208c48909bfd96" xml:space="preserve">
+    <value>第二 AHRS：海拔 (m)</value>
+    <comment>"Secondary AHRS altitude (MSL, m)"</comment>
+  </data>
+  <data name="42bf1dbf87396d020777250892f9d56340e66a42b5fd3866a018b28d849db826" xml:space="preserve">
+    <value>第二 AHRS：纬度 (°)</value>
+    <comment>"Secondary AHRS latitude (°)"</comment>
+  </data>
+  <data name="9739dc0d69f097fdd9f20405739ccddf582c03d0f08329d653e5ce12d8ade2fa" xml:space="preserve">
+    <value>第二 AHRS：经度 (°)</value>
+    <comment>"Secondary AHRS longitude (°)"</comment>
+  </data>
+  <data name="990bc05298662943ea80b1d970be96fcd0c18b48d2dbfc7b7707418123d48647" xml:space="preserve">
+    <value>第二 AHRS：俯仰角 (°)</value>
+    <comment>"Secondary AHRS pitch (°)"</comment>
+  </data>
+  <data name="850973aee6f975b3ab763d084206b3ee4c2ee999a0a54f72a550a228bb15008a" xml:space="preserve">
+    <value>第二 AHRS：横滚角 (°)</value>
+    <comment>"Secondary AHRS roll (°)"</comment>
+  </data>
+  <data name="2da6ffdae881c4e2f3f493f6a17fa08bf3aec558e7e5a1b771e522219e7f75bd" xml:space="preserve">
+    <value>第二 AHRS：偏航角 (°)</value>
+    <comment>"Secondary AHRS yaw (°)"</comment>
+  </data>
   <data name="488a3f524b5ee234b30fa1399caba8d6b99b03209abbc61aa9eceb4fd030493b" xml:space="preserve">
     <value>时间偏移（秒）</value>
     <comment>"Seconds offset"</comment>
@@ -10764,6 +10824,10 @@ Acc：当前测定位置的精度
   <data name="a29df5eb8db385b4775f239c5e2afd8927bc33531a6aaa28b0967a964ef014e0" xml:space="preserve">
     <value>到达目标预计时间 (sec)</value>
     <comment>"Time over Target (sec)"</comment>
+  </data>
+  <data name="7d091129fd707259dcedbf31f969bb8a5c92ce31618df81cd71ca881bd2433ae" xml:space="preserve">
+    <value>距发电机保养剩余时间 (s)</value>
+    <comment>"Time until generator maintenance (s)"</comment>
   </data>
   <data name="7c5053e21a3317f56521e86c86b152337e84a58c1e912763a110ff087f02562c" xml:space="preserve">
     <value>时间 (s)</value>

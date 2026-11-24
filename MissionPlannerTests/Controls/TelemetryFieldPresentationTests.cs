@@ -99,6 +99,45 @@ namespace MissionPlannerTests.Controls
         }
 
         [TestMethod]
+        public void SecondaryAhrsEscAndGeneratorUseExactKeysAndEnhancedDescriptions()
+        {
+            var previous = CultureInfo.CurrentUICulture;
+            try
+            {
+                CultureInfo.CurrentUICulture = new CultureInfo("zh-CN");
+                var ahrs = new[] { "ahrs2_alt", "ahrs2_lat", "ahrs2_lng", "ahrs2_pitch", "ahrs2_roll", "ahrs2_yaw" };
+                var generator = new[] { "gen_status", "gen_speed", "gen_current", "gen_voltage", "gen_runtime", "gen_maint_time" };
+                var esc = Enumerable.Range(1, 16).SelectMany(i => new[] { "curr", "rpm", "temp", "volt" }
+                    .Select(kind => "esc" + i.ToString(CultureInfo.InvariantCulture) + "_" + kind));
+                foreach (var key in ahrs.Concat(generator).Concat(esc))
+                {
+                    Assert.IsNotNull(typeof(CurrentState).GetProperty(key), key);
+                    var label = TelemetryFieldPresentation.FieldLabel(key);
+                    Assert.IsTrue(label.StartsWith(key + " (", StringComparison.Ordinal), label);
+                    Assert.IsTrue(label.Any(c => c >= '\u4e00' && c <= '\u9fff'), label);
+                    Assert.IsTrue(TelemetryFieldPresentation.Matches(key, key, label), key);
+                }
+
+                var rotor = TelemetryFieldPresentation.FieldLabel("esc16_rpm");
+                var current = TelemetryFieldPresentation.FieldLabel("gen_current");
+                Assert.IsTrue(TelemetryFieldPresentation.Matches("电气转速", rotor));
+                Assert.IsTrue(rotor.Contains("eRPM"), rotor);
+                Assert.IsTrue(TelemetryFieldPresentation.Matches("负载电流", current));
+                Assert.IsTrue(current.Contains("(A)"), current);
+                foreach (var key in new[] { "esc0_rpm", "esc01_rpm", "esc17_rpm", "esc1_unknown", "future_unknown" })
+                    Assert.AreEqual(key, TelemetryFieldPresentation.FieldLabel(key));
+
+                foreach (var culture in new[] { "zh-Hans", "en-US", "fr-FR" })
+                {
+                    CultureInfo.CurrentUICulture = new CultureInfo(culture);
+                    foreach (var key in new[] { "ahrs2_lat", "esc16_rpm", "gen_current" })
+                        Assert.AreEqual(key, TelemetryFieldPresentation.FieldLabel(key));
+                }
+            }
+            finally { CultureInfo.CurrentUICulture = previous; }
+        }
+
+        [TestMethod]
         public void StatusBilingualLabelRemainsReadableAtNarrowSizes()
         {
             Exception failure = null;

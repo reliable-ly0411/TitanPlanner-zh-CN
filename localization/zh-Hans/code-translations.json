@@ -2253,5 +2253,21 @@
   "Port {0}\nEEE Enable": "端口 {0}\n启用 EEE",
   "Port {0}\nVLAN Tagged": "端口 {0}\nVLAN 标记",
   "Port {0} to Port {1}": "{0} → {1}",
-  "i2c2 only": "仅限 I²C2"
+  "i2c2 only": "仅限 I²C2",
+  "Secondary AHRS altitude (MSL, m)": "第二 AHRS：海拔 (m)",
+  "Secondary AHRS latitude (°)": "第二 AHRS：纬度 (°)",
+  "Secondary AHRS longitude (°)": "第二 AHRS：经度 (°)",
+  "Secondary AHRS pitch (°)": "第二 AHRS：俯仰角 (°)",
+  "Secondary AHRS roll (°)": "第二 AHRS：横滚角 (°)",
+  "Secondary AHRS yaw (°)": "第二 AHRS：偏航角 (°)",
+  "ESC {0} current (A)": "电调 {0} 电流 (A)",
+  "ESC {0} electrical RPM": "电调 {0} 电气转速 (eRPM)",
+  "ESC {0} temperature (°C)": "电调 {0} 温度 (°C)",
+  "ESC {0} voltage (V)": "电调 {0} 电压 (V)",
+  "Generator status flags": "发电机状态标志",
+  "Generator speed (rpm)": "发电机转速 (rpm)",
+  "Generator load current (A)": "发电机负载电流 (A)",
+  "Generator bus voltage (V)": "发电机侧母线电压 (V)",
+  "Generator run time since restart (s)": "发电机本次运行时间 (s)",
+  "Time until generator maintenance (s)": "距发电机保养剩余时间 (s)"
 }
