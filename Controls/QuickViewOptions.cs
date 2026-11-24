@@ -58,8 +58,15 @@ namespace MissionPlanner.Controls
                 }
                 else
                 {
-                    var description = UiText.Translate(MainV2.comPort.MAV.cs.GetNameandUnit(field.Name));
-                    var display = description == field.Name ? field.Name : field.Name + " (" + description + ")";
+                    // Enhanced Chinese shares the HUD and Status catalog. Keep the established fallback.
+                    var display = field.Name;
+                    if (string.Equals(System.Globalization.CultureInfo.CurrentUICulture.Name, "zh-CN", StringComparison.OrdinalIgnoreCase))
+                        display = TelemetryFieldPresentation.FieldLabel(field.Name);
+                    if (display == field.Name)
+                    {
+                        var description = UiText.Translate(MainV2.comPort.MAV.cs.GetNameandUnit(field.Name));
+                        display = description == field.Name ? field.Name : field.Name + " (" + description + ")";
+                    }
                     all_fields.Add(new Tuple<string, string>(field.Name, display));
                 }
             }
