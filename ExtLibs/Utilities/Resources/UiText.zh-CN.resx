@@ -2396,6 +2396,10 @@ Ctrl+O 从文件加载</value>
     <value>更新 CubeID</value>
     <comment>"CubeID Update"</comment>
   </data>
+  <data name="a3946cb668cae44f1ecbf7faa5aa438a8ff40135af9fad0739286cd3ec002498" xml:space="preserve">
+    <value>CubeLan 八口交换机</value>
+    <comment>"CubeLan 8 port Switch"</comment>
+  </data>
   <data name="20994240e7b674a590c2e40afb6dc95236b6a21cd40e77241299ef0df6e4030f" xml:space="preserve">
     <value>仅限 CubeOrange：不了解后果时请勿使用</value>
     <comment>"CubeOrange Only - DO NOT USE  UNLESS YOU UNDERSTAND THE CONSEQUENCE"</comment>
@@ -8427,6 +8431,30 @@ ffdshow
     <value>端口名称</value>
     <comment>"Port Name"</comment>
   </data>
+  <data name="f7708433d89b48894ca4fff6dce0337951bc68d854e1be15f93fb997e2989e49" xml:space="preserve">
+    <value>端口 {0}
+启用 COS</value>
+    <comment>"Port {0}\nCOS Enable"</comment>
+  </data>
+  <data name="6aa3ff2af96df123b46eeaccaa0f465c6eea417fb00d2591c8f3fdacda87dfbc" xml:space="preserve">
+    <value>COS {0}口
+高优先级</value>
+    <comment>"Port {0}\nCOS High Priority"</comment>
+  </data>
+  <data name="70f4f801c9a4957c87e51bab5c6dbe6ff290025a32e1f840fb70d3f5f94f19f8" xml:space="preserve">
+    <value>端口 {0}
+启用 EEE</value>
+    <comment>"Port {0}\nEEE Enable"</comment>
+  </data>
+  <data name="09160df1d38e7ab5ac42fa7e490c9cec68da0281b074f4034de102d9f0171f6c" xml:space="preserve">
+    <value>端口 {0}
+VLAN 标记</value>
+    <comment>"Port {0}\nVLAN Tagged"</comment>
+  </data>
+  <data name="6d1a19ca28b20b332756e53b5fdb734c7e966c1b89ed5be61422d1c0fb337513" xml:space="preserve">
+    <value>{0} → {1}</value>
+    <comment>"Port {0} to Port {1}"</comment>
+  </data>
   <data name="1269dd55bea3bb786b69cd74e063d1c86167c4aef10bd3b9005d9577378b08e7" xml:space="preserve">
     <value>端口：</value>
     <comment>"Port:"</comment>
@@ -12006,6 +12034,10 @@ http://www.magnetic-declination.com/</value>
   <data name="be02f34d565845d2b9a84a0e72206844fb56e47c4652624bc31317b0b2ae9d27" xml:space="preserve">
     <value>输入频率 (Hz)</value>
     <comment>"hz input"</comment>
+  </data>
+  <data name="09588a5425c6aa7517c06ca452e49578a6b10bc6ea24a167136825a7ac9e38c0" xml:space="preserve">
+    <value>仅限 I²C2</value>
+    <comment>"i2c2 only"</comment>
   </data>
   <data name="c96c6d5be8d08a12e7b5cdc1b207fa6b2430974c86803d8891675e76fd992c20" xml:space="preserve">
     <value>输入</value>

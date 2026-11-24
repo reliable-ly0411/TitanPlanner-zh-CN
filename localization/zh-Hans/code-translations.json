@@ -2246,5 +2246,12 @@
   "Flight Planner sample menu: Enter a valid integer.": "请输入有效的整数。",
   "Flight Planner sample menu: The mission command list is not ready.": "任务命令列表尚未就绪。",
   "Flight Planner sample menu: Enter Angle": "输入角度",
-  "Flight Planner sample menu: This will be the heading": "此角度将作为航向。"
+  "Flight Planner sample menu: This will be the heading": "此角度将作为航向。",
+  "CubeLan 8 port Switch": "CubeLan 八口交换机",
+  "Port {0}\nCOS Enable": "端口 {0}\n启用 COS",
+  "Port {0}\nCOS High Priority": "COS {0}口\n高优先级",
+  "Port {0}\nEEE Enable": "端口 {0}\n启用 EEE",
+  "Port {0}\nVLAN Tagged": "端口 {0}\nVLAN 标记",
+  "Port {0} to Port {1}": "{0} → {1}",
+  "i2c2 only": "仅限 I²C2"
 }
