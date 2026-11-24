@@ -112,6 +112,35 @@ namespace MissionPlanner.plugins
 
         }
 
+        private void MeasureLocalizedMatrix()
+        {
+            var layout = tableLayoutPanel1;
+            int minimumColumn = 1;
+            foreach (CheckBox option in layout.Controls.OfType<CheckBox>())
+            {
+                var size = option.GetPreferredSize(System.Drawing.Size.Empty);
+                minimumColumn = Math.Max(minimumColumn, size.Width + option.Margin.Horizontal);
+                int row = layout.GetPositionFromControl(option).Row;
+                if (row >= 0 && row < layout.RowStyles.Count)
+                    layout.RowStyles[row].Height = Math.Max(layout.RowStyles[row].Height,
+                        size.Height + option.Margin.Vertical);
+            }
+            int minimumWidth = minimumColumn * layout.ColumnCount;
+            int minimumHeight = (int)layout.RowStyles.Cast<RowStyle>().Sum(style => style.Height);
+            layout.Dock = DockStyle.None;
+            AutoScroll = true;
+            AutoScrollMinSize = new System.Drawing.Size(minimumWidth, minimumHeight);
+            ClientSizeChanged -= ResizeLocalizedMatrix;
+            ClientSizeChanged += ResizeLocalizedMatrix;
+            ResizeLocalizedMatrix(this, EventArgs.Empty);
+        }
+
+        private void ResizeLocalizedMatrix(object sender, EventArgs e)
+        {
+            var minimum = AutoScrollMinSize;
+            tableLayoutPanel1.Size = new System.Drawing.Size(Math.Max(ClientSize.Width, minimum.Width), minimum.Height);
+        }
+
         /// <summary>
         /// Called when the ConfigPayload view is activated.
         /// </summary>
@@ -271,7 +300,10 @@ namespace MissionPlanner.plugins
             tableLayoutPanel1.Controls.Add(new Label() { Text = buffer.Select(a => a.ToString("X2")).Aggregate((a, b) => a + b) });
             tableLayoutPanel1.Controls.Add(new Label() { Text = enhancedChinese ? UiText.Translate("i2c2 only") : "i2c2 only" });
             if (enhancedChinese)
+            {
                 ThemeManager.ApplyThemeTo(tableLayoutPanel1);
+                MeasureLocalizedMatrix();
+            }
 
             // restore config
             foreach (var item in tableLayoutPanel1.Controls)
