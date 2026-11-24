@@ -16,6 +16,8 @@ namespace MissionPlanner.Controls
             if (!string.Equals(CultureInfo.CurrentUICulture.Name, "zh-CN", StringComparison.OrdinalIgnoreCase))
                 return key;
             var description = CurrentState.GetDisplayText(key);
+            if (string.IsNullOrWhiteSpace(description) || description == key)
+                description = MissingDisplayDescription(key);
             // Attribute placeholders do not guarantee the units of every input path.
             // Keep the key and description, but never infer a physical unit from them.
             description = description.Replace(" (dist)", "").Replace(" (alt)", "")
@@ -25,6 +27,43 @@ namespace MissionPlanner.Controls
             if (key == "vx" || key == "vy" || key == "vz")
                 description = description.Replace("(ms)", "(m/s)");
             return Combine(key, description);
+        }
+
+        private static string MissingDisplayDescription(string key)
+        {
+            switch (key)
+            {
+                case "ahrs2_alt": return UiText.Translate("Secondary AHRS altitude (MSL, m)");
+                case "ahrs2_lat": return UiText.Translate("Secondary AHRS latitude (°)");
+                case "ahrs2_lng": return UiText.Translate("Secondary AHRS longitude (°)");
+                case "ahrs2_pitch": return UiText.Translate("Secondary AHRS pitch (°)");
+                case "ahrs2_roll": return UiText.Translate("Secondary AHRS roll (°)");
+                case "ahrs2_yaw": return UiText.Translate("Secondary AHRS yaw (°)");
+                case "gen_status": return UiText.Translate("Generator status flags");
+                case "gen_speed": return UiText.Translate("Generator speed (rpm)");
+                case "gen_current": return UiText.Translate("Generator load current (A)");
+                case "gen_voltage": return UiText.Translate("Generator bus voltage (V)");
+                case "gen_runtime": return UiText.Translate("Generator run time since restart (s)");
+                case "gen_maint_time": return UiText.Translate("Time until generator maintenance (s)");
+            }
+
+            if (!key.StartsWith("esc", StringComparison.Ordinal))
+                return key;
+            int separator = key.IndexOf('_', 3);
+            if (separator < 4 || separator > 5 ||
+                !int.TryParse(key.Substring(3, separator - 3), NumberStyles.None, CultureInfo.InvariantCulture, out int number) ||
+                number < 1 || number > 16 ||
+                separator != (number < 10 ? 4 : 5))
+                return key;
+
+            switch (key.Substring(separator + 1))
+            {
+                case "curr": return UiText.Format($"ESC {number} current (A)");
+                case "rpm": return UiText.Format($"ESC {number} electrical RPM");
+                case "temp": return UiText.Format($"ESC {number} temperature (°C)");
+                case "volt": return UiText.Format($"ESC {number} voltage (V)");
+                default: return key;
+            }
         }
 
         public static string Combine(string original, string description)
