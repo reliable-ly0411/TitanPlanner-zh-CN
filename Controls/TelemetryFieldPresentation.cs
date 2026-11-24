@@ -33,6 +33,9 @@ namespace MissionPlanner.Controls
         {
             switch (key)
             {
+                case "altd100": return UiText.Translate("Relative altitude hundreds component (fractional)");
+                case "altd1000": return UiText.Translate("Relative altitude thousands component (fractional)");
+                case "armed": return UiText.Translate("Vehicle armed state");
                 case "ahrs2_alt": return UiText.Translate("Secondary AHRS altitude (MSL, m)");
                 case "ahrs2_lat": return UiText.Translate("Secondary AHRS latitude (°)");
                 case "ahrs2_lng": return UiText.Translate("Secondary AHRS longitude (°)");
@@ -46,6 +49,13 @@ namespace MissionPlanner.Controls
                 case "gen_runtime": return UiText.Translate("Generator run time since restart (s)");
                 case "gen_maint_time": return UiText.Translate("Time until generator maintenance (s)");
             }
+
+
+            const string cellPrefix = "battery_cell";
+            if (key.StartsWith(cellPrefix, StringComparison.Ordinal) &&
+                int.TryParse(key.Substring(cellPrefix.Length), NumberStyles.None, CultureInfo.InvariantCulture, out int cell) &&
+                cell >= 1 && cell <= 14 && key.Length == cellPrefix.Length + (cell < 10 ? 1 : 2))
+                return UiText.Format($"Primary battery cell {cell} voltage (V)");
 
             if (!key.StartsWith("esc", StringComparison.Ordinal))
                 return key;

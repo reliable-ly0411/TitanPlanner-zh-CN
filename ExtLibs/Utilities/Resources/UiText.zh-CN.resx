@@ -8591,6 +8591,10 @@ VLAN 标记</value>
     <value>主用</value>
     <comment>"Primary"</comment>
   </data>
+  <data name="352e2b4d7ce6985a8f0b61b5107f9e9449e31cd22f6dfc828db719b41be76da8" xml:space="preserve">
+    <value>主电池第 {0} 节电压 (V)</value>
+    <comment>"Primary battery cell {0} voltage (V)"</comment>
+  </data>
   <data name="d60dbba079223254d4c49c230a515bc107a997e69f811365da2387f8557b9cec" xml:space="preserve">
     <value>优先级</value>
     <comment>"Priority"</comment>
@@ -8976,6 +8980,14 @@ VLAN 标记</value>
   <data name="ab00d1c79ba9a802bae1346f7f46ddb4665668f8d7c7503fa35f05c74b4fc398" xml:space="preserve">
     <value>相对高度</value>
     <comment>"Relative Alt"</comment>
+  </data>
+  <data name="c78ae265dfce7d5dcbb9cc0ad96fc322c675d50921fd1a0c7a5aab418110baab" xml:space="preserve">
+    <value>相对高度百位分量（含小数）</value>
+    <comment>"Relative altitude hundreds component (fractional)"</comment>
+  </data>
+  <data name="c0b09f99537d45b0a718b3440128b521d572420fcfc4a2d28ae903940ddbfd2b" xml:space="preserve">
+    <value>相对高度千位分量（含小数）</value>
+    <comment>"Relative altitude thousands component (fractional)"</comment>
   </data>
   <data name="935e64a3fd56a4fc1031f00506d79ea8cb5da66bd2f8696bf2ad7d94412e0e6d" xml:space="preserve">
     <value>相对高度</value>
@@ -11369,6 +11381,10 @@ Acc：当前测定位置的精度
   <data name="4bce109cd8c9acce3fdaf3a0ec48384310c6e96f6e5384252907b878e2d7b927" xml:space="preserve">
     <value>机型</value>
     <comment>"Vehicle Type"</comment>
+  </data>
+  <data name="8549a9c661e90effdd93f53531e454d84b64a9c645265efc1d8cbb758f46dbe5" xml:space="preserve">
+    <value>飞行器解锁状态</value>
+    <comment>"Vehicle armed state"</comment>
   </data>
   <data name="8965cdc71634bfb3aee3598d2996bc72c78cbcb1c744076bcd2f9d2368bf0295" xml:space="preserve">
     <value>速度</value>
