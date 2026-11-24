@@ -20,6 +20,7 @@ namespace MissionPlanner.Controls
         private int _rowHeight = 18;
         private int _padding = 10;
         private int _nameValueGap = 8;
+        private int _steadyValueWidth;
         private int _columnGap = 20;
         private int _minimumValueWidth = 50;
         private readonly List<StatusColumn> _columns = new List<StatusColumn>();
@@ -116,6 +117,7 @@ namespace MissionPlanner.Controls
                     _columnGap = Math.Max(1, (int)Math.Ceiling(10 * scale));
                     _rowHeight = Math.Max(1, (int)Math.Ceiling(17 * scale));
                     _minimumValueWidth = (int)Math.Ceiling(50 * scale);
+                    _steadyValueWidth = (int)Math.Ceiling(28 * scale);
                     var nameWidths = _filteredItems.Select(item =>
                         (int)Math.Ceiling(graphics.MeasureString(item.DisplayName ?? item.Name ?? "", _boldFont).Width)).ToArray();
                     var valueWidths = _filteredItems.Select(item =>
@@ -129,14 +131,19 @@ namespace MissionPlanner.Controls
                         int rows = Math.Max(1, (viewport.Height - _padding * 2) / _rowHeight);
                         int nameLimit = Math.Max(_rowHeight * 3,
                             Math.Min((int)Math.Ceiling(240 * scale), (int)(viewport.Width * 0.55)));
-                        if (!BuildColumns(rows, nameLimit, viewport.Width, nameWidths, valueWidths, graphics, out var width))
+                        // Do not let one long off-screen label push neighboring groups away from
+                        // the many ordinary rows. Preserve the wider labels for single-group layouts.
+                        int groupNameLimit = _filteredItems.Count > rows
+                            ? Math.Max(_rowHeight * 3, Math.Min(nameLimit, viewport.Width * 29 / 100))
+                            : nameLimit;
+                        if (!BuildColumns(rows, groupNameLimit, viewport.Width, nameWidths, valueWidths, graphics, out var width, nameLimit))
                         {
                             // Try two complete columns with a shared vertical scroll range before
                             // falling back to one. Only an intrinsically wide row needs horizontal scroll.
                             int twoColumnRows = _filteredItems.Count / 2 + _filteredItems.Count % 2;
                             if (twoColumnRows > rows &&
-                                (BuildColumns(twoColumnRows, nameLimit, viewport.Width, nameWidths, valueWidths, graphics, out width) ||
-                                 TryFitTwoColumns(twoColumnRows, nameLimit, viewport.Width, nameWidths, valueWidths, graphics, out width)))
+                                (BuildColumns(twoColumnRows, groupNameLimit, viewport.Width, nameWidths, valueWidths, graphics, out width, nameLimit) ||
+                                 TryFitTwoColumns(twoColumnRows, groupNameLimit, viewport.Width, nameWidths, valueWidths, graphics, out width)))
                             {
                                 rows = twoColumnRows;
                             }
@@ -178,7 +185,7 @@ namespace MissionPlanner.Controls
         }
 
         private bool BuildColumns(int rows, int nameLimit, int availableWidth, int[] nameWidths,
-            int[] valueWidths, Graphics graphics, out int width)
+            int[] valueWidths, Graphics graphics, out int width, int trailingNameLimit = 0)
         {
             _columns.Clear();
             int left = _padding;
@@ -186,11 +193,14 @@ namespace MissionPlanner.Controls
             for (int start = 0; start < _filteredItems.Count; start += rows)
             {
                 int count = Math.Min(rows, _filteredItems.Count - start);
+                // The last group has no following group to push away.
+                int labelLimit = trailingNameLimit > 0 && start + count == _filteredItems.Count
+                    ? trailingNameLimit : nameLimit;
                 var column = new StatusColumn { Start = start, Count = count, Left = left,
                     ValueWidth = _minimumValueWidth };
                 for (int i = start; i < start + count; i++)
                 {
-                    column.NameWidth = Math.Max(column.NameWidth, Math.Min(nameLimit, nameWidths[i]));
+                    column.NameWidth = Math.Max(column.NameWidth, Math.Min(labelLimit, nameWidths[i]));
                     column.ValueWidth = Math.Max(column.ValueWidth, valueWidths[i]);
                 }
                 if (start == 0 && count == _filteredItems.Count)
@@ -214,7 +224,7 @@ namespace MissionPlanner.Controls
                         (int)Math.Ceiling(graphics.MeasureString(column.Labels[row], _boldFont).Width)));
                     column.ValueWidths[row] = Math.Max(1, valueWidths[start + row]);
                     column.Width = Math.Max(column.Width,
-                        column.LabelWidths[row] + _nameValueGap + column.ValueWidths[row]);
+                        column.LabelWidths[row] + _nameValueGap + Math.Max(_steadyValueWidth, column.ValueWidths[row]));
                 }
                 width = left + column.Width + _padding;
                 if (width > availableWidth && (start != 0 || count < _filteredItems.Count))
@@ -323,7 +333,7 @@ namespace MissionPlanner.Controls
                             _filteredItems[column.Start + row].Value ?? "", _normalFont).Width));
                         column.ValueWidth = Math.Max(column.ValueWidth, valueWidth);
                         column.ValueWidths[row] = valueWidth;
-                        column.Width = Math.Max(column.Width, column.LabelWidths[row] + _nameValueGap + valueWidth);
+                        column.Width = Math.Max(column.Width, column.LabelWidths[row] + _nameValueGap + Math.Max(_steadyValueWidth, valueWidth));
                     }
                     column.Left = left;
                     left += column.Width + _columnGap;
