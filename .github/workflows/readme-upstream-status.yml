@@ -1,0 +1,27 @@
+name: Refresh README upstream comparison
+on:
+  push:
+    branches: [zh-CN, zh-CN-dev, Titanmain, missionmain]
+  # Pushes by other workflows using GITHUB_TOKEN do not trigger push workflows.
+  schedule:
+    - cron: '47 */3 * * *'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: readme-upstream-status
+  cancel-in-progress: false
+jobs:
+  update:
+    if: github.repository == 'reliable-ly0411/TitanPlanner-zh-CN' && (github.event_name == 'push' || github.ref == 'refs/heads/zh-CN')
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: zh-CN
+      - name: Update the isolated README status branch
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 scripts/ci/readme_upstream_status.py "$GITHUB_REPOSITORY"
