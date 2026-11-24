@@ -227,7 +227,7 @@ namespace MissionPlannerTests.Controls
                     for (int i = 0; i < 80; i++)
                         Items(status).Add(new StatusControl.StatusItem { Name = "field" + i,
                             DisplayName = i % 4 == 0 ? "Short " + i : "中英文标签 " + new string('W', 80),
-                            Value = "-123.125" });
+                            Value = i % 4 == 0 ? "-1234567890.123" : "-123.125" });
                     Reflow(status);
                     var panel = Field<Panel>(status, "_contentPanel");
                     var columns = Field<IList>(status, "_columns");
@@ -240,8 +240,9 @@ namespace MissionPlannerTests.Controls
                         int[] labelWidths = (int[])column.GetType().GetField("LabelWidths").GetValue(column);
                         Assert.IsTrue(labelWidths.Any(width => width < Column(column, "NameWidth") - 25),
                             "Short labels must not reserve the width of the longest label.");
-                        Assert.IsTrue(labelWidths.All(width => width + gap + Column(column, "ValueWidth") <= Column(column, "Width")),
-                            "Every label and its adjacent value must fit within the group.");
+                        int[] valueWidths = (int[])column.GetType().GetField("ValueWidths").GetValue(column);
+                        Assert.AreEqual(labelWidths.Zip(valueWidths, (label, value) => label + gap + value).Max(), Column(column, "Width"),
+                            "Group width is the widest rendered pair, not independent label and value maxima.");
                     }
                     AssertLayout(status);
                 }
