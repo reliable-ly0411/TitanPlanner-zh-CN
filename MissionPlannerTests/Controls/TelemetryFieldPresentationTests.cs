@@ -247,6 +247,47 @@ namespace MissionPlannerTests.Controls
             finally { CultureInfo.CurrentUICulture = previous; }
         }
 
+
+        [TestMethod]
+        public void RcPulseWidthsAndVibrationLabelsAreExactAndLocaleScoped()
+        {
+            var previous = CultureInfo.CurrentUICulture;
+            try
+            {
+                CultureInfo.CurrentUICulture = new CultureInfo("zh-CN");
+                foreach (var group in new[] { Tuple.Create("in", 16, "遥控输入"), Tuple.Create("out", 32, "舵机输出") })
+                    for (int channel = 1; channel <= group.Item2; channel++)
+                    {
+                        var raw = "ch" + channel + group.Item1;
+                        var label = TelemetryFieldPresentation.FieldLabel(raw);
+                        Assert.AreEqual(raw + " (" + group.Item3 + "第 " + channel + " 通道脉宽 (µs))", label);
+                        Assert.IsTrue(TelemetryFieldPresentation.Matches(raw, label));
+                        Assert.IsTrue(TelemetryFieldPresentation.Matches("脉宽", label));
+                    }
+                for (int sensor = 0; sensor < 3; sensor++)
+                {
+                    var raw = "vibeclip" + sensor;
+                    Assert.AreEqual(raw + " (第 " + (sensor + 1) + " 个加速度计削波次数)", TelemetryFieldPresentation.FieldLabel(raw));
+                }
+                foreach (var axis in new[] { "x", "y", "z" })
+                {
+                    var raw = "vibe" + axis;
+                    Assert.AreEqual(raw + " (" + axis.ToUpperInvariant() + " 轴振动水平)", TelemetryFieldPresentation.FieldLabel(raw));
+                }
+
+                foreach (var raw in new[] { "ch0in", "ch01in", "ch17in", "ch18in", "ch0out", "ch01out", "ch33out",
+                    "ch1percent", "ch3percent", "vibeclip3", "vibew", "future_unknown" })
+                    Assert.AreEqual(raw, TelemetryFieldPresentation.FieldLabel(raw));
+                foreach (var locale in new[] { "zh-Hans", "en-US" })
+                {
+                    CultureInfo.CurrentUICulture = new CultureInfo(locale);
+                    foreach (var raw in new[] { "ch1in", "ch16in", "ch1out", "ch32out", "vibeclip0", "vibez" })
+                        Assert.AreEqual(raw, TelemetryFieldPresentation.FieldLabel(raw));
+                }
+            }
+            finally { CultureInfo.CurrentUICulture = previous; }
+        }
+
         [TestMethod]
         public void LabelsRetainKeysAndBilingualSearch()
         {

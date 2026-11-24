@@ -684,6 +684,18 @@
     <value>加速度</value>
     <comment>"Acceleration"</comment>
   </data>
+  <data name="0398be8c88a739f410cb91a37f877cd36b3f598fb59880227acb4147c181acf8" xml:space="preserve">
+    <value>第 1 个加速度计削波次数</value>
+    <comment>"Accelerometer 1 clipping count"</comment>
+  </data>
+  <data name="b4639a7d89bba8689f82e1067e4662b3fded2fcf795b3b001a732f61c9b0714f" xml:space="preserve">
+    <value>第 2 个加速度计削波次数</value>
+    <comment>"Accelerometer 2 clipping count"</comment>
+  </data>
+  <data name="2c1d33fa6f7cc587d52c19cfa1eb01f0abb9b167bd61efc443e9b2f40c597657" xml:space="preserve">
+    <value>第 3 个加速度计削波次数</value>
+    <comment>"Accelerometer 3 clipping count"</comment>
+  </data>
   <data name="89713b9c9c1b8f659c9f49db25e4a47886dd673fee248c3f650391f09a759cef" xml:space="preserve">
     <value>接受</value>
     <comment>"Accept"</comment>
@@ -8695,6 +8707,10 @@ VLAN 标记</value>
     <value>遥控选项</value>
     <comment>"RC Options"</comment>
   </data>
+  <data name="5ab611100467507a950e27b0fc00c7d783020b492c2e28a644ba4b3b0e1d87c0" xml:space="preserve">
+    <value>遥控输入第 {0} 通道脉宽 (µs)</value>
+    <comment>"RC input channel {0} pulse width (µs)"</comment>
+  </data>
   <data name="ee723d4466379c8cf4ebe0ee1bf47efcb8340306d0cb5c36f838bdb8d9c60acb" xml:space="preserve">
     <value>RC10 选项</value>
     <comment>"RC10 Opt"</comment>
@@ -9696,6 +9712,10 @@ gps_point：跟踪单个地面点</value>
   <data name="39757bbb5b5bf49597e4fe3c7258fbc3b2ba34ea4a4d6843cd3d808398726b44" xml:space="preserve">
     <value>舵机测试</value>
     <comment>"Servo Test"</comment>
+  </data>
+  <data name="d0f40bcc31e3e087ce67ff2d1eea780e46dbbe1ddb958c8c7376d1d36594512f" xml:space="preserve">
+    <value>舵机输出第 {0} 通道脉宽 (µs)</value>
+    <comment>"Servo output channel {0} pulse width (µs)"</comment>
   </data>
   <data name="8ab7ae56e0351de6a076272245cf022958cce7508c8030cae2e89375b1723d38" xml:space="preserve">
     <value>舵机 {0}</value>
@@ -11659,6 +11679,10 @@ http://www.magnetic-declination.com/</value>
     <value>DSMX对频</value>
     <comment>"X"</comment>
   </data>
+  <data name="c09eae034fb1e9ae2e2998b70fccfc98daf7f3959d7a44d12295d2f5cbb95057" xml:space="preserve">
+    <value>X 轴振动水平</value>
+    <comment>"X-axis vibration level"</comment>
+  </data>
   <data name="81c232fedd398b2bc91d0469a4d99b24724c00f869e7eee955169564f174ff5f" xml:space="preserve">
     <value>X位状态</value>
     <comment>"X-bit Status"</comment>
@@ -11666,6 +11690,10 @@ http://www.magnetic-declination.com/</value>
   <data name="22409e97ec7ced2d15b8d2251543cbc19f5f29cd6595de0fdcce9818290b8142" xml:space="preserve">
     <value>横向航迹误差 (m)</value>
     <comment>"Xtrack Error (m)"</comment>
+  </data>
+  <data name="162fab494a83707b876a586b1a5b2956a22745f46f1de4e56c6f13b23286ad05" xml:space="preserve">
+    <value>Y 轴振动水平</value>
+    <comment>"Y-axis vibration level"</comment>
   </data>
   <data name="75b7318c702f77e6a2b503b50a220477f003d13b98e8cc4a40e6553f08ec21e7" xml:space="preserve">
     <value>偏航角 (°)</value>
@@ -11806,6 +11834,10 @@ http://www.magnetic-declination.com/</value>
   <data name="4c37e1006ecd933b41ecc2384cdf3e69bd581ace279c968dd5142810b836eaae" xml:space="preserve">
     <value>Z 轴速度</value>
     <comment>"Z speed"</comment>
+  </data>
+  <data name="86e138766363f99794d8b76b6496678bdb526401aee543e41afbeca6d0d8f191" xml:space="preserve">
+    <value>Z 轴振动水平</value>
+    <comment>"Z-axis vibration level"</comment>
   </data>
   <data name="973d0c649aa97a0635e387399f32c49abdaa7b2e812a65812255d1ed863b1604" xml:space="preserve">
     <value>最小</value>

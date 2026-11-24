@@ -42,6 +42,12 @@ namespace MissionPlanner.Controls
                 case "ahrs2_pitch": return UiText.Translate("Secondary AHRS pitch (°)");
                 case "ahrs2_roll": return UiText.Translate("Secondary AHRS roll (°)");
                 case "ahrs2_yaw": return UiText.Translate("Secondary AHRS yaw (°)");
+                case "vibeclip0": return UiText.Translate("Accelerometer 1 clipping count");
+                case "vibeclip1": return UiText.Translate("Accelerometer 2 clipping count");
+                case "vibeclip2": return UiText.Translate("Accelerometer 3 clipping count");
+                case "vibex": return UiText.Translate("X-axis vibration level");
+                case "vibey": return UiText.Translate("Y-axis vibration level");
+                case "vibez": return UiText.Translate("Z-axis vibration level");
                 case "gen_status": return UiText.Translate("Generator status flags");
                 case "gen_speed": return UiText.Translate("Generator speed (rpm)");
                 case "gen_current": return UiText.Translate("Generator load current (A)");
@@ -56,6 +62,11 @@ namespace MissionPlanner.Controls
                 int.TryParse(key.Substring(cellPrefix.Length), NumberStyles.None, CultureInfo.InvariantCulture, out int cell) &&
                 cell >= 1 && cell <= 14 && key.Length == cellPrefix.Length + (cell < 10 ? 1 : 2))
                 return UiText.Format($"Primary battery cell {cell} voltage (V)");
+
+            if (TryRawChannel(key, "in", 16, out int channel))
+                return UiText.Format($"RC input channel {channel} pulse width (µs)");
+            if (TryRawChannel(key, "out", 32, out channel))
+                return UiText.Format($"Servo output channel {channel} pulse width (µs)");
 
             if (!key.StartsWith("esc", StringComparison.Ordinal))
                 return key;
@@ -74,6 +85,16 @@ namespace MissionPlanner.Controls
                 case "volt": return UiText.Format($"ESC {number} voltage (V)");
                 default: return key;
             }
+        }
+
+        private static bool TryRawChannel(string key, string suffix, int maximum, out int channel)
+        {
+            channel = 0;
+            int digits = key.Length - 2 - suffix.Length;
+            return (digits == 1 || digits == 2) && key.StartsWith("ch", StringComparison.Ordinal) &&
+                key.EndsWith(suffix, StringComparison.Ordinal) && key[2] != '0' &&
+                int.TryParse(key.Substring(2, digits), NumberStyles.None, CultureInfo.InvariantCulture, out channel) &&
+                channel >= 1 && channel <= maximum;
         }
 
         public static string Combine(string original, string description)
