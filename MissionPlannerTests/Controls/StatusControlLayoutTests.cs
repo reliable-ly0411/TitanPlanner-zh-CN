@@ -165,7 +165,7 @@ namespace MissionPlannerTests.Controls
         }
 
         [TestMethod]
-        public void NarrowCatalogScrollsDownInsteadOfHidingGroupsToTheRight()
+        public void NarrowCatalogUsesHorizontalScrollToReachTrailingGroups()
         {
             Sta(() =>
             {
@@ -180,10 +180,16 @@ namespace MissionPlannerTests.Controls
                     Reflow(status);
                     var panel = Field<Panel>(status, "_contentPanel");
                     var columns = Field<IList>(status, "_columns");
-                    Assert.AreEqual(1, columns.Count);
-                    Assert.AreEqual(80, Column(columns[0], "Count"));
-                    Assert.IsFalse(panel.HorizontalScroll.Visible, "No unseen group off to the right.");
-                    Assert.IsTrue(panel.VerticalScroll.Visible, "Remaining rows are accessible below.");
+                    Assert.IsTrue(columns.Count > 1, "Rows fill down then continue to the right.");
+                    Assert.IsTrue(panel.HorizontalScroll.Visible, "Access overflow with the native horizontal scrollbar.");
+                    Assert.IsFalse(panel.VerticalScroll.Visible, "Ordinary rows must fit above the scrollbar.");
+                    var last = columns[columns.Count - 1];
+                    panel.AutoScrollPosition = new Point(panel.HorizontalScroll.Maximum, 0);
+                    Assert.IsTrue(panel.AutoScrollPosition.X < 0);
+                    int lastRow = Column(last, "Count") - 1;
+                    var point = new Point(Column(last, "Left") + panel.AutoScrollPosition.X + 1,
+                        Field<int>(status, "_padding") + lastRow * Field<int>(status, "_rowHeight") + 1);
+                    Assert.AreSame(Items(status).Last(), Call(status, "ItemAt", point));
                     AssertLayout(status);
                 }
             });
@@ -192,7 +198,7 @@ namespace MissionPlannerTests.Controls
         [DataTestMethod]
         [DataRow(16, false)]
         [DataRow(80, true)]
-        public void TwoCompleteGroupsStillUseWideViewport(int itemCount, bool useVerticalScroll)
+        public void WideViewportOnlyScrollsWhenTheGroupsOverflow(int itemCount, bool useHorizontalScroll)
         {
             Sta(() =>
             {
@@ -206,45 +212,46 @@ namespace MissionPlannerTests.Controls
                             DisplayName = "Field " + i, Value = "12.5" });
                     Reflow(status);
                     var panel = Field<Panel>(status, "_contentPanel");
-                    Assert.AreEqual(2, Field<IList>(status, "_columns").Count);
-                    Assert.IsFalse(panel.HorizontalScroll.Visible);
-                    Assert.AreEqual(useVerticalScroll, panel.VerticalScroll.Visible);
+                    Assert.IsTrue(Field<IList>(status, "_columns").Count >= 2);
+                    Assert.AreEqual(useHorizontalScroll, panel.HorizontalScroll.Visible);
+                    Assert.IsFalse(panel.VerticalScroll.Visible);
                     AssertLayout(status);
                 }
             });
         }
 
         [TestMethod]
-        public void OrdinaryBilingualCatalogUsesTwoCompactGroupsWithAdjacentValues()
+        public void OrdinaryBilingualCatalogFitsThreeGroupsWithAdjacentValues()
         {
             Sta(() =>
             {
-                using (var form = new Form { ClientSize = new Size(616, 95), AutoScaleMode = AutoScaleMode.None })
+                using (var form = new Form { ClientSize = new Size(900, 140), AutoScaleMode = AutoScaleMode.None })
                 using (var status = new StatusControl { Dock = DockStyle.Fill })
                 {
                     form.Controls.Add(status);
                     form.Show();
                     for (int i = 0; i < 80; i++)
                         Items(status).Add(new StatusControl.StatusItem { Name = "field" + i,
-                            DisplayName = i % 4 == 0 ? "Short " + i : "中英文标签 " + new string('W', 80),
+                            DisplayName = i % 4 == 0 ? "Short " + i : "中英文标签 " + new string('W', 23),
                             Value = i % 4 == 0 ? "-1234567890.123" : "-123.125" });
                     Reflow(status);
                     var panel = Field<Panel>(status, "_contentPanel");
                     var columns = Field<IList>(status, "_columns");
-                    Assert.AreEqual(2, columns.Count);
-                    Assert.IsFalse(panel.HorizontalScroll.Visible);
-                    Assert.IsTrue(panel.VerticalScroll.Visible);
+                    Assert.IsTrue(columns.Cast<object>().Count(column => Column(column, "Left") + Column(column, "Width") <= panel.ClientSize.Width) >= 3, "At least three complete groups should fit the representative wide status pane.");
+                    Assert.IsTrue(panel.HorizontalScroll.Visible);
+                    Assert.IsFalse(panel.VerticalScroll.Visible);
                     int gap = Field<int>(status, "_nameValueGap");
                     int reserve = Field<int>(status, "_steadyValueWidth");
+                    bool hasTightlyPlacedShortLabel = false;
                     foreach (var column in columns)
                     {
                         int[] labelWidths = (int[])column.GetType().GetField("LabelWidths").GetValue(column);
-                        Assert.IsTrue(labelWidths.Any(width => width < Column(column, "NameWidth") - 25),
-                            "Short labels must not reserve the width of the longest label.");
+                        hasTightlyPlacedShortLabel |= labelWidths.Any(width => width < Column(column, "NameWidth") - 25);
                         int[] valueWidths = (int[])column.GetType().GetField("ValueWidths").GetValue(column);
                         Assert.AreEqual(labelWidths.Zip(valueWidths, (label, value) => label + gap + Math.Max(reserve, value)).Max(), Column(column, "Width"),
                             "Group width is the widest rendered pair, with a small reserve for steady updates.");
                     }
+                    Assert.IsTrue(hasTightlyPlacedShortLabel, "Short labels do not reserve the longest label width.");
                     AssertLayout(status);
                 }
             });
