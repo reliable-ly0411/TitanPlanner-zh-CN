@@ -2273,5 +2273,13 @@
   "Relative altitude hundreds component (fractional)": "相对高度百位分量（含小数）",
   "Relative altitude thousands component (fractional)": "相对高度千位分量（含小数）",
   "Vehicle armed state": "飞行器解锁状态",
-  "Primary battery cell {0} voltage (V)": "主电池第 {0} 节电压 (V)"
+  "Primary battery cell {0} voltage (V)": "主电池第 {0} 节电压 (V)",
+  "RC input channel {0} pulse width (µs)": "遥控输入第 {0} 通道脉宽 (µs)",
+  "Servo output channel {0} pulse width (µs)": "舵机输出第 {0} 通道脉宽 (µs)",
+  "Accelerometer 1 clipping count": "第 1 个加速度计削波次数",
+  "Accelerometer 2 clipping count": "第 2 个加速度计削波次数",
+  "Accelerometer 3 clipping count": "第 3 个加速度计削波次数",
+  "X-axis vibration level": "X 轴振动水平",
+  "Y-axis vibration level": "Y 轴振动水平",
+  "Z-axis vibration level": "Z 轴振动水平"
 }
