@@ -288,6 +288,39 @@ namespace MissionPlannerTests.Controls
             finally { CultureInfo.CurrentUICulture = previous; }
         }
 
+
+        [TestMethod]
+        public void BatteryTemperatureAndEstimatedRuntimeKeepMonitorIdsAndLocaleFallback()
+        {
+            var previous = CultureInfo.CurrentUICulture;
+            try
+            {
+                foreach (var locale in new[] { "zh-CN", "zh-Hans", "en-US" })
+                {
+                    CultureInfo.CurrentUICulture = new CultureInfo(locale);
+                    for (int id = 0; id <= 8; id++)
+                    {
+                        string suffix = id == 0 ? "" : (id + 1).ToString(CultureInfo.InvariantCulture);
+                        string temp = "battery_temp" + suffix;
+                        string time = "battery_remainmin" + suffix;
+                        Assert.AreEqual(locale == "zh-CN" ? temp + " (电池 ID " + id + " 温度 (°C))" : temp,
+                            TelemetryFieldPresentation.FieldLabel(temp));
+                        Assert.AreEqual(locale == "zh-CN" ? time + " (电池 ID " + id + " 预计剩余时间 (分钟))" : time,
+                            TelemetryFieldPresentation.FieldLabel(time));
+                        if (locale == "zh-CN")
+                        {
+                            Assert.IsTrue(TelemetryFieldPresentation.Matches("预计剩余时间", TelemetryFieldPresentation.FieldLabel(time)));
+                            Assert.IsTrue(TelemetryFieldPresentation.Matches(temp, TelemetryFieldPresentation.FieldLabel(temp)));
+                        }
+                    }
+                    foreach (var raw in new[] { "battery_temp0", "battery_temp1", "battery_temp10", "battery_temp02",
+                        "battery_remainmin0", "battery_remainmin1", "battery_remainmin10", "battery_remainminX" })
+                        Assert.AreEqual(raw, TelemetryFieldPresentation.FieldLabel(raw));
+                }
+            }
+            finally { CultureInfo.CurrentUICulture = previous; }
+        }
+
         [TestMethod]
         public void LabelsRetainKeysAndBilingualSearch()
         {

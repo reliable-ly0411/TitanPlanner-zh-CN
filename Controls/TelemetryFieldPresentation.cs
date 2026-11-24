@@ -63,6 +63,11 @@ namespace MissionPlanner.Controls
                 cell >= 1 && cell <= 14 && key.Length == cellPrefix.Length + (cell < 10 ? 1 : 2))
                 return UiText.Format($"Primary battery cell {cell} voltage (V)");
 
+            if (TryBatteryId(key, "battery_temp", out int batteryId))
+                return UiText.Format($"Battery ID {batteryId} temperature (°C)");
+            if (TryBatteryId(key, "battery_remainmin", out batteryId))
+                return UiText.Format($"Battery ID {batteryId} estimated time remaining (min)");
+
             if (TryRawChannel(key, "in", 16, out int channel))
                 return UiText.Format($"RC input channel {channel} pulse width (µs)");
             if (TryRawChannel(key, "out", 32, out channel))
@@ -85,6 +90,21 @@ namespace MissionPlanner.Controls
                 case "volt": return UiText.Format($"ESC {number} voltage (V)");
                 default: return key;
             }
+        }
+
+        private static bool TryBatteryId(string key, string prefix, out int id)
+        {
+            id = 0;
+            if (!key.StartsWith(prefix, StringComparison.Ordinal))
+                return false;
+            if (key.Length == prefix.Length)
+                return true;
+            if (key.Length != prefix.Length + 1 || key[prefix.Length] < '2' || key[prefix.Length] > '9')
+                return false;
+
+            // The unsuffixed property is BATTERY_STATUS ID 0; suffix N maps to ID N-1.
+            id = key[prefix.Length] - '1';
+            return true;
         }
 
         private static bool TryRawChannel(string key, string suffix, int maximum, out int channel)

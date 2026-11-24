@@ -1510,6 +1510,14 @@
     <value>电池化学类型</value>
     <comment>"Battery Chemistry"</comment>
   </data>
+  <data name="9447d6347746d2cccf6d9271f28937ec36ee8f099bc3f046b73d5db05f05edcd" xml:space="preserve">
+    <value>电池 ID {0} 预计剩余时间 (分钟)</value>
+    <comment>"Battery ID {0} estimated time remaining (min)"</comment>
+  </data>
+  <data name="7cfe4419644db4f89da0c11953f0ad4e7f2e4990df4e00e48315a1d22406d7a2" xml:space="preserve">
+    <value>电池 ID {0} 温度 (°C)</value>
+    <comment>"Battery ID {0} temperature (°C)"</comment>
+  </data>
   <data name="bece9110544eeff812bb521bfdafd09fdc9bced92a5bef6cfaa829829ab306ba" xml:space="preserve">
     <value>电量</value>
     <comment>"Battery Level"</comment>
