@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Windows.Forms;
 using MissionPlanner.Controls;
 using MissionPlanner.GCSViews;
 using MissionPlanner.Plugin;
+using MissionPlanner.Utilities;
 using log4net;
 using System.Linq;
 using DeviceProgramming;
@@ -115,13 +117,18 @@ namespace MissionPlanner.plugins
         /// </summary>
         public void Activate()
         {
+            var enhancedChinese = CultureInfo.CurrentUICulture.Name == "zh-CN";
             tableLayoutPanel1.PerformLayout();
 
             tableLayoutPanel1.RowCount = 13;
             for (int a = 0; a <= 7; a++)
             {
                 CheckBox cbcos = new CheckBox();
-                cbcos.Text = "Port " + a + " COS Enable";
+                cbcos.Text = enhancedChinese
+                    ? UiText.Format($"Port {a}\nCOS Enable")
+                    : "Port " + a + " COS Enable";
+                if (enhancedChinese)
+                    cbcos.Dock = DockStyle.Fill;
 
                 cbcos.Tag = (21, a, 10);
 
@@ -138,7 +145,11 @@ namespace MissionPlanner.plugins
             for (int a = 0; a <= 7; a++)
             {
                 CheckBox cbcoshp = new CheckBox();
-                cbcoshp.Text = "Port " + a + " COS High Priority";
+                cbcoshp.Text = enhancedChinese
+                    ? UiText.Format($"Port {a}\nCOS High Priority")
+                    : "Port " + a + " COS High Priority";
+                if (enhancedChinese)
+                    cbcoshp.Dock = DockStyle.Fill;
                 cbcoshp.Tag = (21, a, 11);
 
                 tableLayoutPanel1.Controls.Add(cbcoshp);
@@ -155,7 +166,11 @@ namespace MissionPlanner.plugins
             {
                 CheckBox cbeee = new CheckBox();
 
-                cbeee.Text = "Port " + a + " EEE Enable";
+                cbeee.Text = enhancedChinese
+                    ? UiText.Format($"Port {a}\nEEE Enable")
+                    : "Port " + a + " EEE Enable";
+                if (enhancedChinese)
+                    cbeee.Dock = DockStyle.Fill;
                 cbeee.Tag = (22, 0, a);
 
                 tableLayoutPanel1.Controls.Add(cbeee);
@@ -173,7 +188,11 @@ namespace MissionPlanner.plugins
                 CheckBox cbtagged = new CheckBox();
                 cbtagged.Checked = false;
 
-                cbtagged.Text = "Port " + a + " VLAN Tagged";
+                cbtagged.Text = enhancedChinese
+                    ? UiText.Format($"Port {a}\nVLAN Tagged")
+                    : "Port " + a + " VLAN Tagged";
+                if (enhancedChinese)
+                    cbtagged.Dock = DockStyle.Fill;
 
                 cbtagged.Tag = (23, 13, a);
 
@@ -193,7 +212,11 @@ namespace MissionPlanner.plugins
                 {
                     CheckBox cbvlanportmembers = new CheckBox();
 
-                    cbvlanportmembers.Text = "Port " + port + " to Port " + a + " ";
+                    cbvlanportmembers.Text = enhancedChinese
+                        ? UiText.Format($"Port {port} to Port {a}")
+                        : "Port " + port + " to Port " + a + " ";
+                    if (enhancedChinese)
+                        cbvlanportmembers.Dock = DockStyle.Fill;
 
                     var high = (int)(port / 2);
                     var align = port % 2;
@@ -213,7 +236,7 @@ namespace MissionPlanner.plugins
             }
 
             MyButton btn = new MyButton();
-            btn.Text = "Apply";
+            btn.Text = enhancedChinese ? UiText.Translate("Apply") : "Apply";
             btn.Click += (s, e) =>
             {
                 Apply();
@@ -221,7 +244,7 @@ namespace MissionPlanner.plugins
             tableLayoutPanel1.Controls.Add(btn);
 
             MyButton btn2 = new MyButton();
-            btn2.Text = "Reset";
+            btn2.Text = enhancedChinese ? UiText.Translate("Reset") : "Reset";
             btn2.Click += (s, e) =>
             {
                 CommandList.Clear();
@@ -237,6 +260,8 @@ namespace MissionPlanner.plugins
 
             if (result != 0)
             {
+                if (enhancedChinese)
+                    ThemeManager.ApplyThemeTo(tableLayoutPanel1);
                 this.Enabled = false;
                 return;
             }
@@ -244,7 +269,9 @@ namespace MissionPlanner.plugins
             decode(buffer);
 
             tableLayoutPanel1.Controls.Add(new Label() { Text = buffer.Select(a => a.ToString("X2")).Aggregate((a, b) => a + b) });
-            tableLayoutPanel1.Controls.Add(new Label() { Text = "i2c2 only" });
+            tableLayoutPanel1.Controls.Add(new Label() { Text = enhancedChinese ? UiText.Translate("i2c2 only") : "i2c2 only" });
+            if (enhancedChinese)
+                ThemeManager.ApplyThemeTo(tableLayoutPanel1);
 
             // restore config
             foreach (var item in tableLayoutPanel1.Controls)
@@ -456,7 +483,8 @@ namespace MissionPlanner.plugins
             public override bool Loaded()
             {
                 // Register the ConfigPayload view on the Config tab
-                SoftwareConfig.AddPluginViewPage(typeof(ConfigSwitch), Name, SoftwareConfig.pageOptions.isConnected);
+                var displayName = CultureInfo.CurrentUICulture.Name == "zh-CN" ? UiText.Translate(Name) : Name;
+                SoftwareConfig.AddPluginViewPage(typeof(ConfigSwitch), displayName, SoftwareConfig.pageOptions.isConnected);
 
                 return true;
             }
