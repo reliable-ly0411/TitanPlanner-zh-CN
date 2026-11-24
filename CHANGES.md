@@ -9,6 +9,7 @@ Flight Data Status now fits adjacent name/value pairs into multiple groups when 
 On Windows, the Actions tab uses its own scrollbar even when the compact Flight Data viewport is shorter than its content.
 
 ## Field selection layout
+Field picker group headings and numeric values now use readable text colors on both light and dark themes.
 
 The field-selection dialog keeps compact name/value columns fully inside the available width, scrolls extra fields vertically, and provides full-text tips for abbreviated labels. Selection callbacks retain the original field keys.
 
