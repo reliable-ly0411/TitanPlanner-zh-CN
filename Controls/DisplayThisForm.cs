@@ -327,6 +327,9 @@ namespace MissionPlanner.Controls
             return text.Substring(0, low == elements.Length ? text.Length : elements[low]) + "…";
         }
 
+        private Color ChooseTextColor(Color preferred)
+            => ThemeTextContrast.Choose(preferred, _contentPanel.ForeColor, _contentPanel.BackColor);
+
         private void ContentPanel_Paint(object sender, PaintEventArgs e)
         {
             if (_resourcesDisposed) return;
@@ -334,9 +337,9 @@ namespace MissionPlanner.Controls
             var g = e.Graphics;
             g.TranslateTransform(_contentPanel.AutoScrollPosition.X, _contentPanel.AutoScrollPosition.Y);
             g.Clear(_contentPanel.BackColor);
-            using (var headerBrush = new SolidBrush(ThemeManager.BannerColor2))
+            using (var headerBrush = new SolidBrush(ChooseTextColor(ThemeManager.BannerColor2)))
             using (var nameBrush = new SolidBrush(_contentPanel.ForeColor))
-            using (var valueBrush = new SolidBrush(Color.Gray))
+            using (var valueBrush = new SolidBrush(ChooseTextColor(Color.Gray)))
             using (var checkPen = new Pen(_contentPanel.ForeColor, 1))
             using (var checkFill = new SolidBrush(Color.Green))
             using (var hoverBrush = new SolidBrush(Color.FromArgb(40, 128, 128, 128)))

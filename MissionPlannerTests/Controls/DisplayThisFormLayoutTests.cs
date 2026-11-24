@@ -168,6 +168,30 @@ namespace MissionPlannerTests.Controls
             finally { panel.AutoScrollPosition = new Point(-previous.X, -previous.Y); }
         }
 
+        [DataTestMethod]
+        [DataRow(0x94C11F, 0x000000, 0xEEEEEE, 0x000000)] // HighContrast group headers.
+        [DataRow(0x808080, 0x000000, 0xEEEEEE, 0x000000)] // HighContrast numeric values.
+        [DataRow(0x94C11F, 0xFFFFFF, 0x272727, 0x94C11F)] // Dark group accent stays green.
+        [DataRow(0x808080, 0xFFFFFF, 0x272727, 0xFFFFFF)] // Weak dark numeric gray.
+        [DataRow(0x808080, 0xFFFFFF, 0x000000, 0x808080)] // Readable gray stays gray on black.
+        [DataRow(0x888888, 0x888888, 0xEEEEEE, 0x000000)] // Custom theme with no readable palette entry.
+        public void PickerHeaderAndValueBrushesRetainOrRecoverReadableColors(int preferred, int foreground,
+            int background, int expected)
+        {
+            Sta(() =>
+            {
+                using (var form = new Probe())
+                {
+                    int opaque = unchecked((int)0xff000000);
+                    var panel = Field<Panel>(form, "_contentPanel");
+                    panel.ForeColor = Color.FromArgb(foreground | opaque);
+                    panel.BackColor = Color.FromArgb(background | opaque);
+                    var color = (Color)Call(form, "ChooseTextColor", Color.FromArgb(preferred | opaque));
+                    Assert.AreEqual(expected | opaque, color.ToArgb());
+                }
+            });
+        }
+
         [TestMethod]
         public void EnhancedChineseNarrowRowUsesSeparateKeyAndDescriptionWithoutChangingTheField()
         {
