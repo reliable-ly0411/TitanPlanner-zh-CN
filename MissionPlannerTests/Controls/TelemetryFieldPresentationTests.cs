@@ -348,6 +348,59 @@ namespace MissionPlannerTests.Controls
             finally { CultureInfo.CurrentUICulture = previous; }
         }
 
+
+        [TestMethod]
+        public void EstimatorPidAndStreamLabelsPreserveKeysAndLocale()
+        {
+            var previous = CultureInfo.CurrentUICulture;
+            try
+            {
+                foreach (var locale in new[] { "zh-CN", "zh-Hans", "en-US" })
+                {
+                    CultureInfo.CurrentUICulture = new CultureInfo(locale);
+                    foreach (var pair in new[] {
+                        Tuple.Create("ekfcompv", "EKF 罗盘方差指标"),
+                        Tuple.Create("ekfflags", "EKF 状态标志位"),
+                        Tuple.Create("ekfposhor", "EKF 水平位置方差指标"),
+                        Tuple.Create("ekfposvert", "EKF 垂直位置方差指标"),
+                        Tuple.Create("ekfstatus", "地面站计算的 EKF 健康指标"),
+                        Tuple.Create("ekfteralt", "EKF 地形高度方差指标"),
+                        Tuple.Create("ekfvelv", "EKF 速度方差指标"),
+                        Tuple.Create("pidachieved", "PID 实际速率"),
+                        Tuple.Create("pidaxis", "PID 调试轴编号"),
+                        Tuple.Create("pidD", "PID 微分分量"),
+                        Tuple.Create("piddesired", "PID 目标速率"),
+                        Tuple.Create("pidff", "PID 前馈分量"),
+                        Tuple.Create("pidI", "PID 积分分量"),
+                        Tuple.Create("pidP", "PID 比例分量"),
+                        Tuple.Create("pidPDmod", "PID 比例和微分分量的振荡修正系数"),
+                        Tuple.Create("pidSRate", "PID 上报的变化率"),
+                        Tuple.Create("pidSRateAccZ", "PID 垂直加速度环变化率"),
+                        Tuple.Create("pidSRateLanding", "PID 着陆控制环变化率"),
+                        Tuple.Create("pidSRatePitch", "PID 俯仰控制环变化率"),
+                        Tuple.Create("pidSRateRoll", "PID 横滚控制环变化率"),
+                        Tuple.Create("pidSRateSteer", "PID 转向控制环变化率"),
+                        Tuple.Create("pidSRateYaw", "PID 偏航控制环变化率"),
+                        Tuple.Create("rateattitude", "请求的姿态和飞行数据流频率 (Hz)"),
+                        Tuple.Create("rateposition", "请求的位置流频率 (Hz)"),
+                        Tuple.Create("raterc", "请求的遥控通道流频率 (Hz)"),
+                        Tuple.Create("ratesensors", "请求的传感器流频率 (Hz)"),
+                        Tuple.Create("ratestatus", "请求的扩展状态流频率 (Hz)"),
+                    })
+                    {
+                        string label = TelemetryFieldPresentation.FieldLabel(pair.Item1);
+                        Assert.AreEqual(locale == "zh-CN" ? pair.Item1 + " (" + pair.Item2 + ")" : pair.Item1, label);
+                        Assert.IsTrue(TelemetryFieldPresentation.Matches(pair.Item1, label));
+                        if (locale == "zh-CN")
+                            Assert.IsTrue(TelemetryFieldPresentation.Matches(pair.Item2, label));
+                    }
+                    foreach (var raw in new[] { "ekf_future", "pid_future", "rate_future", "ch3percent", "press_temp2" })
+                        Assert.AreEqual(raw, TelemetryFieldPresentation.FieldLabel(raw));
+                }
+            }
+            finally { CultureInfo.CurrentUICulture = previous; }
+        }
+
         [TestMethod]
         public void LabelsRetainKeysAndBilingualSearch()
         {
