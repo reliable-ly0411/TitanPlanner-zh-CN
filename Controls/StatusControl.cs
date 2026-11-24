@@ -227,6 +227,42 @@ namespace MissionPlanner.Controls
             return size;
         }
 
+        private static Color ChooseNameColor(Color accent, Color foreground, Color background)
+        {
+            const double minimum = 4.5; // Normal-size text, including bold UI labels.
+            double bg = RelativeLuminance(background.R, background.G, background.B);
+            if (ContrastRatio(accent, background, bg) >= minimum)
+                return accent;
+            if (ContrastRatio(foreground, background, bg) >= minimum)
+                return foreground;
+
+            // A custom theme may provide neither a readable accent nor foreground.
+            return ContrastRatio(Color.Black, background, bg) >= ContrastRatio(Color.White, background, bg)
+                ? Color.Black : Color.White;
+        }
+
+        private static double ContrastRatio(Color foreground, Color background, double backgroundLuminance)
+        {
+            double opacity = foreground.A / 255.0;
+            double luminance = RelativeLuminance(
+                background.R + (foreground.R - background.R) * opacity,
+                background.G + (foreground.G - background.G) * opacity,
+                background.B + (foreground.B - background.B) * opacity);
+            return (Math.Max(luminance, backgroundLuminance) + 0.05) /
+                   (Math.Min(luminance, backgroundLuminance) + 0.05);
+        }
+
+        private static double RelativeLuminance(double red, double green, double blue)
+        {
+            return 0.2126 * LinearChannel(red) + 0.7152 * LinearChannel(green) + 0.0722 * LinearChannel(blue);
+        }
+
+        private static double LinearChannel(double channel)
+        {
+            channel /= 255.0;
+            return channel <= 0.04045 ? channel / 12.92 : Math.Pow((channel + 0.055) / 1.055, 2.4);
+        }
+
         private void ContentPanel_Paint(object sender, PaintEventArgs e)
         {
             if (_filteredItems.Count == 0)
@@ -238,7 +274,8 @@ namespace MissionPlanner.Controls
             g.TranslateTransform(_contentPanel.AutoScrollPosition.X, _contentPanel.AutoScrollPosition.Y);
             g.Clear(_contentPanel.BackColor);
 
-            using (var nameBrush = new SolidBrush(ThemeManager.BannerColor2))
+            using (var nameBrush = new SolidBrush(ChooseNameColor(
+                       ThemeManager.BannerColor2, _contentPanel.ForeColor, _contentPanel.BackColor)))
             using (var valueBrush = new SolidBrush(_contentPanel.ForeColor))
             using (var format = new StringFormat { FormatFlags = StringFormatFlags.NoWrap,
                 Trimming = StringTrimming.EllipsisCharacter })

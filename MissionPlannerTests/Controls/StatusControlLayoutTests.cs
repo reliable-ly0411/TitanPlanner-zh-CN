@@ -59,6 +59,34 @@ namespace MissionPlannerTests.Controls
             if (failure != null) Assert.Fail(failure.ToString());
         }
 
+        [DataTestMethod]
+        [DataRow(0x94C11F, 0x000000, 0xEEEEEE, 0x000000)] // Built-in HighContrast light theme.
+        [DataRow(0x94C11F, 0xFFFFFF, 0x262626, 0x94C11F)] // Preserve readable dark accent.
+        [DataRow(0x999999, 0xAAAAAA, 0xEEEEEE, 0x000000)] // Both custom colors too faint.
+        [DataRow(0x444444, 0x555555, 0x333333, 0xFFFFFF)]
+        [DataRow(0xEEEEEE, 0x777777, 0xFFFFFF, 0x000000)] // A near miss below 4.5:1.
+        public void StatusNamesSelectReadableThemeColors(int accent, int foreground, int background, int expected)
+        {
+            var choose = typeof(StatusControl).GetMethod("ChooseNameColor", BindingFlags.Static | BindingFlags.NonPublic);
+            int opaque = unchecked((int)0xff000000);
+            var actual = (Color)choose.Invoke(null, new object[]
+            {
+                Color.FromArgb(accent | opaque), Color.FromArgb(foreground | opaque), Color.FromArgb(background | opaque)
+            });
+            Assert.AreEqual(expected | opaque, actual.ToArgb());
+        }
+
+        [TestMethod]
+        public void TranslucentAccentMustBeReadableAgainstTheActualPanel()
+        {
+            var choose = typeof(StatusControl).GetMethod("ChooseNameColor", BindingFlags.Static | BindingFlags.NonPublic);
+            var actual = (Color)choose.Invoke(null, new object[]
+            {
+                Color.FromArgb(40, Color.Black), Color.Navy, Color.White
+            });
+            Assert.AreEqual(Color.Navy.ToArgb(), actual.ToArgb());
+        }
+
         [TestMethod]
         public void FilteringMeasuresOnlyVisibleLabelsAndStartsAtTheLeft()
         {
