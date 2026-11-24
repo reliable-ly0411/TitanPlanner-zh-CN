@@ -214,6 +214,39 @@ namespace MissionPlannerTests.Controls
             if (failure != null) Assert.Fail(failure.ToString());
         }
 
+
+        [TestMethod]
+        public void RelativeAltitudeArmingAndBatteryLabelsKeepExactRawKeys()
+        {
+            var previous = CultureInfo.CurrentUICulture;
+            try
+            {
+                CultureInfo.CurrentUICulture = new CultureInfo("zh-CN");
+                Assert.AreEqual("altd100 (相对高度百位分量（含小数）)", TelemetryFieldPresentation.FieldLabel("altd100"));
+                Assert.AreEqual("altd1000 (相对高度千位分量（含小数）)", TelemetryFieldPresentation.FieldLabel("altd1000"));
+                var armed = TelemetryFieldPresentation.FieldLabel("armed");
+                Assert.AreEqual("armed (飞行器解锁状态)", armed);
+                Assert.IsTrue(TelemetryFieldPresentation.Matches("解锁状态", armed));
+                for (int cell = 1; cell <= 14; cell++)
+                {
+                    var raw = "battery_cell" + cell;
+                    var label = TelemetryFieldPresentation.FieldLabel(raw);
+                    Assert.AreEqual(raw + " (主电池第 " + cell + " 节电压 (V))", label);
+                    Assert.IsTrue(TelemetryFieldPresentation.Matches(raw, label));
+                }
+                foreach (var raw in new[] { "battery_cell0", "battery_cell01", "battery_cell15", "battery_cellX", "future_unknown" })
+                    Assert.AreEqual(raw, TelemetryFieldPresentation.FieldLabel(raw));
+
+                foreach (var locale in new[] { "zh-Hans", "en-US" })
+                {
+                    CultureInfo.CurrentUICulture = new CultureInfo(locale);
+                    foreach (var raw in new[] { "altd100", "altd1000", "armed", "battery_cell1", "battery_cell14" })
+                        Assert.AreEqual(raw, TelemetryFieldPresentation.FieldLabel(raw));
+                }
+            }
+            finally { CultureInfo.CurrentUICulture = previous; }
+        }
+
         [TestMethod]
         public void LabelsRetainKeysAndBilingualSearch()
         {

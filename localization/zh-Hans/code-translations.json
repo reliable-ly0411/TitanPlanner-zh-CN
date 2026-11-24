@@ -2269,5 +2269,9 @@
   "Generator load current (A)": "发电机负载电流 (A)",
   "Generator bus voltage (V)": "发电机侧母线电压 (V)",
   "Generator run time since restart (s)": "发电机本次运行时间 (s)",
-  "Time until generator maintenance (s)": "距发电机保养剩余时间 (s)"
+  "Time until generator maintenance (s)": "距发电机保养剩余时间 (s)",
+  "Relative altitude hundreds component (fractional)": "相对高度百位分量（含小数）",
+  "Relative altitude thousands component (fractional)": "相对高度千位分量（含小数）",
+  "Vehicle armed state": "飞行器解锁状态",
+  "Primary battery cell {0} voltage (V)": "主电池第 {0} 节电压 (V)"
 }
