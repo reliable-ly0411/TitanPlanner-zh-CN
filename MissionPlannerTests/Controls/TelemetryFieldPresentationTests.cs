@@ -321,6 +321,33 @@ namespace MissionPlannerTests.Controls
             finally { CultureInfo.CurrentUICulture = previous; }
         }
 
+
+        [TestMethod]
+        public void TerrainLabelsPreserveRawKeysAndDistinguishStatusFromCounts()
+        {
+            var previous = CultureInfo.CurrentUICulture;
+            try
+            {
+                foreach (var locale in new[] { "zh-CN", "zh-Hans", "en-US" })
+                {
+                    CultureInfo.CurrentUICulture = new CultureInfo(locale);
+                    foreach (var pair in new[] { Tuple.Create("ter_load", "内存中已加载的地形块数"),
+                        Tuple.Create("ter_pend", "待接收或从磁盘读取的地形块数"),
+                        Tuple.Create("ter_space", "地形网格间距"),
+                        Tuple.Create("terrainactive", "地形子系统存在、已启用且状态正常") })
+                    {
+                        string label = TelemetryFieldPresentation.FieldLabel(pair.Item1);
+                        Assert.AreEqual(locale == "zh-CN" ? pair.Item1 + " (" + pair.Item2 + ")" : pair.Item1, label);
+                        Assert.IsTrue(TelemetryFieldPresentation.Matches(pair.Item1, label));
+                        if (locale == "zh-CN")
+                            Assert.IsTrue(TelemetryFieldPresentation.Matches(pair.Item2, label));
+                    }
+                    Assert.AreEqual("terrain_future", TelemetryFieldPresentation.FieldLabel("terrain_future"));
+                }
+            }
+            finally { CultureInfo.CurrentUICulture = previous; }
+        }
+
         [TestMethod]
         public void LabelsRetainKeysAndBilingualSearch()
         {

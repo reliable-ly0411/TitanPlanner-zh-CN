@@ -2283,5 +2283,9 @@
   "Y-axis vibration level": "Y 轴振动水平",
   "Z-axis vibration level": "Z 轴振动水平",
   "Battery ID {0} temperature (°C)": "电池 ID {0} 温度 (°C)",
-  "Battery ID {0} estimated time remaining (min)": "电池 ID {0} 预计剩余时间 (分钟)"
+  "Battery ID {0} estimated time remaining (min)": "电池 ID {0} 预计剩余时间 (分钟)",
+  "Terrain blocks loaded in memory": "内存中已加载的地形块数",
+  "Terrain blocks awaiting receipt or disk read": "待接收或从磁盘读取的地形块数",
+  "Terrain grid spacing": "地形网格间距",
+  "Terrain subsystem present, enabled and healthy": "地形子系统存在、已启用且状态正常"
 }
