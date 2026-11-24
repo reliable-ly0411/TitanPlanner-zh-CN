@@ -113,7 +113,7 @@ namespace MissionPlanner.Controls
                     float scale = Math.Max(_boldFont.GetHeight(graphics), _normalFont.GetHeight(graphics)) / 13f;
                     _padding = Math.Max(1, (int)Math.Ceiling(8 * scale));
                     _nameValueGap = Math.Max(1, (int)Math.Ceiling(6 * scale));
-                    _columnGap = Math.Max(1, (int)Math.Ceiling(14 * scale));
+                    _columnGap = Math.Max(1, (int)Math.Ceiling(10 * scale));
                     _rowHeight = Math.Max(1, (int)Math.Ceiling(17 * scale));
                     _minimumValueWidth = (int)Math.Ceiling(50 * scale);
                     var nameWidths = _filteredItems.Select(item =>
@@ -201,12 +201,10 @@ namespace MissionPlanner.Controls
                     if (availableNameWidth >= minimumLabelWidth)
                         column.NameWidth = Math.Min(column.NameWidth, availableNameWidth);
                 }
-                column.Width = column.NameWidth + _nameValueGap + column.ValueWidth;
-                width = left + column.Width + _padding;
-                if (width > availableWidth && (start != 0 || count < _filteredItems.Count))
-                    return false;
+
                 column.Labels = new string[count];
                 column.LabelWidths = new int[count];
+                column.ValueWidths = new int[count];
                 for (int row = 0; row < count; row++)
                 {
                     var item = _filteredItems[start + row];
@@ -214,7 +212,13 @@ namespace MissionPlanner.Controls
                         column.NameWidth, graphics);
                     column.LabelWidths[row] = Math.Min(column.NameWidth, Math.Max(1,
                         (int)Math.Ceiling(graphics.MeasureString(column.Labels[row], _boldFont).Width)));
+                    column.ValueWidths[row] = Math.Max(1, valueWidths[start + row]);
+                    column.Width = Math.Max(column.Width,
+                        column.LabelWidths[row] + _nameValueGap + column.ValueWidths[row]);
                 }
+                width = left + column.Width + _padding;
+                if (width > availableWidth && (start != 0 || count < _filteredItems.Count))
+                    return false;
                 _columns.Add(column);
                 left += column.Width + _columnGap;
             }
@@ -271,7 +275,7 @@ namespace MissionPlanner.Controls
                             new Rectangle(column.Left, y, column.LabelWidths[row], _rowHeight), format);
                         g.DrawString(item.Value ?? "", _normalFont, valueBrush,
                             new Rectangle(column.Left + column.LabelWidths[row] + _nameValueGap, y,
-                                column.ValueWidth, _rowHeight), format);
+                                column.ValueWidths[row], _rowHeight), format);
                     }
                 }
             }
@@ -312,10 +316,15 @@ namespace MissionPlanner.Controls
                 foreach (var column in _columns)
                 {
                     column.ValueWidth = _minimumValueWidth;
-                    for (int i = column.Start; i < column.Start + column.Count; i++)
-                        column.ValueWidth = Math.Max(column.ValueWidth,
-                            (int)Math.Ceiling(graphics.MeasureString(_filteredItems[i].Value ?? "", _normalFont).Width));
-                    column.Width = column.NameWidth + _nameValueGap + column.ValueWidth;
+                    column.Width = 0;
+                    for (int row = 0; row < column.Count; row++)
+                    {
+                        int valueWidth = Math.Max(1, (int)Math.Ceiling(graphics.MeasureString(
+                            _filteredItems[column.Start + row].Value ?? "", _normalFont).Width));
+                        column.ValueWidth = Math.Max(column.ValueWidth, valueWidth);
+                        column.ValueWidths[row] = valueWidth;
+                        column.Width = Math.Max(column.Width, column.LabelWidths[row] + _nameValueGap + valueWidth);
+                    }
                     column.Left = left;
                     left += column.Width + _columnGap;
                 }
@@ -455,7 +464,7 @@ namespace MissionPlanner.Controls
         {
             public int Start, Count, Left, Width, NameWidth, ValueWidth;
             public string[] Labels;
-            public int[] LabelWidths;
+            public int[] LabelWidths, ValueWidths;
         }
 
         private class DoubleBufferedPanel : Panel
