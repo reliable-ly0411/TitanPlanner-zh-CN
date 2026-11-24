@@ -859,6 +859,10 @@
     <value>高度变化： </value>
     <comment>"Alt Delta: "</comment>
   </data>
+  <data name="17634db2212c797741b2a8f54e7bea9c4acdef17fb7ebf1334c902a96b8cc3c1" xml:space="preserve">
+    <value>定高</value>
+    <comment>"Alt Hold"</comment>
+  </data>
   <data name="f91fe194e88df1cf645ea010c7989d5995101e0e5ce25f9317faa28fc8e3d3d5" xml:space="preserve">
     <value>相对返航点高度偏移 (dist)</value>
     <comment>"Alt Home Offset (dist)"</comment>
@@ -995,6 +999,10 @@
   <data name="43cef73c36415fce32682251ae2e5d1d8cef183d9ba3e097d0d3927fad5a0e17" xml:space="preserve">
     <value>外观设置不可用，已回退默认外观。</value>
     <comment>"Appearance preferences unavailable; using defaults."</comment>
+  </data>
+  <data name="9a9fd7a9deaf44e223f70fcd901808cf447f9570bf2e6f73d9b24eec50ec7af7" xml:space="preserve">
+    <value>外观预览不可用。</value>
+    <comment>"Appearance preview unavailable."</comment>
   </data>
   <data name="87544ac8037df5868373f51f61679edc0b52ca4c12c442dd32a078a02e37faba" xml:space="preserve">
     <value>外观已保存。窗口图标立即生效；启动图片下次启动生效。</value>
@@ -1180,6 +1188,10 @@
   <data name="6374645bc192922cd561e8619609c8877843531e7115b60330c8221711cef8b0" xml:space="preserve">
     <value>自动学习偏移</value>
     <comment>"Automatically learn offsets"</comment>
+  </data>
+  <data name="720d7d63c5dfa12702e8ca26dc6c2491d6616b987d911c03d1270350a29bbb84" xml:space="preserve">
+    <value>直升机自转降落</value>
+    <comment>"Autorotate"</comment>
   </data>
   <data name="4471f142b22fc4d1d1bcf70b285aecd3c7e5c14273c095ea4199e799808b02b7" xml:space="preserve">
     <value>自动调参</value>
@@ -2163,6 +2175,10 @@
   <data name="4332af26cf5057751a77a2a3e9fcce19f7310177a419caf815fdc092836c432a" xml:space="preserve">
     <value>配置已保存为“{0}”。</value>
     <comment>"Configuration saved as '{0}'."</comment>
+  </data>
+  <data name="4fe53e2854fb299b6ee8b82ac8f24f76a6ad15ba467e21ecec0e3f304f543dd6" xml:space="preserve">
+    <value>已配置模式</value>
+    <comment>"Configured modes"</comment>
   </data>
   <data name="eebdd24a77d9ad32222660c07777163bf5f6732df2b172351f3f8d5783e4f529" xml:space="preserve">
     <value>确认</value>
@@ -4002,6 +4018,58 @@ Ctrl+O 从文件加载</value>
     <value>正在向 0x08000000 写入镜像</value>
     <comment>"Flashing image to 0x08000000"</comment>
   </data>
+  <data name="9aeb4a3cea828e94053730edff4332fa53115baab37acbfccb3c63011980d647" xml:space="preserve">
+    <value>Black（黑色 / RGB 全零）</value>
+    <comment>"Flight Data LED menu: Black"</comment>
+  </data>
+  <data name="2c074c7718b7a6063a4cb0ae18b5d6ed6be1e2d1e1b59498fff884829234cf9a" xml:space="preserve">
+    <value>Blue（蓝色）</value>
+    <comment>"Flight Data LED menu: Blue"</comment>
+  </data>
+  <data name="3a3887b7bcbfad5ce2ee0e01f3f858699c40805e0052c30cbc3fb1d05bdc5133" xml:space="preserve">
+    <value>Green（绿色）</value>
+    <comment>"Flight Data LED menu: Green"</comment>
+  </data>
+  <data name="30e868cd77c0a45525c6893761504462ee1da3f4c848210a7196db8647b36387" xml:space="preserve">
+    <value>Rainbow（彩虹渐变）</value>
+    <comment>"Flight Data LED menu: Rainbow"</comment>
+  </data>
+  <data name="87745eb3c1b68831b161d4f125cf11f4fc104e42e09653a136698781fc2aada7" xml:space="preserve">
+    <value>Red（红色）</value>
+    <comment>"Flight Data LED menu: Red"</comment>
+  </data>
+  <data name="d5b7b0ff4f2f53bf3754555c8f11fafe2eb2f9b04c3a8888239e3b760063bc97" xml:space="preserve">
+    <value>White（白色）</value>
+    <comment>"Flight Data LED menu: White"</comment>
+  </data>
+  <data name="1fdc6103d78864397be4b648d0a2e282be7cd1ee05340b681e05bb4a1ad7e3e2" xml:space="preserve">
+    <value>AUTO（自动模式）</value>
+    <comment>"Flight Data mass menu: AUTO"</comment>
+  </data>
+  <data name="daba370737837c31fe8e3444e4a56598d9c67bf4082bb33e991f53580b1872d6" xml:space="preserve">
+    <value>Arm（解锁）</value>
+    <comment>"Flight Data mass menu: Arm"</comment>
+  </data>
+  <data name="a5686a173255dfeda24f34b8aaa8c6fbdc46893ad6b6de8d050a1f97c4fea519" xml:space="preserve">
+    <value>Arm(Force)（强制解锁）</value>
+    <comment>"Flight Data mass menu: Arm(Force)"</comment>
+  </data>
+  <data name="90c3f229ad3abae4e2006cd24f69ca76fd2908eccb2a5b56a56d440d1c5119b8" xml:space="preserve">
+    <value>Fly To（飞往此处）</value>
+    <comment>"Flight Data mass menu: Fly To"</comment>
+  </data>
+  <data name="e5f348e1fc7d0f714725caa0dd5d348a97463dcea8fe26b6370efcc0391b5954" xml:space="preserve">
+    <value>GUIDED（引导模式）</value>
+    <comment>"Flight Data mass menu: GUIDED"</comment>
+  </data>
+  <data name="693c621013df780e0aa564ffada5a45530aeb447d2e9fbf0c99a86e4aa401139" xml:space="preserve">
+    <value>TAKEOFF（起飞模式）</value>
+    <comment>"Flight Data mass menu: TAKEOFF"</comment>
+  </data>
+  <data name="6dc24de42d531799a9ad56c9e5f43040815bb53ccca61b157ca5dd8596f962d2" xml:space="preserve">
+    <value>TakeOff (2m)（2 米起飞指令）</value>
+    <comment>"Flight Data mass menu: TakeOff (2m)"</comment>
+  </data>
   <data name="5001ae559bacea4f6120fdf93a764da8181cbbdf53652027827beff7203ede47" xml:space="preserve">
     <value>航班标识：</value>
     <comment>"Flight Identification:"</comment>
@@ -4018,9 +4086,38 @@ Ctrl+O 从文件加载</value>
     <value>飞行轨迹</value>
     <comment>"Flight Path Trail"</comment>
   </data>
+  <data name="1f1150011d3360f45e041103a85606a780d2cba2627bc6d2079cb3f286442c76" xml:space="preserve">
+    <value>输入角度</value>
+    <comment>"Flight Planner sample menu: Enter Angle"</comment>
+  </data>
+  <data name="156c7ec75aab9ef2d3804403483219c44e638431759033d6d9b3bbcb104474e3" xml:space="preserve">
+    <value>请输入有效的整数。</value>
+    <comment>"Flight Planner sample menu: Enter a valid integer."</comment>
+  </data>
+  <data name="fdae195f02884ced25f178c860f392f5bea62858bb23a98f154aef4e85f0e2d1" xml:space="preserve">
+    <value>调整任务首尾（示例）</value>
+    <comment>"Flight Planner sample menu: Fix mission top/bottom"</comment>
+  </data>
+  <data name="54a321d8ae2bf4411d4aab57b041a61af07078f799b0525ba7e7b0c5565e019a" xml:space="preserve">
+    <value>任务命令列表尚未就绪。</value>
+    <comment>"Flight Planner sample menu: The mission command list is not ready."</comment>
+  </data>
+  <data name="58a9fa6911306b970d868280aa324d9588e5f9e304953f5803127cebbe377585" xml:space="preserve">
+    <value>这是一个示例插件。
+源代码位于 plugins 文件夹。</value>
+    <comment>"Flight Planner sample menu: This is a sample plugin\nSee the source in the plugins folder"</comment>
+  </data>
+  <data name="8091c6ae727a2bf2553fc21f903c30a0cd46c71a4d1ac71a30428eee17e7982b" xml:space="preserve">
+    <value>此角度将作为航向。</value>
+    <comment>"Flight Planner sample menu: This will be the heading"</comment>
+  </data>
   <data name="8c5f129e8b7fe8ac26ebcd19e441bc7cf05b5f817a4a8e1b01105f809ba20b92" xml:space="preserve">
     <value>预计飞行时间：</value>
     <comment>"Flight Time (est):"</comment>
+  </data>
+  <data name="f2e7ab699dbf890dc30059b120e348e0b6dbc1e3a9a78dab03762109ec65fd68" xml:space="preserve">
+    <value>飞行模式</value>
+    <comment>"Flight modes"</comment>
   </data>
   <data name="8f5db72113b195a7bd38702154c27f07961dcdbdf38a675cba748d9b04bd7a73" xml:space="preserve">
     <value>航班标识</value>
@@ -4041,6 +4138,14 @@ Ctrl+O 从文件加载</value>
   <data name="afd6d32d9284717423614e6a4f89b8765da43b2cd3a223fc5089b74edae9b4ea" xml:space="preserve">
     <value>光流定点</value>
     <comment>"Flowhold"</comment>
+  </data>
+  <data name="84b5da7fd53f3861b2b3ee3314edeee1fb164be40291c1e60490776f915979a9" xml:space="preserve">
+    <value>固定翼增稳 A</value>
+    <comment>"Fly By Wire A"</comment>
+  </data>
+  <data name="12be26f6b592fe986065ae79a8e4850edb10f8a81ee4f7a90a74166dc68c0cc8" xml:space="preserve">
+    <value>固定翼增稳 B</value>
+    <comment>"Fly By Wire B"</comment>
   </data>
   <data name="f3c15b05a8c430c862ea090ddbd95694c992b05a7c75834b7fc50ce3e1b30e46" xml:space="preserve">
     <value>飞向坐标</value>
@@ -4221,6 +4326,78 @@ Ctrl+O 从文件加载</value>
   <data name="71d131492f9320613919735ac3263a7077c2485e167ec82236b6e68ea04a0a6f" xml:space="preserve">
     <value>GPS 不可用</value>
     <comment>"GPS Unavailable"</comment>
+  </data>
+  <data name="6d4cb07ea76c19ea1feee9e25ba50f7ce5d0644eb1d15f6e2507df8367e3e93f" xml:space="preserve">
+    <value>2D 定位</value>
+    <comment>"GPS compact: 2D Fix"</comment>
+  </data>
+  <data name="d03ac1ed951cf4f8ac12364f144dfb95a33ffb554898bf70049447ebc74de2c3" xml:space="preserve">
+    <value>3D 定位</value>
+    <comment>"GPS compact: 3D Fix"</comment>
+  </data>
+  <data name="20835198d2e2459efbdde6f4238acc5056561567626ccf9d89c81fc73691a31c" xml:space="preserve">
+    <value>差分</value>
+    <comment>"GPS compact: DGPS"</comment>
+  </data>
+  <data name="8877f090680743f39485caf6f130b261834ef197a5e44a7ecf903725f7c7e6f1" xml:space="preserve">
+    <value>未定位</value>
+    <comment>"GPS compact: No Fix"</comment>
+  </data>
+  <data name="44f3fe5537e48d79a46572dab0ab8284d6949881025de752932ee3a066e5875d" xml:space="preserve">
+    <value>无 GPS</value>
+    <comment>"GPS compact: No GPS"</comment>
+  </data>
+  <data name="39d9b1751ac55c0fb10146e9ef7888d73d4b92a84496d5898806ac3de4424059" xml:space="preserve">
+    <value>PPP</value>
+    <comment>"GPS compact: PPP"</comment>
+  </data>
+  <data name="f96d882ad635391421ab81cd419c07b871ba7054b896e52a041c8f76ed373eab" xml:space="preserve">
+    <value>RTK 固定</value>
+    <comment>"GPS compact: RTK Fixed"</comment>
+  </data>
+  <data name="3bf59edbbd85432f1045273503eb103e556300fa69962b1da7fa4e85c2d0de86" xml:space="preserve">
+    <value>RTK 浮点</value>
+    <comment>"GPS compact: RTK Float"</comment>
+  </data>
+  <data name="ca9e6194614529f41fe425e16c3441a0f11202fc43cf66c85d4a32ea067c23e4" xml:space="preserve">
+    <value>静态</value>
+    <comment>"GPS compact: STATIC"</comment>
+  </data>
+  <data name="8c1d3cf2f27fe445328e98a17e99ff02f86904eb47b0f3ff90d7e1376d24f315" xml:space="preserve">
+    <value>二维定位</value>
+    <comment>"GPS fix: 2D Fix"</comment>
+  </data>
+  <data name="8c50aa3a9b77f73daa4de6d763a467b023158ed01b10f444d14c01328da3ccf2" xml:space="preserve">
+    <value>三维定位</value>
+    <comment>"GPS fix: 3D Fix"</comment>
+  </data>
+  <data name="30d9e98825029e6f9721036c20aecbbcf802ac22ae737622b210109eec8245cc" xml:space="preserve">
+    <value>DGPS 差分定位</value>
+    <comment>"GPS fix: DGPS"</comment>
+  </data>
+  <data name="eba3cfb86955f89b29bd8ca46df7f6409b134f2a4ab8766aa493ddb8a9318bc0" xml:space="preserve">
+    <value>未定位</value>
+    <comment>"GPS fix: No Fix"</comment>
+  </data>
+  <data name="48feba542f02a0f5a21935c2f939db58ab7aeebfbcc4507968bca49a5ba418bf" xml:space="preserve">
+    <value>无 GPS</value>
+    <comment>"GPS fix: No GPS"</comment>
+  </data>
+  <data name="a5f54af5c0202096b74653b8d6691e81c235d737d85ff1cab14e87a451ca6202" xml:space="preserve">
+    <value>PPP 精密单点定位</value>
+    <comment>"GPS fix: PPP"</comment>
+  </data>
+  <data name="a9dcf9c7a8322929c7ed985d051be41a29802a14b77f4669f2b7f9e835441691" xml:space="preserve">
+    <value>RTK 固定解</value>
+    <comment>"GPS fix: RTK Fixed"</comment>
+  </data>
+  <data name="fa0d2e67c264130d8ecb895989caa9768dc8142c5b2bf425df3ecd305ad1b9ad" xml:space="preserve">
+    <value>RTK 浮点解</value>
+    <comment>"GPS fix: RTK Float"</comment>
+  </data>
+  <data name="dbb81579f50c1e7a853948d6bad1e9cd696d81c1f62396e3a23d1481575770ab" xml:space="preserve">
+    <value>静态固定定位</value>
+    <comment>"GPS fix: STATIC"</comment>
   </data>
   <data name="79e32f0972b95f41b74801a61d1330a4fb63b4342105ff5fb02b38ed5b5b2d98" xml:space="preserve">
     <value>GPS1：{0} 颗卫星，{1}</value>
@@ -4409,6 +4586,10 @@ Ctrl+O 从文件加载</value>
   <data name="5b0f75fcb93cc133ff002d97bc8fbe72d470caa3172313f39adced2566d94596" xml:space="preserve">
     <value>地速</value>
     <comment>"Ground Speed"</comment>
+  </data>
+  <data name="ff27501553212286828f38d5d405f04c4c6462529530ddf126439bb2aba52206" xml:space="preserve">
+    <value>地面站设置</value>
+    <comment>"Ground station settings"</comment>
   </data>
   <data name="b054d2e48d3fcdb6b5d1f35d49419572c0404f2157d5b9b54980e9bc94764195" xml:space="preserve">
     <value>地面航迹角 (°)</value>
@@ -4873,6 +5054,10 @@ Ctrl+O 从文件加载</value>
   <data name="57f92ad8f3c879d9238c137d5a51154b3e00578eeaa0ff22335f72d623d3befc" xml:space="preserve">
     <value>初始化</value>
     <comment>"Initialising"</comment>
+  </data>
+  <data name="2abae3baffd7f951431031d4974059d83fe3d453e7cef38aa9892bf35414078f" xml:space="preserve">
+    <value>初始化</value>
+    <comment>"Initializing"</comment>
   </data>
   <data name="20b06a8ad6d527cf5092e0537cece81f68b5525d806f1984a68aa74866036af0" xml:space="preserve">
     <value>载入自定义地图</value>
@@ -5454,6 +5639,10 @@ Ctrl+O 从文件加载</value>
   <data name="822acda512e37ea7f0be27930313084da5cdce797b5efd163183d67e8c8c4883" xml:space="preserve">
     <value>悬停/盘旋</value>
     <comment>"Loiter"</comment>
+  </data>
+  <data name="38cddf578632554c49cba2697c906445740713413f9d9a6d5508d575f1e22964" xml:space="preserve">
+    <value>盘旋后垂直降落</value>
+    <comment>"Loiter Alt QLAND"</comment>
   </data>
   <data name="72a16cac1da65fc8256f42e123413a1daa0f0657e711bcd8b5484f597afe1997" xml:space="preserve">
     <value>盘旋半径 (m)：</value>
@@ -7013,6 +7202,10 @@ Ctrl+O 从文件加载</value>
     <value>电机 {0} 尚未分配舵机通道。</value>
     <comment>"Motor {0} is not assigned to a servo channel."</comment>
   </data>
+  <data name="93c2149a7151ade63bae1683d4deb94a64e56811845e9e17bb289995083e5478" xml:space="preserve">
+    <value>电机检测</value>
+    <comment>"Motordetect"</comment>
+  </data>
   <data name="f6801ce62d6d6de3052036995ddbf5c39dc0fff2a7f9b27c825ac06f6656ad58" xml:space="preserve">
     <value>挂载位置</value>
     <comment>"Mount Point"</comment>
@@ -7108,7 +7301,7 @@ Ctrl+O 从文件加载</value>
   </data>
   <data name="3318e9f381b7bd9af68ef5dd9bfca133a467ace8cfa164dbf13a5d8712d1e8fa" xml:space="preserve">
     <value>注意：姿态更新速率为 0，HUD 无法工作。
-请在“配置 &gt; 规划器 &gt; 遥测速率”中更改</value>
+请在“配置/调试 &gt; 地面站设置 &gt; 遥测速率”中更改</value>
     <comment>"NOTE: your attitude rate is 0, the hud will not work\nChange in Configuration &gt; Planner &gt; Telemetry Rates"</comment>
   </data>
   <data name="0a7b7e9adb9c6436afa6982ffd62b0e8a2cd6f7041a0361e2320fa25d099faf1" xml:space="preserve">
@@ -7876,6 +8069,10 @@ Mission Planner 需要收到 2 个有效心跳包后才会连接。</value>
   <data name="ff1cee74414621d812efa8f77a6024850158c209fba6158772088703c2a02ff9" xml:space="preserve">
     <value>引脚</value>
     <comment>"Pin"</comment>
+  </data>
+  <data name="bfb1bf95997e79573f9e427ac051e77711939e09a52e43f8de88d7ef27452b0a" xml:space="preserve">
+    <value>全部固定</value>
+    <comment>"Pin All"</comment>
   </data>
   <data name="07c550b7c64e61dace201ad655e2d2596c36b2d57eb3716b455d4c677a03094f" xml:space="preserve">
     <value>Ping200X 未收到状态消息</value>
@@ -10018,6 +10215,14 @@ gps_point：跟踪单个地面点</value>
   <data name="47322643b0b110b556b1e46953582a1cbde9afd2b56a03f964152862f46e125c" xml:space="preserve">
     <value>支持代理连接</value>
     <comment>"Support Proxy Connection"</comment>
+  </data>
+  <data name="0905f7f59021c2a85f1c0a50d7c252a3e6c6ee006514f01d7264097f1fd4337a" xml:space="preserve">
+    <value>上浮至水面</value>
+    <comment>"Surface"</comment>
+  </data>
+  <data name="6dc7d132e8f5574385e019d33e2b6b20691400a8f7e0ca54da9883477c2d820a" xml:space="preserve">
+    <value>海底地形跟随</value>
+    <comment>"Surftrak"</comment>
   </data>
   <data name="c0c3d825b81c82e4e34ca2d33f6f18788b347e553b85ac204e44b9a5aa17257f" xml:space="preserve">
     <value>测绘（网格）</value>

@@ -34,6 +34,7 @@ namespace MissionPlanner.Controls
         private int _nameValueGap = 8;
         private int _columnGap = 20;
         private bool _updatingLayout;
+        private bool _viewportLayoutQueued;
         private bool _resourcesDisposed;
         private bool _mouseInside;
         private DisplayItem _hoveredItem;
@@ -69,7 +70,7 @@ namespace MissionPlanner.Controls
             _contentPanel.MouseClick += ContentPanel_MouseClick;
             _contentPanel.MouseMove += ContentPanel_MouseMove;
             _contentPanel.MouseLeave += ContentPanel_MouseLeave;
-            _contentPanel.ClientSizeChanged += (sender, e) => UpdateScrollSize();
+            _contentPanel.ClientSizeChanged += (sender, e) => QueueViewportLayout();
             _contentPanel.Scroll += (sender, e) => ClearHover();
             this.Controls.Add(_contentPanel);
             this.Controls.Add(_searchBox);
@@ -166,6 +167,21 @@ namespace MissionPlanner.Controls
             return columns;
         }
 
+        private void QueueViewportLayout()
+        {
+            if (_viewportLayoutQueued || _updatingLayout || _resourcesDisposed || !_contentPanel.IsHandleCreated)
+                return;
+
+            // Defer scrollbar calculation until the parent has finished the resize layout.
+            _viewportLayoutQueued = true;
+            _contentPanel.BeginInvoke((Action)(() =>
+            {
+                _viewportLayoutQueued = false;
+                if (!_resourcesDisposed && !_contentPanel.IsDisposed)
+                    UpdateScrollSize();
+            }));
+        }
+
         private void UpdateScrollSize()
         {
             if (_contentPanel == null || _filteredItems == null || _updatingLayout || _resourcesDisposed)
@@ -184,7 +200,11 @@ namespace MissionPlanner.Controls
                     _columnGap = Math.Max(1, (int)Math.Ceiling(20 * scale));
                     _rowHeight = Math.Max(_checkboxSize + 4, (int)Math.Ceiling(17 * scale));
                     int minimumValue = (int)Math.Ceiling(50 * scale);
-                    int maximumName = (int)Math.Ceiling(graphics.MeasureString("MMMMMMMMMMMMMMMM", _normalFont).Width);
+                    // Enhanced Chinese labels include both the original key and its translation.
+                    // Let the actual viewport, value width and inter-column gap size these labels.
+                    int maximumName = string.Equals(CultureInfo.CurrentUICulture.Name, "zh-CN", StringComparison.Ordinal)
+                        ? int.MaxValue
+                        : (int)Math.Ceiling(graphics.MeasureString("MMMMMMMMMMMMMMMM", _normalFont).Width);
                     var names = _filteredItems.ToDictionary(item => item,
                         item => (int)Math.Ceiling(graphics.MeasureString(item.DisplayName ?? item.Name ?? "", _normalFont).Width) + 8);
                     var values = _filteredItems.ToDictionary(item => item,
@@ -214,7 +234,7 @@ namespace MissionPlanner.Controls
                             if (BuildColumns(mid).Count <= count) high = mid;
                             else low = mid + 1;
                         }
-                        var columns = BuildColumns(low);
+                        var columns = BuildColumns(maximumName == int.MaxValue && count == 1 ? int.MaxValue : low);
                         int x = _padding, bottom = _padding;
                         foreach (var column in columns)
                         {

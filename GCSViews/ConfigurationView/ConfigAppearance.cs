@@ -8,23 +8,37 @@ using MissionPlanner.Utilities;
 
 namespace MissionPlanner.GCSViews.ConfigurationView
 {
-    /// <summary>Separate page to keep appearance preferences independent of planner/vehicle settings.</summary>
+    /// <summary>Desktop appearance controls; imports and resets remain independent of vehicle settings.</summary>
     public sealed class ConfigAppearance : MyUserControl
     {
         private readonly PictureBox iconPreview = new PictureBox { SizeMode = PictureBoxSizeMode.CenterImage, Height = 64, Dock = DockStyle.Fill };
         private readonly PictureBox startupPreview = new PictureBox { SizeMode = PictureBoxSizeMode.Zoom, Height = 200, Dock = DockStyle.Fill, BackColor = Color.Black };
         private readonly Label status = new Label { AutoSize = true, Dock = DockStyle.Fill };
 
-        public ConfigAppearance()
+        public ConfigAppearance() : this(embedded: false)
+        {
+        }
+
+        internal ConfigAppearance(bool embedded)
         {
             Name = "ConfigAppearance";
-            AutoScroll = true;
+            AutoScroll = !embedded;
+            if (embedded)
+            {
+                // ConfigPlanner owns the scroll position and the available width.
+                AutoSize = true;
+                AutoSizeMode = AutoSizeMode.GrowAndShrink;
+                Dock = DockStyle.Top;
+                Margin = Padding.Empty;
+            }
             var layout = new TableLayoutPanel
             {
-                Dock = DockStyle.Top, AutoSize = true, ColumnCount = 1, Padding = new Padding(12)
+                Dock = DockStyle.Top, AutoSize = true, ColumnCount = 1,
+                Padding = embedded ? Padding.Empty : new Padding(12)
             };
             layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
-            AddText(layout, "Window icon and startup image");
+            if (!embedded)
+                AddText(layout, "Window icon and startup image");
             AddText(layout, "ICO: up to 4 MiB, 1-256 pixels per frame (up to 64 frames). Window icons apply now and on restart.");
             layout.Controls.Add(iconPreview);
             layout.Controls.Add(Buttons("Choose ICO...", "Restore default icon", AppearanceAsset.WindowIcon));
@@ -37,7 +51,9 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             layout.Controls.Add(status);
             Controls.Add(layout);
             layout.SizeChanged += (sender, args) => WrapLabels(layout);
-            RefreshPreviews();
+            // Unreadable appearance data must not prevent the settings page from opening.
+            try { RefreshPreviews(); }
+            catch (Exception) { status.Text = UiText.Translate("Appearance preview unavailable."); }
         }
 
         private static void AddText(TableLayoutPanel layout, string text)

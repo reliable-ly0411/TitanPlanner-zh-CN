@@ -23,6 +23,8 @@ namespace MissionPlanner.Controls
         private Panel _gpsPanel;
         private PictureBox _gpsIcon;
         private Label _gpsSatsLabel;
+        private readonly ToolTip _gpsSatsTip = new ToolTip();
+        private string _gpsLayoutText;
         private Label _gpsDopLabel;
         private GpsStatusPopup _gpsPopup;
         private string _lastMode = "";
@@ -183,7 +185,7 @@ namespace MissionPlanner.Controls
             int gpsWidth = 32; // icon width + margin
             if (_gpsSatsLabel != null && _gpsDopLabel != null)
             {
-                int satsWidth = TextRenderer.MeasureText(_gpsSatsLabel.Text, _gpsSatsLabel.Font).Width;
+                int satsWidth = TextRenderer.MeasureText(_gpsLayoutText ?? _gpsSatsLabel.Text, _gpsSatsLabel.Font).Width;
                 int dopWidth = TextRenderer.MeasureText(_gpsDopLabel.Text, _gpsDopLabel.Font).Width;
                 gpsWidth += Math.Max(satsWidth, dopWidth) + 8;
             }
@@ -487,9 +489,9 @@ namespace MissionPlanner.Controls
             _gpsPopup = new GpsStatusPopup();
             _gpsPopup.UpdateValues(
                 (int)cs.satcount,
-                GetFixTypeString((int)cs.gpsstatus),
+                (int)cs.gpsstatus,
                 (int)cs.satcount2,
-                GetFixTypeString((int)cs.gpsstatus2),
+                (int)cs.gpsstatus2,
                 cs.gpshdop,
                 cs.gpsvdop,
                 cs.groundcourse
@@ -759,7 +761,7 @@ namespace MissionPlanner.Controls
             int gpsWidth = 32; // icon width + margin
             if (_gpsSatsLabel != null && _gpsDopLabel != null)
             {
-                int satsWidth = TextRenderer.MeasureText(_gpsSatsLabel.Text, _gpsSatsLabel.Font).Width;
+                int satsWidth = TextRenderer.MeasureText(_gpsLayoutText ?? _gpsSatsLabel.Text, _gpsSatsLabel.Font).Width;
                 int dopWidth = TextRenderer.MeasureText(_gpsDopLabel.Text, _gpsDopLabel.Font).Width;
                 gpsWidth += Math.Max(satsWidth, dopWidth) + 8; // margin for GPS panel
             }
@@ -1132,6 +1134,9 @@ namespace MissionPlanner.Controls
                 UpdateArmButtonAppearance(false);
                 // Reset GPS display
                 _gpsSatsLabel.Text = UiText.Translate("Sats: --: ---");
+                _gpsLayoutText = null;
+                _gpsSatsLabel.AutoSize = true;
+                _gpsSatsTip.SetToolTip(_gpsSatsLabel, null);
                 _gpsDopLabel.Text = "H: -- | V: --";
                 try { _gpsSatsLabel.ForeColor = ThemeManager.TextColor; } catch { _gpsSatsLabel.ForeColor = Color.White; }
                 // Clear the vehicle FLTMODE list (pinned modes are user settings and persist)
@@ -1168,43 +1173,50 @@ namespace MissionPlanner.Controls
 
         private void UpdateGpsDisplay(float satCount, float gpsStatus, float hdop, float vdop, float satCount2 = 0, float gpsStatus2 = 0)
         {
-            string fixType = GetFixTypeString((int)gpsStatus);
-
-            // Check if GPS2 has valid data
+            int fix = (int)gpsStatus;
+            int fix2 = (int)gpsStatus2;
             bool hasGps2 = satCount2 > 0 || gpsStatus2 > 0;
+            var raw = MapGpsPresentation.LegacyFixLabel(fix);
+            var raw2 = MapGpsPresentation.LegacyFixLabel(fix2);
+            _gpsDopLabel.Text = $"H: {hdop:0.0} | V: {vdop:0.0}";
 
-            if (hasGps2)
+            // Keep the previous toolbar-width budget, even where a translated label is wider.
+            var legacy = hasGps2
+                ? $"1: {satCount:0} {UiText.Translate(raw)} | 2: {satCount2:0} {UiText.Translate(raw2)}"
+                : UiText.Format($"Sats: {satCount:0}: {raw}");
+            if (MapGpsPresentation.Enhanced)
             {
-                string fixType2 = GetFixTypeString((int)gpsStatus2);
-                _gpsSatsLabel.Text = $"1: {satCount:0} {UiText.Translate(fixType)} | 2: {satCount2:0} {UiText.Translate(fixType2)}";
+                _gpsLayoutText = legacy;
+                string name = hasGps2
+                    ? $"1: {satCount:0} {MapGpsPresentation.FixLabel(fix)} | 2: {satCount2:0} {MapGpsPresentation.FixLabel(fix2)}"
+                    : UiText.Format($"Sats: {satCount:0}: {MapGpsPresentation.FixLabel(fix)}");
+                string compact = hasGps2
+                    ? $"1:{satCount:0} {MapGpsPresentation.FixLabel(fix, true)} | 2:{satCount2:0} {MapGpsPresentation.FixLabel(fix2, true)}"
+                    : $"{satCount:0}星 {MapGpsPresentation.FixLabel(fix, true)}";
+                var size = TextRenderer.MeasureText(legacy, _gpsSatsLabel.Font);
+                int limit = Math.Max(size.Width, TextRenderer.MeasureText(_gpsDopLabel.Text, _gpsDopLabel.Font).Width);
+                _gpsSatsLabel.AutoSize = false;
+                _gpsSatsLabel.AutoEllipsis = true;
+                _gpsSatsLabel.Size = new Size(limit, size.Height);
+                _gpsSatsLabel.Text = TextRenderer.MeasureText(name, _gpsSatsLabel.Font).Width <= limit ? name : compact;
+                var title = hasGps2
+                    ? $"{name}\nGPS1: {MapGpsPresentation.RawFixHelp(fix)} | GPS2: {MapGpsPresentation.RawFixHelp(fix2)}"
+                    : $"{name}\nGPS: {MapGpsPresentation.RawFixHelp(fix)}";
+                _gpsSatsTip.SetToolTip(_gpsSatsLabel, title);
             }
             else
             {
-                _gpsSatsLabel.Text = UiText.Format($"Sats: {satCount:0}: {fixType}");
+                _gpsLayoutText = null;
+                _gpsSatsLabel.AutoSize = true;
+                _gpsSatsLabel.Text = legacy;
+                _gpsSatsTip.SetToolTip(_gpsSatsLabel, null);
             }
-
-            _gpsDopLabel.Text = $"H: {hdop:0.0} | V: {vdop:0.0}";
 
             // Update label color based on best fix quality
             int bestFix = hasGps2 ? Math.Max((int)gpsStatus, (int)gpsStatus2) : (int)gpsStatus;
             _gpsSatsLabel.ForeColor = GetFixColor(bestFix);
 
             UpdateContainerWidth();
-        }
-
-        private string GetFixTypeString(int fixType)
-        {
-            switch (fixType)
-            {
-                case 0: return "No GPS";
-                case 1: return "No Fix";
-                case 2: return "2D Fix";
-                case 3: return "3D Fix";
-                case 4: return "DGPS";
-                case 5: return "RTK Float";
-                case 6: return "RTK Fixed";
-                default: return fixType.ToString();
-            }
         }
 
         private Color GetFixColor(int fixType)
@@ -1234,6 +1246,7 @@ namespace MissionPlanner.Controls
             {
                 _updateTimer?.Stop();
                 _updateTimer?.Dispose();
+                _gpsSatsTip.Dispose();
 
                 // Unsubscribe from parent resize
                 if (_parentMenuStrip != null)
@@ -1424,6 +1437,36 @@ namespace MissionPlanner.Controls
             ShowDropdown();
         }
 
+        internal static ModeMenuPresentation GetModeMenuPresentation(ArduPilot.Firmwares? firmware,
+            MAVLink.MAV_TYPE? vehicleType)
+        {
+            switch (firmware)
+            {
+                case ArduPilot.Firmwares.ArduCopter2:
+                    return ModeMenuPresentation.Hover;
+                case ArduPilot.Firmwares.ArduPlane:
+                    // QLOITER is a separate mode; LOITER operates in the fixed-wing profile.
+                    return ModeMenuPresentation.Circle;
+                case ArduPilot.Firmwares.ArduRover:
+                    return ModeMenuPresentation.Rover;
+                case ArduPilot.Firmwares.PX4:
+                    switch (vehicleType)
+                    {
+                        case MAVLink.MAV_TYPE.FIXED_WING:
+                            return ModeMenuPresentation.Circle;
+                        case MAVLink.MAV_TYPE.QUADROTOR:
+                        case MAVLink.MAV_TYPE.COAXIAL:
+                        case MAVLink.MAV_TYPE.HEXAROTOR:
+                        case MAVLink.MAV_TYPE.OCTOROTOR:
+                        case MAVLink.MAV_TYPE.TRICOPTER:
+                            return ModeMenuPresentation.Hover;
+                    }
+                    break;
+            }
+            // A PX4 VTOL's type alone does not identify its current flight phase.
+            return ModeMenuPresentation.Unspecified;
+        }
+
         private void ShowDropdown()
         {
             if (_isDropdownOpen)
@@ -1461,7 +1504,9 @@ namespace MissionPlanner.Controls
             // Load modes
             try
             {
-                var modesList = ArduPilot.Common.getModesList(MainV2.comPort?.MAV);
+                var mav = MainV2.comPort?.MAV;
+                _popup.MenuPresentation = GetModeMenuPresentation(mav?.cs?.firmware, mav?.aptype);
+                var modesList = ArduPilot.Common.getModesList(mav);
                 _popup.SetModes(modesList);
             }
             catch { }
@@ -1574,6 +1619,8 @@ namespace MissionPlanner.Controls
 
         public string CurrentMode { get; set; } = "";
 
+        internal ModeMenuPresentation MenuPresentation { get; set; }
+
         public event EventHandler<string> ModeSelected;
         public event EventHandler<string> FavoriteToggled;
         public event EventHandler<string> PinToggled;
@@ -1613,7 +1660,7 @@ namespace MissionPlanner.Controls
             // "Pin All" under the configured modes: pins them all to the toolbar
             _pinAllCheck = new CheckBox
             {
-                Text = "Pin All",
+                Text = UiText.Translate("Pin All"),
                 AutoSize = false,
                 Width = RowWidth,
                 Height = 24,
@@ -1707,6 +1754,12 @@ namespace MissionPlanner.Controls
         {
             // Rebuild the list after the form is shown to ensure colors render properly
             RefreshModesList();
+            var rows = _modesPanel.Controls.OfType<KeyboardModeRow>().ToList();
+            var initial = rows.FirstOrDefault(row =>
+                string.Equals((string)row.Tag, CurrentMode, StringComparison.OrdinalIgnoreCase))
+                ?? rows.FirstOrDefault();
+            if (initial != null)
+                FocusModeRow(initial);
             _modesPanel.Invalidate(true);
             _scrollPanel.Invalidate(true);
             Invalidate(true);
@@ -1782,7 +1835,7 @@ namespace MissionPlanner.Controls
             // the top title gets room from the popup's edge
             return new Label
             {
-                Text = text,
+                Text = UiText.Translate(text),
                 AutoSize = false,
                 Width = RowWidth,
                 Height = 20,
@@ -1795,10 +1848,88 @@ namespace MissionPlanner.Controls
             };
         }
 
+        private void FocusModeRow(KeyboardModeRow row)
+        {
+            if (row.Focus())
+                _scrollPanel.ScrollControlIntoView(row);
+        }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == Keys.Escape)
+            {
+                Close();
+                return true;
+            }
+            if (keyData != Keys.Up && keyData != Keys.Down && keyData != Keys.Home
+                && keyData != Keys.End && keyData != Keys.Enter)
+                return base.ProcessCmdKey(ref msg, keyData);
+
+            var rows = _modesPanel.Controls.OfType<KeyboardModeRow>().ToList();
+            var index = rows.FindIndex(row => row.Focused);
+            if (keyData == Keys.Enter)
+            {
+                if (index < 0)
+                    return base.ProcessCmdKey(ref msg, keyData);
+                SelectModeRow(rows[index]);
+                return true;
+            }
+            if (rows.Count == 0)
+                return base.ProcessCmdKey(ref msg, keyData);
+
+            if (keyData == Keys.Home)
+                index = 0;
+            else if (keyData == Keys.End)
+                index = rows.Count - 1;
+            else if (keyData == Keys.Down)
+                index = Math.Min(index + 1, rows.Count - 1);
+            else
+                index = index < 0 ? rows.Count - 1 : Math.Max(index - 1, 0);
+
+            FocusModeRow(rows[index]);
+            return true;
+        }
+
+        private void SelectModeRow(KeyboardModeRow row)
+        {
+            ModeSelected?.Invoke(this, (string)row.Tag);
+        }
+
+        private sealed class KeyboardModeRow : Panel
+        {
+            public KeyboardModeRow()
+            {
+                SetStyle(ControlStyles.Selectable, true);
+                TabStop = true;
+            }
+
+            protected override void OnGotFocus(EventArgs e)
+            {
+                base.OnGotFocus(e);
+                Invalidate();
+            }
+
+            protected override void OnLostFocus(EventArgs e)
+            {
+                base.OnLostFocus(e);
+                Invalidate();
+            }
+
+            protected override void OnPaint(PaintEventArgs e)
+            {
+                base.OnPaint(e);
+                if (Focused && Width > 2 && Height > 2)
+                    ControlPaint.DrawFocusRectangle(e.Graphics,
+                        new Rectangle(1, 1, Width - 2, Height - 2));
+            }
+        }
+
         private Panel CreateModeRow(KeyValuePair<int, string> mode, bool showStar, bool showPin = true)
         {
-            var row = new Panel
+            var row = new KeyboardModeRow
             {
+                Tag = mode.Value,
+                TabIndex = _modesPanel.Controls.Count,
                 Width = RowWidth,
                 Height = 28,
                 Margin = new Padding(0, 1, 0, 1),
@@ -1814,7 +1945,8 @@ namespace MissionPlanner.Controls
             // Mode name label
             var modeLabel = new Label
             {
-                Text = mode.Value,
+                Text = FlightModeDisplay.EnglishThenChinese(mode.Value, MenuPresentation),
+                UseMnemonic = false,
                 AutoSize = false,
                 Left = 0,
                 Width = 200,
@@ -1828,6 +1960,13 @@ namespace MissionPlanner.Controls
                 Tag = mode.Value // Keep original for mode setting
             };
 
+            // Preserve the existing horizontal action columns, but make the text row tall
+            // enough for the translated label to wrap rather than hide either language.
+            var textBounds = new Size(modeLabel.Width - modeLabel.Padding.Horizontal, int.MaxValue);
+            var textHeight = TextRenderer.MeasureText(modeLabel.Text, modeLabel.Font, textBounds,
+                TextFormatFlags.WordBreak | TextFormatFlags.NoPrefix).Height;
+            row.Height = modeLabel.Height = Math.Max(row.Height, textHeight + 4);
+
             // Pin button - diamond indicator (pins the mode to the toolbar)
             var pinLabel = new Label
             {
@@ -1835,7 +1974,7 @@ namespace MissionPlanner.Controls
                 AutoSize = false,
                 Left = 208,
                 Width = 28,
-                Height = 28,
+                Height = row.Height,
                 TextAlign = ContentAlignment.MiddleCenter,
                 ForeColor = isPinned ? _greenColor : _grayColor,
                 BackColor = Color.Transparent,
@@ -1874,8 +2013,8 @@ namespace MissionPlanner.Controls
             };
 
             // Click handlers
-            row.Click += (s, e) => ModeSelected?.Invoke(this, mode.Value);
-            modeLabel.Click += (s, e) => ModeSelected?.Invoke(this, mode.Value);
+            row.Click += (s, e) => SelectModeRow(row);
+            modeLabel.Click += (s, e) => SelectModeRow(row);
             pinLabel.Click += (s, e) => {
                 PinToggled?.Invoke(this, mode.Value);
             };
@@ -1894,7 +2033,7 @@ namespace MissionPlanner.Controls
                     AutoSize = false,
                     Left = 236,
                     Width = 28,
-                    Height = 28,
+                    Height = row.Height,
                     TextAlign = ContentAlignment.MiddleCenter,
                     ForeColor = isFavorite ? _goldColor : _grayColor,
                     BackColor = Color.Transparent,
@@ -2166,9 +2305,9 @@ namespace MissionPlanner.Controls
                 {
                     UpdateValues(
                         (int)cs.satcount,
-                        GetFixTypeString((int)cs.gpsstatus),
+                        (int)cs.gpsstatus,
                         (int)cs.satcount2,
-                        GetFixTypeString((int)cs.gpsstatus2),
+                        (int)cs.gpsstatus2,
                         cs.gpshdop,
                         cs.gpsvdop,
                         cs.groundcourse
@@ -2181,26 +2320,11 @@ namespace MissionPlanner.Controls
             }
         }
 
-        private string GetFixTypeString(int fixType)
+        public void UpdateValues(int satCount, int gpsFix, int satCount2, int gpsFix2, float hdop, float vdop, float course)
         {
-            switch (fixType)
-            {
-                case 0: return "No GPS";
-                case 1: return "No Fix";
-                case 2: return "2D Fix";
-                case 3: return "3D Fix";
-                case 4: return "DGPS";
-                case 5: return "RTK Float";
-                case 6: return "RTK Fixed";
-                default: return fixType.ToString();
-            }
-        }
-
-        public void UpdateValues(int satCount, string gpsLock, int satCount2, string gpsLock2, float hdop, float vdop, float course)
-        {
-            _gps1Label.Text = UiText.Format($"GPS1: {satCount} sats, {UiText.Translate(gpsLock)}");
-            _gps2Label.Text = UiText.Format($"GPS2: {satCount2} sats, {UiText.Translate(gpsLock2)}");
-            _gps2Label.Visible = satCount2 > 0 || gpsLock2 != "No GPS";
+            _gps1Label.Text = UiText.Format($"GPS1: {satCount} sats, {MapGpsPresentation.FixLabel(gpsFix)}");
+            _gps2Label.Text = UiText.Format($"GPS2: {satCount2} sats, {MapGpsPresentation.FixLabel(gpsFix2)}");
+            _gps2Label.Visible = satCount2 > 0 || gpsFix2 != 0;
             _hdopLabel.Text = $"HDOP: {hdop:0.00}";
             _vdopLabel.Text = $"VDOP: {vdop:0.00}";
             _courseLabel.Text = UiText.Format($"Course: {course:0.0}°");

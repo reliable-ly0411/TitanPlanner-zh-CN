@@ -1,6 +1,6 @@
 # 窗口图标与启动画面
 
-在“配置/调试”内的“窗口图标与启动画面”独立页面，选择文件后立即校验并保存；取消文件选择不更改设置。页面显示预览，并提供分别恢复默认的按钮。该页沿用“地面站设置”入口的显示权限，未连接飞控时也可使用。此功能只修改桌面外观，不涉及飞控命令。
+在“配置/调试 → 地面站设置”内的“窗口图标与启动画面”分组，选择文件后立即校验并保存；取消文件选择不更改设置。分组显示预览，并提供分别恢复默认的按钮。该分组随“地面站设置”入口显示，未连接飞控时也可使用。此功能只修改桌面外观，不涉及飞控命令。
 
 ## 实际生效范围
 
@@ -41,6 +41,6 @@ Windows 的 `Form.Icon` 决定窗体在控制框及任务栏中的表示，但�
 
 ## 实施和验证
 
-主要实现为 `AppearanceAssetStore`（导入、验证及原子保存）、`DesktopAppearance`（运行窗口桥接）、独立 `ConfigAppearance` 页面与 `Splash` 布局。窗口刷新显式包含 `MainV2.instance`，与 `Application.OpenForms` 去重，覆盖主窗口暂不在后者集合中的情况；导入与恢复默认使用同一路径。共享入口只在 `SoftwareConfig` 插入一处页面注册、在 `ThemeManager.FormIcon` 插入桌面偏好读取；新桌面代码均有 `!LIB` 防护。不修改 `ConfigPlanner`、HUD、右上角品牌入口、安装器、自动发布或系统注册表。
+主要实现为 `AppearanceAssetStore`（导入、验证及原子保存）、`DesktopAppearance`（运行窗口桥接）、嵌入 `ConfigPlanner` 的 `ConfigAppearance` 控件与 `Splash` 布局。窗口刷新显式包含 `MainV2.instance`，与 `Application.OpenForms` 去重，覆盖主窗口暂不在后者集合中的情况；导入与恢复默认使用同一路径。`SoftwareConfig` 继续按既有权限注册地面站设置，增强简体中文仅更改其导航标题；`ThemeManager.FormIcon` 保留原外观偏好读取。桌面控件由 `!LIB` 防护。不修改 HUD、右上角品牌入口、安装器、自动发布或系统注册表。
 
 测试范围、复跑命令和原生待验项见 [外观测试记录](../MissionPlannerTests/Appearance/Evidence.md)。当前候选和精确 SHA 由 [Issue #22](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/issues/22) 记录；功能分支不等于已发布安装包。

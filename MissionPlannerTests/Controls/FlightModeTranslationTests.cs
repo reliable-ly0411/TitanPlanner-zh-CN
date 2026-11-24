@@ -2,6 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Reflection;
+using System.Threading;
+using System.Windows.Forms;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MissionPlanner.ArduPilot;
 using MissionPlanner.Controls;
@@ -32,6 +35,8 @@ namespace MissionPlannerTests.Controls
                         var originalKey = mode.Key;
                         if (original == UiText.Translate(original))
                             missing.Add(firmware + ": " + original + " (" + originalKey + ")");
+                        StringAssert.StartsWith(FlightModeDisplay.EnglishThenChinese(mode.Value),
+                            original + " · ", firmware + ": " + original);
                         Assert.AreEqual(original, mode.Value);
                         Assert.AreEqual(originalKey, mode.Key);
                     }
@@ -39,6 +44,70 @@ namespace MissionPlannerTests.Controls
                 Assert.AreEqual(0, missing.Count, "Untranslated real firmware modes: " + string.Join(", ", missing));
             }
             finally { CultureInfo.CurrentUICulture = previous; }
+        }
+
+        [DataTestMethod]
+        [DataRow("zh-CN")]
+        [DataRow("zh-Hans")]
+        [DataRow("en-US")]
+        public void TopBarPopupBilingualLabelsKeepRawSelectionPinAndFavorite(string language)
+        {
+            Exception error = null;
+            var thread = new Thread(() =>
+            {
+                try
+                {
+                    CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo(language);
+                    var type = typeof(ToolStripVehicleState).Assembly.GetType("MissionPlanner.Controls.ModeDropdownPopup", true);
+                    using (var popup = (Form)Activator.CreateInstance(type, true))
+                    {
+                        const string longMode = "Loiter To QLAND";
+                        var rawModes = new List<KeyValuePair<int, string>>
+                        {
+                            new KeyValuePair<int, string>(25, longMode),
+                            new KeyValuePair<int, string>(1, "Acro"),
+                            new KeyValuePair<int, string>(65000, "Settings")
+                        };
+                        const BindingFlags hiddenInstance = BindingFlags.Instance | BindingFlags.NonPublic;
+                        var panel = (FlowLayoutPanel)type.GetField("_modesPanel", hiddenInstance).GetValue(popup);
+                        type.GetMethod("SetFltModes").Invoke(popup, new object[] { new List<string> { longMode } });
+                        type.GetMethod("SetModes").Invoke(popup, new object[] { rawModes });
+
+                        string[] titles = panel.Controls.OfType<Label>().Select(l => l.Text).ToArray();
+                        CollectionAssert.AreEqual(new[] { UiText.Translate("Configured modes"), UiText.Translate("Flight modes") }, titles);
+                        Assert.AreEqual(UiText.Translate("Pin All"), panel.Controls.OfType<CheckBox>().Single().Text);
+                        var rows = panel.Controls.OfType<Panel>().Where(p => p.Controls.Count != 0).ToArray();
+                        var labels = rows.Select(r => r.Controls.OfType<Label>().First()).ToArray();
+                        CollectionAssert.AreEqual(new[] { longMode, "Acro", "Settings" }, labels.Select(l => (string)l.Tag).ToArray());
+                        Assert.AreEqual(language == "zh-CN" ? longMode + " · 盘旋后垂直降落" : longMode, labels[0].Text);
+                        Assert.AreEqual("Settings", labels[2].Text);
+                        for (int i = 0; i < rows.Length; i++)
+                        {
+                            Assert.AreEqual(rows[i].Height, labels[i].Height);
+                            Assert.IsTrue(rows[i].Controls.OfType<Label>().All(l => l.Bottom <= rows[i].Height));
+                        }
+
+                        var actual = new List<string>();
+                        EventHandler<string> selection = (sender, raw) => actual.Add("select:" + raw);
+                        EventHandler<string> pin = (sender, raw) => actual.Add("pin:" + raw);
+                        EventHandler<string> favorite = (sender, raw) => actual.Add("favorite:" + raw);
+                        type.GetEvent("ModeSelected").AddEventHandler(popup, selection);
+                        type.GetEvent("PinToggled").AddEventHandler(popup, pin);
+                        type.GetEvent("FavoriteToggled").AddEventHandler(popup, favorite);
+                        var click = typeof(Control).GetMethod("OnClick", hiddenInstance);
+                        click.Invoke(labels[0], new object[] { EventArgs.Empty });
+                        click.Invoke(rows[0].Controls.OfType<Label>().Single(l => l.Text == "◇"), new object[] { EventArgs.Empty });
+                        click.Invoke(rows[1].Controls.OfType<Label>().Single(l => l.Text == "☆"), new object[] { EventArgs.Empty });
+                        CollectionAssert.AreEqual(new[] { "select:" + longMode, "pin:" + longMode, "favorite:Acro" }, actual.ToArray());
+                        CollectionAssert.AreEqual(new[] { 25, 1, 65000 }, rawModes.Select(x => x.Key).ToArray());
+                    }
+                }
+                catch (Exception ex) { error = ex; }
+            }) { IsBackground = true };
+            thread.SetApartmentState(ApartmentState.STA);
+            thread.Start();
+            Assert.IsTrue(thread.Join(TimeSpan.FromSeconds(30)), "Top-bar popup fixture timed out");
+            if (error != null) Assert.Fail(error.ToString());
         }
 
         [TestMethod]
