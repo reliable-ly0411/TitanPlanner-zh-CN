@@ -2314,5 +2314,15 @@
   "Requested position stream rate (Hz)": "请求的位置流频率 (Hz)",
   "Requested RC channel stream rate (Hz)": "请求的遥控通道流频率 (Hz)",
   "Requested sensor stream rate (Hz)": "请求的传感器流频率 (Hz)",
-  "Requested extended status stream rate (Hz)": "请求的扩展状态流频率 (Hz)"
+  "Requested extended status stream rate (Hz)": "请求的扩展状态流频率 (Hz)",
+  "Reported I2C error count": "上报的 I²C 错误次数",
+  "Radio receive error count": "数传接收错误次数",
+  "Free radio transmit buffer (%)": "数传发送缓冲区剩余（%）",
+  "Error-corrected radio packet count": "数传已纠错的数据包数",
+  "Reported heap top": "上报的堆顶",
+  "Reported free memory (bytes)": "上报的可用内存（字节）",
+  "RPM sensor 1 speed (rpm)": "转速传感器 1 读数（rpm）",
+  "RPM sensor 2 speed (rpm)": "转速传感器 2 读数（rpm）",
+  "Autopilot hardware UID": "飞控硬件唯一标识",
+  "Reported landed state code": "上报的着陆状态代码"
 }
