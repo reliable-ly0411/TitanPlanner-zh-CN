@@ -1201,6 +1201,10 @@
     <value>自动学习偏移</value>
     <comment>"Automatically learn offsets"</comment>
   </data>
+  <data name="24d28e7970b22dc18ebf985b03dde950304551e3f4768fcaa7c9ba129320190b" xml:space="preserve">
+    <value>飞控硬件唯一标识</value>
+    <comment>"Autopilot hardware UID"</comment>
+  </data>
   <data name="720d7d63c5dfa12702e8ca26dc6c2491d6616b987d911c03d1270350a29bbb84" xml:space="preserve">
     <value>直升机自转降落</value>
     <comment>"Autorotate"</comment>
@@ -3538,6 +3542,10 @@ Ctrl+O 从文件加载</value>
     <value>运行脚本失败： </value>
     <comment>"Error running script "</comment>
   </data>
+  <data name="c56ce635a0c84fd0a7554fcc2510a43501cf603c52a803ca149154bf75bd026e" xml:space="preserve">
+    <value>数传已纠错的数据包数</value>
+    <comment>"Error-corrected radio packet count"</comment>
+  </data>
   <data name="0aeab48dfe7857b91558d23ea653fa7f85ad759658b94e306574041938c0c204" xml:space="preserve">
     <value>获取参数列表失败</value>
     <comment>"Error: getting param list"</comment>
@@ -4310,6 +4318,10 @@ Ctrl+O 从文件加载</value>
   <data name="0902eafc38bf232c1b8a7a24086cee3702d9cba72f858b0017a886f9cb67ff2a" xml:space="preserve">
     <value>机架类别</value>
     <comment>"Frame Class"</comment>
+  </data>
+  <data name="51b2132bbc6b1e95587e4f64372e491ec4135d88ba228638e6f8482f6c64e041" xml:space="preserve">
+    <value>数传发送缓冲区剩余（%）</value>
+    <comment>"Free radio transmit buffer (%)"</comment>
   </data>
   <data name="ee6d63ad5e8e5b6cdcbefb40b1abcdcd6da95ef943363ca6177e67690db3ea1e" xml:space="preserve">
     <value>频率 Hz</value>
@@ -8831,6 +8843,14 @@ VLAN 标记</value>
     <value>射频地图</value>
     <comment>"RF Map"</comment>
   </data>
+  <data name="42bd143bb50f1e8e804c989a5beaba5e4198c8405494b9871eb913f81b217033" xml:space="preserve">
+    <value>转速传感器 1 读数（rpm）</value>
+    <comment>"RPM sensor 1 speed (rpm)"</comment>
+  </data>
+  <data name="97ab5a47b147248c5ad0617699867ead1fa8c17d672c20552a9b8f5514ede598" xml:space="preserve">
+    <value>转速传感器 2 读数（rpm）</value>
+    <comment>"RPM sensor 2 speed (rpm)"</comment>
+  </data>
   <data name="6228ad50af741992aa0b3884bf63944e9c33d7088976ac728540daca4d75f7a0" xml:space="preserve">
     <value>RTCM 基站 </value>
     <comment>"RTCM Base "</comment>
@@ -8884,6 +8904,10 @@ VLAN 标记</value>
   <data name="488e46c3ce978a92fb4f675066e24c4c7fc47bbfa6f2e2644dd0d489d3d32b8c" xml:space="preserve">
     <value>遥控通道</value>
     <comment>"Radio Channels"</comment>
+  </data>
+  <data name="024f4fef3ea8abe8e67d7f45a353901704a4b8a7ef836225ddc06c4ef62467ee" xml:space="preserve">
+    <value>数传接收错误次数</value>
+    <comment>"Radio receive error count"</comment>
   </data>
   <data name="6fe0661c82d10d34d342a2db6cf48e6903215f3e296d0dc8038ab44fcb48a0ce" xml:space="preserve">
     <value>半径</value>
@@ -9196,6 +9220,22 @@ VLAN 标记</value>
   <data name="9f8ddb8ef5103fa8cdd528b9c1ab761632cdc6d30b874c65e0d16806cdb05067" xml:space="preserve">
     <value>重复间隔</value>
     <comment>"Repeat Interval"</comment>
+  </data>
+  <data name="6db78fd41955cadd6f5e0cbdea0deffcbb9e81bf99115017103f2fbe72d8a238" xml:space="preserve">
+    <value>上报的 I²C 错误次数</value>
+    <comment>"Reported I2C error count"</comment>
+  </data>
+  <data name="e44a4c841c176c151d5046cff78e8a718a84ba58de732b63bcb72e978297000c" xml:space="preserve">
+    <value>上报的可用内存（字节）</value>
+    <comment>"Reported free memory (bytes)"</comment>
+  </data>
+  <data name="53251401cf0c738c00a2d0e85221e2e2dbe57ffff71abed525f08a5aaf150946" xml:space="preserve">
+    <value>上报的堆顶</value>
+    <comment>"Reported heap top"</comment>
+  </data>
+  <data name="928925019e8664ee6edf73162209317ba0aeb3af50bb73d44e886fe7cf69f382" xml:space="preserve">
+    <value>上报的着陆状态代码</value>
+    <comment>"Reported landed state code"</comment>
   </data>
   <data name="9276cf2f166c067097f29bdbd3ed3dc41fab7b1148c69db9294250442e9a9684" xml:space="preserve">
     <value>请求的遥控通道流频率 (Hz)</value>

@@ -69,6 +69,16 @@ namespace MissionPlanner.Controls
                 case "raterc": return UiText.Translate("Requested RC channel stream rate (Hz)");
                 case "ratesensors": return UiText.Translate("Requested sensor stream rate (Hz)");
                 case "ratestatus": return UiText.Translate("Requested extended status stream rate (Hz)");
+                case "i2cerrors": return UiText.Translate("Reported I2C error count");
+                case "rxerrors": return UiText.Translate("Radio receive error count");
+                case "txbuffer": return UiText.Translate("Free radio transmit buffer (%)");
+                case "fixedp": return UiText.Translate("Error-corrected radio packet count");
+                case "brklevel": return UiText.Translate("Reported heap top");
+                case "freemem": return UiText.Translate("Reported free memory (bytes)");
+                case "rpm1": return UiText.Translate("RPM sensor 1 speed (rpm)");
+                case "rpm2": return UiText.Translate("RPM sensor 2 speed (rpm)");
+                case "uid": return UiText.Translate("Autopilot hardware UID");
+                case "landed_state": return UiText.Translate("Reported landed state code");
                 case "ter_load": return UiText.Translate("Terrain blocks loaded in memory");
                 case "ter_pend": return UiText.Translate("Terrain blocks awaiting receipt or disk read");
                 case "ter_space": return UiText.Translate("Terrain grid spacing");

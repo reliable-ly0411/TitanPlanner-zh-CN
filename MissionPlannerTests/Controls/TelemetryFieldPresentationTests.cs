@@ -402,6 +402,41 @@ namespace MissionPlannerTests.Controls
         }
 
         [TestMethod]
+        public void DirectTelemetryLabelsPreserveKeysAndLocale()
+        {
+            var previous = CultureInfo.CurrentUICulture;
+            try
+            {
+                foreach (var locale in new[] { "zh-CN", "zh-Hans", "en-US" })
+                {
+                    CultureInfo.CurrentUICulture = new CultureInfo(locale);
+                    foreach (var pair in new[] {
+                        Tuple.Create("i2cerrors", "上报的 I²C 错误次数"),
+                        Tuple.Create("rxerrors", "数传接收错误次数"),
+                        Tuple.Create("txbuffer", "数传发送缓冲区剩余（%）"),
+                        Tuple.Create("fixedp", "数传已纠错的数据包数"),
+                        Tuple.Create("brklevel", "上报的堆顶"),
+                        Tuple.Create("freemem", "上报的可用内存（字节）"),
+                        Tuple.Create("rpm1", "转速传感器 1 读数（rpm）"),
+                        Tuple.Create("rpm2", "转速传感器 2 读数（rpm）"),
+                        Tuple.Create("uid", "飞控硬件唯一标识"),
+                        Tuple.Create("landed_state", "上报的着陆状态代码"),
+                    })
+                    {
+                        string label = TelemetryFieldPresentation.FieldLabel(pair.Item1);
+                        Assert.AreEqual(locale == "zh-CN" ? pair.Item1 + " (" + pair.Item2 + ")" : pair.Item1, label);
+                        Assert.IsTrue(TelemetryFieldPresentation.Matches(pair.Item1, label));
+                        if (locale == "zh-CN")
+                            Assert.IsTrue(TelemetryFieldPresentation.Matches(pair.Item2, label));
+                    }
+                    foreach (var key in new[] { "landed", "packetdropremote", "rpm3" })
+                        Assert.AreEqual(key, TelemetryFieldPresentation.FieldLabel(key));
+                }
+            }
+            finally { CultureInfo.CurrentUICulture = previous; }
+        }
+
+        [TestMethod]
         public void LabelsRetainKeysAndBilingualSearch()
         {
             var label = TelemetryFieldPresentation.Combine("airspeed", "空速");
