@@ -81,5 +81,50 @@ namespace MissionPlanner.Utilities.Tests
             }
             finally { File.Delete(path); }
         }
+
+        [TestMethod]
+        public void LocalPlanJsonRetainsMixedFramesAndSeparateHome()
+        {
+            var source = new List<Locationwp>
+            {
+                new Locationwp { frame = 10, lat = 0.125, lng = -0.25, alt = 20f },
+                new Locationwp { id = 16, frame = 0, lat = 0.25, lng = -0.5, alt = 123.5f },
+                new Locationwp { id = 16, frame = 3, lat = 0.5, lng = -0.75, alt = 47.25f }
+            };
+            var path = Path.GetTempFileName();
+            try
+            {
+                MissionFile.WriteFile(path, MissionFile.ConvertFromLocationwpsPreservingFrames(source));
+                var saved = MissionFile.ReadFile(path);
+                CollectionAssert.AreEqual(new[] { 0.125, -0.25, 20.0 }, saved.mission.plannedHomePosition);
+                CollectionAssert.AreEqual(new[] { "SimpleItem", "SimpleItem" },
+                    saved.mission.items.Select(item => item.type).ToArray());
+                CollectionAssert.AreEqual(new[] { 0, 3 }, saved.mission.items.Select(item => item.frame).ToArray());
+                var reopened = MissionFile.ConvertToLocationwps(saved).Skip(1).ToArray();
+                CollectionAssert.AreEqual(new byte[] { 0, 3 }, reopened.Select(row => row.frame).ToArray());
+                CollectionAssert.AreEqual(new[] { 123.5f, 47.25f }, reopened.Select(row => row.alt).ToArray());
+                CollectionAssert.AreEqual(new[] { 0.25, 0.5 }, reopened.Select(row => row.lat).ToArray());
+                CollectionAssert.AreEqual(new[] { -0.5, -0.75 }, reopened.Select(row => row.lng).ToArray());
+            }
+            finally { File.Delete(path); }
+        }
+
+        [TestMethod]
+        public void ExistingConverterStillUsesItsDefaultOrExplicitGlobalFrame()
+        {
+            var source = new List<Locationwp>
+            {
+                new Locationwp(),
+                new Locationwp { id = 16, frame = 0 },
+                new Locationwp { id = 16, frame = 3 }
+            };
+            CollectionAssert.AreEqual(new[] { 3, 3 }, MissionFile.ConvertFromLocationwps(source)
+                .mission.items.Select(item => item.frame).ToArray());
+            CollectionAssert.AreEqual(new[] { 0, 0 }, MissionFile.ConvertFromLocationwps(source, 0)
+                .mission.items.Select(item => item.frame).ToArray());
+            CollectionAssert.AreEqual(new[] { 77, 77 }, MissionFile.ConvertFromLocationwps(source, 77)
+                .mission.items.Select(item => item.frame).ToArray());
+            CollectionAssert.AreEqual(new byte[] { 0, 3 }, source.Skip(1).Select(item => item.frame).ToArray());
+        }
     }
 }
