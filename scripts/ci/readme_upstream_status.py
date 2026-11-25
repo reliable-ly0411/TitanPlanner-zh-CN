@@ -60,22 +60,65 @@ def render(counts):
     return ET.tostring(svg, encoding="utf-8", xml_declaration=True) + b"\n"
 
 
-def publish(svg):
+DIRECTIONS = (("ahead", "领先", "#0969da"), ("behind", "落后", "#a34000"))
+BADGE_NAMES = tuple(f"{line}-{base}-{direction}.svg"
+                    for line in BRANCHES[:2] for base in BRANCHES[2:]
+                    for direction, _, _ in DIRECTIONS)
+
+
+def render_badge(line, base, direction, label, color, count):
+    label_width = 14 + 7 * len(direction)
+    width = label_width + 14 + 8 * len(str(count))
+    svg = ET.Element("svg", xmlns="http://www.w3.org/2000/svg",
+                     width=str(width), height="20", viewBox=f"0 0 {width} 20",
+                     role="img")
+    svg.set("aria-labelledby", "title")
+    ET.SubElement(svg, "title", id="title").text = f"{line} 相对 {base}：{label} {count}"
+    defs = ET.SubElement(svg, "defs")
+    clip = ET.SubElement(defs, "clipPath", id="badge")
+    ET.SubElement(clip, "rect", width=str(width), height="20", rx="4")
+    bg = ET.SubElement(svg, "g", {"clip-path": "url(#badge)"})
+    ET.SubElement(bg, "rect", width=str(width), height="20", fill=color)
+    ET.SubElement(bg, "rect", width=str(label_width), height="20", fill="#424a53")
+    g = ET.SubElement(svg, "g", {"fill": "#fff", "font-family": "Verdana, sans-serif",
+                                  "font-size": "11", "text-anchor": "middle"})
+    ET.SubElement(g, "text", x=str(label_width / 2), y="14").text = direction
+    ET.SubElement(g, "text", x=str((label_width + width) / 2), y="14").text = str(count)
+    return ET.tostring(svg, encoding="utf-8", xml_declaration=True) + b"\n"
+
+
+def render_snapshot(counts):
+    assets = {FILENAME: render(counts)}
+    names = iter(BADGE_NAMES)
+    for line, row in zip(BRANCHES[:2], counts):
+        for base, pair in zip(BRANCHES[2:], row):
+            for (direction, label, color), count in zip(DIRECTIONS, pair):
+                assets[next(names)] = render_badge(line, base, direction, label, color, count)
+    return assets
+
+
+def publish(assets):
+    expected = {FILENAME, *BADGE_NAMES}
+    if assets.keys() != expected:
+        raise ValueError("incomplete README status snapshot")
+
     current = git("ls-remote", "--heads", "origin", STATUS_REF).split()
     parent = current[0].decode() if current else None
     if parent:
         git("fetch", "--no-tags", "--depth=1", "origin", STATUS_REF)
         if git("rev-parse", "FETCH_HEAD").decode().strip() != parent:
             raise RuntimeError("status branch advanced during fetch; keeping the remote version")
-        if git("ls-tree", "--name-only", parent).decode().splitlines() != [FILENAME]:
-            raise RuntimeError("status branch contains unexpected files")
-        old = subprocess.run(["git", "show", f"{parent}:{FILENAME}"], capture_output=True)
-        if old.returncode:
-            raise RuntimeError("status branch does not contain the expected file")
-        if old.stdout == svg:
+        old_files = set(git("ls-tree", "--name-only", parent).decode().splitlines())
+        if old_files not in ({FILENAME}, expected):
+            raise RuntimeError("status branch contains unexpected or missing files")
+        if old_files == expected and all(git("show", f"{parent}:{name}") == data
+                                         for name, data in assets.items()):
             return
-    blob = git("hash-object", "-w", "--stdin", data=svg).decode().strip()
-    tree = git("mktree", data=f"100644 blob {blob}\t{FILENAME}\n".encode()).decode().strip()
+    entries = []
+    for name, data in sorted(assets.items()):
+        blob = git("hash-object", "-w", "--stdin", data=data).decode().strip()
+        entries.append(f"100644 blob {blob}\t{name}\n")
+    tree = git("mktree", data="".join(entries).encode()).decode().strip()
     commit = git("-c", "user.name=github-actions[bot]", "-c",
                  "user.email=41898282+github-actions[bot]@users.noreply.github.com",
                  "commit-tree", tree, *(["-p", parent] if parent else []),
@@ -88,10 +131,16 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("repository")
-    parser.add_argument("--output", type=Path, help="write a local preview instead of pushing")
+    preview = parser.add_mutually_exclusive_group()
+    preview.add_argument("--output", type=Path, help="write the legacy local preview")
+    preview.add_argument("--output-dir", type=Path, help="write all status SVGs as local previews")
     args = parser.parse_args()
-    svg = render(collect(args.repository))
+    assets = render_snapshot(collect(args.repository))
     if args.output:
-        args.output.write_bytes(svg)
+        args.output.write_bytes(assets[FILENAME])
+    elif args.output_dir:
+        args.output_dir.mkdir(parents=True, exist_ok=True)
+        for name, data in assets.items():
+            (args.output_dir / name).write_bytes(data)
     else:
-        publish(svg)
+        publish(assets)
