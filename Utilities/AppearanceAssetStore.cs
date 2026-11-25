@@ -33,6 +33,7 @@ namespace MissionPlanner.Utilities
         {
             public string Icon = "";
             public string Image = "";
+            public string StartupPreset = "";
         }
 
         public Icon LoadIcon(out string warning)
@@ -45,7 +46,24 @@ namespace MissionPlanner.Utilities
 
         public Bitmap LoadStartupImage(out string warning)
         {
-            var bytes = Load(AppearanceAsset.StartupImage, out warning);
+            return LoadStartupImage(null, out warning);
+        }
+
+        internal Bitmap LoadStartupImage(Func<Bitmap> loadMissionPlanner, out string warning)
+        {
+            var selection = ReadSelection(out warning);
+            if (loadMissionPlanner != null && selection.StartupPreset == "mission-planner")
+            {
+                try
+                {
+                    var preset = loadMissionPlanner();
+                    if (preset != null) return preset;
+                }
+                catch (Exception) { }
+                warning = "Built-in startup image unavailable; using default.";
+                return null;
+            }
+            var bytes = LoadSelectedAsset(AppearanceAsset.StartupImage, selection, ref warning);
             if (bytes == null) return null;
             try { return DecodeImage(bytes); }
             catch (Exception) { warning = "Custom startup image unavailable; using default."; return null; }
@@ -54,6 +72,11 @@ namespace MissionPlanner.Utilities
         private byte[] Load(AppearanceAsset kind, out string warning)
         {
             var selection = ReadSelection(out warning);
+            return LoadSelectedAsset(kind, selection, ref warning);
+        }
+
+        private byte[] LoadSelectedAsset(AppearanceAsset kind, Selection selection, ref string warning)
+        {
             var name = kind == AppearanceAsset.WindowIcon ? selection.Icon : selection.Image;
             if (name.Length == 0) return null;
             try
@@ -82,7 +105,25 @@ namespace MissionPlanner.Utilities
 
         public void RestoreDefault(AppearanceAsset kind) { Save(kind, null, ""); }
 
-        private void Save(AppearanceAsset kind, byte[] bytes, string extension)
+        internal void SelectMissionPlannerStartup()
+        {
+            Save(AppearanceAsset.StartupImage, null, "", "mission-planner");
+        }
+
+        internal void SelectSavedStartupImage()
+        {
+            Save(AppearanceAsset.StartupImage, null, "", reuseSavedImage: true);
+        }
+
+        internal bool CanSelectSavedStartupImage()
+        {
+            string warning;
+            var selection = ReadSelection(out warning);
+            return selection.Image.Length != 0;
+        }
+
+        private void Save(AppearanceAsset kind, byte[] bytes, string extension, string startupPreset = "",
+            bool reuseSavedImage = false)
         {
             Directory.CreateDirectory(directory);
             // Serializes read-modify-write between application instances. Failure preserves the old selection.
@@ -103,7 +144,17 @@ namespace MissionPlanner.Utilities
                     }
                 }
                 if (kind == AppearanceAsset.WindowIcon) selection.Icon = name;
-                else selection.Image = name;
+                else
+                {
+                    selection.StartupPreset = startupPreset;
+                    // Choosing the built-in never discards the saved imported selection or its bytes.
+                    if (reuseSavedImage)
+                    {
+                        if (LoadSelectedAsset(AppearanceAsset.StartupImage, selection, ref ignored) == null)
+                            throw new InvalidDataException("No saved startup image is available.");
+                    }
+                    else if (startupPreset.Length == 0) selection.Image = name;
+                }
 
                 var manifest = Path.Combine(directory, "settings.xml");
                 var temporary = Path.Combine(directory, Guid.NewGuid().ToString("N") + ".tmp");
@@ -118,6 +169,8 @@ namespace MissionPlanner.Utilities
                             writer.WriteAttributeString("version", "1");
                             writer.WriteAttributeString("icon", selection.Icon);
                             writer.WriteAttributeString("image", selection.Image);
+                            if (selection.StartupPreset.Length != 0)
+                                writer.WriteAttributeString("startupPreset", selection.StartupPreset);
                             writer.WriteEndElement();
                         }
                         output.Flush(true);
@@ -154,7 +207,9 @@ namespace MissionPlanner.Utilities
                 var image = root.GetAttribute("image");
                 if (!ValidName(icon, @"ico") || !ValidName(image, @"png|jpg|bmp"))
                     throw new InvalidDataException();
-                return new Selection { Icon = icon, Image = image };
+                var startupPreset = root.GetAttribute("startupPreset");
+                return new Selection { Icon = icon, Image = image,
+                    StartupPreset = startupPreset == "mission-planner" ? startupPreset : "" };
             }
             catch (Exception)
             {

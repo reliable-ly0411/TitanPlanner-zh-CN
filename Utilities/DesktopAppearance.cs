@@ -72,9 +72,27 @@ namespace MissionPlanner.Utilities
             }
         }
 
+        internal static void SelectMissionPlannerStartup()
+        {
+            using (var image = LoadMissionPlannerStartup())
+                if (image == null) throw new InvalidDataException("Built-in startup image unavailable; using default.");
+            Store.SelectMissionPlannerStartup();
+        }
+
+        private static Bitmap LoadMissionPlannerStartup()
+        {
+            var image = Properties.Resources.splashdark;
+            return image == null ? null : new Bitmap(image);
+        }
+
+        internal static Bitmap LoadSelectedStartupImage(out string warning)
+        {
+            return Store.LoadStartupImage(LoadMissionPlannerStartup, out warning);
+        }
+
         public static Bitmap CreateStartupPreview(out string warning)
         {
-            var custom = Store.LoadStartupImage(out warning);
+            var custom = LoadSelectedStartupImage(out warning);
             if (custom != null) return custom;
             // Read the exact embedded default used by Splash.Designer; do not open a second splash window.
             var resources = new ComponentResourceManager(typeof(Splash));
