@@ -175,12 +175,13 @@ namespace MissionPlanner.Controls
 
             string translation = null;
             // Verify both metadata id and original label: unknown/new aliases remain unchanged.
+            // ArduPilot RC_Channel.cpp at 7250f9d4: option 52 is ACRO Mode for Copter, Rover, and Plane.
             if (id == 52)
             {
-                if (firmware == "ArduPlane" && raw == "ModeACRO") translation = "特技模式";
-                else if (firmware == "ArduCopter2" && raw == "Acro")
+                if (firmware == "ArduPlane" && (raw == "ModeACRO" || raw == "ACRO Mode")) translation = "特技模式";
+                else if (firmware == "ArduCopter2" && (raw == "Acro" || raw == "ACRO Mode"))
                     translation = "特技模式";
-                else if (firmware == "ArduRover" && raw == "Acro")
+                else if (firmware == "ArduRover" && (raw == "Acro" || raw == "ACRO Mode"))
                     translation = "转向率与速度控制";
             }
 
@@ -218,8 +219,18 @@ namespace MissionPlanner.Controls
                         args.Bounds, args.ForeColor, flags | TextFormatFlags.VerticalCenter | TextFormatFlags.EndEllipsis);
                 args.DrawFocusRectangle();
             };
-            combo.MouseEnter += (sender, args) =>
-                tip.SetToolTip(combo, DisplayAuxiliaryOption(combo, combo.SelectedIndex));
+            Action refreshSelectedTip = () =>
+            {
+                if (combo.Disposing || combo.IsDisposed) return;
+                var label = DisplayAuxiliaryOption(combo, combo.SelectedIndex);
+                if (tip.GetToolTip(combo) == label) return;
+                tip.Hide(combo);
+                tip.SetToolTip(combo, label);
+            };
+            combo.MouseEnter += (sender, args) => refreshSelectedTip();
+            combo.SelectedIndexChanged += (sender, args) => refreshSelectedTip();
+            combo.DataSourceChanged += (sender, args) => refreshSelectedTip();
+            combo.DropDownClosed += (sender, args) => refreshSelectedTip();
             combo.DropDown += (sender, args) =>
             {
                 int width = combo.Width;
