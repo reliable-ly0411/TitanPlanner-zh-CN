@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using log4net;
 using MissionPlanner.Controls.BackstageView;
@@ -46,20 +47,74 @@ namespace MissionPlanner.Controls.BackstageView
         /// </summary>
         public static bool Advanced { get; set; }
 
+        private int logicalMenuWidth = 200;
+
+        // SoftwareConfig opts in; other Backstage hosts retain their existing sizing.
+        public bool UseSingleDpiMenuWidth { get; set; }
+
         public int WidthMenu
         {
-            get
-            {
-                return pnlMenu.Width;
-            }
+            get { return pnlMenu.Width; }
             set
             {
+                logicalMenuWidth = value;
+                if (UseSingleDpiMenuWidth)
+                {
+                    ApplyMenuWidth();
+                    return;
+                }
+
                 int delta = value - pnlMenu.Width;
                 pnlMenu.Width = value;
                 pnlPages.Location = new Point(pnlPages.Location.X + delta, pnlPages.Location.Y);
                 pnlPages.Width -= delta;
             }
         }
+
+        private bool menuWidthPending;
+
+        protected override void OnLayout(LayoutEventArgs e)
+        {
+            base.OnLayout(e);
+            if (!UseSingleDpiMenuWidth || pnlMenu == null || menuWidthPending || !IsHandleCreated
+                || pnlMenu.Width == DeviceMenuWidth())
+                return;
+
+            // Parent DPI scaling can still mutate a docked child within its layout pass.
+            // Reapply the authored width once after that pass, not recursively within it.
+            menuWidthPending = true;
+            BeginInvoke((MethodInvoker)(() =>
+            {
+                try { ApplyMenuWidth(); }
+                finally { menuWidthPending = false; }
+            }));
+        }
+
+        private void ApplyMenuWidth()
+        {
+            if (pnlMenu == null)
+                return;
+
+            // Recompute from the designer width instead of scaling the already laid-out panel.
+            // The sibling page fills the space left by the docked menu.
+            int width = DeviceMenuWidth();
+            if (pnlMenu.Width != width)
+                pnlMenu.Width = width;
+        }
+
+        private int DeviceMenuWidth()
+        {
+            int dpi = 96;
+            if (IsHandleCreated && Environment.OSVersion.Platform == PlatformID.Win32NT)
+            {
+                try { dpi = (int)GetDpiForWindow(Handle); }
+                catch (EntryPointNotFoundException) { }
+            }
+            return (int)Math.Round(logicalMenuWidth * Math.Max(96, dpi) / 96.0);
+        }
+
+        [DllImport("user32.dll")]
+        private static extern uint GetDpiForWindow(IntPtr hwnd);
 
         private BackstageViewPage popoutPage = null;
 
