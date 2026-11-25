@@ -38,6 +38,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
 
 
             var firmware = MainV2.comPort.MAV.cs.firmware;
+            UpdateFenceTypeReadback(MainV2.comPort.MAV.param, firmware);
             var actionOptions = ParameterMetaDataRepository.GetParameterOptionsInt("FENCE_ACTION", firmware.ToString());
             BindFenceAction(actionOptions, firmware, MainV2.comPort.MAV.param);
 
@@ -59,6 +60,57 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                 mavlinkNumericUpDown3.setup(1, 500, (float)CurrentState.fromDistDisplayUnit(100), 1, "RTL_ALT",
                     MainV2.comPort.MAV.param);
         }
+        private Label fenceTypeReadback;
+
+        private void UpdateFenceTypeReadback(MAVLink.MAVLinkParamList parameters, Firmwares firmware)
+        {
+            if (firmware != Firmwares.ArduCopter2 ||
+                !string.Equals(CultureInfo.CurrentUICulture.Name, "zh-CN", StringComparison.Ordinal))
+            {
+                if (fenceTypeReadback != null)
+                    fenceTypeReadback.Visible = false;
+                return;
+            }
+
+            if (fenceTypeReadback == null)
+            {
+                fenceTypeReadback = new Label { AutoSize = true, TabStop = false };
+                Controls.Add(fenceTypeReadback);
+                SizeChanged += (sender, args) => LayoutFenceTypeReadback();
+                tableLayoutPanel1.SizeChanged += (sender, args) => LayoutFenceTypeReadback();
+                tableLayoutPanel1.LocationChanged += (sender, args) => LayoutFenceTypeReadback();
+            }
+
+            var item = parameters["FENCE_TYPE"];
+            string text = "围栏类型缓存：未读取";
+            if (item != null)
+            {
+                double value = item.Value;
+                bool valid = value >= 0 && value <= int.MaxValue && value == Math.Truncate(value);
+                text = valid ? "围栏类型缓存：" + value.ToString("0", CultureInfo.InvariantCulture)
+                    : "围栏类型缓存：数值无效";
+                // The upstream TYPE metadata uses bit indices 0–3, not dropdown enum values.
+                // Preserve the entire number and do not guess what extra bits mean.
+                if (valid && ((int)value & ~15) != 0)
+                    text += "（含未识别位）";
+            }
+
+            fenceTypeReadback.Text = text;
+            fenceTypeReadback.Visible = true;
+            LayoutFenceTypeReadback();
+        }
+
+        private void LayoutFenceTypeReadback()
+        {
+            int inset = Math.Max(1, label4type.Left);
+            var table = tableLayoutPanel1;
+            int x = table.Left + inset;
+            fenceTypeReadback.Location = new System.Drawing.Point(x, table.Bottom + inset);
+            fenceTypeReadback.MaximumSize = new System.Drawing.Size(
+                Math.Max(1, Math.Min(table.Right, ClientSize.Width) - x - inset), 0);
+        }
+
+
         private void BindFenceAction(List<KeyValuePair<int, string>> options, Firmwares firmware,
             MAVLink.MAVLinkParamList parameters)
         {
