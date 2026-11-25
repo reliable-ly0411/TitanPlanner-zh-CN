@@ -6490,7 +6490,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                             list.Insert(0, home);
 
                             var format =
-                                MissionFile.ConvertFromLocationwps(list, (byte) (altmode) CMB_altmode.SelectedValue);
+                                MissionFile.ConvertFromLocationwpsPreservingFrames(list);
 
                             MissionFile.WriteFile(file, format);
                             return;
