@@ -1,6 +1,7 @@
 ﻿using MissionPlanner.Utilities;
 using System;
 using System.Drawing;
+using System.Globalization;
 using System.Windows.Forms;
 
 namespace MissionPlanner.Controls.PreFlight
@@ -10,6 +11,7 @@ namespace MissionPlanner.Controls.PreFlight
         public event EventHandler ReloadList;
 
         CheckListControl _parent;
+        private ToolTip conditionTooltip;
 
         public CheckListInput(CheckListControl parent)
         {
@@ -27,6 +29,7 @@ namespace MissionPlanner.Controls.PreFlight
             CheckListItem.defaultsrc = MainV2.comPort.MAV.cs;
             item.SetField(item.Name);
 
+            SetupConditionPresentation();
             CMB_condition.DataSource = Enum.GetNames(typeof(CheckListItem.Conditional));
 
             CMB_Source.DataSource = item.GetOptions();
@@ -41,13 +44,54 @@ namespace MissionPlanner.Controls.PreFlight
 
         public void updateDisplay()
         {
-            CMB_condition.Text = CheckListItem.ConditionType.ToString();
+            CMB_condition.SelectedItem = CheckListItem.ConditionType.ToString();
             CMB_Source.Text = CheckListItem.Name;
             NUM_trigger.Value = (decimal)CheckListItem.TriggerValue;
             TXT_text.Text = CheckListItem.Text;
             TXT_desc.Text = CheckListItem.Description;
             CMB_colour1.SelectedItem = CheckListItem.TrueColor;
             CMB_colour2.SelectedItem = CheckListItem.FalseColor;
+        }
+
+        private void SetupConditionPresentation()
+        {
+            if (!string.Equals(CultureInfo.CurrentUICulture.Name, "zh-CN", StringComparison.Ordinal))
+                return;
+
+            conditionTooltip = new ToolTip();
+            CMB_condition.Format += (sender, args) =>
+            {
+                var token = args.ListItem as string;
+                switch (token)
+                {
+                    case "NONE": args.Value = token + " · 不比较"; break;
+                    case "LT": args.Value = token + " · 小于"; break;
+                    case "LTEQ": args.Value = token + " · 小于或等于"; break;
+                    case "EQ": args.Value = token + " · 等于"; break;
+                    case "GT": args.Value = token + " · 大于"; break;
+                    case "GTEQ": args.Value = token + " · 大于或等于"; break;
+                    case "NEQ": args.Value = token + " · 不等于"; break;
+                }
+            };
+            CMB_condition.DropDown += (sender, args) => UpdateConditionDropDownWidth();
+            CMB_condition.MouseEnter += (sender, args) => UpdateConditionTooltip();
+            Disposed += (sender, args) => conditionTooltip.Dispose();
+        }
+
+        private void UpdateConditionDropDownWidth()
+        {
+            var combo = CMB_condition;
+            int width = combo.Width;
+            foreach (var item in combo.Items)
+                width = Math.Max(width, TextRenderer.MeasureText(combo.GetItemText(item), combo.Font).Width
+                    + SystemInformation.VerticalScrollBarWidth);
+            combo.DropDownWidth = Math.Max(combo.Width, Math.Min(width, Screen.FromControl(combo).WorkingArea.Width));
+        }
+
+        private void UpdateConditionTooltip()
+        {
+            if (conditionTooltip != null)
+                conditionTooltip.SetToolTip(CMB_condition, CMB_condition.GetItemText(CMB_condition.SelectedItem));
         }
 
         CheckListItem _checklistitem;
@@ -208,9 +252,10 @@ namespace MissionPlanner.Controls.PreFlight
 
         private void CMB_condition_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (CheckListItem != null)
-                CheckListItem.ConditionType =
-                    (CheckListItem.Conditional)Enum.Parse(typeof(CheckListItem.Conditional), CMB_condition.Text);
+            UpdateConditionTooltip();
+            CheckListItem.Conditional condition;
+            if (CheckListItem != null && Enum.TryParse(CMB_condition.SelectedItem as string, out condition))
+                CheckListItem.ConditionType = condition;
         }
 
         private void NUM_warning_ValueChanged(object sender, EventArgs e)
