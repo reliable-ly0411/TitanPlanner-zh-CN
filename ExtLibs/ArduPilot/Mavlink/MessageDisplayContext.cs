@@ -12,7 +12,8 @@ namespace MissionPlanner
             new ConditionalWeakTable<List<(DateTime time, string message, byte severity)>, State>();
         private sealed class State
         {
-            internal bool Heartbeat, Version, Conflict;
+            internal int Heartbeat, Version;
+            internal bool Conflict;
             internal readonly ConditionalWeakTable<string, Row> Rows = new ConditionalWeakTable<string, Row>();
         }
         private sealed class Row
@@ -30,15 +31,20 @@ namespace MissionPlanner
                 if (packet.msgid == (uint)MAVLink.MAVLINK_MSG_ID.HEARTBEAT)
                 {
                     var hb = packet.ToStructure<MAVLink.mavlink_heartbeat_t>();
-                    if (hb.autopilot == 3 && hb.type == 1) s.Heartbeat = true;
-                    else s.Conflict = true;
+                    int family = hb.autopilot == 3 && hb.type == 1 ? 1 : hb.autopilot == 12 ? 2 : 0;
+                    if (family == 0 || (s.Heartbeat != 0 && s.Heartbeat != family)) s.Conflict = true;
+                    else s.Heartbeat = family;
                 }
                 else
                 {
                     var ver = packet.ToStructure<MAVLink.mavlink_autopilot_version_t>();
-                    if (ver.flight_sw_version == 0x040703ff && ver.flight_custom_version != null &&
-                        Encoding.ASCII.GetString(ver.flight_custom_version) == "d9c5097c") s.Version = true;
-                    else s.Conflict = true;
+                    var hash = ver.flight_custom_version;
+                    int version = ver.flight_sw_version == 0x040703ff && hash != null &&
+                        Encoding.ASCII.GetString(hash) == "d9c5097c" ? 1 :
+                        ver.flight_sw_version == 0x011200ff && hash != null && hash.Length == 8 &&
+                        hash[3] == 0xd6 && hash[4] == 0xf1 && hash[5] == 0xdd && hash[6] == 0x5a && hash[7] == 0x93 ? 2 : 0;
+                    if (version == 0 || (s.Version != 0 && s.Version != version)) s.Conflict = true;
+                    else s.Version = version;
                 }
             }
         }
@@ -47,7 +53,7 @@ namespace MissionPlanner
             MAVLink.mavlink_statustext_t text, (DateTime time, string message, byte severity) row)
         {
             State s;
-            if (!states.TryGetValue(list, out s) || !s.Heartbeat || !s.Version || s.Conflict ||
+            if (!states.TryGetValue(list, out s) || s.Heartbeat == 0 || s.Heartbeat != s.Version || s.Conflict ||
                 text.id != 0 || text.chunk_seq != 0 || packet.payloadlength < 2 ||
                 (packet.header == 254 && packet.payloadlength != 51))
                 return;
@@ -62,7 +68,9 @@ namespace MissionPlanner
             catch (DecoderFallbackException) { return; }
 
             // Keep only known supported raw literals, never translated text at receive time.
-            if (row.message != "GPS 1: detected u-blox" && row.message != "EKF3 IMU0 origin set") return;
+            if (s.Version == 1
+                ? row.message != "GPS 1: detected u-blox" && row.message != "EKF3 IMU0 origin set"
+                : row.message != "Battery 1 missing\t" || row.severity != 2) return;
             if (s.Rows.TryGetValue(row.message, out var existing))
             {
                 existing.Time = DateTime.MinValue; // unexpectedly reused token
@@ -82,6 +90,8 @@ namespace MissionPlanner
                     !s.Rows.TryGetValue(row.message, out proof) || proof.Time != row.time ||
                     proof.Severity != row.severity) return null;
 
+                if (s.Version == 2)
+                    return row.message == "Battery 1 missing\t" ? "未检测到 1 号电池" : null;
                 if (row.message == "GPS 1: detected u-blox") return "检测到 GPS 1：u-blox";
                 if (row.message == "EKF3 IMU0 origin set") return "EKF3 IMU0 原点已设置";
                 return null;
