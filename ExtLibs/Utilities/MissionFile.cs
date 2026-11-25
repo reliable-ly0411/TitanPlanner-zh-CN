@@ -240,6 +240,17 @@ namespace MissionPlanner.Utilities
 
         public static RootObject ConvertFromLocationwps(List<Locationwp> list, byte frame = (byte)MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT)
         {
+            return ConvertFromLocationwpsCore(list, frame);
+        }
+
+        /// <summary>Serialize a local plan using each ordinary item's own altitude frame.</summary>
+        public static RootObject ConvertFromLocationwpsPreservingFrames(List<Locationwp> list)
+        {
+            return ConvertFromLocationwpsCore(list, null);
+        }
+
+        private static RootObject ConvertFromLocationwpsCore(List<Locationwp> list, byte? frameOverride)
+        {
             RootObject temp = new RootObject()
             {
                 groundStation = "MissionPlanner",
@@ -267,8 +278,8 @@ namespace MissionPlanner.Utilities
                     var temploc = ConvertFromLocationwp(item);
                     temploc.type = "SimpleItem";
 
-                    // set frame type
-                    temploc.frame = frame;
+                    if (frameOverride.HasValue)
+                        temploc.frame = frameOverride.Value;
 
                     temp.mission.items.Add(temploc);
 
