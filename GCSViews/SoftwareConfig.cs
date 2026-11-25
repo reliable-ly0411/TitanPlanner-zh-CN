@@ -126,6 +126,7 @@ namespace MissionPlanner.GCSViews
         public SoftwareConfig()
         {
             InitializeComponent();
+            backstageView.UseSingleDpiMenuWidth = !Program.MONO && Environment.OSVersion.Platform == PlatformID.Win32NT;
         }
 
         public void Activate()
