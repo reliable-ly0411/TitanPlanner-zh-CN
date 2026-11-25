@@ -39,6 +39,11 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             CHK_startFullscreen.CheckedChanged += CHK_startFullscreen_CheckedChanged;
 
             InitializeComponent();
+            CMB_mapCache.Format += (sender, e) =>
+            {
+                if (e.ListItem is string key)
+                    e.Value = UiText.Translate(key);
+            };
             // Format display text only; SelectedItem remains the original enum.
             CMB_Layout.Format += (sender, e) => e.Value = UiText.Translate(e.ListItem.ToString());
             CMB_severity.Format += (sender, e) => e.Value = UiText.Translate(e.ListItem.ToString());
@@ -1928,10 +1933,11 @@ namespace MissionPlanner.GCSViews.ConfigurationView
 
         private void CMB_mapCache_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (startup)
+            if (startup || !(CMB_mapCache.SelectedItem is string key) ||
+                !Enum.TryParse(key, out GMap.NET.AccessMode mode))
                 return;
-            Settings.Instance["mapCache"] = CMB_mapCache.Text;
-            GMap.NET.GMaps.Instance.Mode = (GMap.NET.AccessMode)Enum.Parse(typeof(GMap.NET.AccessMode), Settings.Instance["mapCache"].ToString());
+            Settings.Instance["mapCache"] = key;
+            GMap.NET.GMaps.Instance.Mode = mode;
         }
 
         private void BUT_mapCacheDir_Click(object sender, EventArgs e)
