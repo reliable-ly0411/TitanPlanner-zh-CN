@@ -24,6 +24,9 @@ namespace MissionPlanner.Controls
 
         // What the source list held at the last update. It is capped at 1000 messages, dropping the oldest, so once
         // full its count stops changing: comparing only the count froze the view on long flights (issue #23).
+        private List<(DateTime time, string message, byte severity)> sourceIdentity;
+        internal Func<List<(DateTime time, string message, byte severity)>,
+            (DateTime time, string message, byte severity), string> DisplaySuffix;
         private int sourceCount = -1;
         private (DateTime time, string message, byte severity) sourceNewest;
 
@@ -160,12 +163,21 @@ namespace MissionPlanner.Controls
             }
         }
 
+        private string RawCopyText((DateTime time, string message, byte severity) msg)
+            => $"[{msg.time:HH:mm:ss}] [{GetSeverityText(msg.severity)}] {msg.message}";
+
+        private string RowDisplayText((DateTime time, string message, byte severity) msg)
+        {
+            string suffix = sourceIdentity == null ? null : DisplaySuffix?.Invoke(sourceIdentity, msg);
+            return string.IsNullOrEmpty(suffix) ? msg.message : msg.message + "  " + suffix;
+        }
+
         private void CopyItem_Click(object sender, EventArgs e)
         {
             if (selectedIndex >= 0 && selectedIndex < messages.Count)
             {
                 var msg = messages[selectedIndex];
-                string text = $"[{msg.time:HH:mm:ss}] [{GetSeverityText(msg.severity)}] {msg.message}";
+                string text = RawCopyText(msg);
                 try
                 {
                     Clipboard.SetText(text);
@@ -182,7 +194,7 @@ namespace MissionPlanner.Controls
             var sb = new System.Text.StringBuilder();
             foreach (var msg in messages)
             {
-                sb.AppendLine($"[{msg.time:HH:mm:ss}] [{GetSeverityText(msg.severity)}] {msg.message}");
+                sb.AppendLine(RawCopyText(msg));
             }
             try
             {
@@ -247,9 +259,20 @@ namespace MissionPlanner.Controls
             lock (newMessages)
             {
                 var newest = newMessages.Count > 0 ? newMessages[newMessages.Count - 1] : default((DateTime, string, byte));
-                if (newMessages.Count == sourceCount && SameMessage(newest, sourceNewest))
+                bool sameSource = ReferenceEquals(newMessages, sourceIdentity);
+                if (sameSource && newMessages.Count == sourceCount && SameMessage(newest, sourceNewest) &&
+                    ReferenceEquals(newest.Item2, sourceNewest.message))
+                {
+                    if (DisplaySuffix != null) containerPanel.Invalidate();
                     return;
+                }
 
+                if (!sameSource)
+                {
+                    clearedThrough = null;
+                    selectedIndex = -1;
+                }
+                sourceIdentity = newMessages;
                 sourceCount = newMessages.Count;
                 sourceNewest = newest;
                 snapshot = new List<(DateTime, string, byte)>(newMessages);
@@ -261,7 +284,7 @@ namespace MissionPlanner.Controls
                 // away, or a new connection's list), everything in it is newer.
                 for (int i = snapshot.Count - 1; i >= 0; i--)
                 {
-                    if (SameMessage(snapshot[i], clearedThrough.Value))
+                    if (SameMessage(snapshot[i], clearedThrough.Value) && ReferenceEquals(snapshot[i].message, clearedThrough.Value.message))
                     {
                         snapshot.RemoveRange(0, i + 1);
                         break;
@@ -275,7 +298,7 @@ namespace MissionPlanner.Controls
             if (messages.Count > 0 && snapshot.Count > 0)
             {
                 var first = snapshot[0];
-                dropped = Math.Max(0, messages.FindIndex(m => SameMessage(m, first)));
+                dropped = Math.Max(0, messages.FindIndex(m => SameMessage(m, first) && ReferenceEquals(m.message, first.message)));
             }
 
             messages = snapshot;
@@ -465,7 +488,7 @@ namespace MissionPlanner.Controls
             using (var brush = new SolidBrush(textColor))
             {
                 var messageRect = new RectangleF(messageX, textY, containerPanel.Width - messageX - padding, displayFont.Height);
-                g.DrawString(msg.message, displayFont, brush, messageRect, messageFormat);
+                g.DrawString(RowDisplayText(msg), displayFont, brush, messageRect, messageFormat);
             }
         }
 

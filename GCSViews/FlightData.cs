@@ -5692,7 +5692,9 @@ namespace MissionPlanner.GCSViews
             // messages that arrived in the same second as the last update.
             try
             {
-                messagesList1.UpdateMessages(MainV2.comPort.MAV.cs.messages);
+                var receiver = MainV2.comPort;
+                messagesList1.DisplaySuffix = receiver.MessagesDisplaySuffix;
+                messagesList1.UpdateMessages(receiver.MAV.cs.messages);
             }
             catch (Exception ex)
             {
