@@ -13,6 +13,7 @@ namespace MissionPlanner.Controls.PreFlight
         CheckListControl _parent;
         private ToolTip conditionTooltip;
         private ToolTip colorTooltip;
+        private ToolTip sourceTooltip;
 
         public CheckListInput(CheckListControl parent)
         {
@@ -33,6 +34,7 @@ namespace MissionPlanner.Controls.PreFlight
             SetupConditionPresentation();
             CMB_condition.DataSource = Enum.GetNames(typeof(CheckListItem.Conditional));
 
+            SetupSourcePresentation();
             CMB_Source.DataSource = item.GetOptions();
 
             SetupColorPresentation();
@@ -47,7 +49,7 @@ namespace MissionPlanner.Controls.PreFlight
         public void updateDisplay()
         {
             CMB_condition.SelectedItem = CheckListItem.ConditionType.ToString();
-            CMB_Source.Text = CheckListItem.Name;
+            CMB_Source.SelectedItem = CheckListItem.Name;
             NUM_trigger.Value = (decimal)CheckListItem.TriggerValue;
             TXT_text.Text = CheckListItem.Text;
             TXT_desc.Text = CheckListItem.Description;
@@ -94,6 +96,66 @@ namespace MissionPlanner.Controls.PreFlight
         {
             if (conditionTooltip != null)
                 conditionTooltip.SetToolTip(CMB_condition, CMB_condition.GetItemText(CMB_condition.SelectedItem));
+        }
+
+        private void SetupSourcePresentation()
+        {
+            if (!string.Equals(CultureInfo.CurrentUICulture.Name, "zh-CN", StringComparison.Ordinal))
+                return;
+
+            sourceTooltip = new ToolTip();
+            CMB_Source.Format += (sender, args) =>
+            {
+                if (args.ListItem is string key)
+                    args.Value = PresentSource(key);
+            };
+            CMB_Source.DropDown += (sender, args) => UpdateSourceDropDownWidth();
+            CMB_Source.MouseEnter += (sender, args) => UpdateSourceTooltip();
+            Disposed += (sender, args) => sourceTooltip.Dispose();
+        }
+
+        private static string PresentSource(string key)
+        {
+            switch (key)
+            {
+                case "gpsstatus":
+                case "gpshdop":
+                case "satcount":
+                case "roll":
+                case "pitch":
+                case "yaw":
+                case "alt":
+                case "airspeed":
+                case "groundspeed":
+                case "battery_voltage":
+                case "wp_dist":
+                case "armed":
+                    string caption = TelemetryFieldPresentation.FieldLabel(key);
+                    if (!caption.StartsWith(key + " (", StringComparison.Ordinal))
+                        return key;
+                    // If the localized description is missing, leave the source field unchanged.
+                    foreach (char ch in caption)
+                        if (ch >= '\u4e00' && ch <= '\u9fff')
+                            return caption;
+                    break;
+            }
+            return key;
+        }
+
+        private void UpdateSourceDropDownWidth()
+        {
+            var combo = CMB_Source;
+            int width = combo.Width;
+            foreach (var item in combo.Items)
+                width = Math.Max(width, TextRenderer.MeasureText(combo.GetItemText(item), combo.Font).Width
+                    + SystemInformation.VerticalScrollBarWidth);
+            combo.DropDownWidth = Math.Max(combo.Width, Math.Min(width, Screen.FromControl(combo).WorkingArea.Width));
+        }
+
+        private void UpdateSourceTooltip()
+        {
+            if (sourceTooltip != null)
+                sourceTooltip.SetToolTip(CMB_Source, CMB_Source.GetItemText(CMB_Source.SelectedItem));
         }
 
         private void SetupColorPresentation()
@@ -342,8 +404,9 @@ namespace MissionPlanner.Controls.PreFlight
 
         private void CMB_Source_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (CheckListItem != null)
-                CheckListItem.SetField(CMB_Source.Text);
+            UpdateSourceTooltip();
+            if (CheckListItem != null && CMB_Source.SelectedItem is string source)
+                CheckListItem.SetField(source);
         }
 
         private void CMB_condition_SelectedIndexChanged(object sender, EventArgs e)
