@@ -28,12 +28,27 @@ namespace MissionPlanner
     {
         private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private ICommsSerial _baseStream;
+        private MessageDisplayContext messageDisplay = new MessageDisplayContext();
+
+        public string MessagesDisplaySuffix(List<(DateTime time, string message, byte severity)> source,
+            (DateTime time, string message, byte severity) row)
+        {
+            if (System.Globalization.CultureInfo.CurrentUICulture.Name != "zh-CN")
+                return null;
+            var generation = Volatile.Read(ref messageDisplay);
+            var suffix = generation.Suffix(source, row);
+            return ReferenceEquals(generation, Volatile.Read(ref messageDisplay)) ? suffix : null;
+        }
+
+        private void ResetMessageDisplay() =>
+            Interlocked.Exchange(ref messageDisplay, new MessageDisplayContext());
 
         public ICommsSerial BaseStream
         {
             get { return _baseStream; }
             set
             {
+                if (!ReferenceEquals(_baseStream, value)) ResetMessageDisplay();
                 // This is called every time user changes the port selection, so we need to make sure we cleanup
                 // any previous objects so we don't leave the cleanup of system resources to the garbage collector.
                 if (_baseStream != null)
@@ -395,7 +410,11 @@ namespace MissionPlanner
         public bool logreadmode
         {
             get { return _logreadmode; }
-            set { _logreadmode = value; }
+            set
+            {
+                if (_logreadmode != value) ResetMessageDisplay();
+                _logreadmode = value;
+            }
         }
 
         /// <summary>
@@ -415,6 +434,7 @@ namespace MissionPlanner
             get { return _logplaybackfile; }
             set
             {
+                ResetMessageDisplay();
                 _logplaybackfile = value;
                 if (_logplaybackfile != null && _logplaybackfile.BaseStream is FileStream)
                     log.Info("Logplaybackfile set " + ((FileStream)_logplaybackfile.BaseStream).Name);
@@ -645,6 +665,7 @@ namespace MissionPlanner
 
         public void Close()
         {
+            ResetMessageDisplay();
             try
             {
                 Terrain?.UnSub();
@@ -717,6 +738,7 @@ namespace MissionPlanner
             if (BaseStream == null || BaseStream.IsOpen && !skipconnectedcheck)
                 return;
 
+            ResetMessageDisplay();
             MAVlist.Clear();
 
             if (showui)
@@ -4763,6 +4785,7 @@ Mission Planner waits for 2 valid heartbeat packets before connecting
                 Console.WriteLine(DateTime.Now.Millisecond + " SR0 " + BaseStream?.BytesToRead);
 
             await readlock.WaitAsync().ConfigureAwait(false);
+            var displayGeneration = Volatile.Read(ref messageDisplay);
             
             try
             {
@@ -5460,6 +5483,12 @@ Mission Planner waits for 2 valid heartbeat packets before connecting
                     if (debugmavlink)
                         DebugPacket(message);
 
+                    bool displayPrimary = compid == 1 &&
+                        ReferenceEquals(displayGeneration, Volatile.Read(ref messageDisplay));
+                    if (displayPrimary && (msgid == (uint)MAVLINK_MSG_ID.HEARTBEAT ||
+                                           msgid == (uint)MAVLINK_MSG_ID.AUTOPILOT_VERSION))
+                        displayGeneration.Observe(MAVlist[sysid, compid].cs.messages, message);
+
                     if (msgid == (byte)MAVLINK_MSG_ID.STATUSTEXT) // status text
                     {
                         var msg = message.ToStructure<mavlink_statustext_t>();
@@ -5476,7 +5505,10 @@ Mission Planner waits for 2 valid heartbeat packets before connecting
                         var messages = MAVlist[sysid, compid].cs.messages;
                         lock (messages)
                         {
-                            messages.Add((DateTime.Now, logdata, sev));
+                            var row = (DateTime.Now, logdata, sev);
+                            messages.Add(row);
+                            if (displayPrimary)
+                                displayGeneration.Mark(messages, message, msg, row);
 
                             // cap list at 1000 element
                             while (messages.Count > 1000)
