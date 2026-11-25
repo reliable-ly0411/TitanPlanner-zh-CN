@@ -4,6 +4,7 @@ using MissionPlanner.Utilities;
 using System;
 using System.Collections;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -22,6 +23,33 @@ namespace MissionPlanner.GCSViews.ConfigurationView
         public ConfigArducopter()
         {
             InitializeComponent();
+        }
+
+        private void UpdateFilterCaptions(Func<string, bool> hasParameter)
+        {
+            if (!string.Equals(CultureInfo.CurrentUICulture.Name, "zh-CN", StringComparison.Ordinal))
+                return;
+
+            ApplyFilterCaption(label18, RATE_PIT_FILT, "PIT", "FLTE", "误差信号滤波频率", hasParameter);
+            ApplyFilterCaption(label32, ATC_RAT_PIT_FLTD, "PIT", "FLTD", "微分项滤波频率", hasParameter);
+            ApplyFilterCaption(label33, ATC_RAT_PIT_FLTT, "PIT", "FLTT", "目标信号滤波频率", hasParameter);
+            ApplyFilterCaption(label14, RATE_RLL_FILT, "RLL", "FLTE", "误差信号滤波频率", hasParameter);
+            ApplyFilterCaption(label29, ATC_RAT_RLL_FLTD, "RLL", "FLTD", "微分项滤波频率", hasParameter);
+            ApplyFilterCaption(label30, ATC_RAT_RLL_FLTT, "RLL", "FLTT", "目标信号滤波频率", hasParameter);
+            ApplyFilterCaption(label12, RATE_YAW_FILT, "YAW", "FLTE", "误差信号滤波频率", hasParameter);
+            ApplyFilterCaption(P_FLTD, ATC_RAT_YAW_FLTD, "YAW", "FLTD", "微分项滤波频率", hasParameter);
+            ApplyFilterCaption(label28, ATC_RAT_YAW_FLTT, "YAW", "FLTT", "目标信号滤波频率", hasParameter);
+        }
+
+        private void ApplyFilterCaption(Label label, MavlinkNumericUpDown value, string axis,
+            string abbreviation, string description, Func<string, bool> hasParameter)
+        {
+            string key = value.ParamName;
+            string suffix = axis + "_" + abbreviation;
+            bool known = (key == "ATC_RAT_" + suffix || key == "Q_A_RAT_" + suffix) && hasParameter(key);
+            string detail = known ? abbreviation + " · " + description + " (Hz)" : null;
+            label.AccessibleName = detail;
+            toolTip1.SetToolTip(label, detail);
         }
 
         public void Activate()
@@ -180,6 +208,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                 CHK_lockrollpitch.Checked = false;
             }
 
+            UpdateFilterCaptions(MainV2.comPort.MAV.param.ContainsKey);
             startup = false;
 
             // Add tooltips asynchronously to prevent UI freeze
