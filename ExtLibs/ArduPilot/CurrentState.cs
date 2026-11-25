@@ -1386,20 +1386,47 @@ namespace MissionPlanner
         /// <summary>
         /// a message that originates from within the gcs
         /// </summary>
+        private readonly object messageHudLock = new object();
+        private Func<string> messageHudSuffix;
+
+        private string RawHudText() =>
+            DateTime.Now > _messageHighTime.AddSeconds(10) ? "" : _messagehigh.TrimUnPrintable();
+
         public string messageHigh
         {
-            get { if (DateTime.Now > _messageHighTime.AddSeconds(10)) return ""; return _messagehigh.TrimUnPrintable(); }
-            set
+            get { lock (messageHudLock) return RawHudText(); }
+            set { SetHudText(value, null); }
+        }
+
+        [JsonIgnore]
+        [IgnoreDataMember]
+        public string messageHighDisplay
+        {
+            get
             {
-                if (value == null || value == "")
-                    return;
-                // check against get
-                if (messageHigh == value)
-                    return;
+                lock (messageHudLock)
+                {
+                    var raw = RawHudText();
+                    if (raw.Length == 0) return raw;
+                    var suffix = messageHudSuffix?.Invoke();
+                    return string.IsNullOrEmpty(suffix) ? raw : raw + "  " + suffix;
+                }
+            }
+        }
+
+        internal void SetHudText(string value, Func<string> verifiedSuffix)
+        {
+            if (string.IsNullOrEmpty(value)) return;
+            lock (messageHudLock)
+            {
+                // An identical local report removes the display lease, not the stock HUD value or expiry.
+                if (verifiedSuffix == null) messageHudSuffix = null;
+                if (RawHudText() == value) return;
                 log.Info("messageHigh " + value);
                 _messageHighTime = DateTime.Now;
                 _messagehigh = value;
                 messageHighSeverity = MAVLink.MAV_SEVERITY.EMERGENCY;
+                messageHudSuffix = verifiedSuffix;
             }
         }
 
@@ -2447,7 +2474,9 @@ namespace MissionPlanner
 
         public object Clone()
         {
-            return MemberwiseClone();
+            var clone = (CurrentState)MemberwiseClone();
+            clone.messageHudSuffix = null;
+            return clone;
         }
 
         private void Parent_OnPacketReceived(object sender, MAVLink.MAVLinkMessage mavLinkMessage)
