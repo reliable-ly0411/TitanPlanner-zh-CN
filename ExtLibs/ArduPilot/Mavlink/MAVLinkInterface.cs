@@ -5503,9 +5503,10 @@ Mission Planner waits for 2 valid heartbeat packets before connecting
 
                         // The Messages tab copies these lists on the UI thread; it locks them the same way.
                         var messages = MAVlist[sysid, compid].cs.messages;
+                        (DateTime time, string message, byte severity) row;
                         lock (messages)
                         {
-                            var row = (DateTime.Now, logdata, sev);
+                            row = (DateTime.Now, logdata, sev);
                             messages.Add(row);
                             if (displayPrimary)
                                 displayGeneration.Mark(messages, message, msg, row);
@@ -5545,7 +5546,13 @@ Mission Planner waits for 2 valid heartbeat packets before connecting
                                 MAVlist[sysid, compidcurrent].cs.messageHighSeverity = mavsev;
                             }
 
-                            MAVlist[sysid, compid].cs.messageHigh = logdata;
+                            var hudState = MAVlist[sysid, compid].cs;
+                            Func<string> verifiedHudSuffix = null;
+                            if (displayPrimary && logdata == "Battery 1 missing\t" &&
+                                displayGeneration.Suffix(messages, row) != null)
+                                verifiedHudSuffix = () => ReferenceEquals(messages, hudState.messages)
+                                    ? MessagesDisplaySuffix(messages, row) : null;
+                            hudState.SetHudText(logdata, verifiedHudSuffix);
                             MAVlist[sysid, compid].cs.messageHighSeverity = mavsev;
 
                             if (Speech != null &&
