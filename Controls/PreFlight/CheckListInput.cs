@@ -12,6 +12,7 @@ namespace MissionPlanner.Controls.PreFlight
 
         CheckListControl _parent;
         private ToolTip conditionTooltip;
+        private ToolTip colorTooltip;
 
         public CheckListInput(CheckListControl parent)
         {
@@ -34,6 +35,7 @@ namespace MissionPlanner.Controls.PreFlight
 
             CMB_Source.DataSource = item.GetOptions();
 
+            SetupColorPresentation();
             CMB_colour1.DataSource = Enum.GetNames(typeof(KnownColor));
             CMB_colour2.DataSource = Enum.GetNames(typeof(KnownColor));
 
@@ -92,6 +94,100 @@ namespace MissionPlanner.Controls.PreFlight
         {
             if (conditionTooltip != null)
                 conditionTooltip.SetToolTip(CMB_condition, CMB_condition.GetItemText(CMB_condition.SelectedItem));
+        }
+
+        private void SetupColorPresentation()
+        {
+            if (!string.Equals(CultureInfo.CurrentUICulture.Name, "zh-CN", StringComparison.Ordinal))
+                return;
+
+            colorTooltip = new ToolTip();
+            Disposed += (sender, args) => colorTooltip.Dispose();
+            foreach (var combo in new[] { CMB_colour1, CMB_colour2 })
+            {
+                combo.DrawMode = DrawMode.OwnerDrawFixed;
+                combo.Format += (sender, args) =>
+                {
+                    if (args.ListItem is string token)
+                        args.Value = PresentColor(token);
+                };
+                combo.DrawItem += DrawColorItem;
+                combo.DropDown += (sender, args) => UpdateColorDropDownWidth(combo);
+                combo.MouseEnter += (sender, args) => UpdateColorTooltip(combo);
+            }
+        }
+
+        private static string PresentColor(string token)
+        {
+            switch (token)
+            {
+                case "Black": return token + " · 黑色";
+                case "Blue": return token + " · 蓝色";
+                case "Cyan": return token + " · 青色";
+                case "Gray": return token + " · 灰色";
+                case "Green": return token + " · 绿色";
+                case "Lime": return token + " · 亮绿色";
+                case "Magenta": return token + " · 品红";
+                case "Orange": return token + " · 橙色";
+                case "Purple": return token + " · 紫色";
+                case "Red": return token + " · 红色";
+                case "Transparent": return token + " · 透明";
+                case "White": return token + " · 白色";
+                case "Yellow": return token + " · 黄色";
+                default: return token;
+            }
+        }
+
+        private static int ColorSwatchWidth(ComboBox combo)
+        {
+            return Math.Max(10, combo.Font.Height - 2);
+        }
+
+        private static void DrawColorItem(object sender, DrawItemEventArgs args)
+        {
+            if (args.Index < 0)
+                return;
+
+            var combo = (ComboBox)sender;
+            var item = combo.Items[args.Index];
+            var color = Color.FromName((string)item);
+            int size = Math.Min(ColorSwatchWidth(combo), Math.Max(1, args.Bounds.Height - 4));
+            var swatch = new Rectangle(args.Bounds.Left + 3, args.Bounds.Top + (args.Bounds.Height - size) / 2, size, size);
+            args.DrawBackground();
+            if (color.A != 0)
+            {
+                using (var brush = new SolidBrush(color))
+                    args.Graphics.FillRectangle(brush, swatch);
+            }
+            using (var pen = new Pen(args.ForeColor))
+            {
+                args.Graphics.DrawRectangle(pen, swatch);
+                if (color.A == 0)
+                    args.Graphics.DrawLine(pen, swatch.Left, swatch.Bottom, swatch.Right, swatch.Top);
+            }
+
+            int textLeft = swatch.Right + 5;
+            var body = Rectangle.FromLTRB(textLeft, args.Bounds.Top, args.Bounds.Right, args.Bounds.Bottom);
+            if (body.Width > 0)
+                TextRenderer.DrawText(args.Graphics, combo.GetItemText(item), combo.Font, body, args.ForeColor,
+                    TextFormatFlags.EndEllipsis | TextFormatFlags.NoPrefix |
+                    TextFormatFlags.VerticalCenter | TextFormatFlags.SingleLine);
+            args.DrawFocusRectangle();
+        }
+
+        private static void UpdateColorDropDownWidth(ComboBox combo)
+        {
+            int width = combo.Width;
+            foreach (var item in combo.Items)
+                width = Math.Max(width, TextRenderer.MeasureText(combo.GetItemText(item), combo.Font).Width
+                    + ColorSwatchWidth(combo) + 8 + SystemInformation.VerticalScrollBarWidth);
+            combo.DropDownWidth = Math.Max(combo.Width, Math.Min(width, Screen.FromControl(combo).WorkingArea.Width));
+        }
+
+        private void UpdateColorTooltip(ComboBox combo)
+        {
+            if (colorTooltip != null)
+                colorTooltip.SetToolTip(combo, combo.GetItemText(combo.SelectedItem));
         }
 
         CheckListItem _checklistitem;
@@ -323,12 +419,14 @@ namespace MissionPlanner.Controls.PreFlight
 
         private void CMB_colour1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            UpdateColorTooltip(CMB_colour1);
             if (CheckListItem != null)
                 CheckListItem.TrueColor = CMB_colour1.SelectedValue.ToString();
         }
 
         private void CMB_colour2_SelectedIndexChanged(object sender, EventArgs e)
         {
+            UpdateColorTooltip(CMB_colour2);
             if (CheckListItem != null)
                 CheckListItem.FalseColor = CMB_colour2.SelectedValue.ToString();
         }
