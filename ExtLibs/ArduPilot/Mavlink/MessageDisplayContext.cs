@@ -24,7 +24,7 @@ namespace MissionPlanner
         }
         private static readonly UTF8Encoding StrictUtf8 = new UTF8Encoding(false, true);
 
-        private static bool IsPx4(int version) => version == 2 || version == 5 || version == 6;
+        private static bool IsPx4(int version) => version == 2 || version == 5 || version == 6 || version == 9;
         private static int FamilyForVersion(int version) => IsPx4(version) ? 2 : version != 0 ? 1 : 0;
 
         internal void Observe(List<(DateTime time, string message, byte severity)> list, MAVLink.MAVLinkMessage packet)
@@ -50,6 +50,10 @@ namespace MissionPlanner
                         if (ver.flight_sw_version == 0x040703ff && ascii == "d9c5097c") version = 1;
                         else if (ver.flight_sw_version == 0x040203ff && ascii == "55685c43") version = 3;
                         else if (ver.flight_sw_version == 0x040603ff && ascii == "3fc7011a") version = 4;
+                        else if (ver.flight_sw_version == 0x040404ff && ascii == "16b78382") version = 7;
+                        else if (ver.flight_sw_version == 0x040507ff && ascii == "0358a9c2") version = 8;
+                        else if (ver.flight_sw_version == 0x010f04ff &&
+                                 BinaryPrefix(hash, 0xff, 0x07, 0x04, 0xc4, 0x99)) version = 9;
                         else if (ver.flight_sw_version == 0x011200ff &&
                                  BinaryPrefix(hash, 0xd6, 0xf1, 0xdd, 0x5a, 0x93)) version = 2;
                         else if (ver.flight_sw_version == 0x011002ff &&
@@ -67,6 +71,8 @@ namespace MissionPlanner
 
         private static bool BinaryPrefix(byte[] hash, byte b3, byte b4, byte b5, byte b6, byte b7)
             => hash[3] == b3 && hash[4] == b4 && hash[5] == b5 && hash[6] == b6 && hash[7] == b7;
+
+        private static string Px4BatteryText(int version) => version == 9 ? "Battery 1 disconnected\t" : "Battery 1 missing\t";
 
         internal void Mark(List<(DateTime time, string message, byte severity)> list, MAVLink.MAVLinkMessage packet,
             MAVLink.mavlink_statustext_t text, (DateTime time, string message, byte severity) row)
@@ -88,7 +94,7 @@ namespace MissionPlanner
 
             // Keep only known supported raw literals, never translated text at receive time.
             bool known = IsPx4(s.Version)
-                ? row.message == "Battery 1 missing\t" && row.severity == 2
+                ? row.message == Px4BatteryText(s.Version) && row.severity == 2
                 : (row.message == "EKF3 IMU0 origin set" && (s.Version == 1 || row.severity == 6)) ||
                   (s.Version == 1 && row.message == "GPS 1: detected u-blox");
             if (!known) return;
@@ -105,9 +111,8 @@ namespace MissionPlanner
         {
             lock (list)
             {
-                if (row.message != "Battery 1 missing\t" ||
-                    !states.TryGetValue(list, out var state) || !IsPx4(state.Version) ||
-                    state.UnconfirmedVoiceVendor)
+                if (!states.TryGetValue(list, out var state) || !IsPx4(state.Version) ||
+                    state.UnconfirmedVoiceVendor || row.message != Px4BatteryText(state.Version))
                     return null;
                 return Suffix(list, row);
             }
@@ -125,7 +130,7 @@ namespace MissionPlanner
                     proof.Severity != row.severity) return null;
 
                 if (IsPx4(s.Version))
-                    return row.message == "Battery 1 missing\t" ? "未检测到 1 号电池" : null;
+                    return row.message == Px4BatteryText(s.Version) ? (s.Version == 9 ? "1 号电池已断开" : "未检测到 1 号电池") : null;
                 if (row.message == "GPS 1: detected u-blox") return "检测到 GPS 1：u-blox";
                 if (row.message == "EKF3 IMU0 origin set") return "EKF3 IMU0 原点已设置";
                 return null;

@@ -5548,7 +5548,7 @@ Mission Planner waits for 2 valid heartbeat packets before connecting
 
                             var hudState = MAVlist[sysid, compid].cs;
                             Func<string> verifiedHudSuffix = null;
-                            if (displayPrimary && logdata == "Battery 1 missing\t" &&
+                            if (displayPrimary && (logdata == "Battery 1 missing\t" || logdata == "Battery 1 disconnected\t") &&
                                 displayGeneration.Suffix(messages, row) != null)
                                 verifiedHudSuffix = () => ReferenceEquals(messages, hudState.messages)
                                     ? MessagesDisplaySuffix(messages, row) : null;
