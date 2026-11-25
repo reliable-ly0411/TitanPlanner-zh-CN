@@ -2331,5 +2331,13 @@
   "Gimbal point latitude (°)": "云台指向点纬度（°）",
   "Gimbal point longitude (°)": "云台指向点经度（°）",
   "Interval between camera trigger records (s)": "相邻两次相机触发记录的时间间隔（秒）",
-  "Ground station packet reception quality (%)": "地面站数据包接收质量（%）"
+  "Ground station packet reception quality (%)": "地面站数据包接收质量（%）",
+  "Secondary GPS ground speed (m/s)": "第二路 GPS 地速（m/s）",
+  "Three-dimensional velocity magnitude (m/s)": "三维速度大小（m/s）",
+  "Home location altitude": "返航点高度",
+  "Navigation target altitude": "导航目标高度",
+  "Target altitude hundreds component (fractional)": "目标高度百位分量（含小数）",
+  "Reported autopilot processing load (%)": "飞控上报的处理负载（%）",
+  "Geomagnetic K-index": "地磁活动 K 指数",
+  "Estimated IMU time to wall clock ratio": "IMU 时间相对于实际时间的估算倍率"
 }

@@ -3562,6 +3562,10 @@ Ctrl+O 从文件加载</value>
     <value>估算偏移</value>
     <comment>"Estimate Offset"</comment>
   </data>
+  <data name="b15d2d482506e78bf6861f0f45c71754c0a14d8d78a7a1a6699ec0a2e64d02fd" xml:space="preserve">
+    <value>IMU 时间相对于实际时间的估算倍率</value>
+    <comment>"Estimated IMU time to wall clock ratio"</comment>
+  </data>
   <data name="8d14f6e72de8f18ab1ee5c5330f00653c0c3ce099e63024454f80af97e72d333" xml:space="preserve">
     <value>事件</value>
     <comment>"Events"</comment>
@@ -4579,6 +4583,10 @@ Ctrl+O 从文件加载</value>
     <value>越过地理围栏</value>
     <comment>"Geofence Breach"</comment>
   </data>
+  <data name="00e7830cdfbd57c89d7066929ca37832f73134b16b763e49a9cf9ef0f8cbf48b" xml:space="preserve">
+    <value>地磁活动 K 指数</value>
+    <comment>"Geomagnetic K-index"</comment>
+  </data>
   <data name="113ac21456de4bbc10f3e0c652b6712f77b86b7d484a52ec125e80219bc5b440" xml:space="preserve">
     <value>按名称获取全部</value>
     <comment>"Get All by Name"</comment>
@@ -4950,6 +4958,10 @@ Ctrl+O 从文件加载</value>
   <data name="cdc51e23abfe91824bbd0bcd1032d63a77cda3c4de2011c81a25227c7ae14b25" xml:space="preserve">
     <value>起飞点在屏幕外</value>
     <comment>"Home Off Screen"</comment>
+  </data>
+  <data name="a5404d8924767e2fb807b7aad832e914fe09313cdf964bfd4141f32635d8e9be" xml:space="preserve">
+    <value>返航点高度</value>
+    <comment>"Home location altitude"</comment>
   </data>
   <data name="b3cd46aff2c492fe410fc7b8f6b8357325a543cf659628fb9680dc5db0daf244" xml:space="preserve">
     <value>距地平线距离 (dist)</value>
@@ -7456,6 +7468,10 @@ Ctrl+O 从文件加载</value>
     <value>导航方位线（橙色）</value>
     <comment>"Nav Bearing Line (Orange)"</comment>
   </data>
+  <data name="a639c6b246ac59829d78cba5f8712bee44269b85ede6f3c2d164b0f2c205bf85" xml:space="preserve">
+    <value>导航目标高度</value>
+    <comment>"Navigation target altitude"</comment>
+  </data>
   <data name="b63a67922d777a0fc4e6e31fde029f35b84244275b25d70dda3e48e4fdf8b5d5" xml:space="preserve">
     <value>网络数量</value>
     <comment>"Net Count"</comment>
@@ -9253,6 +9269,10 @@ VLAN 标记</value>
     <value>上报的 MAVLink 协议能力标志位</value>
     <comment>"Reported MAVLink protocol capability flags"</comment>
   </data>
+  <data name="d5a269ce868643c4904040520375718746a1c02f2916bae6e6f6c209adcdd83a" xml:space="preserve">
+    <value>飞控上报的处理负载（%）</value>
+    <comment>"Reported autopilot processing load (%)"</comment>
+  </data>
   <data name="e44a4c841c176c151d5046cff78e8a718a84ba58de732b63bcb72e978297000c" xml:space="preserve">
     <value>上报的可用内存（字节）</value>
     <comment>"Reported free memory (bytes)"</comment>
@@ -9708,6 +9728,10 @@ gps_point：跟踪单个地面点</value>
   <data name="2da6ffdae881c4e2f3f493f6a17fa08bf3aec558e7e5a1b771e522219e7f75bd" xml:space="preserve">
     <value>第二 AHRS：偏航角 (°)</value>
     <comment>"Secondary AHRS yaw (°)"</comment>
+  </data>
+  <data name="63e92b3240170c6c18910dd70b764318b03183f7bd8eab4afa75e227b3d9ce6c" xml:space="preserve">
+    <value>第二路 GPS 地速（m/s）</value>
+    <comment>"Secondary GPS ground speed (m/s)"</comment>
   </data>
   <data name="488a3f524b5ee234b30fa1399caba8d6b99b03209abbc61aa9eceb4fd030493b" xml:space="preserve">
     <value>时间偏移（秒）</value>
@@ -10643,6 +10667,10 @@ Acc：当前测定位置的精度
     <value>起飞俯仰角</value>
     <comment>"Takeoff Pitch"</comment>
   </data>
+  <data name="03e93af61d4fefdbfe89fdf2de25b7637de8b294977425a4135698dd26c732cf" xml:space="preserve">
+    <value>目标高度百位分量（含小数）</value>
+    <comment>"Target altitude hundreds component (fractional)"</comment>
+  </data>
   <data name="44bf299e9753940e2bd53cc4d92a3ca3215667f8bc6b8051f402868629281048" xml:space="preserve">
     <value>遥测日志</value>
     <comment>"Telemetry Logs"</comment>
@@ -10996,6 +11024,10 @@ Acc：当前测定位置的精度
   <data name="a977e53e5cb2e8eac1ecb8d5e6f27e64f5a014ebb00823e4915642b4c138bcfa" xml:space="preserve">
     <value>这将更新到 MASTER 开发版本</value>
     <comment>"This will update to MASTER release"</comment>
+  </data>
+  <data name="9a3ad2baa821d42fc906ab09befc8ea7a2e79659ce2dee8811d57f5006f6ff10" xml:space="preserve">
+    <value>三维速度大小（m/s）</value>
+    <comment>"Three-dimensional velocity magnitude (m/s)"</comment>
   </data>
   <data name="60b459e536fc45c909b3f36e22aeee9129972bbf5edf7109cf06ebccf425d7a5" xml:space="preserve">
     <value>油门 %</value>
