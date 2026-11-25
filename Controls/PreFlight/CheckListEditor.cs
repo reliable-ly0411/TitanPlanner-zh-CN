@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -44,6 +45,7 @@ namespace MissionPlanner.Controls.PreFlight
         {
             _parent = parent;
             InitializeComponent();
+            ConfigureColorHeadings();
 
             if (DesignMode)
             {
@@ -51,6 +53,35 @@ namespace MissionPlanner.Controls.PreFlight
             }
                         
             reload();
+        }
+
+        private void ConfigureColorHeadings()
+        {
+            if (!string.Equals(CultureInfo.CurrentUICulture.Name, "zh-CN", StringComparison.Ordinal))
+                return;
+
+            var hints = new ToolTip();
+            foreach (var heading in new[] { label5, label7 })
+            {
+                heading.AccessibleName = heading.Text;
+                hints.SetToolTip(heading, heading.Text);
+                heading.SizeChanged += (sender, args) => AlignColorHeadings();
+            }
+            // These headers sit directly above the two color controls.
+            label5.Text = "成立";
+            label7.Text = "不成立";
+            Shown += (sender, args) => AlignColorHeadings();
+            panel1.LocationChanged += (sender, args) => AlignColorHeadings();
+            Disposed += (sender, args) => hints.Dispose();
+            AlignColorHeadings();
+        }
+
+        private void AlignColorHeadings()
+        {
+            // The standard form can use larger native fonts at unchanged design coordinates.
+            // Keep each full header immediately above the scrolling rows.
+            label5.Top = Math.Max(0, panel1.Top - label5.Height - 2);
+            label7.Top = Math.Max(0, panel1.Top - label7.Height - 2);
         }
 
         public void AddNewCheck()
