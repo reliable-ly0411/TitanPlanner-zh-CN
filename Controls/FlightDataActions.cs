@@ -115,6 +115,124 @@ namespace MissionPlanner.Controls
 
         #region Aux functions
 
+        private static readonly Dictionary<(int, string), string> AuxiliaryOptionLabels =
+            new Dictionary<(int, string), string>
+            {
+                [(0, "Do Nothing")] = "无操作",
+                [(3, "Simple Mode")] = "简单模式",
+                [(4, "ModeRTL")] = "返航模式",
+                [(4, "RTL")] = "返航",
+                [(5, "Save Trim")] = "保存微调",
+                [(5, "Save Trim (4.1 and lower)")] = "保存微调（4.1 及更早）",
+                [(7, "Save WP")] = "保存航点",
+                [(9, "Camera Trigger")] = "相机触发",
+                [(10, "RangeFinder")] = "测距仪",
+                [(11, "Fence")] = "地理围栏",
+                [(13, "Super Simple Mode")] = "超简单模式",
+                [(15, "Sprayer")] = "喷洒器",
+                [(16, "Auto")] = "自动模式",
+                [(16, "ModeAuto")] = "自动模式",
+                [(17, "AutoTune")] = "自动调参",
+                [(18, "Land")] = "降落",
+                [(19, "Gripper")] = "抓取器",
+                [(27, "Retract Mount")] = "收起云台",
+                [(28, "Relay On/Off")] = "继电器开／关",
+                [(29, "Landing Gear")] = "起落架",
+                [(34, "Relay2 On/Off")] = "继电器 2 开／关",
+                [(35, "Relay3 On/Off")] = "继电器 3 开／关",
+                [(36, "Relay4 On/Off")] = "继电器 4 开／关",
+                [(42, "SmartRTL")] = "智能返航",
+                [(47, "User Function 1")] = "用户功能 1",
+                [(48, "User Function 2")] = "用户功能 2",
+                [(49, "User Function 3")] = "用户功能 3",
+                [(51, "Manual")] = "手动模式",
+                [(51, "ModeManual")] = "手动模式",
+                [(53, "Steering")] = "转向模式",
+                [(54, "Hold")] = "保持模式",
+                [(55, "Guided")] = "引导模式",
+                [(55, "ModeGuided")] = "引导模式",
+                [(57, "Follow")] = "跟随模式",
+                [(58, "Clear Waypoints")] = "清除航点",
+                [(59, "Simple Mode")] = "简单模式",
+                [(62, "Compass Learn")] = "罗盘学习",
+                [(66, "Relay5 On/Off")] = "继电器 5 开／关",
+                [(67, "Relay6 On/Off")] = "继电器 6 开／关",
+                [(68, "Stabilize")] = "自稳模式",
+                [(69, "PosHold")] = "定点模式",
+                [(70, "AltHold")] = "定高模式",
+                [(72, "ModeCircle")] = "盘旋模式",
+                [(77, "ModeTakeoff")] = "起飞模式",
+                [(90, "EKF Pos Source")] = "EKF 位置来源",
+                [(94, "VTX Power")] = "图传发射功率",
+                [(102, "Camera Mode Toggle")] = "切换相机模式",
+                [(108, "ModeQRTL")] = "垂直返航模式",
+            };
+
+        internal static string FormatAuxiliaryOption(string firmware, int id, string raw, bool enhancedChinese)
+        {
+            if (!enhancedChinese || string.IsNullOrWhiteSpace(raw))
+                return raw;
+
+            string translation = null;
+            // Verify both metadata id and original label: unknown/new aliases remain unchanged.
+            if (id == 52)
+            {
+                if (firmware == "ArduPlane" && raw == "ModeACRO") translation = "特技模式";
+                else if (firmware == "ArduCopter2" && raw == "Acro")
+                    translation = "特技模式";
+                else if (firmware == "ArduRover" && raw == "Acro")
+                    translation = "转向率与速度控制";
+            }
+
+            if (translation == null)
+                AuxiliaryOptionLabels.TryGetValue((id, raw), out translation);
+            return translation == null ? raw : raw + " · " + translation;
+        }
+
+        private string DisplayAuxiliaryOption(ComboBox combo, int index)
+        {
+            if (index < 0 || index >= combo.Items.Count) return "";
+            var item = combo.Items[index];
+            var raw = combo.GetItemText(item);
+            return item is KeyValuePair<int, string> option
+                ? FormatAuxiliaryOption(_auxFunctionsFirmware, option.Key, raw, true)
+                : raw;
+        }
+
+        private void ConfigureAuxiliaryDisplay(ComboBox combo)
+        {
+            if (!string.Equals(System.Globalization.CultureInfo.CurrentUICulture.Name,
+                "zh-CN", StringComparison.Ordinal))
+                return;
+
+            const TextFormatFlags flags = TextFormatFlags.NoPrefix | TextFormatFlags.SingleLine;
+            var tip = new ToolTip();
+            combo.Disposed += (sender, args) => tip.Dispose();
+            combo.DrawMode = DrawMode.OwnerDrawFixed;
+            combo.ItemHeight = Math.Max(combo.ItemHeight, combo.Font.Height + 6);
+            combo.DrawItem += (sender, args) =>
+            {
+                args.DrawBackground();
+                if (args.Index >= 0 && args.Index < combo.Items.Count)
+                    TextRenderer.DrawText(args.Graphics, DisplayAuxiliaryOption(combo, args.Index), combo.Font,
+                        args.Bounds, args.ForeColor, flags | TextFormatFlags.VerticalCenter | TextFormatFlags.EndEllipsis);
+                args.DrawFocusRectangle();
+            };
+            combo.MouseEnter += (sender, args) =>
+                tip.SetToolTip(combo, DisplayAuxiliaryOption(combo, combo.SelectedIndex));
+            combo.DropDown += (sender, args) =>
+            {
+                int width = combo.Width;
+                var area = Screen.FromControl(combo).WorkingArea;
+                int padding = Math.Max(24, SystemInformation.VerticalScrollBarWidth + 10);
+                using (var graphics = combo.CreateGraphics())
+                    for (int i = 0; i < combo.Items.Count; i++)
+                        width = Math.Max(width, TextRenderer.MeasureText(graphics,
+                            DisplayAuxiliaryOption(combo, i), combo.Font, new Size(int.MaxValue, int.MaxValue), flags).Width + padding);
+                combo.DropDownWidth = Math.Max(1, Math.Min(width, area.Width));
+            };
+        }
+
         // DO_AUX_FUNCTION switch positions
         private static readonly (string Text, int Position)[] AuxPositions = { ("Low", 0), ("Mid", 1), ("High", 2) };
 
@@ -146,6 +264,7 @@ namespace MissionPlanner.Controls
                 };
                 // a vehicle of another type connected since the lists were made
                 function.DropDown += (sender, e) => UpdateAuxFunctions();
+                ConfigureAuxiliaryDisplay(function);
                 tableAux.Controls.Add(function, 0, row);
 
                 var buttons = new MyButton[AuxPositions.Length];
