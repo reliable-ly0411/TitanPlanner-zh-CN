@@ -265,6 +265,7 @@ namespace MissionPlanner.Utilities
                     }
 
                     var temploc = ConvertFromLocationwp(item);
+                    temploc.type = "SimpleItem";
 
                     // set frame type
                     temploc.frame = frame;
