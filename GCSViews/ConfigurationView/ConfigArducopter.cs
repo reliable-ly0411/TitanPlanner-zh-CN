@@ -23,6 +23,66 @@ namespace MissionPlanner.GCSViews.ConfigurationView
         public ConfigArducopter()
         {
             InitializeComponent();
+            ConfigureRcOptionDisplay(CH6_OPTION, "RC6_OPTION");
+            ConfigureRcOptionDisplay(CH7_OPTION, "RC7_OPTION");
+            ConfigureRcOptionDisplay(CH8_OPTION, "RC8_OPTION");
+            ConfigureRcOptionDisplay(CH9_OPTION, "RC9_OPTION");
+            ConfigureRcOptionDisplay(CH10_OPTION, "RC10_OPTION");
+        }
+
+        private object rcOptionOwner;
+        private Func<string, bool> canPresentRcOption;
+        private string rcOptionFirmware;
+
+        private string GetRcOptionText(MavlinkComboBox combo, int index, string modernKey)
+        {
+            var item = combo.Items[index];
+            string raw = combo.GetItemText(item);
+            if (CultureInfo.CurrentUICulture.Name != "zh-CN" ||
+                (rcOptionFirmware != "ArduCopter2" && rcOptionFirmware != "ArduPlane") ||
+                combo.ParamName != modernKey || canPresentRcOption == null ||
+                !canPresentRcOption(modernKey) ||
+                !(item is System.Collections.Generic.KeyValuePair<int, string> pair))
+                return raw;
+
+            return FlightDataActions.FormatAuxiliaryOption(rcOptionFirmware, pair.Key, raw, true);
+        }
+
+        private void ConfigureRcOptionDisplay(MavlinkComboBox combo, string modernKey)
+        {
+            if (CultureInfo.CurrentUICulture.Name != "zh-CN")
+                return;
+
+            int originalWidth = combo.DropDownWidth;
+            const TextFormatFlags flags = TextFormatFlags.NoPrefix | TextFormatFlags.SingleLine;
+            combo.DrawMode = DrawMode.OwnerDrawFixed;
+            combo.ItemHeight = Math.Max(combo.ItemHeight, combo.Font.Height + 4);
+            combo.DrawItem += (sender, args) =>
+            {
+                args.DrawBackground();
+                if (args.Index >= 0 && args.Index < combo.Items.Count)
+                    TextRenderer.DrawText(args.Graphics, GetRcOptionText(combo, args.Index, modernKey),
+                        combo.Font, args.Bounds, args.ForeColor,
+                        flags | TextFormatFlags.VerticalCenter | TextFormatFlags.EndEllipsis);
+                args.DrawFocusRectangle();
+            };
+            combo.MouseEnter += (sender, args) =>
+            {
+                int i = combo.SelectedIndex;
+                var label = i >= 0 && i < combo.Items.Count ? GetRcOptionText(combo, i, modernKey) : null;
+                toolTip1.SetToolTip(combo, label);
+            };
+            combo.DropDown += (sender, args) =>
+            {
+                int width = originalWidth;
+                using (var graphics = combo.CreateGraphics())
+                    for (int i = 0; i < combo.Items.Count; i++)
+                        width = Math.Max(width, TextRenderer.MeasureText(graphics,
+                            GetRcOptionText(combo, i, modernKey), combo.Font,
+                            new Size(int.MaxValue, int.MaxValue), flags).Width +
+                            SystemInformation.VerticalScrollBarWidth + 10);
+                combo.DropDownWidth = Math.Min(width, Screen.FromControl(combo).WorkingArea.Width);
+            };
         }
 
         private void UpdateFilterCaptions(Func<string, bool> hasParameter)
@@ -54,6 +114,9 @@ namespace MissionPlanner.GCSViews.ConfigurationView
 
         public void Activate()
         {
+            rcOptionOwner = null;
+            rcOptionFirmware = null;
+            canPresentRcOption = null;
             if (!MainV2.comPort.BaseStream.IsOpen)
             {
                 Enabled = false;
@@ -79,6 +142,14 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                 ParameterMetaDataRepository
                     .GetParameterOptionsInt("TUNE", MainV2.comPort.MAV.cs.firmware.ToString())
                     .ToList(), "TUNE", MainV2.comPort.MAV.param);
+
+            var owner = MainV2.comPort.MAV;
+            var parameters = owner.param;
+            rcOptionOwner = owner;
+            rcOptionFirmware = owner.cs.firmware.ToString();
+            canPresentRcOption = key => ReferenceEquals(MainV2.comPort.MAV, rcOptionOwner) &&
+                ReferenceEquals(owner.param, parameters) && owner.cs.firmware.ToString() == rcOptionFirmware &&
+                parameters.ContainsKey(key);
 
             CH6_OPTION.setup(new[] { "CH6_OPT", "CH6_OPTION", "RC6_OPTION", "RC6_OPTION" }, MainV2.comPort.MAV.param);
             CH7_OPTION.setup(new[] {"CH7_OPT", "CH7_OPTION", "RC7_OPTION", "RC7_OPTION"}, MainV2.comPort.MAV.param);
