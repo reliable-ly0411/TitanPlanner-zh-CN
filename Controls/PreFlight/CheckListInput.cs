@@ -14,6 +14,7 @@ namespace MissionPlanner.Controls.PreFlight
         private ToolTip conditionTooltip;
         private ToolTip colorTooltip;
         private ToolTip sourceTooltip;
+        private ToolTip stockDescriptionTooltip;
 
         public CheckListInput(CheckListControl parent)
         {
@@ -53,6 +54,7 @@ namespace MissionPlanner.Controls.PreFlight
             NUM_trigger.Value = (decimal)CheckListItem.TriggerValue;
             TXT_text.Text = CheckListItem.Text;
             TXT_desc.Text = CheckListItem.Description;
+            UpdateStockDescriptionHint();
             CMB_colour1.SelectedItem = CheckListItem.TrueColor;
             CMB_colour2.SelectedItem = CheckListItem.FalseColor;
         }
@@ -474,10 +476,30 @@ namespace MissionPlanner.Controls.PreFlight
             }
         }
 
+        private void UpdateStockDescriptionHint()
+        {
+            string translated = _parent.GetChecklistDescription(CheckListItem);
+            if (translated != CheckListItem.Description)
+            {
+                if (stockDescriptionTooltip == null)
+                {
+                    stockDescriptionTooltip = new ToolTip();
+                    Disposed += (sender, args) => stockDescriptionTooltip.Dispose();
+                }
+                stockDescriptionTooltip.SetToolTip(TXT_desc, translated);
+            }
+            else
+                stockDescriptionTooltip?.SetToolTip(TXT_desc, null);
+        }
+
         private void TXT_desc_TextChanged(object sender, EventArgs e)
         {
-            if (CheckListItem != null)
-                CheckListItem.Description = TXT_desc.Text;
+            if (CheckListItem == null)
+                return;
+            if (!string.Equals(CheckListItem.Description ?? "", TXT_desc.Text, StringComparison.Ordinal))
+                _parent.RemoveStockDescription(CheckListItem);
+            CheckListItem.Description = TXT_desc.Text;
+            UpdateStockDescriptionHint();
         }
 
         private void CMB_colour1_SelectedIndexChanged(object sender, EventArgs e)
