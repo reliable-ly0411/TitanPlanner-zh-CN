@@ -3,6 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Globalization;
+using System.Security.Cryptography;
+using System.Text;
 using System.Windows.Forms;
 
 namespace MissionPlanner.Controls.PreFlight
@@ -16,6 +19,55 @@ namespace MissionPlanner.Controls.PreFlight
         public string configfiledefault = Settings.GetRunningDirectory() + "checklistDefault.xml";
 
         int rowcount = 0;
+
+        // Change this identity together with the translations if the bundled XML changes.
+        private const string StockChecklistSha256 =
+            "7943DB015A7754C6C55870645750222EA5D5CBF62FC99D0047E6A48827495DE4";
+        private readonly Dictionary<CheckListItem, KeyValuePair<string, string>> stockDescriptions =
+            new Dictionary<CheckListItem, KeyValuePair<string, string>>();
+
+        private static readonly Dictionary<string, string> StockDescriptionTranslations =
+            new Dictionary<string, string>(StringComparer.Ordinal)
+            {
+                { "Veryify GPS", "检查 GPS" },
+                { "Gps Sat Count", "GPS 卫星数量" },
+                { "Telemetry Signal", "遥测信号" },
+                { "Battery Level", "电池电量" },
+                { "Mode", "飞行模式" },
+                { "Check Altitude", "检查高度" },
+                { "Tail and wings secured?", "机尾和机翼是否固定？" },
+                { "All servos respond to input?", "所有舵机是否响应操控？" },
+                { "All servos respond to pitch and roll?", "所有舵机是否响应俯仰和横滚？" },
+                { "Center of gravity at indicated point?", "重心是否位于标示位置？" },
+                { "Servo linkages are secure?", "舵机连杆是否牢固？" },
+                { "Camera is on and ready to fly?", "相机是否开启并准备就绪？" }
+            };
+
+        internal string GetChecklistDescription(CheckListItem item)
+        {
+            if (item == null)
+                return null;
+            if (string.Equals(CultureInfo.CurrentUICulture.Name, "zh-CN", StringComparison.Ordinal)
+                && stockDescriptions.TryGetValue(item, out var entry)
+                && string.Equals(item.Description, entry.Key, StringComparison.Ordinal))
+                return entry.Value;
+            return item.Description;
+        }
+
+        internal void RemoveStockDescription(CheckListItem item)
+        {
+            if (item != null)
+                stockDescriptions.Remove(item);
+        }
+
+        private static bool IsVerifiedStockChecklist(string xml)
+        {
+            using (var hash = SHA256.Create())
+            {
+                var bytes = Encoding.UTF8.GetBytes(xml.Replace("\r\n", "\n"));
+                return BitConverter.ToString(hash.ComputeHash(bytes)).Replace("-", "") == StockChecklistSha256;
+            }
+        }
 
         //Controls and the lists for the controls
         private GroupBox gb = new GroupBox();
@@ -97,7 +149,7 @@ namespace MissionPlanner.Controls.PreFlight
                     if (item.Name.StartsWith("utext"))
                     {
                         item.Text = data.CLItem.DisplayText();
-                        data.desc.Text = data.CLItem.Description;
+                        data.desc.Text = GetChecklistDescription(data.CLItem);
                     }
                     if (item.Name.StartsWith("utickbox"))
                     {
@@ -122,7 +174,7 @@ namespace MissionPlanner.Controls.PreFlight
 
         Control addwarningcontrol(int x, int y, CheckListItem item, bool hideforchild = false)
         {
-            var desctext = item.Description;
+            var desctext = GetChecklistDescription(item);
             var texttext = item.DisplayText();
 
             var height = TextRenderer.MeasureText(desctext, this.Font).Height;
@@ -183,6 +235,8 @@ namespace MissionPlanner.Controls.PreFlight
 
         public void LoadConfig()
         {
+            stockDescriptions.Clear();
+            bool bundledFallback = false;
             string loadfile = configfile;
 
             if (!File.Exists(configfile))
@@ -194,6 +248,7 @@ namespace MissionPlanner.Controls.PreFlight
                 else
                 {
                     loadfile = configfiledefault;
+                    bundledFallback = true;
                 }
             }
 
@@ -203,7 +258,21 @@ namespace MissionPlanner.Controls.PreFlight
 
             using (StreamReader sr = new StreamReader(loadfile))
             {
-                CheckListItems = (List<CheckListItem>)reader.Deserialize(sr);
+                if (!bundledFallback)
+                {
+                    CheckListItems = (List<CheckListItem>)reader.Deserialize(sr);
+                    return;
+                }
+
+                // Parse and identify the same snapshot. Never infer an identity from user XML.
+                string xml = sr.ReadToEnd();
+                using (var snapshot = new StringReader(xml))
+                    CheckListItems = (List<CheckListItem>)reader.Deserialize(snapshot);
+                if (IsVerifiedStockChecklist(xml))
+                    foreach (var item in CheckListItems)
+                        if (item.Description != null &&
+                            StockDescriptionTranslations.TryGetValue(item.Description, out var translation))
+                            stockDescriptions[item] = new KeyValuePair<string, string>(item.Description, translation);
             }
         }
 
