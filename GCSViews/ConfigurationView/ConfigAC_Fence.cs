@@ -1,14 +1,26 @@
-﻿using MissionPlanner.Controls;
+﻿using MissionPlanner.ArduPilot;
+using MissionPlanner.Controls;
 using MissionPlanner.Utilities;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace MissionPlanner.GCSViews.ConfigurationView
 {
     public partial class ConfigAC_Fence : MyUserControl, IActivate
     {
+        private readonly ToolTip fenceActionTooltip = new ToolTip();
+        private bool showFenceActionDetails;
+
         public ConfigAC_Fence()
         {
             InitializeComponent();
+            mavlinkComboBox2.DropDown += (sender, args) => UpdateFenceActionDropDownWidth();
+            mavlinkComboBox2.MouseEnter += (sender, args) => UpdateFenceActionTooltip();
+            mavlinkComboBox2.SelectedIndexChanged += (sender, args) => UpdateFenceActionTooltip();
+            Disposed += (sender, args) => fenceActionTooltip.Dispose();
 
             label6maxalt.Text += "[" + CurrentState.DistanceUnit + "]";
             label8minalt.Text += "[" + CurrentState.DistanceUnit + "]";
@@ -25,9 +37,9 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                     MainV2.comPort.MAV.cs.firmware.ToString()), "FENCE_TYPE", MainV2.comPort.MAV.param);
 
 
-            mavlinkComboBox2.setup(
-                ParameterMetaDataRepository.GetParameterOptionsInt("FENCE_ACTION",
-                    MainV2.comPort.MAV.cs.firmware.ToString()), "FENCE_ACTION", MainV2.comPort.MAV.param);
+            var firmware = MainV2.comPort.MAV.cs.firmware;
+            var actionOptions = ParameterMetaDataRepository.GetParameterOptionsInt("FENCE_ACTION", firmware.ToString());
+            BindFenceAction(actionOptions, firmware, MainV2.comPort.MAV.param);
 
 
             // 3
@@ -47,5 +59,58 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                 mavlinkNumericUpDown3.setup(1, 500, (float)CurrentState.fromDistDisplayUnit(100), 1, "RTL_ALT",
                     MainV2.comPort.MAV.param);
         }
+        private void BindFenceAction(List<KeyValuePair<int, string>> options, Firmwares firmware,
+            MAVLink.MAVLinkParamList parameters)
+        {
+            var presented = PresentFenceActions(options, firmware);
+            showFenceActionDetails = presented.Where((option, index) => option.Value != options[index].Value).Any();
+            mavlinkComboBox2.setup(presented, "FENCE_ACTION", parameters);
+            UpdateFenceActionTooltip();
+        }
+
+        private void UpdateFenceActionTooltip()
+        {
+            fenceActionTooltip.SetToolTip(mavlinkComboBox2, showFenceActionDetails ? mavlinkComboBox2.Text : null);
+        }
+
+        private void UpdateFenceActionDropDownWidth()
+        {
+            var combo = mavlinkComboBox2;
+            if (!showFenceActionDetails)
+            {
+                combo.DropDownWidth = combo.Width;
+                return;
+            }
+
+            int width = combo.Items.Cast<KeyValuePair<int, string>>()
+                .Select(option => TextRenderer.MeasureText(option.Value, combo.Font).Width)
+                .DefaultIfEmpty(combo.Width).Max() + SystemInformation.VerticalScrollBarWidth;
+            combo.DropDownWidth = Math.Max(combo.Width,
+                Math.Min(Screen.FromControl(combo).WorkingArea.Width, width));
+        }
+
+        internal static List<KeyValuePair<int, string>> PresentFenceActions(
+            List<KeyValuePair<int, string>> options, Firmwares firmware)
+        {
+            if (firmware != Firmwares.ArduCopter2 ||
+                !string.Equals(CultureInfo.CurrentUICulture.Name, "zh-CN", StringComparison.Ordinal))
+                return options;
+
+            return options.Select(option =>
+            {
+                string zh = null;
+                switch (option.Key)
+                {
+                    case 0: if (option.Value == "Report Only") zh = "仅报告"; break;
+                    case 1: if (option.Value == "RTL or Land") zh = "返航或降落"; break;
+                    case 2: if (option.Value == "Always Land") zh = "始终降落"; break;
+                    case 3: if (option.Value == "SmartRTL or RTL or Land") zh = "智能返航、返航或降落"; break;
+                    case 4: if (option.Value == "Brake or Land") zh = "刹停或降落"; break;
+                    case 5: if (option.Value == "SmartRTL or Land") zh = "智能返航或降落"; break;
+                }
+                return zh == null ? option : new KeyValuePair<int, string>(option.Key, option.Value + " · " + zh);
+            }).ToList();
+        }
+
     }
 }
