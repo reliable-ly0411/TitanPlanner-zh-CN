@@ -1751,6 +1751,10 @@
     <value>巡航</value>
     <comment>"CRUISE"</comment>
   </data>
+  <data name="e8037029fe38a91d0ed085de171bfee88eadc14507b04f99afaff931f8976669" xml:space="preserve">
+    <value>仅用本地缓存</value>
+    <comment>"CacheOnly"</comment>
+  </data>
   <data name="8083e23efcb01ac2f611d6ff6c81c17f3922da3e8169d58b379ef8cea17f6be3" xml:space="preserve">
     <value>计算</value>
     <comment>"Calc"</comment>
@@ -9892,6 +9896,14 @@ gps_point：跟踪单个地面点</value>
   <data name="68b1301bc535fc4344be1edfc8b80479a8df98e5a1a4fe35c10887f1ccd17391" xml:space="preserve">
     <value>服务器端口？</value>
     <comment>"Server port?"</comment>
+  </data>
+  <data name="3ff0963419f23781ef8a2e2ba40ec56d5936877180a62c3aa8c5970481ecfb56" xml:space="preserve">
+    <value>服务器和本地缓存</value>
+    <comment>"ServerAndCache"</comment>
+  </data>
+  <data name="2e6149c1e90a78bac0fdc09b4cb7570ff7e84163217646cf12f7c0bc8afaabbc" xml:space="preserve">
+    <value>仅从服务器读取</value>
+    <comment>"ServerOnly"</comment>
   </data>
   <data name="207dec6bf95131633daa54e542a8853bdc785a7e4ab8fc941c2d6d246e2b18f0" xml:space="preserve">
     <value>服务公告</value>
