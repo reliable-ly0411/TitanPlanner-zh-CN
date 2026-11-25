@@ -20,14 +20,12 @@ Enhanced Chinese includes an initial set of bilingual Copter and Plane/QuadPlane
 
 `ahead` / `behind`：汉化分支相对上游镜像领先 / 落后的提交数。
 
-![双上游领先／落后提交数](https://raw.githubusercontent.com/reliable-ly0411/TitanPlanner-zh-CN/readme-upstream-status/dual-upstream.svg)
-
-由 GitHub Actions 更新，状态文件保存在独立分支，不计入比较。若图表暂不可用，点击下方链接查看 GitHub 实时比较。
+由 GitHub Actions 更新，状态文件保存在独立分支，不计入比较。点击徽章查看 GitHub 实时比较。
 
 | 汉化线 | 相对 TitanPlanner 镜像 | 相对 MissionPlanner 镜像 |
 | --- | --- | --- |
-| 稳定 `zh-CN` | [本线新增](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/compare/Titanmain...zh-CN) · [镜像侧新增](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/compare/zh-CN...Titanmain) | [本线新增](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/compare/missionmain...zh-CN) · [镜像侧新增](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/compare/zh-CN...missionmain) |
-| 开发 `zh-CN-dev` | [本线新增](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/compare/Titanmain...zh-CN-dev) · [镜像侧新增](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/compare/zh-CN-dev...Titanmain) | [本线新增](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/compare/missionmain...zh-CN-dev) · [镜像侧新增](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/compare/zh-CN-dev...missionmain) |
+| 稳定 `zh-CN` | [![zh-CN 相对 Titanmain 领先](https://raw.githubusercontent.com/reliable-ly0411/TitanPlanner-zh-CN/readme-upstream-status/zh-CN-Titanmain-ahead.svg)](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/compare/Titanmain...zh-CN) [![zh-CN 相对 Titanmain 落后](https://raw.githubusercontent.com/reliable-ly0411/TitanPlanner-zh-CN/readme-upstream-status/zh-CN-Titanmain-behind.svg)](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/compare/zh-CN...Titanmain) | [![zh-CN 相对 missionmain 领先](https://raw.githubusercontent.com/reliable-ly0411/TitanPlanner-zh-CN/readme-upstream-status/zh-CN-missionmain-ahead.svg)](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/compare/missionmain...zh-CN) [![zh-CN 相对 missionmain 落后](https://raw.githubusercontent.com/reliable-ly0411/TitanPlanner-zh-CN/readme-upstream-status/zh-CN-missionmain-behind.svg)](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/compare/zh-CN...missionmain) |
+| 开发 `zh-CN-dev` | [![zh-CN-dev 相对 Titanmain 领先](https://raw.githubusercontent.com/reliable-ly0411/TitanPlanner-zh-CN/readme-upstream-status/zh-CN-dev-Titanmain-ahead.svg)](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/compare/Titanmain...zh-CN-dev) [![zh-CN-dev 相对 Titanmain 落后](https://raw.githubusercontent.com/reliable-ly0411/TitanPlanner-zh-CN/readme-upstream-status/zh-CN-dev-Titanmain-behind.svg)](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/compare/zh-CN-dev...Titanmain) | [![zh-CN-dev 相对 missionmain 领先](https://raw.githubusercontent.com/reliable-ly0411/TitanPlanner-zh-CN/readme-upstream-status/zh-CN-dev-missionmain-ahead.svg)](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/compare/missionmain...zh-CN-dev) [![zh-CN-dev 相对 missionmain 落后](https://raw.githubusercontent.com/reliable-ly0411/TitanPlanner-zh-CN/readme-upstream-status/zh-CN-dev-missionmain-behind.svg)](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/compare/zh-CN-dev...missionmain) |
 
 - “本线新增”与“镜像侧新增”分别查看双方独有提交；文件差异以共同祖先为起点。
 - 统计包含功能、汉化和维护提交；MissionPlanner 对比还包含 TitanPlanner 自身改动。
