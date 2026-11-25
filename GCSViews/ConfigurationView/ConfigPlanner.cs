@@ -74,8 +74,18 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             CMB_severity.Items.Add(SeverityLevel.Info);
             CMB_severity.Items.Add(SeverityLevel.Debug);
 
+            if (string.Equals(CultureInfo.CurrentUICulture.Name, "zh-CN", StringComparison.Ordinal))
+                cmb_secondarydisplaystyle.Format += (sender, e) =>
+                {
+                    switch (e.ListItem as string)
+                    {
+                        case "Normal": e.Value = "\u6b63\u5e38\u663e\u793a"; break;
+                        case "Transparent": e.Value = "\u534a\u900f\u660e\u663e\u793a"; break;
+                        case "Hidden": e.Value = "\u9690\u85cf"; break;
+                    }
+                };
             cmb_secondarydisplaystyle.DataSource = Enum.GetNames(typeof(Maps.GMapMarkerBase.InactiveDisplayStyleEnum));
-            cmb_secondarydisplaystyle.Text = Maps.GMapMarkerBase.InactiveDisplayStyle.ToString();
+            cmb_secondarydisplaystyle.SelectedItem = Maps.GMapMarkerBase.InactiveDisplayStyle.ToString();
 
             BuildLayout();
         }
@@ -1938,10 +1948,10 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             {
                 return;
             }
-            if (Enum.TryParse(cmb_secondarydisplaystyle.Text,
-                              out Maps.GMapMarkerBase.InactiveDisplayStyleEnum result))
+            if (cmb_secondarydisplaystyle.SelectedItem is string key &&
+                Enum.TryParse(key, out Maps.GMapMarkerBase.InactiveDisplayStyleEnum result))
             {
-                Settings.Instance["GMapMarkerBase_InactiveStyle"] = cmb_secondarydisplaystyle.Text;
+                Settings.Instance["GMapMarkerBase_InactiveStyle"] = key;
                 Maps.GMapMarkerBase.InactiveDisplayStyle = result;
             }
             else
