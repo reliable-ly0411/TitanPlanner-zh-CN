@@ -24,6 +24,9 @@ namespace MissionPlanner
         }
         private static readonly UTF8Encoding StrictUtf8 = new UTF8Encoding(false, true);
 
+        private static bool IsPx4(int version) => version == 2 || version == 5 || version == 6;
+        private static int FamilyForVersion(int version) => IsPx4(version) ? 2 : version != 0 ? 1 : 0;
+
         internal void Observe(List<(DateTime time, string message, byte severity)> list, MAVLink.MAVLinkMessage packet)
         {
             lock (list)
@@ -40,11 +43,21 @@ namespace MissionPlanner
                 {
                     var ver = packet.ToStructure<MAVLink.mavlink_autopilot_version_t>();
                     var hash = ver.flight_custom_version;
-                    int version = ver.flight_sw_version == 0x040703ff && hash != null &&
-                        Encoding.ASCII.GetString(hash) == "d9c5097c" ? 1 :
-                        ver.flight_sw_version == 0x011200ff && hash != null && hash.Length == 8 &&
-                        hash[3] == 0xd6 && hash[4] == 0xf1 && hash[5] == 0xdd && hash[6] == 0x5a && hash[7] == 0x93 ? 2 : 0;
-                    if (version == 2 && (hash[0] != 0 || hash[1] != 0 || hash[2] != 0))
+                    int version = 0;
+                    if (hash != null && hash.Length == 8)
+                    {
+                        var ascii = Encoding.ASCII.GetString(hash);
+                        if (ver.flight_sw_version == 0x040703ff && ascii == "d9c5097c") version = 1;
+                        else if (ver.flight_sw_version == 0x040203ff && ascii == "55685c43") version = 3;
+                        else if (ver.flight_sw_version == 0x040603ff && ascii == "3fc7011a") version = 4;
+                        else if (ver.flight_sw_version == 0x011200ff &&
+                                 BinaryPrefix(hash, 0xd6, 0xf1, 0xdd, 0x5a, 0x93)) version = 2;
+                        else if (ver.flight_sw_version == 0x011002ff &&
+                                 BinaryPrefix(hash, 0xfc, 0x5f, 0x45, 0xf0, 0x54)) version = 5;
+                        else if (ver.flight_sw_version == 0x011100ff &&
+                                 BinaryPrefix(hash, 0xc4, 0xd1, 0x2a, 0xf1, 0xd6)) version = 6;
+                    }
+                    if (IsPx4(version) && (hash[0] != 0 || hash[1] != 0 || hash[2] != 0))
                         s.UnconfirmedVoiceVendor = true;
                     if (version == 0 || (s.Version != 0 && s.Version != version)) s.Conflict = true;
                     else s.Version = version;
@@ -52,11 +65,14 @@ namespace MissionPlanner
             }
         }
 
+        private static bool BinaryPrefix(byte[] hash, byte b3, byte b4, byte b5, byte b6, byte b7)
+            => hash[3] == b3 && hash[4] == b4 && hash[5] == b5 && hash[6] == b6 && hash[7] == b7;
+
         internal void Mark(List<(DateTime time, string message, byte severity)> list, MAVLink.MAVLinkMessage packet,
             MAVLink.mavlink_statustext_t text, (DateTime time, string message, byte severity) row)
         {
             State s;
-            if (!states.TryGetValue(list, out s) || s.Heartbeat == 0 || s.Heartbeat != s.Version || s.Conflict ||
+            if (!states.TryGetValue(list, out s) || s.Heartbeat == 0 || s.Heartbeat != FamilyForVersion(s.Version) || s.Conflict ||
                 text.id != 0 || text.chunk_seq != 0 || packet.payloadlength < 2 ||
                 (packet.header == 254 && packet.payloadlength != 51))
                 return;
@@ -71,9 +87,11 @@ namespace MissionPlanner
             catch (DecoderFallbackException) { return; }
 
             // Keep only known supported raw literals, never translated text at receive time.
-            if (s.Version == 1
-                ? row.message != "GPS 1: detected u-blox" && row.message != "EKF3 IMU0 origin set"
-                : row.message != "Battery 1 missing\t" || row.severity != 2) return;
+            bool known = IsPx4(s.Version)
+                ? row.message == "Battery 1 missing\t" && row.severity == 2
+                : (row.message == "EKF3 IMU0 origin set" && (s.Version == 1 || row.severity == 6)) ||
+                  (s.Version == 1 && row.message == "GPS 1: detected u-blox");
+            if (!known) return;
             if (s.Rows.TryGetValue(row.message, out var existing))
             {
                 existing.Time = DateTime.MinValue; // unexpectedly reused token
@@ -88,7 +106,7 @@ namespace MissionPlanner
             lock (list)
             {
                 if (row.message != "Battery 1 missing\t" ||
-                    !states.TryGetValue(list, out var state) || state.Version != 2 ||
+                    !states.TryGetValue(list, out var state) || !IsPx4(state.Version) ||
                     state.UnconfirmedVoiceVendor)
                     return null;
                 return Suffix(list, row);
@@ -106,7 +124,7 @@ namespace MissionPlanner
                     !s.Rows.TryGetValue(row.message, out proof) || proof.Time != row.time ||
                     proof.Severity != row.severity) return null;
 
-                if (s.Version == 2)
+                if (IsPx4(s.Version))
                     return row.message == "Battery 1 missing\t" ? "未检测到 1 号电池" : null;
                 if (row.message == "GPS 1: detected u-blox") return "检测到 GPS 1：u-blox";
                 if (row.message == "EKF3 IMU0 origin set") return "EKF3 IMU0 原点已设置";
