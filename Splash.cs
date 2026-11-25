@@ -41,7 +41,7 @@ namespace MissionPlanner
         private void InitializeAppearance()
         {
             string warning;
-            var custom = DesktopAppearance.Store.LoadStartupImage(out warning);
+            var custom = DesktopAppearance.LoadSelectedStartupImage(out warning);
             if (custom != null)
             {
                 titanLogo.Image = custom;
