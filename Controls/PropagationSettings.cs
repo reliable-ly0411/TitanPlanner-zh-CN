@@ -60,6 +60,104 @@ namespace MissionPlanner.Controls
             chk_setalt.Checked = Maps.Propagation.set_alt_min_max;
         }
 
+        protected override void OnShown(EventArgs e)
+        {
+            base.OnShown(e);
+            LayoutReadableSettings();
+        }
+
+        private void LayoutReadableSettings()
+        {
+            const int pad = 10, gap = 8;
+            var workArea = Screen.FromControl(this).WorkingArea;
+            int width = Math.Min(ClientSize.Width, Math.Max(240, workArea.Width - 36));
+            SuspendLayout();
+            groupBox1.SuspendLayout();
+            try
+            {
+                int y = PlaceSettingsRows(this, width, pad, new[]
+                {
+                    new[] { new Control[] { chk_ele, chk_homedist } },
+                    new[] { new Control[] { chk_terrain, chk_dronedist } },
+                    new[] { new Control[] { chk_rf, chk_setalt } }
+                }, pad, gap);
+                int groupWidth = width - 2 * pad;
+                int groupHeight = PlaceSettingsRows(groupBox1, groupWidth, groupBox1.Font.Height + pad, new[]
+                {
+                    new[] { new Control[] { chk_showscale }, new Control[] { label89, Clearance } },
+                    new[] { new Control[] { label91 }, new Control[] { label90, CMB_Resolution } },
+                    new[] { new Control[] { label100 }, new Control[] { label109, CMB_Rotational },
+                        new Control[] { label111, NUM_range }, new Control[] { label112, NUM_height } },
+                    new[] { new Control[] { label113 }, new Control[] { label114, Tolerance } },
+                    new[] { new Control[] { label3 }, new Control[] { label1, NUM_min }, new Control[] { label2, NUM_max } }
+                }, pad, gap);
+                groupBox1.SetBounds(pad, y, groupWidth, groupHeight);
+                int contentHeight = y + groupHeight + pad;
+                int maxHeight = Math.Max(180, workArea.Height - 70);
+                if (contentHeight > maxHeight)
+                    AutoScrollMinSize = new System.Drawing.Size(width, contentHeight);
+                ClientSize = new System.Drawing.Size(width + (contentHeight > maxHeight ? SystemInformation.VerticalScrollBarWidth : 0),
+                    Math.Min(contentHeight, maxHeight));
+            }
+            finally
+            {
+                groupBox1.ResumeLayout();
+                ResumeLayout();
+            }
+        }
+
+        private static int PlaceSettingsRows(Control parent, int width, int y, Control[][][] rows, int pad, int gap)
+        {
+            foreach (var row in rows)
+            {
+                int x = pad, height = 0;
+                foreach (var unit in row)
+                {
+                    var sizes = Array.ConvertAll(unit, c =>
+                    {
+                        var preferred = c.GetPreferredSize(System.Drawing.Size.Empty);
+                        if (c is NumericUpDown || c is ComboBox)
+                        {
+                            using (var dc = c.CreateGraphics())
+                            {
+                                int editWidth = TextRenderer.MeasureText(dc, "0000.00", c.Font,
+                                    System.Drawing.Size.Empty, TextFormatFlags.SingleLine | TextFormatFlags.NoPadding).Width;
+                                preferred.Width = Math.Max(preferred.Width, editWidth + SystemInformation.VerticalScrollBarWidth + 6);
+                            }
+                        }
+                        return preferred;
+                    });
+                    int unitWidth = 0;
+                    foreach (var size in sizes) unitWidth += size.Width;
+                    unitWidth += (sizes.Length - 1) * gap;
+                    if (x > pad && x + unitWidth > width - pad)
+                    {
+                        y += height + gap;
+                        x = pad;
+                        height = 0;
+                    }
+                    for (int i = 0; i < unit.Length; i++)
+                    {
+                        var c = unit[i];
+                        var size = sizes[i];
+                        if (c is Label)
+                        {
+                            c.AutoSize = false;
+                            int remaining = sizes.Length == 1 ? 0 : gap + sizes[1].Width;
+                            int available = Math.Max(24, width - pad - x - remaining);
+                            if (size.Width > available)
+                                size = c.GetPreferredSize(new System.Drawing.Size(available, 0));
+                        }
+                        c.SetBounds(x, y, size.Width, size.Height);
+                        x += size.Width + gap;
+                        height = Math.Max(height, size.Height);
+                    }
+                }
+                y += height + gap;
+            }
+            return y + pad;
+        }
+
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PropagationSettings));

@@ -34,6 +34,7 @@ namespace MissionPlanner.Controls
         private int _nameValueGap = 8;
         private int _columnGap = 20;
         private bool _updatingLayout;
+        private bool _viewportLayoutQueued;
         private bool _resourcesDisposed;
         private bool _mouseInside;
         private DisplayItem _hoveredItem;
@@ -69,7 +70,7 @@ namespace MissionPlanner.Controls
             _contentPanel.MouseClick += ContentPanel_MouseClick;
             _contentPanel.MouseMove += ContentPanel_MouseMove;
             _contentPanel.MouseLeave += ContentPanel_MouseLeave;
-            _contentPanel.ClientSizeChanged += (sender, e) => UpdateScrollSize();
+            _contentPanel.ClientSizeChanged += (sender, e) => QueueViewportLayout();
             _contentPanel.Scroll += (sender, e) => ClearHover();
             this.Controls.Add(_contentPanel);
             this.Controls.Add(_searchBox);
@@ -166,6 +167,21 @@ namespace MissionPlanner.Controls
             return columns;
         }
 
+        private void QueueViewportLayout()
+        {
+            if (_viewportLayoutQueued || _updatingLayout || _resourcesDisposed || !_contentPanel.IsHandleCreated)
+                return;
+
+            // Defer scrollbar calculation until the parent has finished the resize layout.
+            _viewportLayoutQueued = true;
+            _contentPanel.BeginInvoke((Action)(() =>
+            {
+                _viewportLayoutQueued = false;
+                if (!_resourcesDisposed && !_contentPanel.IsDisposed)
+                    UpdateScrollSize();
+            }));
+        }
+
         private void UpdateScrollSize()
         {
             if (_contentPanel == null || _filteredItems == null || _updatingLayout || _resourcesDisposed)
@@ -184,7 +200,11 @@ namespace MissionPlanner.Controls
                     _columnGap = Math.Max(1, (int)Math.Ceiling(20 * scale));
                     _rowHeight = Math.Max(_checkboxSize + 4, (int)Math.Ceiling(17 * scale));
                     int minimumValue = (int)Math.Ceiling(50 * scale);
-                    int maximumName = (int)Math.Ceiling(graphics.MeasureString("MMMMMMMMMMMMMMMM", _normalFont).Width);
+                    // Enhanced Chinese labels include both the original key and its translation.
+                    // Let the actual viewport, value width and inter-column gap size these labels.
+                    bool enhancedChinese = string.Equals(CultureInfo.CurrentUICulture.Name, "zh-CN", StringComparison.Ordinal);
+                    int maximumName = enhancedChinese ? int.MaxValue
+                        : (int)Math.Ceiling(graphics.MeasureString("MMMMMMMMMMMMMMMM", _normalFont).Width);
                     var names = _filteredItems.ToDictionary(item => item,
                         item => (int)Math.Ceiling(graphics.MeasureString(item.DisplayName ?? item.Name ?? "", _normalFont).Width) + 8);
                     var values = _filteredItems.ToDictionary(item => item,
@@ -214,7 +234,7 @@ namespace MissionPlanner.Controls
                             if (BuildColumns(mid).Count <= count) high = mid;
                             else low = mid + 1;
                         }
-                        var columns = BuildColumns(low);
+                        var columns = BuildColumns(maximumName == int.MaxValue && count == 1 ? int.MaxValue : low);
                         int x = _padding, bottom = _padding;
                         foreach (var column in columns)
                         {
@@ -225,19 +245,34 @@ namespace MissionPlanner.Controls
                             int y = _padding;
                             foreach (var row in column.Rows)
                             {
-                                row.Bounds = new Rectangle(x, y, width, _rowHeight);
+                                // On smaller panes put the original field key above its localized description
+                                // instead of losing the description to a one-line ellipsis.
+                                var description = enhancedChinese && !row.IsHeader && names[row.Item] - 8 > nameWidth
+                                    ? BilingualDescription(row.Item)
+                                    : null;
+                                int rowHeight = description == null ? _rowHeight : 2 * _rowHeight;
+                                row.Bounds = new Rectangle(x, y, width, rowHeight);
                                 if (row.IsHeader)
                                     row.NameBounds = row.Bounds;
                                 else
                                 {
-                                    row.CheckBounds = new Rectangle(x, y + (_rowHeight - _checkboxSize) / 2, _checkboxSize, _checkboxSize);
+                                    row.CheckBounds = new Rectangle(x, y + (rowHeight - _checkboxSize) / 2, _checkboxSize, _checkboxSize);
                                     row.NameBounds = new Rectangle(x + _checkboxSize + _checkboxMargin, y, nameWidth, _rowHeight);
-                                    row.ValueBounds = new Rectangle(row.NameBounds.Right + _nameValueGap, y, valueWidth, _rowHeight);
+                                    row.ValueBounds = new Rectangle(row.NameBounds.Right + _nameValueGap,
+                                        y, valueWidth, _rowHeight);
                                     row.Item.Bounds = row.Bounds;
                                 }
-                                row.Label = FitLabel(row.FullText, row.IsHeader ? _headerFont : _normalFont, row.NameBounds.Width, graphics);
+                                row.Label = FitLabel(description == null ? row.FullText : row.Item.Name,
+                                    row.IsHeader ? _headerFont : _normalFont, row.NameBounds.Width, graphics);
+                                if (description != null)
+                                {
+                                    // The value occupies only the key line. Reuse that width below it.
+                                    row.DescriptionBounds = new Rectangle(row.NameBounds.Left, y + _rowHeight,
+                                        row.Bounds.Right - row.NameBounds.Left, _rowHeight);
+                                    row.Description = FitLabel(description, _normalFont, row.DescriptionBounds.Width, graphics);
+                                }
                                 _layoutRows.Add(row);
-                                y += _rowHeight;
+                                y += rowHeight;
                             }
                             bottom = Math.Max(bottom, y);
                             x += width + _columnGap;
@@ -260,6 +295,21 @@ namespace MissionPlanner.Controls
                 width - _checkboxSize - _checkboxMargin - _nameValueGap - valueWidth));
         }
 
+        private static string BilingualDescription(DisplayItem item)
+        {
+            // TelemetryFieldPresentation.Combine uses "key (description)"; never
+            // reinterpret a name authored by the operator as a translated field.
+            var key = item.Name;
+            var label = item.DisplayName;
+            if (string.IsNullOrEmpty(key) || string.IsNullOrEmpty(label) || key.Contains("customfield"))
+                return null;
+            var prefix = key + " (";
+            return label.Length > prefix.Length + 1 && label.StartsWith(prefix, StringComparison.Ordinal) &&
+                   label.EndsWith(")", StringComparison.Ordinal)
+                ? label.Substring(prefix.Length, label.Length - prefix.Length - 1)
+                : null;
+        }
+
         private static string FitLabel(string text, Font font, int width, Graphics graphics)
         {
             int lineEnd = text.IndexOfAny(new[] { '\r', '\n' });
@@ -277,6 +327,9 @@ namespace MissionPlanner.Controls
             return text.Substring(0, low == elements.Length ? text.Length : elements[low]) + "…";
         }
 
+        private Color ChooseTextColor(Color preferred)
+            => ThemeTextContrast.Choose(preferred, _contentPanel.ForeColor, _contentPanel.BackColor);
+
         private void ContentPanel_Paint(object sender, PaintEventArgs e)
         {
             if (_resourcesDisposed) return;
@@ -284,9 +337,9 @@ namespace MissionPlanner.Controls
             var g = e.Graphics;
             g.TranslateTransform(_contentPanel.AutoScrollPosition.X, _contentPanel.AutoScrollPosition.Y);
             g.Clear(_contentPanel.BackColor);
-            using (var headerBrush = new SolidBrush(ThemeManager.BannerColor2))
+            using (var headerBrush = new SolidBrush(ChooseTextColor(ThemeManager.BannerColor2)))
             using (var nameBrush = new SolidBrush(_contentPanel.ForeColor))
-            using (var valueBrush = new SolidBrush(Color.Gray))
+            using (var valueBrush = new SolidBrush(ChooseTextColor(Color.Gray)))
             using (var checkPen = new Pen(_contentPanel.ForeColor, 1))
             using (var checkFill = new SolidBrush(Color.Green))
             using (var hoverBrush = new SolidBrush(Color.FromArgb(40, 128, 128, 128)))
@@ -308,6 +361,8 @@ namespace MissionPlanner.Controls
                         g.FillRectangle(checkFill, inside);
                     }
                     g.DrawString(row.Label, _normalFont, nameBrush, row.NameBounds, format);
+                    if (row.Description != null)
+                        g.DrawString(row.Description, _normalFont, nameBrush, row.DescriptionBounds, format);
                     g.DrawString(row.Item.Value ?? "", _normalFont, valueBrush, row.ValueBounds, format);
                 }
             }
@@ -472,7 +527,8 @@ namespace MissionPlanner.Controls
         {
             public DisplayItem Item;
             public bool IsHeader;
-            public string FullText, Label;
+            public string FullText, Label, Description;
+            public Rectangle DescriptionBounds;
             public Rectangle Bounds, NameBounds, ValueBounds, CheckBounds;
         }
 

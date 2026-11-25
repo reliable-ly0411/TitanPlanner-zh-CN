@@ -1,3 +1,15 @@
+字段选择弹窗在深浅主题下保持分组标题与数值可读，字段名称、数值和布局不变。
+
+飞行数据状态页恢复上游的横向浏览：每列从上往下排，横向空间足够时显示更多列，其余列可左右滚动查看。
+
+飞行数据状态页相邻列靠拢，普通数值刷新时列位置保持稳定；较长参数名可悬停查看全文。
+
+飞行数据状态页按实际显示的参数名和值计算列宽，进一步缩小相邻列间距。
+
+飞行数据状态页按可用宽度排列多列，参数值紧跟名称；窗口过窄时仍可单列滚动。
+
+Windows 紧凑窗口中的飞行数据操作页可使用内部滚动条查看下方控件。
+
 Enhanced Chinese includes an initial set of bilingual Copter and Plane/QuadPlane parameter descriptions, version-scoped offline metadata, and Chinese search. See [scope, sources and validation](docs/parameter-descriptions.zh-CN.md); unsupported or changed descriptions retain English.
 
 # TitanPlanner-zh-CN
@@ -6,14 +18,11 @@ Enhanced Chinese includes an initial set of bilingual Copter and Plane/QuadPlane
 
 ## 双上游差异
 
-下表是 **2026-11-23** 的核对快照（领先 / 落后），不自动刷新。点击数字可查看 GitHub 当前分支比较。
+`ahead` / `behind`：汉化分支相对上游镜像领先 / 落后的提交数。
 
-| 汉化线 | 相对 TitanPlanner 镜像 `Titanmain` | 相对 MissionPlanner 镜像 `missionmain` |
-| --- | --- | --- |
-| `zh-CN` | [领先 74 · 落后 0](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/compare/Titanmain...zh-CN) | [领先 604 · 落后 58](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/compare/missionmain...zh-CN) |
-| `zh-CN-dev` | [领先 159 · 落后 0](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/compare/Titanmain...zh-CN-dev) | [领先 689 · 落后 58](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/compare/missionmain...zh-CN-dev) |
+![双上游领先／落后提交数](https://raw.githubusercontent.com/reliable-ly0411/TitanPlanner-zh-CN/readme-upstream-status/dual-upstream.svg)
 
-徽章缓存至少 5 分钟；点击数字或下方链接查看 GitHub 当前比较结果。
+由 GitHub Actions 更新，状态文件保存在独立分支，不计入比较。若图表暂不可用，点击下方链接查看 GitHub 实时比较。
 
 | 汉化线 | 相对 TitanPlanner 镜像 | 相对 MissionPlanner 镜像 |
 | --- | --- | --- |
@@ -45,6 +54,8 @@ Enhanced Chinese includes an initial set of bilingual Copter and Plane/QuadPlane
 This fork implements every feature we've always yearned for with considerable UI/UX upgrades, a reworked HUD, a real-time 3D map with vehicle rendering (and ADSB), an overhauled parameter editor and tab layout, a Betaflight-style motor setup, USB auto-connect, offline map packs for air-gapped planning, and dozens of large improvements throughout the app.
 
 **See [CHANGES.md](CHANGES.md) for the full list of features and fixes added in this fork.**
+
+On compact Windows screens, the default flight-data HUD leaves room for Actions, Messages and Status without moving the HUD/map divider.
 
 ---
 

@@ -330,11 +330,73 @@ namespace MissionPlanner.GCSViews.ConfigurationView
         /// The keyboard shortcuts, by where they work, read from their [KeyboardShortcut] declarations: a shortcut
         /// added or changed in the code shows here as it is.
         /// </summary>
+        private static readonly Dictionary<string, string> ShortcutHelpChinese = new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            ["Keyboard Shortcuts"] = "键盘快捷键",
+            ["Everywhere"] = "全局",
+            ["FLY screen"] = "飞行数据页",
+            ["PLAN screen"] = "航线规划页",
+            ["Parameter pages"] = "参数页",
+            ["SIMULATION screen"] = "仿真页",
+            ["Install Firmware"] = "固件安装页",
+            ["Survey (Grid)"] = "测绘（网格）",
+            ["Log Browser"] = "日志浏览器",
+            ["Open the FLY screen"] = "打开飞行数据页",
+            ["Open the PLAN screen"] = "打开航线规划页",
+            ["Open the CONFIG screen"] = "打开配置／调试页",
+            ["Download the parameters again and reload the screen"] = "重新读取参数并刷新页面",
+            ["Connect or disconnect"] = "连接或断开",
+            ["Open the Tools window"] = "打开工具窗口",
+            ["Send the vehicle's position out as NMEA"] = "打开 NMEA 输出设置窗口",
+            ["Open the DevOps tools"] = "打开开发运维工具",
+            ["Open the spectrogram"] = "打开频谱图",
+            ["Open the plugin manager"] = "打开插件管理器",
+            ["Reboot the autopilot"] = "重启飞控",
+            ["Open the connection without downloading the parameters"] = "连接但不下载参数",
+            ["Open the propagation settings"] = "打开地图叠加层设置",
+            ["Open the map cache"] = "打开地图缓存",
+            ["Have the autopilot save its parameters to storage"] = "让飞控将参数写入存储",
+            ["Ask the camera for its information and start its video stream"] = "读取相机信息并启动视频流",
+            ["Play or pause the log being played back"] = "播放或暂停当前日志",
+            ["Speed the log playback up"] = "加快日志回放",
+            ["Slow the log playback down"] = "减慢日志回放",
+            ["Open the tab at that place along the tabs (0 for the tenth)"] = "打开对应序号的标签页（0 对应第十项）",
+            ["Swap the 3D map between FPV and the chase view"] = "在第一人称与跟随视角之间切换 3D 地图",
+            ["Show or hide the HUD over the video (the Video tab's HUD Overlay)"] = "显示或隐藏视频上的抬头显示（视频页的 HUD 叠加）",
+            ["Take the plan as the vehicle's mission here, without writing it"] = "在本地将规划作为任务，不向飞行器写入",
+            ["Switch the maps' GDI drawing on or off"] = "切换地图 GDI 绘制",
+            ["Load a mission file"] = "打开任务文件",
+            ["Save the mission to a file"] = "将任务保存为文件",
+            ["Undo the last change to the plan"] = "撤销上一次规划更改",
+            ["Write the mission to the vehicle, fast"] = "快速写入任务到飞行器",
+            ["Read the mission from the vehicle"] = "从飞行器读取任务",
+            ["Write the mission to the vehicle"] = "将任务写入飞行器",
+            ["Write the changed parameters"] = "写入更改过的参数",
+            ["Start a swarm of separate simulated copters"] = "启动相互独立的多旋翼编队仿真",
+            ["Start a swarm of simulated vehicles, each following the one before"] = "启动逐一跟随前机的编队仿真",
+            ["Install the PX4 firmware"] = "安装 PX4 固件",
+            ["List the development (latest) firmware"] = "列出最新开发版固件",
+            ["Load a survey grid"] = "打开测绘网格",
+            ["Save the survey grid"] = "保存测绘网格",
+            ["Go to a line"] = "跳转到指定行",
+        };
+
+        private static string ShortcutHelpText(string source, bool enhancedChinese, string separator)
+        {
+            if (!enhancedChinese)
+                return UiText.Translate(source);
+            return ShortcutHelpChinese.TryGetValue(source, out var translated) ? translated + separator + source : source;
+        }
+
         private Control CreateKeyboardShortcutsGroup()
         {
-            var group = CreateGroupBox(UiText.Translate("Keyboard Shortcuts"));
+            bool enhancedChinese = string.Equals(CultureInfo.CurrentUICulture.Name, "zh-CN", StringComparison.Ordinal);
+            var group = CreateGroupBox("Keyboard Shortcuts");
+            group.Text = ShortcutHelpText("Keyboard Shortcuts", enhancedChinese, " / ");
             group.Tag = GroupColumnsPanel.FullWidth;
             var table = CreateTableLayout(2);
+            var descriptions = new List<Label>();
+            var keysLabels = new List<Label>();
 
             string scope = null;
             int row = 0;
@@ -346,7 +408,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                     var header = new Label
                     {
                         AutoSize = true,
-                        Text = UiText.Translate(scope),
+                        Text = ShortcutHelpText(scope, enhancedChinese, " / "),
                         Margin = new Padding(3, row == 0 ? 3 : 12, 3, 3)
                     };
                     header.Font = new Font(header.Font, FontStyle.Bold);
@@ -355,17 +417,40 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                     row++;
                 }
 
-                table.Controls.Add(new Label
+                var keys = new Label
                 {
                     AutoSize = true,
                     Text = shortcut.KeysText,
                     Margin = new Padding(15, 3, 20, 3)
-                }, 0, row);
-                table.Controls.Add(new Label { AutoSize = true, Text = UiText.Translate(shortcut.Description) }, 1, row);
+                };
+                var description = new Label
+                {
+                    AutoSize = true,
+                    Text = ShortcutHelpText(shortcut.Description, enhancedChinese, Environment.NewLine)
+                };
+                keysLabels.Add(keys);
+                descriptions.Add(description);
+                table.Controls.Add(keys, 0, row);
+                table.Controls.Add(description, 1, row);
                 row++;
             }
 
             group.Controls.Add(table);
+            if (enhancedChinese)
+            {
+                Action constrainDescriptions = () =>
+                {
+                    if (group.ClientSize.Width <= 0)
+                        return;
+                    int keysWidth = keysLabels.Count == 0 ? 0 : keysLabels.Max(label => label.PreferredWidth + label.Margin.Horizontal);
+                    int width = Math.Max(1, group.ClientSize.Width - group.Padding.Horizontal - table.Margin.Horizontal - keysWidth - 6);
+                    foreach (var description in descriptions)
+                        if (description.MaximumSize.Width != width)
+                            description.MaximumSize = new Size(width, 0);
+                };
+                group.SizeChanged += (sender, args) => constrainDescriptions();
+                constrainDescriptions();
+            }
             return group;
         }
 

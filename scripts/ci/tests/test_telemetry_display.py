@@ -52,9 +52,15 @@ class TelemetryDisplayTest(unittest.TestCase):
         self.assertIn('Name = field.Name,', chart)
         self.assertIn('IsChecked = _isChecked(field.Name)', chart)
         self.assertIn('Name = item.Name,', chart)
-        # Status retains the legacy renderer; field selection now renders measured rows.
+        # Status draws a measured label derived from the original field and keeps
+        # the complete label and value available in the tooltip.
         self.assertIn('TelemetryFieldPresentation.Matches(searchText', status)
-        self.assertIn('g.DrawString(item.DisplayName,', status)
+        self.assertIn('Name = field, DisplayName = TelemetryFieldPresentation.FieldLabel(field)', status)
+        self.assertIn('column.Labels[row] = FitName(item.DisplayName ?? item.Name ?? "", nameWidths[start + row]', status)
+        self.assertIn('g.DrawString(column.Labels[row],', status)
+        self.assertIn('g.DrawString(item.Value ?? "",', status)
+        self.assertIn('item.DisplayName + Environment.NewLine + item.Value', status)
+        self.assertIn('_contentPanel.AutoScrollPosition = Point.Empty;', status)
         self.assertIn('TelemetryFieldPresentation.Matches(text, item.DisplayName, item.Name, item.Group, item.GroupLabel)', chart)
         self.assertIn('g.DrawString(row.Label, _normalFont, nameBrush, row.NameBounds, format)', chart)
         self.assertIn('g.DrawString(row.Item.Value ?? "", _normalFont, valueBrush, row.ValueBounds, format)', chart)

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
@@ -165,6 +166,88 @@ namespace MissionPlannerTests.Controls
                 Assert.IsTrue(bottom + padding + panel.AutoScrollPosition.Y <= viewport.Height, "The last row must be vertically reachable.");
             }
             finally { panel.AutoScrollPosition = new Point(-previous.X, -previous.Y); }
+        }
+
+        [DataTestMethod]
+        [DataRow(0x94C11F, 0x000000, 0xEEEEEE, 0x000000)] // HighContrast group headers.
+        [DataRow(0x808080, 0x000000, 0xEEEEEE, 0x000000)] // HighContrast numeric values.
+        [DataRow(0x94C11F, 0xFFFFFF, 0x272727, 0x94C11F)] // Dark group accent stays green.
+        [DataRow(0x808080, 0xFFFFFF, 0x272727, 0xFFFFFF)] // Weak dark numeric gray.
+        [DataRow(0x808080, 0xFFFFFF, 0x000000, 0x808080)] // Readable gray stays gray on black.
+        [DataRow(0x888888, 0x888888, 0xEEEEEE, 0x000000)] // Custom theme with no readable palette entry.
+        public void PickerHeaderAndValueBrushesRetainOrRecoverReadableColors(int preferred, int foreground,
+            int background, int expected)
+        {
+            Sta(() =>
+            {
+                using (var form = new Probe())
+                {
+                    int opaque = unchecked((int)0xff000000);
+                    var panel = Field<Panel>(form, "_contentPanel");
+                    panel.ForeColor = Color.FromArgb(foreground | opaque);
+                    panel.BackColor = Color.FromArgb(background | opaque);
+                    var color = (Color)Call(form, "ChooseTextColor", Color.FromArgb(preferred | opaque));
+                    Assert.AreEqual(expected | opaque, color.ToArgb());
+                }
+            });
+        }
+
+        [TestMethod]
+        public void EnhancedChineseNarrowRowUsesSeparateKeyAndDescriptionWithoutChangingTheField()
+        {
+            Sta(() =>
+            {
+                var language = CultureInfo.CurrentUICulture;
+                try
+                {
+                    CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo("zh-CN");
+                    using (var form = new Probe { ClientSize = new Size(260, 110) })
+                    {
+                        form.Show();
+                        const string key = "generator_current";
+                        const string description = "发电机蓄电池电流和控制状态";
+                        const string label = key + " (" + description + ")";
+                        const string value = "-12.500";
+                        var item = Add(form, key, label, value);
+                        Set(item, "IsChecked", true);
+                        Add(form, "customfield0", "customfield0 (操作员自行设置名称)", "0");
+                        Add(form, "not_translated", "not_translated", "0");
+                        Reflow(form);
+                        var rows = BodyRows(form);
+                        var row = rows[0];
+                        Assert.AreEqual(key, Row<string>(row, "Label"));
+                        Assert.AreEqual(description, Row<string>(row, "Description"));
+                        var descriptionBounds = Row<Rectangle>(row, "DescriptionBounds");
+                        var valueBounds = Row<Rectangle>(row, "ValueBounds");
+                        Assert.AreEqual(valueBounds.Right, descriptionBounds.Right);
+                        Assert.AreEqual(valueBounds.Bottom, descriptionBounds.Top);
+                        Assert.IsFalse(valueBounds.IntersectsWith(descriptionBounds));
+                        Assert.AreEqual(2 * Field<int>(form, "_rowHeight"), Row<Rectangle>(row, "Bounds").Height);
+                        Assert.IsNull(Row<string>(rows[1], "Description"), "Do not reinterpret an operator label.");
+                        Assert.IsNull(Row<string>(rows[2], "Description"), "Unknown fields remain unchanged.");
+                        AssertLayout(form);
+                        var bounds = Row<Rectangle>(row, "Bounds");
+                        var secondLinePoint = new Point(bounds.Left + 2, bounds.Bottom - 2);
+                        Assert.AreSame(item, Call(form, "GetItemAtPoint", secondLinePoint));
+                        Field<PlaceholderTextBox>(form, "_searchBox").Text = description;
+                        Assert.AreEqual(1, BodyRows(form).Length);
+                        Assert.AreSame(item, Row<object>(BodyRows(form).Single(), "Item"));
+                        Assert.AreEqual(value, Item<string>(item, "Value"));
+                        Assert.IsTrue(Item<bool>(item, "IsChecked"));
+
+                        form.ClientSize = new Size(960, 480);
+                        Application.DoEvents();
+                        Reflow(form);
+                        Assert.AreEqual(label, Row<string>(BodyRows(form).Single(), "Label"));
+                        Assert.IsNull(Row<string>(BodyRows(form).Single(), "Description"));
+                        form.ClientSize = new Size(260, 110);
+                        CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo("zh-Hans");
+                        Reflow(form);
+                        Assert.IsNull(Row<string>(BodyRows(form).Single(), "Description"), "Legacy Chinese retains single-line layout.");
+                    }
+                }
+                finally { CultureInfo.CurrentUICulture = language; }
+            });
         }
 
         [TestMethod]

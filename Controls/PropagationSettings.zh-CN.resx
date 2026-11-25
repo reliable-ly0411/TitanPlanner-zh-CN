@@ -64,13 +64,13 @@
   <data name="chk_rf.Text" xml:space="preserve"><value>射频地图</value></data>
   <data name="chk_dronedist.Text" xml:space="preserve"><value>飞行器剩余距离</value></data>
   <data name="chk_homedist.Text" xml:space="preserve"><value>距起飞点剩余距离</value></data>
-  <data name="cb_showscale.Text" xml:space="preserve"><value>显示比例尺</value></data>
-  <data name="label3.Text" xml:space="preserve"><value>高度筛选</value></data>
+  <data name="cb_showscale.Text" xml:space="preserve"><value>显示图例</value></data>
+  <data name="label3.Text" xml:space="preserve"><value>高度范围</value></data>
   <data name="label91.Text" xml:space="preserve"><value>高程</value></data>
   <data name="label2.Text" xml:space="preserve"><value>最大高度</value></data>
   <data name="label89.Text" xml:space="preserve"><value>净空 [m]</value></data>
   <data name="label100.Text" xml:space="preserve"><value>无线电传播</value></data>
-  <data name="label113.Text" xml:space="preserve"><value>剩余公里数</value></data>
+  <data name="label113.Text" xml:space="preserve"><value>剩余里程</value></data>
   <data name="label1.Text" xml:space="preserve"><value>最低高度</value></data>
   <data name="label109.Text" xml:space="preserve"><value>方位角步长</value></data>
   <data name="label90.Text" xml:space="preserve"><value>分辨率</value></data>
@@ -80,5 +80,5 @@
   <data name="label114.Text" xml:space="preserve"><value>容差</value></data>
   <data name="groupBox1.Text" xml:space="preserve"><value>地图叠加层</value></data>
   <data name="chk_setalt.Text" xml:space="preserve"><value>高度筛选</value></data>
-  <data name="$this.Text" xml:space="preserve"><value>无线电传播设置</value></data>
+  <data name="$this.Text" xml:space="preserve"><value>地图叠加层设置</value></data>
 </root>

@@ -18,7 +18,7 @@ namespace MissionPlanner.Controls
             footer.SuspendLayout();
             try
             {
-                footer.AutoSize = true;
+                footer.AutoSize = false;
                 footer.AutoSizeMode = AutoSizeMode.GrowAndShrink;
                 footer.FlowDirection = FlowDirection.LeftToRight;
                 footer.WrapContents = true;
@@ -57,7 +57,8 @@ namespace MissionPlanner.Controls
             private readonly CheckBox[] options;
             private int naturalCoordinateWidth;
             private int appliedCoordinateWidth;
-            private bool updating;
+            private bool updating, updateQueued;
+            private int observedTableWidth = -1;
 
             internal WidthConstraint(TableLayoutPanel table, FlowLayoutPanel footer, Control coordinates, CheckBox[] options)
             {
@@ -67,8 +68,29 @@ namespace MissionPlanner.Controls
                 this.options = options;
                 naturalCoordinateWidth = appliedCoordinateWidth = coordinates.Width;
                 footer.ClientSizeChanged += (sender, args) => Update();
-                footer.Layout += (sender, args) => Update();
+                table.ClientSizeChanged += (sender, args) => QueueUpdate();
+                coordinates.HandleCreated += (sender, args) => Update();
                 coordinates.SizeChanged += (sender, args) => Update();
+                foreach (var option in options)
+                    option.FontChanged += (sender, args) => Update();
+            }
+
+            private void QueueUpdate()
+            {
+                if (observedTableWidth == table.ClientSize.Width || updateQueued || !table.IsHandleCreated || table.IsDisposed)
+                    return;
+                updateQueued = true;
+                table.BeginInvoke((Action)(() =>
+                {
+                    updateQueued = false;
+                    observedTableWidth = table.ClientSize.Width;
+                    Update();
+                    int row = table.GetRow(footer);
+                    var actual = table.GetRowHeights();
+                    if (row >= 0 && row < actual.Length && table.RowStyles[row].SizeType == SizeType.Absolute &&
+                        Math.Abs(actual[row] - table.RowStyles[row].Height) > 2)
+                        table.PerformLayout(null, null);
+                }));
             }
 
             internal void Update()
@@ -89,7 +111,16 @@ namespace MissionPlanner.Controls
                             ? (int)Math.Round((double)naturalCoordinateWidth * coordinates.Width / appliedCoordinateWidth)
                             : coordinates.Width;
 
-                    int width = Math.Min(naturalCoordinateWidth, availableWidth - coordinates.Margin.Horizontal);
+                    // With the legacy WinForms configuration, native text may render at a
+                    // higher DPI than the coordinate control's designer-scaled width.
+                    int renderedCoordinateWidth = naturalCoordinateWidth;
+                    if (coordinates.IsHandleCreated)
+                    {
+                        using (var graphics = coordinates.CreateGraphics())
+                            renderedCoordinateWidth = Math.Max(renderedCoordinateWidth,
+                                (int)Math.Ceiling(naturalCoordinateWidth * graphics.DpiX / coordinates.DeviceDpi));
+                    }
+                    int width = Math.Min(renderedCoordinateWidth, availableWidth - coordinates.Margin.Horizontal);
                     if (coordinates.Width != width)
                     {
                         coordinates.Width = width;
@@ -105,6 +136,36 @@ namespace MissionPlanner.Controls
                             option.MaximumSize = maximum;
                             changed = true;
                         }
+                    }
+                    // Measure at the actual viewport; the table's unconstrained probe can
+                    // otherwise allocate one fewer line than the flow panel needs.
+                    int preferredHeight = footer.Padding.Vertical;
+                    int lineWidth = 0, lineHeight = 0;
+                    foreach (Control child in footer.Controls)
+                    {
+                        if (!child.Visible)
+                            continue;
+                        var size = child.AutoSize ? child.GetPreferredSize(new Size(availableWidth, 0)) : child.Size;
+                        if (child.MaximumSize.Width > 0)
+                            size.Width = Math.Min(size.Width, child.MaximumSize.Width);
+                        int childWidth = size.Width + child.Margin.Horizontal;
+                        if (lineWidth != 0 && lineWidth + childWidth > availableWidth)
+                        {
+                            preferredHeight += lineHeight;
+                            lineWidth = lineHeight = 0;
+                        }
+                        lineWidth += childWidth;
+                        lineHeight = Math.Max(lineHeight, size.Height + child.Margin.Vertical);
+                    }
+                    preferredHeight += lineHeight;
+                    var row = table.RowStyles[table.GetRow(footer)];
+                    int height = preferredHeight + footer.Margin.Vertical;
+                    if (preferredHeight > 0 && (row.SizeType != SizeType.Absolute || row.Height != height))
+                    {
+                        row.SizeType = SizeType.Absolute;
+                        row.Height = height;
+                        footer.Height = preferredHeight;
+                        changed = true;
                     }
                 }
                 finally

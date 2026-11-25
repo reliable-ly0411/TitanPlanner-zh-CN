@@ -276,7 +276,9 @@ namespace MissionPlanner.GCSViews
         private void PopulateLocationDropdown(SITLLocation selected = null)
         {
             cmb_location.Items.Clear();
-            cmb_location.Items.Add(UiText.Translate("Please set a valid home location on the map first."));
+            cmb_location.Items.Add(string.Equals(CultureInfo.CurrentUICulture.Name, "zh-CN", StringComparison.OrdinalIgnoreCase)
+                ? "请先在地图选点"
+                : UiText.Translate("Please set a valid home location on the map first."));
             cmb_location.Items.Add(WoodleyLocation);
             foreach (var location in _savedLocations)
             {
@@ -600,7 +602,7 @@ namespace MissionPlanner.GCSViews
             {
                 StartSITL(await exepath, "+",
                     BuildHomeLocation(position, heading, await HomeAltitudeAsync(position)), "",
-                    (int) num_simspeed.Value);
+                    (int) num_simspeed.Value, isCopter: true);
             }
             catch (Exception ex)
             {
@@ -871,7 +873,7 @@ namespace MissionPlanner.GCSViews
             return sitldirectory + Path.GetFileNameWithoutExtension(filename) + ".exe";
         }
 
-        private async Task<string> GetDefaultConfig(string model)
+        private async Task<string> GetLegacyDefaultConfig(string model)
         {
             if (await Download.getFilefromNetAsync(
                     "https://raw.githubusercontent.com/ArduPilot/ardupilot/master/Tools/autotest/sim_vehicle.py",
@@ -892,6 +894,73 @@ namespace MissionPlanner.GCSViews
                 }
             }
 
+            return "";
+        }
+
+        // The menu uses a lower-case x; the ArduCopter catalog key is case-sensitive.
+        // Do not normalize the simulator token or the per-model state directory.
+        internal static string SitlCopterCatalogKey(string model, bool isCopter)
+        {
+            return isCopter && model == "x" ? "X" : model;
+        }
+
+        private async Task<string> ReadFreshCopterXDefault(string file)
+        {
+            // A never-used path avoids the downloader's Last-Modified/length cache shortcut.
+            var staged = Path.Combine(sitldirectory, Guid.NewGuid().ToString("N") + ".parm");
+            try
+            {
+                if (!await Download.getFilefromNetAsync(
+                        "https://raw.githubusercontent.com/ArduPilot/ardupilot/master/Tools/autotest/" + file,
+                        staged).ConfigureAwait(false) || !File.Exists(staged))
+                    throw new InvalidDataException("Copter X: unable to download required SITL defaults " + file +
+                        ". Check the connection and try again.");
+
+                var data = File.ReadAllText(staged);
+                if (string.IsNullOrWhiteSpace(data))
+                    throw new InvalidDataException("Copter X: downloaded SITL defaults are empty: " + file +
+                        ". Check the connection and try again.");
+                return data;
+            }
+            finally
+            {
+                try { File.Delete(staged); File.Delete(staged + ".new"); }
+                catch (IOException ex) { log.Error(ex); }
+                catch (UnauthorizedAccessException ex) { log.Error(ex); }
+            }
+        }
+
+        private async Task<string> BuildCopterXDefaults(JToken files)
+        {
+            var list = files as JArray ?? new JArray(files);
+            if (list.Count == 0)
+                throw new InvalidDataException("Copter X: the SITL catalog has an empty defaults list.");
+
+            var data = new System.Text.StringBuilder();
+            foreach (var token in list)
+            {
+                if (token.Type != JTokenType.String || string.IsNullOrWhiteSpace((string)token))
+                    throw new InvalidDataException("Copter X: the SITL catalog contains an invalid defaults entry.");
+                data.AppendLine();
+                data.Append(await ReadFreshCopterXDefault((string)token).ConfigureAwait(false));
+            }
+
+            var temp = Path.GetTempFileName();
+            File.WriteAllText(temp, data.ToString());
+            return temp;
+        }
+
+        private async Task<string> GetDefaultConfig(string model, bool isCopter = false)
+        {
+            var catalogKey = SitlCopterCatalogKey(model, isCopter);
+            var preferCopterCatalog = catalogKey != model;
+            if (!preferCopterCatalog)
+            {
+                var legacyConfig = await GetLegacyDefaultConfig(model).ConfigureAwait(false);
+                if (!string.IsNullOrEmpty(legacyConfig))
+                    return legacyConfig;
+            }
+
             if (await Download.getFilefromNetAsync(
                     "https://firmware.ardupilot.org/Tools/MissionPlanner/vehicleinfo.py",
                     sitldirectory + "vehicleinfo.py").ConfigureAwait(false) || File.Exists(sitldirectory + "vehicleinfo.py"))
@@ -907,21 +976,28 @@ namespace MissionPlanner.GCSViews
                         var obj = (JObject) serializer.Deserialize(reader);
 
                         if (obj == null)
-                            return "";
+                            return preferCopterCatalog ? await GetLegacyDefaultConfig(model).ConfigureAwait(false) : "";
 
                         foreach (var fwtype in obj)
                         {
                             var frames = fwtype.Value["frames"];
 
-                            if (frames == null)
+                            if (frames == null || (preferCopterCatalog && fwtype.Key != "ArduCopter"))
                                 continue;
 
-                            var config = frames[model];
+                            var config = frames[catalogKey];
 
                             if (config == null)
                                 continue;
 
                             var configs = config["default_params_filename"];
+
+                            if (preferCopterCatalog)
+                            {
+                                if (configs == null)
+                                    throw new InvalidDataException("Copter X: the SITL catalog is missing its defaults list.");
+                                return await BuildCopterXDefaults(configs).ConfigureAwait(false);
+                            }
 
                             if (configs is JValue)
                             {
@@ -961,11 +1037,13 @@ namespace MissionPlanner.GCSViews
                 }
                 catch (Exception ex)
                 {
+                    if (preferCopterCatalog && ex is InvalidDataException)
+                        throw;
                     log.Error(ex);
                     Console.WriteLine(ex.ToString());
                 }
             }
-            return "";
+            return preferCopterCatalog ? await GetLegacyDefaultConfig(model).ConfigureAwait(false) : "";
         }
 
         void cleanupJson(string filename)
@@ -1017,7 +1095,7 @@ namespace MissionPlanner.GCSViews
             return "";
         }
 
-        private async void StartSITL(string exepath, string model, string homelocation, string extraargs = "", int speedup = 1)
+        private async void StartSITL(string exepath, string model, string homelocation, string extraargs = "", int speedup = 1, bool isCopter = false)
         {
 
             //If we got null, it means that the verison selection box was canceled.
@@ -1055,7 +1133,18 @@ namespace MissionPlanner.GCSViews
             if (cmb_model.Text != "")
                 model = cmb_model.Text;
 
-            var config = await GetDefaultConfig(model);
+            string config;
+            try
+            {
+                config = await GetDefaultConfig(model, isCopter);
+            }
+            catch (InvalidDataException ex)
+            {
+                if (!isCopter || model != "x")
+                    throw;
+                CustomMessageBox.Show(ex.Message, Strings.ERROR);
+                return;
+            }
 
             if (!string.IsNullOrEmpty(config))
                 extraargs += @" --defaults """ + config + @"""";

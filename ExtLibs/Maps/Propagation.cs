@@ -19,7 +19,6 @@ namespace MissionPlanner.Maps
         private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private double[,] alts;
         public PointLatLngAlt center = PointLatLngAlt.Zero;
-        private float clearance;
 
 
         public GMapOverlay distance;
@@ -44,7 +43,7 @@ namespace MissionPlanner.Maps
         private double prev_clearance;
         private double prev_base_height;
         private double prev_rotational;
-        private int prev_res;
+        private (bool elevation, bool terrain, bool scale, int resolution, bool fixedRange, float low, float high, float clearance) previousRasterSettings;
         private int prev_width;
         private double prev_zoom;
         private bool need_rf_redraw;
@@ -179,6 +178,10 @@ namespace MissionPlanner.Maps
                     if (connected && ele_run || ter_run)
                     {
                         var res = Settings.Instance.GetInt32("Propagation_Resolution", 4);
+                        var rasterSettings = (elevation: ele_run, terrain: ter_run, scale: showScale, resolution: res,
+                            fixedRange: set_alt_min_max, low: Settings.Instance.GetFloat("Propagation_Minalt"),
+                            high: Settings.Instance.GetFloat("Propagation_Maxalt"), clearance: Settings.Instance.GetFloat("Propagation_Clearance", 5));
+                        var settingsChanged = !rasterSettings.Equals(previousRasterSettings);
                         var width = gMapControl1.Width;
                         var height = gMapControl1.Height;
                         var zoom = gMapControl1.Zoom;
@@ -186,7 +189,7 @@ namespace MissionPlanner.Maps
 
                         if (elevationoverlay.Markers.Count == 0 || center != prev_position || alt != prev_alt ||
                             height != prev_height || width != prev_width ||
-                            zoom != prev_zoom)
+                            zoom != prev_zoom || settingsChanged)
                         {
                             // reset imagedata and alts
                             if (height != prev_height || width != prev_width)
@@ -197,7 +200,7 @@ namespace MissionPlanner.Maps
 
                             // get alt data
                             if (elevationoverlay.Markers.Count == 0 || center != prev_position ||
-                                zoom != prev_zoom)
+                                zoom != prev_zoom || width != prev_width || height != prev_height || settingsChanged)
                             {
                                 max_alt = srtm.getAltitude(center.Lat, center.Lng).alt;
                                 min_alt = max_alt;
@@ -215,10 +218,10 @@ namespace MissionPlanner.Maps
                                 ParallelOptions po = new ParallelOptions();
                                 po.CancellationToken = cts.Token;
 
-                                if (set_alt_min_max)
+                                if (rasterSettings.fixedRange)
                                 {
-                                    min_alt = Settings.Instance.GetFloat("Propagation_Minalt");
-                                    max_alt = Settings.Instance.GetFloat("Propagation_Maxalt");
+                                    min_alt = rasterSettings.low;
+                                    max_alt = rasterSettings.high;
                                 }
 
                                 Parallel.ForEach(
@@ -242,7 +245,7 @@ namespace MissionPlanner.Maps
                                             {
                                                 alts[x, y] = altresponce.alt;
 
-                                                if (!set_alt_min_max && ter_run)
+                                                if (!rasterSettings.fixedRange && rasterSettings.terrain)
                                                 {
                                                     if (max_alt < altresponce.alt) max_alt = altresponce.alt;
 
@@ -273,11 +276,11 @@ namespace MissionPlanner.Maps
                                         if (!ele_enabled)
                                             return;
 
-                                        if (ele_run)
+                                        if (rasterSettings.elevation)
                                         {
                                             var rel = altasl - alts[x, y];
 
-                                            var normvalue = normalize(rel);
+                                            var normvalue = normalize(rel, rasterSettings.elevation, rasterSettings.terrain, rasterSettings.clearance);
 
                                             var gradcolor = (byte)(((1-normvalue) * 254));
 
@@ -289,9 +292,9 @@ namespace MissionPlanner.Maps
                                             for (var j = -res / 2; j <= res / 2; j++)
                                                 imageData[x + i, y + j] = gradcolor;
                                         }
-                                        else if (ter_run)
+                                        else if (rasterSettings.terrain)
                                         {
-                                            var normvalue = normalize(alts[x, y]);
+                                            var normvalue = normalize(alts[x, y], rasterSettings.elevation, rasterSettings.terrain, rasterSettings.clearance);
 
 
                                             var gradcolor = (byte)(normvalue * 255);
@@ -320,8 +323,8 @@ namespace MissionPlanner.Maps
                             if (!ele_enabled)
                                 return;
 
-                            if (ele_run) gMapMarkerElevation.setScale(showScale, 0, (int)Settings.Instance.GetFloat("Propagation_Clearance", 5),"Rel to Terrain");
-                            else if (ter_run) gMapMarkerElevation.setScale(showScale, (int)max_alt, (int)min_alt, "Elevation (AMSL)");
+                            if (rasterSettings.elevation) gMapMarkerElevation.setScale(rasterSettings.scale, 0, (int)rasterSettings.clearance,"Rel to Terrain");
+                            else if (rasterSettings.terrain) gMapMarkerElevation.setScale(rasterSettings.scale, (int)max_alt, (int)min_alt, "Elevation (AMSL)");
 
                             try
                             {
@@ -331,18 +334,18 @@ namespace MissionPlanner.Maps
                                     if (elevationoverlay.Markers.Count > 1) elevationoverlay.Markers.RemoveAt(0);
                                 });
 
+                                // Publish the input key only after the overlay accepted the image.
+                                prev_position = center;
+                                prev_alt = alt;
+                                prev_height = height;
+                                prev_width = width;
+                                prev_zoom = zoom;
+                                previousRasterSettings = rasterSettings;
                             }
                             catch (InvalidOperationException)
                             {
-
+                                // The view may not be ready yet. Keep the previous key so the next tick retries.
                             }
-
-                            prev_position = center;
-                            prev_alt = alt;
-                            prev_height = height;
-                            prev_width = width;
-                            prev_zoom = zoom;
-                            prev_res = res;
                         }
                     }
 
@@ -435,17 +438,16 @@ namespace MissionPlanner.Maps
         }
 
 
-        private double normalize(double value)
+        private double normalize(double value, bool elevation, bool terrain, float clearance)
         {
             double normvalue = 0;
 
-            if (ele_run)
+            if (elevation)
             {
-                clearance = Settings.Instance.GetFloat("Propagation_Clearance", 5); //metres
                 normvalue = value / clearance;
             }
 
-            else if (ter_run)
+            else if (terrain)
             {
                 normvalue = (value - min_alt) / (max_alt - min_alt);
             }

@@ -14,6 +14,7 @@ namespace MissionPlanner.Controls
         public event EventValueChanged ValueChanged;
         List<KeyValuePair<int, string>> list;
         int chkcount;
+        private bool updatingValue;
 
         MAVLink.MAV_PARAM_TYPE Type = MAVLink.MAV_PARAM_TYPE.REAL32;
 
@@ -51,12 +52,21 @@ namespace MissionPlanner.Controls
             }
             set
             {
-                for (int a = 0; a < chkcount; a++)
+                bool wasUpdating = updatingValue;
+                updatingValue = true;
+                try
                 {
-                    CheckBox chk = (CheckBox)panel1.Controls[a];
+                    for (int a = 0; a < chkcount; a++)
+                    {
+                        CheckBox chk = (CheckBox)panel1.Controls[a];
 
 
-                    chk.Checked = (((uint)value & (1 << list[a].Key)) > 0);
+                        chk.Checked = (((uint)value & (1 << list[a].Key)) > 0);
+                    }
+                }
+                finally
+                {
+                    updatingValue = wasUpdating;
                 }
             }
         }
@@ -142,6 +152,9 @@ namespace MissionPlanner.Controls
 
         void MavlinkCheckBoxBitMask_CheckedChanged(object sender, EventArgs e)
         {
+            if (updatingValue)
+                return;
+
             if (this.ValueChanged != null)
             {
                 this.ValueChanged(sender, ParamName, Value.ToString());

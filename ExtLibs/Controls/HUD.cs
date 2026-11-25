@@ -1714,6 +1714,56 @@ namespace MissionPlanner.Controls
             return icon;
         }
 
+        private static string EnhancedGpsCaption(float fix)
+        {
+            if (!MapGpsPresentation.Enhanced || !(fix >= 0 && fix <= 8) || fix != (int)fix)
+                return null;
+
+            var label = MapGpsPresentation.FixLabel((int)fix, compact: true);
+            if (label == MapGpsPresentation.LegacyFixLabel((int)fix))
+                return null;
+            // The compact catalog calls DGPS “差分”; the protocol name remains visible on the badge.
+            return fix == 4 && !label.StartsWith("DGPS", StringComparison.Ordinal) ? "DGPS " + label : label;
+        }
+
+        private static Bitmap DrawGpsBadge(Bitmap original, string caption)
+        {
+            var badge = new Bitmap(original.Width, original.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            var background = original.GetPixel(original.Width / 2, original.Height / 8);
+            // Remove the old text but retain its original rounded silhouette and alpha edge.
+            for (int y = 0; y < badge.Height; y++)
+                for (int x = 0; x < badge.Width; x++)
+                    badge.SetPixel(x, y, Color.FromArgb(original.GetPixel(x, y).A, background));
+            using (var graphics = Graphics.FromImage(badge))
+            using (var format = new StringFormat(StringFormat.GenericTypographic)
+            {
+                Alignment = StringAlignment.Center,
+                LineAlignment = StringAlignment.Center,
+                FormatFlags = StringFormatFlags.NoWrap
+            })
+            using (var initial = new Font(FontFamily.GenericSansSerif, badge.Height * 0.56f, FontStyle.Bold, GraphicsUnit.Pixel))
+            {
+                graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
+                var measured = graphics.MeasureString(caption, initial, int.MaxValue, format).Width;
+                var maxWidth = badge.Width * 0.92f;
+                using (var fitted = new Font(initial.FontFamily, initial.Size * Math.Min(1f, maxWidth / Math.Max(1f, measured)),
+                    initial.Style, GraphicsUnit.Pixel))
+                    graphics.DrawString(caption, fitted, Brushes.White, new RectangleF(0, 0, badge.Width, badge.Height), format);
+            }
+            return badge;
+        }
+
+        private Image GetGpsStatusBadge(Image original, float fix)
+        {
+            var caption = EnhancedGpsCaption(fix);
+            if (caption == null || !(original is Bitmap bitmap))
+                return original;
+            var key = "enhanced-gps-" + ((int)fix).ToString(System.Globalization.CultureInfo.InvariantCulture);
+            if (!iconCache.TryGetValue(key, out var badge))
+                iconCache[key] = badge = DrawGpsBadge(bitmap, caption);
+            return badge;
+        }
+
         public void DrawImage(Image img, int x, int y, int width, int height, int textureno = 0)
         {
             if (opengl)
@@ -3317,7 +3367,7 @@ namespace MissionPlanner.Controls
 
                             var hor_pos = this.Width - rightMargin - slot * width - (slot - 1) * gap;
                             modeRight = Math.Min(modeRight, hor_pos - fontsize);
-                            DrawImage(icon, hor_pos, this.Height - (fontsize + 5), width, fontsize);
+                            DrawImage(GetGpsStatusBadge(icon, _fix), hor_pos, this.Height - (fontsize + 5), width, fontsize);
                         }
                         else
                         {

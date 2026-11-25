@@ -1,4 +1,15 @@
+Flight Data Status groups fill top to bottom and continue to the right, with native horizontal scrolling as in upstream.
+
+Flight Data Status keeps neighboring columns close and steady for ordinary values while preserving full hover names and values.
+
+Flight Data Status packs groups using the widest rendered name/value pair, with a smaller gutter.
+
+Flight Data Status now fits adjacent name/value pairs into multiple groups when the viewport is wide enough.
+
+On Windows, the Actions tab uses its own scrollbar even when the compact Flight Data viewport is shorter than its content.
+
 ## Field selection layout
+Field picker group headings and numeric values now use readable text colors on both light and dark themes.
 
 The field-selection dialog keeps compact name/value columns fully inside the available width, scrolls extra fields vertically, and provides full-text tips for abbreviated labels. Selection callbacks retain the original field keys.
 
@@ -38,6 +49,8 @@ What this fork adds on top of upstream [ArduPilot/MissionPlanner](https://github
 # Simulation layout
 
 The simulation screen keeps location and heading controls reachable in smaller windows, wraps advanced options and vehicle choices, and scrolls when the available height is limited.
+
+The Copter x simulation preset uses its own catalog defaults. If a required defaults file is unavailable or empty, startup reports the file and stops.
 
 # Branding & Theming
 
@@ -152,6 +165,8 @@ Replaced the dated FlightData tab bar with a modern themed strip and refreshed i
 
 ## Splits, Sizing & Defaults
 Split percentages on every divider in the main GUI persist across launches, with faster swap and resize behavior. New installs default to maximized window and ~50% HUD width. HUD vertically centers when swapped with the map.
+
+On compact Windows flight-data windows, the attached left HUD scales down without changing its aspect ratio or the saved map-divider position, leaving space for the Actions, Messages and Status tabs.
 
 ---
 

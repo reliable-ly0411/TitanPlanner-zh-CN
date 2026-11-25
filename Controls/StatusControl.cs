@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
 using MissionPlanner.Utilities;
@@ -19,12 +19,14 @@ namespace MissionPlanner.Controls
         private Font _normalFont;
         private int _rowHeight = 18;
         private int _padding = 10;
-        private int _nameWidth = 130;
+        private int _nameValueGap = 8;
+        private int _steadyValueWidth;
         private int _columnGap = 20;
-        private List<int> _columnWidths = new List<int>();
-        private int _totalWidth = 0;
-        private bool _columnWidthsCalculated = false;
-        private bool _valuesPopulated = false;
+        private int _minimumValueWidth = 50;
+        private readonly List<StatusColumn> _columns = new List<StatusColumn>();
+        private readonly ToolTip _toolTip = new ToolTip { AutoPopDelay = 15000, ShowAlways = true };
+        private readonly bool _scrollbarsInsideClient = Type.GetType("Mono.Runtime") != null;
+        private bool _updatingLayout;
 
         public StatusControl()
         {
@@ -41,7 +43,6 @@ namespace MissionPlanner.Controls
         {
             this.SuspendLayout();
 
-            // Search box - same height as ConfigRawParams (26)
             _searchBox = new PlaceholderTextBox();
             _searchBox.Dock = DockStyle.Top;
             _searchBox.Font = new Font(this.Font.FontFamily, 10);
@@ -51,16 +52,17 @@ namespace MissionPlanner.Controls
             _searchBox.MinimumSize = new Size(0, 28);
             _searchBox.Height = 28;
 
-            // Content panel with horizontal scrolling only
             _contentPanel = new DoubleBufferedPanel();
             _contentPanel.Dock = DockStyle.Fill;
             _contentPanel.AutoScroll = true;
             _contentPanel.Paint += ContentPanel_Paint;
+            _contentPanel.ClientSizeChanged += (sender, e) => UpdateScrollSize();
+            _contentPanel.MouseMove += ContentPanel_MouseMove;
+            _contentPanel.MouseLeave += (sender, e) => ClearToolTip();
+            _contentPanel.Scroll += (sender, e) => ClearToolTip();
 
-            // Add controls - order matters for docking
             this.Controls.Add(_contentPanel);
             this.Controls.Add(_searchBox);
-
             this.ResumeLayout(false);
         }
 
@@ -83,166 +85,252 @@ namespace MissionPlanner.Controls
             {
                 _allItems.Add(new StatusItem { Name = field, DisplayName = TelemetryFieldPresentation.FieldLabel(field), Value = "" });
             }
-            _filteredItems = _allItems;
 
-            // Set up autocomplete
             _searchBox.SetAutoCompleteSource(_allItems.SelectMany(x => new[] { x.Name, x.DisplayName }).Distinct().ToList());
-            _columnWidthsCalculated = false;
+            // Reopening the tab or reconnecting must retain the visible search query.
+            SearchBox_TextChanged(this, EventArgs.Empty);
+        }
 
-            UpdateScrollSize();
-            _contentPanel.Invalidate();
+        private void EnsureFonts()
+        {
+            if (_boldFont == null)
+            {
+                _boldFont = new Font(this.Font, FontStyle.Bold);
+                _normalFont = new Font(this.Font, FontStyle.Regular);
+            }
         }
 
         private void UpdateScrollSize()
         {
-            if (_filteredItems == null || _contentPanel == null)
+            if (_filteredItems == null || _contentPanel == null || _updatingLayout)
                 return;
-            if (_filteredItems.Count == 0)
+            _updatingLayout = true;
+            try
             {
-                _contentPanel.AutoScrollMinSize = Size.Empty;
-                return;
-            }
-
-            // Measure the actual bilingual labels before reserving the value column.
-            using (var graphics = _contentPanel.CreateGraphics())
-            using (var nameFont = new Font(this.Font, FontStyle.Bold))
-            {
-                _nameWidth = 130;
-                foreach (var item in _allItems)
-                    _nameWidth = Math.Max(_nameWidth, (int)Math.Ceiling(graphics.MeasureString(item.DisplayName, nameFont).Width) + 8);
-                _rowHeight = Math.Max(18, (int)Math.Ceiling(nameFont.GetHeight(graphics)) + 4);
-            }
-
-            // Only calculate column widths once values have been populated
-            if (!_columnWidthsCalculated && _valuesPopulated)
-            {
-                CalculateColumnWidths();
-            }
-
-            // Use a default width if not yet calculated
-            if (!_columnWidthsCalculated)
-            {
-                int availableHeight = _contentPanel.ClientSize.Height;
-                int rowsPerColumn = Math.Max(1, (availableHeight - _padding * 2) / _rowHeight);
-                int numColumns = (int)Math.Ceiling((double)_filteredItems.Count / rowsPerColumn);
-                int defaultColumnWidth = _nameWidth + 100 + _columnGap;
-                _contentPanel.AutoScrollMinSize = new Size(_padding + (numColumns * defaultColumnWidth) + _padding, 0);
-                return;
-            }
-
-            // Only horizontal scrolling - set height to 0 to disable vertical scroll
-            _contentPanel.AutoScrollMinSize = new Size(_totalWidth, 0);
-        }
-
-        private void CalculateColumnWidths()
-        {
-            if (_filteredItems.Count == 0)
-                return;
-
-            int availableHeight = _contentPanel.ClientSize.Height;
-            if (availableHeight <= 0)
-                return;
-
-            int rowsPerColumn = Math.Max(1, (availableHeight - _padding * 2) / _rowHeight);
-
-            _columnWidths.Clear();
-            _totalWidth = _padding;
-
-            if (_normalFont == null)
-                _normalFont = new Font(this.Font.FontFamily, this.Font.Size, FontStyle.Regular);
-
-            using (var g = _contentPanel.CreateGraphics())
-            {
-                int columnStart = 0;
-
-                while (columnStart < _filteredItems.Count)
+                EnsureFonts();
+                using (var graphics = _contentPanel.CreateGraphics())
                 {
-                    int columnEnd = Math.Min(columnStart + rowsPerColumn, _filteredItems.Count);
-                    float maxValueWidth = 50; // minimum value width
+                    // Rendered font metrics include both DPI and user font changes.
+                    float scale = Math.Max(_boldFont.GetHeight(graphics), _normalFont.GetHeight(graphics)) / 13f;
+                    _padding = Math.Max(1, (int)Math.Ceiling(8 * scale));
+                    _nameValueGap = Math.Max(1, (int)Math.Ceiling(6 * scale));
+                    _columnGap = Math.Max(1, (int)Math.Ceiling(27 * scale));
+                    _rowHeight = Math.Max(1, (int)Math.Ceiling(17 * scale));
+                    _minimumValueWidth = (int)Math.Ceiling(50 * scale);
+                    _steadyValueWidth = (int)Math.Ceiling(28 * scale);
+                    var nameWidths = _filteredItems.Select(item =>
+                        (int)Math.Ceiling(graphics.MeasureString(item.DisplayName ?? item.Name ?? "", _boldFont).Width)).ToArray();
+                    var valueWidths = _filteredItems.Select(item =>
+                        (int)Math.Ceiling(graphics.MeasureString(item.Value ?? "", _normalFont).Width)).ToArray();
 
-                    for (int i = columnStart; i < columnEnd; i++)
+                    // Scrollbars change the client area and hence the rows per group.
+                    // Settle against that area so the last row stays above the bar.
+                    var viewport = _contentPanel.Size;
+                    for (int pass = 0; pass < 4; pass++)
                     {
-                        var valueSize = g.MeasureString(_filteredItems[i].Value ?? "", _normalFont);
-                        maxValueWidth = Math.Max(maxValueWidth, valueSize.Width);
+                        int rows = Math.Max(1, (viewport.Height - _padding * 2) / _rowHeight);
+                        int nameLimit = Math.Max(_rowHeight * 3,
+                            Math.Min((int)Math.Ceiling(240 * scale), (int)(viewport.Width * 0.55)));
+                        // Fill each group top to bottom, then continue right as in the upstream
+                        // Status tab. The native horizontal scrollbar reaches the remaining groups.
+                        int groupNameLimit = _filteredItems.Count > rows
+                            ? Math.Max(_rowHeight * 3, Math.Min(nameLimit, viewport.Width * 29 / 100))
+                            : nameLimit;
+                        int width = BuildColumns(rows, groupNameLimit, viewport.Width, nameWidths, valueWidths,
+                            graphics, nameLimit);
+                        int height = _padding * 2 + Math.Min(rows, _filteredItems.Count) * _rowHeight;
+                        int scrollPageHeight = _contentPanel.ClientSize.Height;
+                        if (_scrollbarsInsideClient && _contentPanel.HorizontalScroll.Visible)
+                            scrollPageHeight = Math.Max(0, scrollPageHeight - SystemInformation.HorizontalScrollBarHeight);
+                        _contentPanel.AutoScrollMinSize = _filteredItems.Count == 0 ? Size.Empty :
+                            new Size(width,
+                                MinimumScrollHeight(height, viewport.Height, scrollPageHeight));
+                        if (ViewportSize() == viewport)
+                            break;
+                        viewport = ViewportSize();
                     }
-
-                    int columnWidth = _nameWidth + (int)maxValueWidth + _columnGap;
-                    _columnWidths.Add(columnWidth);
-                    _totalWidth += columnWidth;
-
-                    columnStart = columnEnd;
                 }
+                _contentPanel.Invalidate();
             }
-
-            _totalWidth += _padding;
-            _columnWidthsCalculated = true;
+            finally { _updatingLayout = false; }
         }
+
+        private int BuildColumns(int rows, int nameLimit, int availableWidth, int[] nameWidths,
+            int[] valueWidths, Graphics graphics, int trailingNameLimit)
+        {
+            _columns.Clear();
+            int left = _padding;
+            int width = 0;
+            for (int start = 0; start < _filteredItems.Count; start += rows)
+            {
+                int count = Math.Min(rows, _filteredItems.Count - start);
+                // The last group has no following group to push away.
+                int labelLimit = start + count == _filteredItems.Count
+                    ? trailingNameLimit : nameLimit;
+                var column = new StatusColumn { Start = start, Count = count, Left = left,
+                    ValueWidth = _minimumValueWidth };
+                for (int i = start; i < start + count; i++)
+                {
+                    column.NameWidth = Math.Max(column.NameWidth, Math.Min(labelLimit, nameWidths[i]));
+                    column.ValueWidth = Math.Max(column.ValueWidth, valueWidths[i]);
+                }
+                if (start == 0 && count == _filteredItems.Count)
+                {
+                    int availableNameWidth = availableWidth - _padding * 2 - _nameValueGap - column.ValueWidth;
+                    int minimumLabelWidth = Math.Min(column.NameWidth,
+                        (int)Math.Ceiling(graphics.MeasureString("…", _boldFont).Width));
+                    if (availableNameWidth >= minimumLabelWidth)
+                        column.NameWidth = Math.Min(column.NameWidth, availableNameWidth);
+                }
+
+                column.Labels = new string[count];
+                column.LabelWidths = new int[count];
+                column.ValueWidths = new int[count];
+                for (int row = 0; row < count; row++)
+                {
+                    var item = _filteredItems[start + row];
+                    column.Labels[row] = FitName(item.DisplayName ?? item.Name ?? "", nameWidths[start + row],
+                        column.NameWidth, graphics);
+                    column.LabelWidths[row] = Math.Min(column.NameWidth, Math.Max(1,
+                        (int)Math.Ceiling(graphics.MeasureString(column.Labels[row], _boldFont).Width)));
+                    column.ValueWidths[row] = Math.Max(1, valueWidths[start + row]);
+                    column.Width = Math.Max(column.Width,
+                        column.LabelWidths[row] + _nameValueGap + Math.Max(_steadyValueWidth, column.ValueWidths[row]));
+                }
+                width = left + column.Width + _padding;
+                _columns.Add(column);
+                left += column.Width + _columnGap;
+            }
+            return width;
+        }
+
+        private static int MinimumScrollHeight(int contentHeight, int viewportHeight, int scrollPageHeight)
+        {
+            if (contentHeight <= viewportHeight)
+                return 0;
+            // The scroll range is compared with the runtime's physical page,
+            // whereas rows also reserve a footer. Include that difference so a
+            // mandatory single row can scroll fully above the reserved gutter.
+            return contentHeight + Math.Max(0, scrollPageHeight - viewportHeight);
+        }
+
+        private Size ViewportSize()
+        {
+            // Native scrollbars and borders can shrink the drawable client area
+            // without changing the panel's outer Size. Keep the row budget in
+            // client coordinates; only Mono draws its scrollbars inside the client.
+            var size = _contentPanel.ClientSize;
+            if (_scrollbarsInsideClient && _contentPanel.HorizontalScroll.Visible)
+                size.Height = Math.Max(0, size.Height - SystemInformation.HorizontalScrollBarHeight);
+            if (_scrollbarsInsideClient && _contentPanel.VerticalScroll.Visible)
+                size.Width = Math.Max(0, size.Width - SystemInformation.VerticalScrollBarWidth);
+            return size;
+        }
+
+        private static Color ChooseNameColor(Color accent, Color foreground, Color background)
+            => ThemeTextContrast.Choose(accent, foreground, background);
 
         private void ContentPanel_Paint(object sender, PaintEventArgs e)
         {
             if (_filteredItems.Count == 0)
                 return;
-
-            if (_boldFont == null || _boldFont.FontFamily != this.Font.FontFamily)
-            {
-                _boldFont = new Font(this.Font.FontFamily, this.Font.Size, FontStyle.Bold);
-                _normalFont = new Font(this.Font.FontFamily, this.Font.Size, FontStyle.Regular);
-            }
-
+            EnsureFonts();
             var g = e.Graphics;
-
-            // Apply scroll offset
+            int leftEdge = -_contentPanel.AutoScrollPosition.X;
+            int rightEdge = leftEdge + _contentPanel.ClientSize.Width;
             g.TranslateTransform(_contentPanel.AutoScrollPosition.X, _contentPanel.AutoScrollPosition.Y);
-
-            // Clear background
             g.Clear(_contentPanel.BackColor);
 
-            int availableHeight = _contentPanel.ClientSize.Height;
-            int rowsPerColumn = Math.Max(1, (availableHeight - _padding * 2) / _rowHeight);
-
-            int x = _padding;
-            int y = _padding;
-            int itemIndex = 0;
-            int columnIndex = 0;
-
-            using (var nameBrush = new SolidBrush(ThemeManager.BannerColor2))
+            using (var nameBrush = new SolidBrush(ChooseNameColor(
+                       ThemeManager.BannerColor2, _contentPanel.ForeColor, _contentPanel.BackColor)))
             using (var valueBrush = new SolidBrush(_contentPanel.ForeColor))
+            using (var format = new StringFormat { FormatFlags = StringFormatFlags.NoWrap,
+                Trimming = StringTrimming.EllipsisCharacter })
             {
-                foreach (var item in _filteredItems)
+                foreach (var column in _columns)
                 {
-                    // Draw property name in bold green
-                    g.DrawString(item.DisplayName, _boldFont, nameBrush, x, y);
-
-                    // Draw value in normal font
-                    g.DrawString(item.Value, _normalFont, valueBrush, x + _nameWidth, y);
-
-                    itemIndex++;
-                    y += _rowHeight;
-
-                    // Move to next column when we've filled this one
-                    if (itemIndex % rowsPerColumn == 0)
+                    if (column.Left >= rightEdge) break;
+                    if (column.Left + column.Width <= leftEdge) continue;
+                    for (int row = 0; row < column.Count; row++)
                     {
-                        if (columnIndex < _columnWidths.Count)
-                        {
-                            x += _columnWidths[columnIndex];
-                            columnIndex++;
-                        }
-                        y = _padding;
+                        var item = _filteredItems[column.Start + row];
+                        int y = _padding + row * _rowHeight;
+                        // Long names show an ellipsis and a full row tooltip; each
+                        // group measures only its own filtered labels and values.
+                        g.DrawString(column.Labels[row], _boldFont, nameBrush,
+                            new Rectangle(column.Left, y, column.LabelWidths[row], _rowHeight), format);
+                        g.DrawString(item.Value ?? "", _normalFont, valueBrush,
+                            new Rectangle(column.Left + column.LabelWidths[row] + _nameValueGap, y,
+                                column.ValueWidths[row], _rowHeight), format);
                     }
                 }
             }
+        }
+
+        private string FitName(string name, int measuredWidth, int width, Graphics graphics)
+        {
+            int lineEnd = name.IndexOfAny(new[] { '\r', '\n' });
+            if (lineEnd < 0 && measuredWidth <= width)
+                return name;
+            if (lineEnd >= 0)
+                name = name.Substring(0, lineEnd);
+            // Some GDI+ implementations clip without rendering StringTrimming's
+            // ellipsis. Fit an explicit marker, preserving Unicode text elements.
+            var elements = StringInfo.ParseCombiningCharacters(name);
+            int low = 0, high = elements.Length;
+            while (low < high)
+            {
+                int mid = (low + high + 1) / 2;
+                int end = mid == elements.Length ? name.Length : elements[mid];
+                if (graphics.MeasureString(name.Substring(0, end) + "…", _boldFont).Width <= width)
+                    low = mid;
+                else
+                    high = mid - 1;
+            }
+            return name.Substring(0, low == elements.Length ? name.Length : elements[low]) + "…";
+        }
+
+        private void UpdateValueWidths()
+        {
+            if (_columns.Count == 0)
+                return;
+            var viewport = ViewportSize();
+            using (var graphics = _contentPanel.CreateGraphics())
+            {
+                int left = _padding;
+                foreach (var column in _columns)
+                {
+                    column.ValueWidth = _minimumValueWidth;
+                    column.Width = 0;
+                    for (int row = 0; row < column.Count; row++)
+                    {
+                        int valueWidth = Math.Max(1, (int)Math.Ceiling(graphics.MeasureString(
+                            _filteredItems[column.Start + row].Value ?? "", _normalFont).Width));
+                        column.ValueWidth = Math.Max(column.ValueWidth, valueWidth);
+                        column.ValueWidths[row] = valueWidth;
+                        column.Width = Math.Max(column.Width, column.LabelWidths[row] + _nameValueGap + Math.Max(_steadyValueWidth, valueWidth));
+                    }
+                    column.Left = left;
+                    left += column.Width + _columnGap;
+                }
+                _contentPanel.AutoScrollMinSize = new Size(left - _columnGap + _padding,
+                    _contentPanel.AutoScrollMinSize.Height);
+            }
+            // Mono can change bar visibility without raising ClientSizeChanged.
+            // Ordinary samples only need new value widths, not name measurements.
+            if (ViewportSize() != viewport)
+                UpdateScrollSize();
+            _contentPanel.Invalidate();
         }
 
         private void UpdateTimer_Tick(object sender, EventArgs e)
         {
             if (!this.Visible)
                 return;
-
             try
             {
                 var cs = MainV2.comPort.MAV.cs;
                 bool changed = false;
-
                 foreach (var item in _allItems)
                 {
                     var prop = typeof(CurrentState).GetProperty(item.Name);
@@ -256,17 +344,10 @@ namespace MissionPlanner.Controls
                         }
                     }
                 }
-
+                // Later values can be longer than the first sample. Recalculate
+                // without changing the query, item order or current scroll position.
                 if (changed)
-                {
-                    // Mark values as populated after first update and recalculate widths
-                    if (!_valuesPopulated)
-                    {
-                        _valuesPopulated = true;
-                        UpdateScrollSize();
-                    }
-                    _contentPanel.Invalidate();
-                }
+                    UpdateValueWidths();
             }
             catch
             {
@@ -277,36 +358,66 @@ namespace MissionPlanner.Controls
         private void SearchBox_TextChanged(object sender, EventArgs e)
         {
             var searchText = _searchBox.Text.Trim();
-
             if (string.IsNullOrEmpty(searchText))
-            {
                 _filteredItems = _allItems;
-            }
             else
-            {
                 _filteredItems = _allItems.Where(x => TelemetryFieldPresentation.Matches(searchText, x.Name, x.DisplayName)).ToList();
-            }
 
-            // Recalculate column widths for filtered results
-            _columnWidthsCalculated = false;
+            ClearToolTip();
             UpdateScrollSize();
+            // Apply after reflow: WinForms can clamp the old offset as the scroll
+            // extent changes. Every new search starts with the field name visible.
+            _contentPanel.AutoScrollPosition = Point.Empty;
             _contentPanel.Invalidate();
         }
 
-        protected override void OnResize(EventArgs e)
+        protected override void OnFontChanged(EventArgs e)
         {
-            base.OnResize(e);
-            // Recalculate column widths since rows per column changes
-            _columnWidthsCalculated = false;
+            base.OnFontChanged(e);
+            _boldFont?.Dispose();
+            _normalFont?.Dispose();
+            _boldFont = null;
+            _normalFont = null;
             UpdateScrollSize();
-            _contentPanel?.Invalidate();
+        }
+
+#if !LIB
+        protected override void OnDpiChangedAfterParent(EventArgs e)
+        {
+            base.OnDpiChangedAfterParent(e);
+            UpdateScrollSize();
+        }
+#endif
+
+        private StatusItem ItemAt(Point location)
+        {
+            location.Offset(-_contentPanel.AutoScrollPosition.X, -_contentPanel.AutoScrollPosition.Y);
+            if (location.Y < _padding)
+                return null;
+            int row = (location.Y - _padding) / _rowHeight;
+            foreach (var column in _columns)
+                if (row < column.Count && location.X >= column.Left && location.X < column.Left + column.Width)
+                    return _filteredItems[column.Start + row];
+            return null;
+        }
+
+        private void ContentPanel_MouseMove(object sender, MouseEventArgs e)
+        {
+            var item = ItemAt(e.Location);
+            var text = item == null ? null : item.DisplayName + Environment.NewLine + item.Value;
+            if (_toolTip.GetToolTip(_contentPanel) != text)
+                _toolTip.SetToolTip(_contentPanel, text);
+        }
+
+        private void ClearToolTip()
+        {
+            _toolTip.SetToolTip(_contentPanel, null);
         }
 
         public void ApplyTheme()
         {
             this.BackColor = ThemeManager.BGColor;
             _searchBox.ApplyTheme();
-
             _contentPanel.BackColor = ThemeManager.BGColor;
             _contentPanel.ForeColor = ThemeManager.TextColor;
             _contentPanel.Invalidate();
@@ -320,6 +431,7 @@ namespace MissionPlanner.Controls
                 _updateTimer?.Dispose();
                 _boldFont?.Dispose();
                 _normalFont?.Dispose();
+                _toolTip.Dispose();
             }
             base.Dispose(disposing);
         }
@@ -331,9 +443,13 @@ namespace MissionPlanner.Controls
             public string Value { get; set; }
         }
 
-        /// <summary>
-        /// A Panel with double buffering enabled to prevent flickering
-        /// </summary>
+        private class StatusColumn
+        {
+            public int Start, Count, Left, Width, NameWidth, ValueWidth;
+            public string[] Labels;
+            public int[] LabelWidths, ValueWidths;
+        }
+
         private class DoubleBufferedPanel : Panel
         {
             public DoubleBufferedPanel()

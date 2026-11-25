@@ -58,8 +58,15 @@ namespace MissionPlanner.Controls
                 }
                 else
                 {
-                    var description = UiText.Translate(MainV2.comPort.MAV.cs.GetNameandUnit(field.Name));
-                    var display = description == field.Name ? field.Name : field.Name + " (" + description + ")";
+                    // Enhanced Chinese shares the HUD and Status catalog. Keep the established fallback.
+                    var display = field.Name;
+                    if (string.Equals(System.Globalization.CultureInfo.CurrentUICulture.Name, "zh-CN", StringComparison.OrdinalIgnoreCase))
+                        display = TelemetryFieldPresentation.FieldLabel(field.Name);
+                    if (display == field.Name)
+                    {
+                        var description = UiText.Translate(MainV2.comPort.MAV.cs.GetNameandUnit(field.Name));
+                        display = description == field.Name ? field.Name : field.Name + " (" + description + ")";
+                    }
                     all_fields.Add(new Tuple<string, string>(field.Name, display));
                 }
             }
@@ -78,11 +85,22 @@ namespace MissionPlanner.Controls
                 ; // silently fail
             }
 
+
+            if (string.Equals(System.Globalization.CultureInfo.CurrentUICulture.Name, "zh-CN", StringComparison.OrdinalIgnoreCase))
+            {
+                CMB_Source.DrawMode = DrawMode.OwnerDrawFixed;
+                CMB_Source.ItemHeight = Math.Max(CMB_Source.ItemHeight, CMB_Source.Font.Height + 2);
+                CMB_Source.DrawItem += DrawSourceItem;
+                CMB_Source.DropDown += SizeSourceDropDown;
+            }
+
             // Initialize combobox
             CMB_Source.ValueMember = "Item1";
             CMB_Source.DisplayMember = "Item2";
             CMB_Source.DataSource = all_fields;
             CMB_Source.SelectedValue = variable_name;
+            if (CMB_Source.DrawMode == DrawMode.OwnerDrawFixed)
+                SizeSourceDropDown(CMB_Source, EventArgs.Empty);
 
             // Initialize precision field, check if _qv.numberformat is in the form "0" or "0.00" etc.
             // and count the zeros after the decimal if it is
@@ -149,6 +167,83 @@ namespace MissionPlanner.Controls
 
             // Done initializing - now event handlers can save settings
             _initializing = false;
+        }
+
+
+        private int _sourceKeyWidth;
+
+        private const TextFormatFlags SourceTextFlags = TextFormatFlags.NoPrefix | TextFormatFlags.NoPadding |
+            TextFormatFlags.SingleLine | TextFormatFlags.VerticalCenter | TextFormatFlags.EndEllipsis;
+
+        private static string SourceDescription(Tuple<string, string> item)
+        {
+            string prefix = item.Item1 + " (";
+            return !item.Item1.Contains("customfield") && item.Item2.StartsWith(prefix, StringComparison.Ordinal) &&
+                item.Item2.EndsWith(")", StringComparison.Ordinal)
+                ? item.Item2.Substring(prefix.Length, item.Item2.Length - prefix.Length - 1) : null;
+        }
+
+        private void SizeSourceDropDown(object sender, EventArgs e)
+        {
+            // Always use the full catalog so search results do not shift the description column.
+            int descriptionWidth = 0;
+            int singleWidth = 0;
+            using (var graphics = CMB_Source.CreateGraphics())
+            {
+                int Measure(string value) => TextRenderer.MeasureText(graphics, value, CMB_Source.Font,
+                    new Size(32767, 32767), TextFormatFlags.NoPrefix | TextFormatFlags.NoPadding | TextFormatFlags.SingleLine).Width;
+                _sourceKeyWidth = 0;
+                foreach (var item in all_fields)
+                {
+                    var description = SourceDescription(item);
+                    if (description == null)
+                        singleWidth = Math.Max(singleWidth, Measure(item.Item2));
+                    else
+                    {
+                        _sourceKeyWidth = Math.Max(_sourceKeyWidth, Measure(item.Item1));
+                        descriptionWidth = Math.Max(descriptionWidth, Measure(description));
+                    }
+                }
+            }
+
+            int padding = CMB_Source.Font.Height;
+            var workArea = Screen.FromControl(CMB_Source).WorkingArea;
+            var comboBounds = CMB_Source.RectangleToScreen(CMB_Source.ClientRectangle);
+            int available = Math.Max(workArea.Right - comboBounds.Left, comboBounds.Right - workArea.Left);
+            int wanted = Math.Max(singleWidth, _sourceKeyWidth + padding / 2 + descriptionWidth) +
+                padding + SystemInformation.VerticalScrollBarWidth;
+            CMB_Source.DropDownWidth = Math.Max(CMB_Source.Width, Math.Min(available, wanted));
+        }
+
+        private int SourceDescriptionOffset(int availableWidth)
+        {
+            int start = _sourceKeyWidth + Math.Max(4, CMB_Source.Font.Height / 2);
+            return _sourceKeyWidth > 0 && availableWidth - start >= CMB_Source.Font.Height * 4 ? start : 0;
+        }
+
+        private void DrawSourceItem(object sender, DrawItemEventArgs e)
+        {
+            e.DrawBackground();
+            if (e.Index < 0 || e.Index >= CMB_Source.Items.Count)
+                return;
+            var item = (Tuple<string, string>)CMB_Source.Items[e.Index];
+            Rectangle bounds = Rectangle.Inflate(e.Bounds, -3, 0);
+            if (bounds.Width <= 0)
+                return;
+
+            // The editable box and constrained dropdown keep the complete textual label.
+            var description = (e.State & DrawItemState.ComboBoxEdit) == 0 ? SourceDescription(item) : null;
+            int offset = description == null ? 0 : SourceDescriptionOffset(bounds.Width);
+            if (offset > 0)
+            {
+                var keyBounds = new Rectangle(bounds.X, bounds.Y, _sourceKeyWidth, bounds.Height);
+                var descriptionBounds = new Rectangle(bounds.X + offset, bounds.Y, bounds.Width - offset, bounds.Height);
+                TextRenderer.DrawText(e.Graphics, item.Item1, e.Font, keyBounds, e.ForeColor, SourceTextFlags);
+                TextRenderer.DrawText(e.Graphics, description, e.Font, descriptionBounds, e.ForeColor, SourceTextFlags);
+            }
+            else
+                TextRenderer.DrawText(e.Graphics, item.Item2, e.Font, bounds, e.ForeColor, SourceTextFlags);
+            e.DrawFocusRectangle();
         }
 
         private void SetColorCodeFieldsEnabled(bool enabled)

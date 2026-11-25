@@ -684,6 +684,18 @@
     <value>加速度</value>
     <comment>"Acceleration"</comment>
   </data>
+  <data name="0398be8c88a739f410cb91a37f877cd36b3f598fb59880227acb4147c181acf8" xml:space="preserve">
+    <value>第 1 个加速度计削波次数</value>
+    <comment>"Accelerometer 1 clipping count"</comment>
+  </data>
+  <data name="b4639a7d89bba8689f82e1067e4662b3fded2fcf795b3b001a732f61c9b0714f" xml:space="preserve">
+    <value>第 2 个加速度计削波次数</value>
+    <comment>"Accelerometer 2 clipping count"</comment>
+  </data>
+  <data name="2c1d33fa6f7cc587d52c19cfa1eb01f0abb9b167bd61efc443e9b2f40c597657" xml:space="preserve">
+    <value>第 3 个加速度计削波次数</value>
+    <comment>"Accelerometer 3 clipping count"</comment>
+  </data>
   <data name="89713b9c9c1b8f659c9f49db25e4a47886dd673fee248c3f650391f09a759cef" xml:space="preserve">
     <value>接受</value>
     <comment>"Accept"</comment>
@@ -1189,6 +1201,10 @@
     <value>自动学习偏移</value>
     <comment>"Automatically learn offsets"</comment>
   </data>
+  <data name="24d28e7970b22dc18ebf985b03dde950304551e3f4768fcaa7c9ba129320190b" xml:space="preserve">
+    <value>飞控硬件唯一标识</value>
+    <comment>"Autopilot hardware UID"</comment>
+  </data>
   <data name="720d7d63c5dfa12702e8ca26dc6c2491d6616b987d911c03d1270350a29bbb84" xml:space="preserve">
     <value>直升机自转降落</value>
     <comment>"Autorotate"</comment>
@@ -1497,6 +1513,14 @@
   <data name="d96b9d64478c676b26024e7558936063bdcc22f78cf235630749b5f7ea1f25ee" xml:space="preserve">
     <value>电池化学类型</value>
     <comment>"Battery Chemistry"</comment>
+  </data>
+  <data name="9447d6347746d2cccf6d9271f28937ec36ee8f099bc3f046b73d5db05f05edcd" xml:space="preserve">
+    <value>电池 ID {0} 预计剩余时间 (分钟)</value>
+    <comment>"Battery ID {0} estimated time remaining (min)"</comment>
+  </data>
+  <data name="7cfe4419644db4f89da0c11953f0ad4e7f2e4990df4e00e48315a1d22406d7a2" xml:space="preserve">
+    <value>电池 ID {0} 温度 (°C)</value>
+    <comment>"Battery ID {0} temperature (°C)"</comment>
   </data>
   <data name="bece9110544eeff812bb521bfdafd09fdc9bced92a5bef6cfaa829829ab306ba" xml:space="preserve">
     <value>电量</value>
@@ -2396,6 +2420,10 @@ Ctrl+O 从文件加载</value>
     <value>更新 CubeID</value>
     <comment>"CubeID Update"</comment>
   </data>
+  <data name="a3946cb668cae44f1ecbf7faa5aa438a8ff40135af9fad0739286cd3ec002498" xml:space="preserve">
+    <value>CubeLan 八口交换机</value>
+    <comment>"CubeLan 8 port Switch"</comment>
+  </data>
   <data name="20994240e7b674a590c2e40afb6dc95236b6a21cd40e77241299ef0df6e4030f" xml:space="preserve">
     <value>仅限 CubeOrange：不了解后果时请勿使用</value>
     <comment>"CubeOrange Only - DO NOT USE  UNLESS YOU UNDERSTAND THE CONSEQUENCE"</comment>
@@ -2997,6 +3025,30 @@ Ctrl+O 从文件加载</value>
     <value>EKF 状态</value>
     <comment>"EKF Status"</comment>
   </data>
+  <data name="af73615b563a7b608da3ca0abf671c2c857a4483accf5669a4c2e4281fb6ba12" xml:space="preserve">
+    <value>EKF 罗盘方差指标</value>
+    <comment>"EKF compass variance indicator"</comment>
+  </data>
+  <data name="ae21178b07d8305da1aba36b00e13e0456cd266009e42456e85f1ef2881b53f0" xml:space="preserve">
+    <value>EKF 水平位置方差指标</value>
+    <comment>"EKF horizontal position variance indicator"</comment>
+  </data>
+  <data name="76ae9f88f32e9b08c389fab50f59d661a21acdca3b2a9602eb237c632d4758b4" xml:space="preserve">
+    <value>EKF 状态标志位</value>
+    <comment>"EKF status flags"</comment>
+  </data>
+  <data name="6125e7fb8d01b5b88002e8d40ffb24662520dd03d06a8bf771974cbd5fcebb37" xml:space="preserve">
+    <value>EKF 地形高度方差指标</value>
+    <comment>"EKF terrain altitude variance indicator"</comment>
+  </data>
+  <data name="c48929a79a2a60fc45492ec6bb9fd8694a034b1a5afb9a4dd227b93bf676b7b6" xml:space="preserve">
+    <value>EKF 速度方差指标</value>
+    <comment>"EKF velocity variance indicator"</comment>
+  </data>
+  <data name="ecf07f46589a850f520f9e98f1bbfdbec5c61fe4ac3d970543916883998b056e" xml:space="preserve">
+    <value>EKF 垂直位置方差指标</value>
+    <comment>"EKF vertical position variance indicator"</comment>
+  </data>
   <data name="d98ee0e5f9399db9381014c9f890f896d3fcb272c2a7a521d0a13aa23085a284" xml:space="preserve">
     <value>错误</value>
     <comment>"ERROR"</comment>
@@ -3012,6 +3064,22 @@ Ctrl+O 从文件加载</value>
   <data name="69dd129ca5f32c87eacb205528e9aeaa7f00e9100e22539b5cb1a7fae89e5b78" xml:space="preserve">
     <value>电调类型：</value>
     <comment>"ESC Type:"</comment>
+  </data>
+  <data name="c6e846081c2b2532f02ae96175fcd7c707ec727c505aa670bb3b22f83e729afa" xml:space="preserve">
+    <value>电调 {0} 电流 (A)</value>
+    <comment>"ESC {0} current (A)"</comment>
+  </data>
+  <data name="e5430c5218877fea7985473c09e659b4fa8d1128d40391fc79a2c44983f32ac9" xml:space="preserve">
+    <value>电调 {0} 电气转速 (eRPM)</value>
+    <comment>"ESC {0} electrical RPM"</comment>
+  </data>
+  <data name="47f049b430607a7443603c30a55c03e7691e965d942e6ab063ecf3ab1d411e45" xml:space="preserve">
+    <value>电调 {0} 温度 (°C)</value>
+    <comment>"ESC {0} temperature (°C)"</comment>
+  </data>
+  <data name="ffb847f7715c8d49ccad7d3d0abf3263b37a7995f252bab23c4dd0036a058ad7" xml:space="preserve">
+    <value>电调 {0} 电压 (V)</value>
+    <comment>"ESC {0} voltage (V)"</comment>
   </data>
   <data name="821ad6c2da96e0e86d1413a28fb3473c27cf5ab9c746d1760b78030fcce9239a" xml:space="preserve">
     <value>EXE、安装器与资源管理器图标需重新构建。已有或固定的快捷方式保留自身图标，需另行更换或重建；Windows 任务栏可能保留图标缓存。</value>
@@ -3473,6 +3541,10 @@ Ctrl+O 从文件加载</value>
   <data name="131323ee6f83a25d831865821d05c308dd7f6935dcde73a8ee1932f4aa149104" xml:space="preserve">
     <value>运行脚本失败： </value>
     <comment>"Error running script "</comment>
+  </data>
+  <data name="c56ce635a0c84fd0a7554fcc2510a43501cf603c52a803ca149154bf75bd026e" xml:space="preserve">
+    <value>数传已纠错的数据包数</value>
+    <comment>"Error-corrected radio packet count"</comment>
   </data>
   <data name="0aeab48dfe7857b91558d23ea653fa7f85ad759658b94e306574041938c0c204" xml:space="preserve">
     <value>获取参数列表失败</value>
@@ -4247,6 +4319,10 @@ Ctrl+O 从文件加载</value>
     <value>机架类别</value>
     <comment>"Frame Class"</comment>
   </data>
+  <data name="51b2132bbc6b1e95587e4f64372e491ec4135d88ba228638e6f8482f6c64e041" xml:space="preserve">
+    <value>数传发送缓冲区剩余（%）</value>
+    <comment>"Free radio transmit buffer (%)"</comment>
+  </data>
   <data name="ee6d63ad5e8e5b6cdcbefb40b1abcdcd6da95ef943363ca6177e67690db3ea1e" xml:space="preserve">
     <value>频率 Hz</value>
     <comment>"Freq Hz"</comment>
@@ -4459,6 +4535,26 @@ Ctrl+O 从文件加载</value>
     <value>生成密钥</value>
     <comment>"Generate Key"</comment>
   </data>
+  <data name="a9d162ebccd19a70f781ddf7a8f7d473c1fc6e67c79158433c40e60a87b2d20f" xml:space="preserve">
+    <value>发电机侧母线电压 (V)</value>
+    <comment>"Generator bus voltage (V)"</comment>
+  </data>
+  <data name="0dd651c9fe15c754d6aaa3a0451da096d976b65650c5307532e9b441ab9e41f8" xml:space="preserve">
+    <value>发电机负载电流 (A)</value>
+    <comment>"Generator load current (A)"</comment>
+  </data>
+  <data name="4ae8a37c2ffb2c3e08e51a2bf3490aca73a567e57cc8a473045089cc68171f1c" xml:space="preserve">
+    <value>发电机本次运行时间 (s)</value>
+    <comment>"Generator run time since restart (s)"</comment>
+  </data>
+  <data name="95ec084da5db7975bcebd1b9512b681a34456db7e9f040a73e2b957bea92671d" xml:space="preserve">
+    <value>发电机转速 (rpm)</value>
+    <comment>"Generator speed (rpm)"</comment>
+  </data>
+  <data name="da706797faa6738813863c6844142c5b47bef3b7f9685dc8a2214bae2d6e0604" xml:space="preserve">
+    <value>发电机状态标志</value>
+    <comment>"Generator status flags"</comment>
+  </data>
   <data name="c748ff517cf3ffa6128fb000e2468c38248a43c51369ed29a192813b2457febe" xml:space="preserve">
     <value>影像地理配准</value>
     <comment>"Geo Ref Images"</comment>
@@ -4510,6 +4606,14 @@ Ctrl+O 从文件加载</value>
   <data name="e695db55532ec14f38b4f9184facd5f592b1e4fed66af6366011fe476cc45096" xml:space="preserve">
     <value>云台视频</value>
     <comment>"Gimbal Video"</comment>
+  </data>
+  <data name="84a2458903a1f9140b37cf3b51ed87d7b4bf35555c3c15a8d18b0f82806930d6" xml:space="preserve">
+    <value>云台指向点纬度（°）</value>
+    <comment>"Gimbal point latitude (°)"</comment>
+  </data>
+  <data name="7e2fe17c5631d720d2435d42939916ef8365f33b93d67a37a6616fe20c6c5eaa" xml:space="preserve">
+    <value>云台指向点经度（°）</value>
+    <comment>"Gimbal point longitude (°)"</comment>
   </data>
   <data name="5da97b5d47088bd556ebad83010a125a53568c38327aa7efcb8c600b6ffa127d" xml:space="preserve">
     <value>云台视频控制设置</value>
@@ -4587,9 +4691,21 @@ Ctrl+O 从文件加载</value>
     <value>地速</value>
     <comment>"Ground Speed"</comment>
   </data>
+  <data name="36c3b29a97128b8a4134e2478f4c246d5263d2bc3ec0c083a61ad198f1037a2c" xml:space="preserve">
+    <value>地面站计算的 EKF 健康指标</value>
+    <comment>"Ground station EKF health indicator"</comment>
+  </data>
+  <data name="9e76bc41832d5746361468f6457d99c8c6e520f891918f00c40fc8f5d4037a90" xml:space="preserve">
+    <value>地面站数据包接收质量（%）</value>
+    <comment>"Ground station packet reception quality (%)"</comment>
+  </data>
   <data name="ff27501553212286828f38d5d405f04c4c6462529530ddf126439bb2aba52206" xml:space="preserve">
     <value>地面站设置</value>
     <comment>"Ground station settings"</comment>
+  </data>
+  <data name="6a9ea7b2abbde11a60d434a8e97b180e5e10559f846128c895c0d8b898b6019c" xml:space="preserve">
+    <value>地面站识别的机型类别</value>
+    <comment>"Ground station vehicle class"</comment>
   </data>
   <data name="b054d2e48d3fcdb6b5d1f35d49419572c0404f2157d5b9b54980e9bc94764195" xml:space="preserve">
     <value>地面航迹角 (°)</value>
@@ -5127,6 +5243,10 @@ Ctrl+O 从文件加载</value>
     <value>间隔（秒）</value>
     <comment>"Interval (sec)"</comment>
   </data>
+  <data name="8b68d822157e783620ae4771ad22b22d0725d5ed071dc48259ad371be51c28e4" xml:space="preserve">
+    <value>相邻两次相机触发记录的时间间隔（秒）</value>
+    <comment>"Interval between camera trigger records (s)"</comment>
+  </data>
   <data name="e37bf2194d5fd7ea066b9ec0089d1bf9dacb9d135ba02cd7a635304a5931e99b" xml:space="preserve">
     <value>串口无效或已被占用</value>
     <comment>"Invalid ComPort or in use"</comment>
@@ -5447,6 +5567,10 @@ Ctrl+O 从文件加载</value>
   <data name="fae7fc579197dcc374dd2177a5d1480255df995e8f80c0b7e2a8805c2b6d7471" xml:space="preserve">
     <value>打开链接失败，请检查默认浏览器关联</value>
     <comment>"Link open failed. check your default webpage association"</comment>
+  </data>
+  <data name="7944fa9352603be9c8c1529f81174ce0fb435d03f4326a3900bf7550aae31651" xml:space="preserve">
+    <value>链路已打开或正在回放日志</value>
+    <comment>"Link open or log playback active"</comment>
   </data>
   <data name="3ba0bf7f68380fa4a7e2396156a3edd5409d5c7d63ba9491be658af4bbb84542" xml:space="preserve">
     <value>先听后发阈值</value>
@@ -7885,6 +8009,66 @@ Mission Planner 需要收到 2 个有效心跳包后才会连接。</value>
     <value>覆盖顶部说明</value>
     <comment>"Override the description at the top"</comment>
   </data>
+  <data name="a2045a9ab2bcb6f6b06a502f985661199bac8256e4dabb0fd0f8ff04fb1eef37" xml:space="preserve">
+    <value>PID 比例和微分分量的振荡修正系数</value>
+    <comment>"PID P/D oscillation modifier"</comment>
+  </data>
+  <data name="36b20b5047709493acc4b7c527658de84d0561942c2964547259cd0c64d52448" xml:space="preserve">
+    <value>PID 实际速率</value>
+    <comment>"PID actual rate"</comment>
+  </data>
+  <data name="62ca323b62e105c3d1609d6fca929acc14d169ac8c82f0b0a42187f02120a350" xml:space="preserve">
+    <value>PID 微分分量</value>
+    <comment>"PID derivative contribution"</comment>
+  </data>
+  <data name="3557e9b84d50c80bad0614f184f287741ecd6aca39311808cc740f2963da3bb6" xml:space="preserve">
+    <value>PID 前馈分量</value>
+    <comment>"PID feedforward contribution"</comment>
+  </data>
+  <data name="00e7e1d3308adf66b3ffb3377ce9f842f826fe12929b8e4e0b995df1c8c5d489" xml:space="preserve">
+    <value>PID 积分分量</value>
+    <comment>"PID integral contribution"</comment>
+  </data>
+  <data name="7823eb5c5e7c67f2ac1d6b69e1e8f62bd1f3937c1c94efdd4f860740092804a4" xml:space="preserve">
+    <value>PID 着陆控制环变化率</value>
+    <comment>"PID landing slew rate"</comment>
+  </data>
+  <data name="c371e2589c443bb1eb96a01bb9fab6e1ec1446bd5bf9e069e0e6a3522d2bed37" xml:space="preserve">
+    <value>PID 俯仰控制环变化率</value>
+    <comment>"PID pitch slew rate"</comment>
+  </data>
+  <data name="8a6a0e6e3ebd0f8447d6306082c29b4f1e58b74a13de6a388a08dea926de8dd1" xml:space="preserve">
+    <value>PID 比例分量</value>
+    <comment>"PID proportional contribution"</comment>
+  </data>
+  <data name="f21f068f52d613e8b1365b894a7861914525e9bf6e50df6d85e8a62a417ded27" xml:space="preserve">
+    <value>PID 上报的变化率</value>
+    <comment>"PID reported slew rate"</comment>
+  </data>
+  <data name="fb114b14170af8359481d62803a78946e03202b006e1174f7df709723f8f69be" xml:space="preserve">
+    <value>PID 横滚控制环变化率</value>
+    <comment>"PID roll slew rate"</comment>
+  </data>
+  <data name="40b5b2599135277baf3f04ef62c00371f95d9e566cdb2be14ee4d8aa7615fac7" xml:space="preserve">
+    <value>PID 转向控制环变化率</value>
+    <comment>"PID steering slew rate"</comment>
+  </data>
+  <data name="dc2a12d73786f121696dc596bb38b4cae79cea30311eae18755da8745d1d8368" xml:space="preserve">
+    <value>PID 目标速率</value>
+    <comment>"PID target rate"</comment>
+  </data>
+  <data name="7d7a5b899dbabae069cede307f82aa3ece9c4e6e711ff04a8b3e8cb45c8bc8cd" xml:space="preserve">
+    <value>PID 调试轴编号</value>
+    <comment>"PID tuning axis code"</comment>
+  </data>
+  <data name="ba22975f5e6a0f85a7b35284f21c6d0c2f1122e81ed0f96474a33ffacd97f3b0" xml:space="preserve">
+    <value>PID 垂直加速度环变化率</value>
+    <comment>"PID vertical acceleration slew rate"</comment>
+  </data>
+  <data name="b9cab791fcd75a49308cfda4e989854f2c4b24f79fb13bbe79ca6d77fa66e5ae" xml:space="preserve">
+    <value>PID 偏航控制环变化率</value>
+    <comment>"PID yaw slew rate"</comment>
+  </data>
   <data name="293667cb5cf1fb0be1917b489d16aee82904ab1bbaf027500d4833634f9fdc47" xml:space="preserve">
     <value>请务必阅读！</value>
     <comment>"PLEASE READ IT !"</comment>
@@ -8427,6 +8611,30 @@ ffdshow
     <value>端口名称</value>
     <comment>"Port Name"</comment>
   </data>
+  <data name="f7708433d89b48894ca4fff6dce0337951bc68d854e1be15f93fb997e2989e49" xml:space="preserve">
+    <value>端口 {0}
+启用 COS</value>
+    <comment>"Port {0}\nCOS Enable"</comment>
+  </data>
+  <data name="6aa3ff2af96df123b46eeaccaa0f465c6eea417fb00d2591c8f3fdacda87dfbc" xml:space="preserve">
+    <value>COS {0}口
+高优先级</value>
+    <comment>"Port {0}\nCOS High Priority"</comment>
+  </data>
+  <data name="70f4f801c9a4957c87e51bab5c6dbe6ff290025a32e1f840fb70d3f5f94f19f8" xml:space="preserve">
+    <value>端口 {0}
+启用 EEE</value>
+    <comment>"Port {0}\nEEE Enable"</comment>
+  </data>
+  <data name="09160df1d38e7ab5ac42fa7e490c9cec68da0281b074f4034de102d9f0171f6c" xml:space="preserve">
+    <value>端口 {0}
+VLAN 标记</value>
+    <comment>"Port {0}\nVLAN Tagged"</comment>
+  </data>
+  <data name="6d1a19ca28b20b332756e53b5fdb734c7e966c1b89ed5be61422d1c0fb337513" xml:space="preserve">
+    <value>{0} → {1}</value>
+    <comment>"Port {0} to Port {1}"</comment>
+  </data>
   <data name="1269dd55bea3bb786b69cd74e063d1c86167c4aef10bd3b9005d9577378b08e7" xml:space="preserve">
     <value>端口：</value>
     <comment>"Port:"</comment>
@@ -8526,6 +8734,10 @@ ffdshow
   <data name="efe10c80ec8a9f38624cbb47103010a8cf32488a503e4b4bfe4f92307a9cefa7" xml:space="preserve">
     <value>主用</value>
     <comment>"Primary"</comment>
+  </data>
+  <data name="352e2b4d7ce6985a8f0b61b5107f9e9449e31cd22f6dfc828db719b41be76da8" xml:space="preserve">
+    <value>主电池第 {0} 节电压 (V)</value>
+    <comment>"Primary battery cell {0} voltage (V)"</comment>
   </data>
   <data name="d60dbba079223254d4c49c230a515bc107a997e69f811365da2387f8557b9cec" xml:space="preserve">
     <value>优先级</value>
@@ -8627,6 +8839,10 @@ ffdshow
     <value>遥控选项</value>
     <comment>"RC Options"</comment>
   </data>
+  <data name="5ab611100467507a950e27b0fc00c7d783020b492c2e28a644ba4b3b0e1d87c0" xml:space="preserve">
+    <value>遥控输入第 {0} 通道脉宽 (µs)</value>
+    <comment>"RC input channel {0} pulse width (µs)"</comment>
+  </data>
   <data name="ee723d4466379c8cf4ebe0ee1bf47efcb8340306d0cb5c36f838bdb8d9c60acb" xml:space="preserve">
     <value>RC10 选项</value>
     <comment>"RC10 Opt"</comment>
@@ -8650,6 +8866,14 @@ ffdshow
   <data name="b1d3bf37151a9721e971148ef6b9c2158046cd578757e8998549f04af0614480" xml:space="preserve">
     <value>射频地图</value>
     <comment>"RF Map"</comment>
+  </data>
+  <data name="42bd143bb50f1e8e804c989a5beaba5e4198c8405494b9871eb913f81b217033" xml:space="preserve">
+    <value>转速传感器 1 读数（rpm）</value>
+    <comment>"RPM sensor 1 speed (rpm)"</comment>
+  </data>
+  <data name="97ab5a47b147248c5ad0617699867ead1fa8c17d672c20552a9b8f5514ede598" xml:space="preserve">
+    <value>转速传感器 2 读数（rpm）</value>
+    <comment>"RPM sensor 2 speed (rpm)"</comment>
   </data>
   <data name="6228ad50af741992aa0b3884bf63944e9c33d7088976ac728540daca4d75f7a0" xml:space="preserve">
     <value>RTCM 基站 </value>
@@ -8704,6 +8928,10 @@ ffdshow
   <data name="488e46c3ce978a92fb4f675066e24c4c7fc47bbfa6f2e2644dd0d489d3d32b8c" xml:space="preserve">
     <value>遥控通道</value>
     <comment>"Radio Channels"</comment>
+  </data>
+  <data name="024f4fef3ea8abe8e67d7f45a353901704a4b8a7ef836225ddc06c4ef62467ee" xml:space="preserve">
+    <value>数传接收错误次数</value>
+    <comment>"Radio receive error count"</comment>
   </data>
   <data name="6fe0661c82d10d34d342a2db6cf48e6903215f3e296d0dc8038ab44fcb48a0ce" xml:space="preserve">
     <value>半径</value>
@@ -8913,6 +9141,14 @@ ffdshow
     <value>相对高度</value>
     <comment>"Relative Alt"</comment>
   </data>
+  <data name="c78ae265dfce7d5dcbb9cc0ad96fc322c675d50921fd1a0c7a5aab418110baab" xml:space="preserve">
+    <value>相对高度百位分量（含小数）</value>
+    <comment>"Relative altitude hundreds component (fractional)"</comment>
+  </data>
+  <data name="c0b09f99537d45b0a718b3440128b521d572420fcfc4a2d28ae903940ddbfd2b" xml:space="preserve">
+    <value>相对高度千位分量（含小数）</value>
+    <comment>"Relative altitude thousands component (fractional)"</comment>
+  </data>
   <data name="935e64a3fd56a4fc1031f00506d79ea8cb5da66bd2f8696bf2ad7d94412e0e6d" xml:space="preserve">
     <value>相对高度</value>
     <comment>"RelativeAlt"</comment>
@@ -9008,6 +9244,46 @@ ffdshow
   <data name="9f8ddb8ef5103fa8cdd528b9c1ab761632cdc6d30b874c65e0d16806cdb05067" xml:space="preserve">
     <value>重复间隔</value>
     <comment>"Repeat Interval"</comment>
+  </data>
+  <data name="6db78fd41955cadd6f5e0cbdea0deffcbb9e81bf99115017103f2fbe72d8a238" xml:space="preserve">
+    <value>上报的 I²C 错误次数</value>
+    <comment>"Reported I2C error count"</comment>
+  </data>
+  <data name="0674cafb36e22426d1db0ba36b45fb8b8cdc0a86aa6f1b027703b5f7c37a0e59" xml:space="preserve">
+    <value>上报的 MAVLink 协议能力标志位</value>
+    <comment>"Reported MAVLink protocol capability flags"</comment>
+  </data>
+  <data name="e44a4c841c176c151d5046cff78e8a718a84ba58de732b63bcb72e978297000c" xml:space="preserve">
+    <value>上报的可用内存（字节）</value>
+    <comment>"Reported free memory (bytes)"</comment>
+  </data>
+  <data name="53251401cf0c738c00a2d0e85221e2e2dbe57ffff71abed525f08a5aaf150946" xml:space="preserve">
+    <value>上报的堆顶</value>
+    <comment>"Reported heap top"</comment>
+  </data>
+  <data name="928925019e8664ee6edf73162209317ba0aeb3af50bb73d44e886fe7cf69f382" xml:space="preserve">
+    <value>上报的着陆状态代码</value>
+    <comment>"Reported landed state code"</comment>
+  </data>
+  <data name="9276cf2f166c067097f29bdbd3ed3dc41fab7b1148c69db9294250442e9a9684" xml:space="preserve">
+    <value>请求的遥控通道流频率 (Hz)</value>
+    <comment>"Requested RC channel stream rate (Hz)"</comment>
+  </data>
+  <data name="2e173564553ffd57dcc51293ec39ddbb11a5d7d2382edfda5609e929943d79b7" xml:space="preserve">
+    <value>请求的姿态和飞行数据流频率 (Hz)</value>
+    <comment>"Requested attitude and flight data stream rate (Hz)"</comment>
+  </data>
+  <data name="b7c8eb1a7773d9c7b71ebe773e4681cbf53868660dd52e5e95e0fe2b3bd2964d" xml:space="preserve">
+    <value>请求的扩展状态流频率 (Hz)</value>
+    <comment>"Requested extended status stream rate (Hz)"</comment>
+  </data>
+  <data name="e098f09e79755ca7552980a3a6581916a37fbd55ea32a0df217eaee1fafc44b6" xml:space="preserve">
+    <value>请求的位置流频率 (Hz)</value>
+    <comment>"Requested position stream rate (Hz)"</comment>
+  </data>
+  <data name="7583803c72c265ab9eef5c49afb29e560d0864b92c129c6991c7f8339a7e08b0" xml:space="preserve">
+    <value>请求的传感器流频率 (Hz)</value>
+    <comment>"Requested sensor stream rate (Hz)"</comment>
   </data>
   <data name="b469ebcf140b9c19d513e00d546a9cc7c86d858074f9451d1936e584f4810b40" xml:space="preserve">
     <value>保留名称</value>
@@ -9409,6 +9685,30 @@ gps_point：跟踪单个地面点</value>
     <value>备用</value>
     <comment>"Secondary"</comment>
   </data>
+  <data name="22ea075b4cd423753863d6d8d474d369edd49d82cab476cd8c208c48909bfd96" xml:space="preserve">
+    <value>第二 AHRS：海拔 (m)</value>
+    <comment>"Secondary AHRS altitude (MSL, m)"</comment>
+  </data>
+  <data name="42bf1dbf87396d020777250892f9d56340e66a42b5fd3866a018b28d849db826" xml:space="preserve">
+    <value>第二 AHRS：纬度 (°)</value>
+    <comment>"Secondary AHRS latitude (°)"</comment>
+  </data>
+  <data name="9739dc0d69f097fdd9f20405739ccddf582c03d0f08329d653e5ce12d8ade2fa" xml:space="preserve">
+    <value>第二 AHRS：经度 (°)</value>
+    <comment>"Secondary AHRS longitude (°)"</comment>
+  </data>
+  <data name="990bc05298662943ea80b1d970be96fcd0c18b48d2dbfc7b7707418123d48647" xml:space="preserve">
+    <value>第二 AHRS：俯仰角 (°)</value>
+    <comment>"Secondary AHRS pitch (°)"</comment>
+  </data>
+  <data name="850973aee6f975b3ab763d084206b3ee4c2ee999a0a54f72a550a228bb15008a" xml:space="preserve">
+    <value>第二 AHRS：横滚角 (°)</value>
+    <comment>"Secondary AHRS roll (°)"</comment>
+  </data>
+  <data name="2da6ffdae881c4e2f3f493f6a17fa08bf3aec558e7e5a1b771e522219e7f75bd" xml:space="preserve">
+    <value>第二 AHRS：偏航角 (°)</value>
+    <comment>"Secondary AHRS yaw (°)"</comment>
+  </data>
   <data name="488a3f524b5ee234b30fa1399caba8d6b99b03209abbc61aa9eceb4fd030493b" xml:space="preserve">
     <value>时间偏移（秒）</value>
     <comment>"Seconds offset"</comment>
@@ -9596,6 +9896,10 @@ gps_point：跟踪单个地面点</value>
   <data name="39757bbb5b5bf49597e4fe3c7258fbc3b2ba34ea4a4d6843cd3d808398726b44" xml:space="preserve">
     <value>舵机测试</value>
     <comment>"Servo Test"</comment>
+  </data>
+  <data name="d0f40bcc31e3e087ce67ff2d1eea780e46dbbe1ddb958c8c7376d1d36594512f" xml:space="preserve">
+    <value>舵机输出第 {0} 通道脉宽 (µs)</value>
+    <comment>"Servo output channel {0} pulse width (µs)"</comment>
   </data>
   <data name="8ab7ae56e0351de6a076272245cf022958cce7508c8030cae2e89375b1723d38" xml:space="preserve">
     <value>舵机 {0}</value>
@@ -10467,6 +10771,22 @@ Acc：当前测定位置的精度
     <value>地面高程（GL）</value>
     <comment>"Terrain GL"</comment>
   </data>
+  <data name="c20539dd3860332bb3f5fa90ed8ab42dcbc9aa6bd6ca1c304f903982ef9723f4" xml:space="preserve">
+    <value>待接收或从磁盘读取的地形块数</value>
+    <comment>"Terrain blocks awaiting receipt or disk read"</comment>
+  </data>
+  <data name="13b84b0acb4f25ae4a022e3f4851ecd6df75ea7a16bb823ff95b192d4aa9e947" xml:space="preserve">
+    <value>内存中已加载的地形块数</value>
+    <comment>"Terrain blocks loaded in memory"</comment>
+  </data>
+  <data name="fe3e64a5115620e97207a8090a6340731dda9c87dd8a6ad977758db4ba79d433" xml:space="preserve">
+    <value>地形网格间距</value>
+    <comment>"Terrain grid spacing"</comment>
+  </data>
+  <data name="3b6008714d2add782db56eb279f2a589c48722f5545486d7c41353ca689075fa" xml:space="preserve">
+    <value>地形子系统存在、已启用且状态正常</value>
+    <comment>"Terrain subsystem present, enabled and healthy"</comment>
+  </data>
   <data name="af3ddd815af84ae581f631295b763f729697b8a8dc36e4b49b301ea423bc1500" xml:space="preserve">
     <value>第三</value>
     <comment>"Tertiary"</comment>
@@ -10736,6 +11056,10 @@ Acc：当前测定位置的精度
   <data name="a29df5eb8db385b4775f239c5e2afd8927bc33531a6aaa28b0967a964ef014e0" xml:space="preserve">
     <value>到达目标预计时间 (sec)</value>
     <comment>"Time over Target (sec)"</comment>
+  </data>
+  <data name="7d091129fd707259dcedbf31f969bb8a5c92ce31618df81cd71ca881bd2433ae" xml:space="preserve">
+    <value>距发电机保养剩余时间 (s)</value>
+    <comment>"Time until generator maintenance (s)"</comment>
   </data>
   <data name="7c5053e21a3317f56521e86c86b152337e84a58c1e912763a110ff087f02562c" xml:space="preserve">
     <value>时间 (s)</value>
@@ -11278,6 +11602,10 @@ Acc：当前测定位置的精度
     <value>机型</value>
     <comment>"Vehicle Type"</comment>
   </data>
+  <data name="8549a9c661e90effdd93f53531e454d84b64a9c645265efc1d8cbb758f46dbe5" xml:space="preserve">
+    <value>飞行器解锁状态</value>
+    <comment>"Vehicle armed state"</comment>
+  </data>
   <data name="8965cdc71634bfb3aee3598d2996bc72c78cbcb1c744076bcd2f9d2368bf0295" xml:space="preserve">
     <value>速度</value>
     <comment>"Velocity"</comment>
@@ -11551,6 +11879,10 @@ http://www.magnetic-declination.com/</value>
     <value>DSMX对频</value>
     <comment>"X"</comment>
   </data>
+  <data name="c09eae034fb1e9ae2e2998b70fccfc98daf7f3959d7a44d12295d2f5cbb95057" xml:space="preserve">
+    <value>X 轴振动水平</value>
+    <comment>"X-axis vibration level"</comment>
+  </data>
   <data name="81c232fedd398b2bc91d0469a4d99b24724c00f869e7eee955169564f174ff5f" xml:space="preserve">
     <value>X位状态</value>
     <comment>"X-bit Status"</comment>
@@ -11558,6 +11890,10 @@ http://www.magnetic-declination.com/</value>
   <data name="22409e97ec7ced2d15b8d2251543cbc19f5f29cd6595de0fdcce9818290b8142" xml:space="preserve">
     <value>横向航迹误差 (m)</value>
     <comment>"Xtrack Error (m)"</comment>
+  </data>
+  <data name="162fab494a83707b876a586b1a5b2956a22745f46f1de4e56c6f13b23286ad05" xml:space="preserve">
+    <value>Y 轴振动水平</value>
+    <comment>"Y-axis vibration level"</comment>
   </data>
   <data name="75b7318c702f77e6a2b503b50a220477f003d13b98e8cc4a40e6553f08ec21e7" xml:space="preserve">
     <value>偏航角 (°)</value>
@@ -11698,6 +12034,10 @@ http://www.magnetic-declination.com/</value>
   <data name="4c37e1006ecd933b41ecc2384cdf3e69bd581ace279c968dd5142810b836eaae" xml:space="preserve">
     <value>Z 轴速度</value>
     <comment>"Z speed"</comment>
+  </data>
+  <data name="86e138766363f99794d8b76b6496678bdb526401aee543e41afbeca6d0d8f191" xml:space="preserve">
+    <value>Z 轴振动水平</value>
+    <comment>"Z-axis vibration level"</comment>
   </data>
   <data name="973d0c649aa97a0635e387399f32c49abdaa7b2e812a65812255d1ed863b1604" xml:space="preserve">
     <value>最小</value>
@@ -12006,6 +12346,10 @@ http://www.magnetic-declination.com/</value>
   <data name="be02f34d565845d2b9a84a0e72206844fb56e47c4652624bc31317b0b2ae9d27" xml:space="preserve">
     <value>输入频率 (Hz)</value>
     <comment>"hz input"</comment>
+  </data>
+  <data name="09588a5425c6aa7517c06ca452e49578a6b10bc6ea24a167136825a7ac9e38c0" xml:space="preserve">
+    <value>仅限 I²C2</value>
+    <comment>"i2c2 only"</comment>
   </data>
   <data name="c96c6d5be8d08a12e7b5cdc1b207fa6b2430974c86803d8891675e76fd992c20" xml:space="preserve">
     <value>输入</value>
