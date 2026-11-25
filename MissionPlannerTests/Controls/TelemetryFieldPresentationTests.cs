@@ -469,6 +469,39 @@ namespace MissionPlannerTests.Controls
         }
 
         [TestMethod]
+        public void NavigationAndDiagnosticLabelsPreserveKeys()
+        {
+            var previous = CultureInfo.CurrentUICulture;
+            try
+            {
+                foreach (var locale in new[] { "zh-CN", "zh-Hans", "en-US" })
+                {
+                    CultureInfo.CurrentUICulture = new CultureInfo(locale);
+                    foreach (var pair in new[] {
+                        Tuple.Create("groundspeed2", "第二路 GPS 地速（m/s）"),
+                        Tuple.Create("vlen", "三维速度大小（m/s）"),
+                        Tuple.Create("HomeAlt", "返航点高度"),
+                        Tuple.Create("targetalt", "导航目标高度"),
+                        Tuple.Create("targetaltd100", "目标高度百位分量（含小数）"),
+                        Tuple.Create("load", "飞控上报的处理负载（%）"),
+                        Tuple.Create("KIndex", "地磁活动 K 指数"),
+                        Tuple.Create("speedup", "IMU 时间相对于实际时间的估算倍率"),
+                    })
+                    {
+                        var label = TelemetryFieldPresentation.FieldLabel(pair.Item1);
+                        Assert.AreEqual(locale == "zh-CN" ? pair.Item1 + " (" + pair.Item2 + ")" : pair.Item1, label);
+                        Assert.IsTrue(TelemetryFieldPresentation.Matches(pair.Item1, label));
+                        if (locale == "zh-CN")
+                            Assert.IsTrue(TelemetryFieldPresentation.Matches(pair.Item2, label));
+                    }
+                    foreach (var key in new[] { "campointa", "press_temp2", "targetaltd1000", "ch3percent" })
+                        Assert.AreEqual(key, TelemetryFieldPresentation.FieldLabel(key));
+                }
+            }
+            finally { CultureInfo.CurrentUICulture = previous; }
+        }
+
+        [TestMethod]
         public void LabelsRetainKeysAndBilingualSearch()
         {
             var label = TelemetryFieldPresentation.Combine("airspeed", "空速");
