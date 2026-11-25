@@ -3978,6 +3978,10 @@ Ctrl+O 从文件加载</value>
     <value>收藏</value>
     <comment>"Fav"</comment>
   </data>
+  <data name="c59e96abc48597b127b2e9d9d8bf9a9d248dbd3a51a83eef9f6203846ffe518e" xml:space="preserve">
+    <value>英尺（ft）</value>
+    <comment>"Feet"</comment>
+  </data>
   <data name="96c0727e4b1222ae05e36bbf087fb9a5316ff12c647276982fac6dcbc21dafda" xml:space="preserve">
     <value>围栏</value>
     <comment>"Fence"</comment>
@@ -6159,6 +6163,10 @@ Ctrl+O 从文件加载</value>
   <data name="f0da125ad09c742cb5b5fcd54eb9b0843c7b7f89949323bf2314a7324ee2ec6d" xml:space="preserve">
     <value>已接收消息</value>
     <comment>"Messages Seen"</comment>
+  </data>
+  <data name="efd2ff93442f3220c980f7ce416e689ffd3b2553600cd9cf907fd90bbaac14c2" xml:space="preserve">
+    <value>米（m）</value>
+    <comment>"Meters"</comment>
   </data>
   <data name="76df0c6db32d4e04e0ef6a3a6a1e1686677e34308d9435892b1ab5713e57d470" xml:space="preserve">
     <value>中</value>
@@ -12339,6 +12347,10 @@ http://www.magnetic-declination.com/</value>
     <value>跟随领航机集群</value>
     <comment>"follow the leader swarm"</comment>
   </data>
+  <data name="2f02a4f7da5ad4d639709057f6c4ed1aba56511ee494254315d0183d060604df" xml:space="preserve">
+    <value>英尺/秒（ft/s）</value>
+    <comment>"fps"</comment>
+  </data>
   <data name="3298cf5e8d8338b1f1fb08b1f11f730b8af35e274c7d6d13fb5895c61d1c9b53" xml:space="preserve">
     <value>从日志获取罗盘偏移</value>
     <comment>"get mag offsets from a log"</comment>
@@ -12402,6 +12414,14 @@ http://www.magnetic-declination.com/</value>
   <data name="1d0fef70ad301011d33c14c6f3938a6ea1781cfa2b4d8cd7dd965b6646cb7f7a" xml:space="preserve">
     <value>固件版本是否高于 APM:Copter 3.01 或 APM:Plane 2.74？</value>
     <comment>"is the FW version greater than APM:copter 3.01 or APM:Plane 2.74?"</comment>
+  </data>
+  <data name="e1404219ff5e094d111549bfd9b54b31b704e3f799a68f1e63365e50a816319d" xml:space="preserve">
+    <value>节（kn）</value>
+    <comment>"knots"</comment>
+  </data>
+  <data name="a84c447ba5c14e0deceade21e10ce7346a2978462c1c9e11745441b2c46ddc28" xml:space="preserve">
+    <value>千米/小时（km/h）</value>
+    <comment>"kph"</comment>
   </data>
   <data name="70dc800f443cf042a608c01791d42c5d3bd384d09909309ae6504055a7c5fe01" xml:space="preserve">
     <value>通过 GDAL 加载自定义地图瓦片源</value>
@@ -12475,6 +12495,10 @@ http://www.magnetic-declination.com/</value>
     <value>MCU 电压</value>
     <comment>"mcu voltage"</comment>
   </data>
+  <data name="bb0825e682015689c7bdcce25588ec830c6ddbb5123b42fc322b0c13a9003417" xml:space="preserve">
+    <value>米/秒（m/s）</value>
+    <comment>"meters_per_second"</comment>
+  </data>
   <data name="4870e53688cb1f24862364944a53cf99be969c4259472e76442dc2efdd602085" xml:space="preserve">
     <value>向下距离（米）</value>
     <comment>"metres down"</comment>
@@ -12514,6 +12538,10 @@ http://www.magnetic-declination.com/</value>
   <data name="0b7ec5faa3095da747a8b963976971a65bccf6ab28ff5fa684b3b04e6811c44c" xml:space="preserve">
     <value>已移至数据闪存选项卡</value>
     <comment>"moved to dataflash tab"</comment>
+  </data>
+  <data name="efcc859903e75c54f5a049216000431d280fa45e48630f2e0626049393ace6d1" xml:space="preserve">
+    <value>英里/小时（mph）</value>
+    <comment>"mph"</comment>
   </data>
   <data name="144db0a3d60889b2c50e8f7a0d54a7dab790a3677ba73262e2b564237f36faca" xml:space="preserve">
     <value>多飞行器集群界面</value>

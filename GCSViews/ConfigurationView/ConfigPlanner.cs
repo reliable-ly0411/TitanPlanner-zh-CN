@@ -39,6 +39,9 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             CHK_startFullscreen.CheckedChanged += CHK_startFullscreen_CheckedChanged;
 
             InitializeComponent();
+            CMB_distunits.Format += FormatUnit;
+            CMB_speedunits.Format += FormatUnit;
+            CMB_altunits.Format += FormatUnit;
             CMB_mapCache.Format += (sender, e) =>
             {
                 if (e.ListItem is string key)
@@ -881,12 +884,9 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             }
 
 
-            if (Settings.Instance["distunits"] != null)
-                CMB_distunits.Text = Settings.Instance["distunits"].ToString();
-            if (Settings.Instance["speedunits"] != null)
-                CMB_speedunits.Text = Settings.Instance["speedunits"].ToString();
-            if (Settings.Instance["altunits"] != null)
-                CMB_altunits.Text = Settings.Instance["altunits"].ToString();
+            RestoreUnitSelection(CMB_distunits, Settings.Instance["distunits"]);
+            RestoreUnitSelection(CMB_speedunits, Settings.Instance["speedunits"]);
+            RestoreUnitSelection(CMB_altunits, Settings.Instance["altunits"]);
 
             try
             {
@@ -1318,19 +1318,39 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             new JoystickSetup().ShowUserControl();
         }
 
+        private static void FormatUnit(object sender, ListControlConvertEventArgs e)
+        {
+            if (e.ListItem is string key)
+                e.Value = UiText.Translate(key);
+        }
+
+        private static void RestoreUnitSelection(ComboBox combo, string savedKey)
+        {
+            if (savedKey == null)
+                return;
+            for (int i = 0; i < combo.Items.Count; i++)
+            {
+                if (string.Equals(combo.Items[i] as string, savedKey, StringComparison.OrdinalIgnoreCase))
+                {
+                    combo.SelectedIndex = i;
+                    return;
+                }
+            }
+        }
+
         private void CMB_distunits_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (startup)
+            if (startup || !(CMB_distunits.SelectedItem is string key))
                 return;
-            Settings.Instance["distunits"] = CMB_distunits.Text;
+            Settings.Instance["distunits"] = key;
             MainV2.instance.ChangeUnits();
         }
 
         private void CMB_speedunits_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (startup)
+            if (startup || !(CMB_speedunits.SelectedItem is string key))
                 return;
-            Settings.Instance["speedunits"] = CMB_speedunits.Text;
+            Settings.Instance["speedunits"] = key;
             MainV2.instance.ChangeUnits();
         }
 
@@ -1821,9 +1841,9 @@ namespace MissionPlanner.GCSViews.ConfigurationView
 
         private void CMB_altunits_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (startup)
+            if (startup || !(CMB_altunits.SelectedItem is string key))
                 return;
-            Settings.Instance["altunits"] = CMB_altunits.Text;
+            Settings.Instance["altunits"] = key;
             MainV2.instance.ChangeUnits();
         }
 
