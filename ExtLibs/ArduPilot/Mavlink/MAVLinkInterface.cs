@@ -5561,7 +5561,17 @@ Mission Planner waits for 2 valid heartbeat packets before connecting
                                 Settings.Instance["speechenable"].ToString() == "True")
                             {
                                 if (speechenabled && !logdata.StartsWith("PreArm:")) // Suppress audible PreArm messages
-                                    Speech.SpeakAsync(logdata);
+                                {
+                                    var spoken = logdata;
+                                    if (displayPrimary && Settings.Instance["language"] == "zh-CN" &&
+                                        ReferenceEquals(displayGeneration, Volatile.Read(ref messageDisplay)))
+                                    {
+                                        var suffix = displayGeneration.VoiceSuffix(messages, row);
+                                        if (suffix != null && ReferenceEquals(displayGeneration, Volatile.Read(ref messageDisplay)))
+                                            spoken = suffix;
+                                    }
+                                    Speech.SpeakAsync(spoken);
+                                }
                             }
                         }
                     }

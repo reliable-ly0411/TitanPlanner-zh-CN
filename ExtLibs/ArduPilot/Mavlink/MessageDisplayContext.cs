@@ -14,6 +14,7 @@ namespace MissionPlanner
         {
             internal int Heartbeat, Version;
             internal bool Conflict;
+            internal bool UnconfirmedVoiceVendor;
             internal readonly ConditionalWeakTable<string, Row> Rows = new ConditionalWeakTable<string, Row>();
         }
         private sealed class Row
@@ -43,6 +44,8 @@ namespace MissionPlanner
                         Encoding.ASCII.GetString(hash) == "d9c5097c" ? 1 :
                         ver.flight_sw_version == 0x011200ff && hash != null && hash.Length == 8 &&
                         hash[3] == 0xd6 && hash[4] == 0xf1 && hash[5] == 0xdd && hash[6] == 0x5a && hash[7] == 0x93 ? 2 : 0;
+                    if (version == 2 && (hash[0] != 0 || hash[1] != 0 || hash[2] != 0))
+                        s.UnconfirmedVoiceVendor = true;
                     if (version == 0 || (s.Version != 0 && s.Version != version)) s.Conflict = true;
                     else s.Version = version;
                 }
@@ -77,6 +80,19 @@ namespace MissionPlanner
                 return;
             }
             s.Rows.Add(row.message, new Row { Time = row.time, Severity = row.severity });
+        }
+
+        internal string VoiceSuffix(List<(DateTime time, string message, byte severity)> list,
+            (DateTime time, string message, byte severity) row)
+        {
+            lock (list)
+            {
+                if (row.message != "Battery 1 missing\t" ||
+                    !states.TryGetValue(list, out var state) || state.Version != 2 ||
+                    state.UnconfirmedVoiceVendor)
+                    return null;
+                return Suffix(list, row);
+            }
         }
 
         internal string Suffix(List<(DateTime time, string message, byte severity)> list,
