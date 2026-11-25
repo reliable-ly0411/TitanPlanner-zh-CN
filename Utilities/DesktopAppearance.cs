@@ -81,7 +81,7 @@ namespace MissionPlanner.Utilities
 
         private static Bitmap LoadMissionPlannerStartup()
         {
-            var image = Properties.Resources.splashdark;
+            var image = global::MissionPlanner.Properties.Resources.splashdark;
             return image == null ? null : new Bitmap(image);
         }
 
