@@ -43,6 +43,24 @@ namespace MissionPlanner.Utilities
             if (kind == AppearanceAsset.WindowIcon) RefreshWindowIcons();
         }
 
+        internal static void ImportMfe(AppearanceAsset kind, string path)
+        {
+            Store.ImportMfe(kind, path);
+            if (kind == AppearanceAsset.WindowIcon) RefreshWindowIcons();
+        }
+
+        internal static void SelectMfe(AppearanceAsset kind)
+        {
+            Store.SelectMfe(kind);
+            if (kind == AppearanceAsset.WindowIcon) RefreshWindowIcons();
+        }
+
+        internal static void SelectSavedIcon()
+        {
+            Store.SelectSavedIcon();
+            RefreshWindowIcons();
+        }
+
         public static void RestoreDefault(AppearanceAsset kind)
         {
             Store.RestoreDefault(kind);

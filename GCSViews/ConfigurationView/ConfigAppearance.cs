@@ -13,7 +13,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
     {
         private readonly PictureBox iconPreview = new PictureBox { SizeMode = PictureBoxSizeMode.CenterImage, Height = 64, Dock = DockStyle.Fill };
         private readonly PictureBox startupPreview = new PictureBox { SizeMode = PictureBoxSizeMode.Zoom, Height = 200, Dock = DockStyle.Fill, BackColor = Color.Black };
-        private Button savedStartup;
+        private Button savedStartup, savedIcon, mfeIcon, mfeStartup;
         private readonly Label status = new Label { AutoSize = true, Dock = DockStyle.Fill };
 
         public ConfigAppearance() : this(embedded: false)
@@ -48,6 +48,22 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             layout.Controls.Add(Buttons("Choose startup image...", "Restore default startup image", AppearanceAsset.StartupImage));
             bool enhancedChinese = string.Equals(System.Globalization.CultureInfo.CurrentUICulture.Name,
                 "zh-CN", StringComparison.Ordinal);
+            AddText(layout, enhancedChinese ? "\u594b\u6597\u8005\u9884\u8bbe\uff1a\u53ea\u4f7f\u7528\u624b\u52a8\u5bfc\u5165\u7684\u672c\u5730\u7d20\u6750\u3002" :
+                "MakeFlyEasy presets use only files you import locally.");
+            var mfeIconRow = new FlowLayoutPanel { AutoSize = true, Dock = DockStyle.Fill };
+            mfeIcon = PresetButton(mfeIconRow, enhancedChinese ? "\u9009\u62e9\u594b\u6597\u8005\u7a97\u53e3\u56fe\u6807" : "Use MakeFlyEasy window icon",
+                () => DesktopAppearance.SelectMfe(AppearanceAsset.WindowIcon));
+            PresetButton(mfeIconRow, enhancedChinese ? "\u5bfc\u5165\u594b\u6597\u8005 ICO..." : "Import MakeFlyEasy ICO...",
+                () => ImportMfe(AppearanceAsset.WindowIcon), wrapSave: false);
+            savedIcon = PresetButton(mfeIconRow, enhancedChinese ? "\u6362\u56de\u81ea\u5b9a\u4e49\u7a97\u53e3\u56fe\u6807" : "Use saved custom window icon",
+                DesktopAppearance.SelectSavedIcon);
+            layout.Controls.Add(mfeIconRow);
+            var mfeStartupRow = new FlowLayoutPanel { AutoSize = true, Dock = DockStyle.Fill };
+            mfeStartup = PresetButton(mfeStartupRow, enhancedChinese ? "\u9009\u62e9\u594b\u6597\u8005\u542f\u52a8\u56fe" : "Use MakeFlyEasy startup artwork",
+                () => DesktopAppearance.SelectMfe(AppearanceAsset.StartupImage));
+            PresetButton(mfeStartupRow, enhancedChinese ? "\u5bfc\u5165\u594b\u6597\u8005\u542f\u52a8\u56fe..." : "Import MakeFlyEasy startup artwork...",
+                () => ImportMfe(AppearanceAsset.StartupImage), wrapSave: false);
+            layout.Controls.Add(mfeStartupRow);
             var missionStartup = new Button
             {
                 AutoSize = true, Anchor = AnchorStyles.Left,
@@ -113,6 +129,25 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             return flow;
         }
 
+        private Button PresetButton(FlowLayoutPanel row, string text, Action action, bool wrapSave = true)
+        {
+            var button = new Button { AutoSize = true, Text = text };
+            button.Click += (sender, args) => { if (wrapSave) Change(action); else action(); };
+            row.Controls.Add(button);
+            return button;
+        }
+
+        private void ImportMfe(AppearanceAsset kind)
+        {
+            using (var dialog = new OpenFileDialog
+            {
+                Filter = kind == AppearanceAsset.WindowIcon ? "ICO (*.ico)|*.ico" : "PNG / JPEG / BMP|*.png;*.jpg;*.jpeg;*.bmp",
+                CheckFileExists = true, Multiselect = false, RestoreDirectory = true
+            })
+                if (dialog.ShowDialog(this) == DialogResult.OK)
+                    Change(() => DesktopAppearance.ImportMfe(kind, dialog.FileName));
+        }
+
         private void Change(Action save)
         {
             try
@@ -147,6 +182,12 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             previous?.Dispose();
             if (savedStartup != null)
                 savedStartup.Enabled = DesktopAppearance.Store.CanSelectSavedStartupImage();
+            if (mfeIcon != null)
+                mfeIcon.Enabled = DesktopAppearance.Store.CanSelectMfe(AppearanceAsset.WindowIcon);
+            if (mfeStartup != null)
+                mfeStartup.Enabled = DesktopAppearance.Store.CanSelectMfe(AppearanceAsset.StartupImage);
+            if (savedIcon != null)
+                savedIcon.Enabled = DesktopAppearance.Store.CanSelectSavedIcon();
             warning = DesktopAppearance.IconWarning ?? warning;
             status.Text = UiText.Translate(warning ?? "Default or saved appearance is shown above.");
             return warning;

@@ -33,7 +33,7 @@ namespace MissionPlanner.Utilities
         {
             public string Icon = "";
             public string Image = "";
-            public string StartupPreset = "";
+            public string StartupPreset = "", IconPreset = "", MfeIcon = "", MfeImage = "";
         }
 
         public Icon LoadIcon(out string warning)
@@ -77,7 +77,9 @@ namespace MissionPlanner.Utilities
 
         private byte[] LoadSelectedAsset(AppearanceAsset kind, Selection selection, ref string warning)
         {
-            var name = kind == AppearanceAsset.WindowIcon ? selection.Icon : selection.Image;
+            var name = kind == AppearanceAsset.WindowIcon
+                ? (selection.IconPreset == "mfe" ? selection.MfeIcon : selection.Icon)
+                : (selection.StartupPreset == "mfe" ? selection.MfeImage : selection.Image);
             if (name.Length == 0) return null;
             try
             {
@@ -96,11 +98,29 @@ namespace MissionPlanner.Utilities
 
         public void Import(AppearanceAsset kind, string source)
         {
+                        ImportLocal(kind, source, false);
+        }
+
+        internal void ImportMfe(AppearanceAsset kind, string source) { ImportLocal(kind, source, true); }
+
+        internal bool CanSelectMfe(AppearanceAsset kind)
+        {
+            var selection = ReadSelection(out _);
+            return (kind == AppearanceAsset.WindowIcon ? selection.MfeIcon : selection.MfeImage).Length != 0;
+        }
+
+        internal void SelectMfe(AppearanceAsset kind) { Save(kind, null, "", "mfe", reusePreset: true); }
+
+        internal bool CanSelectSavedIcon() { return ReadSelection(out _).Icon.Length != 0; }
+        internal void SelectSavedIcon() { Save(AppearanceAsset.WindowIcon, null, "", reusePreset: true); }
+
+        private void ImportLocal(AppearanceAsset kind, string source, bool mfe)
+        {
             var extension = Path.GetExtension(source).ToLowerInvariant();
             if (extension == ".jpeg") extension = ".jpg";
             var bytes = ReadBounded(source, Limit(kind));
             Validate(kind, extension, bytes); // Validate before creating or changing any preference.
-            Save(kind, bytes, extension);
+            Save(kind, bytes, extension, mfe ? "mfe" : "");
         }
 
         public void RestoreDefault(AppearanceAsset kind) { Save(kind, null, ""); }
@@ -123,7 +143,7 @@ namespace MissionPlanner.Utilities
         }
 
         private void Save(AppearanceAsset kind, byte[] bytes, string extension, string startupPreset = "",
-            bool reuseSavedImage = false)
+            bool reuseSavedImage = false, bool reusePreset = false)
         {
             Directory.CreateDirectory(directory);
             // Serializes read-modify-write between application instances. Failure preserves the old selection.
@@ -143,7 +163,20 @@ namespace MissionPlanner.Utilities
                         asset.Flush(true);
                     }
                 }
-                if (kind == AppearanceAsset.WindowIcon) selection.Icon = name;
+                if (kind == AppearanceAsset.WindowIcon) selection.IconPreset = startupPreset;
+                else selection.StartupPreset = startupPreset;
+
+                if (startupPreset == "mfe" && !reusePreset)
+                {
+                    if (kind == AppearanceAsset.WindowIcon) selection.MfeIcon = name;
+                    else selection.MfeImage = name;
+                }
+                else if (reusePreset)
+                {
+                    if (LoadSelectedAsset(kind, selection, ref ignored) == null)
+                        throw new InvalidDataException();
+                }
+                else if (kind == AppearanceAsset.WindowIcon) selection.Icon = name;
                 else
                 {
                     selection.StartupPreset = startupPreset;
@@ -169,6 +202,9 @@ namespace MissionPlanner.Utilities
                             writer.WriteAttributeString("version", "1");
                             writer.WriteAttributeString("icon", selection.Icon);
                             writer.WriteAttributeString("image", selection.Image);
+                            if (selection.IconPreset == "mfe") writer.WriteAttributeString("iconPreset", "mfe");
+                            if (selection.MfeIcon.Length != 0) writer.WriteAttributeString("mfeIcon", selection.MfeIcon);
+                            if (selection.MfeImage.Length != 0) writer.WriteAttributeString("mfeImage", selection.MfeImage);
                             if (selection.StartupPreset.Length != 0)
                                 writer.WriteAttributeString("startupPreset", selection.StartupPreset);
                             writer.WriteEndElement();
@@ -209,7 +245,10 @@ namespace MissionPlanner.Utilities
                     throw new InvalidDataException();
                 var startupPreset = root.GetAttribute("startupPreset");
                 return new Selection { Icon = icon, Image = image,
-                    StartupPreset = startupPreset == "mission-planner" ? startupPreset : "" };
+                    StartupPreset = startupPreset == "mission-planner" || startupPreset == "mfe" ? startupPreset : "",
+                    IconPreset = root.GetAttribute("iconPreset") == "mfe" ? "mfe" : "",
+                    MfeIcon = ValidName(root.GetAttribute("mfeIcon"), @"ico") ? root.GetAttribute("mfeIcon") : "",
+                    MfeImage = ValidName(root.GetAttribute("mfeImage"), @"png|jpg|bmp") ? root.GetAttribute("mfeImage") : "" };
             }
             catch (Exception)
             {
