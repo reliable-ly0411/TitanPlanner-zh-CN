@@ -29,6 +29,8 @@ namespace MissionPlanner.GCSViews.ConfigurationView
         public ConfigSerial()
         {
             InitializeComponent();
+            if (string.Equals(CultureInfo.CurrentUICulture.Name, "zh-CN", StringComparison.OrdinalIgnoreCase))
+                myLabel2.Text = "波特率";
         }
 
         //This is a long function, but I did not extract methods that are used once only
