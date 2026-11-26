@@ -6527,6 +6527,12 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                                 mode = getCmdID(Commands.Rows[a].Cells[Command.Index].Value.ToString());
                             }
 
+                            // Match the importer and .mission exporter for this optional position field.
+                            var altMultiplier = mode == (ushort) MAVLink.MAV_CMD.DO_RETURN_PATH_START
+                                ? (cmdParamMultipliers.TryGetValue(nameof(MAVLink.MAV_CMD.DO_RETURN_PATH_START), out var multipliers)
+                                    ? multipliers[6] : 1.0)
+                                : CurrentState.multiplieralt;
+
                             sw.Write((a + 1)); // seq
                             sw.Write("\t" + 0); // current
                             sw.Write("\t" + ((int) Commands.Rows[a].Cells[Frame.Index].Value).ToString()); //frame
@@ -6551,7 +6557,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                                          .ToString("0.00000000", new CultureInfo("en-US")));
                             sw.Write("\t" +
                                      (double.Parse(Commands.Rows[a].Cells[Alt.Index].Value.ToString()) /
-                                      CurrentState.multiplieralt).ToString("0.000000", new CultureInfo("en-US")));
+                                      altMultiplier).ToString("0.000000", new CultureInfo("en-US")));
                             sw.Write("\t" + 1);
                             sw.WriteLine("");
                         }
