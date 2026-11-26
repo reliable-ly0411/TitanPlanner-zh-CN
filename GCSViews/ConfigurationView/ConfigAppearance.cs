@@ -13,7 +13,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
     {
         private readonly PictureBox iconPreview = new PictureBox { SizeMode = PictureBoxSizeMode.CenterImage, Height = 64, Dock = DockStyle.Fill };
         private readonly PictureBox startupPreview = new PictureBox { SizeMode = PictureBoxSizeMode.Zoom, Height = 200, Dock = DockStyle.Fill, BackColor = Color.Black };
-        private Button savedStartup, savedIcon, mfeIcon, mfeStartup;
+        private Button savedStartup, savedIcon, mfeIcon, mfeStartup, missionPlannerIcon, titanPlannerIcon;
         private readonly Label status = new Label { AutoSize = true, Dock = DockStyle.Fill };
 
         public ConfigAppearance() : this(embedded: false)
@@ -50,6 +50,11 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                 "zh-CN", StringComparison.Ordinal);
             AddText(layout, enhancedChinese ? "\u594b\u6597\u8005\u9884\u8bbe\uff1a\u53ea\u4f7f\u7528\u624b\u52a8\u5bfc\u5165\u7684\u672c\u5730\u7d20\u6750\u3002" :
                 "MakeFlyEasy presets use only files you import locally.");
+            AddText(layout, enhancedChinese
+                ? "窗口图标预设使用你本地导入的 ICO，不附带或下载厂商图标。"
+                : "Window icon presets use ICO files you import locally; vendor icons are not bundled or downloaded.");
+            missionPlannerIcon = AddVendorIconRow(layout, ImportedVendorIcon.MissionPlanner, "Mission Planner", enhancedChinese);
+            titanPlannerIcon = AddVendorIconRow(layout, ImportedVendorIcon.TitanPlanner, "TitanPlanner", enhancedChinese);
             var mfeIconRow = new FlowLayoutPanel { AutoSize = true, Dock = DockStyle.Fill };
             mfeIcon = PresetButton(mfeIconRow, enhancedChinese ? "\u9009\u62e9\u594b\u6597\u8005\u7a97\u53e3\u56fe\u6807" : "Use MakeFlyEasy window icon",
                 () => DesktopAppearance.SelectMfe(AppearanceAsset.WindowIcon));
@@ -137,15 +142,33 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             return button;
         }
 
+        private Button AddVendorIconRow(TableLayoutPanel layout, ImportedVendorIcon vendor, string brand, bool enhancedChinese)
+        {
+            var row = new FlowLayoutPanel { AutoSize = true, Dock = DockStyle.Fill, WrapContents = true };
+            string use = enhancedChinese ? "选用 " + brand + " 窗口图标" : "Use " + brand + " window icon";
+            string import = enhancedChinese ? "导入 " + brand + " ICO..." : "Import " + brand + " ICO...";
+            var select = PresetButton(row, use, () => DesktopAppearance.SelectVendorIcon(vendor));
+            PresetButton(row, import, () => ImportAppearance(AppearanceAsset.WindowIcon,
+                path => DesktopAppearance.ImportVendorIcon(vendor, path), import), wrapSave: false);
+            layout.Controls.Add(row);
+            return select;
+        }
+
         private void ImportMfe(AppearanceAsset kind)
+        {
+            ImportAppearance(kind, path => DesktopAppearance.ImportMfe(kind, path));
+        }
+
+        private void ImportAppearance(AppearanceAsset kind, Action<string> import, string title = null)
         {
             using (var dialog = new OpenFileDialog
             {
                 Filter = kind == AppearanceAsset.WindowIcon ? "ICO (*.ico)|*.ico" : "PNG / JPEG / BMP|*.png;*.jpg;*.jpeg;*.bmp",
-                CheckFileExists = true, Multiselect = false, RestoreDirectory = true
+                CheckFileExists = true, Multiselect = false, RestoreDirectory = true,
+                Title = title ?? ""
             })
                 if (dialog.ShowDialog(this) == DialogResult.OK)
-                    Change(() => DesktopAppearance.ImportMfe(kind, dialog.FileName));
+                    Change(() => import(dialog.FileName));
         }
 
         private void Change(Action save)
@@ -188,6 +211,10 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                 mfeStartup.Enabled = DesktopAppearance.Store.CanSelectMfe(AppearanceAsset.StartupImage);
             if (savedIcon != null)
                 savedIcon.Enabled = DesktopAppearance.Store.CanSelectSavedIcon();
+            if (missionPlannerIcon != null)
+                missionPlannerIcon.Enabled = DesktopAppearance.Store.CanSelectVendorIcon(ImportedVendorIcon.MissionPlanner);
+            if (titanPlannerIcon != null)
+                titanPlannerIcon.Enabled = DesktopAppearance.Store.CanSelectVendorIcon(ImportedVendorIcon.TitanPlanner);
             warning = DesktopAppearance.IconWarning ?? warning;
             status.Text = UiText.Translate(warning ?? "Default or saved appearance is shown above.");
             return warning;
