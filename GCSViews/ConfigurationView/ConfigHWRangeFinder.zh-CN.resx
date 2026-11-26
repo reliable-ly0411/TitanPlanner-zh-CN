@@ -121,7 +121,7 @@
     <value>启用</value>
   </data>
   <data name="label1.Text" xml:space="preserve">
-    <value>声呐</value>
+    <value>测距传感器</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
@@ -136,4 +136,6 @@
   <data name="label2.Text" xml:space="preserve">
     <value>距离: </value>
   </data>
+  <data name="label1.Size" type="System.Drawing.Size, System.Drawing"><value>114, 24</value></data>
+  <data name="groupBox1.Location" type="System.Drawing.Point, System.Drawing"><value>3, 29</value></data>
 </root>
