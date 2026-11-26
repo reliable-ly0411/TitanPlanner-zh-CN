@@ -694,8 +694,13 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                                 foreach (var val in availableValues)
                                 {
                                     var valParts = val.Split(':');
-                                    splitValues.Add(new KeyValuePair<string, string>(valParts[0].Trim(),
-                                        (valParts.Length > 1) ? valParts[1].Trim() : valParts[0].Trim()));
+                                    var optionKey = valParts[0].Trim();
+                                    var optionText = valParts.Length > 1 ? valParts[1].Trim() : optionKey;
+                                    // Match the verified ArduCopter metadata entry, not the numeric ID alone.
+                                    if (measuredDescription && x.Key == "ADSB_TYPE" && optionKey == "0" &&
+                                        optionText == "Disabled" && MainV2.comPort.MAV.cs.firmware.ToString() == "ArduCopter2")
+                                        optionText += " · " + UiText.Translate("Disable");
+                                    splitValues.Add(new KeyValuePair<string, string>(optionKey, optionText));
                                 }
                                 ;
                                 valueControl.ComboBoxControl.DisplayMember = "Value";
