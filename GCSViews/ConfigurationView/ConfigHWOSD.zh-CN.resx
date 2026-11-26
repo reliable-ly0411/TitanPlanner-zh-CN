@@ -124,6 +124,6 @@
     <value>OSD</value>
   </data>
   <data name="label7.Text" xml:space="preserve">
-    <value>你仅需要在OSD有不更新的问题的时候使用这个</value>
+    <value>仅在 OSD 显示内容不更新时使用。</value>
   </data>
 </root>
