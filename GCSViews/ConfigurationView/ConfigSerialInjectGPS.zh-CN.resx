@@ -96,7 +96,7 @@ Acc：当前测定位置的精度
   <data name="chk_septentriofixedposition.Text" xml:space="preserve"><value>固定位置</value></data>
   <data name="chk_septentriofixedposition.ToolTip" xml:space="preserve"><value>手动输入基站天线的固定位置，而非让接收机自动测定。这可以提高改正数据的精度。
 </value></data>
-  <data name="label14.Text" xml:space="preserve"><value>高度 (WGS84)</value></data>
+  <data name="label14.Text" xml:space="preserve"><value>纬度 (WGS84)</value></data>
   <data name="label17.Text" xml:space="preserve"><value>经度 (WGS84)</value></data>
   <data name="label18.Text" xml:space="preserve"><value>高度 (m)</value></data>
   <data name="button_septentriosetposition.Text" xml:space="preserve"><value>设置位置</value></data>
