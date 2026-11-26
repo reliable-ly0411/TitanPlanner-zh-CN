@@ -585,7 +585,9 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             CMB_modeChannel.DataSource = null;
 
             var list = new System.Collections.Generic.List<System.Collections.Generic.KeyValuePair<int, string>>();
-            list.Add(new System.Collections.Generic.KeyValuePair<int, string>(0, "0 - Disabled"));
+            var disabled = UiText.Translate("Disable");
+            var disabledLabel = disabled == "Disable" ? "0 - Disabled" : "0 - " + disabled;
+            list.Add(new System.Collections.Generic.KeyValuePair<int, string>(0, disabledLabel));
             for (var i = 1; i <= 16; i++)
             {
                 list.Add(new System.Collections.Generic.KeyValuePair<int, string>(i, i.ToString()));
