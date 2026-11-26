@@ -308,7 +308,7 @@
     <value />
   </data>
   <data name="groupBox2.Text" xml:space="preserve">
-    <value>电台</value>
+    <value>遥控</value>
   </data>
   <data name="groupBox2.ToolTip" xml:space="preserve">
     <value />
@@ -329,5 +329,6 @@
     <value />
   </data>
   <data name="LNK_wiki.Text" xml:space="preserve"><value>维基文档</value></data>
-  <data name="label6.Text" xml:space="preserve"><value>低电平计时器</value></data>
+  <data name="label6.Text" xml:space="preserve"><value>低压延时 (s)</value></data>
+  <data name="label6.Location" type="System.Drawing.Point, System.Drawing"><value>4, 1</value></data>
 </root>
