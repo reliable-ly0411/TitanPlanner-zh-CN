@@ -59,6 +59,12 @@ namespace MissionPlanner.GCSViews
         public InitialSetup()
         {
             InitializeComponent();
+            if (!Program.MONO && Environment.OSVersion.Platform == PlatformID.Win32NT)
+            {
+                backstageView.UseSingleDpiMenuWidth = true;
+                // Keep the short navigation labels readable beside a vertical scrollbar.
+                backstageView.WidthMenu = 192;
+            }
         }
 
         public bool isConnected
