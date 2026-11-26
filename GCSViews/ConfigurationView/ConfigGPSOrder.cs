@@ -17,6 +17,23 @@ namespace MissionPlanner.GCSViews.ConfigurationView
         public ConfigGPSOrder()
         {
             InitializeComponent();
+            if (string.Equals(System.Globalization.CultureInfo.CurrentUICulture.Name, "zh-CN", StringComparison.OrdinalIgnoreCase))
+                myDataGridView1.CellFormatting += FormatGpsRowName;
+        }
+
+        private void FormatGpsRowName(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (e.ColumnIndex != nameDataGridViewTextBoxColumn.Index)
+                return;
+            switch (e.Value as string)
+            {
+                case "GPS Override 1": e.Value = "手动指定 GPS 1"; break;
+                case "GPS Override 2": e.Value = "手动指定 GPS 2"; break;
+                case "GPS Detect 1": e.Value = "自动检测 GPS 1"; break;
+                case "GPS Detect 2": e.Value = "自动检测 GPS 2"; break;
+                default: return;
+            }
+            e.FormattingApplied = true;
         }
 
         public void Activate()
