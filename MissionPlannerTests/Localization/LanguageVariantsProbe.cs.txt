@@ -68,15 +68,21 @@ class SettingsUiProbe {
     Check(language.GetItemText(language.Items.Cast<CultureInfo>().Single(c=>c.Name=="zh-CN"))=="中文(简体)2","new label mismatch");
     Check(language.GetItemText(language.Items.Cast<CultureInfo>().Single(c=>c.Name=="zh-Hans"))=="中文(简体)","original label mismatch");
     languageSetting.SetValue(settings,culture,new object[]{"language"});setup.Invoke(view,null);
-    // Upstream's shortcuts section deliberately spans all columns. Keep it
-    // out of the column-count assertion, and verify its separate layout contract.
+    // The desktop appearance and shortcut groups each span all settings columns.
+    // Keep both out of the column-count assertion and verify their separate contract.
     FieldInfo fullWidthField=layout.GetType().GetField("FullWidth",BindingFlags.Public|BindingFlags.Static);
     Check(fullWidthField!=null,"full-width layout marker missing");
     object fullWidthTag=fullWidthField.GetValue(null);
     var columnGroups=layout.Controls.Cast<Control>().Where(c=>c.Visible&&!Object.ReferenceEquals(c.Tag,fullWidthTag)).ToList();
     var fullWidthGroups=layout.Controls.Cast<Control>().Where(c=>c.Visible&&Object.ReferenceEquals(c.Tag,fullWidthTag)).ToList();
     Check(columnGroups.Count>0,"ordinary settings groups missing");
-    Check(fullWidthGroups.Count==1,"keyboard shortcuts full-width group missing/duplicated");
+    const string shortcutsTitle="Keyboard Shortcuts";
+    string expectedShortcutsTitle=enhanced?"键盘快捷键 / "+shortcutsTitle:shortcutsTitle;
+    var shortcutGroups=layout.Controls.Cast<Control>().Where(c=>c.Visible&&c.Text==expectedShortcutsTitle).ToList();
+    var appearanceGroups=layout.Controls.Cast<Control>().Where(c=>c.Visible&&c.Name=="desktopAppearanceGroup").ToList();
+    Check(shortcutGroups.Count==1&&Object.ReferenceEquals(shortcutGroups[0].Tag,fullWidthTag),"keyboard shortcuts full-width group missing/duplicated");
+    Check(appearanceGroups.Count==1&&Object.ReferenceEquals(appearanceGroups[0].Tag,fullWidthTag),"desktop appearance full-width group missing/duplicated");
+    Check(fullWidthGroups.Count==2,"unexpected full-width settings groups");
     // Returning to a narrow viewport catches stale widths and scroll ranges.
     foreach(int width in new[]{640,1024,1600,640}) {
      form.ClientSize=new Size(width,1000);form.PerformLayout();view.PerformLayout();Application.DoEvents();
@@ -86,6 +92,7 @@ class SettingsUiProbe {
       Check(group.Right+group.Margin.Right<=layout.ClientSize.Width-layout.Padding.Right+1,"group clips horizontally at "+width+": "+group.Text);
      }
      if(width==1600) Check(columnGroups.Select(c=>c.Left).Distinct().Count()==3,"wide screen should have three columns");
+     Check(shortcutGroups[0].Top>=appearanceGroups[0].Bottom+appearanceGroups[0].Margin.Bottom,"full-width settings groups overlap or are out of order at "+width);
      foreach(Control wide in fullWidthGroups) {
       Check(wide.Top>=columnGroups.Max(c=>c.Bottom+c.Margin.Bottom),"full-width group overlaps ordinary settings at "+width);
       Check(wide.Left>=layout.Padding.Left&&wide.Left<=columnGroups.Min(c=>c.Left),"full-width group left edge is outside the columns at "+width);
