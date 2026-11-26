@@ -690,6 +690,10 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                                 }
 
                                 var splitValues = new List<KeyValuePair<string, string>>();
+                                var firmware = MainV2.comPort.MAV.cs.firmware.ToString();
+                                var annotateAvoidance = measuredDescription && x.Key == "AVD_ENABLE" &&
+                                    availableValuesRaw == "0:Disabled,1:Enabled" &&
+                                    (firmware == "ArduCopter2" || firmware == "ArduPlane");
                                 // Add the values to the ddl
                                 foreach (var val in availableValues)
                                 {
@@ -697,6 +701,8 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                                     var optionKey = valParts[0].Trim();
                                     var optionText = valParts.Length > 1 ? valParts[1].Trim() : optionKey;
                                     // Match the verified ArduCopter metadata entry, not the numeric ID alone.
+                                    if (annotateAvoidance)
+                                        optionText += optionKey == "0" ? " · 禁用" : " · 启用";
                                     if (measuredDescription && x.Key == "ADSB_TYPE" && optionKey == "0" &&
                                         optionText == "Disabled" && MainV2.comPort.MAV.cs.firmware.ToString() == "ArduCopter2")
                                         optionText += " · " + UiText.Translate("Disable");
