@@ -9,5 +9,9 @@
   "GCSViews/ConfigurationView/ConfigRawParams.resx": {
     "ParameterTreeRoot.Text": "全部",
     "SearchPlaceholder.Text": "搜索"
+  },
+  "GCSViews/ConfigurationView/ConfigMount.resx": {
+    "label25.Text": "X",
+    "label30.Text": "X"
   }
 }
