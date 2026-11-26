@@ -168,6 +168,16 @@ namespace MissionPlanner.Controls
                 [(108, "ModeQRTL")] = "垂直返航模式",
             };
 
+        // Camera captions verified against the ArduPilot RC input-option metadata.
+        private static readonly Dictionary<(int, string), string> AuxiliaryCameraOptionLabels =
+            new Dictionary<(int, string), string>
+            {
+                [(166, "Camera Record Video")] = "相机录像",
+                [(167, "Camera Zoom")] = "相机变焦",
+                [(168, "Camera Manual Focus")] = "相机手动对焦",
+                [(169, "Camera Auto Focus")] = "相机自动对焦",
+            };
+
         internal static string FormatAuxiliaryOption(string firmware, int id, string raw, bool enhancedChinese)
         {
             if (!enhancedChinese || string.IsNullOrWhiteSpace(raw))
@@ -184,6 +194,10 @@ namespace MissionPlanner.Controls
                 else if (firmware == "ArduRover" && (raw == "Acro" || raw == "ACRO Mode"))
                     translation = "转向率与速度控制";
             }
+
+            if (translation == null &&
+                (firmware == "ArduCopter2" || firmware == "ArduRover" || firmware == "ArduPlane"))
+                AuxiliaryCameraOptionLabels.TryGetValue((id, raw), out translation);
 
             if (translation == null)
                 AuxiliaryOptionLabels.TryGetValue((id, raw), out translation);
