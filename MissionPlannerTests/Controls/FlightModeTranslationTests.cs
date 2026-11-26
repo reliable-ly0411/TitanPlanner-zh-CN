@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
+using System.Xml.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MissionPlanner.ArduPilot;
 using MissionPlanner.Controls;
@@ -150,6 +151,7 @@ namespace MissionPlannerTests.Controls
         }
 
         [DataTestMethod]
+        [DoNotParallelize]
         [DataRow(Firmwares.ArduPlane, 26, "AUTOLAND", "Autoland", "自动着陆")]
         [DataRow(Firmwares.ArduRover, 8, "DOCK", "Dock", "自动停靠")]
         public void RecentFirmwareModesUseRealListsAndKeepValuesAcrossThreeLanguages(
@@ -160,24 +162,91 @@ namespace MissionPlannerTests.Controls
             {
                 Assert.AreEqual(26, (int)MAVLink.PLANE_MODE.AUTOLAND);
                 Assert.AreEqual(8, (int)MAVLink.ROVER_MODE.DOCK);
+                // The shipped backup parameter metadata may predate these protocol modes.
+                // The real list must mirror supplied metadata, not inject an available-mode entry.
+                string metadataKey = firmware == Firmwares.ArduPlane ? "FLTMODE1" : "MODE1";
+                var supplied = ParameterMetaDataRepository.GetParameterOptionsInt(metadataKey, firmware.ToString())
+                    .Where(item => item.Key == value).ToArray();
                 var modes = Common.getModesList(firmware);
                 Assert.IsNotNull(modes);
-                var mode = modes.Single(item => item.Key == value);
-                Assert.AreEqual(formatted, mode.Value);
-                Assert.AreEqual(mode.Value, Common.FormatModeName(protocolName));
+                var listed = modes.Where(item => item.Key == value).ToArray();
+                Assert.AreEqual(supplied.Length, listed.Length, "mode availability differs from firmware metadata");
+                for (int i = 0; i < supplied.Length; i++)
+                {
+                    Assert.AreEqual(supplied[i].Key, listed[i].Key);
+                    Assert.AreEqual(Common.FormatModeName(supplied[i].Value), listed[i].Value);
+                }
+
+                AssertModeMetadataFixture(firmware, metadataKey, value, protocolName, formatted);
+
+                // Independently exercise the canonical protocol captions, even with older metadata.
+                var canonical = Common.FormatModeName(protocolName);
+                Assert.AreEqual(formatted, canonical);
                 foreach (var language in new[] { "en-US", "zh-Hans", "zh-CN" })
                 {
                     CultureInfo.CurrentUICulture = new CultureInfo(language);
                     bool enhanced = language == "zh-CN";
-                    var display = FlightModeDisplay.FromMode(mode.Value);
-                    Assert.AreEqual(enhanced ? chinese : mode.Value, display.Primary, language);
-                    Assert.AreEqual(enhanced ? mode.Value : "", display.Secondary, language);
+                    var display = FlightModeDisplay.FromMode(canonical);
+                    Assert.AreEqual(enhanced ? chinese : canonical, display.Primary, language);
+                    Assert.AreEqual(enhanced ? canonical : "", display.Secondary, language);
                     Assert.AreEqual(enhanced, display.IsBilingual, language);
-                    Assert.AreEqual(value, mode.Key);
-                    Assert.AreEqual(formatted, mode.Value);
                 }
             }
             finally { CultureInfo.CurrentUICulture = previous; }
+        }
+
+        private static void AssertModeMetadataFixture(Firmwares firmware, string key, int value,
+            string protocolName, string formatted)
+        {
+            // Exercise the same pdef XML index/parser and Common list entry point, without replacing
+            // files in the installed/user profile or depending on a downloaded firmware snapshot.
+            const BindingFlags flags = BindingFlags.Static | BindingFlags.NonPublic;
+            Type repository = typeof(ParameterMetaDataRepositoryAPMpdef);
+            var documents = (Dictionary<string, XDocument>)repository
+                .GetField("_parameterMetaDataXML", flags).GetValue(null);
+            var indices = (Dictionary<string, Dictionary<string, XElement>>)repository
+                .GetField("_parameterIndex", flags).GetValue(null);
+            var buildIndex = repository.GetMethod("BuildIndex", flags);
+            var cache = typeof(ParameterMetaDataRepository).GetField("_cache", flags).GetValue(null);
+            var remove = cache.GetType().GetMethod("Remove", new[] { typeof(object) });
+            string firmwareKey = firmware == Firmwares.ArduPlane ? "ArduPlane" : "Rover";
+            string cacheKey = key + ParameterMetaDataConstants.Values + firmware;
+            bool hadDocument = documents.TryGetValue(firmwareKey, out var previousDocument);
+            bool hadIndex = indices.TryGetValue(firmwareKey, out var previousIndex);
+            try
+            {
+                foreach (bool present in new[] { false, true })
+                {
+                    var values = new XElement("values", new XElement("value", new XAttribute("code", 0), "MANUAL"));
+                    if (present)
+                        values.Add(new XElement("value", new XAttribute("code", value), protocolName));
+                    var doc = new XDocument(new XElement("paramfile",
+                        new XElement("vehicles", new XElement("parameters", new XAttribute("name", firmwareKey),
+                            new XElement("param", new XAttribute("name", firmwareKey + ":" + key), values)))));
+                    documents[firmwareKey] = doc;
+                    indices[firmwareKey] = (Dictionary<string, XElement>)buildIndex.Invoke(null, new object[] { doc });
+                    remove.Invoke(cache, new object[] { cacheKey });
+
+                    var modes = Common.getModesList(firmware);
+                    Assert.IsTrue(modes.Any(item => item.Key == 0 && item.Value == "Manual"),
+                        "fixture did not reach the metadata loader");
+                    var recent = modes.Where(item => item.Key == value).ToArray();
+                    Assert.AreEqual(present ? 1 : 0, recent.Length, "fixture availability changed");
+                    if (present)
+                    {
+                        Assert.AreEqual(value, recent[0].Key);
+                        Assert.AreEqual(formatted, recent[0].Value);
+                    }
+                }
+            }
+            finally
+            {
+                if (hadDocument) documents[firmwareKey] = previousDocument;
+                else documents.Remove(firmwareKey);
+                if (hadIndex) indices[firmwareKey] = previousIndex;
+                else indices.Remove(firmwareKey);
+                remove.Invoke(cache, new object[] { cacheKey });
+            }
         }
     }
 }
