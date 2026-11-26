@@ -201,6 +201,16 @@ namespace MissionPlanner.Controls
                 (firmware == "ArduCopter2" || firmware == "ArduRover" || firmware == "ArduPlane"))
                 AuxiliaryCameraOptionLabels.TryGetValue((id, raw), out translation);
 
+            // The pinned ArduPilot OPTION metadata declares 300–315 as Scripting1–Scripting16.
+            // Keep other firmware, alternate names, and nearby options on the existing fallback path.
+            if (translation == null && id >= 300 && id <= 315 &&
+                (firmware == "ArduCopter2" || firmware == "ArduRover" || firmware == "ArduPlane"))
+            {
+                var scriptNumber = (id - 299).ToString(System.Globalization.CultureInfo.InvariantCulture);
+                if (raw == "Scripting" + scriptNumber)
+                    translation = "脚本功能 " + scriptNumber;
+            }
+
             if (translation == null)
                 AuxiliaryOptionLabels.TryGetValue((id, raw), out translation);
             return translation == null ? raw : raw + " · " + translation;
