@@ -10951,6 +10951,18 @@ Acc：当前测定位置的精度
     <value>主题名称：</value>
     <comment>"Theme Name:"</comment>
   </data>
+  <data name="2e907d1dda2927f96d39cd4c77a797bd86dca17469be2562df4635d44ea1f28d" xml:space="preserve">
+    <value>经典深色主题</value>
+    <comment>"Theme file: BurntKermit.mpsystheme"</comment>
+  </data>
+  <data name="ea3194d8cfee4c8b2ea8b0057d75592163c6eb1cc758829d335782bb16f80f83" xml:space="preserve">
+    <value>高对比度主题</value>
+    <comment>"Theme file: HighContrast.mpsystheme"</comment>
+  </data>
+  <data name="8326440ba331a41fbb404437d9941ba7607ae50bc5e912649a8099a0f5cf66e3" xml:space="preserve">
+    <value>TitanDynamics 橙色主题</value>
+    <comment>"Theme file: TitanDynamics.mpsystheme"</comment>
+  </data>
   <data name="b66e1965270c7f5271f29c4d8f5dde2420bf375e8de3787fe48a6ef47bf35f91" xml:space="preserve">
     <value>主题编辑器</value>
     <comment>"ThemeEditor"</comment>

@@ -42,6 +42,11 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             CMB_distunits.Format += FormatUnit;
             CMB_speedunits.Format += FormatUnit;
             CMB_altunits.Format += FormatUnit;
+            CMB_theme.Format += (sender, e) =>
+            {
+                if (e.ListItem is string filename)
+                    e.Value = FormatThemeCaption(filename);
+            };
             CMB_mapCache.Format += (sender, e) =>
             {
                 if (e.ListItem is string key)
@@ -799,7 +804,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
 
             CMB_theme.DataSource = ThemeManager.ThemeNames;
 
-            CMB_theme.Text = ThemeManager.thmColor.strThemeName;
+            CMB_theme.SelectedItem = ThemeManager.thmColor.strThemeName;
 
             num_gcsid.Maximum = uint.MaxValue;
             num_gcsid.Value = MAVLinkInterface.gcssysid;
@@ -1587,12 +1592,19 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             }
         }
 
+        private static string FormatThemeCaption(string filename)
+        {
+            var key = "Theme file: " + filename;
+            var translated = UiText.Translate(key);
+            return translated == key ? filename : translated + " (" + filename + ")";
+        }
+
         private void CMB_theme_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (startup)
+            if (startup || !(CMB_theme.SelectedItem is string filename))
                 return;
 
-            ThemeManager.LoadTheme(CMB_theme.Text);
+            ThemeManager.LoadTheme(filename);
             ThemeManager.ApplyThemeTo(MainV2.instance);
             CustomMessageBox.Show(UiText.Translate("You may need to select another tab or restart to see the full effect."));
         }
