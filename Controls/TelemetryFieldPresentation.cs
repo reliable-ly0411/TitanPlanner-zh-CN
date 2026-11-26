@@ -15,7 +15,16 @@ namespace MissionPlanner.Controls
                 return customName;
             if (!string.Equals(CultureInfo.CurrentUICulture.Name, "zh-CN", StringComparison.OrdinalIgnoreCase))
                 return key;
-            var description = CurrentState.GetDisplayText(key);
+            string description;
+            // These fields expose the original HYGROMETER_SENSOR values and units.
+            switch (key)
+            {
+                case "hygrotemp1": description = "1 号温湿度传感器温度 (cdegC)"; break;
+                case "hygrohumi1": description = "1 号温湿度传感器湿度 (c%)"; break;
+                case "hygrotemp2": description = "2 号温湿度传感器温度 (cdegC)"; break;
+                case "hygrohumi2": description = "2 号温湿度传感器湿度 (c%)"; break;
+                default: description = CurrentState.GetDisplayText(key); break;
+            }
             if (string.IsNullOrWhiteSpace(description) || description == key)
                 description = MissingDisplayDescription(key);
             // Attribute placeholders do not guarantee the units of every input path.
