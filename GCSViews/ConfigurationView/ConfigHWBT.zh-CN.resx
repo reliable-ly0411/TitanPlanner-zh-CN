@@ -134,6 +134,7 @@
     <value>波特率</value>
   </data>
   <data name="label3.Text" xml:space="preserve">
-    <value>PIN</value>
+    <value>配对码</value>
   </data>
+  <data name="label3.Location" type="System.Drawing.Point, System.Drawing"><value>93, 86</value></data>
 </root>
