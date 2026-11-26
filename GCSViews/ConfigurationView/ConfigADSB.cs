@@ -582,11 +582,22 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                                 var valueControl = new ValuesControl();
                                 valueControl.Width = tableLayoutPanel1.Width - 50;
                                 valueControl.Name = x.Key;
-                                valueControl.DescriptionText = FitDescriptionText(units, description,
-                                    tableLayoutPanel1.Width);
+                                var measuredDescription = string.Equals(CultureInfo.CurrentUICulture.Name, "zh-CN",
+                                    StringComparison.OrdinalIgnoreCase);
+                                if (!measuredDescription)
+                                    valueControl.DescriptionText = FitDescriptionText(units, description,
+                                        tableLayoutPanel1.Width);
                                 valueControl.LabelText = displayName;
 
                                 ThemeManager.ApplyThemeTo(valueControl);
+                                if (measuredDescription)
+                                {
+                                    var unitText = string.IsNullOrEmpty(units)
+                                        ? string.Empty : string.Format(Strings.Units, units, Environment.NewLine);
+                                    var descriptionText = string.IsNullOrEmpty(description)
+                                        ? string.Empty : Strings.Desc + description;
+                                    valueControl.SetMeasuredDescription(unitText + descriptionText);
+                                }
 
                                 var splitValues = new List<KeyValuePair<string, string>>();
                                 // Add the values to the ddl

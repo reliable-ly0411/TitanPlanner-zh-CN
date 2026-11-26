@@ -26,6 +26,17 @@ namespace MissionPlanner.Controls
               //this.Height += label1.Height;
           }
       }
+      // Opt-in: measure the same WinForms label that renders the unchanged text.
+      public void SetMeasuredDescription(string text)
+      {
+          label1.Text = text;
+          var available = Math.Max(1, label1.ClientSize.Width);
+          var needed = label1.GetPreferredSize(new Size(available, 0)).Height;
+          // The label is top/bottom anchored and the dropdown is bottom anchored.
+          // Grow the row before the host adds it so both bounds remain valid.
+          Height += Math.Max(0, needed - label1.Height);
+      }
+
       public ComboBox ComboBoxControl { get { return comboBox1; } set { comboBox1 = value; } }
 
       #region Interface Properties
