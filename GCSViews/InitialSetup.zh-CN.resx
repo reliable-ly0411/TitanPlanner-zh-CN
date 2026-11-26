@@ -164,7 +164,7 @@
     <value>指南针/电机 校准</value>
   </data>
   <data name="backstageViewPagesonar.Text" xml:space="preserve">
-    <value>声呐</value>
+    <value>测距传感器</value>
   </data>
   <data name="backstageViewPageairspeed.Text" xml:space="preserve">
     <value>空速</value>
