@@ -81,6 +81,16 @@ namespace MissionPlanner.Controls
             this.Width = 700;
         }
 
+        // Opt-in only: let the native label wrap against the available row width.
+        public void SetMeasuredDescription(string text)
+        {
+            label1.MaximumSize = new System.Drawing.Size(Math.Max(1, ClientSize.Width - tableLayoutPanel1.Left
+                - tableLayoutPanel1.Padding.Horizontal - label1.Margin.Horizontal - 3), 0);
+            label1.Text = text;
+            tableLayoutPanel1.PerformLayout();
+            Height = Math.Max(Height, tableLayoutPanel1.Top + panel1.Bottom + tableLayoutPanel1.Padding.Bottom + 3);
+        }
+
         public void setup(string paramname, MAVLink.MAVLinkParamList paramlist)
         {
             this.ParamName = paramname;

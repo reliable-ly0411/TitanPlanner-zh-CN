@@ -563,10 +563,21 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                             bitmask.setup(x.Key, MainV2.comPort.MAV.param);
 
                             bitmask.myLabel1.Text = displayName;
-                            bitmask.label1.Text = FitDescriptionText(units, description, tableLayoutPanel1.Width - 50);
+                            var measuredBitmaskDescription = string.Equals(CultureInfo.CurrentUICulture.Name, "zh-CN",
+                                StringComparison.OrdinalIgnoreCase);
+                            if (!measuredBitmaskDescription)
+                                bitmask.label1.Text = FitDescriptionText(units, description, tableLayoutPanel1.Width - 50);
                             bitmask.Width = tableLayoutPanel1.Width - 50;
 
                             ThemeManager.ApplyThemeTo(bitmask);
+                            if (measuredBitmaskDescription)
+                            {
+                                var unitText = string.IsNullOrEmpty(units)
+                                    ? string.Empty : string.Format(Strings.Units, units, Environment.NewLine);
+                                var descriptionText = string.IsNullOrEmpty(description)
+                                    ? string.Empty : Strings.Desc + description;
+                                bitmask.SetMeasuredDescription(unitText + descriptionText);
+                            }
 
                             // set pos
                             bitmask.Location = new Point(0, y);
