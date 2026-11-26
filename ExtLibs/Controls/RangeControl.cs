@@ -24,6 +24,19 @@ namespace MissionPlanner.Controls
 
         public string DescriptionText;
 
+        private int measuredDescriptionHeight;
+
+        // Opt-in GDI+ measurement for ADS-B; the input controls remain bottom-anchored.
+        public void SetMeasuredDescription(string text)
+        {
+            DescriptionText = text;
+            int previous = Math.Max(39, measuredDescriptionHeight);
+            int available = Math.Max(1, ClientSize.Width - 6);
+            using (var g = CreateGraphics())
+                measuredDescriptionHeight = Math.Max(previous, (int)Math.Ceiling(g.MeasureString(text, Font, available).Height));
+            Height += measuredDescriptionHeight - previous;
+        }
+
         public string LabelText;
 
         public TrackBar TrackBarControl
@@ -165,7 +178,8 @@ namespace MissionPlanner.Controls
             e.Graphics.DrawString(LabelText, FontLabel, new SolidBrush(this.Parent.ForeColor), 3, 0);
 
             e.Graphics.DrawString(DescriptionText, this.Font, new SolidBrush(this.Parent.ForeColor),
-                new RectangleF(3, 15, this.Width, 39));
+                new RectangleF(3, 15, measuredDescriptionHeight == 0 ? Width : Math.Max(1, ClientSize.Width - 6),
+                    measuredDescriptionHeight == 0 ? 39 : measuredDescriptionHeight));
             /*
             e.Graphics.DrawString(LBL_min, this.Font, new SolidBrush(this.Parent.ForeColor),
                 new RectangleF(trackBar1.Left, trackBar1.Bottom - this.Font.Height, 100, this.Font.Height));
