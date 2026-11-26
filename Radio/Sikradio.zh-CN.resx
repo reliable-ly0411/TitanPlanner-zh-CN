@@ -152,7 +152,7 @@
     <value>29, 12</value>
   </data>
   <data name="label3.Text" xml:space="preserve">
-    <value>空速</value>
+    <value>空口速率</value>
   </data>
   <data name="label3.ToolTip" xml:space="preserve">
     <value />
@@ -358,7 +358,7 @@
     <value>29, 12</value>
   </data>
   <data name="label30.Text" xml:space="preserve">
-    <value>空速</value>
+    <value>空口速率</value>
   </data>
   <data name="label30.ToolTip" xml:space="preserve">
     <value />
