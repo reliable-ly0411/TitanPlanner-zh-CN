@@ -507,7 +507,10 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                                 //  increment /= 100;
                             }
 
-                            var desc = FitDescriptionText(units, description, tableLayoutPanel1.Width);
+                            var measuredRangeDescription = string.Equals(CultureInfo.CurrentUICulture.Name, "zh-CN",
+                                StringComparison.OrdinalIgnoreCase);
+                            var desc = measuredRangeDescription ? string.Empty
+                                : FitDescriptionText(units, description, tableLayoutPanel1.Width);
 
                             var rangeControl = new RangeControl(x.Key, desc, displayName, increment, displayscale,
                                 lowerRange, upperRange, value);
@@ -517,6 +520,15 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                             //Console.WriteLine("{0} {1} {2} {3} {4}", x.Key, increment, lowerRange, upperRange, value);
 
                             ThemeManager.ApplyThemeTo(rangeControl);
+
+                            if (measuredRangeDescription)
+                            {
+                                var unitText = string.IsNullOrEmpty(units)
+                                    ? string.Empty : string.Format(Strings.Units, units, Environment.NewLine);
+                                var descriptionText = string.IsNullOrEmpty(description)
+                                    ? string.Empty : Strings.Desc + description;
+                                rangeControl.SetMeasuredDescription(unitText + descriptionText);
+                            }
 
                             if (intValue < lowerRange)
                                 rangeControl.NumericUpDownControl.BackColor = Color.Orange;
