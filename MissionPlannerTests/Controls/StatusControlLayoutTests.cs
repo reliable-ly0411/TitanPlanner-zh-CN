@@ -248,13 +248,17 @@ namespace MissionPlannerTests.Controls
             });
         }
 
-        [TestMethod]
-        public void OrdinaryBilingualCatalogFitsThreeGroupsWithAdjacentValues()
+        [DataTestMethod]
+        [DataRow(1f)]
+        [DataRow(1.2f)]
+        [DataRow(1.4f)]
+        public void OrdinaryBilingualCatalogFitsThreeGroupsWithAdjacentValues(float scale)
         {
             Sta(() =>
             {
                 using (var form = new Form { ClientSize = new Size(900, 140), AutoScaleMode = AutoScaleMode.None })
-                using (var status = new StatusControl { Dock = DockStyle.Fill })
+                using (var font = new Font(SystemFonts.DefaultFont.FontFamily, SystemFonts.DefaultFont.SizeInPoints * scale))
+                using (var status = new StatusControl { Dock = DockStyle.Fill, Font = font })
                 {
                     form.Controls.Add(status);
                     form.Show();
