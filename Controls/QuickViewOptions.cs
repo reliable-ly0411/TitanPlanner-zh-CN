@@ -61,7 +61,11 @@ namespace MissionPlanner.Controls
                     // Enhanced Chinese shares the HUD and Status catalog. Keep the established fallback.
                     var display = field.Name;
                     if (string.Equals(System.Globalization.CultureInfo.CurrentUICulture.Name, "zh-CN", StringComparison.OrdinalIgnoreCase))
+                    {
                         display = TelemetryFieldPresentation.FieldLabel(field.Name);
+                        if (display == field.Name)
+                            display = TelemetryFieldPresentation.Combine(field.Name, PressureFieldDescription(field.Name));
+                    }
                     if (display == field.Name)
                     {
                         var description = UiText.Translate(MainV2.comPort.MAV.cs.GetNameandUnit(field.Name));
@@ -169,6 +173,21 @@ namespace MissionPlanner.Controls
             _initializing = false;
         }
 
+
+        private static string PressureFieldDescription(string key)
+        {
+            // CurrentState keeps the input values rather than normalizing them for display.
+            // Primary temperature can be cdegC (SCALED_PRESSURE) or degC
+            // (HIGHRES_IMU or HIGH_LATENCY); only attach units shared by all input paths.
+            switch (key)
+            {
+                case "press_abs": return "主绝对气压 (hPa)";
+                case "press_temp": return "主温度原值（单位随消息来源）";
+                case "press_abs2": return "第二气压计绝对气压 (hPa)";
+                case "press_temp2": return "第二气压计温度 (cdegC)";
+                default: return null;
+            }
+        }
 
         private int _sourceKeyWidth;
 
