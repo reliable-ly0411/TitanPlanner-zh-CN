@@ -150,6 +150,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             tableLayoutPanel1.Height = Height;
 
             Resize += this_Resize;
+            tableLayoutPanel1.SizeChanged += ReflowMeasuredRows;
 
             BUT_rerequestparams.Click += BUT_rerequestparams_Click;
             BUT_writePIDS.Click += BUT_writePIDS_Click;
@@ -245,6 +246,72 @@ namespace MissionPlanner.GCSViews.ConfigurationView
         protected void this_Resize(object sender, EventArgs e)
         {
             tableLayoutPanel1.Height = Height - 50;
+        }
+
+        // Keep the existing row objects and their bound values when the viewport changes.
+        private bool _rowReflowQueued;
+
+        private void ReflowMeasuredRows(object sender, EventArgs e)
+        {
+            if (_rowReflowQueued || !IsHandleCreated ||
+                !string.Equals(CultureInfo.CurrentUICulture.Name, "zh-CN", StringComparison.OrdinalIgnoreCase))
+                return;
+
+            _rowReflowQueued = true;
+            // WinForms updates the scroll range after its parent finishes resizing.
+            BeginInvoke((Action)delegate
+            {
+                _rowReflowQueued = false;
+                if (!IsDisposed && !Disposing)
+                    ReflowMeasuredRows();
+            });
+        }
+
+        private void ReflowMeasuredRows()
+        {
+            if (!string.Equals(CultureInfo.CurrentUICulture.Name, "zh-CN", StringComparison.OrdinalIgnoreCase))
+                return;
+
+            var width = Math.Max(1, tableLayoutPanel1.Width - 50);
+            if (width < 70 || !tableLayoutPanel1.Visible)
+                return;
+
+            var offset = tableLayoutPanel1.AutoScrollPosition;
+            var top = 10 + offset.Y;
+            tableLayoutPanel1.SuspendLayout();
+            try
+            {
+                foreach (Control row in tableLayoutPanel1.Controls)
+                {
+                    var values = row as ValuesControl;
+                    var range = row as RangeControl;
+                    var mask = row as MavlinkCheckBoxBitMask;
+                    if (values == null && range == null && mask == null)
+                        continue;
+
+                    if (row.Width != width)
+                    {
+                        row.Width = width;
+                        if (values != null)
+                            values.SetMeasuredDescription(values.DescriptionText);
+                        else if (range != null)
+                            range.SetMeasuredDescription(range.DescriptionText);
+                        else
+                            mask.SetMeasuredDescription(mask.label1.Text);
+                    }
+
+                    if (row.Visible)
+                    {
+                        row.Location = new Point(offset.X, top);
+                        top += row.Height;
+                    }
+                }
+                y = top - offset.Y;
+            }
+            finally
+            {
+                tableLayoutPanel1.ResumeLayout(true);
+            }
         }
 
         /// <summary>
