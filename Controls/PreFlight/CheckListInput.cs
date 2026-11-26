@@ -132,6 +132,16 @@ namespace MissionPlanner.Controls.PreFlight
                 case "battery_voltage":
                 case "wp_dist":
                 case "armed":
+                case "ahrs2_alt":
+                case "ahrs2_lat":
+                case "ahrs2_lng":
+                case "ahrs2_pitch":
+                case "ahrs2_roll":
+                case "ahrs2_yaw":
+                case "hygrotemp1":
+                case "hygrohumi1":
+                case "hygrotemp2":
+                case "hygrohumi2":
                     string caption = TelemetryFieldPresentation.FieldLabel(key);
                     if (!caption.StartsWith(key + " (", StringComparison.Ordinal))
                         return key;
