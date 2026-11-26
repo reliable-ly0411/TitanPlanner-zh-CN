@@ -136,7 +136,7 @@
     <value>校准</value>
   </data>
   <data name="label4.Text" xml:space="preserve">
-    <value>5. 电流(计算过)：</value>
+    <value>5. 计算电流</value>
   </data>
   <data name="TXT_battcapacity.Text" xml:space="preserve">
     <value>2200</value>
@@ -148,10 +148,10 @@
     <value>1. 测量电池电压：</value>
   </data>
   <data name="label34.Text" xml:space="preserve">
-    <value>3. 电压分压器(计算过)：</value>
+    <value>3. 分压系数</value>
   </data>
   <data name="label33.Text" xml:space="preserve">
-    <value>2. 电池电压(计算过)：</value>
+    <value>2. 计算电压</value>
   </data>
   <data name="label35.Text" xml:space="preserve">
     <value>6. 安培每伏：</value>
