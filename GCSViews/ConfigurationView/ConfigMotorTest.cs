@@ -22,6 +22,17 @@ namespace MissionPlanner.GCSViews.ConfigurationView
         {
             InitializeComponent();
 
+            // The scrolling surface is the docked panel, not the outer view.
+            AutoScroll = false;
+            panel1.AutoSize = false;
+            panel1.AutoScroll = true;
+            panel1.SizeChanged += MotorTestLayoutChanged;
+            FrameClass.TextChanged += MotorTestLayoutChanged;
+            label2.FontChanged += MotorTestLayoutChanged;
+            tableLayoutPanelMotors.SizeChanged += MotorTestLayoutChanged;
+            webViewFrame.VisibleChanged += MotorTestLayoutChanged;
+            LayoutMotorTest();
+
             MotorFrameImages.Updated += MotorFrameImages_Updated;
             Disposed += (sender, e) => MotorFrameImages.Updated -= MotorFrameImages_Updated;
         }
@@ -184,10 +195,6 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                 tableLayoutPanelMotors.Controls.Add(btnStopAll, 1, motormax);
                 tableLayoutPanelMotors.Controls.Add(btnTestSequence, 2, motormax);
 
-                // Position WebView to the right of the table with 32px spacing
-                PositionWebView();
-                tableLayoutPanelMotors.SizeChanged -= TableLayoutPanelMotors_SizeChanged;
-                tableLayoutPanelMotors.SizeChanged += TableLayoutPanelMotors_SizeChanged;
             }
             finally
             {
@@ -204,18 +211,99 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                 // Resume layout
                 tableLayoutPanelMotors.ResumeLayout(true);
                 this.ResumeLayout(false);
+                LayoutMotorTest();
             }
         }
 
-        private void TableLayoutPanelMotors_SizeChanged(object sender, EventArgs e)
+        private bool layingOutMotorTest;
+
+        private void MotorTestLayoutChanged(object sender, EventArgs e)
         {
-            PositionWebView();
+            LayoutMotorTest();
         }
 
-        private void PositionWebView()
+        // Keep the resource strings and existing interactive controls; only their
+        // positions and the labels' wrapping widths depend on the viewport.
+        private void LayoutMotorTest()
         {
-            // Position WebView 32px to the right of the table, aligned to table top
-            webViewFrame.Location = new Point(tableLayoutPanelMotors.Right + 12, tableLayoutPanelMotors.Top);
+            if (layingOutMotorTest || panel1.IsDisposed || panel1.Width <= 0)
+                return;
+
+            layingOutMotorTest = true;
+            panel1.SuspendLayout();
+            try
+            {
+                const int margin = 8;
+                const int gap = 6;
+                const int diagramGap = 12;
+                // Width (not ClientSize) avoids switching layouts when a vertical
+                // scrollbar appears; always reserve its width.
+                int available = Math.Max(1, panel1.Width - SystemInformation.VerticalScrollBarWidth - 2 * margin);
+                Point scroll = panel1.AutoScrollPosition;
+
+                int top = PlaceMotorTestText(FrameClass, margin, margin, available, scroll) + gap;
+                int captionWidth = new[] { label1, label3, label4, label5 }
+                    .Max(label => TextRenderer.MeasureText(label.Text, label.Font).Width);
+                int entryWidth = new[] { NUM_thr_percent, NUM_duration, NUM_mot_spin_arm, NUM_mot_spin_min }
+                    .Max(entry => entry.Width);
+                int pairWidth = captionWidth + gap + entryWidth;
+                bool twoColumns = pairWidth * 2 + diagramGap <= available;
+                captionWidth = Math.Max(1, Math.Min(captionWidth, available - gap - entryWidth));
+                int secondLeft = margin + pairWidth + diagramGap;
+
+                int row1 = PlaceMotorTestInput(label1, NUM_thr_percent, margin, top, captionWidth, gap, scroll);
+                int row2 = PlaceMotorTestInput(label3, NUM_duration, twoColumns ? secondLeft : margin,
+                    twoColumns ? top : row1 + gap, captionWidth, gap, scroll);
+                top = Math.Max(row1, row2) + gap;
+                int row3 = PlaceMotorTestInput(label4, NUM_mot_spin_arm, margin, top, captionWidth, gap, scroll);
+                int row4 = PlaceMotorTestInput(label5, NUM_mot_spin_min, twoColumns ? secondLeft : margin,
+                    twoColumns ? top : row3 + gap, captionWidth, gap, scroll);
+                top = Math.Max(row3, row4) + gap;
+
+                top = PlaceMotorTestText(label2, margin, top, available, scroll) + gap;
+                top = PlaceMotorTestText(linkLabel1, margin, top, available, scroll) + diagramGap;
+                tableLayoutPanelMotors.Location = new Point(margin + scroll.X, top + scroll.Y);
+                int tableBottom = top + tableLayoutPanelMotors.Height;
+                int contentRight = margin + Math.Max(tableLayoutPanelMotors.Width, captionWidth + gap + entryWidth);
+                int contentBottom = tableBottom;
+
+                // Read the original diagram at its original size. If it no longer
+                // fits beside the table, the same panel scrolls to it below.
+                bool diagramBeside = tableLayoutPanelMotors.Width + diagramGap + webViewFrame.Width <= available;
+                int diagramLeft = diagramBeside ? margin + tableLayoutPanelMotors.Width + diagramGap : margin;
+                int diagramTop = diagramBeside ? top : tableBottom + diagramGap;
+                webViewFrame.Location = new Point(diagramLeft + scroll.X, diagramTop + scroll.Y);
+                if (webViewFrame.Visible)
+                {
+                    contentRight = Math.Max(contentRight, diagramLeft + webViewFrame.Width);
+                    contentBottom = Math.Max(contentBottom, diagramTop + webViewFrame.Height);
+                }
+
+                panel1.AutoScrollMinSize = new Size(contentRight + margin, contentBottom + margin);
+            }
+            finally
+            {
+                panel1.ResumeLayout(true);
+                layingOutMotorTest = false;
+            }
+        }
+
+        private static int PlaceMotorTestInput(Label label, NumericUpDown input, int left, int top,
+            int captionWidth, int gap, Point scroll)
+        {
+            int labelBottom = PlaceMotorTestText(label, left, top, captionWidth, scroll);
+            input.Location = new Point(left + captionWidth + gap + scroll.X, top + scroll.Y);
+            return Math.Max(labelBottom, top + input.Height);
+        }
+
+        private static int PlaceMotorTestText(Label label, int left, int top, int width, Point scroll)
+        {
+            var max = new Size(width, 0);
+            if (label.MaximumSize != max)
+                label.MaximumSize = max;
+            label.AutoSize = true;
+            label.Location = new Point(left + scroll.X, top + scroll.Y);
+            return top + label.Height;
         }
 
         private Dictionary<int, int> GetMotorAssignments()
