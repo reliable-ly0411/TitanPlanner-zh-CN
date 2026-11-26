@@ -156,9 +156,9 @@
   <data name="buttonStart.Text" xml:space="preserve">
     <value>开始</value>
   </data>
-  <data name="label3.Text" xml:space="preserve"><value>电调类型：</value></data>
-  <data name="label4.Text" xml:space="preserve"><value>输出 PWM 最小值</value></data>
-  <data name="label5.Text" xml:space="preserve"><value>输出 PWM 最大值</value></data>
+  <data name="label3.Text" xml:space="preserve"><value>输出协议：</value></data>
+  <data name="label4.Text" xml:space="preserve"><value>PWM 输出下限</value></data>
+  <data name="label5.Text" xml:space="preserve"><value>PWM 输出上限</value></data>
   <data name="label6.Text" xml:space="preserve"><value>解锁时旋转</value></data>
   <data name="label7.Text" xml:space="preserve"><value>最小转速</value></data>
   <data name="label8.Text" xml:space="preserve"><value>最大转速</value></data>
