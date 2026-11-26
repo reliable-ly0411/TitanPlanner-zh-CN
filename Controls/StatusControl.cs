@@ -136,8 +136,16 @@ namespace MissionPlanner.Controls
                         int groupNameLimit = _filteredItems.Count > rows
                             ? Math.Max(_rowHeight * 3, Math.Min(nameLimit, viewport.Width * 29 / 100))
                             : nameLimit;
+                        // On a comfortably wide viewport, budget three complete groups including
+                        // the gaps, padding and each row's full live value. At narrow widths keep
+                        // the usual horizontal scrolling rather than squeeze names into slivers.
+                        int groupWidthForThree = _filteredItems.Count > 2 * rows
+                            ? (viewport.Width - 2 * _padding - 2 * _columnGap) / 3 : 0;
+                        int readableNameWidth = (int)Math.Ceiling(graphics.MeasureString("WWWWWWWW", _boldFont).Width);
+                        if (groupWidthForThree < readableNameWidth + _nameValueGap + _steadyValueWidth)
+                            groupWidthForThree = 0;
                         int width = BuildColumns(rows, groupNameLimit, viewport.Width, nameWidths, valueWidths,
-                            graphics, nameLimit);
+                            graphics, nameLimit, groupWidthForThree);
                         int height = _padding * 2 + Math.Min(rows, _filteredItems.Count) * _rowHeight;
                         int scrollPageHeight = _contentPanel.ClientSize.Height;
                         if (_scrollbarsInsideClient && _contentPanel.HorizontalScroll.Visible)
@@ -156,7 +164,7 @@ namespace MissionPlanner.Controls
         }
 
         private int BuildColumns(int rows, int nameLimit, int availableWidth, int[] nameWidths,
-            int[] valueWidths, Graphics graphics, int trailingNameLimit)
+            int[] valueWidths, Graphics graphics, int trailingNameLimit, int groupWidthForThree)
         {
             _columns.Clear();
             int left = _padding;
@@ -189,11 +197,18 @@ namespace MissionPlanner.Controls
                 for (int row = 0; row < count; row++)
                 {
                     var item = _filteredItems[start + row];
-                    column.Labels[row] = FitName(item.DisplayName ?? item.Name ?? "", nameWidths[start + row],
-                        column.NameWidth, graphics);
-                    column.LabelWidths[row] = Math.Min(column.NameWidth, Math.Max(1,
-                        (int)Math.Ceiling(graphics.MeasureString(column.Labels[row], _boldFont).Width)));
                     column.ValueWidths[row] = Math.Max(1, valueWidths[start + row]);
+                    int rowNameWidth = column.NameWidth;
+                    int nameBudget = groupWidthForThree - _nameValueGap -
+                        Math.Max(_steadyValueWidth, column.ValueWidths[row]);
+                    // Keep a readable name when a long value consumes the budget. The existing
+                    // scrollbar then reaches any extra groups, and the tooltip retains the full label.
+                    if (start + count < _filteredItems.Count && nameBudget >= _rowHeight * 3)
+                        rowNameWidth = Math.Min(rowNameWidth, nameBudget);
+                    column.Labels[row] = FitName(item.DisplayName ?? item.Name ?? "", nameWidths[start + row],
+                        rowNameWidth, graphics);
+                    column.LabelWidths[row] = Math.Min(rowNameWidth, Math.Max(1,
+                        (int)Math.Ceiling(graphics.MeasureString(column.Labels[row], _boldFont).Width)));
                     column.Width = Math.Max(column.Width,
                         column.LabelWidths[row] + _nameValueGap + Math.Max(_steadyValueWidth, column.ValueWidths[row]));
                 }

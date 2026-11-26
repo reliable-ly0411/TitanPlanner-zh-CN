@@ -240,10 +240,41 @@ namespace MissionPlannerTests.Controls
                         Reflow(form);
                         Assert.AreEqual(label, Row<string>(BodyRows(form).Single(), "Label"));
                         Assert.IsNull(Row<string>(BodyRows(form).Single(), "Description"));
-                        form.ClientSize = new Size(260, 110);
-                        CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo("zh-Hans");
+                    }
+                }
+                finally { CultureInfo.CurrentUICulture = language; }
+            });
+        }
+
+        [DataTestMethod]
+        [DataRow("zh-Hans")]
+        [DataRow("en-US")]
+        public void FreshLegacySessionKeepsBilingualShapedLabelsOnOneLine(string culture)
+        {
+            Sta(() =>
+            {
+                var language = CultureInfo.CurrentUICulture;
+                try
+                {
+                    // The real language preference takes effect on restart, not
+                    // during queued layout callbacks for an existing picker.
+                    CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo(culture);
+                    using (var form = new Probe { ClientSize = new Size(260, 110) })
+                    {
+                        form.Show();
+                        const string key = "generator_current";
+                        const string value = "-12.500";
+                        var item = Add(form, key, key + " (发电机蓄电池电流和控制状态)", value);
+                        Set(item, "IsChecked", true);
                         Reflow(form);
-                        Assert.IsNull(Row<string>(BodyRows(form).Single(), "Description"), "Legacy Chinese retains single-line layout.");
+                        var row = BodyRows(form).Single();
+                        Assert.IsNull(Row<string>(row, "Description"), "Legacy sessions retain single-line layout.");
+                        Assert.AreEqual(Field<int>(form, "_rowHeight"), Row<Rectangle>(row, "Bounds").Height);
+                        Assert.AreSame(item, Row<object>(row, "Item"));
+                        Assert.AreEqual(key, Item<string>(item, "Name"));
+                        Assert.AreEqual(value, Item<string>(item, "Value"));
+                        Assert.IsTrue(Item<bool>(item, "IsChecked"));
+                        AssertLayout(form);
                     }
                 }
                 finally { CultureInfo.CurrentUICulture = language; }
