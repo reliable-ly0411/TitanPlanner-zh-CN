@@ -172,6 +172,8 @@ namespace MissionPlanner.Controls
         private static readonly Dictionary<(int, string), string> AuxiliaryCameraOptionLabels =
             new Dictionary<(int, string), string>
             {
+                [(78, "RunCam Control")] = "RunCam 控制",
+                [(79, "RunCam OSD Control")] = "RunCam 屏显控制",
                 [(166, "Camera Record Video")] = "相机录像",
                 [(167, "Camera Zoom")] = "相机变焦",
                 [(168, "Camera Manual Focus")] = "相机手动对焦",
