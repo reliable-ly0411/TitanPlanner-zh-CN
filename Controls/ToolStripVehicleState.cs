@@ -501,11 +501,31 @@ namespace MissionPlanner.Controls
                 _gpsPopup = null;
             };
 
-            // Position below the GPS panel
-            var screenPoint = _gpsPanel.PointToScreen(new Point(0, _gpsPanel.Height));
-            _gpsPopup.StartPosition = FormStartPosition.Manual;
-            _gpsPopup.Location = screenPoint;
-            _gpsPopup.Show(_gpsPanel.FindForm());
+            // Prefer below the GPS panel; on a narrow screen keep the translated popup visible.
+            var anchor = _gpsPanel.RectangleToScreen(_gpsPanel.ClientRectangle);
+            var popup = _gpsPopup;
+            popup.StartPosition = FormStartPosition.Manual;
+            if (MapGpsPresentation.Enhanced)
+            {
+                var area = Screen.FromControl(_gpsPanel).WorkingArea;
+                popup.Location = GetGpsPopupLocation(anchor, popup.GetPreferredSize(Size.Empty), area);
+                popup.SizeChanged += (s, args) => popup.Location = GetGpsPopupLocation(anchor, popup.Size, area);
+            }
+            else
+            {
+                popup.Location = _gpsPanel.PointToScreen(new Point(0, _gpsPanel.Height));
+            }
+            popup.Show(_gpsPanel.FindForm());
+        }
+
+        private static Point GetGpsPopupLocation(Rectangle anchor, Size popup, Rectangle area)
+        {
+            int left = Math.Max(area.Left, Math.Min(anchor.Left, area.Right - popup.Width));
+            int top = anchor.Bottom;
+            if (top + popup.Height > area.Bottom && anchor.Top - popup.Height >= area.Top)
+                top = anchor.Top - popup.Height;
+            top = Math.Max(area.Top, Math.Min(top, area.Bottom - popup.Height));
+            return new Point(left, top);
         }
 
         private void UpdateArmButtonAppearance(bool isArmed)
