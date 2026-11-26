@@ -153,7 +153,7 @@
     <value>47, 12</value>
   </data>
   <data name="label4.Text" xml:space="preserve">
-    <value>关伞PWM</value>
+    <value>待命 PWM</value>
   </data>
   <data name="label5.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -162,7 +162,7 @@
     <value>47, 12</value>
   </data>
   <data name="label5.Text" xml:space="preserve">
-    <value>开伞PWM</value>
+    <value>释放 PWM</value>
   </data>
   <data name="label6.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
