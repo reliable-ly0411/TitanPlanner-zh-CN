@@ -46,15 +46,16 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             AddText(layout, "PNG, JPEG or BMP: up to 16 MiB, 4096 pixels per side. The full image is fitted without cropping. Applies on next startup.");
             layout.Controls.Add(startupPreview);
             layout.Controls.Add(Buttons("Choose startup image...", "Restore default startup image", AppearanceAsset.StartupImage));
-            bool enhancedChinese = string.Equals(System.Globalization.CultureInfo.CurrentUICulture.Name,
-                "zh-CN", StringComparison.Ordinal);
+            var cultureName = System.Globalization.CultureInfo.CurrentUICulture.Name;
+            bool enhancedChinese = string.Equals(cultureName, "zh-CN", StringComparison.Ordinal);
+            bool vendorIconChinese = enhancedChinese || string.Equals(cultureName, "zh-Hans", StringComparison.Ordinal);
             AddText(layout, enhancedChinese ? "\u594b\u6597\u8005\u9884\u8bbe\uff1a\u53ea\u4f7f\u7528\u624b\u52a8\u5bfc\u5165\u7684\u672c\u5730\u7d20\u6750\u3002" :
                 "MakeFlyEasy presets use only files you import locally.");
             AddText(layout, enhancedChinese
                 ? "窗口图标预设使用你本地导入的 ICO，不附带或下载厂商图标。"
                 : "Window icon presets use ICO files you import locally; vendor icons are not bundled or downloaded.");
-            missionPlannerIcon = AddVendorIconRow(layout, ImportedVendorIcon.MissionPlanner, "Mission Planner", enhancedChinese);
-            titanPlannerIcon = AddVendorIconRow(layout, ImportedVendorIcon.TitanPlanner, "TitanPlanner", enhancedChinese);
+            missionPlannerIcon = AddVendorIconRow(layout, ImportedVendorIcon.MissionPlanner, "Mission Planner", vendorIconChinese);
+            titanPlannerIcon = AddVendorIconRow(layout, ImportedVendorIcon.TitanPlanner, "TitanPlanner", vendorIconChinese);
             var mfeIconRow = new FlowLayoutPanel { AutoSize = true, Dock = DockStyle.Fill };
             mfeIcon = PresetButton(mfeIconRow, enhancedChinese ? "\u9009\u62e9\u594b\u6597\u8005\u7a97\u53e3\u56fe\u6807" : "Use MakeFlyEasy window icon",
                 () => DesktopAppearance.SelectMfe(AppearanceAsset.WindowIcon));
@@ -142,11 +143,11 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             return button;
         }
 
-        private Button AddVendorIconRow(TableLayoutPanel layout, ImportedVendorIcon vendor, string brand, bool enhancedChinese)
+        private Button AddVendorIconRow(TableLayoutPanel layout, ImportedVendorIcon vendor, string brand, bool simplifiedChinese)
         {
             var row = new FlowLayoutPanel { AutoSize = true, Dock = DockStyle.Fill, WrapContents = true };
-            string use = enhancedChinese ? "选用 " + brand + " 窗口图标" : "Use " + brand + " window icon";
-            string import = enhancedChinese ? "导入 " + brand + " ICO..." : "Import " + brand + " ICO...";
+            string use = simplifiedChinese ? "选用 " + brand + " 窗口图标" : "Use " + brand + " window icon";
+            string import = simplifiedChinese ? "导入 " + brand + " ICO..." : "Import " + brand + " ICO...";
             var select = PresetButton(row, use, () => DesktopAppearance.SelectVendorIcon(vendor));
             PresetButton(row, import, () => ImportAppearance(AppearanceAsset.WindowIcon,
                 path => DesktopAppearance.ImportVendorIcon(vendor, path), import), wrapSave: false);
