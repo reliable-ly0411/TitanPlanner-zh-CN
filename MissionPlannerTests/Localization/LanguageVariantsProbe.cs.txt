@@ -12,6 +12,57 @@ class SettingsUiProbe {
  static int assertions;
  static void Check(bool ok, string message) { assertions++; if(!ok) throw new Exception(message); }
  static Control Find(Control c,string name) { if(c.Name==name)return c; foreach(Control child in c.Controls){Control found=Find(child,name);if(found!=null)return found;}return null; }
+ static void CheckOsdColors(Control view, Type type, object settings, PropertyInfo setting) {
+  var colors=(ComboBox)Find(view,"CMB_osdcolor");
+  Check(colors.DrawMode==DrawMode.OwnerDrawFixed,"OSD color control must keep drawing swatches");
+  var names=Enum.GetNames(typeof(KnownColor));
+  colors.DataSource=names;
+  Check(colors.Items.Cast<string>().SequenceEqual(names),"OSD color values or order changed");
+
+  var currentCulture=CultureInfo.CurrentUICulture;
+  var startup=type.GetField("startup",BindingFlags.Instance|BindingFlags.NonPublic);
+  object wasStarting=startup.GetValue(view);
+  var settingKey=new object[]{"hudcolor"};
+  object saved=setting.GetValue(settings,settingKey);
+  try {
+   startup.SetValue(view,false);
+   foreach(string language in new[]{"zh-CN","zh-Hans","en-US"}) {
+    CultureInfo.CurrentUICulture=CultureInfo.GetCultureInfo(language);
+    bool enhanced=language=="zh-CN";
+    foreach(string name in names) {
+     string caption=colors.GetItemText(name);
+     Check(enhanced?caption.EndsWith(" ("+name+")",StringComparison.Ordinal):caption==name,
+      language+" OSD color caption: "+name+" -> "+caption);
+    }
+    Check(colors.GetItemText("ActiveBorder")== (enhanced?"活动窗口边框 (ActiveBorder)":"ActiveBorder"),"OSD system color translation");
+    Check(colors.GetItemText("FutureUnknownColor")=="FutureUnknownColor","Unknown OSD color must keep its original name");
+    colors.SelectedItem="AliceBlue";
+    Check((string)colors.SelectedItem=="AliceBlue" && (string)colors.SelectedValue=="AliceBlue","OSD color selection changed the bound value");
+    Check(object.Equals(setting.GetValue(settings,settingKey),saved),"OSD selection changed the saved color");
+    var draw=type.GetMethod("CMB_osdcolor_DrawItem",BindingFlags.Instance|BindingFlags.NonPublic);
+    using(var image=new Bitmap(320,30))
+    using(var graphics=Graphics.FromImage(image)) {
+     var ev=new DrawItemEventArgs(graphics,colors.Font,new Rectangle(0,0,320,30),colors.SelectedIndex,
+      DrawItemState.Selected|DrawItemState.ComboBoxEdit);
+     draw.Invoke(view,new object[]{colors,ev});
+     Check(image.GetPixel(8,12).ToArgb()==Color.AliceBlue.ToArgb(),"OSD swatch did not use the bound color");
+    }
+    var fit=type.GetMethod("FitOsdColorEditCaption",BindingFlags.Instance|BindingFlags.NonPublic);
+    if(enhanced) using(var bitmap=new Bitmap(520,36))
+    using(var graphics=Graphics.FromImage(bitmap)) {
+     string full=colors.GetItemText("GradientInactiveCaption");
+     Check((string)fit.Invoke(view,new object[]{graphics,"GradientInactiveCaption",full,80})==
+      "非活动标题栏渐变","Narrow selected OSD caption must prefer Chinese");
+     Check((string)fit.Invoke(view,new object[]{graphics,"GradientInactiveCaption",full,500})==full,
+      "Wide selected OSD caption should keep both languages");
+    }
+    colors.SelectedItem="ActiveBorder";
+   }
+  } finally {
+   CultureInfo.CurrentUICulture=currentCulture;
+   startup.SetValue(view,wasStarting);
+  }
+ }
  [STAThread] static int Main(string[] args) {
   try {
    Check(Environment.GetEnvironmentVariable("CI") == "true" || System.Diagnostics.Process.GetCurrentProcess().SessionId == 0,"Run this isolated UI probe through the Guest Agent, not on the active desktop.");
@@ -51,6 +102,7 @@ class SettingsUiProbe {
     Type settingsType=utils.GetType("MissionPlanner.Utilities.Settings");
     object settings=settingsType.GetProperty("Instance").GetValue(null,null);
     var languageSetting=settingsType.GetProperty("Item",new[]{typeof(string)});
+    CheckOsdColors(view,type,settings,languageSetting);
     Type localization=main.GetType("MissionPlanner.L10N",true);
     languageSetting.SetValue(settings,"invalid_@@culture",new object[]{"language"});
     Check(((CultureInfo)localization.GetMethod("GetConfigLang").Invoke(null,null)).Name=="zh-CN","invalid saved culture should fall back safely");
@@ -86,6 +138,17 @@ class SettingsUiProbe {
     // Returning to a narrow viewport catches stale widths and scroll ranges.
     foreach(int width in new[]{640,1024,1600,640}) {
      form.ClientSize=new Size(width,1000);form.PerformLayout();view.PerformLayout();Application.DoEvents();
+     if(enhanced) {
+      var colors=(ComboBox)Find(view,"CMB_osdcolor");
+      var resizeColors=type.GetMethod("CMB_osdcolor_DropDown",BindingFlags.Instance|BindingFlags.NonPublic);
+      resizeColors.Invoke(view,new object[]{colors,EventArgs.Empty});
+      // The popup owner draw starts at x+35 and reserves the native scrollbar and border.
+      int available=colors.DropDownWidth-35-SystemInformation.VerticalScrollBarWidth-4;
+      using(var graphics=colors.CreateGraphics())
+       foreach(string name in colors.Items)
+        Check(graphics.MeasureString(colors.GetItemText(name),colors.Font).Width<=available,
+         "OSD color caption clips at "+width+" ("+colors.Width+"px control): "+name);
+     }
      Console.WriteLine("width="+width+" layout="+layout.GetType().Name+" client="+layout.ClientSize+" display="+layout.DisplayRectangle+" padding="+layout.Padding);
      foreach(Control group in layout.Controls) {
       Console.WriteLine("width="+width+" group="+group.Text+" bounds="+group.Bounds);

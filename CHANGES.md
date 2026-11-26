@@ -24,6 +24,9 @@ The HUD and toolbar show the current flight mode in Chinese above a smaller orig
 New Simplified Chinese profiles default to Bing Satellite. Saved map selections and provider coordinate projections are preserved.
 
 Mission altitude references, bundled plugin menu entries and dashboard descriptions use localized display text while retaining protocol values and field keys. Dashboard field selection shows the original identifier beside its description. Vibration axes and mission altitude headers use context-specific labels.
+
+Ground Station Settings shows bilingual OSD color names in enhanced Simplified Chinese. Narrow selection fields show the Chinese name, and the list shows both names.
+
 ## Desktop appearance preferences
 
 The settings include a separate window icon and startup image page with previews, independent default resets, and persistent per-user imports. Window icons update during the session; startup images appear on the next launch. The startup footer identifies the modifier as lyy0405 and retains Michael Oborne and the TitanPlanner upstream credit. EXE, installer and existing shortcut icons retain their build-time identity.

@@ -47,6 +47,18 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                 if (e.ListItem is string filename)
                     e.Value = FormatThemeCaption(filename);
             };
+            CMB_osdcolor.Format += (sender, e) =>
+            {
+                var colorName = e.ListItem as string;
+                if (colorName != null)
+                {
+                    var key = "Color: " + colorName;
+                    var translated = UiText.Translate(key);
+                    if (translated != key)
+                        e.Value = translated + " (" + colorName + ")";
+                }
+            };
+            CMB_osdcolor.DropDown += CMB_osdcolor_DropDown;
             CMB_mapCache.Format += (sender, e) =>
             {
                 if (e.ListItem is string key)
@@ -1508,6 +1520,32 @@ namespace MissionPlanner.GCSViews.ConfigurationView
         {
         }
 
+        private void CMB_osdcolor_DropDown(object sender, EventArgs e)
+        {
+            if (CultureInfo.CurrentUICulture.Name != "zh-CN")
+                return;
+
+            using (var graphics = CMB_osdcolor.CreateGraphics())
+            {
+                var widest = CMB_osdcolor.Items.Cast<string>()
+                    .Select(name => graphics.MeasureString(CMB_osdcolor.GetItemText(name), CMB_osdcolor.Font).Width)
+                    .DefaultIfEmpty(0f).Max();
+                var required = (int)Math.Ceiling(widest) + 35 + SystemInformation.VerticalScrollBarWidth + 4;
+                CMB_osdcolor.DropDownWidth = Math.Max(CMB_osdcolor.Width,
+                    Math.Min(required, Screen.FromControl(CMB_osdcolor).WorkingArea.Width));
+            }
+        }
+
+        private string FitOsdColorEditCaption(Graphics graphics, string name, string caption, int width)
+        {
+            if (graphics.MeasureString(caption, CMB_osdcolor.Font).Width <= width)
+                return caption;
+
+            var key = "Color: " + name;
+            var translated = UiText.Translate(key);
+            return translated == key ? caption : translated;
+        }
+
         private void CMB_osdcolor_DrawItem(object sender, DrawItemEventArgs e)
         {
             if (e.Index < 0)
@@ -1533,8 +1571,23 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                 brush = new SolidBrush(CMB_osdcolor.ForeColor);
             else
                 brush = SystemBrushes.HighlightText;
-            g.DrawString(CMB_osdcolor.Items[e.Index].ToString(),
-                CMB_osdcolor.Font, brush, rect.X + 35, rect.Top + rect.Height - CMB_osdcolor.Font.Height);
+            var name = (string)CMB_osdcolor.Items[e.Index];
+            var caption = CMB_osdcolor.GetItemText(name);
+            var font = CMB_osdcolor.Font;
+            var x = rect.X + 35;
+            var y = rect.Bottom - font.Height;
+            if ((e.State & DrawItemState.ComboBoxEdit) != 0 && CultureInfo.CurrentUICulture.Name == "zh-CN")
+            {
+                // Keep the full bilingual label in the list; favor readable Chinese in a narrow selection field.
+                int width = rect.Right - x - 4;
+                if (width <= 0)
+                    return;
+                caption = FitOsdColorEditCaption(g, name, caption, width);
+                using (var format = new StringFormat(StringFormatFlags.NoWrap) { Trimming = StringTrimming.EllipsisCharacter })
+                    g.DrawString(caption, font, brush, new RectangleF(x, y, width, font.Height + 1), format);
+                return;
+            }
+            g.DrawString(caption, font, brush, x, y);
         }
 
         private void CMB_videosources_Click(object sender, EventArgs e)

@@ -2128,6 +2128,706 @@
     <value>按数值着色</value>
     <comment>"Color-code"</comment>
   </data>
+  <data name="885213a137413499311098985322a7fe78ba8b84fe2026842a5ada65443bb1fd" xml:space="preserve">
+    <value>活动窗口边框</value>
+    <comment>"Color: ActiveBorder"</comment>
+  </data>
+  <data name="07908380972349b315fb8821fcee8a6f48d1ce1a94c1cfe4c3724a57303921e6" xml:space="preserve">
+    <value>活动窗口标题栏</value>
+    <comment>"Color: ActiveCaption"</comment>
+  </data>
+  <data name="c8aee88e86eae903269b8e395dd7440d6d617c0728a07a9600e86a45cb3b0fa2" xml:space="preserve">
+    <value>活动窗口标题文字</value>
+    <comment>"Color: ActiveCaptionText"</comment>
+  </data>
+  <data name="ec240ceadce353072de542f12f5d12f3c76d902425671f6bd9a61e3bbdc7266a" xml:space="preserve">
+    <value>爱丽丝蓝</value>
+    <comment>"Color: AliceBlue"</comment>
+  </data>
+  <data name="2bb8d0d752cebbfe230cd4d64b2392319e021892d84dbba8350720f19065a411" xml:space="preserve">
+    <value>古董白</value>
+    <comment>"Color: AntiqueWhite"</comment>
+  </data>
+  <data name="0b5640c1bf7a668fca099bc165ae51e8672235edbfb470532d3fcdbf5d702339" xml:space="preserve">
+    <value>应用程序工作区</value>
+    <comment>"Color: AppWorkspace"</comment>
+  </data>
+  <data name="710713ec23b4687624bad2e1038201fd75b9ee99bc413ea7b9faeacc7e18b059" xml:space="preserve">
+    <value>水蓝</value>
+    <comment>"Color: Aqua"</comment>
+  </data>
+  <data name="b6b7242e02817070db1241bb0ece1c468e9b3dcb7903c8e2d5d444a551a9d809" xml:space="preserve">
+    <value>碧绿</value>
+    <comment>"Color: Aquamarine"</comment>
+  </data>
+  <data name="fb03f0bc1fb58d6efa813cd5b6e3930c6112fabee0c81eb63053cbc2a27837a9" xml:space="preserve">
+    <value>蔚蓝</value>
+    <comment>"Color: Azure"</comment>
+  </data>
+  <data name="8ba897d5521d8ed945375b9712e6768d08414174c39b86911a0386f13cc61639" xml:space="preserve">
+    <value>米色</value>
+    <comment>"Color: Beige"</comment>
+  </data>
+  <data name="e4650ce28ae21a58c0dd3b775f82e054efc08b14a1ec5f79131b12ecf636ab75" xml:space="preserve">
+    <value>陶坯色</value>
+    <comment>"Color: Bisque"</comment>
+  </data>
+  <data name="1df6ff74a600e98010c0f44e312b5dfb7dcd385565217116732b612664cef24d" xml:space="preserve">
+    <value>黑色</value>
+    <comment>"Color: Black"</comment>
+  </data>
+  <data name="1fe0b5b70b3b85e50e97bb10cf85e0992d32ed456a5477f6763d8a751302577f" xml:space="preserve">
+    <value>杏仁白</value>
+    <comment>"Color: BlanchedAlmond"</comment>
+  </data>
+  <data name="bf807397b6800a3d65a256f54dfac7c818c58c907547a7708c3b6ff57addc619" xml:space="preserve">
+    <value>蓝色</value>
+    <comment>"Color: Blue"</comment>
+  </data>
+  <data name="3d4d20eea44f6153f8906c24be3f62acc855adcfd29ec16a671c3406794e0cd0" xml:space="preserve">
+    <value>蓝紫色</value>
+    <comment>"Color: BlueViolet"</comment>
+  </data>
+  <data name="b7b86c63c90ddd5ba3a1969d63119ed38b71902584ad601b7d830f0570352e71" xml:space="preserve">
+    <value>棕色</value>
+    <comment>"Color: Brown"</comment>
+  </data>
+  <data name="ff5e28fd6c30ed3d3dcacdfe8e5eb7ed3f06a71d43d031070c3d5feba08ce651" xml:space="preserve">
+    <value>原木色</value>
+    <comment>"Color: BurlyWood"</comment>
+  </data>
+  <data name="9b7f3d8a2f9cd93cc45fc86b9b05ce8f30d288322457254ef65ac9d06760e4a1" xml:space="preserve">
+    <value>按钮表面</value>
+    <comment>"Color: ButtonFace"</comment>
+  </data>
+  <data name="968ee8b142dda9631a563b07d7f173f47dd992e774e86ef3dcd95145fc5ed417" xml:space="preserve">
+    <value>按钮高光</value>
+    <comment>"Color: ButtonHighlight"</comment>
+  </data>
+  <data name="2e4c2a2ea74b89d7f0cb77af2654ef185798d40ba26538286556e96b52b8f7b4" xml:space="preserve">
+    <value>按钮阴影</value>
+    <comment>"Color: ButtonShadow"</comment>
+  </data>
+  <data name="4e3f11a9f9dceb9abcb4e17e5c16cca8c5a4927c5f4f8e88b4cc0f13d760d24e" xml:space="preserve">
+    <value>军服蓝</value>
+    <comment>"Color: CadetBlue"</comment>
+  </data>
+  <data name="d7dbdc665d7e5640160cdb881a15683de5d6726c5df3ebb3cf48364bdd44ed39" xml:space="preserve">
+    <value>黄绿色</value>
+    <comment>"Color: Chartreuse"</comment>
+  </data>
+  <data name="28847e92aad2d7cc032f7af1db45ff4e06d9344817abe020d560d78ead641d66" xml:space="preserve">
+    <value>巧克力色</value>
+    <comment>"Color: Chocolate"</comment>
+  </data>
+  <data name="d8077dc37ffd2a640c7257c23130cdddb5b08fe43c4fdb0343e0d08d0c64df0f" xml:space="preserve">
+    <value>控件背景</value>
+    <comment>"Color: Control"</comment>
+  </data>
+  <data name="b4fcacfcb1140be37285b5fd0e6269555c6985a1ce61ece2172cc603ae0f6063" xml:space="preserve">
+    <value>控件阴影</value>
+    <comment>"Color: ControlDark"</comment>
+  </data>
+  <data name="a113951fae405c2fe4d2ef370233c86bb70df69e971dd95b2cebe45f49281e71" xml:space="preserve">
+    <value>控件深阴影</value>
+    <comment>"Color: ControlDarkDark"</comment>
+  </data>
+  <data name="3ed3affcba730aa6b69c03863fef1ba4def62d3b2e9d465dc913a96aa9502726" xml:space="preserve">
+    <value>控件浅色</value>
+    <comment>"Color: ControlLight"</comment>
+  </data>
+  <data name="896789b5cdbbec7486f50a071b104a054b06924c4b41b568ed4b479058c3b392" xml:space="preserve">
+    <value>控件高光</value>
+    <comment>"Color: ControlLightLight"</comment>
+  </data>
+  <data name="8a17bcee9344dd888c9b3485b4fdb4233f5ebbf4018bcc2e9c5b11a323c88bff" xml:space="preserve">
+    <value>控件文字</value>
+    <comment>"Color: ControlText"</comment>
+  </data>
+  <data name="d1d4e238d5d995afdf6a9f6deba3548d4383e3eeabd4d69490d5693ce5e65bc7" xml:space="preserve">
+    <value>珊瑚色</value>
+    <comment>"Color: Coral"</comment>
+  </data>
+  <data name="774f18143ba2e737e98f0ed419051b553d7da3c969dbd686d4e3fe490082f24d" xml:space="preserve">
+    <value>矢车菊蓝</value>
+    <comment>"Color: CornflowerBlue"</comment>
+  </data>
+  <data name="c6becc1f271ad05494bd75a4472ba895c7508e893d0d368599bf1199da96fb9d" xml:space="preserve">
+    <value>玉米丝色</value>
+    <comment>"Color: Cornsilk"</comment>
+  </data>
+  <data name="e68371c7dc8e3af09a94839475675f6853ce472e8722eab114f453455cdd94bb" xml:space="preserve">
+    <value>猩红色</value>
+    <comment>"Color: Crimson"</comment>
+  </data>
+  <data name="273d5f83de61ea7aea27593e6099bd502a2b8c1fe71275856ee4fb58118b79b3" xml:space="preserve">
+    <value>青色</value>
+    <comment>"Color: Cyan"</comment>
+  </data>
+  <data name="b06387296aaef40f4388ac14513f7a899bbd29134ba6fa6ffd82b45e1135273f" xml:space="preserve">
+    <value>深蓝色</value>
+    <comment>"Color: DarkBlue"</comment>
+  </data>
+  <data name="04bc33359ebd0dc99b4f3c50dafffc2e69dbe8dc77555ed87372f6c4edabc257" xml:space="preserve">
+    <value>深青色</value>
+    <comment>"Color: DarkCyan"</comment>
+  </data>
+  <data name="68d4edf2843c56729701c8ab237137d8cf11b3383f0c133b27a7e70f373086e5" xml:space="preserve">
+    <value>深金菊色</value>
+    <comment>"Color: DarkGoldenrod"</comment>
+  </data>
+  <data name="7e402112faf0e13f31c03d4262d4630917eb7ac171c8ab3ab56005743301d803" xml:space="preserve">
+    <value>深灰色</value>
+    <comment>"Color: DarkGray"</comment>
+  </data>
+  <data name="b2b8011c3776a8ab4006fe4c42a9a3226e89767d7a20655a8eeba0758c0e88d8" xml:space="preserve">
+    <value>深绿色</value>
+    <comment>"Color: DarkGreen"</comment>
+  </data>
+  <data name="0a93240a10ce5631795b2fa49d616c0aadd826568b2576d3ef9236d8cdd901f7" xml:space="preserve">
+    <value>深卡其色</value>
+    <comment>"Color: DarkKhaki"</comment>
+  </data>
+  <data name="2c83850d595703b3de4e50b5cf1b443297f56d277f916d07726f150980262458" xml:space="preserve">
+    <value>深洋红色</value>
+    <comment>"Color: DarkMagenta"</comment>
+  </data>
+  <data name="e5ced7f97e2eea54464d543e4fcb08aa7e35c7bb3de7b6a246a440e0bea0054c" xml:space="preserve">
+    <value>深橄榄绿</value>
+    <comment>"Color: DarkOliveGreen"</comment>
+  </data>
+  <data name="a4c03bc5f83706e7209192e4cc11993f9ad2108848acba56de99855cb77efb7b" xml:space="preserve">
+    <value>深橙色</value>
+    <comment>"Color: DarkOrange"</comment>
+  </data>
+  <data name="931554e28733c215d0b24a489409934f10d4ffe9a3a10bb588bb462708ffd847" xml:space="preserve">
+    <value>深兰紫色</value>
+    <comment>"Color: DarkOrchid"</comment>
+  </data>
+  <data name="5863e2c73c2a57257c74ecde1585f070209bec99f7731c1df60e4f4d41beb943" xml:space="preserve">
+    <value>深红色</value>
+    <comment>"Color: DarkRed"</comment>
+  </data>
+  <data name="d1b7d8df34924b485626ac44cfe819b7a26bf08bbbe1d4ef73fed5614ed868f8" xml:space="preserve">
+    <value>深鲑鱼色</value>
+    <comment>"Color: DarkSalmon"</comment>
+  </data>
+  <data name="a5781e35a69ed0a8679f161ce69266fb33ca3021b7f1616a1531286fc729c575" xml:space="preserve">
+    <value>深海绿</value>
+    <comment>"Color: DarkSeaGreen"</comment>
+  </data>
+  <data name="6bb50cbd8d0459ec535f835430c438cc62178c479eb42abc7e151e74bd506f9a" xml:space="preserve">
+    <value>深石板蓝</value>
+    <comment>"Color: DarkSlateBlue"</comment>
+  </data>
+  <data name="3eff97b1f1dd3f2e12227b9463c2d79001f5d6f8bbaeb692006ede91cc77eb75" xml:space="preserve">
+    <value>深石板灰</value>
+    <comment>"Color: DarkSlateGray"</comment>
+  </data>
+  <data name="6649215dd4f4d6089c4ce7800a35b052d3159b697ff2f9618843157dd6a5de96" xml:space="preserve">
+    <value>深绿松石色</value>
+    <comment>"Color: DarkTurquoise"</comment>
+  </data>
+  <data name="194c6f0480dc3c04918add505eac677bd8ce4bc3c66361296bf8b5254362535b" xml:space="preserve">
+    <value>深紫罗兰色</value>
+    <comment>"Color: DarkViolet"</comment>
+  </data>
+  <data name="93f60cfbbcc3b03375a2d6690108ba34a101b4131debfc6a1dc360946956da55" xml:space="preserve">
+    <value>深粉色</value>
+    <comment>"Color: DeepPink"</comment>
+  </data>
+  <data name="9339dbbc8c3276e0aaaeba8ff457a2e2c97a4045835d404c0d87028f749aba58" xml:space="preserve">
+    <value>深天蓝</value>
+    <comment>"Color: DeepSkyBlue"</comment>
+  </data>
+  <data name="65413643612e688daf2ca96c2e01ff15d8e52496bdb57d7ab1e65cdd2521edeb" xml:space="preserve">
+    <value>桌面</value>
+    <comment>"Color: Desktop"</comment>
+  </data>
+  <data name="dcb9066003c4f7b53c54966f3e0db9b584b2ac0c6437761a4d7875dc9ac9de93" xml:space="preserve">
+    <value>暗灰色</value>
+    <comment>"Color: DimGray"</comment>
+  </data>
+  <data name="35e3ba912b6ff56f9002198642cfabb0768e064f8b18a4767ad12b29bf4960a7" xml:space="preserve">
+    <value>道奇蓝</value>
+    <comment>"Color: DodgerBlue"</comment>
+  </data>
+  <data name="e520fe13d878a874634a6d54c20f2f8a1f87bb3688f92e901db0171336cd64ca" xml:space="preserve">
+    <value>砖红色</value>
+    <comment>"Color: Firebrick"</comment>
+  </data>
+  <data name="d7e1fca4b4f5a4405208334f6683bacecd9638d29e31237105cf54938767fc93" xml:space="preserve">
+    <value>花白色</value>
+    <comment>"Color: FloralWhite"</comment>
+  </data>
+  <data name="3a4c90b398705bda5a99b9ceeaa5371812e6429ad40580988ef9f6105029bfd3" xml:space="preserve">
+    <value>森林绿</value>
+    <comment>"Color: ForestGreen"</comment>
+  </data>
+  <data name="93cb8548dacd7fe822611351e5be4e15dbdd3944f6b2dc04b8948dd29890bae2" xml:space="preserve">
+    <value>紫红色</value>
+    <comment>"Color: Fuchsia"</comment>
+  </data>
+  <data name="642437317e72c06b63b46a1f4a1ccb7995f838a7d3f73839cdec320118d81e1c" xml:space="preserve">
+    <value>淡灰色</value>
+    <comment>"Color: Gainsboro"</comment>
+  </data>
+  <data name="391999a24da9e2f70966405b37064096a34403efe5233fd4e865401fb03ac276" xml:space="preserve">
+    <value>幽灵白</value>
+    <comment>"Color: GhostWhite"</comment>
+  </data>
+  <data name="d262237e4bedfab09f1c2ef5a4945b23865b8ed87b1b9faa510da06a47a911d7" xml:space="preserve">
+    <value>金色</value>
+    <comment>"Color: Gold"</comment>
+  </data>
+  <data name="02b77460da837d01299b6d9cc0cf5e9db902f5550a8144b1b743504039799959" xml:space="preserve">
+    <value>金菊色</value>
+    <comment>"Color: Goldenrod"</comment>
+  </data>
+  <data name="fb2120231ef2506289b90e4642984bab0417fa254afc43fecb4a54facd47e2b6" xml:space="preserve">
+    <value>活动标题栏渐变</value>
+    <comment>"Color: GradientActiveCaption"</comment>
+  </data>
+  <data name="69707a42f89199164d9a2bddaeafe60f1a02928737e995104750727ff65e94e9" xml:space="preserve">
+    <value>非活动标题栏渐变</value>
+    <comment>"Color: GradientInactiveCaption"</comment>
+  </data>
+  <data name="edcb32ef9df0342b505f5512647772a4be5e282657682b8c8d03fc9639bfcfbe" xml:space="preserve">
+    <value>灰色</value>
+    <comment>"Color: Gray"</comment>
+  </data>
+  <data name="441ae23904c1e4f3b873d8f261e6ab4b631d2e601fd006a35594cc56f2780372" xml:space="preserve">
+    <value>禁用文字</value>
+    <comment>"Color: GrayText"</comment>
+  </data>
+  <data name="ba04eb8101cec5347965e9f5d6c05f64408d3308254a6ab2bb3ee727d87c86ad" xml:space="preserve">
+    <value>绿色</value>
+    <comment>"Color: Green"</comment>
+  </data>
+  <data name="e7f708961ca6165107e4296b674c42d31270e6b64a82628fcd8a9d2e93e628d0" xml:space="preserve">
+    <value>绿黄色</value>
+    <comment>"Color: GreenYellow"</comment>
+  </data>
+  <data name="063db8075797e3a7eea80defcf27dc69551415b39ac997d0fa2cd6340dbc747d" xml:space="preserve">
+    <value>选中背景</value>
+    <comment>"Color: Highlight"</comment>
+  </data>
+  <data name="32b4c47bfec602366a767c42dbe0fd3462940e0c65165d532c5c692f370a866b" xml:space="preserve">
+    <value>选中文字</value>
+    <comment>"Color: HighlightText"</comment>
+  </data>
+  <data name="bde54b7fda3fd637162dab3cb142d727164dffc00f473f2e4811095f11e3e2bf" xml:space="preserve">
+    <value>蜜瓜色</value>
+    <comment>"Color: Honeydew"</comment>
+  </data>
+  <data name="65d8ed36d5a4b9674efe2bf9d75a61c0ce8c44bf532f46d665df7f130e6fb038" xml:space="preserve">
+    <value>亮粉色</value>
+    <comment>"Color: HotPink"</comment>
+  </data>
+  <data name="6ee4c9dfe94cf1697ffae98b459c0e7bf50c3b15a39723248b809711f97c291c" xml:space="preserve">
+    <value>热点链接</value>
+    <comment>"Color: HotTrack"</comment>
+  </data>
+  <data name="d50d937d09b0c5087277318c82b718af7aff59eb53a726c8f21a516f4b49fea5" xml:space="preserve">
+    <value>非活动窗口边框</value>
+    <comment>"Color: InactiveBorder"</comment>
+  </data>
+  <data name="2f3a43b365fb065db949b746bbbbebb262c6c98042521f87ab338ac264ed734b" xml:space="preserve">
+    <value>非活动窗口标题栏</value>
+    <comment>"Color: InactiveCaption"</comment>
+  </data>
+  <data name="859a3c29e03b4a2a873433e8347e48c782884fd989a17503c2bc0714e060206a" xml:space="preserve">
+    <value>非活动窗口标题文字</value>
+    <comment>"Color: InactiveCaptionText"</comment>
+  </data>
+  <data name="e91c6b1856b63495a46b824d1e4cd161b1deffe0807ca23d6b8c533bcde15854" xml:space="preserve">
+    <value>印度红</value>
+    <comment>"Color: IndianRed"</comment>
+  </data>
+  <data name="02146ac184f2a6cb1ac59b48943d41438e3834c1b7d4e2106f066a09439e951a" xml:space="preserve">
+    <value>靛蓝</value>
+    <comment>"Color: Indigo"</comment>
+  </data>
+  <data name="f0dfe2e9e6df4acd50082aee0030c91188f657a472b72e404f7a757b53fb69e1" xml:space="preserve">
+    <value>提示背景</value>
+    <comment>"Color: Info"</comment>
+  </data>
+  <data name="244ee5ba7ba815f31ca2d981ae8ad4798b0815463b224965ff87fdbbd50eeb6a" xml:space="preserve">
+    <value>提示文字</value>
+    <comment>"Color: InfoText"</comment>
+  </data>
+  <data name="e41afb94d417e313000efc2e4b1726cd2b3761ea6a86f091472ba079ef65e572" xml:space="preserve">
+    <value>象牙白</value>
+    <comment>"Color: Ivory"</comment>
+  </data>
+  <data name="ac7d330c50dc4c7e31c0aedf07ff2d2cb773201a546a2518af4eeb83d528f96b" xml:space="preserve">
+    <value>卡其色</value>
+    <comment>"Color: Khaki"</comment>
+  </data>
+  <data name="9b4aca0fb097054dfe759cde7996a81d6f54abdeff77c936ce30de0cb7552b79" xml:space="preserve">
+    <value>薰衣草色</value>
+    <comment>"Color: Lavender"</comment>
+  </data>
+  <data name="b01cae623fdea53a2e35af706c5b4d158f2c96bb2235cd39366ec85acb460425" xml:space="preserve">
+    <value>淡紫红</value>
+    <comment>"Color: LavenderBlush"</comment>
+  </data>
+  <data name="d769290df2f82404e55670cfe5ea72b41aa45465e2a5b437e945940bde7af647" xml:space="preserve">
+    <value>草坪绿</value>
+    <comment>"Color: LawnGreen"</comment>
+  </data>
+  <data name="922ed2a7cf7220183e6f2724ad1c5b311c6c39c41767ceff7246bd79c763481b" xml:space="preserve">
+    <value>柠檬绸色</value>
+    <comment>"Color: LemonChiffon"</comment>
+  </data>
+  <data name="f505c95eea4cad07a96977d0c2b52b61495b55b9347ab1a986fb431c593688f8" xml:space="preserve">
+    <value>浅蓝色</value>
+    <comment>"Color: LightBlue"</comment>
+  </data>
+  <data name="ded347e7ce13c7962940a010e1b2020855a7c959c4c0d288df80826172e4f729" xml:space="preserve">
+    <value>浅珊瑚色</value>
+    <comment>"Color: LightCoral"</comment>
+  </data>
+  <data name="7da23189d9187a95782fbb6d61a850352f288b0619a60cd0d218c4ce9fb23d8b" xml:space="preserve">
+    <value>浅青色</value>
+    <comment>"Color: LightCyan"</comment>
+  </data>
+  <data name="ab3677a7a598d483abbd3ff1f8948466b245bcae87c1401cecd4e70b4c56b007" xml:space="preserve">
+    <value>浅金菊黄</value>
+    <comment>"Color: LightGoldenrodYellow"</comment>
+  </data>
+  <data name="005205a6fac03b58a163a87d3bb1ec965572274762454bf7925cc3224d6175e4" xml:space="preserve">
+    <value>浅灰色</value>
+    <comment>"Color: LightGray"</comment>
+  </data>
+  <data name="784f685f5bf7b08bf75be5010063082bc6f7715c37bc2768b36a19e4a1f43525" xml:space="preserve">
+    <value>浅绿色</value>
+    <comment>"Color: LightGreen"</comment>
+  </data>
+  <data name="0e7f756d04c32cb1c40adb359327c06a676646e4aef7edcad15b8cdfe1163162" xml:space="preserve">
+    <value>浅粉色</value>
+    <comment>"Color: LightPink"</comment>
+  </data>
+  <data name="703c0a5dbfb920f7dd7f62e9c5ae62b7065d6417a22455838787b027442b560f" xml:space="preserve">
+    <value>浅鲑鱼色</value>
+    <comment>"Color: LightSalmon"</comment>
+  </data>
+  <data name="784b9c1ce628f9ce9c9247251a4cc49c36a034c080add1e52b8038956565cb96" xml:space="preserve">
+    <value>浅海绿</value>
+    <comment>"Color: LightSeaGreen"</comment>
+  </data>
+  <data name="c4b91bf10082e591d18b2a25b70542225529db777576526e342428729963ec80" xml:space="preserve">
+    <value>浅天蓝</value>
+    <comment>"Color: LightSkyBlue"</comment>
+  </data>
+  <data name="3f81adc72d842b3fe3ec195820539f32b30e280372f8cf4cb75aad99513611d3" xml:space="preserve">
+    <value>浅石板灰</value>
+    <comment>"Color: LightSlateGray"</comment>
+  </data>
+  <data name="c5402e7e2efa77d59d3f589d1967559901f728ca1bd4befadf160ef984b9f148" xml:space="preserve">
+    <value>浅钢蓝</value>
+    <comment>"Color: LightSteelBlue"</comment>
+  </data>
+  <data name="1bc47d4a9013b7f58285868e64a677c2e6adcaa44454b224a1972728af7b918f" xml:space="preserve">
+    <value>浅黄色</value>
+    <comment>"Color: LightYellow"</comment>
+  </data>
+  <data name="526676e516a212d59240bb277e868dce0e45f5328daee7368f728868e2d2c8e1" xml:space="preserve">
+    <value>鲜绿色</value>
+    <comment>"Color: Lime"</comment>
+  </data>
+  <data name="02913ac8cbac671263c0bdd758cbb380f8f6fea264c07cfd4a1808bd5d1a03c9" xml:space="preserve">
+    <value>酸橙绿</value>
+    <comment>"Color: LimeGreen"</comment>
+  </data>
+  <data name="3d309e98e0eb2dcad693ea226ac551ba51eb61e52056c0d5e69f3f0c24168789" xml:space="preserve">
+    <value>亚麻色</value>
+    <comment>"Color: Linen"</comment>
+  </data>
+  <data name="3d8bb3792d078b82658d239bf27d58f80cd4ec12bfe4f92309bf789b3298b8c8" xml:space="preserve">
+    <value>洋红色</value>
+    <comment>"Color: Magenta"</comment>
+  </data>
+  <data name="dd11f0b34a90db1af73604fc3167281c7e82110c2c5d012f3ec513ba86dadfa6" xml:space="preserve">
+    <value>栗色</value>
+    <comment>"Color: Maroon"</comment>
+  </data>
+  <data name="d960c802fb4a7533c16074b43b6b1cae1dbafe1988465699b42041da19ee3a95" xml:space="preserve">
+    <value>中碧绿</value>
+    <comment>"Color: MediumAquamarine"</comment>
+  </data>
+  <data name="2f20ce9dfb8211bc58f67412479dab077f599310edf09c480d9ea01690017e1a" xml:space="preserve">
+    <value>中蓝色</value>
+    <comment>"Color: MediumBlue"</comment>
+  </data>
+  <data name="097c6b99a91416f6b51f57befd2b5d5cf66369dc597b4340c7f855f284ad47ac" xml:space="preserve">
+    <value>中兰紫色</value>
+    <comment>"Color: MediumOrchid"</comment>
+  </data>
+  <data name="d3501eb5682355b58682e7e69b986bb92a0623199008107529170b999d17fdc1" xml:space="preserve">
+    <value>中紫色</value>
+    <comment>"Color: MediumPurple"</comment>
+  </data>
+  <data name="c48e10a71b05c906e6d8d7ad5fb54a35342269932dc8633b20c9973f35ba01fc" xml:space="preserve">
+    <value>中海绿</value>
+    <comment>"Color: MediumSeaGreen"</comment>
+  </data>
+  <data name="226aa8ba962f21706f556afcf5ff3d463c34e055b66259007cc7201285ae9685" xml:space="preserve">
+    <value>中石板蓝</value>
+    <comment>"Color: MediumSlateBlue"</comment>
+  </data>
+  <data name="075a2c32e143cb1099802f8d0f0a6a617d492ef3acafd06ac55a95c76d54db01" xml:space="preserve">
+    <value>中春绿色</value>
+    <comment>"Color: MediumSpringGreen"</comment>
+  </data>
+  <data name="bfcb34b2e6585706fc0f3ad9fe8d7b7aae58a66c0579b9f386fdf2c16f282663" xml:space="preserve">
+    <value>中绿松石色</value>
+    <comment>"Color: MediumTurquoise"</comment>
+  </data>
+  <data name="a889d20427aeffbd1c138db7b943344efbb4b4825a058132769a9ee6c785bc7a" xml:space="preserve">
+    <value>中紫红色</value>
+    <comment>"Color: MediumVioletRed"</comment>
+  </data>
+  <data name="13fdc6bffc63ce38574de93756d7e538d8e8c571f8f5906596accbdbe96092ce" xml:space="preserve">
+    <value>菜单背景</value>
+    <comment>"Color: Menu"</comment>
+  </data>
+  <data name="19ce79ca12e417c4d022025e7baef79b5738b61ce49dc1ece7866ab50f7e7619" xml:space="preserve">
+    <value>菜单栏</value>
+    <comment>"Color: MenuBar"</comment>
+  </data>
+  <data name="00b111549af3c44f87a616ebb6cb946a202fb2d59c3aa73f730a01056e4141c2" xml:space="preserve">
+    <value>菜单高亮</value>
+    <comment>"Color: MenuHighlight"</comment>
+  </data>
+  <data name="aa0ab45dc9d15f031bd10c772a4bc2ef31ae4941168447840f0276d0df4f24d4" xml:space="preserve">
+    <value>菜单文字</value>
+    <comment>"Color: MenuText"</comment>
+  </data>
+  <data name="d60c6d66b2e00bdf190c5a9dc35a939076b00c2c2410ac5bd06dfb61601ba913" xml:space="preserve">
+    <value>午夜蓝</value>
+    <comment>"Color: MidnightBlue"</comment>
+  </data>
+  <data name="ab42d72acd5aa20aa038584b55a853296d467c9b4dc7fcc6556851edc88635c8" xml:space="preserve">
+    <value>薄荷乳白</value>
+    <comment>"Color: MintCream"</comment>
+  </data>
+  <data name="740a80b90912ba882e573dcadc236e55611b58ff4c2b42d22a40bfcc7ec99df4" xml:space="preserve">
+    <value>雾玫瑰色</value>
+    <comment>"Color: MistyRose"</comment>
+  </data>
+  <data name="01f9058a468dd138f2792dfd60b330cd8a212bb8f0b3da8c7ba8421b9b82a946" xml:space="preserve">
+    <value>鹿皮色</value>
+    <comment>"Color: Moccasin"</comment>
+  </data>
+  <data name="a2f6d795ac41a6d858accf772c75f763cbc43f7d988ed37d7e1428b5da5a0329" xml:space="preserve">
+    <value>纳瓦霍白</value>
+    <comment>"Color: NavajoWhite"</comment>
+  </data>
+  <data name="bf6750ba3681d8e3b2b50c962b375124134c849cec1b2eec6fb4683397c8d8e3" xml:space="preserve">
+    <value>藏青色</value>
+    <comment>"Color: Navy"</comment>
+  </data>
+  <data name="e80a8c3c38f06ba6d4fb4612f839e365fb27bfcb185d833162eb311f433d285c" xml:space="preserve">
+    <value>旧蕾丝色</value>
+    <comment>"Color: OldLace"</comment>
+  </data>
+  <data name="2d315124b0a6f751c0e839ddb9d61b19a6a2549533dad3e6704168fd78f8f914" xml:space="preserve">
+    <value>橄榄色</value>
+    <comment>"Color: Olive"</comment>
+  </data>
+  <data name="f84fa2b63b433844e6b9514cb68a2f385da17e791a1c971f52350373568d5799" xml:space="preserve">
+    <value>橄榄褐</value>
+    <comment>"Color: OliveDrab"</comment>
+  </data>
+  <data name="51be0c648f7a2b4e55fd6d00be445782b195d9da842a6cf8f60b536f8ec89253" xml:space="preserve">
+    <value>橙色</value>
+    <comment>"Color: Orange"</comment>
+  </data>
+  <data name="a3236b119fd64360630ab5201586fb50bf69532226a74c8dc7d4c0208cdbf451" xml:space="preserve">
+    <value>橙红色</value>
+    <comment>"Color: OrangeRed"</comment>
+  </data>
+  <data name="49919fdb9a2652ad4969594c6984e2740e087db285f3f233dd4ccb8e1daf63c0" xml:space="preserve">
+    <value>兰紫色</value>
+    <comment>"Color: Orchid"</comment>
+  </data>
+  <data name="cfcddf86280ebfa8d2b63173aee0de7a56f230d1531b57183fa682798250c006" xml:space="preserve">
+    <value>淡金菊色</value>
+    <comment>"Color: PaleGoldenrod"</comment>
+  </data>
+  <data name="79d05343be2bff88481403126d15df2b3a9c2225cb1c733bba614f67f3a0da25" xml:space="preserve">
+    <value>淡绿色</value>
+    <comment>"Color: PaleGreen"</comment>
+  </data>
+  <data name="198799e1b9b79d42060889230257de610aa3aa4a064fdf369de7b76e86962a3e" xml:space="preserve">
+    <value>淡绿松石色</value>
+    <comment>"Color: PaleTurquoise"</comment>
+  </data>
+  <data name="d287947b95657ac4b255bca53a99c2890d52c14e1adad46b30633aa0fb50c771" xml:space="preserve">
+    <value>淡紫红色</value>
+    <comment>"Color: PaleVioletRed"</comment>
+  </data>
+  <data name="92af99381fb36a4e6027526a03e81ca1ea554da87840ff0aefb35449fd964f1c" xml:space="preserve">
+    <value>木瓜色</value>
+    <comment>"Color: PapayaWhip"</comment>
+  </data>
+  <data name="a168c4a771e5b14eb8e321c6d1a4fe63aa9055ad02e3eeaad55dc272857bc9cd" xml:space="preserve">
+    <value>桃色</value>
+    <comment>"Color: PeachPuff"</comment>
+  </data>
+  <data name="ce5d37ce6b2757131b313f69f1e1c6a2258d56efc0bf3e8272251bd6a5da0c1c" xml:space="preserve">
+    <value>秘鲁棕</value>
+    <comment>"Color: Peru"</comment>
+  </data>
+  <data name="caefc461ecd4b2a339e39991e09f36cc9dab66f34eecea1279e4366e4d3fe49a" xml:space="preserve">
+    <value>粉色</value>
+    <comment>"Color: Pink"</comment>
+  </data>
+  <data name="fa2abcee2bb807ab5aca85fb109b51c450975da90527380868223ada0b80e000" xml:space="preserve">
+    <value>李子紫</value>
+    <comment>"Color: Plum"</comment>
+  </data>
+  <data name="492c36f15f9feb87fc0d61d1049db2c57d47ed85bec87fe97a575a124f920319" xml:space="preserve">
+    <value>粉蓝色</value>
+    <comment>"Color: PowderBlue"</comment>
+  </data>
+  <data name="6a8eefced15b64c8d8554e6c13bd1378a457067e6b52957fd19f2742fb94ca9c" xml:space="preserve">
+    <value>紫色</value>
+    <comment>"Color: Purple"</comment>
+  </data>
+  <data name="42956d2ee4073796b8412b74543ea2b98269c9306105ccd00c97357c29fa1e96" xml:space="preserve">
+    <value>丽贝卡紫</value>
+    <comment>"Color: RebeccaPurple"</comment>
+  </data>
+  <data name="3e7377565be95f99bc54fad11e553b9566379e37f0d586cce5f450f9c3838465" xml:space="preserve">
+    <value>红色</value>
+    <comment>"Color: Red"</comment>
+  </data>
+  <data name="c84efeabdb1447a56047f14458b4285287fce34f1f1a2d835fcdc9f506562db9" xml:space="preserve">
+    <value>玫瑰棕</value>
+    <comment>"Color: RosyBrown"</comment>
+  </data>
+  <data name="0fe136a285331dc216653c726c2e8e4da8dfc798f0ec8d322b36a429d82e1ab3" xml:space="preserve">
+    <value>宝蓝色</value>
+    <comment>"Color: RoyalBlue"</comment>
+  </data>
+  <data name="6ce9bb097391edae3b3accabae6c54c0a4cdc803bc2004db1df57aa125479054" xml:space="preserve">
+    <value>马鞍棕</value>
+    <comment>"Color: SaddleBrown"</comment>
+  </data>
+  <data name="f04b745134b412bb2258d695c0ae19e93dbdff66816ba3563a3c00d0ad70a639" xml:space="preserve">
+    <value>鲑鱼色</value>
+    <comment>"Color: Salmon"</comment>
+  </data>
+  <data name="f8e8b0e600b9ad46c6e00b59576eb0971df289140d6b784450acd1a143f2cf0f" xml:space="preserve">
+    <value>沙棕色</value>
+    <comment>"Color: SandyBrown"</comment>
+  </data>
+  <data name="cccafa34083f6db761e68b68d829da1f9cc57daa1350921b1b6336dac8dd7dd0" xml:space="preserve">
+    <value>滚动条</value>
+    <comment>"Color: ScrollBar"</comment>
+  </data>
+  <data name="7b000563be3e50e46098be9bf8ae1a1f353ecbdfce278ea13c57d408b8a619f0" xml:space="preserve">
+    <value>海绿色</value>
+    <comment>"Color: SeaGreen"</comment>
+  </data>
+  <data name="2d12484d5a8a1208e99a9ac80546e226ca4b436a6897aab1bd215e2f2b8e41e7" xml:space="preserve">
+    <value>贝壳色</value>
+    <comment>"Color: SeaShell"</comment>
+  </data>
+  <data name="a06dfef3bcdcd939223e2f849b0cd16eafb0ad5a689077efb4ee092cd9ced94b" xml:space="preserve">
+    <value>赭色</value>
+    <comment>"Color: Sienna"</comment>
+  </data>
+  <data name="22e7184df483a7ccf39437367e67071a8f04811459b9a889f205efab79b2a088" xml:space="preserve">
+    <value>银色</value>
+    <comment>"Color: Silver"</comment>
+  </data>
+  <data name="43aaa75be2eb27ab04cdb42f33562c26788e6c706350530f380b80ea1883aac6" xml:space="preserve">
+    <value>天蓝色</value>
+    <comment>"Color: SkyBlue"</comment>
+  </data>
+  <data name="abb53046647cc59d795edb31d9297f97e80620c8077b604de182c550cd41fff2" xml:space="preserve">
+    <value>石板蓝</value>
+    <comment>"Color: SlateBlue"</comment>
+  </data>
+  <data name="27f3ec359d57e0b2140f96ebe4c1991df743d38fe2380b534a04d5ef2c9533ac" xml:space="preserve">
+    <value>石板灰</value>
+    <comment>"Color: SlateGray"</comment>
+  </data>
+  <data name="6df2677c33b0b6c569778edd8fb5ab1bd13f56dff36bea54e4e42b114c490767" xml:space="preserve">
+    <value>雪白色</value>
+    <comment>"Color: Snow"</comment>
+  </data>
+  <data name="ce6ddbaa02064efaba5be391f64dcfb4de19c70d89353008de723ac4d1f780a5" xml:space="preserve">
+    <value>春绿色</value>
+    <comment>"Color: SpringGreen"</comment>
+  </data>
+  <data name="d2dfc86142f8d9e1238e6691eadf69c61925114d1011fcbd20bd370887284ec2" xml:space="preserve">
+    <value>钢蓝色</value>
+    <comment>"Color: SteelBlue"</comment>
+  </data>
+  <data name="94e778ee3927a3813df50d25369131ca094525ba4b6677b8c250e34f455407e6" xml:space="preserve">
+    <value>棕褐色</value>
+    <comment>"Color: Tan"</comment>
+  </data>
+  <data name="bc13e6044692657b3f1be021b99ff33792ea5a7f1519d724d6f9e764b41e42d0" xml:space="preserve">
+    <value>蓝绿色</value>
+    <comment>"Color: Teal"</comment>
+  </data>
+  <data name="c93c251fa1447b804644e377ead4a631bd860c2cfb9fd00e7939d81828562531" xml:space="preserve">
+    <value>蓟色</value>
+    <comment>"Color: Thistle"</comment>
+  </data>
+  <data name="799309824c7c51018115117cdc3e4a74f2538ad5e9e7560f2f5d8e893a063ae1" xml:space="preserve">
+    <value>番茄红</value>
+    <comment>"Color: Tomato"</comment>
+  </data>
+  <data name="b725d2a41db2613312b44f87906b68f1a48cfa7e4a1560c9f05e8578fa014ac2" xml:space="preserve">
+    <value>透明</value>
+    <comment>"Color: Transparent"</comment>
+  </data>
+  <data name="5f253c7d4eee9195523d7e1c627e6db022916999362c90e57021d7864c029b18" xml:space="preserve">
+    <value>绿松石色</value>
+    <comment>"Color: Turquoise"</comment>
+  </data>
+  <data name="bc9792505175926cd8d7e894cff6d304bd44ac22f05ece86ba513cad6f69ec69" xml:space="preserve">
+    <value>紫罗兰色</value>
+    <comment>"Color: Violet"</comment>
+  </data>
+  <data name="bbf9cbc1daa7c4e9b31dd0a5c0e4b5624b9d7a4114ff1a1abf88e6fdb47e4c06" xml:space="preserve">
+    <value>小麦色</value>
+    <comment>"Color: Wheat"</comment>
+  </data>
+  <data name="5ab462a34830100122d73e7b56d1c1c763862e8a12aa087f8f9787e59d0ae756" xml:space="preserve">
+    <value>白色</value>
+    <comment>"Color: White"</comment>
+  </data>
+  <data name="1f297320a8db61d9d6ca559a226fb3a81c87c470ac6ecd3d96c0f338eb464a32" xml:space="preserve">
+    <value>烟白色</value>
+    <comment>"Color: WhiteSmoke"</comment>
+  </data>
+  <data name="440ee947559dc62a563b76925403c57c99ac6c2204898426d3dc28db06d30730" xml:space="preserve">
+    <value>窗口背景</value>
+    <comment>"Color: Window"</comment>
+  </data>
+  <data name="91017611f0075c5ee5c6e51dc0386d0d7fb0217fff71dfa711924887cfd1c994" xml:space="preserve">
+    <value>窗口边框</value>
+    <comment>"Color: WindowFrame"</comment>
+  </data>
+  <data name="e0e62931cbbc8c32727119c596412a3ba28214bc1a7e0dc6e6751ac91eeed722" xml:space="preserve">
+    <value>窗口文字</value>
+    <comment>"Color: WindowText"</comment>
+  </data>
+  <data name="24aee9032569a87cf10bf74f1a25af15373057e93edff70bfa2295fcb4056457" xml:space="preserve">
+    <value>黄色</value>
+    <comment>"Color: Yellow"</comment>
+  </data>
+  <data name="cc34b540f21b7663652e64b768319d1e5cf4a288e821d89c3329640b29edaddc" xml:space="preserve">
+    <value>黄绿色</value>
+    <comment>"Color: YellowGreen"</comment>
+  </data>
   <data name="a32ed73c9dbc7d86e36e84f55cd531493d4393612af7f209987b5b0f38ba541e" xml:space="preserve">
     <value>颜色名称</value>
     <comment>"ColorName"</comment>
