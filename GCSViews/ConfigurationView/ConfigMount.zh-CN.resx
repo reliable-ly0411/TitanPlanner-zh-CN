@@ -357,8 +357,8 @@
   <data name="label6.Text" xml:space="preserve"><value>横滚</value></data>
   <data name="LNK_wiki.Text" xml:space="preserve"><value>维基文档</value></data>
   <data name="label15.Text" xml:space="preserve"><value>平摇</value></data>
-  <data name="label25.Text" xml:space="preserve"><value>DSMX对频</value></data>
-  <data name="label30.Text" xml:space="preserve"><value>DSMX对频</value></data>
+  <data name="label25.Text" xml:space="preserve"><value>X</value></data>
+  <data name="label30.Text" xml:space="preserve"><value>X</value></data>
   <data name="label43.Text" xml:space="preserve"><value>类型</value></data>
   <data name="label44.Text" xml:space="preserve"><value>注意：云台类型将在飞控下次重启后生效</value></data>
 </root>
