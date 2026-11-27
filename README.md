@@ -40,3 +40,7 @@ These source-level captures use synthetic data; they are not full product or use
 | `issue-36/appearance36-420.png` | `57ee418c2e430aeb1cf024e22e7c0060918b96cd54c2af576e615ec9fa844c29` |
 | `issue-36/appearance36-670.png` | `78c3d7bb07b743d50813a07dbfe5390be15dc1081b2d9aeed0c64b78695a8cef` |
 | `issues-40-42/quickview-options-popup.png` | `1bd3d6b8d42808bf3c6b7d7538f0fd474a05a42c4b5a95e3864a18951d7203b1` |
+
+## Opening image #22 / #225
+
+Same synthetic 3840×480 input, genuine Windows GDI+ production renderer into a 660×400 bitmap tagged **144 DPI**. This is offscreen render DPI, not the computer's scaling. The old source already did not paint a background; the comparison isolates the change from zero to three visible outline credit lines on the same ultra-wide image. Before `ac9ebb4`; after `405a7bd`. No full application or vendor imagery.
