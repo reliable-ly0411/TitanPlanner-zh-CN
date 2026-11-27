@@ -493,23 +493,14 @@ namespace MissionPlanner.Controls
         // Runs when the user types in the box, but not when the text is changed programatically
         private void CMB_Source_TextUpdate(object sender, EventArgs e)
         {
-            List<Tuple<string, string>> filtered_fields;
-            
-            // Back up cursor position and text
+            // Preserve the edit text and search both original field keys and visible labels.
             int cursor_pos = CMB_Source.SelectionStart;
-            string searchText = CMB_Source.Text.ToLower();
-            if (false)//CMB_Source.SelectedIndex > 0 || searchText == "")
-            {
-                filtered_fields = new List<Tuple<string, string>>(all_fields);
-            }
-            else
-            {
-                // Check all the fields in the table and see if any of them contain `searchText` as a DisplayName
-                filtered_fields = all_fields.Where(f => f.Item2.ToLower().Contains(searchText.ToLower())).ToList();
-                CMB_Source.DroppedDown = true;
-                Cursor.Current = Cursors.Default;
-            }
+            string searchText = CMB_Source.Text;
+            var filtered_fields = all_fields.Where(field =>
+                TelemetryFieldPresentation.Matches(searchText, field.Item1, field.Item2)).ToList();
 
+            CMB_Source.DroppedDown = true;
+            Cursor.Current = Cursors.Default;
             CMB_Source.DataSource = filtered_fields;
             CMB_Source.Text = searchText;
             CMB_Source.SelectionStart = cursor_pos;
