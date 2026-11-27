@@ -9176,6 +9176,1446 @@
       "recordSha256": "c54c250baa4edb4a1fa14f5cc96d0ec96c48c8b9f1c96e70d0a93e84517afdd7",
       "english": "Vertical position on screen",
       "chinese": "设置 OSD 第 4 屏上时钟的垂直位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD1_FLTIME_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "ebd81c408209e132984c85adcdd9b139e40311a61803ecb3c887f20046d1c8d4",
+      "recordSha256": "7f5452eea28000eb38aa9605f9782207a4b1c0f0c36e4cd8274fc3f600a0cb71",
+      "english": "Displays total flight time",
+      "chinese": "选择是否在 OSD 第 1 屏以分钟和秒显示飞控在本次开机期间累计的飞行时间。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD1_FLTIME_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "2b805e46a7e4063f1959243b109efa1704d5ff670698f3c890f6b0e1ec796625",
+      "english": "Horizontal position on screen",
+      "chinese": "设置 OSD 第 1 屏上累计飞行时间的水平位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD1_FLTIME_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "8dec180486bd8099072afc2f64063d33e263e1e5463de379a8d27d9ee4761de2",
+      "english": "Vertical position on screen",
+      "chinese": "设置 OSD 第 1 屏上累计飞行时间的垂直位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD1_TEMP_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "bfed00eb34feca34107073d104f5ab9306f8d63d4a4691aefa659290c0f06cbb",
+      "recordSha256": "51fe5f66bc27b7e5bac2c58be20adfeebb796827e271c30b4945ccf17d9d19a2",
+      "english": "Displays temperature reported by primary barometer",
+      "chinese": "选择是否在 OSD 第 1 屏显示主气压计报告的温度。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD1_TEMP_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "3ce4a0472eb22c63d1d856fcf70546aabdcd88bfe3c372f27115f535cd324fd0",
+      "english": "Horizontal position on screen",
+      "chinese": "设置 OSD 第 1 屏上主气压计温度的水平位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD1_TEMP_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "529692148310c1d1ffca86657a63a9ccab2dd1cd82d5c991debc69b31e146022",
+      "english": "Vertical position on screen",
+      "chinese": "设置 OSD 第 1 屏上主气压计温度的垂直位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD1_BTEMP_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "0b2e71d32be704b7f7628b291d998947ea253add0d76689620fe9a5fae9002a8",
+      "recordSha256": "622554c476a1b8b75fb8053393906b0231dab7e9d23c6c56ba3a3bbb68e461a5",
+      "english": "Displays temperature reported by secondary barometer",
+      "chinese": "选择是否在 OSD 第 1 屏显示第二个气压计报告的温度。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD1_BTEMP_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "c562dd86371dc2d21321a664983578e67e1327fb7366667f800241ce68721255",
+      "english": "Horizontal position on screen",
+      "chinese": "设置 OSD 第 1 屏上第二个气压计温度的水平位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD1_BTEMP_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "09f492c2756ba9e606f0de05062bbca5bc5236a7f295cab64a9103407d0fde4d",
+      "english": "Vertical position on screen",
+      "chinese": "设置 OSD 第 1 屏上第二个气压计温度的垂直位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD2_FLTIME_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "ebd81c408209e132984c85adcdd9b139e40311a61803ecb3c887f20046d1c8d4",
+      "recordSha256": "68b6c8d09fb1c796e71e8417fbc3dd762b45033ec644a10b33eb4de2543aa45d",
+      "english": "Displays total flight time",
+      "chinese": "选择是否在 OSD 第 2 屏以分钟和秒显示飞控在本次开机期间累计的飞行时间。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD2_FLTIME_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "90509a05d56b185a403ec6164112ad9edec420448d3e4adcee6fbdf8514f126b",
+      "english": "Horizontal position on screen",
+      "chinese": "设置 OSD 第 2 屏上累计飞行时间的水平位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD2_FLTIME_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "2d0e17df90d9f05dcbc4950847c688c0f0dc5e566bdcbd473e955e01e896db95",
+      "english": "Vertical position on screen",
+      "chinese": "设置 OSD 第 2 屏上累计飞行时间的垂直位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD2_TEMP_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "bfed00eb34feca34107073d104f5ab9306f8d63d4a4691aefa659290c0f06cbb",
+      "recordSha256": "a4ca6d82b76b15126874fba59691e41a8c6821d202edb2b44ff75fa693014b6d",
+      "english": "Displays temperature reported by primary barometer",
+      "chinese": "选择是否在 OSD 第 2 屏显示主气压计报告的温度。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD2_TEMP_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "824df85d49024ca2830519d030dbb23ea0a0f7558533962b0670d9b4c2a06129",
+      "english": "Horizontal position on screen",
+      "chinese": "设置 OSD 第 2 屏上主气压计温度的水平位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD2_TEMP_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "c3da4635edab0e3e15d34679eba96a227a37040dcbddc4a21c0c918ae38aee56",
+      "english": "Vertical position on screen",
+      "chinese": "设置 OSD 第 2 屏上主气压计温度的垂直位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD2_BTEMP_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "0b2e71d32be704b7f7628b291d998947ea253add0d76689620fe9a5fae9002a8",
+      "recordSha256": "9ea6a9c4653185ad397f91fa338c8085eeca188b01556f3018c49b59df47db56",
+      "english": "Displays temperature reported by secondary barometer",
+      "chinese": "选择是否在 OSD 第 2 屏显示第二个气压计报告的温度。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD2_BTEMP_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "f9506d15ee57ae555b6b4cd077fc0f247d70f7036026a963b93e27ce653b0f8a",
+      "english": "Horizontal position on screen",
+      "chinese": "设置 OSD 第 2 屏上第二个气压计温度的水平位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD2_BTEMP_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "b1bc059dec80e796d855b09fd039c8b3cc3104686a2dad14cb7c5f742ad54484",
+      "english": "Vertical position on screen",
+      "chinese": "设置 OSD 第 2 屏上第二个气压计温度的垂直位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD3_FLTIME_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "ebd81c408209e132984c85adcdd9b139e40311a61803ecb3c887f20046d1c8d4",
+      "recordSha256": "8b88d7a24a94555e00ab9ff5ca57e83befe5173cc8b4d40e711db666121e80ee",
+      "english": "Displays total flight time",
+      "chinese": "选择是否在 OSD 第 3 屏以分钟和秒显示飞控在本次开机期间累计的飞行时间。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD3_FLTIME_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "f602c6f7463e54e00087ad3eef9da95f28d5c7efee44b5a34e92e0b9bfe76b74",
+      "english": "Horizontal position on screen",
+      "chinese": "设置 OSD 第 3 屏上累计飞行时间的水平位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD3_FLTIME_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "1a8f1d29edbf1633fc6c3fd44fee8c4affa7a499ad9a6416766e95ce34c4715c",
+      "english": "Vertical position on screen",
+      "chinese": "设置 OSD 第 3 屏上累计飞行时间的垂直位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD3_TEMP_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "bfed00eb34feca34107073d104f5ab9306f8d63d4a4691aefa659290c0f06cbb",
+      "recordSha256": "cdbb5ad119ed4dcc7c08ef190ae6c91090d7ec3a62440402e8be6aff332e8936",
+      "english": "Displays temperature reported by primary barometer",
+      "chinese": "选择是否在 OSD 第 3 屏显示主气压计报告的温度。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD3_TEMP_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "bbb216c5625bbb327f4f5af0298870f50dcb17ee2f636bf2b1083670a1da6d28",
+      "english": "Horizontal position on screen",
+      "chinese": "设置 OSD 第 3 屏上主气压计温度的水平位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD3_TEMP_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "360f329eed99369a62a883a390863e1c68a660a1ac8e97114123986215264ceb",
+      "english": "Vertical position on screen",
+      "chinese": "设置 OSD 第 3 屏上主气压计温度的垂直位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD3_BTEMP_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "0b2e71d32be704b7f7628b291d998947ea253add0d76689620fe9a5fae9002a8",
+      "recordSha256": "5d69bf8779a157d3bec249342cde0ba64563cb6840a3f7d10ab0773d3e727070",
+      "english": "Displays temperature reported by secondary barometer",
+      "chinese": "选择是否在 OSD 第 3 屏显示第二个气压计报告的温度。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD3_BTEMP_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "ba7c2cf04d09d326a793dc8eb534d5db3667fdf9b7e77bcf8d1e3d7cee763da5",
+      "english": "Horizontal position on screen",
+      "chinese": "设置 OSD 第 3 屏上第二个气压计温度的水平位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD3_BTEMP_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "6b3137e4ef089014dc50a28906fde232bdb28ee3a056b4e8632dd923b7d36aa9",
+      "english": "Vertical position on screen",
+      "chinese": "设置 OSD 第 3 屏上第二个气压计温度的垂直位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD4_FLTIME_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "ebd81c408209e132984c85adcdd9b139e40311a61803ecb3c887f20046d1c8d4",
+      "recordSha256": "ffd35b5f292c81eafc4ad434564766da9fc51a5b003e1e2898d9908a858c260e",
+      "english": "Displays total flight time",
+      "chinese": "选择是否在 OSD 第 4 屏以分钟和秒显示飞控在本次开机期间累计的飞行时间。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD4_FLTIME_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "f15a8034b3c6f96a2c45dc45a873f50c576fe48b8f88933a1e52fea3156f8176",
+      "english": "Horizontal position on screen",
+      "chinese": "设置 OSD 第 4 屏上累计飞行时间的水平位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD4_FLTIME_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "2a424d0892a6be947afec8b87fa15c9cdf456fac47806aabe1a80685d3e308fd",
+      "english": "Vertical position on screen",
+      "chinese": "设置 OSD 第 4 屏上累计飞行时间的垂直位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD4_TEMP_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "bfed00eb34feca34107073d104f5ab9306f8d63d4a4691aefa659290c0f06cbb",
+      "recordSha256": "a0f1dea9f40cf07d7382fac885afc0b0b20abb60dc08c8a026a0ee0abcc33777",
+      "english": "Displays temperature reported by primary barometer",
+      "chinese": "选择是否在 OSD 第 4 屏显示主气压计报告的温度。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD4_TEMP_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "a337e49c48f1d602155dcae0f5a6e046a998b0a67a6cdd39c040f4bdf0299024",
+      "english": "Horizontal position on screen",
+      "chinese": "设置 OSD 第 4 屏上主气压计温度的水平位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD4_TEMP_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "bd591ce11e6583278fea4ee9a23e7170f102a2b342600830db4860cd4e3147dd",
+      "english": "Vertical position on screen",
+      "chinese": "设置 OSD 第 4 屏上主气压计温度的垂直位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD4_BTEMP_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "0b2e71d32be704b7f7628b291d998947ea253add0d76689620fe9a5fae9002a8",
+      "recordSha256": "cb157db9643ecc597fb5ef87dc5c609ae2ef6f40047b8f7cf6cf1c29983c5b78",
+      "english": "Displays temperature reported by secondary barometer",
+      "chinese": "选择是否在 OSD 第 4 屏显示第二个气压计报告的温度。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD4_BTEMP_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "f72665adcafe0aad91db91901ccb639406afe01ba26e938ee93cdd139e19a57a",
+      "english": "Horizontal position on screen",
+      "chinese": "设置 OSD 第 4 屏上第二个气压计温度的水平位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD4_BTEMP_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "39ca0d19036c1e425fd50866ce8987f92a83d94f425ba832094ed4e74e277e33",
+      "english": "Vertical position on screen",
+      "chinese": "设置 OSD 第 4 屏上第二个气压计温度的垂直位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD1_FLTIME_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "ebd81c408209e132984c85adcdd9b139e40311a61803ecb3c887f20046d1c8d4",
+      "recordSha256": "7f5452eea28000eb38aa9605f9782207a4b1c0f0c36e4cd8274fc3f600a0cb71",
+      "english": "Displays total flight time",
+      "chinese": "选择是否在 OSD 第 1 屏以分钟和秒显示飞控在本次开机期间累计的飞行时间。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD1_FLTIME_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "2b805e46a7e4063f1959243b109efa1704d5ff670698f3c890f6b0e1ec796625",
+      "english": "Horizontal position on screen",
+      "chinese": "设置 OSD 第 1 屏上累计飞行时间的水平位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD1_FLTIME_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "8dec180486bd8099072afc2f64063d33e263e1e5463de379a8d27d9ee4761de2",
+      "english": "Vertical position on screen",
+      "chinese": "设置 OSD 第 1 屏上累计飞行时间的垂直位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD1_TEMP_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "bfed00eb34feca34107073d104f5ab9306f8d63d4a4691aefa659290c0f06cbb",
+      "recordSha256": "51fe5f66bc27b7e5bac2c58be20adfeebb796827e271c30b4945ccf17d9d19a2",
+      "english": "Displays temperature reported by primary barometer",
+      "chinese": "选择是否在 OSD 第 1 屏显示主气压计报告的温度。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD1_TEMP_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "3ce4a0472eb22c63d1d856fcf70546aabdcd88bfe3c372f27115f535cd324fd0",
+      "english": "Horizontal position on screen",
+      "chinese": "设置 OSD 第 1 屏上主气压计温度的水平位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD1_TEMP_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "529692148310c1d1ffca86657a63a9ccab2dd1cd82d5c991debc69b31e146022",
+      "english": "Vertical position on screen",
+      "chinese": "设置 OSD 第 1 屏上主气压计温度的垂直位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD1_BTEMP_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "0b2e71d32be704b7f7628b291d998947ea253add0d76689620fe9a5fae9002a8",
+      "recordSha256": "622554c476a1b8b75fb8053393906b0231dab7e9d23c6c56ba3a3bbb68e461a5",
+      "english": "Displays temperature reported by secondary barometer",
+      "chinese": "选择是否在 OSD 第 1 屏显示第二个气压计报告的温度。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD1_BTEMP_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "c562dd86371dc2d21321a664983578e67e1327fb7366667f800241ce68721255",
+      "english": "Horizontal position on screen",
+      "chinese": "设置 OSD 第 1 屏上第二个气压计温度的水平位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD1_BTEMP_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "09f492c2756ba9e606f0de05062bbca5bc5236a7f295cab64a9103407d0fde4d",
+      "english": "Vertical position on screen",
+      "chinese": "设置 OSD 第 1 屏上第二个气压计温度的垂直位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD2_FLTIME_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "ebd81c408209e132984c85adcdd9b139e40311a61803ecb3c887f20046d1c8d4",
+      "recordSha256": "68b6c8d09fb1c796e71e8417fbc3dd762b45033ec644a10b33eb4de2543aa45d",
+      "english": "Displays total flight time",
+      "chinese": "选择是否在 OSD 第 2 屏以分钟和秒显示飞控在本次开机期间累计的飞行时间。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD2_FLTIME_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "90509a05d56b185a403ec6164112ad9edec420448d3e4adcee6fbdf8514f126b",
+      "english": "Horizontal position on screen",
+      "chinese": "设置 OSD 第 2 屏上累计飞行时间的水平位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD2_FLTIME_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "2d0e17df90d9f05dcbc4950847c688c0f0dc5e566bdcbd473e955e01e896db95",
+      "english": "Vertical position on screen",
+      "chinese": "设置 OSD 第 2 屏上累计飞行时间的垂直位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD2_TEMP_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "bfed00eb34feca34107073d104f5ab9306f8d63d4a4691aefa659290c0f06cbb",
+      "recordSha256": "a4ca6d82b76b15126874fba59691e41a8c6821d202edb2b44ff75fa693014b6d",
+      "english": "Displays temperature reported by primary barometer",
+      "chinese": "选择是否在 OSD 第 2 屏显示主气压计报告的温度。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD2_TEMP_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "824df85d49024ca2830519d030dbb23ea0a0f7558533962b0670d9b4c2a06129",
+      "english": "Horizontal position on screen",
+      "chinese": "设置 OSD 第 2 屏上主气压计温度的水平位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD2_TEMP_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "c3da4635edab0e3e15d34679eba96a227a37040dcbddc4a21c0c918ae38aee56",
+      "english": "Vertical position on screen",
+      "chinese": "设置 OSD 第 2 屏上主气压计温度的垂直位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD2_BTEMP_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "0b2e71d32be704b7f7628b291d998947ea253add0d76689620fe9a5fae9002a8",
+      "recordSha256": "9ea6a9c4653185ad397f91fa338c8085eeca188b01556f3018c49b59df47db56",
+      "english": "Displays temperature reported by secondary barometer",
+      "chinese": "选择是否在 OSD 第 2 屏显示第二个气压计报告的温度。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD2_BTEMP_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "f9506d15ee57ae555b6b4cd077fc0f247d70f7036026a963b93e27ce653b0f8a",
+      "english": "Horizontal position on screen",
+      "chinese": "设置 OSD 第 2 屏上第二个气压计温度的水平位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD2_BTEMP_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "b1bc059dec80e796d855b09fd039c8b3cc3104686a2dad14cb7c5f742ad54484",
+      "english": "Vertical position on screen",
+      "chinese": "设置 OSD 第 2 屏上第二个气压计温度的垂直位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD3_FLTIME_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "ebd81c408209e132984c85adcdd9b139e40311a61803ecb3c887f20046d1c8d4",
+      "recordSha256": "8b88d7a24a94555e00ab9ff5ca57e83befe5173cc8b4d40e711db666121e80ee",
+      "english": "Displays total flight time",
+      "chinese": "选择是否在 OSD 第 3 屏以分钟和秒显示飞控在本次开机期间累计的飞行时间。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD3_FLTIME_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "f602c6f7463e54e00087ad3eef9da95f28d5c7efee44b5a34e92e0b9bfe76b74",
+      "english": "Horizontal position on screen",
+      "chinese": "设置 OSD 第 3 屏上累计飞行时间的水平位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD3_FLTIME_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "1a8f1d29edbf1633fc6c3fd44fee8c4affa7a499ad9a6416766e95ce34c4715c",
+      "english": "Vertical position on screen",
+      "chinese": "设置 OSD 第 3 屏上累计飞行时间的垂直位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD3_TEMP_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "bfed00eb34feca34107073d104f5ab9306f8d63d4a4691aefa659290c0f06cbb",
+      "recordSha256": "cdbb5ad119ed4dcc7c08ef190ae6c91090d7ec3a62440402e8be6aff332e8936",
+      "english": "Displays temperature reported by primary barometer",
+      "chinese": "选择是否在 OSD 第 3 屏显示主气压计报告的温度。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD3_TEMP_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "bbb216c5625bbb327f4f5af0298870f50dcb17ee2f636bf2b1083670a1da6d28",
+      "english": "Horizontal position on screen",
+      "chinese": "设置 OSD 第 3 屏上主气压计温度的水平位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD3_TEMP_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "360f329eed99369a62a883a390863e1c68a660a1ac8e97114123986215264ceb",
+      "english": "Vertical position on screen",
+      "chinese": "设置 OSD 第 3 屏上主气压计温度的垂直位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD3_BTEMP_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "0b2e71d32be704b7f7628b291d998947ea253add0d76689620fe9a5fae9002a8",
+      "recordSha256": "5d69bf8779a157d3bec249342cde0ba64563cb6840a3f7d10ab0773d3e727070",
+      "english": "Displays temperature reported by secondary barometer",
+      "chinese": "选择是否在 OSD 第 3 屏显示第二个气压计报告的温度。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD3_BTEMP_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "ba7c2cf04d09d326a793dc8eb534d5db3667fdf9b7e77bcf8d1e3d7cee763da5",
+      "english": "Horizontal position on screen",
+      "chinese": "设置 OSD 第 3 屏上第二个气压计温度的水平位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD3_BTEMP_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "6b3137e4ef089014dc50a28906fde232bdb28ee3a056b4e8632dd923b7d36aa9",
+      "english": "Vertical position on screen",
+      "chinese": "设置 OSD 第 3 屏上第二个气压计温度的垂直位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD4_FLTIME_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "ebd81c408209e132984c85adcdd9b139e40311a61803ecb3c887f20046d1c8d4",
+      "recordSha256": "ffd35b5f292c81eafc4ad434564766da9fc51a5b003e1e2898d9908a858c260e",
+      "english": "Displays total flight time",
+      "chinese": "选择是否在 OSD 第 4 屏以分钟和秒显示飞控在本次开机期间累计的飞行时间。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD4_FLTIME_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "f15a8034b3c6f96a2c45dc45a873f50c576fe48b8f88933a1e52fea3156f8176",
+      "english": "Horizontal position on screen",
+      "chinese": "设置 OSD 第 4 屏上累计飞行时间的水平位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD4_FLTIME_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "2a424d0892a6be947afec8b87fa15c9cdf456fac47806aabe1a80685d3e308fd",
+      "english": "Vertical position on screen",
+      "chinese": "设置 OSD 第 4 屏上累计飞行时间的垂直位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD4_TEMP_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "bfed00eb34feca34107073d104f5ab9306f8d63d4a4691aefa659290c0f06cbb",
+      "recordSha256": "a0f1dea9f40cf07d7382fac885afc0b0b20abb60dc08c8a026a0ee0abcc33777",
+      "english": "Displays temperature reported by primary barometer",
+      "chinese": "选择是否在 OSD 第 4 屏显示主气压计报告的温度。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD4_TEMP_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "a337e49c48f1d602155dcae0f5a6e046a998b0a67a6cdd39c040f4bdf0299024",
+      "english": "Horizontal position on screen",
+      "chinese": "设置 OSD 第 4 屏上主气压计温度的水平位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD4_TEMP_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "bd591ce11e6583278fea4ee9a23e7170f102a2b342600830db4860cd4e3147dd",
+      "english": "Vertical position on screen",
+      "chinese": "设置 OSD 第 4 屏上主气压计温度的垂直位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD4_BTEMP_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "0b2e71d32be704b7f7628b291d998947ea253add0d76689620fe9a5fae9002a8",
+      "recordSha256": "cb157db9643ecc597fb5ef87dc5c609ae2ef6f40047b8f7cf6cf1c29983c5b78",
+      "english": "Displays temperature reported by secondary barometer",
+      "chinese": "选择是否在 OSD 第 4 屏显示第二个气压计报告的温度。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD4_BTEMP_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "f72665adcafe0aad91db91901ccb639406afe01ba26e938ee93cdd139e19a57a",
+      "english": "Horizontal position on screen",
+      "chinese": "设置 OSD 第 4 屏上第二个气压计温度的水平位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD4_BTEMP_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "39ca0d19036c1e425fd50866ce8987f92a83d94f425ba832094ed4e74e277e33",
+      "english": "Vertical position on screen",
+      "chinese": "设置 OSD 第 4 屏上第二个气压计温度的垂直位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD1_FLTIME_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "ebd81c408209e132984c85adcdd9b139e40311a61803ecb3c887f20046d1c8d4",
+      "recordSha256": "7f5452eea28000eb38aa9605f9782207a4b1c0f0c36e4cd8274fc3f600a0cb71",
+      "english": "Displays total flight time",
+      "chinese": "选择是否在 OSD 第 1 屏以分钟和秒显示飞控在本次开机期间累计的飞行时间。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD1_FLTIME_X",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "2b805e46a7e4063f1959243b109efa1704d5ff670698f3c890f6b0e1ec796625",
+      "english": "Horizontal position on screen",
+      "chinese": "设置 OSD 第 1 屏上累计飞行时间的水平位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD1_FLTIME_Y",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "8dec180486bd8099072afc2f64063d33e263e1e5463de379a8d27d9ee4761de2",
+      "english": "Vertical position on screen",
+      "chinese": "设置 OSD 第 1 屏上累计飞行时间的垂直位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD1_TEMP_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "bfed00eb34feca34107073d104f5ab9306f8d63d4a4691aefa659290c0f06cbb",
+      "recordSha256": "51fe5f66bc27b7e5bac2c58be20adfeebb796827e271c30b4945ccf17d9d19a2",
+      "english": "Displays temperature reported by primary barometer",
+      "chinese": "选择是否在 OSD 第 1 屏显示主气压计报告的温度。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD1_TEMP_X",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "3ce4a0472eb22c63d1d856fcf70546aabdcd88bfe3c372f27115f535cd324fd0",
+      "english": "Horizontal position on screen",
+      "chinese": "设置 OSD 第 1 屏上主气压计温度的水平位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD1_TEMP_Y",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "529692148310c1d1ffca86657a63a9ccab2dd1cd82d5c991debc69b31e146022",
+      "english": "Vertical position on screen",
+      "chinese": "设置 OSD 第 1 屏上主气压计温度的垂直位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD1_BTEMP_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "0b2e71d32be704b7f7628b291d998947ea253add0d76689620fe9a5fae9002a8",
+      "recordSha256": "622554c476a1b8b75fb8053393906b0231dab7e9d23c6c56ba3a3bbb68e461a5",
+      "english": "Displays temperature reported by secondary barometer",
+      "chinese": "选择是否在 OSD 第 1 屏显示第二个气压计报告的温度。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD1_BTEMP_X",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "c562dd86371dc2d21321a664983578e67e1327fb7366667f800241ce68721255",
+      "english": "Horizontal position on screen",
+      "chinese": "设置 OSD 第 1 屏上第二个气压计温度的水平位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD1_BTEMP_Y",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "09f492c2756ba9e606f0de05062bbca5bc5236a7f295cab64a9103407d0fde4d",
+      "english": "Vertical position on screen",
+      "chinese": "设置 OSD 第 1 屏上第二个气压计温度的垂直位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD2_FLTIME_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "ebd81c408209e132984c85adcdd9b139e40311a61803ecb3c887f20046d1c8d4",
+      "recordSha256": "68b6c8d09fb1c796e71e8417fbc3dd762b45033ec644a10b33eb4de2543aa45d",
+      "english": "Displays total flight time",
+      "chinese": "选择是否在 OSD 第 2 屏以分钟和秒显示飞控在本次开机期间累计的飞行时间。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD2_FLTIME_X",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "90509a05d56b185a403ec6164112ad9edec420448d3e4adcee6fbdf8514f126b",
+      "english": "Horizontal position on screen",
+      "chinese": "设置 OSD 第 2 屏上累计飞行时间的水平位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD2_FLTIME_Y",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "2d0e17df90d9f05dcbc4950847c688c0f0dc5e566bdcbd473e955e01e896db95",
+      "english": "Vertical position on screen",
+      "chinese": "设置 OSD 第 2 屏上累计飞行时间的垂直位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD2_TEMP_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "bfed00eb34feca34107073d104f5ab9306f8d63d4a4691aefa659290c0f06cbb",
+      "recordSha256": "a4ca6d82b76b15126874fba59691e41a8c6821d202edb2b44ff75fa693014b6d",
+      "english": "Displays temperature reported by primary barometer",
+      "chinese": "选择是否在 OSD 第 2 屏显示主气压计报告的温度。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD2_TEMP_X",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "824df85d49024ca2830519d030dbb23ea0a0f7558533962b0670d9b4c2a06129",
+      "english": "Horizontal position on screen",
+      "chinese": "设置 OSD 第 2 屏上主气压计温度的水平位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD2_TEMP_Y",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "c3da4635edab0e3e15d34679eba96a227a37040dcbddc4a21c0c918ae38aee56",
+      "english": "Vertical position on screen",
+      "chinese": "设置 OSD 第 2 屏上主气压计温度的垂直位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD2_BTEMP_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "0b2e71d32be704b7f7628b291d998947ea253add0d76689620fe9a5fae9002a8",
+      "recordSha256": "9ea6a9c4653185ad397f91fa338c8085eeca188b01556f3018c49b59df47db56",
+      "english": "Displays temperature reported by secondary barometer",
+      "chinese": "选择是否在 OSD 第 2 屏显示第二个气压计报告的温度。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD2_BTEMP_X",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "f9506d15ee57ae555b6b4cd077fc0f247d70f7036026a963b93e27ce653b0f8a",
+      "english": "Horizontal position on screen",
+      "chinese": "设置 OSD 第 2 屏上第二个气压计温度的水平位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD2_BTEMP_Y",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "b1bc059dec80e796d855b09fd039c8b3cc3104686a2dad14cb7c5f742ad54484",
+      "english": "Vertical position on screen",
+      "chinese": "设置 OSD 第 2 屏上第二个气压计温度的垂直位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD3_FLTIME_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "ebd81c408209e132984c85adcdd9b139e40311a61803ecb3c887f20046d1c8d4",
+      "recordSha256": "8b88d7a24a94555e00ab9ff5ca57e83befe5173cc8b4d40e711db666121e80ee",
+      "english": "Displays total flight time",
+      "chinese": "选择是否在 OSD 第 3 屏以分钟和秒显示飞控在本次开机期间累计的飞行时间。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD3_FLTIME_X",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "f602c6f7463e54e00087ad3eef9da95f28d5c7efee44b5a34e92e0b9bfe76b74",
+      "english": "Horizontal position on screen",
+      "chinese": "设置 OSD 第 3 屏上累计飞行时间的水平位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD3_FLTIME_Y",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "1a8f1d29edbf1633fc6c3fd44fee8c4affa7a499ad9a6416766e95ce34c4715c",
+      "english": "Vertical position on screen",
+      "chinese": "设置 OSD 第 3 屏上累计飞行时间的垂直位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD3_TEMP_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "bfed00eb34feca34107073d104f5ab9306f8d63d4a4691aefa659290c0f06cbb",
+      "recordSha256": "cdbb5ad119ed4dcc7c08ef190ae6c91090d7ec3a62440402e8be6aff332e8936",
+      "english": "Displays temperature reported by primary barometer",
+      "chinese": "选择是否在 OSD 第 3 屏显示主气压计报告的温度。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD3_TEMP_X",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "bbb216c5625bbb327f4f5af0298870f50dcb17ee2f636bf2b1083670a1da6d28",
+      "english": "Horizontal position on screen",
+      "chinese": "设置 OSD 第 3 屏上主气压计温度的水平位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD3_TEMP_Y",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "360f329eed99369a62a883a390863e1c68a660a1ac8e97114123986215264ceb",
+      "english": "Vertical position on screen",
+      "chinese": "设置 OSD 第 3 屏上主气压计温度的垂直位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD3_BTEMP_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "0b2e71d32be704b7f7628b291d998947ea253add0d76689620fe9a5fae9002a8",
+      "recordSha256": "5d69bf8779a157d3bec249342cde0ba64563cb6840a3f7d10ab0773d3e727070",
+      "english": "Displays temperature reported by secondary barometer",
+      "chinese": "选择是否在 OSD 第 3 屏显示第二个气压计报告的温度。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD3_BTEMP_X",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "ba7c2cf04d09d326a793dc8eb534d5db3667fdf9b7e77bcf8d1e3d7cee763da5",
+      "english": "Horizontal position on screen",
+      "chinese": "设置 OSD 第 3 屏上第二个气压计温度的水平位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD3_BTEMP_Y",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "6b3137e4ef089014dc50a28906fde232bdb28ee3a056b4e8632dd923b7d36aa9",
+      "english": "Vertical position on screen",
+      "chinese": "设置 OSD 第 3 屏上第二个气压计温度的垂直位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD4_FLTIME_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "ebd81c408209e132984c85adcdd9b139e40311a61803ecb3c887f20046d1c8d4",
+      "recordSha256": "ffd35b5f292c81eafc4ad434564766da9fc51a5b003e1e2898d9908a858c260e",
+      "english": "Displays total flight time",
+      "chinese": "选择是否在 OSD 第 4 屏以分钟和秒显示飞控在本次开机期间累计的飞行时间。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD4_FLTIME_X",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "f15a8034b3c6f96a2c45dc45a873f50c576fe48b8f88933a1e52fea3156f8176",
+      "english": "Horizontal position on screen",
+      "chinese": "设置 OSD 第 4 屏上累计飞行时间的水平位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD4_FLTIME_Y",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "2a424d0892a6be947afec8b87fa15c9cdf456fac47806aabe1a80685d3e308fd",
+      "english": "Vertical position on screen",
+      "chinese": "设置 OSD 第 4 屏上累计飞行时间的垂直位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD4_TEMP_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "bfed00eb34feca34107073d104f5ab9306f8d63d4a4691aefa659290c0f06cbb",
+      "recordSha256": "a0f1dea9f40cf07d7382fac885afc0b0b20abb60dc08c8a026a0ee0abcc33777",
+      "english": "Displays temperature reported by primary barometer",
+      "chinese": "选择是否在 OSD 第 4 屏显示主气压计报告的温度。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD4_TEMP_X",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "a337e49c48f1d602155dcae0f5a6e046a998b0a67a6cdd39c040f4bdf0299024",
+      "english": "Horizontal position on screen",
+      "chinese": "设置 OSD 第 4 屏上主气压计温度的水平位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD4_TEMP_Y",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "bd591ce11e6583278fea4ee9a23e7170f102a2b342600830db4860cd4e3147dd",
+      "english": "Vertical position on screen",
+      "chinese": "设置 OSD 第 4 屏上主气压计温度的垂直位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD4_BTEMP_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "0b2e71d32be704b7f7628b291d998947ea253add0d76689620fe9a5fae9002a8",
+      "recordSha256": "cb157db9643ecc597fb5ef87dc5c609ae2ef6f40047b8f7cf6cf1c29983c5b78",
+      "english": "Displays temperature reported by secondary barometer",
+      "chinese": "选择是否在 OSD 第 4 屏显示第二个气压计报告的温度。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD4_BTEMP_X",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "f72665adcafe0aad91db91901ccb639406afe01ba26e938ee93cdd139e19a57a",
+      "english": "Horizontal position on screen",
+      "chinese": "设置 OSD 第 4 屏上第二个气压计温度的水平位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD4_BTEMP_Y",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "39ca0d19036c1e425fd50866ce8987f92a83d94f425ba832094ed4e74e277e33",
+      "english": "Vertical position on screen",
+      "chinese": "设置 OSD 第 4 屏上第二个气压计温度的垂直位置。"
     }
   ]
 }

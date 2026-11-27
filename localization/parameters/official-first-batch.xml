@@ -727,6 +727,42 @@
           <param humanName="CLK_Y" name="OSD1_CLK_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="FLTIME_EN" name="OSD1_FLTIME_EN" documentation="Displays total flight time">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="FLTIME_X" name="OSD1_FLTIME_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="FLTIME_Y" name="OSD1_FLTIME_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="TEMP_EN" name="OSD1_TEMP_EN" documentation="Displays temperature reported by primary barometer">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="TEMP_X" name="OSD1_TEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="TEMP_Y" name="OSD1_TEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BTEMP_EN" name="OSD1_BTEMP_EN" documentation="Displays temperature reported by secondary barometer">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="BTEMP_X" name="OSD1_BTEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BTEMP_Y" name="OSD1_BTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -778,6 +814,42 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="CLK_Y" name="OSD2_CLK_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="FLTIME_EN" name="OSD2_FLTIME_EN" documentation="Displays total flight time">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="FLTIME_X" name="OSD2_FLTIME_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="FLTIME_Y" name="OSD2_FLTIME_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="TEMP_EN" name="OSD2_TEMP_EN" documentation="Displays temperature reported by primary barometer">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="TEMP_X" name="OSD2_TEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="TEMP_Y" name="OSD2_TEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BTEMP_EN" name="OSD2_BTEMP_EN" documentation="Displays temperature reported by secondary barometer">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="BTEMP_X" name="OSD2_BTEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BTEMP_Y" name="OSD2_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -833,6 +905,42 @@
           <param humanName="CLK_Y" name="OSD3_CLK_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="FLTIME_EN" name="OSD3_FLTIME_EN" documentation="Displays total flight time">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="FLTIME_X" name="OSD3_FLTIME_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="FLTIME_Y" name="OSD3_FLTIME_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="TEMP_EN" name="OSD3_TEMP_EN" documentation="Displays temperature reported by primary barometer">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="TEMP_X" name="OSD3_TEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="TEMP_Y" name="OSD3_TEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BTEMP_EN" name="OSD3_BTEMP_EN" documentation="Displays temperature reported by secondary barometer">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="BTEMP_X" name="OSD3_BTEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BTEMP_Y" name="OSD3_BTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -884,6 +992,42 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="CLK_Y" name="OSD4_CLK_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="FLTIME_EN" name="OSD4_FLTIME_EN" documentation="Displays total flight time">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="FLTIME_X" name="OSD4_FLTIME_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="FLTIME_Y" name="OSD4_FLTIME_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="TEMP_EN" name="OSD4_TEMP_EN" documentation="Displays temperature reported by primary barometer">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="TEMP_X" name="OSD4_TEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="TEMP_Y" name="OSD4_TEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BTEMP_EN" name="OSD4_BTEMP_EN" documentation="Displays temperature reported by secondary barometer">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="BTEMP_X" name="OSD4_BTEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BTEMP_Y" name="OSD4_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -1703,6 +1847,42 @@
           <param humanName="CLK_Y" name="OSD1_CLK_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="FLTIME_EN" name="OSD1_FLTIME_EN" documentation="Displays total flight time">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="FLTIME_X" name="OSD1_FLTIME_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="FLTIME_Y" name="OSD1_FLTIME_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="TEMP_EN" name="OSD1_TEMP_EN" documentation="Displays temperature reported by primary barometer">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="TEMP_X" name="OSD1_TEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="TEMP_Y" name="OSD1_TEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BTEMP_EN" name="OSD1_BTEMP_EN" documentation="Displays temperature reported by secondary barometer">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="BTEMP_X" name="OSD1_BTEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BTEMP_Y" name="OSD1_BTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -1754,6 +1934,42 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="CLK_Y" name="OSD2_CLK_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="FLTIME_EN" name="OSD2_FLTIME_EN" documentation="Displays total flight time">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="FLTIME_X" name="OSD2_FLTIME_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="FLTIME_Y" name="OSD2_FLTIME_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="TEMP_EN" name="OSD2_TEMP_EN" documentation="Displays temperature reported by primary barometer">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="TEMP_X" name="OSD2_TEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="TEMP_Y" name="OSD2_TEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BTEMP_EN" name="OSD2_BTEMP_EN" documentation="Displays temperature reported by secondary barometer">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="BTEMP_X" name="OSD2_BTEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BTEMP_Y" name="OSD2_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -1809,6 +2025,42 @@
           <param humanName="CLK_Y" name="OSD3_CLK_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="FLTIME_EN" name="OSD3_FLTIME_EN" documentation="Displays total flight time">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="FLTIME_X" name="OSD3_FLTIME_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="FLTIME_Y" name="OSD3_FLTIME_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="TEMP_EN" name="OSD3_TEMP_EN" documentation="Displays temperature reported by primary barometer">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="TEMP_X" name="OSD3_TEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="TEMP_Y" name="OSD3_TEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BTEMP_EN" name="OSD3_BTEMP_EN" documentation="Displays temperature reported by secondary barometer">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="BTEMP_X" name="OSD3_BTEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BTEMP_Y" name="OSD3_BTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -1860,6 +2112,42 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="CLK_Y" name="OSD4_CLK_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="FLTIME_EN" name="OSD4_FLTIME_EN" documentation="Displays total flight time">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="FLTIME_X" name="OSD4_FLTIME_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="FLTIME_Y" name="OSD4_FLTIME_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="TEMP_EN" name="OSD4_TEMP_EN" documentation="Displays temperature reported by primary barometer">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="TEMP_X" name="OSD4_TEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="TEMP_Y" name="OSD4_TEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BTEMP_EN" name="OSD4_BTEMP_EN" documentation="Displays temperature reported by secondary barometer">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="BTEMP_X" name="OSD4_BTEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BTEMP_Y" name="OSD4_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -2769,6 +3057,42 @@
           <param humanName="CLK_Y" name="OSD1_CLK_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="FLTIME_EN" name="OSD1_FLTIME_EN" documentation="Displays total flight time">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="FLTIME_X" name="OSD1_FLTIME_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="FLTIME_Y" name="OSD1_FLTIME_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="TEMP_EN" name="OSD1_TEMP_EN" documentation="Displays temperature reported by primary barometer">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="TEMP_X" name="OSD1_TEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="TEMP_Y" name="OSD1_TEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BTEMP_EN" name="OSD1_BTEMP_EN" documentation="Displays temperature reported by secondary barometer">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="BTEMP_X" name="OSD1_BTEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BTEMP_Y" name="OSD1_BTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -2820,6 +3144,42 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="CLK_Y" name="OSD2_CLK_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="FLTIME_EN" name="OSD2_FLTIME_EN" documentation="Displays total flight time">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="FLTIME_X" name="OSD2_FLTIME_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="FLTIME_Y" name="OSD2_FLTIME_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="TEMP_EN" name="OSD2_TEMP_EN" documentation="Displays temperature reported by primary barometer">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="TEMP_X" name="OSD2_TEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="TEMP_Y" name="OSD2_TEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BTEMP_EN" name="OSD2_BTEMP_EN" documentation="Displays temperature reported by secondary barometer">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="BTEMP_X" name="OSD2_BTEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BTEMP_Y" name="OSD2_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -2875,6 +3235,42 @@
           <param humanName="CLK_Y" name="OSD3_CLK_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="FLTIME_EN" name="OSD3_FLTIME_EN" documentation="Displays total flight time">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="FLTIME_X" name="OSD3_FLTIME_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="FLTIME_Y" name="OSD3_FLTIME_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="TEMP_EN" name="OSD3_TEMP_EN" documentation="Displays temperature reported by primary barometer">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="TEMP_X" name="OSD3_TEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="TEMP_Y" name="OSD3_TEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BTEMP_EN" name="OSD3_BTEMP_EN" documentation="Displays temperature reported by secondary barometer">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="BTEMP_X" name="OSD3_BTEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BTEMP_Y" name="OSD3_BTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -2926,6 +3322,42 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="CLK_Y" name="OSD4_CLK_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="FLTIME_EN" name="OSD4_FLTIME_EN" documentation="Displays total flight time">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="FLTIME_X" name="OSD4_FLTIME_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="FLTIME_Y" name="OSD4_FLTIME_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="TEMP_EN" name="OSD4_TEMP_EN" documentation="Displays temperature reported by primary barometer">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="TEMP_X" name="OSD4_TEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="TEMP_Y" name="OSD4_TEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BTEMP_EN" name="OSD4_BTEMP_EN" documentation="Displays temperature reported by secondary barometer">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="BTEMP_X" name="OSD4_BTEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BTEMP_Y" name="OSD4_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -3823,6 +4255,42 @@
           <param humanName="CLK_Y" name="OSD1_CLK_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="FLTIME_EN" name="OSD1_FLTIME_EN" documentation="Displays total flight time">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="FLTIME_X" name="OSD1_FLTIME_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="FLTIME_Y" name="OSD1_FLTIME_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="TEMP_EN" name="OSD1_TEMP_EN" documentation="Displays temperature reported by primary barometer">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="TEMP_X" name="OSD1_TEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="TEMP_Y" name="OSD1_TEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BTEMP_EN" name="OSD1_BTEMP_EN" documentation="Displays temperature reported by secondary barometer">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="BTEMP_X" name="OSD1_BTEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BTEMP_Y" name="OSD1_BTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -3874,6 +4342,42 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="CLK_Y" name="OSD2_CLK_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="FLTIME_EN" name="OSD2_FLTIME_EN" documentation="Displays total flight time">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="FLTIME_X" name="OSD2_FLTIME_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="FLTIME_Y" name="OSD2_FLTIME_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="TEMP_EN" name="OSD2_TEMP_EN" documentation="Displays temperature reported by primary barometer">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="TEMP_X" name="OSD2_TEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="TEMP_Y" name="OSD2_TEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BTEMP_EN" name="OSD2_BTEMP_EN" documentation="Displays temperature reported by secondary barometer">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="BTEMP_X" name="OSD2_BTEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BTEMP_Y" name="OSD2_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -3929,6 +4433,42 @@
           <param humanName="CLK_Y" name="OSD3_CLK_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="FLTIME_EN" name="OSD3_FLTIME_EN" documentation="Displays total flight time">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="FLTIME_X" name="OSD3_FLTIME_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="FLTIME_Y" name="OSD3_FLTIME_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="TEMP_EN" name="OSD3_TEMP_EN" documentation="Displays temperature reported by primary barometer">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="TEMP_X" name="OSD3_TEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="TEMP_Y" name="OSD3_TEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BTEMP_EN" name="OSD3_BTEMP_EN" documentation="Displays temperature reported by secondary barometer">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="BTEMP_X" name="OSD3_BTEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BTEMP_Y" name="OSD3_BTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -3980,6 +4520,42 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="CLK_Y" name="OSD4_CLK_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="FLTIME_EN" name="OSD4_FLTIME_EN" documentation="Displays total flight time">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="FLTIME_X" name="OSD4_FLTIME_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="FLTIME_Y" name="OSD4_FLTIME_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="TEMP_EN" name="OSD4_TEMP_EN" documentation="Displays temperature reported by primary barometer">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="TEMP_X" name="OSD4_TEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="TEMP_Y" name="OSD4_TEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BTEMP_EN" name="OSD4_BTEMP_EN" documentation="Displays temperature reported by secondary barometer">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="BTEMP_X" name="OSD4_BTEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BTEMP_Y" name="OSD4_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -4854,6 +5430,42 @@
           <param humanName="CLK_Y" name="OSD1_CLK_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="FLTIME_EN" name="OSD1_FLTIME_EN" documentation="Displays total flight time">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="FLTIME_X" name="OSD1_FLTIME_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="FLTIME_Y" name="OSD1_FLTIME_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="TEMP_EN" name="OSD1_TEMP_EN" documentation="Displays temperature reported by primary barometer">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="TEMP_X" name="OSD1_TEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="TEMP_Y" name="OSD1_TEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BTEMP_EN" name="OSD1_BTEMP_EN" documentation="Displays temperature reported by secondary barometer">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="BTEMP_X" name="OSD1_BTEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BTEMP_Y" name="OSD1_BTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -4905,6 +5517,42 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="CLK_Y" name="OSD2_CLK_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="FLTIME_EN" name="OSD2_FLTIME_EN" documentation="Displays total flight time">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="FLTIME_X" name="OSD2_FLTIME_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="FLTIME_Y" name="OSD2_FLTIME_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="TEMP_EN" name="OSD2_TEMP_EN" documentation="Displays temperature reported by primary barometer">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="TEMP_X" name="OSD2_TEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="TEMP_Y" name="OSD2_TEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BTEMP_EN" name="OSD2_BTEMP_EN" documentation="Displays temperature reported by secondary barometer">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="BTEMP_X" name="OSD2_BTEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BTEMP_Y" name="OSD2_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -4960,6 +5608,42 @@
           <param humanName="CLK_Y" name="OSD3_CLK_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="FLTIME_EN" name="OSD3_FLTIME_EN" documentation="Displays total flight time">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="FLTIME_X" name="OSD3_FLTIME_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="FLTIME_Y" name="OSD3_FLTIME_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="TEMP_EN" name="OSD3_TEMP_EN" documentation="Displays temperature reported by primary barometer">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="TEMP_X" name="OSD3_TEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="TEMP_Y" name="OSD3_TEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BTEMP_EN" name="OSD3_BTEMP_EN" documentation="Displays temperature reported by secondary barometer">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="BTEMP_X" name="OSD3_BTEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BTEMP_Y" name="OSD3_BTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -5011,6 +5695,42 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="CLK_Y" name="OSD4_CLK_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="FLTIME_EN" name="OSD4_FLTIME_EN" documentation="Displays total flight time">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="FLTIME_X" name="OSD4_FLTIME_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="FLTIME_Y" name="OSD4_FLTIME_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="TEMP_EN" name="OSD4_TEMP_EN" documentation="Displays temperature reported by primary barometer">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="TEMP_X" name="OSD4_TEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="TEMP_Y" name="OSD4_TEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BTEMP_EN" name="OSD4_BTEMP_EN" documentation="Displays temperature reported by secondary barometer">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="BTEMP_X" name="OSD4_BTEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BTEMP_Y" name="OSD4_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -5984,6 +6704,42 @@
           <param humanName="CLK_Y" name="OSD1_CLK_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="FLTIME_EN" name="OSD1_FLTIME_EN" documentation="Displays total flight time">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="FLTIME_X" name="OSD1_FLTIME_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="FLTIME_Y" name="OSD1_FLTIME_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="TEMP_EN" name="OSD1_TEMP_EN" documentation="Displays temperature reported by primary barometer">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="TEMP_X" name="OSD1_TEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="TEMP_Y" name="OSD1_TEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BTEMP_EN" name="OSD1_BTEMP_EN" documentation="Displays temperature reported by secondary barometer">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="BTEMP_X" name="OSD1_BTEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BTEMP_Y" name="OSD1_BTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -6035,6 +6791,42 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="CLK_Y" name="OSD2_CLK_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="FLTIME_EN" name="OSD2_FLTIME_EN" documentation="Displays total flight time">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="FLTIME_X" name="OSD2_FLTIME_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="FLTIME_Y" name="OSD2_FLTIME_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="TEMP_EN" name="OSD2_TEMP_EN" documentation="Displays temperature reported by primary barometer">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="TEMP_X" name="OSD2_TEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="TEMP_Y" name="OSD2_TEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BTEMP_EN" name="OSD2_BTEMP_EN" documentation="Displays temperature reported by secondary barometer">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="BTEMP_X" name="OSD2_BTEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BTEMP_Y" name="OSD2_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -6090,6 +6882,42 @@
           <param humanName="CLK_Y" name="OSD3_CLK_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="FLTIME_EN" name="OSD3_FLTIME_EN" documentation="Displays total flight time">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="FLTIME_X" name="OSD3_FLTIME_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="FLTIME_Y" name="OSD3_FLTIME_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="TEMP_EN" name="OSD3_TEMP_EN" documentation="Displays temperature reported by primary barometer">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="TEMP_X" name="OSD3_TEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="TEMP_Y" name="OSD3_TEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BTEMP_EN" name="OSD3_BTEMP_EN" documentation="Displays temperature reported by secondary barometer">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="BTEMP_X" name="OSD3_BTEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BTEMP_Y" name="OSD3_BTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -6141,6 +6969,42 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="CLK_Y" name="OSD4_CLK_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="FLTIME_EN" name="OSD4_FLTIME_EN" documentation="Displays total flight time">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="FLTIME_X" name="OSD4_FLTIME_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="FLTIME_Y" name="OSD4_FLTIME_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="TEMP_EN" name="OSD4_TEMP_EN" documentation="Displays temperature reported by primary barometer">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="TEMP_X" name="OSD4_TEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="TEMP_Y" name="OSD4_TEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BTEMP_EN" name="OSD4_BTEMP_EN" documentation="Displays temperature reported by secondary barometer">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="BTEMP_X" name="OSD4_BTEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BTEMP_Y" name="OSD4_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -6586,6 +7450,42 @@
           <param humanName="CLK_Y" name="OSD1_CLK_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="FLTIME_EN" name="OSD1_FLTIME_EN" documentation="Displays total flight time">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="FLTIME_X" name="OSD1_FLTIME_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="FLTIME_Y" name="OSD1_FLTIME_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="TEMP_EN" name="OSD1_TEMP_EN" documentation="Displays temperature reported by primary barometer">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="TEMP_X" name="OSD1_TEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="TEMP_Y" name="OSD1_TEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BTEMP_EN" name="OSD1_BTEMP_EN" documentation="Displays temperature reported by secondary barometer">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="BTEMP_X" name="OSD1_BTEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BTEMP_Y" name="OSD1_BTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -6637,6 +7537,42 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="CLK_Y" name="OSD2_CLK_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="FLTIME_EN" name="OSD2_FLTIME_EN" documentation="Displays total flight time">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="FLTIME_X" name="OSD2_FLTIME_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="FLTIME_Y" name="OSD2_FLTIME_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="TEMP_EN" name="OSD2_TEMP_EN" documentation="Displays temperature reported by primary barometer">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="TEMP_X" name="OSD2_TEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="TEMP_Y" name="OSD2_TEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BTEMP_EN" name="OSD2_BTEMP_EN" documentation="Displays temperature reported by secondary barometer">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="BTEMP_X" name="OSD2_BTEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BTEMP_Y" name="OSD2_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -6692,6 +7628,42 @@
           <param humanName="CLK_Y" name="OSD3_CLK_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="FLTIME_EN" name="OSD3_FLTIME_EN" documentation="Displays total flight time">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="FLTIME_X" name="OSD3_FLTIME_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="FLTIME_Y" name="OSD3_FLTIME_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="TEMP_EN" name="OSD3_TEMP_EN" documentation="Displays temperature reported by primary barometer">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="TEMP_X" name="OSD3_TEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="TEMP_Y" name="OSD3_TEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BTEMP_EN" name="OSD3_BTEMP_EN" documentation="Displays temperature reported by secondary barometer">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="BTEMP_X" name="OSD3_BTEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BTEMP_Y" name="OSD3_BTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -6743,6 +7715,42 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="CLK_Y" name="OSD4_CLK_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="FLTIME_EN" name="OSD4_FLTIME_EN" documentation="Displays total flight time">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="FLTIME_X" name="OSD4_FLTIME_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="FLTIME_Y" name="OSD4_FLTIME_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="TEMP_EN" name="OSD4_TEMP_EN" documentation="Displays temperature reported by primary barometer">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="TEMP_X" name="OSD4_TEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="TEMP_Y" name="OSD4_TEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BTEMP_EN" name="OSD4_BTEMP_EN" documentation="Displays temperature reported by secondary barometer">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="BTEMP_X" name="OSD4_BTEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BTEMP_Y" name="OSD4_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
