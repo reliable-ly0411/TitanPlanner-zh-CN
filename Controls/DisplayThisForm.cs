@@ -242,6 +242,7 @@ namespace MissionPlanner.Controls
                             int nameWidth = Math.Min(column.Rows.Where(row => !row.IsHeader).Max(row => names[row.Item]),
                                 NameLimit(innerWidth, valueWidth, maximumName));
                             int width = _checkboxSize + _checkboxMargin + nameWidth + _nameValueGap + valueWidth;
+                            int descriptionWidth = width - _checkboxSize - _checkboxMargin;
                             int y = _padding;
                             foreach (var row in column.Rows)
                             {
@@ -250,13 +251,16 @@ namespace MissionPlanner.Controls
                                 var description = enhancedChinese && !row.IsHeader && names[row.Item] - 8 > nameWidth
                                     ? BilingualDescription(row.Item)
                                     : null;
-                                int rowHeight = description == null ? _rowHeight : 2 * _rowHeight;
+                                int descriptionHeight = description == null ? 0 : Math.Max(_rowHeight,
+                                    (int)Math.Ceiling(graphics.MeasureString(description, _normalFont, descriptionWidth).Height));
+                                int rowHeight = _rowHeight + descriptionHeight;
                                 row.Bounds = new Rectangle(x, y, width, rowHeight);
                                 if (row.IsHeader)
                                     row.NameBounds = row.Bounds;
                                 else
                                 {
-                                    row.CheckBounds = new Rectangle(x, y + (rowHeight - _checkboxSize) / 2, _checkboxSize, _checkboxSize);
+                                    int checkRowHeight = Math.Min(rowHeight, 2 * _rowHeight);
+                                    row.CheckBounds = new Rectangle(x, y + (checkRowHeight - _checkboxSize) / 2, _checkboxSize, _checkboxSize);
                                     row.NameBounds = new Rectangle(x + _checkboxSize + _checkboxMargin, y, nameWidth, _rowHeight);
                                     row.ValueBounds = new Rectangle(row.NameBounds.Right + _nameValueGap,
                                         y, valueWidth, _rowHeight);
@@ -268,8 +272,8 @@ namespace MissionPlanner.Controls
                                 {
                                     // The value occupies only the key line. Reuse that width below it.
                                     row.DescriptionBounds = new Rectangle(row.NameBounds.Left, y + _rowHeight,
-                                        row.Bounds.Right - row.NameBounds.Left, _rowHeight);
-                                    row.Description = FitLabel(description, _normalFont, row.DescriptionBounds.Width, graphics);
+                                        descriptionWidth, descriptionHeight);
+                                    row.Description = description;
                                 }
                                 _layoutRows.Add(row);
                                 y += rowHeight;
@@ -362,7 +366,7 @@ namespace MissionPlanner.Controls
                     }
                     g.DrawString(row.Label, _normalFont, nameBrush, row.NameBounds, format);
                     if (row.Description != null)
-                        g.DrawString(row.Description, _normalFont, nameBrush, row.DescriptionBounds, format);
+                        g.DrawString(row.Description, _normalFont, nameBrush, row.DescriptionBounds);
                     g.DrawString(row.Item.Value ?? "", _normalFont, valueBrush, row.ValueBounds, format);
                 }
             }

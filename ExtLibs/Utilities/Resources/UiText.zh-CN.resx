@@ -3574,6 +3574,10 @@ Ctrl+O 从文件加载</value>
     <value>IMU 时间相对于实际时间的估算倍率</value>
     <comment>"Estimated IMU time to wall clock ratio"</comment>
   </data>
+  <data name="731be68dd3c5ff9010ee531b33cd8a66d853779d66382376587ef7510798673f" xml:space="preserve">
+    <value>估算海平面气压</value>
+    <comment>"Estimated sea-level pressure"</comment>
+  </data>
   <data name="8d14f6e72de8f18ab1ee5c5330f00653c0c3ce099e63024454f80af97e72d333" xml:space="preserve">
     <value>事件</value>
     <comment>"Events"</comment>
@@ -4719,9 +4723,29 @@ Ctrl+O 从文件加载</value>
     <value>地面站计算的 EKF 健康指标</value>
     <comment>"Ground station EKF health indicator"</comment>
   </data>
+  <data name="1be556c89e10496d7a9a9f9d872462d44dc3f6ee1a2902166902996d6c7a8643" xml:space="preserve">
+    <value>低空速标志</value>
+    <comment>"Ground station low airspeed flag"</comment>
+  </data>
+  <data name="fb750c9fc1d1b7e34fb36b95a4fd215f4a090a5159173fffb43a550bca7f978e" xml:space="preserve">
+    <value>低地速标志</value>
+    <comment>"Ground station low ground speed flag"</comment>
+  </data>
+  <data name="8e57f4ee00ed23f4f0e2aaeefffbc9d898826c2209edbcac7ea6d8363d8abfc9" xml:space="preserve">
+    <value>地面站在地面状态标志</value>
+    <comment>"Ground station on-ground flag"</comment>
+  </data>
   <data name="9e76bc41832d5746361468f6457d99c8c6e520f891918f00c40fc8f5d4037a90" xml:space="preserve">
     <value>地面站数据包接收质量（%）</value>
     <comment>"Ground station packet reception quality (%)"</comment>
+  </data>
+  <data name="234b2389f1701c2998f6c2b289416a1e2fb4785d7ab175a6cad02db16ef7cda2" xml:space="preserve">
+    <value>地面站解锁前状态标志（已连接，且检查正常或未启用）</value>
+    <comment>"Ground station pre-arm flag (connected and checks healthy or disabled)"</comment>
+  </data>
+  <data name="63e0aa6353549fa67a5579c5b337d2059cae1d425650075ea21670d99f2d7900" xml:space="preserve">
+    <value>地面站安全标志（电机控制未启用）</value>
+    <comment>"Ground station safety flag (motor control not enabled)"</comment>
   </data>
   <data name="ff27501553212286828f38d5d405f04c4c6462529530ddf126439bb2aba52206" xml:space="preserve">
     <value>地面站设置</value>
