@@ -329,7 +329,7 @@
   <data name="label7.Text" xml:space="preserve"><value>地面站 ID</value></data>
   <data name="CHK_params_bg.Text" xml:space="preserve"><value>后台下载参数</value></data>
   <data name="chk_slowMachine.Text" xml:space="preserve"><value>在低性能计算机上运行</value></data>
-  <data name="CHK_speechArmedOnly.Text" xml:space="preserve"><value>仅在解锁时</value></data>
+  <data name="CHK_speechArmedOnly.Text" xml:space="preserve"><value>仅在已解锁状态播报</value></data>
   <data name="label8.Text" xml:space="preserve"><value>语音播报的最低消息级别。</value></data>
   <data name="label9.Text" xml:space="preserve"><value>非活动航空器</value></data>
   <data name="chk_displaycog.Text" xml:space="preserve"><value>显示地面航迹方向</value></data>
