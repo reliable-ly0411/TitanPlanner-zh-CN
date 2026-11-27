@@ -60,3 +60,7 @@ Actual Windows 120 DPI, only isolated controls. #188 shows the checked backgroun
 ## #184 tile failure and #186 HUD translation
 
 Windows offscreen GDI rendering using the same exact packaged commit `7dab547c` for both languages. The 256×256 tile uses an intentionally missing synthetic tile without network requests; there is no real map. The 466×354 HUD uses a synthetic waypoint (7, 123 m) and wind (3.5 m/s). en-US versus enhanced zh-CN is a **language** comparison, not a comparison of different software builds. No hardware or OpenGL capture.
+
+## #38 PX4 Hold and #39 optical flow selection
+
+Actual isolated Windows WinForms 120-DPI control crops with synthetic inputs, no hardware or transmitted command. #38 exact `2b8f5cc3` shows the same raw Loiter name for helicopter, fixed wing and generic fallback; the Chinese context differs. #39 exact `2f6cec47` shows the verified ID 158 label in Copter and Plane and raw-English fallback in the ArduSub test case; raw option ID and name unchanged. These figures are source-level, not a complete application or general firmware-coverage claim.
