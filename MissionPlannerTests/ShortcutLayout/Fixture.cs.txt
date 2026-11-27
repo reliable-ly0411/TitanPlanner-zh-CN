@@ -1,0 +1,200 @@
+using System;
+using System.Drawing;
+using System.Globalization;
+using System.Linq;
+using System.Windows.Forms;
+using MissionPlanner.Controls.BackstageView;
+
+namespace MissionPlanner.Controls
+{
+    public class MyUserControl : UserControl { }
+    public interface IActivate { void Activate(); }
+    public interface IDeactivate { void Deactivate(); }
+}
+namespace MissionPlanner.Utilities
+{
+    public static class UiText { public static string Translate(string value) => value; }
+}
+namespace log4net
+{
+    public interface ILog { void Error(object value); void DebugFormat(string format, params object[] args); }
+    public static class LogManager
+    {
+        private class SilentLog : ILog
+        {
+            public void Error(object value) { throw new Exception("Unexpected Backstage error", value as Exception); }
+            public void DebugFormat(string format, params object[] args) { }
+        }
+        public static ILog GetLogger(Type type) => new SilentLog();
+    }
+}
+
+internal class KeyboardShortcuts
+{
+    public static KeyboardShortcuts[] All;
+    public string Scope, KeysText, Description;
+}
+
+partial class ShortcutRegression
+{
+    internal static int FixtureDpi;
+    private static void Check(bool expected, string error)
+    {
+        if (!expected) throw new Exception(error);
+    }
+
+    private sealed class SettingsFixture : UserControl
+    {
+        public Panel Columns;
+        public Control ShortcutGroup;
+        public Button FocusTarget;
+    }
+
+    private SettingsFixture CreateFixture()
+    {
+        var fixture = new SettingsFixture { Dock = DockStyle.Fill };
+        fixture.Columns = new GroupColumnsPanel { Dock = DockStyle.Fill, AutoScroll = true, Padding = new Padding(10) };
+        fixture.Columns.SuspendLayout();
+        for (int i = 0; i < 9; i++)
+        {
+            var group = new GroupBox { Text = "Setting " + i, Margin = new Padding(4), Padding = new Padding(7),
+                AutoSize = true, AutoSizeMode = AutoSizeMode.GrowAndShrink };
+            var table = new TableLayoutPanel { AutoSize = true, AutoSizeMode = AutoSizeMode.GrowAndShrink,
+                Dock = DockStyle.Top, ColumnCount = 2 };
+            table.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 40));
+            table.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 60));
+            for (int row = 0; row < 4 + i % 6; row++)
+            {
+                table.Controls.Add(new Label { AutoSize = true, Text = "Option " + row }, 0, row);
+                if (i == 0 && row == 0)
+                {
+                    fixture.FocusTarget = new Button { Text = "Other settings" };
+                    table.Controls.Add(fixture.FocusTarget, 1, row);
+                }
+                else if (row % 2 == 0)
+                {
+                    var combo = new ComboBox { Dock = DockStyle.Fill };
+                    combo.Items.AddRange(new[] { "Normal", "Second", "Third" });
+                    combo.SelectedIndex = 0;
+                    table.Controls.Add(combo, 1, row);
+                }
+                else table.Controls.Add(new CheckBox { Text = "Enabled" }, 1, row);
+            }
+            group.Controls.Add(table);
+            fixture.Columns.Controls.Add(group);
+        }
+
+        fixture.ShortcutGroup = CreateKeyboardShortcutsGroup();
+        fixture.Columns.Controls.Add(fixture.ShortcutGroup);
+        PrepareLayoutControls(fixture.Columns);
+        fixture.Columns.ResumeLayout(false);
+        fixture.Controls.Add(fixture.Columns);
+        return fixture;
+    }
+
+    private static string Measure(string phase, SettingsFixture fixture, bool checkContents = true)
+    {
+        var columns = fixture.Columns;
+        var group = fixture.ShortcutGroup;
+        var table = group.Controls.OfType<TableLayoutPanel>().Single();
+        if (checkContents)
+        {
+            var cells = table.Controls.OfType<Label>().ToArray();
+
+            Check(group.Width == columns.ClientSize.Width - columns.Padding.Horizontal - group.Margin.Horizontal,
+                phase + ": shortcut group no longer follows the full settings width");
+            Check(cells.Length > 75, "Fixture did not exercise the long help table");
+            int finalRow = cells.Max(label => label.Bottom);
+            Check(finalRow <= table.Height, phase + ": final shortcut row is clipped by the table");
+            Check(table.Bottom <= group.Height, phase + ": table exceeds its group");
+            Check(table.Left >= 0 && table.Right <= group.ClientSize.Width, phase + ": table exceeds its group horizontally");
+            Check(cells.All(label => label.Left >= 0 && label.Right <= table.Width),
+                phase + ": shortcut text exceeds its table horizontally");
+            Check(columns.Controls.Cast<Control>().Where(control => control != group).All(c => !c.Bounds.IntersectsWith(group.Bounds)),
+                phase + ": shortcut group overlaps another settings group");
+        }
+
+        return columns.ClientSize.Width + "/" + group.Height + "/" + table.Height + "/" + columns.DisplayRectangle.Height;
+    }
+
+    [STAThread]
+    private static int Main(string[] args)
+    {
+        try
+        {
+            FixtureDpi = int.Parse(args[0]);
+            CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo(args[1]);
+            KeyboardShortcuts.All = ShortcutHelpChinese.Keys.Skip(9).Concat(ShortcutHelpChinese.Keys.Skip(9)).Take(38)
+                .Select((description, i) => new KeyboardShortcuts
+                {
+                    Scope = new[] { "Everywhere", "FLY screen", "PLAN screen", "Parameter pages", "Install Firmware", "Log Browser", "Survey (Grid)" }[i / 6],
+                    KeysText = "Ctrl+" + i % 9, Description = description
+                }).ToArray();
+            Application.EnableVisualStyles();
+            using (var form = new Form { Size = new Size(1024, 700), StartPosition = FormStartPosition.Manual })
+            using (var backstage = new BackstageView { Dock = DockStyle.Fill, UseSingleDpiMenuWidth = true,
+                WidthMenu = (int)(200.0 * FixtureDpi / 96) })
+            using (var fixture = new ShortcutRegression().CreateFixture())
+            {
+                form.Controls.Add(backstage);
+                var settings = backstage.AddPage(typeof(SettingsFixture), "Settings", null, false);
+                settings.Page = fixture;
+                var other = backstage.AddPage(typeof(UserControl), "Other", null, false);
+                form.Show();
+                backstage.ActivatePage(other);
+                Application.DoEvents();
+
+                Action revisit = () =>
+                {
+                    backstage.ActivatePage(other);
+                    Application.DoEvents();
+                    backstage.ActivatePage(settings);
+                    Application.DoEvents();
+                    Check(backstage.SelectedPage == settings, "Settings tab did not become active");
+                };
+
+                revisit();
+                revisit();
+                string standard = Measure("standard width", fixture, false);
+                for (int i = 0; i < 12; i++)
+                {
+                    revisit();
+                    string actual = Measure("warm reactivation " + i, fixture, false);
+                    Check(actual == standard, "Warm reactivation grew geometry: " + standard + " -> " + actual);
+                }
+
+                Measure("standard width", fixture);
+                foreach (int width in new[] { 850, 1420, 1024, 850, 1024 })
+                {
+                    form.Width = width;
+                    Application.DoEvents();
+                    revisit();
+                    string settled = Measure("after resize to " + width, fixture);
+                    revisit();
+                    Check(Measure("revisited at " + width, fixture) == settled, "Resize left unstable shortcut geometry");
+                    if (width == 1024) Check(settled == standard, "Returning to the original width changed settings geometry");
+                }
+
+                var table = (TableLayoutPanel)fixture.ShortcutGroup.Controls[0];
+                var lastRow = table.Controls.OfType<Label>().OrderBy(label => label.Bottom).Last();
+                // Scroll to the same clamped end position as the scrollbar, including nested labels.
+                fixture.Columns.AutoScrollPosition = new Point(0, fixture.Columns.DisplayRectangle.Height);
+                Application.DoEvents();
+                var area = fixture.Columns.RectangleToClient(lastRow.RectangleToScreen(lastRow.ClientRectangle));
+                Check(fixture.Columns.ClientRectangle.Contains(area), "Final shortcut row is not reachable using settings scroll: " + area
+                    + " viewport=" + fixture.Columns.ClientRectangle + " display=" + fixture.Columns.DisplayRectangle);
+                fixture.Columns.AutoScrollPosition = Point.Empty;
+                Application.DoEvents();
+                Check(fixture.FocusTarget.Focus(), "Neighboring setting could not receive keyboard focus");
+                Check(fixture.FocusTarget.Focused, "Focus did not reach the neighboring setting");
+                Console.WriteLine("PASS " + args[1] + " dpi=" + FixtureDpi + " stable geometry " + standard);
+            }
+            return 0;
+        }
+        catch (Exception error)
+        {
+            Console.Error.WriteLine(error);
+            return 1;
+        }
+    }
+}
