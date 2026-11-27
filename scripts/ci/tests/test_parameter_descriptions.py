@@ -19,19 +19,39 @@ class ParameterCatalogTests(unittest.TestCase):
     def test_committed_resource_is_current_and_scoped(self):
         self.assertTrue(catalog_module.generated_matches((ROOT / 'localization/parameters/zh-CN.xml').read_bytes(), catalog_module.resource(self.catalog, self.bundle)))
         for release in self.bundle:
-            expected = 37 if release.get('family') == 'Copter' else 53 if release.get('version') == '4.7.1' else 51
+            expected = 2 if release.get('family') == 'Tracker' else 37 if release.get('family') == 'Copter' else 53 if release.get('version') == '4.7.1' else 51
             self.assertEqual(expected, len(list(release.iter('param'))))
             self.assertEqual(release.get('family') + '-' + release.get('version'), release.find('paramfile/firmware').get('git_tag'))
 
     def test_scope_counts_and_held_versions(self):
         notes = self.catalog['translations']
         descriptions = {(n['family'], v, n['parameter']) for n in notes if n['field'] == 'Description' for v in n['versions']}
-        self.assertEqual(266, len(descriptions))
-        self.assertEqual(119, len({(f, p) for f, v, p in descriptions}))
+        self.assertEqual(268, len(descriptions))
+        self.assertEqual(121, len({(f, p) for f, v, p in descriptions}))
         self.assertFalse(any(v == '4.7.2' for f, v, p in descriptions))
         excluded_copter = {'RTL_CONE_SLOPE', 'LAND_SPEED', 'LAND_SPD_MS', 'LOG_FILE_BUFSIZE', 'FS_GCS_ENABLE'}
         excluded_plane = {'TECS_CLMB_MAX', 'TECS_SINK_MIN', 'ROLL_LIMIT_DEG'}
         self.assertFalse(any(p in (excluded_copter if f == 'Copter' else excluded_plane) for f, v, p in descriptions))
+
+    def test_tracker_slice_is_pinned_and_contains_only_two_read_only_statistics(self):
+        release = self.bundle.find("release[@family='Tracker']")
+        self.assertEqual('4.7.1', release.get('version'))
+        self.assertEqual('143350e5806885fd34cd9c710cfbe6f9b758bee0260c5e081bfef6eab05e91fc', release.get('sourceSha256'))
+        self.assertEqual('dbe792162d06cab66c3475fd5556bf7a120f119e', release.get('gitSha'))
+        params = {p.get('name'): p for p in release.iter('param')}
+        self.assertEqual({'STAT_BOOTCNT', 'STAT_RUNTIME'}, set(params))
+        for name, units in [('STAT_BOOTCNT', None), ('STAT_RUNTIME', 's')]:
+            self.assertEqual('True', params[name].findtext("field[@name='ReadOnly']"))
+            self.assertEqual(units, params[name].findtext("field[@name='Units']"))
+            self.assertIsNone(params[name].find('values'))
+        notes = [t for t in self.catalog['translations'] if t['family'] == 'Tracker']
+        self.assertEqual(2, len(notes))
+        self.assertEqual(set(params), {t['parameter'] for t in notes})
+        self.assertTrue(all(t['versions'] == ['4.7.1'] and t['field'] == 'Description' for t in notes))
+        altered = copy.deepcopy(self.bundle)
+        altered.find("release[@family='Tracker']//param/field[@name='ReadOnly']").text = 'False'
+        with self.assertRaises(ValueError):
+            catalog_module.resource(self.catalog, altered)
 
     def test_source_changes_cannot_automatically_reapprove_notes(self):
         for change in ('English', 'Range', 'Unit'):

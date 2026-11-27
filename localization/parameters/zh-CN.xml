@@ -1032,4 +1032,12 @@
     <english>Mixing of pitch and throttle correction for height and airspeed errors. Pitch controls altitude and throttle controls airspeed if set to 0. Pitch controls airspeed and throttle controls altitude if set to 2 (good for gliders). Blended if set to 1.</english>
     <chinese>设置俯仰与油门对高度误差和空速误差的分工权重。0：俯仰控制高度、油门控制空速。2：俯仰控制空速、油门控制高度，适合滑翔机。1：两者混合。</chinese>
   </translation>
+  <translation family="Tracker" parameter="STAT_BOOTCNT" field="Description" versions="4.7.1" englishSha256="e7b251a97e2dfbc1690e0391c1fa8c468a5a5600d3e091ff465550e066f637e2" recordSha256="df8e97a1e859dbeda2994ac3c718461f00088b33aac4d6d2afeff25018bfe2ee">
+    <english>Number of times board has been booted</english>
+    <chinese>控制板累计启动次数。</chinese>
+  </translation>
+  <translation family="Tracker" parameter="STAT_RUNTIME" field="Description" versions="4.7.1" englishSha256="bf6d102163dbaadd0b4c5aa013cc264887ef8a719682416418aee62afaa479ff" recordSha256="1b76798e075671498acb5714e85472843ecab1590222def6e3edf04b4e731e8e">
+    <english>Total time autopilot has run</english>
+    <chinese>飞控累计运行时间（秒）。</chinese>
+  </translation>
 </parameterTranslations>

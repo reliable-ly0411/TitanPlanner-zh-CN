@@ -4,7 +4,7 @@
 
 ## 当前范围
 
-当前包含 119 个不同的“机型 + 参数键”、266 条精确版本说明记录：Copter 4.5.7、4.6.3、4.7.1 各 37 条，Plane 4.5.7、4.6.3 各 51 条，4.7.1 为 53 条。独立中文目录共 258 条按版本和指纹划分的说明/枚举译文条目。新增说明保留未翻译枚举原文；不改变编号、范围或单位。4.7.2 尚未纳入：精确来源未确认，不能套用 4.7.1 说明。
+当前包含 121 个不同的“机型 + 参数键”、268 条精确版本说明记录：Copter 4.5.7、4.6.3、4.7.1 各 37 条，Plane 4.5.7、4.6.3 各 51 条，4.7.1 为 53 条；Tracker 4.7.1 为 2 条。独立中文目录共 260 条按版本和指纹划分的说明/枚举译文条目。新增说明保留未翻译枚举原文；不改变编号、范围或单位。4.7.2 尚未纳入：精确来源未确认，不能套用 4.7.1 说明。
 
 下表保留首批示例；新增说明涵盖姿态角控制、Loiter、爬升下降、航点、固定翼空速和 TECS 等，完整精确范围以目录资源为准。
 
@@ -22,6 +22,11 @@
 ArduPilot 源码 `Parameters.cpp` 和各库中的 `@DisplayName`、`@Description`、`@Values`、`@Bitmask` 等注释，经官方 `Tools/autotest/param_metadata/param_parse.py` / `xmlemit.py` 生成 `apm.pdef.xml`。MAVLink 普通参数协议本身传参数名、值和类型，不随每个值传送完整英文或中文说明。
 
 现有普通参数表实际走 `ConfigRawParams.LoadMetadataAndUpdateCells` → `ParameterMetaDataRepository.GetParameterMetaData`。原链路按每个字段查询：当前机型 PDEF → SITL PDEF → AP_Periph PDEF → 旧格式 APM XML；成功结果还有 5 分钟滑动内存缓存。旧格式先尝试用户目录的 `ParameterMetaData.xml`，加载失败才使用运行目录 `ParameterMetaDataBackup.xml`。这是代码规定的顺序，不能从截图或某个文件存在就认定当前进程实际采用了哪一份。
+
+Tracker 仅登记 `STAT_BOOTCNT` 与 `STAT_RUNTIME` 两个只读统计。原始版本 XML 的标签
+`Tracker-4.7.1` 与官方源码指向 `dbe792162d06cab66c3475fd5556bf7a120f119e`，完整 SHA-256
+为 `143350e5806885fd34cd9c710cfbe6f9b758bee0260c5e081bfef6eab05e91fc`。保留原英文、字段及单位；
+重置项与其它统计不在该范围，不套用于别版或不同构建。
 
 原 PDEF 下载地址是 `https://autotest.ardupilot.org/Parameters/{vehicle}/apm.pdef.xml.gz`，机型名为 `ArduCopter`、`ArduPlane`、`Rover`、`ArduSub`、`AntennaTracker`，另有 AP_Periph、Blimp、Heli、SITL。原代码也尝试 `Parameters/versioned/{Copter|Plane|Rover|Sub|Tracker}/stable-{版本}/apm.pdef.xml`。 gzip 下载先解压为机型 `.xml`，`Reload` 使用 `XDocument.Load` 读取 XML；例如共享数据目录下的 `ArduCopter.apm.pdef.xml`，版本文件则是 `Copter4.6.3.apm.pdef.xml`。版本加载会把内存中的机型索引指向版本文件；因此磁盘上通用文件存在，也不足以证明当前查询采用它。`app.config` 中的 `raw.oborne.me` C++ 地址用于旧解析器/调试生成路径，不能称为普通参数表每次查询时的唯一来源。
 
