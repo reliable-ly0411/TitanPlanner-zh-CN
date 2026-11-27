@@ -4903,6 +4903,10 @@ Ctrl+O 从文件加载</value>
     <value>HUD 叠加层</value>
     <comment>"HUD Overlay"</comment>
   </data>
+  <data name="efa5016086ee3aef29ef4b456382b6b349a3bec5de6f3c239dc07650d5c2f8d6" xml:space="preserve">
+    <value>活动窗口边框（ActiveBorder）</value>
+    <comment>"HUD color: ActiveBorder"</comment>
+  </data>
   <data name="b78c87853562c9b3190e421567f209d284f857a06d81fbce490e3950c2775a28" xml:space="preserve">
     <value>叠加 HUD</value>
     <comment>"HUD overlay"</comment>

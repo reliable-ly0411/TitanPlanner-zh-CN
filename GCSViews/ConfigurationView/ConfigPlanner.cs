@@ -836,6 +836,12 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             }
 
             CMB_osdcolor.DataSource = Enum.GetNames(typeof(KnownColor));
+            if (CultureInfo.CurrentUICulture.Name == "zh-CN")
+            {
+                var activeBorderCaption = FormatHudColorCaption(nameof(KnownColor.ActiveBorder));
+                var captionWidth = TextRenderer.MeasureText(activeBorderCaption, CMB_osdcolor.Font).Width;
+                CMB_osdcolor.DropDownWidth = Math.Max(CMB_osdcolor.Width, captionWidth + 35 + SystemInformation.VerticalScrollBarWidth);
+            }
 
             // set distance/speed unit states
             CMB_distunits.DataSource = Enum.GetNames(typeof(distances));
@@ -1551,6 +1557,13 @@ namespace MissionPlanner.GCSViews.ConfigurationView
         {
         }
 
+        internal static string FormatHudColorCaption(string key)
+        {
+            return CultureInfo.CurrentUICulture.Name == "zh-CN" && key == nameof(KnownColor.ActiveBorder)
+                ? UiText.Translate("HUD color: ActiveBorder")
+                : key;
+        }
+
         private void CMB_osdcolor_DrawItem(object sender, DrawItemEventArgs e)
         {
             if (e.Index < 0)
@@ -1576,7 +1589,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                 brush = new SolidBrush(CMB_osdcolor.ForeColor);
             else
                 brush = SystemBrushes.HighlightText;
-            g.DrawString(CMB_osdcolor.Items[e.Index].ToString(),
+            g.DrawString(FormatHudColorCaption((string)CMB_osdcolor.Items[e.Index]),
                 CMB_osdcolor.Font, brush, rect.X + 35, rect.Top + rect.Height - CMB_osdcolor.Font.Height);
         }
 
