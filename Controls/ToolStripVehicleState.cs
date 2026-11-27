@@ -1476,6 +1476,7 @@ namespace MissionPlanner.Controls
                             return ModeMenuPresentation.Circle;
                         case MAVLink.MAV_TYPE.QUADROTOR:
                         case MAVLink.MAV_TYPE.COAXIAL:
+                        case MAVLink.MAV_TYPE.HELICOPTER: // PX4 helicopter Hold uses multicopter semantics.
                         case MAVLink.MAV_TYPE.HEXAROTOR:
                         case MAVLink.MAV_TYPE.OCTOROTOR:
                         case MAVLink.MAV_TYPE.TRICOPTER:

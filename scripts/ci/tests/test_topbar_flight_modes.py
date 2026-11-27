@@ -79,6 +79,17 @@ class TopBarFlightModesTests(unittest.TestCase):
         self.assertIn('CurrentUICulture.Name == "zh-CN"', secondary)
         self.assertIn("!KnownMenuModes.Contains(mode)", secondary)
 
+    def test_px4_helicopter_uses_existing_hover_caption_without_vtol_guess(self):
+        selector = self.control.split("internal static ModeMenuPresentation GetModeMenuPresentation", 1)[1].split(
+            "private void ShowDropdown()", 1)[0]
+        px4 = selector.split("case ArduPilot.Firmwares.PX4:", 1)[1]
+        self.assertRegex(px4, r"MAV_TYPE\.FIXED_WING:\s*return ModeMenuPresentation\.Circle;")
+        hover = px4.split("case MAVLink.MAV_TYPE.QUADROTOR:", 1)[1].split(
+            "return ModeMenuPresentation.Hover;", 1)[0]
+        self.assertIn("case MAVLink.MAV_TYPE.HELICOPTER:", hover)
+        self.assertNotIn("case MAVLink.MAV_TYPE.VTOL_", px4)
+        self.assertIn("return ModeMenuPresentation.Unspecified;", px4)
+
     def test_menu_keeps_raw_names_and_uses_bilingual_text_only_for_display(self):
         self.assertEqual(1, self.menu.count("FlightModeDisplay.EnglishThenChinese(mode.Value, MenuPresentation)"))
         self.assertIn("fltOrder.ContainsKey(m.Value)", self.menu)
