@@ -45,6 +45,10 @@ namespace MissionPlanner.Controls
                 case "altd100": return UiText.Translate("Relative altitude hundreds component (fractional)");
                 case "altd1000": return UiText.Translate("Relative altitude thousands component (fractional)");
                 case "armed": return UiText.Translate("Vehicle armed state");
+                // These are the ground station's booleans, not the MAVLink landed state code.
+                case "landed": return UiText.Translate("Ground station on-ground flag");
+                case "safetyactive": return UiText.Translate("Ground station safety flag (motor control not enabled)");
+                case "prearmstatus": return UiText.Translate("Ground station pre-arm flag (connected and checks healthy or disabled)");
                 case "ahrs2_alt": return UiText.Translate("Secondary AHRS altitude (MSL, m)");
                 case "ahrs2_lat": return UiText.Translate("Secondary AHRS latitude (°)");
                 case "ahrs2_lng": return UiText.Translate("Secondary AHRS longitude (°)");

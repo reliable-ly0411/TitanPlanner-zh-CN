@@ -502,6 +502,39 @@ namespace MissionPlannerTests.Controls
         }
 
         [TestMethod]
+        public void QuickViewStateFlagsUseDescriptionsWithoutChangingKeysOrOtherLocales()
+        {
+            var previous = CultureInfo.CurrentUICulture;
+            try
+            {
+                var flags = new[]
+                {
+                    Tuple.Create("landed", "地面站在地面状态标志"),
+                    Tuple.Create("safetyactive", "地面站安全标志（电机控制未启用）"),
+                    Tuple.Create("prearmstatus", "地面站解锁前状态标志（已连接，且检查正常或未启用）"),
+                };
+                foreach (var culture in new[] { "zh-CN", "zh-Hans", "en-US", "zh-TW" })
+                {
+                    CultureInfo.CurrentUICulture = new CultureInfo(culture);
+                    foreach (var flag in flags)
+                    {
+                        Assert.AreEqual(typeof(bool), typeof(CurrentState).GetProperty(flag.Item1).PropertyType);
+                        string label = TelemetryFieldPresentation.FieldLabel(flag.Item1);
+                        Assert.AreEqual(culture == "zh-CN" ? flag.Item1 + " (" + flag.Item2 + ")" : flag.Item1, label);
+                        Assert.IsTrue(TelemetryFieldPresentation.Matches(flag.Item1, label));
+                        Assert.AreEqual(culture == "zh-CN", TelemetryFieldPresentation.Matches(flag.Item2, label));
+                    }
+
+                    Assert.AreEqual("landed_future", TelemetryFieldPresentation.FieldLabel("landed_future"));
+                    // Keep the separate protocol code distinct from the ground station flag.
+                    string code = TelemetryFieldPresentation.FieldLabel("landed_state");
+                    Assert.AreEqual(culture == "zh-CN" ? "landed_state (上报的着陆状态代码)" : "landed_state", code);
+                }
+            }
+            finally { CultureInfo.CurrentUICulture = previous; }
+        }
+
+        [TestMethod]
         public void LabelsRetainKeysAndBilingualSearch()
         {
             var label = TelemetryFieldPresentation.Combine("airspeed", "空速");

@@ -4711,9 +4711,21 @@ Ctrl+O 从文件加载</value>
     <value>地面站计算的 EKF 健康指标</value>
     <comment>"Ground station EKF health indicator"</comment>
   </data>
+  <data name="8e57f4ee00ed23f4f0e2aaeefffbc9d898826c2209edbcac7ea6d8363d8abfc9" xml:space="preserve">
+    <value>地面站在地面状态标志</value>
+    <comment>"Ground station on-ground flag"</comment>
+  </data>
   <data name="9e76bc41832d5746361468f6457d99c8c6e520f891918f00c40fc8f5d4037a90" xml:space="preserve">
     <value>地面站数据包接收质量（%）</value>
     <comment>"Ground station packet reception quality (%)"</comment>
+  </data>
+  <data name="234b2389f1701c2998f6c2b289416a1e2fb4785d7ab175a6cad02db16ef7cda2" xml:space="preserve">
+    <value>地面站解锁前状态标志（已连接，且检查正常或未启用）</value>
+    <comment>"Ground station pre-arm flag (connected and checks healthy or disabled)"</comment>
+  </data>
+  <data name="63e0aa6353549fa67a5579c5b337d2059cae1d425650075ea21670d99f2d7900" xml:space="preserve">
+    <value>地面站安全标志（电机控制未启用）</value>
+    <comment>"Ground station safety flag (motor control not enabled)"</comment>
   </data>
   <data name="ff27501553212286828f38d5d405f04c4c6462529530ddf126439bb2aba52206" xml:space="preserve">
     <value>地面站设置</value>
