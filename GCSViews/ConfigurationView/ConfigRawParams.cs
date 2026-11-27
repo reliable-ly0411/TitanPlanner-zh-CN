@@ -1400,6 +1400,9 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                     cmb.SelectedIndex = -1;
                 }
 
+                if (UseEnhancedParameterDescriptions)
+                    ConfigureCompactParameterOptions(cmb, options);
+
                 // When the combo box selection changes, update the cell value
                 cmb.SelectedIndexChanged += (s, a) =>
                 {

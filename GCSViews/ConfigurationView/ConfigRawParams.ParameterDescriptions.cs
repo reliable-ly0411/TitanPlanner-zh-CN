@@ -208,6 +208,75 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             return text != null && filter.IsMatch(text.SearchText);
         }
 
+        private static void ConfigureCompactParameterOptions(ComboBox combo, List<KeyValuePair<int, string>> original)
+        {
+            // The bilingual values have already passed the release/record checks. Match their raw
+            // counterpart by exact numeric key and prefix, never by parsing a user-facing label.
+            var raw = new Dictionary<int, string>();
+            foreach (var option in original)
+                if (!raw.ContainsKey(option.Key)) raw.Add(option.Key, option.Value);
+            if (!combo.Items.Cast<object>().OfType<KeyValuePair<int, string>>()
+                .Any(option => AuditedParameterOptionRaw(raw, option) != null)) return;
+
+            const TextFormatFlags measureFlags = TextFormatFlags.SingleLine | TextFormatFlags.NoPrefix;
+            var tooltip = new ToolTip();
+            string CompactOption(object item, Graphics graphics)
+            {
+                if (!(item is KeyValuePair<int, string> option)) return null;
+                var source = AuditedParameterOptionRaw(raw, option);
+                if (source == null) return null;
+                var available = Math.Max(0, combo.ClientSize.Width - SystemInformation.VerticalScrollBarWidth - 4);
+                var preferred = TextRenderer.MeasureText(graphics, option.Value, combo.Font,
+                    new Size(int.MaxValue, int.MaxValue), measureFlags).Width;
+                return preferred > available ? source : null;
+            }
+            void UpdateHint()
+            {
+                string hint = null;
+                if (combo.SelectedItem != null && !combo.DroppedDown)
+                    using (var graphics = combo.CreateGraphics())
+                        if (CompactOption(combo.SelectedItem, graphics) != null)
+                            hint = combo.GetItemText(combo.SelectedItem);
+                tooltip.SetToolTip(combo, hint);
+                combo.AccessibleDescription = hint;
+                combo.Invalidate();
+            }
+
+            combo.DrawMode = DrawMode.OwnerDrawFixed;
+            combo.DrawItem += (sender, args) =>
+            {
+                args.DrawBackground();
+                if (args.Index >= 0 && args.Index < combo.Items.Count)
+                {
+                    var item = combo.Items[args.Index];
+                    string label = !combo.DroppedDown && (args.State & DrawItemState.ComboBoxEdit) != 0
+                        ? CompactOption(item, args.Graphics) : null;
+                    TextRenderer.DrawText(args.Graphics, label ?? combo.GetItemText(item), combo.Font,
+                        args.Bounds, args.ForeColor,
+                        measureFlags | TextFormatFlags.EndEllipsis | TextFormatFlags.VerticalCenter);
+                }
+                args.DrawFocusRectangle();
+            };
+            combo.MouseEnter += (sender, args) => UpdateHint();
+            combo.SelectedIndexChanged += (sender, args) => UpdateHint();
+            combo.SizeChanged += (sender, args) => UpdateHint();
+            combo.FontChanged += (sender, args) => UpdateHint();
+            combo.DropDown += (sender, args) => { tooltip.SetToolTip(combo, null); combo.AccessibleDescription = null; combo.Invalidate(); };
+            combo.DropDownClosed += (sender, args) => UpdateHint();
+            combo.Disposed += (sender, args) => tooltip.Dispose();
+            UpdateHint();
+        }
+
+        private static string AuditedParameterOptionRaw(Dictionary<int, string> original, KeyValuePair<int, string> option)
+        {
+            if (!original.TryGetValue(option.Key, out var source) || string.IsNullOrWhiteSpace(source) || option.Value == null)
+                return null;
+            var prefix = source + " / ";
+            if (!option.Value.StartsWith(prefix, StringComparison.Ordinal)) return null;
+            string translation = option.Value.Substring(prefix.Length);
+            return string.IsNullOrWhiteSpace(translation) || translation == "[中文待复核]" ? null : source;
+        }
+
         private List<KeyValuePair<int, string>> BilingualParameterOptions(string name, List<KeyValuePair<int, string>> original)
         {
             if (!UseEnhancedParameterDescriptions) return original;
