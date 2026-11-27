@@ -271,6 +271,8 @@ namespace MissionPlanner.GCSViews.ConfigurationView
         {
             var group = CreateGroupBox($"{label5.Text} / {label4.Text}");
             var table = CreateTableLayout(3);
+            // Measure the option rows at their own preferred height, not at the previous filled height.
+            table.Dock = DockStyle.Top;
 
             table.Controls.Add(label5, 0, 0);
             table.Controls.Add(CMB_Layout, 1, 0);
