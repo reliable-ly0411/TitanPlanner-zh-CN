@@ -1,0 +1,72 @@
+using System;
+using System.Drawing;
+using System.Globalization;
+using System.Linq;
+using System.Windows.Forms;
+
+namespace MissionPlanner.Utilities
+{
+    public static class UiText { public static string Translate(string source) => source; }
+}
+internal sealed class KeyboardShortcuts
+{
+    public static KeyboardShortcuts[] All;
+    public string Scope, KeysText, Description;
+}
+partial class StockWidthChecks
+{
+    // Width is pinned by this fixture, so only the production section tag is needed.
+    private static class GroupColumnsPanel { public static readonly object FullWidth = new object(); }
+
+    private static void Check(bool value, string failure)
+    {
+        if (!value) throw new Exception(failure);
+    }
+
+    [STAThread]
+    private static int Main(string[] args)
+    {
+        try
+        {
+            string language = args[0];
+            CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo(language);
+            KeyboardShortcuts.All = ShortcutHelpChinese.Keys.Skip(9).Select((description, index) => new KeyboardShortcuts
+            {
+                Scope = index < 12 ? "Everywhere" : "FLY screen",
+                KeysText = index % 4 == 0 ? "Ctrl-Shift-O, Alt-P" : "Ctrl-G",
+                Description = description
+            }).ToArray();
+            using (var group = new StockWidthChecks().CreateKeyboardShortcutsGroup())
+            using (var form = new Form { Width = 1240, Height = 760, AutoScroll = true })
+            {
+                form.Controls.Add(group);
+                form.Show();
+                var table = group.Controls.OfType<TableLayoutPanel>().Single();
+                var descriptions = table.Controls.OfType<Label>().Where(label => table.GetColumn(label) == 1).ToArray();
+                Check(descriptions.Length == KeyboardShortcuts.All.Length, "Missing shortcut descriptions");
+                int previous = -1;
+                foreach (int width in new[] { 1125, 667, 450, 667, 1125 })
+                {
+                    // Width pin is the same contract the settings column container applies.
+                    group.MinimumSize = Size.Empty;
+                    group.MaximumSize = new Size(width, 0);
+                    group.MinimumSize = new Size(width, 0);
+                    group.Width = width;
+                    Application.DoEvents();
+                    int allotted = descriptions.First().MaximumSize.Width;
+                    Check(allotted > 0 && allotted < width && descriptions.All(label => label.MaximumSize.Width == allotted),
+                        "Missing description width cap: " + language + "/" + width + " got " + allotted);
+                    Check(descriptions.All(label => label.Width <= allotted && label.Right <= table.ClientSize.Width),
+                        "Description escaped its visible width");
+                    if (previous != -1) Check(previous != allotted, "Width cap did not update after resize");
+                    previous = allotted;
+                }
+                Check(descriptions.All(label => label.Text.Contains(Environment.NewLine)) == (language == "zh-CN"),
+                    "Original one-/two-line locale dispatch changed");
+                Console.WriteLine("PASS authored shortcut description widths " + language);
+            }
+            return 0;
+        }
+        catch (Exception error) { Console.Error.WriteLine(error); return 1; }
+    }
+}
