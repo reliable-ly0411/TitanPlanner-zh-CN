@@ -13,5 +13,10 @@
   "GCSViews/ConfigurationView/ConfigMount.resx": {
     "label25.Text": "X",
     "label30.Text": "X"
+  },
+  "GCSViews/ConfigurationView/ConfigAntennaTracker.resx": {
+    "label4.Text": "角度范围 (°)",
+    "label18.Text": "最大角度 (°)",
+    "label5.Text": "最小角度 (°)"
   }
 }
