@@ -25,6 +25,34 @@ namespace MissionPlanner.Controls
         public GMAPCache()
         {
             InitializeComponent();
+            myDataGridView1.DataBindingComplete += (sender, args) => LocalizeSummaryHeaders();
+        }
+
+        private void LocalizeSummaryHeaders()
+        {
+            if (System.Globalization.CultureInfo.CurrentUICulture.Name != "zh-CN")
+                return;
+
+            foreach (DataGridViewColumn column in myDataGridView1.Columns)
+            {
+                string source;
+                switch (column.DataPropertyName)
+                {
+                    case "Name":
+                    case "Size":
+                        source = column.DataPropertyName;
+                        break;
+                    case "Count":
+                        source = "count"; // Existing UI catalog key; leave the bound Count member unchanged.
+                        break;
+                    default:
+                        continue;
+                }
+
+                var translated = UiText.Translate(source);
+                if (translated != source && column.HeaderText != translated)
+                    column.HeaderText = translated;
+            }
         }
 
         public void Activate()
