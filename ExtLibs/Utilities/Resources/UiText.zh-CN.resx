@@ -7945,6 +7945,10 @@ Mission Planner 需要收到 2 个有效心跳包后才会连接。</value>
     <value>在资源管理器中打开地图瓦片缓存文件夹</value>
     <comment>"Open the tile cache folder in Explorer"</comment>
   </data>
+  <data name="b7737780346ea91658428b572bf506b0db2d486f33b6abb323e228c569691e1c" xml:space="preserve">
+    <value>光流校准</value>
+    <comment>"Optflow Calibration"</comment>
+  </data>
   <data name="0132a0a37d62466140474091db0757e548bae3e62f4cdf09034b40f89e2b00f3" xml:space="preserve">
     <value>优化航程</value>
     <comment>"Optimise for Distance"</comment>

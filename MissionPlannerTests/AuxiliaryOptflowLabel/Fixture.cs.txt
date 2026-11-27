@@ -101,7 +101,11 @@ partial class Fixture
     {
         try
         {
+            CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo("zh-CN");
             CheckCatalog();
+            CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo("en-US");
+            Check(FormatAuxiliaryOption("ArduPlane", Key, Raw, true) == Raw,
+                "Missing translation keeps one original caption rather than repeating it");
             var backup = new XmlDocument { XmlResolver = null };
             backup.Load(args[0]);
             var fixture = new Fixture();
