@@ -84,7 +84,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
         {
             int token = ++generation;
             foreach (var request in requests.Where(item => item.Value.IsCompleted &&
-                !EqualityComparer<TKey>.Default.Equals(item.Key, requestedKey)).ToArray())
+                !System.Collections.Generic.EqualityComparer<TKey>.Default.Equals(item.Key, requestedKey)).ToArray())
                 requests.Remove(request.Key);
 
             if (!requests.TryGetValue(requestedKey, out Task<TResult> task) ||
