@@ -1,4 +1,7 @@
 {
+  "GCSViews/InitialSetup.resx": {
+    "backstageViewPageAntTrack.Text": "跟踪器参数"
+  },
   "Controls/Vibration.resx": {
     "label3.Text": "X",
     "label8.Text": "加速度计削波"

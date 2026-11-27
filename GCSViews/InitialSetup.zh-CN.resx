@@ -175,9 +175,7 @@
   <data name="backstageViewPagegimbal.Text" xml:space="preserve">
     <value>相机云台</value>
   </data>
-  <data name="backstageViewPageAntTrack.Text" xml:space="preserve">
-    <value>天线追踪器</value>
-  </data>
+  <data name="backstageViewPageAntTrack.Text" xml:space="preserve"><value>跟踪器参数</value></data>
   <data name="backstageViewPageMotorTest.Text" xml:space="preserve">
     <value>电机测试</value>
   </data>
