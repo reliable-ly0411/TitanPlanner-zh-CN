@@ -101,6 +101,9 @@ namespace MissionPlannerTests.Utilities
 
             internal string Display((DateTime time, string message, byte severity) row) =>
                 (string)Call("Suffix", Rows, row);
+
+            internal string Voice((DateTime time, string message, byte severity) row) =>
+                (string)Call("VoiceSuffix", Rows, row);
         }
 
         private static void InCulture(string name, Action check)
@@ -203,5 +206,77 @@ namespace MissionPlannerTests.Utilities
                     Assert.IsNull(px4.Display(px4.Status(Px4Text, 2, id: 1)));
                 });
         }
+
+        [TestMethod]
+        public void VoiceUsesDisplayProofFromTheSameDecodedRow() => InCulture("zh-CN", () =>
+        {
+            var plane = new Replay();
+            var warning = plane.Status(PlaneText, 4);
+            var px4 = new Replay(px4: true);
+            var critical = px4.Status(Px4Text, 2, id: 1);
+
+            Assert.AreEqual(PlaneChinese, plane.Display(warning));
+            Assert.AreEqual(PlaneChinese, plane.Voice(warning));
+            Assert.AreEqual(Px4Chinese, px4.Display(critical));
+            Assert.AreEqual(Px4Chinese, px4.Voice(critical));
+            Assert.AreEqual((PlaneText, (byte)4), (plane.Rows[0].message, plane.Rows[0].severity));
+            Assert.AreEqual((Px4Text, (byte)2), (px4.Rows[0].message, px4.Rows[0].severity));
+            Assert.AreEqual(warning, plane.Rows[0]);
+            Assert.AreEqual(critical, px4.Rows[0]);
+        });
+
+        [TestMethod]
+        public void VoiceKeepsOriginalWithoutTheSameProof() => InCulture("zh-CN", () =>
+        {
+            var px4 = new Replay(px4: true);
+            Assert.IsNull(px4.Voice(px4.Status("Unknown diagnostic", 2, id: 1)));
+            Assert.IsNull(px4.Voice(px4.Status(Px4Text, 4, id: 2)));
+            Assert.IsNull(px4.Voice(px4.Status(Px4Text, 2, id: 3, sequence: 1)));
+            Assert.IsNull(px4.Voice(px4.Status(Px4Text, 2, id: 4, component: 2)));
+            Assert.IsNull(px4.Voice(px4.Status(Px4Text + "\0X", 2, id: 5)));
+            Assert.IsNull(px4.Voice(px4.Status(Px4Text + "X", 2, id: 6, rowText: Px4Text)));
+
+            var another = new Replay(px4: true);
+            var critical = px4.Status(Px4Text, 2, id: 7);
+            Assert.IsNull(another.Voice(critical));
+            Assert.IsNull(px4.Voice((critical.time.AddSeconds(1), critical.message, critical.severity)));
+            Assert.IsNull(px4.Voice((critical.time, critical.message, 4)));
+
+            var vendor = new Replay(px4: true, hash: new byte[] { 1, 0, 0, 0xc4, 0xd1, 0x2a, 0xf1, 0xd6 });
+            Assert.IsNull(vendor.Voice(vendor.Status(Px4Text, 2, id: 1)));
+            var wrongAircraft = new Replay(px4: true, vehicle: 1);
+            Assert.IsNull(wrongAircraft.Voice(wrongAircraft.Status(Px4Text, 2, id: 1)));
+            var wrongRelease = new Replay(version: 0x040603ff);
+            Assert.IsNull(wrongRelease.Voice(wrongRelease.Status(PlaneText, 4)));
+        });
+
+        [TestMethod]
+        public void VoiceKeepsOriginalOutsideEnhancedChinese()
+        {
+            foreach (var culture in new[] { "zh-Hans", "en-US" })
+                InCulture(culture, () =>
+                {
+                    var plane = new Replay();
+                    var px4 = new Replay(px4: true);
+                    Assert.IsNull(plane.Voice(plane.Status(PlaneText, 4)));
+                    Assert.IsNull(px4.Voice(px4.Status(Px4Text, 2, id: 1)));
+                });
+        }
+
+        [TestMethod]
+        public void VoiceKeepsExistingPx4BatteryVendorGate() => InCulture("zh-CN", () =>
+        {
+            const string raw = "Battery 1 missing\t";
+            const string chinese = "未检测到 1 号电池";
+            var px4 = new Replay(px4: true);
+            var warning = px4.Status(raw, 2);
+            Assert.AreEqual(chinese, px4.Display(warning));
+            Assert.AreEqual(chinese, px4.Voice(warning));
+
+            var vendor = new Replay(px4: true, hash: new byte[] { 1, 0, 0, 0xc4, 0xd1, 0x2a, 0xf1, 0xd6 });
+            var vendorWarning = vendor.Status(raw, 2);
+            Assert.AreEqual(chinese, vendor.Display(vendorWarning));
+            Assert.IsNull(vendor.Voice(vendorWarning));
+        });
     }
 }

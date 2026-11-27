@@ -1388,6 +1388,7 @@ namespace MissionPlanner
         /// </summary>
         private readonly object messageHudLock = new object();
         private Func<string> messageHudSuffix;
+        private FirmwareSpeechAlert messageSpeechAlert;
 
         private string RawHudText() =>
             DateTime.Now > _messageHighTime.AddSeconds(10) ? "" : _messagehigh.TrimUnPrintable();
@@ -1414,11 +1415,33 @@ namespace MissionPlanner
             }
         }
 
-        internal void SetHudText(string value, Func<string> verifiedSuffix)
+        public string SpeakHighMessageIfChanged(ISpeech speaker, string previous)
+        {
+            string raw;
+            FirmwareSpeechAlert alert;
+            lock (messageHudLock)
+            {
+                raw = RawHudText();
+                alert = messageSpeechAlert;
+            }
+            if (raw == previous || raw.StartsWith("PX4v2 ") || raw.StartsWith("PreArm:"))
+                return previous;
+            if (raw.Length != 0 && alert != null)
+                return alert.Speak(speaker, raw) ? raw : previous;
+
+            speaker.SpeakAsync(raw);
+            return raw;
+        }
+
+        internal void SetHudText(string value, Func<string> verifiedSuffix) =>
+            SetFirmwareHudText(value, verifiedSuffix, null);
+
+        internal void SetFirmwareHudText(string value, Func<string> verifiedSuffix, FirmwareSpeechAlert alert)
         {
             if (string.IsNullOrEmpty(value)) return;
             lock (messageHudLock)
             {
+                messageSpeechAlert = alert;
                 // An identical local report removes the display lease, not the stock HUD value or expiry.
                 if (verifiedSuffix == null) messageHudSuffix = null;
                 if (RawHudText() == value) return;

@@ -150,9 +150,10 @@ namespace MissionPlanner
         {
             lock (list)
             {
-                if (!states.TryGetValue(list, out var state) || !IsPx4(state.Version) ||
-                    state.UnconfirmedVoiceVendor || row.message != Px4BatteryText(state.Version))
-                    return null;
+                if (!states.TryGetValue(list, out var state)) return null;
+                bool battery = IsPx4(state.Version) && !state.UnconfirmedVoiceVendor &&
+                               row.message == Px4BatteryText(state.Version);
+                if (!battery && !IsPinnedDiagnostic(state, row.message, row.severity)) return null;
                 return Suffix(list, row);
             }
         }

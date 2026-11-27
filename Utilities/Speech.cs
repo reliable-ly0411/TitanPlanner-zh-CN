@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 
 namespace MissionPlanner.Utilities
 {
-    public class Speech : IDisposable, ISpeech
+    public class Speech : IDisposable, ISpeech, ISpeechSubmission
     {
         private static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
@@ -62,13 +62,14 @@ namespace MissionPlanner.Utilities
             }
         }
 
-        public void SpeakAsync(string text)
-        {
-            if (!MainV2.speechEnabled())
-                return;
+        public void SpeakAsync(string text) => TrySpeakAsync(text);
 
-            if (text == null || String.IsNullOrWhiteSpace(text))
-                return;
+        public bool TrySpeakAsync(string text)
+        {
+            if (!MainV2.speechEnabled() || String.IsNullOrWhiteSpace(text))
+                return false;
+
+            bool submitted = false;
 
             text = Regex.Replace(text, @"\bPreArm\b", "Pre Arm", RegexOptions.IgnoreCase);
             text = Regex.Replace(text, @"\bdist\b", "distance", RegexOptions.IgnoreCase);
@@ -102,6 +103,7 @@ namespace MissionPlanner.Utilities
                     _state = SynthesizerState.Speaking;
                     _speechlinux.StandardInput.WriteLine("(SayText \"" + text + "\")");
                     _speechlinux.StandardInput.WriteLine("(quit)");
+                    submitted = true;
 
                     _speechlinux.Close();
                 }
@@ -119,6 +121,7 @@ namespace MissionPlanner.Utilities
                         PromptBuilder pb = new PromptBuilder(CultureInfo.CurrentUICulture);
                         pb.AppendText(text);
                         _speechwindows.SpeakAsync(pb);
+                        submitted = true;
                     }
                 }
                 catch (COMException)
@@ -128,6 +131,7 @@ namespace MissionPlanner.Utilities
             }
 
             log.Info("TTS: say " + text);
+            return submitted;
         }
 
         void _speechlinux_Exited(object sender, EventArgs e)
