@@ -46,6 +46,7 @@ namespace MissionPlanner.Controls.PreFlight
             _parent = parent;
             InitializeComponent();
             ConfigureColorHeadings();
+            ReserveFieldHeadingSpace();
 
             if (DesignMode)
             {
@@ -53,6 +54,28 @@ namespace MissionPlanner.Controls.PreFlight
             }
                         
             reload();
+        }
+
+        private void ReserveFieldHeadingSpace()
+        {
+            if (!string.Equals(CultureInfo.CurrentUICulture.Name, "zh-CN", StringComparison.Ordinal))
+                return;
+
+            int minimumTop = panel1.Top;
+            var headings = new[] { label1, label2, label3, label6 };
+            Action reserve = () =>
+            {
+                // Keep the existing bottom and button row; only reserve the height needed above the scrolling rows.
+                int bottom = panel1.Bottom;
+                int top = Math.Min(bottom, Math.Max(minimumTop, headings.Max(heading => heading.Bottom) + 2));
+                if (top != panel1.Top)
+                    panel1.SetBounds(panel1.Left, top, panel1.Width, bottom - top, BoundsSpecified.Y | BoundsSpecified.Height);
+            };
+
+            foreach (var heading in headings)
+                heading.SizeChanged += (sender, args) => reserve();
+            Shown += (sender, args) => reserve();
+            reserve();
         }
 
         private void ConfigureColorHeadings()
