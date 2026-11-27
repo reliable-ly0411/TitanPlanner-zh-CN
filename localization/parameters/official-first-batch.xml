@@ -611,6 +611,14 @@
           <param humanName="OSD Font" name="OSD_FONT" documentation="This sets which OSD font to use. It is an integer from 0 to the number of fonts available" user="Standard">
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="OSD vertical offset" name="OSD_V_OFFSET" documentation="Sets vertical offset of the osd inside image" user="Standard">
+            <field name="Range">0 31</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="OSD horizontal offset" name="OSD_H_OFFSET" documentation="Sets horizontal offset of the osd inside image" user="Standard">
+            <field name="Range">0 63</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="OSD1_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD1_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -1262,6 +1270,14 @@
             <field name="Range">1 20</field>
           </param>
           <param humanName="OSD Font" name="OSD_FONT" documentation="This sets which OSD font to use. It is an integer from 0 to the number of fonts available" user="Standard">
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="OSD vertical offset" name="OSD_V_OFFSET" documentation="Sets vertical offset of the osd inside image" user="Standard">
+            <field name="Range">0 31</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="OSD horizontal offset" name="OSD_H_OFFSET" documentation="Sets horizontal offset of the osd inside image" user="Standard">
+            <field name="Range">0 63</field>
             <field name="RebootRequired">True</field>
           </param>
         </parameters>
@@ -1964,6 +1980,14 @@
             <field name="Range">1 20</field>
           </param>
           <param humanName="OSD Font" name="OSD_FONT" documentation="This sets which OSD font to use. It is an integer from 0 to the number of fonts available" user="Standard">
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="OSD vertical offset" name="OSD_V_OFFSET" documentation="Sets vertical offset of the osd inside image" user="Standard">
+            <field name="Range">0 31</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="OSD horizontal offset" name="OSD_H_OFFSET" documentation="Sets horizontal offset of the osd inside image" user="Standard">
+            <field name="Range">0 63</field>
             <field name="RebootRequired">True</field>
           </param>
         </parameters>
@@ -2688,6 +2712,14 @@
           <param humanName="OSD Font" name="OSD_FONT" documentation="This sets which OSD font to use. It is an integer from 0 to the number of fonts available" user="Standard">
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="OSD vertical offset" name="OSD_V_OFFSET" documentation="Sets vertical offset of the osd inside image" user="Standard">
+            <field name="Range">0 31</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="OSD horizontal offset" name="OSD_H_OFFSET" documentation="Sets horizontal offset of the osd inside image" user="Standard">
+            <field name="Range">0 63</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="OSD1_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD1_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -3396,6 +3428,14 @@
             <field name="Range">1 20</field>
           </param>
           <param humanName="OSD Font" name="OSD_FONT" documentation="This sets which OSD font to use. It is an integer from 0 to the number of fonts available" user="Standard">
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="OSD vertical offset" name="OSD_V_OFFSET" documentation="Sets vertical offset of the osd inside image" user="Standard">
+            <field name="Range">0 31</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="OSD horizontal offset" name="OSD_H_OFFSET" documentation="Sets horizontal offset of the osd inside image" user="Standard">
+            <field name="Range">0 63</field>
             <field name="RebootRequired">True</field>
           </param>
         </parameters>
@@ -4166,6 +4206,14 @@
           <param humanName="OSD Font" name="OSD_FONT" documentation="This sets which OSD font to use. It is an integer from 0 to the number of fonts available" user="Standard">
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="OSD vertical offset" name="OSD_V_OFFSET" documentation="Sets vertical offset of the osd inside image" user="Standard">
+            <field name="Range">0 31</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="OSD horizontal offset" name="OSD_H_OFFSET" documentation="Sets horizontal offset of the osd inside image" user="Standard">
+            <field name="Range">0 63</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="OSD1_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD1_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -4397,6 +4445,14 @@
             <field name="Range">1 20</field>
           </param>
           <param humanName="OSD Font" name="OSD_FONT" documentation="This sets which OSD font to use. It is an integer from 0 to the number of fonts available" user="Standard">
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="OSD vertical offset" name="OSD_V_OFFSET" documentation="Sets vertical offset of the osd inside image" user="Standard">
+            <field name="Range">0 31</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="OSD horizontal offset" name="OSD_H_OFFSET" documentation="Sets horizontal offset of the osd inside image" user="Standard">
+            <field name="Range">0 63</field>
             <field name="RebootRequired">True</field>
           </param>
         </parameters>
