@@ -360,6 +360,16 @@
               <value code="1">Enabled</value>
             </values>
           </param>
+          <param humanName="Maximum number of log files" name="LOG_MAX_FILES" documentation="This sets the maximum number of log file that will be written on dataflash or sd card before starting to rotate log number. Limit is capped at 500 logs." user="Advanced">
+            <field name="Range">2 500</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Old logs on the SD card will be deleted to maintain this amount of free space" name="LOG_FILE_MB_FREE" documentation="Set this such that the free space is larger than your largest typical flight log" user="Standard">
+            <field name="Units">MB</field>
+            <field name="UnitText">megabyte</field>
+            <field name="Range">10 1000</field>
+          </param>
         </parameters>
         <parameters name="LOIT_">
           <param humanName="Loiter pilot angle max" name="LOIT_ANG_MAX" documentation="Loiter maximum pilot requested lean angle. Set to zero for 2/3 of PSC_ANGLE_MAX/ANGLE_MAX. The maximum vehicle lean angle is still limited by PSC_ANGLE_MAX/ANGLE_MAX" user="Advanced">
@@ -924,6 +934,16 @@
               <value code="0">Disabled</value>
               <value code="1">Enabled</value>
             </values>
+          </param>
+          <param humanName="Maximum number of log files" name="LOG_MAX_FILES" documentation="This sets the maximum number of log file that will be written on dataflash or sd card before starting to rotate log number. Limit is capped at 500 logs." user="Advanced">
+            <field name="Range">2 500</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Old logs on the SD card will be deleted to maintain this amount of free space" name="LOG_FILE_MB_FREE" documentation="Set this such that the free space is larger than your largest typical flight log" user="Standard">
+            <field name="Units">MB</field>
+            <field name="UnitText">megabyte</field>
+            <field name="Range">10 1000</field>
           </param>
         </parameters>
         <parameters name="LOIT_">
@@ -1490,6 +1510,16 @@
               <value code="0">Disabled</value>
               <value code="1">Enabled</value>
             </values>
+          </param>
+          <param humanName="Maximum number of log files" name="LOG_MAX_FILES" documentation="This sets the maximum number of log file that will be written on dataflash or sd card before starting to rotate log number. Limit is capped at 500 logs." user="Advanced">
+            <field name="Range">2 500</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Old logs on the SD card will be deleted to maintain this amount of free space" name="LOG_FILE_MB_FREE" documentation="Set this such that the free space is larger than your largest typical flight log" user="Standard">
+            <field name="Units">MB</field>
+            <field name="UnitText">megabyte</field>
+            <field name="Range">2 1000</field>
           </param>
         </parameters>
         <parameters name="LOIT_">
@@ -2146,6 +2176,16 @@
               <value code="1">Enabled</value>
             </values>
           </param>
+          <param humanName="Maximum number of log files" name="LOG_MAX_FILES" documentation="This sets the maximum number of log file that will be written on dataflash or sd card before starting to rotate log number. Limit is capped at 500 logs." user="Advanced">
+            <field name="Range">2 500</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Old logs on the SD card will be deleted to maintain this amount of free space" name="LOG_FILE_MB_FREE" documentation="Set this such that the free space is larger than your largest typical flight log" user="Standard">
+            <field name="Units">MB</field>
+            <field name="UnitText">megabyte</field>
+            <field name="Range">10 1000</field>
+          </param>
         </parameters>
         <parameters name="NAVL1_">
           <param humanName="L1 control damping ratio" name="NAVL1_DAMPING" documentation="Damping ratio for L1 control. Increase this in increments of 0.05 if you are getting overshoot in path tracking. You should not need a value below 0.7 or above 0.85." user="Advanced">
@@ -2767,6 +2807,16 @@
               <value code="0">Disabled</value>
               <value code="1">Enabled</value>
             </values>
+          </param>
+          <param humanName="Maximum number of log files" name="LOG_MAX_FILES" documentation="This sets the maximum number of log file that will be written on dataflash or sd card before starting to rotate log number. Limit is capped at 500 logs." user="Advanced">
+            <field name="Range">2 500</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Old logs on the SD card will be deleted to maintain this amount of free space" name="LOG_FILE_MB_FREE" documentation="Set this such that the free space is larger than your largest typical flight log" user="Standard">
+            <field name="Units">MB</field>
+            <field name="UnitText">megabyte</field>
+            <field name="Range">10 1000</field>
           </param>
         </parameters>
         <parameters name="NAVL1_">
@@ -3410,6 +3460,16 @@
               <value code="1">Enabled</value>
             </values>
           </param>
+          <param humanName="Maximum number of log files" name="LOG_MAX_FILES" documentation="This sets the maximum number of log file that will be written on dataflash or sd card before starting to rotate log number. Limit is capped at 500 logs." user="Advanced">
+            <field name="Range">2 500</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Old logs on the SD card will be deleted to maintain this amount of free space" name="LOG_FILE_MB_FREE" documentation="Set this such that the free space is larger than your largest typical flight log" user="Standard">
+            <field name="Units">MB</field>
+            <field name="UnitText">megabyte</field>
+            <field name="Range">2 1000</field>
+          </param>
         </parameters>
         <parameters name="NAVL1_">
           <param humanName="L1 control damping ratio" name="NAVL1_DAMPING" documentation="Damping ratio for L1 control. Increase this in increments of 0.05 if you are getting overshoot in path tracking. You should not need a value below 0.7 or above 0.85." user="Advanced">
@@ -3861,6 +3921,18 @@
           </param>
           <param humanName="logging count" name="INS_LOG_BAT_LGCT" documentation="Number of samples to push to count every INS_LOG_BAT_LGIN">
             <field name="Increment">1</field>
+          </param>
+        </parameters>
+        <parameters name="LOG">
+          <param humanName="Maximum number of log files" name="LOG_MAX_FILES" documentation="This sets the maximum number of log file that will be written on dataflash or sd card before starting to rotate log number. Limit is capped at 500 logs." user="Advanced">
+            <field name="Range">2 500</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Old logs on the SD card will be deleted to maintain this amount of free space" name="LOG_FILE_MB_FREE" documentation="Set this such that the free space is larger than your largest typical flight log" user="Standard">
+            <field name="Units">MB</field>
+            <field name="UnitText">megabyte</field>
+            <field name="Range">2 1000</field>
           </param>
         </parameters>
       </libraries>

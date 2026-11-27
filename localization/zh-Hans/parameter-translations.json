@@ -4984,6 +4984,108 @@
       "recordSha256": "a15680cc2d1168cdddeb5f1c99c0fe465740a5802c8a76832dcb12bbf8f7436d",
       "english": "Sets message duration seconds",
       "chinese": "设置 OSD 消息在屏幕上的显示时长，单位为秒。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "LOG_MAX_FILES",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "bb01e4445510ed94c118ad2f1a62366cbb67e6150d5be05378f09916db07ac7b",
+      "recordSha256": "2d6f0930427abd8a2d4dec6d8d750c4e8a55de2326569c08cadc9ef3a2257499",
+      "english": "This sets the maximum number of log file that will be written on dataflash or sd card before starting to rotate log number. Limit is capped at 500 logs.",
+      "chinese": "日志编号开始轮换前，DataFlash 或 SD 卡可写入的最大日志文件数，上限为 500 个。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "LOG_FILE_MB_FREE",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3"
+      ],
+      "englishSha256": "90f48c7ccd068da7b5ab721e3becec0d642c36d06b599f4ac33ba7f26b4ef75e",
+      "recordSha256": "403e592ec27bd96c986a9a17d5f111f9ff1e54e8f5858f0f53c769436cdf7588",
+      "english": "Set this such that the free space is larger than your largest typical flight log",
+      "chinese": "预留的可用空间应大于通常最大的单份飞行日志。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "LOG_FILE_MB_FREE",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "90f48c7ccd068da7b5ab721e3becec0d642c36d06b599f4ac33ba7f26b4ef75e",
+      "recordSha256": "94a586cb428507b33a2d53fd6f4edb87923e692e08b4f0959181eb9363b844e3",
+      "english": "Set this such that the free space is larger than your largest typical flight log",
+      "chinese": "预留的可用空间应大于通常最大的单份飞行日志。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "LOG_MAX_FILES",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "bb01e4445510ed94c118ad2f1a62366cbb67e6150d5be05378f09916db07ac7b",
+      "recordSha256": "2d6f0930427abd8a2d4dec6d8d750c4e8a55de2326569c08cadc9ef3a2257499",
+      "english": "This sets the maximum number of log file that will be written on dataflash or sd card before starting to rotate log number. Limit is capped at 500 logs.",
+      "chinese": "日志编号开始轮换前，DataFlash 或 SD 卡可写入的最大日志文件数，上限为 500 个。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "LOG_FILE_MB_FREE",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3"
+      ],
+      "englishSha256": "90f48c7ccd068da7b5ab721e3becec0d642c36d06b599f4ac33ba7f26b4ef75e",
+      "recordSha256": "403e592ec27bd96c986a9a17d5f111f9ff1e54e8f5858f0f53c769436cdf7588",
+      "english": "Set this such that the free space is larger than your largest typical flight log",
+      "chinese": "预留的可用空间应大于通常最大的单份飞行日志。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "LOG_FILE_MB_FREE",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "90f48c7ccd068da7b5ab721e3becec0d642c36d06b599f4ac33ba7f26b4ef75e",
+      "recordSha256": "94a586cb428507b33a2d53fd6f4edb87923e692e08b4f0959181eb9363b844e3",
+      "english": "Set this such that the free space is larger than your largest typical flight log",
+      "chinese": "预留的可用空间应大于通常最大的单份飞行日志。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "LOG_MAX_FILES",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "bb01e4445510ed94c118ad2f1a62366cbb67e6150d5be05378f09916db07ac7b",
+      "recordSha256": "2d6f0930427abd8a2d4dec6d8d750c4e8a55de2326569c08cadc9ef3a2257499",
+      "english": "This sets the maximum number of log file that will be written on dataflash or sd card before starting to rotate log number. Limit is capped at 500 logs.",
+      "chinese": "日志编号开始轮换前，DataFlash 或 SD 卡可写入的最大日志文件数，上限为 500 个。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "LOG_FILE_MB_FREE",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "90f48c7ccd068da7b5ab721e3becec0d642c36d06b599f4ac33ba7f26b4ef75e",
+      "recordSha256": "94a586cb428507b33a2d53fd6f4edb87923e692e08b4f0959181eb9363b844e3",
+      "english": "Set this such that the free space is larger than your largest typical flight log",
+      "chinese": "预留的可用空间应大于通常最大的单份飞行日志。"
     }
   ]
 }
