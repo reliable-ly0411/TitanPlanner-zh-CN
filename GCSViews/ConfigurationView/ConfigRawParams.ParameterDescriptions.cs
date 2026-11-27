@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -52,12 +53,34 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             Params.CellDoubleClick += (sender, e) =>
             {
                 if (!UseEnhancedParameterDescriptions || e.RowIndex < 0 || (e.ColumnIndex != Desc.Index && e.ColumnIndex != Options.Index)) return;
-                using (var details = CreateParameterDescriptionDetails(Params.Rows[e.RowIndex])) details.ShowDialog(FindForm());
+                var owner = FindForm();
+                using (var details = CreateParameterDescriptionDetails(Params.Rows[e.RowIndex]))
+                {
+                    ConstrainParameterDescriptionDetails(details, Screen.FromControl(owner ?? (Control)this).WorkingArea);
+                    details.ShowDialog(owner);
+                }
             };
 #endif
         }
 
 #if !LIB
+        private static void ConstrainParameterDescriptionDetails(Form details, Rectangle workingArea)
+        {
+            var size = details.Size;
+            if (workingArea.Width <= 0 || workingArea.Height <= 0 ||
+                (size.Width <= workingArea.Width && size.Height <= workingArea.Height))
+                return;
+
+            // Screen.WorkingArea and top-level Form.Bounds both use screen coordinates.
+            // Only constrained windows need explicit placement; keep CenterParent otherwise.
+            int width = Math.Min(size.Width, workingArea.Width);
+            int height = Math.Min(size.Height, workingArea.Height);
+            details.StartPosition = FormStartPosition.Manual;
+            details.Bounds = new Rectangle(
+                workingArea.Left + (workingArea.Width - width) / 2,
+                workingArea.Top + (workingArea.Height - height) / 2, width, height);
+        }
+
         private Form CreateParameterDescriptionDetails(DataGridViewRow row)
         {
             // A long bilingual paragraph may exceed the viewport even with its full preferred row height.
