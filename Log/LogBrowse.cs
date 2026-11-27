@@ -240,6 +240,11 @@ namespace MissionPlanner.Log
 
         private void LogBrowse_Load(object sender, EventArgs e)
         {
+            ResetAndLoadLogs();
+        }
+
+        private void ResetAndLoadLogs(string[] selectedFiles = null)
+        {
             mapoverlay.Clear();
             markeroverlay.Clear();
 
@@ -270,49 +275,35 @@ namespace MissionPlanner.Log
 
             chk_time_CheckedChanged(null, null);
 
-            if (!File.Exists(logfilename))
+            if (selectedFiles != null || !File.Exists(logfilename))
             {
-                using (OpenFileDialog openFileDialog1 = new OpenFileDialog())
+                var files = selectedFiles ?? SelectLogFiles();
+                if (files == null)
                 {
-                    openFileDialog1.Filter = "Log Files|*.log;*.bin;*.BIN;*.LOG";
-                    openFileDialog1.FilterIndex = 2;
-                    openFileDialog1.Multiselect = true;
-                    openFileDialog1.InitialDirectory = lastLogDir ?? Settings.Instance.LogDir;
+                    this.BeginInvoke((Action)delegate { this.Close(); });
+                    return;
+                }
 
-                    if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                int a = 0;
+                foreach (var fileName in files)
+                {
+                    Loading.ShowLoading(fileName, this);
+
+                    if (a == 0)
                     {
-                        lastLogDir = Path.GetDirectoryName(openFileDialog1.FileName);
-
-                        int a = 0;
-                        foreach (var fileName in openFileDialog1.FileNames)
-                        {
-                            Loading.ShowLoading(fileName, this);
-
-                            if (a == 0)
-                            {
-                                // load first file
-                                logfilename = fileName;
-                                ThreadPool.QueueUserWorkItem(o => LoadLog(logfilename));
-                            }
-                            else
-                            {
-                                // load additional files in new windows
-                                if (File.Exists(fileName))
-                                {
-                                    LogBrowse browse = new LogBrowse();
-                                    browse.logfilename = fileName;
-                                    browse.Show(this);
-                                }
-                            }
-
-                            a++;
-                        }
+                        // load first file
+                        logfilename = fileName;
+                        ThreadPool.QueueUserWorkItem(o => LoadLog(logfilename));
                     }
-                    else
+                    else if (File.Exists(fileName))
                     {
-                        this.BeginInvoke((Action)delegate { this.Close(); });
-                        return;
+                        // load additional files in new windows
+                        LogBrowse browse = new LogBrowse();
+                        browse.logfilename = fileName;
+                        browse.Show(this);
                     }
+
+                    a++;
                 }
             }
             else
@@ -323,6 +314,23 @@ namespace MissionPlanner.Log
             zg1.ContextMenuBuilder += Zg1_ContextMenuBuilder;
 
             log.Info("LogBrowse_Load Done");
+        }
+
+        private static string[] SelectLogFiles()
+        {
+            using (OpenFileDialog openFileDialog1 = new OpenFileDialog())
+            {
+                openFileDialog1.Filter = "Log Files|*.log;*.bin;*.BIN;*.LOG";
+                openFileDialog1.FilterIndex = 2;
+                openFileDialog1.Multiselect = true;
+                openFileDialog1.InitialDirectory = lastLogDir ?? Settings.Instance.LogDir;
+
+                if (openFileDialog1.ShowDialog() != DialogResult.OK)
+                    return null;
+
+                lastLogDir = Path.GetDirectoryName(openFileDialog1.FileName);
+                return openFileDialog1.FileNames;
+            }
         }
 
         private void Zg1_ContextMenuBuilder(ZedGraphControl sender, ContextMenuStrip menuStrip, Point mousePt, ZedGraphControl.ContextMenuObjectState objState)
@@ -2813,12 +2821,17 @@ main()
 
         private void BUT_loadlog_Click(object sender, EventArgs e)
         {
+            // Cancel keeps the current log and its view intact.
+            var selectedFiles = SelectLogFiles();
+            if (selectedFiles == null)
+                return;
+
             // clear existing lists
             zg1.GraphPane.CurveList.Clear();
             // reset logname
             logfilename = "";
             // reload
-            LogBrowse_Load(sender, e);
+            ResetAndLoadLogs(selectedFiles);
         }
 
         private void dataGridView1_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)

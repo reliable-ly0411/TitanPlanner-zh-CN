@@ -150,6 +150,7 @@ namespace MissionPlanner.Controls.PreFlight
                 case "hygrotemp2":
                 case "hygrohumi2":
                 // RADIO / RADIO_STATUS map these counters directly in CurrentState.
+                case "linkqualitygcs":
                 case "txbuffer":
                 case "rxerrors":
                 case "fixedp":

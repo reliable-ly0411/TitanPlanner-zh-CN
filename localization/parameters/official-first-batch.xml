@@ -589,6 +589,16 @@
             <field name="Range">0 21</field>
           </param>
         </parameters>
+        <parameters name="NTF_">
+          <param humanName="Type of on-board I2C display" name="NTF_DISPLAY_TYPE" documentation="This sets up the type of on-board I2C display. Disabled by default." user="Advanced">
+            <values>
+              <value code="0">Disable</value>
+              <value code="1">ssd1306</value>
+              <value code="2">sh1106</value>
+              <value code="10">SITL</value>
+            </values>
+          </param>
+        </parameters>
       </libraries>
     </paramfile>
   </release>
@@ -1193,6 +1203,16 @@
           </param>
           <param humanName="logging count" name="INS_LOG_BAT_LGCT" documentation="Number of samples to push to count every INS_LOG_BAT_LGIN">
             <field name="Increment">1</field>
+          </param>
+        </parameters>
+        <parameters name="NTF_">
+          <param humanName="Type of on-board I2C display" name="NTF_DISPLAY_TYPE" documentation="This sets up the type of on-board I2C display. Disabled by default." user="Advanced">
+            <values>
+              <value code="0">Disable</value>
+              <value code="1">ssd1306</value>
+              <value code="2">sh1106</value>
+              <value code="10">SITL</value>
+            </values>
           </param>
         </parameters>
       </libraries>
@@ -1834,6 +1854,16 @@
           </param>
           <param humanName="logging count" name="INS_LOG_BAT_LGCT" documentation="Number of samples to push to count every INS_LOG_BAT_LGIN">
             <field name="Increment">1</field>
+          </param>
+        </parameters>
+        <parameters name="NTF_">
+          <param humanName="Type of on-board I2C display" name="NTF_DISPLAY_TYPE" documentation="This sets up the type of on-board I2C display. Disabled by default." user="Advanced">
+            <values>
+              <value code="0">Disable</value>
+              <value code="1">ssd1306</value>
+              <value code="2">sh1106</value>
+              <value code="10">SITL</value>
+            </values>
           </param>
         </parameters>
       </libraries>
@@ -2489,6 +2519,16 @@
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
             <field name="Range">0 21</field>
+          </param>
+        </parameters>
+        <parameters name="NTF_">
+          <param humanName="Type of on-board I2C display" name="NTF_DISPLAY_TYPE" documentation="This sets up the type of on-board I2C display. Disabled by default." user="Advanced">
+            <values>
+              <value code="0">Disable</value>
+              <value code="1">ssd1306</value>
+              <value code="2">sh1106</value>
+              <value code="10">SITL</value>
+            </values>
           </param>
         </parameters>
       </libraries>
@@ -3152,6 +3192,16 @@
           </param>
           <param humanName="logging count" name="INS_LOG_BAT_LGCT" documentation="Number of samples to push to count every INS_LOG_BAT_LGIN">
             <field name="Increment">1</field>
+          </param>
+        </parameters>
+        <parameters name="NTF_">
+          <param humanName="Type of on-board I2C display" name="NTF_DISPLAY_TYPE" documentation="This sets up the type of on-board I2C display. Disabled by default." user="Advanced">
+            <values>
+              <value code="0">Disable</value>
+              <value code="1">ssd1306</value>
+              <value code="2">sh1106</value>
+              <value code="10">SITL</value>
+            </values>
           </param>
         </parameters>
       </libraries>
@@ -3861,6 +3911,16 @@
             <field name="Increment">1</field>
           </param>
         </parameters>
+        <parameters name="NTF_">
+          <param humanName="Type of on-board I2C display" name="NTF_DISPLAY_TYPE" documentation="This sets up the type of on-board I2C display. Disabled by default." user="Advanced">
+            <values>
+              <value code="0">Disable</value>
+              <value code="1">ssd1306</value>
+              <value code="2">sh1106</value>
+              <value code="10">SITL</value>
+            </values>
+          </param>
+        </parameters>
       </libraries>
     </paramfile>
   </release>
@@ -4094,6 +4154,16 @@
             <field name="Units">MB</field>
             <field name="UnitText">megabyte</field>
             <field name="Range">2 1000</field>
+          </param>
+        </parameters>
+        <parameters name="NTF_">
+          <param humanName="Type of on-board I2C display" name="NTF_DISPLAY_TYPE" documentation="This sets up the type of on-board I2C display. Disabled by default." user="Advanced">
+            <values>
+              <value code="0">Disable</value>
+              <value code="1">ssd1306</value>
+              <value code="2">sh1106</value>
+              <value code="10">SITL</value>
+            </values>
           </param>
         </parameters>
       </libraries>

@@ -49,6 +49,7 @@ namespace MissionPlanner.Controls
         public MissionStyleEditor(MissionStyleConfig config, Action<MissionStyle> applyStyle)
         {
             InitializeComponent();
+            ruleTabs.SelectedIndexChanged += ruleListBox_SelectedIndexChanged;
 
             rulePropertyEditor.PropertyValueChanged += (s, args) =>
             {
@@ -121,8 +122,7 @@ namespace MissionPlanner.Controls
 
         private void ruleListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var senderBox = sender as ListBox;
-            rulePropertyEditor.SelectedObject = senderBox.SelectedItem;
+            rulePropertyEditor.SelectedObject = getActiveListBox()?.SelectedItem;
         }
 
         private void styleBox_SelectedIndexChanged(object sender, EventArgs e)

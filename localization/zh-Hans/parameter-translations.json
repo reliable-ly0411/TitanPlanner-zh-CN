@@ -5089,6 +5089,46 @@
     },
     {
       "family": "Copter",
+      "parameter": "NTF_DISPLAY_TYPE",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "68e31b1bb3ca5d4f4a1219e0bb2c719b437c35b7ca326d73910f8470bb3fef5a",
+      "recordSha256": "4ac6dc9ab30dd69c00d07c3f46cd87078a51ced425a49ad8e191b606e61e970e",
+      "english": "This sets up the type of on-board I2C display. Disabled by default.",
+      "chinese": "选择板载 I²C 显示屏的类型。默认禁用。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "NTF_DISPLAY_TYPE",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "68e31b1bb3ca5d4f4a1219e0bb2c719b437c35b7ca326d73910f8470bb3fef5a",
+      "recordSha256": "4ac6dc9ab30dd69c00d07c3f46cd87078a51ced425a49ad8e191b606e61e970e",
+      "english": "This sets up the type of on-board I2C display. Disabled by default.",
+      "chinese": "选择板载 I²C 显示屏的类型。默认禁用。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "NTF_DISPLAY_TYPE",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "68e31b1bb3ca5d4f4a1219e0bb2c719b437c35b7ca326d73910f8470bb3fef5a",
+      "recordSha256": "4ac6dc9ab30dd69c00d07c3f46cd87078a51ced425a49ad8e191b606e61e970e",
+      "english": "This sets up the type of on-board I2C display. Disabled by default.",
+      "chinese": "选择板载 I²C 显示屏的类型。默认禁用。"
+    },
+    {
+      "family": "Copter",
       "parameter": "OSD_FONT",
       "field": "Description",
       "versions": [

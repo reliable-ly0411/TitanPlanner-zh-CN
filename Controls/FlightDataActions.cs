@@ -223,6 +223,24 @@ namespace MissionPlanner.Controls
                     translation = caption;
             }
 
+            // Copter and Plane 4.6.3 RC6_OPTION metadata, and RC_Channel.cpp at 7250f9d4.
+            if (translation == null && id == 174 && raw == "Camera Image Tracking" &&
+                (firmware == "ArduCopter2" || firmware == "ArduPlane"))
+            {
+                var caption = UiText.Translate(raw);
+                if (!string.IsNullOrEmpty(caption) && !string.Equals(caption, raw, StringComparison.Ordinal))
+                    translation = caption;
+            }
+
+            // Copter and Plane 4.6.3 RC6_OPTION metadata, and RC_Channel.cpp at 7250f9d4.
+            if (translation == null && id == 175 && raw == "Camera Lens" &&
+                (firmware == "ArduCopter2" || firmware == "ArduPlane"))
+            {
+                var caption = UiText.Translate(raw);
+                if (!string.IsNullOrEmpty(caption) && !string.Equals(caption, raw, StringComparison.Ordinal))
+                    translation = caption;
+            }
+
             return translation == null ? raw : raw + " · " + translation;
         }
 

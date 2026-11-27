@@ -1839,6 +1839,14 @@
     <value>相机高度：</value>
     <comment>"Camera Height:"</comment>
   </data>
+  <data name="1867a0a75adcc43d28ddf505ad28f43c18577d2e9b0123a9853dd83d739c12d6" xml:space="preserve">
+    <value>相机图像跟踪</value>
+    <comment>"Camera Image Tracking"</comment>
+  </data>
+  <data name="c6a0fc356377c93d46ea45a8e710b1550ce1a948cf0eb915f319af52f96b54d8" xml:space="preserve">
+    <value>相机镜头</value>
+    <comment>"Camera Lens"</comment>
+  </data>
   <data name="aeddde856f66918d986e7e522c452ee5faa77f3a759555d37cd8cd6e21506984" xml:space="preserve">
     <value>相机名称</value>
     <comment>"Camera Name"</comment>
@@ -4902,6 +4910,10 @@ Ctrl+O 从文件加载</value>
   <data name="fc15a72d1d3718878b0c60f182f0e700d8e0b0224358ca2f764b69dd64b68f32" xml:space="preserve">
     <value>HUD 叠加层</value>
     <comment>"HUD Overlay"</comment>
+  </data>
+  <data name="efa5016086ee3aef29ef4b456382b6b349a3bec5de6f3c239dc07650d5c2f8d6" xml:space="preserve">
+    <value>活动窗口边框（ActiveBorder）</value>
+    <comment>"HUD color: ActiveBorder"</comment>
   </data>
   <data name="b78c87853562c9b3190e421567f209d284f857a06d81fbce490e3950c2775a28" xml:space="preserve">
     <value>叠加 HUD</value>

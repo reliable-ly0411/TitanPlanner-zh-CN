@@ -320,7 +320,10 @@ namespace MissionPlanner.GCSViews
                     {
                         try
                         {
-                            backstageView.ActivatePage(start);
+                            // An explicit choice can arrive before the deferred default is dispatched.
+                            if (!IsDisposed && !Disposing && !backstageView.IsDisposed &&
+                                backstageView.SelectedPage == null)
+                                backstageView.ActivatePage(start);
                         }
                         catch (Exception ex)
                         {

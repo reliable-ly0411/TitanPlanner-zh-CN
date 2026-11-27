@@ -321,25 +321,25 @@ namespace MissionPlanner.Controls
 
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            if (e == null || e.Node == null || e.Node.Parent == null)
+            selectedmsgid = null;
+            but_graphit.Enabled = false;
+
+            // The graph needs a field under a message: system, component, message, then field.
+            var node = e?.Node;
+            if (node?.Parent == null || node.Level != 3 || !int.TryParse(node.Parent.Name, out _))
                 return;
 
-            int throwaway = 0;
-            if (int.TryParse(e.Node.Parent.Name, out throwaway))
-            {
-                selectedmsgid = e.Node.FullPath;
-                but_graphit.Enabled = true;
-            }
-            else
-            {
-                but_graphit.Enabled = false;
-            }
+            selectedmsgid = node.FullPath;
+            but_graphit.Enabled = true;
         }
 
         int history = 50;
 
         private void but_graphit_Click(object sender, EventArgs e)
         {
+            if (selectedmsgid == null)
+                return;
+
             InputBox.Show(UiText.Translate("Points"), UiText.Translate("Points of history?"), ref history);
             var form = new Form() { Size = new Size(640, 480) };
             var zg1 = new ZedGraphControl() { Dock = DockStyle.Fill };

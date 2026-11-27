@@ -66,6 +66,7 @@ namespace MissionPlanner.Controls
             // Context menu for copy
             var copyItem = new ToolStripMenuItem(UiText.Translate("Copy Message"));
             copyItem.Click += CopyItem_Click;
+            this.contextMenu.Opening += (sender, e) => copyItem.Enabled = selectedIndex >= 0 && selectedIndex < messages.Count;
             var copyAllItem = new ToolStripMenuItem(UiText.Translate("Copy All Messages"));
             copyAllItem.Click += CopyAllItem_Click;
             var clearItem = new ToolStripMenuItem(UiText.Translate("Clear Messages"));
@@ -156,9 +157,10 @@ namespace MissionPlanner.Controls
             int scrollOffset = scrollBar.Enabled ? scrollBar.Value : 0;
             int clickedIndex = scrollOffset + (e.Y / itemHeight);
 
-            if (clickedIndex < messages.Count)
+            int nextSelection = e.Y >= 0 && clickedIndex < messages.Count ? clickedIndex : -1;
+            if (nextSelection != selectedIndex)
             {
-                selectedIndex = clickedIndex;
+                selectedIndex = nextSelection;
                 containerPanel.Invalidate();
             }
         }

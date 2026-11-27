@@ -20,113 +20,112 @@ namespace MissionPlanner.Controls
 
         private void BUT_runwav_Click(object sender, EventArgs e)
         {
-            Utilities.FFT2 fft = new FFT2();
-
             using (OpenFileDialog ofd = new OpenFileDialog())
             {
                 ofd.Filter = "*.wav|*.wav";
 
-                ofd.ShowDialog();
-
-                if (!File.Exists(ofd.FileName))
+                if (ofd.ShowDialog() != DialogResult.OK || !File.Exists(ofd.FileName))
                     return;
 
-                var st = File.OpenRead(ofd.FileName);
-
-                int bins = (int)NUM_bins.Value;
-
-                List<double[]> avg = new List<double[]>
-                {
-                    new double[1 << bins]
-                };
-                Color[] color = new Color[]
-                    { Color.Red, Color.Green, Color.Black, Color.Violet, Color.Blue, Color.Orange };
-
                 int hz = 8000;
-                InputBox.Show(UiText.Translate("fft sample rate"), UiText.Translate("nter source file sample rate"), ref hz);
+                if (InputBox.Show(UiText.Translate("fft sample rate"), UiText.Translate("nter source file sample rate"), ref hz) != DialogResult.OK)
+                    return;
 
-                double[] buffer = new double[1 << bins];
-
-                int a = 0;
-                int samples = 0;
-
-                while (st.Position < st.Length)
+                Utilities.FFT2 fft = new FFT2();
+                using (var st = File.OpenRead(ofd.FileName))
                 {
-                    byte[] temp = new byte[2];
-                    var read = st.Read(temp, 0, temp.Length);
+                    int bins = (int)NUM_bins.Value;
 
-                    var val = (double)BitConverter.ToInt16(temp, 0);
-
-                    buffer[a] = val;
-
-                    a++;
-
-                    if (a == (1 << bins))
+                    List<double[]> avg = new List<double[]>
                     {
-                        samples++;
+                        new double[1 << bins]
+                    };
+                    Color[] color = new Color[]
+                        { Color.Red, Color.Green, Color.Black, Color.Violet, Color.Blue, Color.Orange };
 
-                        var fftanswer = fft.rin(buffer, (uint)bins, indB);
+                    double[] buffer = new double[1 << bins];
 
-                        var freqt = fft.FreqTable(buffer.Length, hz);
+                    int a = 0;
+                    int samples = 0;
 
-                        ZedGraph.PointPairList ppl = new ZedGraph.PointPairList();
+                    while (st.Position < st.Length)
+                    {
+                        byte[] temp = new byte[2];
+                        var read = st.Read(temp, 0, temp.Length);
 
-                        for (int b = 0; b < fftanswer.Length; b++)
+                        var val = (double)BitConverter.ToInt16(temp, 0);
+
+                        buffer[a] = val;
+
+                        a++;
+
+                        if (a == (1 << bins))
                         {
-                            ppl.Add(freqt[b], fftanswer[b]);
-                        }
+                            samples++;
 
-                        double xMin, xMax, yMin, yMax;
+                            var fftanswer = fft.rin(buffer, (uint)bins, indB);
 
-                        var curve = new LineItem("FFT", ppl, Color.Red, SymbolType.Diamond);
+                            var freqt = fft.FreqTable(buffer.Length, hz);
 
-                        curve.GetRange(out xMin, out xMax, out yMin, out yMax, true, false, zedGraphControl1.GraphPane);
+                            ZedGraph.PointPairList ppl = new ZedGraph.PointPairList();
 
-                        zedGraphControl1.GraphPane.XAxis.Title.Text = UiText.Translate("Freq Hz");
-                        zedGraphControl1.GraphPane.YAxis.Title.Text = UiText.Translate("Amplitude");
-                        zedGraphControl1.GraphPane.Title.Text = "FFT - " + hz;
-                        zedGraphControl1.GraphPane.Y2Axis.IsVisible = true;
-                        zedGraphControl1.GraphPane.CurveList.Clear();
-                        zedGraphControl1.GraphPane.CurveList.Add(curve);
-
-                        for (int b = 0; b < (1 << bins) / 2; b++)
-                        {
-                            avg[0][b] = avg[0][b] * (1.0 - (1.0 / samples)) + fftanswer[b] * (1.0 / samples);
-                        }
-
-                        // 0 out all data befor cutoff
-                        for (int b = 0; b < 1 << bins / 2; b++)
-                        {
-                            if (freqt[b] < (double)NUM_startfreq.Value)
+                            for (int b = 0; b < fftanswer.Length; b++)
                             {
-                                avg[0][b] = 0;
-                                continue;
+                                ppl.Add(freqt[b], fftanswer[b]);
                             }
 
-                            break;
+                            double xMin, xMax, yMin, yMax;
+
+                            var curve = new LineItem("FFT", ppl, Color.Red, SymbolType.Diamond);
+
+                            curve.GetRange(out xMin, out xMax, out yMin, out yMax, true, false, zedGraphControl1.GraphPane);
+
+                            zedGraphControl1.GraphPane.XAxis.Title.Text = UiText.Translate("Freq Hz");
+                            zedGraphControl1.GraphPane.YAxis.Title.Text = UiText.Translate("Amplitude");
+                            zedGraphControl1.GraphPane.Title.Text = "FFT - " + hz;
+                            zedGraphControl1.GraphPane.Y2Axis.IsVisible = true;
+                            zedGraphControl1.GraphPane.CurveList.Clear();
+                            zedGraphControl1.GraphPane.CurveList.Add(curve);
+
+                            for (int b = 0; b < (1 << bins) / 2; b++)
+                            {
+                                avg[0][b] = avg[0][b] * (1.0 - (1.0 / samples)) + fftanswer[b] * (1.0 / samples);
+                            }
+
+                            // 0 out all data befor cutoff
+                            for (int b = 0; b < 1 << bins / 2; b++)
+                            {
+                                if (freqt[b] < (double)NUM_startfreq.Value)
+                                {
+                                    avg[0][b] = 0;
+                                    continue;
+                                }
+
+                                break;
+                            }
+
+                            ppl = new ZedGraph.PointPairList(freqt, avg[0]);
+                            curve = new LineItem("Avg", ppl, color[1], SymbolType.None) { IsY2Axis = true };
+                            zedGraphControl1.GraphPane.CurveList.Add(curve);
+
+                            zedGraphControl1.AxisChange();
+                            zedGraphControl1.Invalidate();
+
+                            zedGraphControl1.Refresh();
+
+                            // 50% overlap
+                            st.Seek(-(1 << bins) / 2, SeekOrigin.Current);
+                            a = 0;
+                            buffer = new double[buffer.Length];
                         }
-
-                        ppl = new ZedGraph.PointPairList(freqt, avg[0]);
-                        curve = new LineItem("Avg", ppl, color[1], SymbolType.None) { IsY2Axis = true };
-                        zedGraphControl1.GraphPane.CurveList.Add(curve);
-
-                        zedGraphControl1.AxisChange();
-                        zedGraphControl1.Invalidate();
-
-                        zedGraphControl1.Refresh();
-
-                        // 50% overlap
-                        st.Seek(-(1 << bins) / 2, SeekOrigin.Current);
-                        a = 0;
-                        buffer = new double[buffer.Length];
                     }
-                }
 
-                tableLayoutPanel1.Controls.Add(zedGraphControl1);
-                SetScale(new[]
-                {
-                    zedGraphControl1
-                });
+                    tableLayoutPanel1.Controls.Add(zedGraphControl1);
+                    SetScale(new[]
+                    {
+                        zedGraphControl1
+                    });
+                }
             }
         }
 
