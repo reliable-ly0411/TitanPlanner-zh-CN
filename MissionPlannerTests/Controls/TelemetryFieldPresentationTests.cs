@@ -451,7 +451,7 @@ namespace MissionPlannerTests.Controls
                         if (locale == "zh-CN")
                             Assert.IsTrue(TelemetryFieldPresentation.Matches(pair.Item2, label));
                     }
-                    foreach (var key in new[] { "landed", "packetdropremote", "rpm3" })
+                    foreach (var key in new[] { "press_abs2", "packetdropremote", "rpm3" })
                         Assert.AreEqual(key, TelemetryFieldPresentation.FieldLabel(key));
                 }
             }
@@ -483,7 +483,7 @@ namespace MissionPlannerTests.Controls
                         if (locale == "zh-CN")
                             Assert.IsTrue(TelemetryFieldPresentation.Matches(pair.Item2, label));
                     }
-                    foreach (var key in new[] { "landed", "campointa", "GimbalPointFuture" })
+                    foreach (var key in new[] { "campointb", "campointa", "GimbalPointFuture" })
                         Assert.AreEqual(key, TelemetryFieldPresentation.FieldLabel(key));
                 }
             }
