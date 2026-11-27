@@ -12,6 +12,7 @@ namespace GMap.NET.WindowsForms
     using System.Drawing.Drawing2D;
     using System.Drawing.Imaging;
     using System.IO;
+    using System.Globalization;
     using System.Threading;
     using System.Windows.Forms;
     using GMap.NET;
@@ -133,7 +134,7 @@ namespace GMap.NET.WindowsForms
         /// <summary>
         /// text on empty tiles
         /// </summary>
-        public string EmptyTileText = "We are sorry, but we don't\nhave imagery at this zoom\nlevel for this region.";
+        public string EmptyTileText = FailedTileText.DefaultEmptyTileText;
 
         /// <summary>
         /// pen for empty tile borders
@@ -744,25 +745,28 @@ namespace GMap.NET.WindowsForms
                                     if (Core.FailedLoads.ContainsKey(lt))
                                     {
                                         var ex = Core.FailedLoads[lt];
+                                        var culture = CultureInfo.CurrentUICulture;
+                                        string errorText = FailedTileText.ExceptionText(ex, culture);
+                                        string imageryText = FailedTileText.ImageryText(EmptyTileText, culture);
 #if !PocketPC
                                         g.FillRectangle(EmptytileBrush,
                                             new RectangleF(Core.tileRect.X, Core.tileRect.Y, Core.tileRect.Width,
                                                 Core.tileRect.Height));
 
-                                        g.DrawString("Exception: " + ex.Message, MissingDataFont, Brushes.Red,
+                                        g.DrawString(errorText, MissingDataFont, Brushes.Red,
                                             new RectangleF(Core.tileRect.X + 11, Core.tileRect.Y + 11,
                                                 Core.tileRect.Width - 11, Core.tileRect.Height - 11));
 
-                                        g.DrawString(EmptyTileText, MissingDataFont, Brushes.Blue,
+                                        g.DrawString(imageryText, MissingDataFont, Brushes.Blue,
                                             new RectangleF(Core.tileRect.X, Core.tileRect.Y, Core.tileRect.Width,
                                                 Core.tileRect.Height), CenterFormat);
 
 #else
                               g.FillRectangle(EmptytileBrush, new System.Drawing.Rectangle((int) Core.tileRect.X, (int) Core.tileRect.Y, (int) Core.tileRect.Width, (int) Core.tileRect.Height));
 
-                              g.DrawString("Exception: " + ex.Message, MissingDataFont, TileGridMissingTextBrush, new RectangleF(Core.tileRect.X + 11, Core.tileRect.Y + 11, Core.tileRect.Width - 11, Core.tileRect.Height - 11));
+                              g.DrawString(errorText, MissingDataFont, TileGridMissingTextBrush, new RectangleF(Core.tileRect.X + 11, Core.tileRect.Y + 11, Core.tileRect.Width - 11, Core.tileRect.Height - 11));
 
-                              g.DrawString(EmptyTileText, MissingDataFont, TileGridMissingTextBrush, new RectangleF(Core.tileRect.X, Core.tileRect.Y + Core.tileRect.Width / 2 + (ShowTileGridLines ? 11 : -22), Core.tileRect.Width, Core.tileRect.Height), BottomFormat);
+                              g.DrawString(imageryText, MissingDataFont, TileGridMissingTextBrush, new RectangleF(Core.tileRect.X, Core.tileRect.Y + Core.tileRect.Width / 2 + (ShowTileGridLines ? 11 : -22), Core.tileRect.Width, Core.tileRect.Height), BottomFormat);
 #endif
 
                                         g.DrawRectangle(EmptyTileBorders, (int) Core.tileRect.X, (int) Core.tileRect.Y,

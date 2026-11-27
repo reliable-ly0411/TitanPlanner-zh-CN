@@ -2236,6 +2236,8 @@
   "GPS fix: RTK Fixed": "RTK 固定解",
   "GPS fix: STATIC": "静态固定定位",
   "GPS fix: PPP": "PPP 精密单点定位",
+  "HUD readout: WP": "航点",
+  "HUD readout: Wind": "风",
   "GPS compact: No GPS": "无 GPS",
   "GPS compact: No Fix": "未定位",
   "GPS compact: 2D Fix": "2D 定位",

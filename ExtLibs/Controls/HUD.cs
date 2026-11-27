@@ -2871,10 +2871,10 @@ namespace MissionPlanner.Controls
                         newdist = (int)newdist;
                     }
 
-                    var wpLabel = "WP";
+                    var wpLabel = HudReadoutLabel("WP");
                     if (_wpno > 0 && mode == "Auto")
                     {
-                        wpLabel = "WP " + _wpno;
+                        wpLabel += " " + _wpno;
                     }
                     if (mode == "Loiter")
                     {
@@ -3833,6 +3833,14 @@ namespace MissionPlanner.Controls
         private readonly Pen _arrowPen = new Pen(Color.White, 2) { StartCap = LineCap.Round, EndCap = LineCap.Round };
         private readonly Pen _arrowOutlinePen = new Pen(_outlineColor, 4) { StartCap = LineCap.Round, EndCap = LineCap.Round };
 
+        private static string HudReadoutLabel(string label)
+        {
+            if (!MapGpsPresentation.Enhanced) return label;
+            var key = "HUD readout: " + label;
+            var localized = UiText.Translate(key);
+            return localized == key ? label : localized;
+        }
+
         /// <summary>
         /// The wind on a line of text at x, y: "Wind", an arrow the way it blows relative to the nose (up is a
         /// tailwind, down a headwind), then its speed. A calm, or no wind telemetry, has no arrow.
@@ -3840,7 +3848,7 @@ namespace MissionPlanner.Controls
         void DrawWind(float x, float y, float fontsize)
         {
             // below what the readout shows as 0.1 there is no direction to point; it blows towards its direction plus 180
-            DrawArrowReadout("Wind", _windSpeed < 0.05f ? (float?)null : _windDirection + 180,
+            DrawArrowReadout(HudReadoutLabel("Wind"), _windSpeed < 0.05f ? (float?)null : _windDirection + 180,
                 _windSpeed.ToString("0.0") + speedunit, x, y, fontsize);
         }
 
