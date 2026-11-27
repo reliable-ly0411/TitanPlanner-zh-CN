@@ -98,7 +98,18 @@ namespace MissionPlanner.GCSViews.ConfigurationView
         private void BuildLayout()
         {
             SuspendLayout();
+            try
+            {
+                BuildLayoutContents();
+            }
+            finally
+            {
+                ResumeLayout(true);
+            }
+        }
 
+        private void BuildLayoutContents()
+        {
             layoutRoot = new GroupColumnsPanel
             {
                 Name = "layoutRoot",
@@ -124,8 +135,22 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             PrepareLayoutControls(layoutRoot);
             Controls.Clear();
             Controls.Add(layoutRoot);
+        }
 
-            ResumeLayout(true);
+        private void ReloadSettingsLayout()
+        {
+            bool wasStartingUp = startup;
+            startup = true;
+            try
+            {
+                // The page host owns visibility. Rebuilding controls must not leave the active tab hidden.
+                BuildLayout();
+                ThemeManager.ApplyThemeTo(this);
+            }
+            finally
+            {
+                startup = wasStartingUp;
+            }
         }
 
         /// <summary>
@@ -2142,16 +2167,8 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                         ThemeManager.ApplyThemeTo(MainV2.instance);
                     }
 
-                    // Reload ConfigPlanner to reflect new settings
-                    startup = true;
-                    Visible = false;
-                    SuspendLayout();
-                    BuildLayout();
-                    ResumeLayout(true);
-                    // Apply theme to the newly created controls
-                    ThemeManager.ApplyThemeTo(this);
-                    Visible = true;
-                    startup = false;
+                    // Reload ConfigPlanner to reflect new settings.
+                    ReloadSettingsLayout();
                 }
             }
         }
