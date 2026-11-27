@@ -106,12 +106,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                 }
             }
 
-            // Explain why the editor can be blank without giving it a synthetic selectable value.
-            var boundOptions = mavlinkComboBox1.DataSource as List<KeyValuePair<int, string>>;
-            if (boundOptions != null && boundOptions.Count == 0)
-                text += " · 下拉无选项";
-            else if (item != null && mavlinkComboBox1.SelectedIndex < 0)
-                text += " · 下拉无对应项";
+            text += FenceTypeListStatus(item != null);
 
             fenceTypeReadback.Text = text;
             fenceTooltip.SetToolTip(fenceTypeReadback, details);
@@ -164,6 +159,20 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                 Math.Max(1, Math.Min(table.Right, ClientSize.Width) - x - inset), 0);
         }
 
+
+        private string FenceTypeListStatus(bool hasCachedValue)
+        {
+            // Read the bound list only; never give the editor a synthetic selectable value.
+            var boundOptions = mavlinkComboBox1.DataSource as List<KeyValuePair<int, string>>;
+            var key = boundOptions != null && boundOptions.Count == 0 ? "Fence type list has no options"
+                : hasCachedValue && mavlinkComboBox1.SelectedIndex < 0 ? "Fence type list has no matching option"
+                : null;
+            if (key == null)
+                return "";
+            var caption = UiText.Translate(key);
+            return string.IsNullOrEmpty(caption) || string.Equals(caption, key, StringComparison.Ordinal)
+                ? "" : " · " + caption;
+        }
 
         private void BindFenceAction(List<KeyValuePair<int, string>> options, Firmwares firmware,
             MAVLink.MAVLinkParamList parameters)

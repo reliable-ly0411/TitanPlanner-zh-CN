@@ -3994,6 +3994,14 @@ Ctrl+O 从文件加载</value>
     <value>允许区域围栏</value>
     <comment>"Fence Inclusion"</comment>
   </data>
+  <data name="4ba395c1a72b08890b36f5d6180f81e657e3318939cd0f7d073ad5fbe3334350" xml:space="preserve">
+    <value>下拉无对应项</value>
+    <comment>"Fence type list has no matching option"</comment>
+  </data>
+  <data name="5626e3457a703498345be691e0f9e5a417cd8e787d8c7df924d7ac6d3f0efc4b" xml:space="preserve">
+    <value>下拉无选项</value>
+    <comment>"Fence type list has no options"</comment>
+  </data>
   <data name="dea92d2a7b06d0f8c08aa1b2a6b68cc55e38809cc78c27fb3217b13761fccc14" xml:space="preserve">
     <value>正在获取参数名称</value>
     <comment>"Fetching Param Names"</comment>
