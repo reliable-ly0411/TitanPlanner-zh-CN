@@ -74,10 +74,10 @@
   <data name="label2.Text" xml:space="preserve"><value>最大</value></data>
   <data name="label3.Text" xml:space="preserve"><value>最小</value></data>
   <data name="groupBox3.Text" xml:space="preserve"><value>俯仰舵机</value></data>
-  <data name="label4.Text" xml:space="preserve"><value>范围 (deg)</value></data>
+  <data name="label4.Text" xml:space="preserve"><value>角度范围 (°)</value></data>
   <data name="groupBox4.Text" xml:space="preserve"><value>偏航运动范围</value></data>
-  <data name="label18.Text" xml:space="preserve"><value>最大值 (deg)</value></data>
-  <data name="label5.Text" xml:space="preserve"><value>最小值 (deg)</value></data>
+  <data name="label18.Text" xml:space="preserve"><value>最大角度 (°)</value></data>
+  <data name="label5.Text" xml:space="preserve"><value>最小角度 (°)</value></data>
   <data name="groupBox5.Text" xml:space="preserve"><value>俯仰运动范围</value></data>
   <data name="label9.Text" xml:space="preserve"><value>最大速率</value></data>
   <data name="label88.Text" xml:space="preserve"><value>I最大</value></data>
