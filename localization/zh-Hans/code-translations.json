@@ -2263,6 +2263,7 @@
   "Flight Data LED menu: Green": "Green（绿色）",
   "Flight Data LED menu: Blue": "Blue（蓝色）",
   "Flight Data LED menu: White": "White（白色）",
+  "HUD color: ActiveBorder": "活动窗口边框（ActiveBorder）",
   "Flight Data LED menu: Black": "Black（黑色 / RGB 全零）",
   "Flight Data LED menu: Rainbow": "Rainbow（彩虹渐变）",
   "GPS fix: No GPS": "无 GPS",
