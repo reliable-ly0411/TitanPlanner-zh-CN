@@ -1,5 +1,7 @@
 using System;
 using System.Drawing;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
 using GMap.NET;
@@ -145,6 +147,45 @@ internal static class PairedPlanPreviewProbe
                 !pair.TryCommit(plan, rev, initial, original, frame) && ReadPixels(pair, flight, frame, lines).Equals(start) &&
                 ReferenceEquals(flight.Overlays.Single(), canonical) &&
                 originalBounds.Equals(flight.GetRectOfAllMarkers(null)));
+            using (var grid = new DataGridView { AllowUserToAddRows = false })
+            {
+                foreach (var col in new[] {"Command","Param1","Param2","Param3","Param4","Lat","Lon","Alt","Frame"})
+                    grid.Columns.Add(col, col);
+                foreach (var p in Shape.Select((point, i) => new { point, i }))
+                    grid.Rows.Add("WAYPOINT", 0, 0, 0, 0, p.point.Lat, p.point.Lng, 20 + p.i * 5, 3);
+                var reader = new ReadOnlyPlanReader(grid, new PlanCommandCatalog(
+                    new Dictionary<string, ushort> { ["WAYPOINT"] = 16 },
+                    new Dictionary<string, double[]>(), new ushort[] { 5000, 5100 }));
+                Func<ReadOnlyPlanSnapshot> read = () => reader.Capture(PlanKind.Mission, "10.12", "2.10", "120",
+                    1, 3, CultureInfo.GetCultureInfo("en-US"));
+                rev = pair.BeginRevision(plan, PlanKind.Mission);
+                plan.Overlays.Remove(planLayer); planLayer.Dispose();
+                planLayer = PublishPlannerLayer(plan, Shape);
+                original = read();
+                pair.RecordPlanProjection(plan, rev, original, read(), planLayer);
+                pair.TryStage(plan, rev, original, frame, Evidence(original), out var stagedGrid);
+                var fresh = read();
+                Check("equal fresh grid capture commits without moving evidence identity",
+                    !ReferenceEquals(original, fresh) && pair.TryCommitRechecked(plan, rev, stagedGrid, fresh, frame) &&
+                    pair.RecheckRetention(plan, rev, read()) && ReadPixels(pair, flight, frame, lines).map > 40);
+                grid.Rows[0].Cells["Alt"].Value = 999; // No preview event subscription to the grid.
+                Check("direct row-write without preview event drops both retained layers and preserves device layer",
+                    !pair.RecheckRetention(plan, rev, read()) && ReadPixels(pair, flight, frame, lines).Equals(start));
+                grid.Rows[0].Cells["Alt"].Value = 20;
+                Check("reverting cells doesn't resurrect retired preview or callbacks",
+                    !pair.TryCommitRechecked(plan, rev, stagedGrid, read(), frame) &&
+                    !pair.RecheckRetention(plan, rev, read()) && ReadPixels(pair, flight, frame, lines).Equals(start));
+                rev = pair.BeginRevision(plan, PlanKind.Mission);
+                plan.Overlays.Remove(planLayer); planLayer.Dispose();
+                planLayer = PublishPlannerLayer(plan, Shape);
+                original = read();
+                pair.RecordPlanProjection(plan, rev, original, read(), planLayer);
+                pair.TryStage(plan, rev, original, frame, Evidence(original), out stagedGrid);
+                grid.Rows.Clear();
+                Check("unobserved bulk clear before queued commit cannot publish either view",
+                    !pair.TryCommitRechecked(plan, rev, stagedGrid, read(), frame) &&
+                    ReadPixels(pair, flight, frame, lines).Equals(start));
+            }
         }
         Console.WriteLine(passed + " checks passed");
     }

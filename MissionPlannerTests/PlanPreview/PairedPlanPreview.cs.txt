@@ -129,6 +129,32 @@ namespace Plan29PreviewProbe
             return true;
         }
 
+        // Last UI-dispatch gate after a fresh read, not the immutable identity used by altitude evidence.
+        public bool TryCommitRechecked(object owner, Revision revision, Stage key,
+            ReadOnlyPlanSnapshot freshCapture, WorldFrame scene)
+        {
+            CheckThread();
+            if (!IsCurrent(owner, revision) || pending == null || !ReferenceEquals(key, pending.Key))
+                return false;
+            if (!LocalPlanPreviewSession.SamePlan(pending.Source, freshCapture))
+            {
+                Invalidate(owner); // Retire projections/evidence as well; revert does not revive old work.
+                return false;
+            }
+            return TryCommit(owner, revision, key, pending.Source, scene);
+        }
+
+        // Call at an explicit stable PLAN/bulk boundary before retaining an existing preview.
+        // Pass null if capture failed, PLAN is dirty, non-mission, or the generation is unavailable.
+        public bool RecheckRetention(object owner, Revision revision, ReadOnlyPlanSnapshot freshCapture)
+        {
+            CheckThread();
+            if (!IsCurrent(owner, revision) || published == null) return false;
+            if (LocalPlanPreviewSession.SamePlan(published.Source, freshCapture)) return true;
+            Invalidate(owner);
+            return false;
+        }
+
         public string Caption3D(WorldFrame scene)
         {
             CheckThread();

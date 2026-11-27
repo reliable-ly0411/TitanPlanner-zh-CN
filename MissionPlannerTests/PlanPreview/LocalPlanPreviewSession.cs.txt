@@ -120,8 +120,8 @@ namespace Plan29PreviewProbe
 
         private bool Current(Ticket ticket) => ticket != null && ReferenceEquals(active, ticket);
 
-        private static bool SamePlan(ReadOnlyPlanSnapshot a, ReadOnlyPlanSnapshot b) =>
-            a.DisplayCulture == b.DisplayCulture && a.Home.Frame == b.Home.Frame &&
+        internal static bool SamePlan(ReadOnlyPlanSnapshot a, ReadOnlyPlanSnapshot b) =>
+            a != null && b != null && a.DisplayCulture == b.DisplayCulture && a.Home.Frame == b.Home.Frame &&
             a.Home.Latitude == b.Home.Latitude && a.Home.Longitude == b.Home.Longitude &&
             a.Home.AltitudeMetres == b.Home.AltitudeMetres &&
             a.Home.DisplayUnitsPerMetre == b.Home.DisplayUnitsPerMetre &&
