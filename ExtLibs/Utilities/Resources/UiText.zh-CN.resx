@@ -1619,7 +1619,7 @@
     <comment>"Beta set to "</comment>
   </data>
   <data name="eedf3216f00aefe908205c488fbfa1833ddb9261f883904e5492295d11bc57cc" xml:space="preserve">
-    <value>频率区间数</value>
+    <value>幂次</value>
     <comment>"Bins"</comment>
   </data>
   <data name="265357c31740bc688bc41cd076a6044bd8100c40b4e0bb88d4817849f6b78f86" xml:space="preserve">
@@ -3687,6 +3687,10 @@ Ctrl+O 从文件加载</value>
   <data name="15fde6edd95f7323f1edd158fc777082ea5bed5cced87eed157c7655a4704bbf" xml:space="preserve">
     <value>FFT 设置</value>
     <comment>"FFT Setup"</comment>
+  </data>
+  <data name="e2a651b1196f648cc850f8cd5d2385c81d335688f6e6aeb5c463260fe57c713c" xml:space="preserve">
+    <value>FFT 点数 = 2 的 n 次方，n 为此处数值（填 10 表示 1024 点）。</value>
+    <comment>"FFT point count is 2 to this power (10 means 1024 points)."</comment>
   </data>
   <data name="f696f9afc2f13822e0091f46c92741e8f63607f9b892380a8e4d1323be265fcd" xml:space="preserve">
     <value>翻转</value>

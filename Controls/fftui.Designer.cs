@@ -101,6 +101,19 @@ namespace MissionPlanner.Controls
             this.label1.Size = new System.Drawing.Size(27, 13);
             this.label1.TabIndex = 5;
             this.label1.Text = UiText.Translate("Bins");
+            if (System.Globalization.CultureInfo.CurrentUICulture.Name == "zh-CN")
+            {
+                const string source = "FFT point count is 2 to this power (10 means 1024 points).";
+                var description = UiText.Translate(source);
+                if (!string.Equals(description, source, System.StringComparison.Ordinal))
+                {
+                    this.NUM_bins.AccessibleName = this.label1.Text;
+                    this.NUM_bins.AccessibleDescription = description;
+                    var fftLengthTip = new System.Windows.Forms.ToolTip(this.components);
+                    fftLengthTip.SetToolTip(this.label1, description);
+                    fftLengthTip.SetToolTip(this.NUM_bins, description);
+                }
+            }
             // 
             // label2
             // 
