@@ -1839,6 +1839,10 @@
     <value>相机高度：</value>
     <comment>"Camera Height:"</comment>
   </data>
+  <data name="1867a0a75adcc43d28ddf505ad28f43c18577d2e9b0123a9853dd83d739c12d6" xml:space="preserve">
+    <value>相机图像跟踪</value>
+    <comment>"Camera Image Tracking"</comment>
+  </data>
   <data name="c6a0fc356377c93d46ea45a8e710b1550ce1a948cf0eb915f319af52f96b54d8" xml:space="preserve">
     <value>相机镜头</value>
     <comment>"Camera Lens"</comment>
