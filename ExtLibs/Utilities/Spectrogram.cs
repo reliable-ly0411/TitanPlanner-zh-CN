@@ -39,6 +39,9 @@ namespace MissionPlanner.Utilities
                 int sensorno = (type.Contains("1") ? 0 : (type.Contains("2") ? 1 : 2));
                 int sensor = type.Contains("ACC") ? 0 : 1;
 
+                // The cached series contains only the axis requested from each ISBD packet.
+                string axis = field.Substring(field.Length - 1).ToLowerInvariant();
+                var batchCacheKey = (cb.GetHashCode(), sensorno, sensor, axis);
                 (double, (double, double)[], double?) cachedata;
                 const int bins = 10;
                 int N = 1 << bins;
@@ -47,7 +50,7 @@ namespace MissionPlanner.Utilities
                 double? firstWindowRate = null;
 
                 (double time, double d)[] data = new (double time, double d)[0];
-                if (!cache.TryGetValue(cb.GetHashCode() + sensorno + "" + sensor, out cachedata))
+                if (!cache.TryGetValue(batchCacheKey, out cachedata))
                 {
                     int Ns = -1;
                     int type1 = -1;
@@ -100,8 +103,7 @@ namespace MissionPlanner.Utilities
 
                                     double time = double.Parse(item.items[offsetTime], CultureInfo.InvariantCulture);
 
-                                    var ua = (BinaryLog.UnionArray)item.GetRaw(field.ToLower()
-                                        .Substring(field.Length - 1));
+                                    var ua = (BinaryLog.UnionArray)item.GetRaw(axis);
 
                                     int samplesInPacket = ua.Shorts.Length;
                                     if (firstWindowSamples < N && samplesInPacket > 0)
@@ -128,7 +130,7 @@ namespace MissionPlanner.Utilities
 
                                 return new (double time, double d)[0];
                             }).ToArray();
-                    cache.Set(cb.GetHashCode() + sensorno + "" + sensor, (sample_rate, data, firstWindowRate),
+                    cache.Set(batchCacheKey, (sample_rate, data, firstWindowRate),
                         new MemoryCacheEntryOptions()
                         {
                             AbsoluteExpirationRelativeToNow = System.TimeSpan.FromMinutes(10)
