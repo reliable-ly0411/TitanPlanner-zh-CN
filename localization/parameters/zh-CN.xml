@@ -1884,4 +1884,216 @@
     <english>4 byte bitmap of log types to enable</english>
     <chinese>用 4 字节位掩码选择飞控要记录的日志类型。</chinese>
   </translation>
+  <translation family="Copter" parameter="SIM_THML_SCENARI" field="Description" versions="4.6.3,4.7.1" englishSha256="c3b637696403e58ab504a9bd455d3578d19fd7eb326616d1d11bbd2d1db8917c" recordSha256="d20c41d87e45bbe4e44a84e0288ef677d6478ce0919ae0b8cced39098306cf3e">
+    <english>Scenario for thermalling simulation, for soaring</english>
+    <chinese>用于滑翔盘升的热气流仿真场景。</chinese>
+  </translation>
+  <translation family="Copter" parameter="SIM_TIDE_DIR" field="Description" versions="4.6.3,4.7.1" englishSha256="630ce89b13582cf2d165227da7697abab555eaa11ca81081534d37573fdc8794" recordSha256="a7392384230ea839ff38dc357baaca56d94eb43347968bdd8660d3b1e6aa0886">
+    <english>Tide direction wave is coming from</english>
+    <chinese>潮汐来向。</chinese>
+  </translation>
+  <translation family="Copter" parameter="SIM_TIDE_SPEED" field="Description" versions="4.6.3,4.7.1" englishSha256="3059d3ba0cbdeb3881f87670d43f0c5187e3527b60285cbdb4d696ade335a2b2" recordSha256="b2e14b4c5b39b6e5421c386d3e463a0b986e6d597855e1e41339a503864e9d24">
+    <english>Tide speed in simulation</english>
+    <chinese>仿真中的潮汐速度。</chinese>
+  </translation>
+  <translation family="Copter" parameter="SIM_WAVE_AMP" field="Description" versions="4.6.3,4.7.1" englishSha256="2809bedaa65713b70001cca542b9fada563bc1b687543fafc50a589130afe18d" recordSha256="4f68ec6b4492d7917a3f07368c3c70bed1d1e494372e1d35013956202a8a2262">
+    <english>Wave amplitude in SITL</english>
+    <chinese>SITL 仿真中的波幅。</chinese>
+  </translation>
+  <translation family="Copter" parameter="SIM_WAVE_DIR" field="Description" versions="4.6.3,4.7.1" englishSha256="3f1e486aa3f632c248311d9edfe37b563f0c7a1adc2f299970a8ec1aa0f19aa5" recordSha256="de42333e3e7607bc79dbf04320ce3eb143fe70e623895c7613cbd47b8f224da6">
+    <english>Direction wave is coming from</english>
+    <chinese>波浪来向。</chinese>
+  </translation>
+  <translation family="Copter" parameter="SIM_WAVE_ENABLE" field="Description" versions="4.6.3,4.7.1" englishSha256="f30b4632d6c034f31e1bcb9d27bea0ab91599c64308899777215dbb227ded94f" recordSha256="fb79688eaa2cbc3160d1c883592e79f8d5fb88fdadae60ce20d3f3e7d8f61dd2">
+    <english>Wave enable and modes</english>
+    <chinese>仿真波浪的启用和模式选择。</chinese>
+  </translation>
+  <translation family="Copter" parameter="SIM_WAVE_LENGTH" field="Description" versions="4.6.3,4.7.1" englishSha256="55c6e76cbfc3748a96f310556bc8208814b456a4efb824c5bf86ca707cb29013" recordSha256="e5772c3afad6646411118e1b7ef22300edf3646aee88a7fc8cf3224f2354f40a">
+    <english>Wave length in SITL</english>
+    <chinese>SITL 仿真中的波长。</chinese>
+  </translation>
+  <translation family="Copter" parameter="SIM_WAVE_SPEED" field="Description" versions="4.6.3,4.7.1" englishSha256="64ba2f900da54f5140e5fce6c6f339bc34e8c8ef496fdbd94331b2a0e5b26fef" recordSha256="71ee1ed2d173c038242025a7af8dc562b13827f6a1c051028fd7f4ffc718b28b">
+    <english>Wave speed in SITL</english>
+    <chinese>SITL 仿真中的波浪传播速度。</chinese>
+  </translation>
+  <translation family="Copter" parameter="SIM_WIND_DIR" field="Description" versions="4.6.3,4.7.1" englishSha256="7242580017bdb829d28e597d1cd07c08d276b928e66b5d0ff1e4eea7ad1d8cbe" recordSha256="6d8c0409b58f45245ea77edb0552a99fb39939aeb98b5674e5f5634b40241cc3">
+    <english>Allows you to set wind direction (true deg) in sim</english>
+    <chinese>仿真中的风向，以真方位角（度）表示。</chinese>
+  </translation>
+  <translation family="Copter" parameter="SIM_WIND_DIR" field="Description" versions="4.5.7" englishSha256="7242580017bdb829d28e597d1cd07c08d276b928e66b5d0ff1e4eea7ad1d8cbe" recordSha256="8b541819b2334f6d78c5e9c8d3231e705528769be18cc99962e6d83e359dc676">
+    <english>Allows you to set wind direction (true deg) in sim</english>
+    <chinese>仿真中的风向，以真方位角（度）表示。</chinese>
+  </translation>
+  <translation family="Copter" parameter="SIM_WIND_DIR_Z" field="Description" versions="4.6.3,4.7.1" englishSha256="bb694c059585673b49df2a0c3925cf1b4936f74bd520e1ed3d29becbf34d5bad" recordSha256="7c5a1dd90e9735405a19087392997b918403376f07edfbfee8f2173010aaedce">
+    <english>Allows you to set vertical wind direction (true deg) in sim. 0 means pure horizontal wind. 90 means pure updraft.</english>
+    <chinese>仿真中的垂直风向角，以度表示。0 表示纯水平风，90 表示纯上升气流。</chinese>
+  </translation>
+  <translation family="Copter" parameter="SIM_WIND_SPD" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="bdc38989de4c965cca2fe233139ba8aacdc512b00f8e769fd1612ba4d125b5de" recordSha256="564b11151fb234f009d2420c2f511356b08deb0fb005a2b86f935d7aad0deb6c">
+    <english>Allows you to emulate wind in sim</english>
+    <chinese>在仿真中模拟风速。</chinese>
+  </translation>
+  <translation family="Copter" parameter="SIM_WIND_T" field="Description" versions="4.5.7,4.6.3" englishSha256="d8a5491f15668ebf1ae290df5dbf07eab6c915584e4fe6b53518307572a65e30" recordSha256="1e8d92610a109f794ce2ecb6224943732e73e248fcccc4060ef163c3d72ba81f">
+    <english>Selects how wind varies from surface to WIND_T_ALT</english>
+    <chinese>选择风况从地面到 WIND_T_ALT 高度的变化方式。</chinese>
+  </translation>
+  <translation family="Copter" parameter="SIM_WIND_T" field="Description" versions="4.7.1" englishSha256="d8a5491f15668ebf1ae290df5dbf07eab6c915584e4fe6b53518307572a65e30" recordSha256="8a721748be2e6c678196d52a87cf0b2b5b71dd53efe341c3b69898253738c87f">
+    <english>Selects how wind varies from surface to WIND_T_ALT</english>
+    <chinese>选择风况从地面到 WIND_T_ALT 高度的变化方式。</chinese>
+  </translation>
+  <translation family="Copter" parameter="SIM_WIND_TC" field="Description" versions="4.6.3,4.7.1" englishSha256="77063b98e77dd4fd5a087c5fb496f161b0f71293990cf1fb79077dfb6b912906" recordSha256="c838cd6c36d95e57e0a4340620af4514772380eeeefb3e4bec6cf2f9063ed4c3">
+    <english>this controls the time over which wind changes take effect</english>
+    <chinese>控制风况变化生效所需的时间。</chinese>
+  </translation>
+  <translation family="Copter" parameter="SIM_WIND_TURB" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="67b0a67266850307bb8fd0a4cbeabc912a4ccadff73fc7abff1ec384864c9b3f" recordSha256="0cf1f209088c466f56a96c94aa124dd0487007067c4f6e8e7303df9026fcc063">
+    <english>Allows you to emulate random wind variations in sim</english>
+    <chinese>在仿真中模拟风速的随机变化。</chinese>
+  </translation>
+  <translation family="Copter" parameter="SIM_WIND_T_ALT" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="b52782cdaa2276d400664a03a64f4a10263db3708e2485c4e33ffd29a7308ae5" recordSha256="757bdc262686e11b202493af78a097c159c1e9cad4d922d7ee9a756f5fb60a57">
+    <english>Altitude at which wind reaches full strength, decaying from full strength as altitude lowers to ground level</english>
+    <chinese>风速达到全强度的高度。从该高度下降至地面，风速逐渐减弱。</chinese>
+  </translation>
+  <translation family="Copter" parameter="SIM_WIND_T_COEF" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="817412f7edaaa9f235e025e836abc449c0f3147a44c4f697e46aba2fa140d369" recordSha256="4057ba8b07667dd7014fb4c6277e73eeaf465f9fb8a90f54f1a321fb4647da31">
+    <english>For linear wind profile,wind is reduced by (Altitude-WIND_T_ALT) x this value</english>
+    <chinese>在线性风廓线中，从风速中扣除（高度 − WIND_T_ALT）× 此参数值。</chinese>
+  </translation>
+  <translation family="Plane" parameter="SIM_THML_SCENARI" field="Description" versions="4.6.3,4.7.1" englishSha256="c3b637696403e58ab504a9bd455d3578d19fd7eb326616d1d11bbd2d1db8917c" recordSha256="d20c41d87e45bbe4e44a84e0288ef677d6478ce0919ae0b8cced39098306cf3e">
+    <english>Scenario for thermalling simulation, for soaring</english>
+    <chinese>用于滑翔盘升的热气流仿真场景。</chinese>
+  </translation>
+  <translation family="Plane" parameter="SIM_TIDE_DIR" field="Description" versions="4.6.3,4.7.1" englishSha256="630ce89b13582cf2d165227da7697abab555eaa11ca81081534d37573fdc8794" recordSha256="a7392384230ea839ff38dc357baaca56d94eb43347968bdd8660d3b1e6aa0886">
+    <english>Tide direction wave is coming from</english>
+    <chinese>潮汐来向。</chinese>
+  </translation>
+  <translation family="Plane" parameter="SIM_TIDE_SPEED" field="Description" versions="4.6.3,4.7.1" englishSha256="3059d3ba0cbdeb3881f87670d43f0c5187e3527b60285cbdb4d696ade335a2b2" recordSha256="b2e14b4c5b39b6e5421c386d3e463a0b986e6d597855e1e41339a503864e9d24">
+    <english>Tide speed in simulation</english>
+    <chinese>仿真中的潮汐速度。</chinese>
+  </translation>
+  <translation family="Plane" parameter="SIM_WAVE_AMP" field="Description" versions="4.6.3,4.7.1" englishSha256="2809bedaa65713b70001cca542b9fada563bc1b687543fafc50a589130afe18d" recordSha256="4f68ec6b4492d7917a3f07368c3c70bed1d1e494372e1d35013956202a8a2262">
+    <english>Wave amplitude in SITL</english>
+    <chinese>SITL 仿真中的波幅。</chinese>
+  </translation>
+  <translation family="Plane" parameter="SIM_WAVE_DIR" field="Description" versions="4.6.3,4.7.1" englishSha256="3f1e486aa3f632c248311d9edfe37b563f0c7a1adc2f299970a8ec1aa0f19aa5" recordSha256="de42333e3e7607bc79dbf04320ce3eb143fe70e623895c7613cbd47b8f224da6">
+    <english>Direction wave is coming from</english>
+    <chinese>波浪来向。</chinese>
+  </translation>
+  <translation family="Plane" parameter="SIM_WAVE_ENABLE" field="Description" versions="4.6.3,4.7.1" englishSha256="f30b4632d6c034f31e1bcb9d27bea0ab91599c64308899777215dbb227ded94f" recordSha256="fb79688eaa2cbc3160d1c883592e79f8d5fb88fdadae60ce20d3f3e7d8f61dd2">
+    <english>Wave enable and modes</english>
+    <chinese>仿真波浪的启用和模式选择。</chinese>
+  </translation>
+  <translation family="Plane" parameter="SIM_WAVE_LENGTH" field="Description" versions="4.6.3,4.7.1" englishSha256="55c6e76cbfc3748a96f310556bc8208814b456a4efb824c5bf86ca707cb29013" recordSha256="e5772c3afad6646411118e1b7ef22300edf3646aee88a7fc8cf3224f2354f40a">
+    <english>Wave length in SITL</english>
+    <chinese>SITL 仿真中的波长。</chinese>
+  </translation>
+  <translation family="Plane" parameter="SIM_WAVE_SPEED" field="Description" versions="4.6.3,4.7.1" englishSha256="64ba2f900da54f5140e5fce6c6f339bc34e8c8ef496fdbd94331b2a0e5b26fef" recordSha256="71ee1ed2d173c038242025a7af8dc562b13827f6a1c051028fd7f4ffc718b28b">
+    <english>Wave speed in SITL</english>
+    <chinese>SITL 仿真中的波浪传播速度。</chinese>
+  </translation>
+  <translation family="Plane" parameter="SIM_WIND_DIR" field="Description" versions="4.6.3,4.7.1" englishSha256="7242580017bdb829d28e597d1cd07c08d276b928e66b5d0ff1e4eea7ad1d8cbe" recordSha256="6d8c0409b58f45245ea77edb0552a99fb39939aeb98b5674e5f5634b40241cc3">
+    <english>Allows you to set wind direction (true deg) in sim</english>
+    <chinese>仿真中的风向，以真方位角（度）表示。</chinese>
+  </translation>
+  <translation family="Plane" parameter="SIM_WIND_DIR" field="Description" versions="4.5.7" englishSha256="7242580017bdb829d28e597d1cd07c08d276b928e66b5d0ff1e4eea7ad1d8cbe" recordSha256="8b541819b2334f6d78c5e9c8d3231e705528769be18cc99962e6d83e359dc676">
+    <english>Allows you to set wind direction (true deg) in sim</english>
+    <chinese>仿真中的风向，以真方位角（度）表示。</chinese>
+  </translation>
+  <translation family="Plane" parameter="SIM_WIND_DIR_Z" field="Description" versions="4.6.3,4.7.1" englishSha256="bb694c059585673b49df2a0c3925cf1b4936f74bd520e1ed3d29becbf34d5bad" recordSha256="7c5a1dd90e9735405a19087392997b918403376f07edfbfee8f2173010aaedce">
+    <english>Allows you to set vertical wind direction (true deg) in sim. 0 means pure horizontal wind. 90 means pure updraft.</english>
+    <chinese>仿真中的垂直风向角，以度表示。0 表示纯水平风，90 表示纯上升气流。</chinese>
+  </translation>
+  <translation family="Plane" parameter="SIM_WIND_SPD" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="bdc38989de4c965cca2fe233139ba8aacdc512b00f8e769fd1612ba4d125b5de" recordSha256="564b11151fb234f009d2420c2f511356b08deb0fb005a2b86f935d7aad0deb6c">
+    <english>Allows you to emulate wind in sim</english>
+    <chinese>在仿真中模拟风速。</chinese>
+  </translation>
+  <translation family="Plane" parameter="SIM_WIND_T" field="Description" versions="4.5.7,4.6.3" englishSha256="d8a5491f15668ebf1ae290df5dbf07eab6c915584e4fe6b53518307572a65e30" recordSha256="1e8d92610a109f794ce2ecb6224943732e73e248fcccc4060ef163c3d72ba81f">
+    <english>Selects how wind varies from surface to WIND_T_ALT</english>
+    <chinese>选择风况从地面到 WIND_T_ALT 高度的变化方式。</chinese>
+  </translation>
+  <translation family="Plane" parameter="SIM_WIND_T" field="Description" versions="4.7.1" englishSha256="d8a5491f15668ebf1ae290df5dbf07eab6c915584e4fe6b53518307572a65e30" recordSha256="8a721748be2e6c678196d52a87cf0b2b5b71dd53efe341c3b69898253738c87f">
+    <english>Selects how wind varies from surface to WIND_T_ALT</english>
+    <chinese>选择风况从地面到 WIND_T_ALT 高度的变化方式。</chinese>
+  </translation>
+  <translation family="Plane" parameter="SIM_WIND_TC" field="Description" versions="4.6.3,4.7.1" englishSha256="77063b98e77dd4fd5a087c5fb496f161b0f71293990cf1fb79077dfb6b912906" recordSha256="c838cd6c36d95e57e0a4340620af4514772380eeeefb3e4bec6cf2f9063ed4c3">
+    <english>this controls the time over which wind changes take effect</english>
+    <chinese>控制风况变化生效所需的时间。</chinese>
+  </translation>
+  <translation family="Plane" parameter="SIM_WIND_TURB" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="67b0a67266850307bb8fd0a4cbeabc912a4ccadff73fc7abff1ec384864c9b3f" recordSha256="0cf1f209088c466f56a96c94aa124dd0487007067c4f6e8e7303df9026fcc063">
+    <english>Allows you to emulate random wind variations in sim</english>
+    <chinese>在仿真中模拟风速的随机变化。</chinese>
+  </translation>
+  <translation family="Plane" parameter="SIM_WIND_T_ALT" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="b52782cdaa2276d400664a03a64f4a10263db3708e2485c4e33ffd29a7308ae5" recordSha256="757bdc262686e11b202493af78a097c159c1e9cad4d922d7ee9a756f5fb60a57">
+    <english>Altitude at which wind reaches full strength, decaying from full strength as altitude lowers to ground level</english>
+    <chinese>风速达到全强度的高度。从该高度下降至地面，风速逐渐减弱。</chinese>
+  </translation>
+  <translation family="Plane" parameter="SIM_WIND_T_COEF" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="817412f7edaaa9f235e025e836abc449c0f3147a44c4f697e46aba2fa140d369" recordSha256="4057ba8b07667dd7014fb4c6277e73eeaf465f9fb8a90f54f1a321fb4647da31">
+    <english>For linear wind profile,wind is reduced by (Altitude-WIND_T_ALT) x this value</english>
+    <chinese>在线性风廓线中，从风速中扣除（高度 − WIND_T_ALT）× 此参数值。</chinese>
+  </translation>
+  <translation family="Sub" parameter="SIM_THML_SCENARI" field="Description" versions="4.7.1" englishSha256="c3b637696403e58ab504a9bd455d3578d19fd7eb326616d1d11bbd2d1db8917c" recordSha256="d20c41d87e45bbe4e44a84e0288ef677d6478ce0919ae0b8cced39098306cf3e">
+    <english>Scenario for thermalling simulation, for soaring</english>
+    <chinese>用于滑翔盘升的热气流仿真场景。</chinese>
+  </translation>
+  <translation family="Sub" parameter="SIM_TIDE_DIR" field="Description" versions="4.7.1" englishSha256="630ce89b13582cf2d165227da7697abab555eaa11ca81081534d37573fdc8794" recordSha256="a7392384230ea839ff38dc357baaca56d94eb43347968bdd8660d3b1e6aa0886">
+    <english>Tide direction wave is coming from</english>
+    <chinese>潮汐来向。</chinese>
+  </translation>
+  <translation family="Sub" parameter="SIM_TIDE_SPEED" field="Description" versions="4.7.1" englishSha256="3059d3ba0cbdeb3881f87670d43f0c5187e3527b60285cbdb4d696ade335a2b2" recordSha256="b2e14b4c5b39b6e5421c386d3e463a0b986e6d597855e1e41339a503864e9d24">
+    <english>Tide speed in simulation</english>
+    <chinese>仿真中的潮汐速度。</chinese>
+  </translation>
+  <translation family="Sub" parameter="SIM_WAVE_AMP" field="Description" versions="4.7.1" englishSha256="2809bedaa65713b70001cca542b9fada563bc1b687543fafc50a589130afe18d" recordSha256="4f68ec6b4492d7917a3f07368c3c70bed1d1e494372e1d35013956202a8a2262">
+    <english>Wave amplitude in SITL</english>
+    <chinese>SITL 仿真中的波幅。</chinese>
+  </translation>
+  <translation family="Sub" parameter="SIM_WAVE_DIR" field="Description" versions="4.7.1" englishSha256="3f1e486aa3f632c248311d9edfe37b563f0c7a1adc2f299970a8ec1aa0f19aa5" recordSha256="de42333e3e7607bc79dbf04320ce3eb143fe70e623895c7613cbd47b8f224da6">
+    <english>Direction wave is coming from</english>
+    <chinese>波浪来向。</chinese>
+  </translation>
+  <translation family="Sub" parameter="SIM_WAVE_ENABLE" field="Description" versions="4.7.1" englishSha256="f30b4632d6c034f31e1bcb9d27bea0ab91599c64308899777215dbb227ded94f" recordSha256="fb79688eaa2cbc3160d1c883592e79f8d5fb88fdadae60ce20d3f3e7d8f61dd2">
+    <english>Wave enable and modes</english>
+    <chinese>仿真波浪的启用和模式选择。</chinese>
+  </translation>
+  <translation family="Sub" parameter="SIM_WAVE_LENGTH" field="Description" versions="4.7.1" englishSha256="55c6e76cbfc3748a96f310556bc8208814b456a4efb824c5bf86ca707cb29013" recordSha256="e5772c3afad6646411118e1b7ef22300edf3646aee88a7fc8cf3224f2354f40a">
+    <english>Wave length in SITL</english>
+    <chinese>SITL 仿真中的波长。</chinese>
+  </translation>
+  <translation family="Sub" parameter="SIM_WAVE_SPEED" field="Description" versions="4.7.1" englishSha256="64ba2f900da54f5140e5fce6c6f339bc34e8c8ef496fdbd94331b2a0e5b26fef" recordSha256="71ee1ed2d173c038242025a7af8dc562b13827f6a1c051028fd7f4ffc718b28b">
+    <english>Wave speed in SITL</english>
+    <chinese>SITL 仿真中的波浪传播速度。</chinese>
+  </translation>
+  <translation family="Sub" parameter="SIM_WIND_DIR" field="Description" versions="4.7.1" englishSha256="7242580017bdb829d28e597d1cd07c08d276b928e66b5d0ff1e4eea7ad1d8cbe" recordSha256="6d8c0409b58f45245ea77edb0552a99fb39939aeb98b5674e5f5634b40241cc3">
+    <english>Allows you to set wind direction (true deg) in sim</english>
+    <chinese>仿真中的风向，以真方位角（度）表示。</chinese>
+  </translation>
+  <translation family="Sub" parameter="SIM_WIND_DIR_Z" field="Description" versions="4.7.1" englishSha256="bb694c059585673b49df2a0c3925cf1b4936f74bd520e1ed3d29becbf34d5bad" recordSha256="7c5a1dd90e9735405a19087392997b918403376f07edfbfee8f2173010aaedce">
+    <english>Allows you to set vertical wind direction (true deg) in sim. 0 means pure horizontal wind. 90 means pure updraft.</english>
+    <chinese>仿真中的垂直风向角，以度表示。0 表示纯水平风，90 表示纯上升气流。</chinese>
+  </translation>
+  <translation family="Sub" parameter="SIM_WIND_SPD" field="Description" versions="4.7.1" englishSha256="bdc38989de4c965cca2fe233139ba8aacdc512b00f8e769fd1612ba4d125b5de" recordSha256="564b11151fb234f009d2420c2f511356b08deb0fb005a2b86f935d7aad0deb6c">
+    <english>Allows you to emulate wind in sim</english>
+    <chinese>在仿真中模拟风速。</chinese>
+  </translation>
+  <translation family="Sub" parameter="SIM_WIND_T" field="Description" versions="4.7.1" englishSha256="d8a5491f15668ebf1ae290df5dbf07eab6c915584e4fe6b53518307572a65e30" recordSha256="8a721748be2e6c678196d52a87cf0b2b5b71dd53efe341c3b69898253738c87f">
+    <english>Selects how wind varies from surface to WIND_T_ALT</english>
+    <chinese>选择风况从地面到 WIND_T_ALT 高度的变化方式。</chinese>
+  </translation>
+  <translation family="Sub" parameter="SIM_WIND_TC" field="Description" versions="4.7.1" englishSha256="77063b98e77dd4fd5a087c5fb496f161b0f71293990cf1fb79077dfb6b912906" recordSha256="c838cd6c36d95e57e0a4340620af4514772380eeeefb3e4bec6cf2f9063ed4c3">
+    <english>this controls the time over which wind changes take effect</english>
+    <chinese>控制风况变化生效所需的时间。</chinese>
+  </translation>
+  <translation family="Sub" parameter="SIM_WIND_TURB" field="Description" versions="4.7.1" englishSha256="67b0a67266850307bb8fd0a4cbeabc912a4ccadff73fc7abff1ec384864c9b3f" recordSha256="0cf1f209088c466f56a96c94aa124dd0487007067c4f6e8e7303df9026fcc063">
+    <english>Allows you to emulate random wind variations in sim</english>
+    <chinese>在仿真中模拟风速的随机变化。</chinese>
+  </translation>
+  <translation family="Sub" parameter="SIM_WIND_T_ALT" field="Description" versions="4.7.1" englishSha256="b52782cdaa2276d400664a03a64f4a10263db3708e2485c4e33ffd29a7308ae5" recordSha256="757bdc262686e11b202493af78a097c159c1e9cad4d922d7ee9a756f5fb60a57">
+    <english>Altitude at which wind reaches full strength, decaying from full strength as altitude lowers to ground level</english>
+    <chinese>风速达到全强度的高度。从该高度下降至地面，风速逐渐减弱。</chinese>
+  </translation>
+  <translation family="Sub" parameter="SIM_WIND_T_COEF" field="Description" versions="4.7.1" englishSha256="817412f7edaaa9f235e025e836abc449c0f3147a44c4f697e46aba2fa140d369" recordSha256="4057ba8b07667dd7014fb4c6277e73eeaf465f9fb8a90f54f1a321fb4647da31">
+    <english>For linear wind profile,wind is reduced by (Altitude-WIND_T_ALT) x this value</english>
+    <chinese>在线性风廓线中，从风速中扣除（高度 − WIND_T_ALT）× 此参数值。</chinese>
+  </translation>
+  <translation family="Sub" parameter="STAT_DISTFLWN" field="Description" versions="4.7.1" englishSha256="3e47e5804a84c3eeb13e7be5b09abee553be70fc52e59c635d54bf722e2c2364" recordSha256="2c5e7a852a77629f98e360cf59d7a02fa34cd436270c1c2003bbf1aab5402f79">
+    <english>Estimate of total distance flown since statistics reset</english>
+    <chinese>上次重置统计以来的估算飞行总距离。</chinese>
+  </translation>
 </parameterTranslations>

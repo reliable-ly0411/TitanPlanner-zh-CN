@@ -653,6 +653,33 @@
             </values>
           </param>
         </parameters>
+        <parameters name="SIM_">
+          <param humanName="Simulated Wind speed" name="SIM_WIND_SPD" documentation="Allows you to emulate wind in sim" user="Advanced">
+            <field name="Units">m/s</field>
+            <field name="UnitText">meters per second</field>
+          </param>
+          <param humanName="Simulated Wind direction" name="SIM_WIND_DIR" documentation="Allows you to set wind direction (true deg) in sim" user="Advanced">
+            <field name="Units">deg</field>
+            <field name="UnitText">degrees</field>
+          </param>
+          <param humanName="Simulated Wind variation" name="SIM_WIND_TURB" documentation="Allows you to emulate random wind variations in sim" user="Advanced">
+            <field name="Units">m/s</field>
+            <field name="UnitText">meters per second</field>
+          </param>
+          <param humanName="Wind Profile Type" name="SIM_WIND_T" documentation="Selects how wind varies from surface to WIND_T_ALT" user="Advanced    ">
+            <values>
+              <value code="0">square law</value>
+              <value code="1">none</value>
+              <value code="2">linear-see WIND_T_COEF</value>
+            </values>
+          </param>
+          <param humanName="Full Wind Altitude" name="SIM_WIND_T_ALT" documentation="Altitude at which wind reaches full strength, decaying from full strength as altitude lowers to ground level" user="Advanced">
+            <field name="Units">m</field>
+            <field name="UnitText">meters</field>
+          </param>
+          <param humanName="Linear Wind Curve Coeff" name="SIM_WIND_T_COEF" documentation="For linear wind profile,wind is reduced by (Altitude-WIND_T_ALT) x this value" user="Advanced">
+</param>
+        </parameters>
       </libraries>
     </paramfile>
   </release>
@@ -1352,6 +1379,74 @@
               <value code="10">SITL</value>
             </values>
           </param>
+        </parameters>
+        <parameters name="SIM_">
+          <param humanName="Simulated Wind speed" name="SIM_WIND_SPD" documentation="Allows you to emulate wind in sim" user="Advanced">
+            <field name="Units">m/s</field>
+            <field name="UnitText">meters per second</field>
+          </param>
+          <param humanName="Direction simulated wind is coming from" name="SIM_WIND_DIR" documentation="Allows you to set wind direction (true deg) in sim" user="Advanced">
+            <field name="Units">deg</field>
+            <field name="UnitText">degrees</field>
+          </param>
+          <param humanName="Simulated Wind variation" name="SIM_WIND_TURB" documentation="Allows you to emulate random wind variations in sim" user="Advanced">
+            <field name="Units">m/s</field>
+            <field name="UnitText">meters per second</field>
+          </param>
+          <param humanName="Wind variation time constant" name="SIM_WIND_TC" documentation="this controls the time over which wind changes take effect" user="Advanced">
+            <field name="Units">s</field>
+            <field name="UnitText">seconds</field>
+          </param>
+          <param humanName="Simulated wind vertical direction" name="SIM_WIND_DIR_Z" documentation="Allows you to set vertical wind direction (true deg) in sim. 0 means pure horizontal wind. 90 means pure updraft." user="Advanced">
+            <field name="Units">deg</field>
+            <field name="UnitText">degrees</field>
+          </param>
+          <param humanName="Wind Profile Type" name="SIM_WIND_T" documentation="Selects how wind varies from surface to WIND_T_ALT" user="Advanced    ">
+            <values>
+              <value code="0">square law</value>
+              <value code="1">none</value>
+              <value code="2">linear-see WIND_T_COEF</value>
+            </values>
+          </param>
+          <param humanName="Full Wind Altitude" name="SIM_WIND_T_ALT" documentation="Altitude at which wind reaches full strength, decaying from full strength as altitude lowers to ground level" user="Advanced">
+            <field name="Units">m</field>
+            <field name="UnitText">meters</field>
+          </param>
+          <param humanName="Linear Wind Curve Coeff" name="SIM_WIND_T_COEF" documentation="For linear wind profile,wind is reduced by (Altitude-WIND_T_ALT) x this value" user="Advanced">
+</param>
+          <param humanName="Wave enable" name="SIM_WAVE_ENABLE" documentation="Wave enable and modes">
+            <values>
+              <value code="0">disabled</value>
+              <value code="1">roll and pitch</value>
+              <value code="2">roll and pitch and heave</value>
+            </values>
+          </param>
+          <param humanName="Wave length" name="SIM_WAVE_LENGTH" documentation="Wave length in SITL">
+            <field name="Units">m</field>
+            <field name="UnitText">meters</field>
+          </param>
+          <param humanName="Wave amplitude" name="SIM_WAVE_AMP" documentation="Wave amplitude in SITL">
+            <field name="Units">m</field>
+            <field name="UnitText">meters</field>
+          </param>
+          <param humanName="Wave direction" name="SIM_WAVE_DIR" documentation="Direction wave is coming from">
+            <field name="Units">deg</field>
+            <field name="UnitText">degrees</field>
+          </param>
+          <param humanName="Wave speed" name="SIM_WAVE_SPEED" documentation="Wave speed in SITL">
+            <field name="Units">m/s</field>
+            <field name="UnitText">meters per second</field>
+          </param>
+          <param humanName="Tide direction" name="SIM_TIDE_DIR" documentation="Tide direction wave is coming from">
+            <field name="Units">deg</field>
+            <field name="UnitText">degrees</field>
+          </param>
+          <param humanName="Tide speed" name="SIM_TIDE_SPEED" documentation="Tide speed in simulation">
+            <field name="Units">m/s</field>
+            <field name="UnitText">meters per second</field>
+          </param>
+          <param humanName="Thermal scenarios" name="SIM_THML_SCENARI" documentation="Scenario for thermalling simulation, for soaring">
+</param>
         </parameters>
       </libraries>
     </paramfile>
@@ -2088,6 +2183,74 @@
             </values>
           </param>
         </parameters>
+        <parameters name="SIM_">
+          <param humanName="Simulated Wind speed" name="SIM_WIND_SPD" documentation="Allows you to emulate wind in sim" user="Advanced">
+            <field name="Units">m/s</field>
+            <field name="UnitText">meters per second</field>
+          </param>
+          <param humanName="Direction simulated wind is coming from" name="SIM_WIND_DIR" documentation="Allows you to set wind direction (true deg) in sim" user="Advanced">
+            <field name="Units">deg</field>
+            <field name="UnitText">degrees</field>
+          </param>
+          <param humanName="Simulated Wind variation" name="SIM_WIND_TURB" documentation="Allows you to emulate random wind variations in sim" user="Advanced">
+            <field name="Units">m/s</field>
+            <field name="UnitText">meters per second</field>
+          </param>
+          <param humanName="Wind variation time constant" name="SIM_WIND_TC" documentation="this controls the time over which wind changes take effect" user="Advanced">
+            <field name="Units">s</field>
+            <field name="UnitText">seconds</field>
+          </param>
+          <param humanName="Simulated wind vertical direction" name="SIM_WIND_DIR_Z" documentation="Allows you to set vertical wind direction (true deg) in sim. 0 means pure horizontal wind. 90 means pure updraft." user="Advanced">
+            <field name="Units">deg</field>
+            <field name="UnitText">degrees</field>
+          </param>
+          <param humanName="Wind Profile Type" name="SIM_WIND_T" documentation="Selects how wind varies from surface to WIND_T_ALT" user="Advanced">
+            <values>
+              <value code="0">square law</value>
+              <value code="1">none</value>
+              <value code="2">linear-see WIND_T_COEF</value>
+            </values>
+          </param>
+          <param humanName="Full Wind Altitude" name="SIM_WIND_T_ALT" documentation="Altitude at which wind reaches full strength, decaying from full strength as altitude lowers to ground level" user="Advanced">
+            <field name="Units">m</field>
+            <field name="UnitText">meters</field>
+          </param>
+          <param humanName="Linear Wind Curve Coeff" name="SIM_WIND_T_COEF" documentation="For linear wind profile,wind is reduced by (Altitude-WIND_T_ALT) x this value" user="Advanced">
+</param>
+          <param humanName="Wave enable" name="SIM_WAVE_ENABLE" documentation="Wave enable and modes">
+            <values>
+              <value code="0">disabled</value>
+              <value code="1">roll and pitch</value>
+              <value code="2">roll and pitch and heave</value>
+            </values>
+          </param>
+          <param humanName="Wave length" name="SIM_WAVE_LENGTH" documentation="Wave length in SITL">
+            <field name="Units">m</field>
+            <field name="UnitText">meters</field>
+          </param>
+          <param humanName="Wave amplitude" name="SIM_WAVE_AMP" documentation="Wave amplitude in SITL">
+            <field name="Units">m</field>
+            <field name="UnitText">meters</field>
+          </param>
+          <param humanName="Wave direction" name="SIM_WAVE_DIR" documentation="Direction wave is coming from">
+            <field name="Units">deg</field>
+            <field name="UnitText">degrees</field>
+          </param>
+          <param humanName="Wave speed" name="SIM_WAVE_SPEED" documentation="Wave speed in SITL">
+            <field name="Units">m/s</field>
+            <field name="UnitText">meters per second</field>
+          </param>
+          <param humanName="Tide direction" name="SIM_TIDE_DIR" documentation="Tide direction wave is coming from">
+            <field name="Units">deg</field>
+            <field name="UnitText">degrees</field>
+          </param>
+          <param humanName="Tide speed" name="SIM_TIDE_SPEED" documentation="Tide speed in simulation">
+            <field name="Units">m/s</field>
+            <field name="UnitText">meters per second</field>
+          </param>
+          <param humanName="Thermal scenarios" name="SIM_THML_SCENARI" documentation="Scenario for thermalling simulation, for soaring">
+</param>
+        </parameters>
       </libraries>
     </paramfile>
   </release>
@@ -2806,6 +2969,33 @@
               <value code="10">SITL</value>
             </values>
           </param>
+        </parameters>
+        <parameters name="SIM_">
+          <param humanName="Simulated Wind speed" name="SIM_WIND_SPD" documentation="Allows you to emulate wind in sim" user="Advanced">
+            <field name="Units">m/s</field>
+            <field name="UnitText">meters per second</field>
+          </param>
+          <param humanName="Simulated Wind direction" name="SIM_WIND_DIR" documentation="Allows you to set wind direction (true deg) in sim" user="Advanced">
+            <field name="Units">deg</field>
+            <field name="UnitText">degrees</field>
+          </param>
+          <param humanName="Simulated Wind variation" name="SIM_WIND_TURB" documentation="Allows you to emulate random wind variations in sim" user="Advanced">
+            <field name="Units">m/s</field>
+            <field name="UnitText">meters per second</field>
+          </param>
+          <param humanName="Wind Profile Type" name="SIM_WIND_T" documentation="Selects how wind varies from surface to WIND_T_ALT" user="Advanced    ">
+            <values>
+              <value code="0">square law</value>
+              <value code="1">none</value>
+              <value code="2">linear-see WIND_T_COEF</value>
+            </values>
+          </param>
+          <param humanName="Full Wind Altitude" name="SIM_WIND_T_ALT" documentation="Altitude at which wind reaches full strength, decaying from full strength as altitude lowers to ground level" user="Advanced">
+            <field name="Units">m</field>
+            <field name="UnitText">meters</field>
+          </param>
+          <param humanName="Linear Wind Curve Coeff" name="SIM_WIND_T_COEF" documentation="For linear wind profile,wind is reduced by (Altitude-WIND_T_ALT) x this value" user="Advanced">
+</param>
         </parameters>
       </libraries>
     </paramfile>
@@ -3561,6 +3751,74 @@
               <value code="10">SITL</value>
             </values>
           </param>
+        </parameters>
+        <parameters name="SIM_">
+          <param humanName="Simulated Wind speed" name="SIM_WIND_SPD" documentation="Allows you to emulate wind in sim" user="Advanced">
+            <field name="Units">m/s</field>
+            <field name="UnitText">meters per second</field>
+          </param>
+          <param humanName="Direction simulated wind is coming from" name="SIM_WIND_DIR" documentation="Allows you to set wind direction (true deg) in sim" user="Advanced">
+            <field name="Units">deg</field>
+            <field name="UnitText">degrees</field>
+          </param>
+          <param humanName="Simulated Wind variation" name="SIM_WIND_TURB" documentation="Allows you to emulate random wind variations in sim" user="Advanced">
+            <field name="Units">m/s</field>
+            <field name="UnitText">meters per second</field>
+          </param>
+          <param humanName="Wind variation time constant" name="SIM_WIND_TC" documentation="this controls the time over which wind changes take effect" user="Advanced">
+            <field name="Units">s</field>
+            <field name="UnitText">seconds</field>
+          </param>
+          <param humanName="Simulated wind vertical direction" name="SIM_WIND_DIR_Z" documentation="Allows you to set vertical wind direction (true deg) in sim. 0 means pure horizontal wind. 90 means pure updraft." user="Advanced">
+            <field name="Units">deg</field>
+            <field name="UnitText">degrees</field>
+          </param>
+          <param humanName="Wind Profile Type" name="SIM_WIND_T" documentation="Selects how wind varies from surface to WIND_T_ALT" user="Advanced    ">
+            <values>
+              <value code="0">square law</value>
+              <value code="1">none</value>
+              <value code="2">linear-see WIND_T_COEF</value>
+            </values>
+          </param>
+          <param humanName="Full Wind Altitude" name="SIM_WIND_T_ALT" documentation="Altitude at which wind reaches full strength, decaying from full strength as altitude lowers to ground level" user="Advanced">
+            <field name="Units">m</field>
+            <field name="UnitText">meters</field>
+          </param>
+          <param humanName="Linear Wind Curve Coeff" name="SIM_WIND_T_COEF" documentation="For linear wind profile,wind is reduced by (Altitude-WIND_T_ALT) x this value" user="Advanced">
+</param>
+          <param humanName="Wave enable" name="SIM_WAVE_ENABLE" documentation="Wave enable and modes">
+            <values>
+              <value code="0">disabled</value>
+              <value code="1">roll and pitch</value>
+              <value code="2">roll and pitch and heave</value>
+            </values>
+          </param>
+          <param humanName="Wave length" name="SIM_WAVE_LENGTH" documentation="Wave length in SITL">
+            <field name="Units">m</field>
+            <field name="UnitText">meters</field>
+          </param>
+          <param humanName="Wave amplitude" name="SIM_WAVE_AMP" documentation="Wave amplitude in SITL">
+            <field name="Units">m</field>
+            <field name="UnitText">meters</field>
+          </param>
+          <param humanName="Wave direction" name="SIM_WAVE_DIR" documentation="Direction wave is coming from">
+            <field name="Units">deg</field>
+            <field name="UnitText">degrees</field>
+          </param>
+          <param humanName="Wave speed" name="SIM_WAVE_SPEED" documentation="Wave speed in SITL">
+            <field name="Units">m/s</field>
+            <field name="UnitText">meters per second</field>
+          </param>
+          <param humanName="Tide direction" name="SIM_TIDE_DIR" documentation="Tide direction wave is coming from">
+            <field name="Units">deg</field>
+            <field name="UnitText">degrees</field>
+          </param>
+          <param humanName="Tide speed" name="SIM_TIDE_SPEED" documentation="Tide speed in simulation">
+            <field name="Units">m/s</field>
+            <field name="UnitText">meters per second</field>
+          </param>
+          <param humanName="Thermal scenarios" name="SIM_THML_SCENARI" documentation="Scenario for thermalling simulation, for soaring">
+</param>
         </parameters>
       </libraries>
     </paramfile>
@@ -4361,6 +4619,74 @@
             </values>
           </param>
         </parameters>
+        <parameters name="SIM_">
+          <param humanName="Simulated Wind speed" name="SIM_WIND_SPD" documentation="Allows you to emulate wind in sim" user="Advanced">
+            <field name="Units">m/s</field>
+            <field name="UnitText">meters per second</field>
+          </param>
+          <param humanName="Direction simulated wind is coming from" name="SIM_WIND_DIR" documentation="Allows you to set wind direction (true deg) in sim" user="Advanced">
+            <field name="Units">deg</field>
+            <field name="UnitText">degrees</field>
+          </param>
+          <param humanName="Simulated Wind variation" name="SIM_WIND_TURB" documentation="Allows you to emulate random wind variations in sim" user="Advanced">
+            <field name="Units">m/s</field>
+            <field name="UnitText">meters per second</field>
+          </param>
+          <param humanName="Wind variation time constant" name="SIM_WIND_TC" documentation="this controls the time over which wind changes take effect" user="Advanced">
+            <field name="Units">s</field>
+            <field name="UnitText">seconds</field>
+          </param>
+          <param humanName="Simulated wind vertical direction" name="SIM_WIND_DIR_Z" documentation="Allows you to set vertical wind direction (true deg) in sim. 0 means pure horizontal wind. 90 means pure updraft." user="Advanced">
+            <field name="Units">deg</field>
+            <field name="UnitText">degrees</field>
+          </param>
+          <param humanName="Wind Profile Type" name="SIM_WIND_T" documentation="Selects how wind varies from surface to WIND_T_ALT" user="Advanced">
+            <values>
+              <value code="0">square law</value>
+              <value code="1">none</value>
+              <value code="2">linear-see WIND_T_COEF</value>
+            </values>
+          </param>
+          <param humanName="Full Wind Altitude" name="SIM_WIND_T_ALT" documentation="Altitude at which wind reaches full strength, decaying from full strength as altitude lowers to ground level" user="Advanced">
+            <field name="Units">m</field>
+            <field name="UnitText">meters</field>
+          </param>
+          <param humanName="Linear Wind Curve Coeff" name="SIM_WIND_T_COEF" documentation="For linear wind profile,wind is reduced by (Altitude-WIND_T_ALT) x this value" user="Advanced">
+</param>
+          <param humanName="Wave enable" name="SIM_WAVE_ENABLE" documentation="Wave enable and modes">
+            <values>
+              <value code="0">disabled</value>
+              <value code="1">roll and pitch</value>
+              <value code="2">roll and pitch and heave</value>
+            </values>
+          </param>
+          <param humanName="Wave length" name="SIM_WAVE_LENGTH" documentation="Wave length in SITL">
+            <field name="Units">m</field>
+            <field name="UnitText">meters</field>
+          </param>
+          <param humanName="Wave amplitude" name="SIM_WAVE_AMP" documentation="Wave amplitude in SITL">
+            <field name="Units">m</field>
+            <field name="UnitText">meters</field>
+          </param>
+          <param humanName="Wave direction" name="SIM_WAVE_DIR" documentation="Direction wave is coming from">
+            <field name="Units">deg</field>
+            <field name="UnitText">degrees</field>
+          </param>
+          <param humanName="Wave speed" name="SIM_WAVE_SPEED" documentation="Wave speed in SITL">
+            <field name="Units">m/s</field>
+            <field name="UnitText">meters per second</field>
+          </param>
+          <param humanName="Tide direction" name="SIM_TIDE_DIR" documentation="Tide direction wave is coming from">
+            <field name="Units">deg</field>
+            <field name="UnitText">degrees</field>
+          </param>
+          <param humanName="Tide speed" name="SIM_TIDE_SPEED" documentation="Tide speed in simulation">
+            <field name="Units">m/s</field>
+            <field name="UnitText">meters per second</field>
+          </param>
+          <param humanName="Thermal scenarios" name="SIM_THML_SCENARI" documentation="Scenario for thermalling simulation, for soaring">
+</param>
+        </parameters>
       </libraries>
     </paramfile>
   </release>
@@ -4411,6 +4737,11 @@
             <field name="ReadOnly">True</field>
           </param>
           <param humanName="Total Flight Count" name="STAT_FLTCNT" documentation="Total number of flights" user="Standard">
+            <field name="ReadOnly">True</field>
+          </param>
+          <param humanName="Total Distance Flown" name="STAT_DISTFLWN" documentation="Estimate of total distance flown since statistics reset" user="Standard">
+            <field name="Units">m</field>
+            <field name="UnitText">meters</field>
             <field name="ReadOnly">True</field>
           </param>
         </parameters>
@@ -4703,6 +5034,74 @@
               <value code="10">SITL</value>
             </values>
           </param>
+        </parameters>
+        <parameters name="SIM_">
+          <param humanName="Simulated Wind speed" name="SIM_WIND_SPD" documentation="Allows you to emulate wind in sim" user="Advanced">
+            <field name="Units">m/s</field>
+            <field name="UnitText">meters per second</field>
+          </param>
+          <param humanName="Direction simulated wind is coming from" name="SIM_WIND_DIR" documentation="Allows you to set wind direction (true deg) in sim" user="Advanced">
+            <field name="Units">deg</field>
+            <field name="UnitText">degrees</field>
+          </param>
+          <param humanName="Simulated Wind variation" name="SIM_WIND_TURB" documentation="Allows you to emulate random wind variations in sim" user="Advanced">
+            <field name="Units">m/s</field>
+            <field name="UnitText">meters per second</field>
+          </param>
+          <param humanName="Wind variation time constant" name="SIM_WIND_TC" documentation="this controls the time over which wind changes take effect" user="Advanced">
+            <field name="Units">s</field>
+            <field name="UnitText">seconds</field>
+          </param>
+          <param humanName="Simulated wind vertical direction" name="SIM_WIND_DIR_Z" documentation="Allows you to set vertical wind direction (true deg) in sim. 0 means pure horizontal wind. 90 means pure updraft." user="Advanced">
+            <field name="Units">deg</field>
+            <field name="UnitText">degrees</field>
+          </param>
+          <param humanName="Wind Profile Type" name="SIM_WIND_T" documentation="Selects how wind varies from surface to WIND_T_ALT" user="Advanced">
+            <values>
+              <value code="0">square law</value>
+              <value code="1">none</value>
+              <value code="2">linear-see WIND_T_COEF</value>
+            </values>
+          </param>
+          <param humanName="Full Wind Altitude" name="SIM_WIND_T_ALT" documentation="Altitude at which wind reaches full strength, decaying from full strength as altitude lowers to ground level" user="Advanced">
+            <field name="Units">m</field>
+            <field name="UnitText">meters</field>
+          </param>
+          <param humanName="Linear Wind Curve Coeff" name="SIM_WIND_T_COEF" documentation="For linear wind profile,wind is reduced by (Altitude-WIND_T_ALT) x this value" user="Advanced">
+</param>
+          <param humanName="Wave enable" name="SIM_WAVE_ENABLE" documentation="Wave enable and modes">
+            <values>
+              <value code="0">disabled</value>
+              <value code="1">roll and pitch</value>
+              <value code="2">roll and pitch and heave</value>
+            </values>
+          </param>
+          <param humanName="Wave length" name="SIM_WAVE_LENGTH" documentation="Wave length in SITL">
+            <field name="Units">m</field>
+            <field name="UnitText">meters</field>
+          </param>
+          <param humanName="Wave amplitude" name="SIM_WAVE_AMP" documentation="Wave amplitude in SITL">
+            <field name="Units">m</field>
+            <field name="UnitText">meters</field>
+          </param>
+          <param humanName="Wave direction" name="SIM_WAVE_DIR" documentation="Direction wave is coming from">
+            <field name="Units">deg</field>
+            <field name="UnitText">degrees</field>
+          </param>
+          <param humanName="Wave speed" name="SIM_WAVE_SPEED" documentation="Wave speed in SITL">
+            <field name="Units">m/s</field>
+            <field name="UnitText">meters per second</field>
+          </param>
+          <param humanName="Tide direction" name="SIM_TIDE_DIR" documentation="Tide direction wave is coming from">
+            <field name="Units">deg</field>
+            <field name="UnitText">degrees</field>
+          </param>
+          <param humanName="Tide speed" name="SIM_TIDE_SPEED" documentation="Tide speed in simulation">
+            <field name="Units">m/s</field>
+            <field name="UnitText">meters per second</field>
+          </param>
+          <param humanName="Thermal scenarios" name="SIM_THML_SCENARI" documentation="Scenario for thermalling simulation, for soaring">
+</param>
         </parameters>
       </libraries>
     </paramfile>
