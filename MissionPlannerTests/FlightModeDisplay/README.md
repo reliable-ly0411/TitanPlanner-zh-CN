@@ -4,6 +4,8 @@
 
 ArduPlane `Autoland`（26）显示为“自动着陆”，指[官方 AUTOLAND 文档](https://ardupilot.org/plane/docs/mode_autoland.html)中的固定翼自动着陆模式，区别于 QLAND。`Autoland`、`AUTOLAND`、`AutoLand` 三种显示源文均覆盖。Rover `Dock`（8）显示为“自动停靠”，对应[官方 DOCK 文档](https://ardupilot.org/rover/docs/dock-mode.html)的自动接近固定对接目标；也覆盖 `DOCK` 源文。协议枚举未改。
 
+顶栏下拉的 AntennaTracker `Auto` 行在增强简体显示 `Auto · 自动跟踪`，对应[官方跟踪器模式文档](https://docs.ardupilot.org/antennatracker/docs/how-to-operate.html)。现有 `Common.getModesList(ArduTracker)` 中仍为原英语 `Auto` 和编号 10。只改顶栏行标题；其他机型、当前模式徽标、未知模式和原版语言保持原状。
+
 HUD 的徽标限制在底部中央与实际电池、GPS、EKF、振动指示之间，位于航点/高度带及预解锁提示下方。长文本省略；预留区域被遥测占满时不绘制徽标。顶部提示和辅助功能名称保留完整文字。第三方 HUD 插件自行绘制的内容不在这些边界的测量范围内。
 
 ## Linux / 跨平台逻辑检查
@@ -46,3 +48,5 @@ HUD 截帧先等待 40 ms，越过生产控件的 30 ms 绘制节流，再验证
 Linux：加入 Autoland / Dock 后显示/合成几何 8,316 条断言通过；显示翻译静态测试 6 项通过；资源校验通过。Windows 探针已用 .NET Framework 4.7.2 引用程序集编译，未在此环境执行 Windows GUI。
 
 独立 Windows 复验报告：`178463cf` Release 编译成功；原有 3 项真实模式测试中 2 通过、1 在 ArduPlane Autoland 漏译处失败，本次补译待同环境复验。该版本的 HUD 像素比较偶现失败已捕获到整张黑色 before 帧、正常 after 帧，与 30 ms 节流导致紧邻 `DrawToBitmap` 未绘制的路径吻合。本次修复探针取帧并保留遮挡断言，仍须在 Windows 分语言反复执行；空帧原因已找到不代表其他遮挡已排除。完整应用、OpenGL、真实 DPI、SITL 不能由这些检查代替。
+
+2026-11-27：AntennaTracker 顶栏显示层定向测试通过 8,430 项断言。Mono/Xvfb 使用实际模式列表分支、上下文选择、弹窗代码和三套资源，3 种语言均验证六条原始模式的数量和键值未变，点击 `Auto` 行的事件值仍为原文，未挂接指令发送。未运行完整构建、Windows 原生 DPI 矩阵、实机或真实模式切换。

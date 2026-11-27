@@ -111,6 +111,53 @@ namespace MissionPlannerTests.Controls
             if (error != null) Assert.Fail(error.ToString());
         }
 
+        [DataTestMethod]
+        [DataRow("zh-CN", "Auto · 自动跟踪")]
+        [DataRow("zh-Hans", "Auto")]
+        [DataRow("en-US", "Auto")]
+        public void TrackerAutoPopupUsesContextWithoutChangingModesOrSelection(string language, string label)
+        {
+            Exception error = null;
+            var thread = new Thread(() =>
+            {
+                try
+                {
+                    CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo(language);
+                    var modes = Common.getModesList(Firmwares.ArduTracker);
+                    var expected = modes.ToArray();
+                    Assert.AreEqual("Auto", modes.Single(mode => mode.Key == 10).Value);
+                    var assembly = typeof(ToolStripVehicleState).Assembly;
+                    var button = assembly.GetType("MissionPlanner.Controls.ModeDropdownButton", true);
+                    var popupType = assembly.GetType("MissionPlanner.Controls.ModeDropdownPopup", true);
+                    const BindingFlags hidden = BindingFlags.Instance | BindingFlags.NonPublic;
+                    var context = button.GetMethod("GetModeMenuPresentation", BindingFlags.Static | BindingFlags.NonPublic)
+                        .Invoke(null, new object[] { Firmwares.ArduTracker, MAVLink.MAV_TYPE.ANTENNA_TRACKER });
+                    using (var popup = (Form)Activator.CreateInstance(popupType, true))
+                    {
+                        popupType.GetProperty("MenuPresentation", hidden).SetValue(popup, context);
+                        popupType.GetMethod("SetModes").Invoke(popup, new object[] { modes });
+                        var panel = (FlowLayoutPanel)popupType.GetField("_modesPanel", hidden).GetValue(popup);
+                        var auto = panel.Controls.OfType<Panel>()
+                            .Select(row => row.Controls.OfType<Label>().FirstOrDefault())
+                            .Single(item => (string)item?.Tag == "Auto");
+                        Assert.AreEqual(label, auto.Text);
+                        Assert.AreEqual(expected.Length, panel.Controls.OfType<Panel>().Count(row => row.Controls.OfType<Label>().Any()));
+                        string selected = null;
+                        popupType.GetEvent("ModeSelected").AddEventHandler(popup,
+                            new EventHandler<string>((sender, raw) => selected = raw));
+                        typeof(Control).GetMethod("OnClick", hidden).Invoke(auto, new object[] { EventArgs.Empty });
+                        Assert.AreEqual("Auto", selected, "Selection uses the raw label; no command is dispatched by this fixture");
+                        CollectionAssert.AreEqual(expected, modes.ToArray());
+                    }
+                }
+                catch (Exception ex) { error = ex; }
+            }) { IsBackground = true };
+            thread.SetApartmentState(ApartmentState.STA);
+            thread.Start();
+            Assert.IsTrue(thread.Join(TimeSpan.FromSeconds(30)), "Tracker popup fixture timed out");
+            if (error != null) Assert.Fail(error.ToString());
+        }
+
         [TestMethod]
         public void MixedCaseModeNamesMatchRealFormatter()
         {
