@@ -52,6 +52,14 @@ namespace MissionPlanner.Controls
             SetupControls();
         }
 
+        private bool _includeSelectionClickInChange;
+
+        internal static DisplayThisForm CreateTuningChooser(Func<string, bool> isChecked, EventHandler checkChangedHandler)
+        {
+            // Tuning needs the axis from this click. Public and HUD callers keep the existing EventArgs.Empty contract.
+            return new DisplayThisForm(isChecked, checkChangedHandler) { _includeSelectionClickInChange = true };
+        }
+
         private void SetupControls()
         {
             _searchBox = new PlaceholderTextBox();
@@ -380,7 +388,7 @@ namespace MissionPlanner.Controls
             var fakeCheckbox = new CheckBox { Name = item.Name, Text = item.DisplayName, Checked = item.IsChecked, Tag = "custom" };
             if (e.Button == MouseButtons.Right && _mouseDownHandler != null)
                 _mouseDownHandler(fakeCheckbox, e);
-            _checkChangedHandler?.Invoke(fakeCheckbox, EventArgs.Empty);
+            _checkChangedHandler?.Invoke(fakeCheckbox, _includeSelectionClickInChange ? e : EventArgs.Empty);
             fakeCheckbox.Dispose();
             _contentPanel.Invalidate();
         }

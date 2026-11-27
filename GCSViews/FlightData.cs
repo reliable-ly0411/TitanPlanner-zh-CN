@@ -2950,6 +2950,7 @@ namespace MissionPlanner.GCSViews
 
         void chk_box_tunningCheckedChanged(object sender, EventArgs e)
         {
+            bool tuningwasrightclick = e is MouseEventArgs click && click.Button == MouseButtons.Right;
             ThemeManager.ApplyThemeTo((Control) sender);
 
             if (((CheckBox) sender).Checked)
@@ -7532,22 +7533,10 @@ namespace MissionPlanner.GCSViews
 
         private void zg1_DoubleClick(object sender, EventArgs e)
         {
-            var form = new Controls.DisplayThisForm(
+            var form = Controls.DisplayThisForm.CreateTuningChooser(
                 isChecked: IsTuningItemChecked,
-                checkChangedHandler: chk_box_tunningCheckedChanged,
-                mouseDownHandler: Chk_box_tunningMouseDown);
+                checkChangedHandler: chk_box_tunningCheckedChanged);
             form.Show();
-        }
-
-        private void Chk_box_tunningMouseDown(object sender, MouseEventArgs e)
-        {
-            tuningwasrightclick = e.Button == MouseButtons.Right;
-            if (tuningwasrightclick)
-            {
-                var chk = sender as CheckBox;
-                if (chk != null)
-                    chk.Checked = !chk.Checked;
-            }
         }
 
         private void Zoomlevel_ValueChanged(object sender, EventArgs e)
@@ -7735,7 +7724,6 @@ namespace MissionPlanner.GCSViews
             hud1.displayCellVoltage = true;
             hud1.batterycellcount = iCellCount;
         }
-        private bool tuningwasrightclick;
 
         private Form _undockedQuickForm = null;
 
