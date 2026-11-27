@@ -1,0 +1,120 @@
+using System;
+using System.Drawing;
+using System.Windows.Forms;
+using Plan29PreviewProbe;
+using D = Plan29PreviewProbe.OfflineDatumPair;
+using H = Plan29PreviewProbe.PairedPreviewHost;
+
+// One composition probe, not another resolver or host.  The scene leaf is inert GDI,
+// not a claim about GL swap timing: phase 8 exercised the same dispatch guard on real GL.
+internal static class PairedPreviewIntegrationProbe
+{
+    private static int n;
+    [STAThread] private static void Main()
+    {
+        using (var form = new Form { ClientSize = new Size(260, 140) })
+        using (var map = new Panel { Location = new Point(5, 5), Size = new Size(115, 115) })
+        using (var scene = new Panel { Location = new Point(135, 5), Size = new Size(115, 115) })
+        using (var source = new D())
+        using (var host = new H(map, scene))
+        using (var queue = new PreviewDispatch(form, map, scene))
+        {
+            form.Controls.AddRange(new Control[] { map, scene });
+            form.Show();
+            Application.DoEvents();
+            var p = Plan(100);
+            Check(!host.Stage(host.AdoptFixture(source.Switch(p, null, Receipt(p))),p),
+                "opened form is disabled and has no shortcut registration");
+            Check(host.EnableFixtureOnly(source), "explicit fixture path only");
+            long revision = 0;
+            var sceneEpoch = new object();
+            PreviewDispatch.Ticket frameTicket = null;
+            int posts = 0;
+            int commits = 0;
+            map.Paint += (s,e) =>
+            {
+                var pair = host.Read(map,revision);
+                if (pair != null) e.Graphics.FillRectangle(Brushes.Purple, 14, 14, 25, 25);
+            };
+            scene.Paint += (s,e) =>
+            {
+                var pair = host.Read(scene,revision);
+                if (pair != null) e.Graphics.FillRectangle(Brushes.Purple, 14, 14, 25, 25);
+                if (frameTicket != null)
+                {
+                    // Completed inert surface paint notification. Never call Publish in this stack.
+                    var token = frameTicket;
+                    frameTicket = null;
+                    queue.FrameSwapped(scene, token, sceneEpoch);
+                }
+            };
+            Action<ReadOnlyPlanSnapshot> revise = plan =>
+            {
+                queue.Retire();
+                revision = host.AdoptFixture(source.Switch(plan,null,Receipt(plan)));
+                Check(host.Stage(revision,plan), "stages a complete pair for the current fixture plan");
+                var plannedRevision = revision;
+                var dispatcherTicket = queue.Revision;
+                Check(queue.Request(dispatcherTicket, () =>
+                {
+                    posts++;
+                    if (host.Publish(plannedRevision, host.MarkReady(H.View.Map,plannedRevision),
+                        host.MarkReady(H.View.Scene,plannedRevision))) commits++;
+                }), "posts a readiness-gated callback");
+            };
+            revise(p);
+            var oldFrame = queue.Revision;
+            var newer = Plan(101); // same PLAN owner, rapid local revision
+            revise(newer);
+            frameTicket = oldFrame;
+            Check(!Purple(scene) && !Purple(map), "late first surface from previous PLAN revision stays blank on both");
+            Application.DoEvents();
+            Check(posts == 0 && commits == 0, "late callback doesn't publish the latest plan");
+            frameTicket = queue.Revision;
+            Check(!Purple(scene) && posts == 0 && !Purple(map), "valid first paint schedules, not synchronous visibility");
+            Application.DoEvents();
+            Check(posts == 1 && commits == 1 && Purple(scene) && Purple(map) &&
+                host.Read(scene,revision).Scene[0].z == 101 &&
+                host.Read(map,revision).SourceLabel.Contains("not navigation"),
+                "latest immutable pair is drawable independently by both controls");
+            var same = newer;
+            revise(same);
+            frameTicket = queue.Revision;
+            Purple(scene); // post, don't pump yet
+            scene.Hide();
+            Application.DoEvents();
+            Check(posts == 1 && commits == 1 && !Purple(map) && host.Read(scene,revision) == null,
+                "hide between first paint and queued commit withdraws both");
+            scene.Show();
+            revise(same);
+            frameTicket = queue.Revision;
+            Purple(scene);
+            form.Close();
+            Application.DoEvents();
+            Check(posts == 1 && commits == 1 && host.Read(scene,revision) == null && host.Read(map,revision) == null,
+                "form close drops queued work and removes both payloads");
+        }
+        Console.WriteLine(n + " checks passed");
+    }
+    private static bool Purple(Control c)
+    {
+        using (var bmp = new Bitmap(c.Width,c.Height))
+        {
+            c.DrawToBitmap(bmp,new Rectangle(0,0,bmp.Width,bmp.Height));
+            return bmp.GetPixel(22,22).ToArgb() == Color.Purple.ToArgb();
+        }
+    }
+    private static ReadOnlyPlanSnapshot Plan(double z)
+    {
+        var v = new[] {0d,0,0,0,10d,20d,z};
+        return new ReadOnlyPlanSnapshot(new PlanHome(0,10,20,0),
+            new[] { new PlanRow(1,"WAYPOINT",16,0,v,v) }, "fixture");
+    }
+    private static D.Receipt Receipt(ReadOnlyPlanSnapshot p) =>
+        new D.Receipt(p,D.HeightKind.Absolute,1,10,20,p.Rows[0].Values[6],D.Vertical,D.Unit.Metres);
+    private static void Check(bool ok, string name)
+    {
+        if (!ok) throw new Exception(name);
+        n++; Console.WriteLine("PASS " + name);
+    }
+}
