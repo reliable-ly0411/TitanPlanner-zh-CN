@@ -48,7 +48,7 @@ internal static class Program
             Check(context != null, "stable release identity");
             var snapshot = bundled.Bundled(context);
             Check(snapshot != null && snapshot.Partial && snapshot.MatchesReportedBuild, "offline bundle matches the reported release/build");
-            Check(snapshot.Count == (family == "Sub" ? 43 : family == "Copter" ? (version == "4.7.1" ? 84 : version == "4.5.7" ? 76 : 78) : (version == "4.7.1" ? 97 : version == "4.5.7" ? 87 : 89)), "reviewed exact-version record count");
+            Check(snapshot.Count == (family == "Sub" ? 44 : family == "Copter" ? (version == "4.7.1" ? 85 : version == "4.5.7" ? 77 : 79) : (version == "4.7.1" ? 98 : version == "4.5.7" ? 88 : 90)), "reviewed exact-version record count");
             foreach (var p in release.Descendants("param"))
             {
                 var name = ((string)p.Attribute("name")).Split(':').Last(); var english = (string)p.Attribute("documentation");

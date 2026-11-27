@@ -4944,6 +4944,46 @@
       "recordSha256": "6a9d8add717a8d64a9e0c51508a47bbd8d9f23d4cd86a2a5e5598de3c71b1f48",
       "english": "Number of samples to push to count every INS_LOG_BAT_LGIN",
       "chinese": "每隔 INS_LOG_BAT_LGIN 指定的时间，写入日志的样本数。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD_MSG_TIME",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "6614145265a8db874ee8e2757404918d955f8ae7d6fbb37cf1ca7b5b339a37b2",
+      "recordSha256": "a15680cc2d1168cdddeb5f1c99c0fe465740a5802c8a76832dcb12bbf8f7436d",
+      "english": "Sets message duration seconds",
+      "chinese": "设置 OSD 消息在屏幕上的显示时长，单位为秒。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD_MSG_TIME",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "6614145265a8db874ee8e2757404918d955f8ae7d6fbb37cf1ca7b5b339a37b2",
+      "recordSha256": "a15680cc2d1168cdddeb5f1c99c0fe465740a5802c8a76832dcb12bbf8f7436d",
+      "english": "Sets message duration seconds",
+      "chinese": "设置 OSD 消息在屏幕上的显示时长，单位为秒。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD_MSG_TIME",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "6614145265a8db874ee8e2757404918d955f8ae7d6fbb37cf1ca7b5b339a37b2",
+      "recordSha256": "a15680cc2d1168cdddeb5f1c99c0fe465740a5802c8a76832dcb12bbf8f7436d",
+      "english": "Sets message duration seconds",
+      "chinese": "设置 OSD 消息在屏幕上的显示时长，单位为秒。"
     }
   ]
 }
