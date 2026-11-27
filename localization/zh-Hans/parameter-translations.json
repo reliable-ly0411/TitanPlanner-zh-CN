@@ -23416,6 +23416,254 @@
       "recordSha256": "94be148ff5fe27e013f6c377a718d08e4adf354cfad3df7a994f1497385abc3d",
       "english": "Vertical position on screen",
       "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD1_TXT_RES",
+      "field": "Description",
+      "versions": [
+        "4.5.7"
+      ],
+      "englishSha256": "41708d4e8f905fd4530c0b99837a05d1325b93b1cf81ca7adc3f4fdc005a060e",
+      "recordSha256": "2b912e96fe3c9f144eae2b177f95ea3d89178e5ab65ab89d58f9739318155337",
+      "english": "Sets the overlay text resolution for this screen to either LD 30x16 or HD 50x18 (MSP DisplayPort only)",
+      "chinese": "本屏叠加文字的分辨率：LD 30×16 或 HD 50×18（仅限 MSP DisplayPort）。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD1_TXT_RES",
+      "field": "Description",
+      "versions": [
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d13e9a9b79e6821b3ed6fe80b579ddd00f40967423c17a11cc81295803466aee",
+      "recordSha256": "ac6c2504a2d3602e2c3d9f55ff49a71c7751e577fe33c80b1fb5d3358d22f5cd",
+      "english": "Sets the overlay text resolution for this screen to either SD 30x16 or HD 50x18/60x22 (MSP DisplayPort only)",
+      "chinese": "本屏叠加文字的分辨率：SD 30×16，或 HD 50×18／60×22（仅限 MSP DisplayPort）。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD2_TXT_RES",
+      "field": "Description",
+      "versions": [
+        "4.5.7"
+      ],
+      "englishSha256": "41708d4e8f905fd4530c0b99837a05d1325b93b1cf81ca7adc3f4fdc005a060e",
+      "recordSha256": "287cee7a91fc6b7f816eb128bb8bd5aecb6a1fd1373957a3ee4c66f0e0648f78",
+      "english": "Sets the overlay text resolution for this screen to either LD 30x16 or HD 50x18 (MSP DisplayPort only)",
+      "chinese": "本屏叠加文字的分辨率：LD 30×16 或 HD 50×18（仅限 MSP DisplayPort）。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD2_TXT_RES",
+      "field": "Description",
+      "versions": [
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d13e9a9b79e6821b3ed6fe80b579ddd00f40967423c17a11cc81295803466aee",
+      "recordSha256": "dc5941b397c2c34c8a50397bd1f33e1cb7315e15d1c8a497534176d96a276830",
+      "english": "Sets the overlay text resolution for this screen to either SD 30x16 or HD 50x18/60x22 (MSP DisplayPort only)",
+      "chinese": "本屏叠加文字的分辨率：SD 30×16，或 HD 50×18／60×22（仅限 MSP DisplayPort）。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD3_TXT_RES",
+      "field": "Description",
+      "versions": [
+        "4.5.7"
+      ],
+      "englishSha256": "41708d4e8f905fd4530c0b99837a05d1325b93b1cf81ca7adc3f4fdc005a060e",
+      "recordSha256": "5e81d08651757ff30da3edd2c1a71de83870246f057ea7b443308c149ae61155",
+      "english": "Sets the overlay text resolution for this screen to either LD 30x16 or HD 50x18 (MSP DisplayPort only)",
+      "chinese": "本屏叠加文字的分辨率：LD 30×16 或 HD 50×18（仅限 MSP DisplayPort）。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD3_TXT_RES",
+      "field": "Description",
+      "versions": [
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d13e9a9b79e6821b3ed6fe80b579ddd00f40967423c17a11cc81295803466aee",
+      "recordSha256": "17de69ec5d52f88f6e552f371d1b03bcc0f4d859937526adca7edd490e51cfae",
+      "english": "Sets the overlay text resolution for this screen to either SD 30x16 or HD 50x18/60x22 (MSP DisplayPort only)",
+      "chinese": "本屏叠加文字的分辨率：SD 30×16，或 HD 50×18／60×22（仅限 MSP DisplayPort）。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD4_TXT_RES",
+      "field": "Description",
+      "versions": [
+        "4.5.7"
+      ],
+      "englishSha256": "41708d4e8f905fd4530c0b99837a05d1325b93b1cf81ca7adc3f4fdc005a060e",
+      "recordSha256": "efdf8af8f55f612e7b822b7fe66b445781c489c24be5106d2f03a04c6f42ae4b",
+      "english": "Sets the overlay text resolution for this screen to either LD 30x16 or HD 50x18 (MSP DisplayPort only)",
+      "chinese": "本屏叠加文字的分辨率：LD 30×16 或 HD 50×18（仅限 MSP DisplayPort）。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD4_TXT_RES",
+      "field": "Description",
+      "versions": [
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d13e9a9b79e6821b3ed6fe80b579ddd00f40967423c17a11cc81295803466aee",
+      "recordSha256": "b2bd7da85857da15718bcea5ee03b2106704ee91b221297154b7312680555a42",
+      "english": "Sets the overlay text resolution for this screen to either SD 30x16 or HD 50x18/60x22 (MSP DisplayPort only)",
+      "chinese": "本屏叠加文字的分辨率：SD 30×16，或 HD 50×18／60×22（仅限 MSP DisplayPort）。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD1_TXT_RES",
+      "field": "Description",
+      "versions": [
+        "4.5.7"
+      ],
+      "englishSha256": "41708d4e8f905fd4530c0b99837a05d1325b93b1cf81ca7adc3f4fdc005a060e",
+      "recordSha256": "2b912e96fe3c9f144eae2b177f95ea3d89178e5ab65ab89d58f9739318155337",
+      "english": "Sets the overlay text resolution for this screen to either LD 30x16 or HD 50x18 (MSP DisplayPort only)",
+      "chinese": "本屏叠加文字的分辨率：LD 30×16 或 HD 50×18（仅限 MSP DisplayPort）。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD1_TXT_RES",
+      "field": "Description",
+      "versions": [
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d13e9a9b79e6821b3ed6fe80b579ddd00f40967423c17a11cc81295803466aee",
+      "recordSha256": "ac6c2504a2d3602e2c3d9f55ff49a71c7751e577fe33c80b1fb5d3358d22f5cd",
+      "english": "Sets the overlay text resolution for this screen to either SD 30x16 or HD 50x18/60x22 (MSP DisplayPort only)",
+      "chinese": "本屏叠加文字的分辨率：SD 30×16，或 HD 50×18／60×22（仅限 MSP DisplayPort）。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD2_TXT_RES",
+      "field": "Description",
+      "versions": [
+        "4.5.7"
+      ],
+      "englishSha256": "41708d4e8f905fd4530c0b99837a05d1325b93b1cf81ca7adc3f4fdc005a060e",
+      "recordSha256": "287cee7a91fc6b7f816eb128bb8bd5aecb6a1fd1373957a3ee4c66f0e0648f78",
+      "english": "Sets the overlay text resolution for this screen to either LD 30x16 or HD 50x18 (MSP DisplayPort only)",
+      "chinese": "本屏叠加文字的分辨率：LD 30×16 或 HD 50×18（仅限 MSP DisplayPort）。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD2_TXT_RES",
+      "field": "Description",
+      "versions": [
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d13e9a9b79e6821b3ed6fe80b579ddd00f40967423c17a11cc81295803466aee",
+      "recordSha256": "dc5941b397c2c34c8a50397bd1f33e1cb7315e15d1c8a497534176d96a276830",
+      "english": "Sets the overlay text resolution for this screen to either SD 30x16 or HD 50x18/60x22 (MSP DisplayPort only)",
+      "chinese": "本屏叠加文字的分辨率：SD 30×16，或 HD 50×18／60×22（仅限 MSP DisplayPort）。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD3_TXT_RES",
+      "field": "Description",
+      "versions": [
+        "4.5.7"
+      ],
+      "englishSha256": "41708d4e8f905fd4530c0b99837a05d1325b93b1cf81ca7adc3f4fdc005a060e",
+      "recordSha256": "5e81d08651757ff30da3edd2c1a71de83870246f057ea7b443308c149ae61155",
+      "english": "Sets the overlay text resolution for this screen to either LD 30x16 or HD 50x18 (MSP DisplayPort only)",
+      "chinese": "本屏叠加文字的分辨率：LD 30×16 或 HD 50×18（仅限 MSP DisplayPort）。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD3_TXT_RES",
+      "field": "Description",
+      "versions": [
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d13e9a9b79e6821b3ed6fe80b579ddd00f40967423c17a11cc81295803466aee",
+      "recordSha256": "17de69ec5d52f88f6e552f371d1b03bcc0f4d859937526adca7edd490e51cfae",
+      "english": "Sets the overlay text resolution for this screen to either SD 30x16 or HD 50x18/60x22 (MSP DisplayPort only)",
+      "chinese": "本屏叠加文字的分辨率：SD 30×16，或 HD 50×18／60×22（仅限 MSP DisplayPort）。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD4_TXT_RES",
+      "field": "Description",
+      "versions": [
+        "4.5.7"
+      ],
+      "englishSha256": "41708d4e8f905fd4530c0b99837a05d1325b93b1cf81ca7adc3f4fdc005a060e",
+      "recordSha256": "efdf8af8f55f612e7b822b7fe66b445781c489c24be5106d2f03a04c6f42ae4b",
+      "english": "Sets the overlay text resolution for this screen to either LD 30x16 or HD 50x18 (MSP DisplayPort only)",
+      "chinese": "本屏叠加文字的分辨率：LD 30×16 或 HD 50×18（仅限 MSP DisplayPort）。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD4_TXT_RES",
+      "field": "Description",
+      "versions": [
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d13e9a9b79e6821b3ed6fe80b579ddd00f40967423c17a11cc81295803466aee",
+      "recordSha256": "b2bd7da85857da15718bcea5ee03b2106704ee91b221297154b7312680555a42",
+      "english": "Sets the overlay text resolution for this screen to either SD 30x16 or HD 50x18/60x22 (MSP DisplayPort only)",
+      "chinese": "本屏叠加文字的分辨率：SD 30×16，或 HD 50×18／60×22（仅限 MSP DisplayPort）。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD1_TXT_RES",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "d13e9a9b79e6821b3ed6fe80b579ddd00f40967423c17a11cc81295803466aee",
+      "recordSha256": "ac6c2504a2d3602e2c3d9f55ff49a71c7751e577fe33c80b1fb5d3358d22f5cd",
+      "english": "Sets the overlay text resolution for this screen to either SD 30x16 or HD 50x18/60x22 (MSP DisplayPort only)",
+      "chinese": "本屏叠加文字的分辨率：SD 30×16，或 HD 50×18／60×22（仅限 MSP DisplayPort）。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD2_TXT_RES",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "d13e9a9b79e6821b3ed6fe80b579ddd00f40967423c17a11cc81295803466aee",
+      "recordSha256": "dc5941b397c2c34c8a50397bd1f33e1cb7315e15d1c8a497534176d96a276830",
+      "english": "Sets the overlay text resolution for this screen to either SD 30x16 or HD 50x18/60x22 (MSP DisplayPort only)",
+      "chinese": "本屏叠加文字的分辨率：SD 30×16，或 HD 50×18／60×22（仅限 MSP DisplayPort）。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD3_TXT_RES",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "d13e9a9b79e6821b3ed6fe80b579ddd00f40967423c17a11cc81295803466aee",
+      "recordSha256": "17de69ec5d52f88f6e552f371d1b03bcc0f4d859937526adca7edd490e51cfae",
+      "english": "Sets the overlay text resolution for this screen to either SD 30x16 or HD 50x18/60x22 (MSP DisplayPort only)",
+      "chinese": "本屏叠加文字的分辨率：SD 30×16，或 HD 50×18／60×22（仅限 MSP DisplayPort）。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD4_TXT_RES",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "d13e9a9b79e6821b3ed6fe80b579ddd00f40967423c17a11cc81295803466aee",
+      "recordSha256": "b2bd7da85857da15718bcea5ee03b2106704ee91b221297154b7312680555a42",
+      "english": "Sets the overlay text resolution for this screen to either SD 30x16 or HD 50x18/60x22 (MSP DisplayPort only)",
+      "chinese": "本屏叠加文字的分辨率：SD 30×16，或 HD 50×18／60×22（仅限 MSP DisplayPort）。"
     }
   ]
 }
