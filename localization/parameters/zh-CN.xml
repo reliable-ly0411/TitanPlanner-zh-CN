@@ -2440,4 +2440,436 @@
     <english>Vertical position on screen</english>
     <chinese>设置第 4 个 OSD 画面中风速和风向显示项的垂直位置。</chinese>
   </translation>
+  <translation family="Copter" parameter="OSD1_FLTMODE_EN" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="b0168094eb205c4b7eae91adac413c89ad8863e5513cebaeed4c538f8df97931" recordSha256="b43bde366335fcee74c601a4472ae6e5bcd1215824ae3581b14555f054b9b08b">
+    <english>Displays flight mode</english>
+    <chinese>选择是否在 OSD 第 1 屏显示当前飞行模式。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD1_FLTMODE_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="615d49e8650e5731d350dac1071c7890f4836a59a7ea9842ab8e51534596e7de">
+    <english>Horizontal position on screen</english>
+    <chinese>设置 OSD 第 1 屏上飞行模式文字的水平位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD1_FLTMODE_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="f94c94f6ce515165d286ac6a37d9c1e54d28c4a59c298b4997555da4eb773186">
+    <english>Vertical position on screen</english>
+    <chinese>设置 OSD 第 1 屏上飞行模式文字的垂直位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD1_MESSAGE_EN" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="5ffbc4608fc1cb18b72447c0cf142e2d23d0dbd4db1cba09de838adf7e55a765" recordSha256="e8e71de1966b4b0627b5c621e05382eed7551e8f902922db9577efe1b5fb382d">
+    <english>Displays Mavlink messages</english>
+    <chinese>选择是否在 OSD 第 1 屏显示飞控当前的文字提示，例如 MAVLink 状态文本。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD1_MESSAGE_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="69da8c768e7df88525970d801ee19bed342d75e34c583b88a85bdcdd80bd15da">
+    <english>Horizontal position on screen</english>
+    <chinese>设置 OSD 第 1 屏上文字提示的水平位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD1_MESSAGE_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="ef14841497c520a70a9cf605c4436594fd66b39b3bf4056abc96933ae9f56566">
+    <english>Vertical position on screen</english>
+    <chinese>设置 OSD 第 1 屏上文字提示的垂直位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD1_CLK_EN" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1eb85821ce72f9a8e886491712d12536562474bfb9246d81b799a43e45d6c398" recordSha256="a42345a72b3c43163568a78840720d294e507b83c3270f883c1d2e628926d1da">
+    <english>Displays a clock panel based on AP_RTC local time</english>
+    <chinese>选择是否在 OSD 第 1 屏显示飞控实时时钟（AP_RTC）的本地时间。飞控以 24 小时制显示小时和分钟。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD1_CLK_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="6d2905fe193911a41595b5220f833d4231ed3f9331bc58388209a6b3a48140a1">
+    <english>Horizontal position on screen</english>
+    <chinese>设置 OSD 第 1 屏上时钟的水平位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD1_CLK_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="f246068ff69580d0892ef1302c6bfe231e272cc6f03fe587d8250c7e0149c548">
+    <english>Vertical position on screen</english>
+    <chinese>设置 OSD 第 1 屏上时钟的垂直位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD2_FLTMODE_EN" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="b0168094eb205c4b7eae91adac413c89ad8863e5513cebaeed4c538f8df97931" recordSha256="b47b15b7f197cebc6dcc26809a98d4da76d155fb894d0870d199517adf6cea14">
+    <english>Displays flight mode</english>
+    <chinese>选择是否在 OSD 第 2 屏显示当前飞行模式。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD2_FLTMODE_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="47e83c277ead26ca8ff4357a73729666ae60ad3eec0c7c26e3168ef519a76a40">
+    <english>Horizontal position on screen</english>
+    <chinese>设置 OSD 第 2 屏上飞行模式文字的水平位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD2_FLTMODE_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="456418c88643b6ab327b5bc81a30fc2ae1513a61fcafa54df6a5ab724ce62a6b">
+    <english>Vertical position on screen</english>
+    <chinese>设置 OSD 第 2 屏上飞行模式文字的垂直位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD2_MESSAGE_EN" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="5ffbc4608fc1cb18b72447c0cf142e2d23d0dbd4db1cba09de838adf7e55a765" recordSha256="db629d8e79e303dab5d6ce2d0da65f131433fff14498eb34ba55e22eda0d5289">
+    <english>Displays Mavlink messages</english>
+    <chinese>选择是否在 OSD 第 2 屏显示飞控当前的文字提示，例如 MAVLink 状态文本。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD2_MESSAGE_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="e7d42ea37236e036111b04eb1727a8c57ab07ff7c6f00f7fb444f9ac5ca5f6a0">
+    <english>Horizontal position on screen</english>
+    <chinese>设置 OSD 第 2 屏上文字提示的水平位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD2_MESSAGE_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="2433e0ebb1089b74c7603459e24a75646af33e29ca8280be5dfffb3b99693ee1">
+    <english>Vertical position on screen</english>
+    <chinese>设置 OSD 第 2 屏上文字提示的垂直位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD2_CLK_EN" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1eb85821ce72f9a8e886491712d12536562474bfb9246d81b799a43e45d6c398" recordSha256="39c8896feaeaae291aed9a0747fcf5923d65c7114df0f9d363fa8ced97d610b1">
+    <english>Displays a clock panel based on AP_RTC local time</english>
+    <chinese>选择是否在 OSD 第 2 屏显示飞控实时时钟（AP_RTC）的本地时间。飞控以 24 小时制显示小时和分钟。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD2_CLK_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="aa772f8f12830a2e32165b6b4bfa820602391b94da849ccbc17bc44b7fc5730e">
+    <english>Horizontal position on screen</english>
+    <chinese>设置 OSD 第 2 屏上时钟的水平位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD2_CLK_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="1ef3f8c81a9f2e1b2e64c29adbc39ea1443ed8d6c165eb5558cf9e4f22c90db2">
+    <english>Vertical position on screen</english>
+    <chinese>设置 OSD 第 2 屏上时钟的垂直位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD3_FLTMODE_EN" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="b0168094eb205c4b7eae91adac413c89ad8863e5513cebaeed4c538f8df97931" recordSha256="88387a64e7fba5e3503b88fbff30cb4e791d339fe4d503548d851000068351af">
+    <english>Displays flight mode</english>
+    <chinese>选择是否在 OSD 第 3 屏显示当前飞行模式。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD3_FLTMODE_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="e4ab037106bc4cb363304c474717bf85eb210fb43b38bf4c61455dc9dcf8ec34">
+    <english>Horizontal position on screen</english>
+    <chinese>设置 OSD 第 3 屏上飞行模式文字的水平位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD3_FLTMODE_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="affe61999aa1f3074cb1723f551d96b903565415a58fe60663b2ba7bb1e85f51">
+    <english>Vertical position on screen</english>
+    <chinese>设置 OSD 第 3 屏上飞行模式文字的垂直位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD3_MESSAGE_EN" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="5ffbc4608fc1cb18b72447c0cf142e2d23d0dbd4db1cba09de838adf7e55a765" recordSha256="29721441b67e91913b995d3edcfccb33ebff07d2c94007e9661cb0164df66622">
+    <english>Displays Mavlink messages</english>
+    <chinese>选择是否在 OSD 第 3 屏显示飞控当前的文字提示，例如 MAVLink 状态文本。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD3_MESSAGE_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="77c72e083e38236aace1a64a5f8b8c4f90f49ba5936d5026a13307595b8740d9">
+    <english>Horizontal position on screen</english>
+    <chinese>设置 OSD 第 3 屏上文字提示的水平位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD3_MESSAGE_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="b0ab4d41813fff84ad5858252b3f7f271dfae2e3d3f45131ae76555ae399419b">
+    <english>Vertical position on screen</english>
+    <chinese>设置 OSD 第 3 屏上文字提示的垂直位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD3_CLK_EN" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1eb85821ce72f9a8e886491712d12536562474bfb9246d81b799a43e45d6c398" recordSha256="0d6a4fc786ed2bce1596466723cbd18b18b80ae980b69f38bd1b0d8e558249f0">
+    <english>Displays a clock panel based on AP_RTC local time</english>
+    <chinese>选择是否在 OSD 第 3 屏显示飞控实时时钟（AP_RTC）的本地时间。飞控以 24 小时制显示小时和分钟。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD3_CLK_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="9e9d316245fc0c08667c65e6cf0946fce24cc5e572a1ae72cfa33d5ee391f252">
+    <english>Horizontal position on screen</english>
+    <chinese>设置 OSD 第 3 屏上时钟的水平位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD3_CLK_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="a634608ed2da392b68db32c5ef853140437a48f25c74e92dba6f06342ffb2420">
+    <english>Vertical position on screen</english>
+    <chinese>设置 OSD 第 3 屏上时钟的垂直位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD4_FLTMODE_EN" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="b0168094eb205c4b7eae91adac413c89ad8863e5513cebaeed4c538f8df97931" recordSha256="dd9ad82c93ca8dfe90d4ad6fc4d9308d5ee84f0ed09c791b3036b57f3109e193">
+    <english>Displays flight mode</english>
+    <chinese>选择是否在 OSD 第 4 屏显示当前飞行模式。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD4_FLTMODE_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="202369c04466890ac93f312833e5c49c88f696fed5785dc350b318a473b8b53c">
+    <english>Horizontal position on screen</english>
+    <chinese>设置 OSD 第 4 屏上飞行模式文字的水平位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD4_FLTMODE_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="47ecd3a967c06c0d413994d9adbe6a26764562e2c42973a7bc2228ee5e693ec6">
+    <english>Vertical position on screen</english>
+    <chinese>设置 OSD 第 4 屏上飞行模式文字的垂直位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD4_MESSAGE_EN" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="5ffbc4608fc1cb18b72447c0cf142e2d23d0dbd4db1cba09de838adf7e55a765" recordSha256="432b12c2b708484c1d2fd977ffdfd0904110065c04e15e13157d08ad2647c6da">
+    <english>Displays Mavlink messages</english>
+    <chinese>选择是否在 OSD 第 4 屏显示飞控当前的文字提示，例如 MAVLink 状态文本。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD4_MESSAGE_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="6b48defc702afd117d1c7e6c5898189d50750899c7e8c4ba7b1098b87ca76efc">
+    <english>Horizontal position on screen</english>
+    <chinese>设置 OSD 第 4 屏上文字提示的水平位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD4_MESSAGE_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="4d2cc033a2ca3b83d17fc665ff3c03bbf8996ae08c47d0188b15a1598f86e23c">
+    <english>Vertical position on screen</english>
+    <chinese>设置 OSD 第 4 屏上文字提示的垂直位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD4_CLK_EN" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1eb85821ce72f9a8e886491712d12536562474bfb9246d81b799a43e45d6c398" recordSha256="44d1a77e89319b8daf209a44b49427c751c0396b8d12e0a854ef42bbe94280dc">
+    <english>Displays a clock panel based on AP_RTC local time</english>
+    <chinese>选择是否在 OSD 第 4 屏显示飞控实时时钟（AP_RTC）的本地时间。飞控以 24 小时制显示小时和分钟。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD4_CLK_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="06d030b1dc8af23d74b30beb88d9208b49fd4fea8643d72a1503be2a60b0ffcb">
+    <english>Horizontal position on screen</english>
+    <chinese>设置 OSD 第 4 屏上时钟的水平位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD4_CLK_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="c54c250baa4edb4a1fa14f5cc96d0ec96c48c8b9f1c96e70d0a93e84517afdd7">
+    <english>Vertical position on screen</english>
+    <chinese>设置 OSD 第 4 屏上时钟的垂直位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD1_FLTMODE_EN" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="b0168094eb205c4b7eae91adac413c89ad8863e5513cebaeed4c538f8df97931" recordSha256="b43bde366335fcee74c601a4472ae6e5bcd1215824ae3581b14555f054b9b08b">
+    <english>Displays flight mode</english>
+    <chinese>选择是否在 OSD 第 1 屏显示当前飞行模式。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD1_FLTMODE_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="615d49e8650e5731d350dac1071c7890f4836a59a7ea9842ab8e51534596e7de">
+    <english>Horizontal position on screen</english>
+    <chinese>设置 OSD 第 1 屏上飞行模式文字的水平位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD1_FLTMODE_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="f94c94f6ce515165d286ac6a37d9c1e54d28c4a59c298b4997555da4eb773186">
+    <english>Vertical position on screen</english>
+    <chinese>设置 OSD 第 1 屏上飞行模式文字的垂直位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD1_MESSAGE_EN" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="5ffbc4608fc1cb18b72447c0cf142e2d23d0dbd4db1cba09de838adf7e55a765" recordSha256="e8e71de1966b4b0627b5c621e05382eed7551e8f902922db9577efe1b5fb382d">
+    <english>Displays Mavlink messages</english>
+    <chinese>选择是否在 OSD 第 1 屏显示飞控当前的文字提示，例如 MAVLink 状态文本。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD1_MESSAGE_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="69da8c768e7df88525970d801ee19bed342d75e34c583b88a85bdcdd80bd15da">
+    <english>Horizontal position on screen</english>
+    <chinese>设置 OSD 第 1 屏上文字提示的水平位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD1_MESSAGE_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="ef14841497c520a70a9cf605c4436594fd66b39b3bf4056abc96933ae9f56566">
+    <english>Vertical position on screen</english>
+    <chinese>设置 OSD 第 1 屏上文字提示的垂直位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD1_CLK_EN" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1eb85821ce72f9a8e886491712d12536562474bfb9246d81b799a43e45d6c398" recordSha256="a42345a72b3c43163568a78840720d294e507b83c3270f883c1d2e628926d1da">
+    <english>Displays a clock panel based on AP_RTC local time</english>
+    <chinese>选择是否在 OSD 第 1 屏显示飞控实时时钟（AP_RTC）的本地时间。飞控以 24 小时制显示小时和分钟。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD1_CLK_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="6d2905fe193911a41595b5220f833d4231ed3f9331bc58388209a6b3a48140a1">
+    <english>Horizontal position on screen</english>
+    <chinese>设置 OSD 第 1 屏上时钟的水平位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD1_CLK_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="f246068ff69580d0892ef1302c6bfe231e272cc6f03fe587d8250c7e0149c548">
+    <english>Vertical position on screen</english>
+    <chinese>设置 OSD 第 1 屏上时钟的垂直位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD2_FLTMODE_EN" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="b0168094eb205c4b7eae91adac413c89ad8863e5513cebaeed4c538f8df97931" recordSha256="b47b15b7f197cebc6dcc26809a98d4da76d155fb894d0870d199517adf6cea14">
+    <english>Displays flight mode</english>
+    <chinese>选择是否在 OSD 第 2 屏显示当前飞行模式。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD2_FLTMODE_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="47e83c277ead26ca8ff4357a73729666ae60ad3eec0c7c26e3168ef519a76a40">
+    <english>Horizontal position on screen</english>
+    <chinese>设置 OSD 第 2 屏上飞行模式文字的水平位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD2_FLTMODE_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="456418c88643b6ab327b5bc81a30fc2ae1513a61fcafa54df6a5ab724ce62a6b">
+    <english>Vertical position on screen</english>
+    <chinese>设置 OSD 第 2 屏上飞行模式文字的垂直位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD2_MESSAGE_EN" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="5ffbc4608fc1cb18b72447c0cf142e2d23d0dbd4db1cba09de838adf7e55a765" recordSha256="db629d8e79e303dab5d6ce2d0da65f131433fff14498eb34ba55e22eda0d5289">
+    <english>Displays Mavlink messages</english>
+    <chinese>选择是否在 OSD 第 2 屏显示飞控当前的文字提示，例如 MAVLink 状态文本。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD2_MESSAGE_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="e7d42ea37236e036111b04eb1727a8c57ab07ff7c6f00f7fb444f9ac5ca5f6a0">
+    <english>Horizontal position on screen</english>
+    <chinese>设置 OSD 第 2 屏上文字提示的水平位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD2_MESSAGE_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="2433e0ebb1089b74c7603459e24a75646af33e29ca8280be5dfffb3b99693ee1">
+    <english>Vertical position on screen</english>
+    <chinese>设置 OSD 第 2 屏上文字提示的垂直位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD2_CLK_EN" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1eb85821ce72f9a8e886491712d12536562474bfb9246d81b799a43e45d6c398" recordSha256="39c8896feaeaae291aed9a0747fcf5923d65c7114df0f9d363fa8ced97d610b1">
+    <english>Displays a clock panel based on AP_RTC local time</english>
+    <chinese>选择是否在 OSD 第 2 屏显示飞控实时时钟（AP_RTC）的本地时间。飞控以 24 小时制显示小时和分钟。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD2_CLK_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="aa772f8f12830a2e32165b6b4bfa820602391b94da849ccbc17bc44b7fc5730e">
+    <english>Horizontal position on screen</english>
+    <chinese>设置 OSD 第 2 屏上时钟的水平位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD2_CLK_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="1ef3f8c81a9f2e1b2e64c29adbc39ea1443ed8d6c165eb5558cf9e4f22c90db2">
+    <english>Vertical position on screen</english>
+    <chinese>设置 OSD 第 2 屏上时钟的垂直位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD3_FLTMODE_EN" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="b0168094eb205c4b7eae91adac413c89ad8863e5513cebaeed4c538f8df97931" recordSha256="88387a64e7fba5e3503b88fbff30cb4e791d339fe4d503548d851000068351af">
+    <english>Displays flight mode</english>
+    <chinese>选择是否在 OSD 第 3 屏显示当前飞行模式。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD3_FLTMODE_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="e4ab037106bc4cb363304c474717bf85eb210fb43b38bf4c61455dc9dcf8ec34">
+    <english>Horizontal position on screen</english>
+    <chinese>设置 OSD 第 3 屏上飞行模式文字的水平位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD3_FLTMODE_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="affe61999aa1f3074cb1723f551d96b903565415a58fe60663b2ba7bb1e85f51">
+    <english>Vertical position on screen</english>
+    <chinese>设置 OSD 第 3 屏上飞行模式文字的垂直位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD3_MESSAGE_EN" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="5ffbc4608fc1cb18b72447c0cf142e2d23d0dbd4db1cba09de838adf7e55a765" recordSha256="29721441b67e91913b995d3edcfccb33ebff07d2c94007e9661cb0164df66622">
+    <english>Displays Mavlink messages</english>
+    <chinese>选择是否在 OSD 第 3 屏显示飞控当前的文字提示，例如 MAVLink 状态文本。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD3_MESSAGE_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="77c72e083e38236aace1a64a5f8b8c4f90f49ba5936d5026a13307595b8740d9">
+    <english>Horizontal position on screen</english>
+    <chinese>设置 OSD 第 3 屏上文字提示的水平位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD3_MESSAGE_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="b0ab4d41813fff84ad5858252b3f7f271dfae2e3d3f45131ae76555ae399419b">
+    <english>Vertical position on screen</english>
+    <chinese>设置 OSD 第 3 屏上文字提示的垂直位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD3_CLK_EN" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1eb85821ce72f9a8e886491712d12536562474bfb9246d81b799a43e45d6c398" recordSha256="0d6a4fc786ed2bce1596466723cbd18b18b80ae980b69f38bd1b0d8e558249f0">
+    <english>Displays a clock panel based on AP_RTC local time</english>
+    <chinese>选择是否在 OSD 第 3 屏显示飞控实时时钟（AP_RTC）的本地时间。飞控以 24 小时制显示小时和分钟。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD3_CLK_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="9e9d316245fc0c08667c65e6cf0946fce24cc5e572a1ae72cfa33d5ee391f252">
+    <english>Horizontal position on screen</english>
+    <chinese>设置 OSD 第 3 屏上时钟的水平位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD3_CLK_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="a634608ed2da392b68db32c5ef853140437a48f25c74e92dba6f06342ffb2420">
+    <english>Vertical position on screen</english>
+    <chinese>设置 OSD 第 3 屏上时钟的垂直位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD4_FLTMODE_EN" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="b0168094eb205c4b7eae91adac413c89ad8863e5513cebaeed4c538f8df97931" recordSha256="dd9ad82c93ca8dfe90d4ad6fc4d9308d5ee84f0ed09c791b3036b57f3109e193">
+    <english>Displays flight mode</english>
+    <chinese>选择是否在 OSD 第 4 屏显示当前飞行模式。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD4_FLTMODE_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="202369c04466890ac93f312833e5c49c88f696fed5785dc350b318a473b8b53c">
+    <english>Horizontal position on screen</english>
+    <chinese>设置 OSD 第 4 屏上飞行模式文字的水平位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD4_FLTMODE_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="47ecd3a967c06c0d413994d9adbe6a26764562e2c42973a7bc2228ee5e693ec6">
+    <english>Vertical position on screen</english>
+    <chinese>设置 OSD 第 4 屏上飞行模式文字的垂直位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD4_MESSAGE_EN" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="5ffbc4608fc1cb18b72447c0cf142e2d23d0dbd4db1cba09de838adf7e55a765" recordSha256="432b12c2b708484c1d2fd977ffdfd0904110065c04e15e13157d08ad2647c6da">
+    <english>Displays Mavlink messages</english>
+    <chinese>选择是否在 OSD 第 4 屏显示飞控当前的文字提示，例如 MAVLink 状态文本。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD4_MESSAGE_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="6b48defc702afd117d1c7e6c5898189d50750899c7e8c4ba7b1098b87ca76efc">
+    <english>Horizontal position on screen</english>
+    <chinese>设置 OSD 第 4 屏上文字提示的水平位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD4_MESSAGE_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="4d2cc033a2ca3b83d17fc665ff3c03bbf8996ae08c47d0188b15a1598f86e23c">
+    <english>Vertical position on screen</english>
+    <chinese>设置 OSD 第 4 屏上文字提示的垂直位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD4_CLK_EN" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1eb85821ce72f9a8e886491712d12536562474bfb9246d81b799a43e45d6c398" recordSha256="44d1a77e89319b8daf209a44b49427c751c0396b8d12e0a854ef42bbe94280dc">
+    <english>Displays a clock panel based on AP_RTC local time</english>
+    <chinese>选择是否在 OSD 第 4 屏显示飞控实时时钟（AP_RTC）的本地时间。飞控以 24 小时制显示小时和分钟。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD4_CLK_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="06d030b1dc8af23d74b30beb88d9208b49fd4fea8643d72a1503be2a60b0ffcb">
+    <english>Horizontal position on screen</english>
+    <chinese>设置 OSD 第 4 屏上时钟的水平位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD4_CLK_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="c54c250baa4edb4a1fa14f5cc96d0ec96c48c8b9f1c96e70d0a93e84517afdd7">
+    <english>Vertical position on screen</english>
+    <chinese>设置 OSD 第 4 屏上时钟的垂直位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD1_FLTMODE_EN" field="Description" versions="4.7.1" englishSha256="b0168094eb205c4b7eae91adac413c89ad8863e5513cebaeed4c538f8df97931" recordSha256="b43bde366335fcee74c601a4472ae6e5bcd1215824ae3581b14555f054b9b08b">
+    <english>Displays flight mode</english>
+    <chinese>选择是否在 OSD 第 1 屏显示当前飞行模式。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD1_FLTMODE_X" field="Description" versions="4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="615d49e8650e5731d350dac1071c7890f4836a59a7ea9842ab8e51534596e7de">
+    <english>Horizontal position on screen</english>
+    <chinese>设置 OSD 第 1 屏上飞行模式文字的水平位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD1_FLTMODE_Y" field="Description" versions="4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="f94c94f6ce515165d286ac6a37d9c1e54d28c4a59c298b4997555da4eb773186">
+    <english>Vertical position on screen</english>
+    <chinese>设置 OSD 第 1 屏上飞行模式文字的垂直位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD1_MESSAGE_EN" field="Description" versions="4.7.1" englishSha256="5ffbc4608fc1cb18b72447c0cf142e2d23d0dbd4db1cba09de838adf7e55a765" recordSha256="e8e71de1966b4b0627b5c621e05382eed7551e8f902922db9577efe1b5fb382d">
+    <english>Displays Mavlink messages</english>
+    <chinese>选择是否在 OSD 第 1 屏显示飞控当前的文字提示，例如 MAVLink 状态文本。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD1_MESSAGE_X" field="Description" versions="4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="69da8c768e7df88525970d801ee19bed342d75e34c583b88a85bdcdd80bd15da">
+    <english>Horizontal position on screen</english>
+    <chinese>设置 OSD 第 1 屏上文字提示的水平位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD1_MESSAGE_Y" field="Description" versions="4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="ef14841497c520a70a9cf605c4436594fd66b39b3bf4056abc96933ae9f56566">
+    <english>Vertical position on screen</english>
+    <chinese>设置 OSD 第 1 屏上文字提示的垂直位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD1_CLK_EN" field="Description" versions="4.7.1" englishSha256="1eb85821ce72f9a8e886491712d12536562474bfb9246d81b799a43e45d6c398" recordSha256="a42345a72b3c43163568a78840720d294e507b83c3270f883c1d2e628926d1da">
+    <english>Displays a clock panel based on AP_RTC local time</english>
+    <chinese>选择是否在 OSD 第 1 屏显示飞控实时时钟（AP_RTC）的本地时间。飞控以 24 小时制显示小时和分钟。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD1_CLK_X" field="Description" versions="4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="6d2905fe193911a41595b5220f833d4231ed3f9331bc58388209a6b3a48140a1">
+    <english>Horizontal position on screen</english>
+    <chinese>设置 OSD 第 1 屏上时钟的水平位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD1_CLK_Y" field="Description" versions="4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="f246068ff69580d0892ef1302c6bfe231e272cc6f03fe587d8250c7e0149c548">
+    <english>Vertical position on screen</english>
+    <chinese>设置 OSD 第 1 屏上时钟的垂直位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD2_FLTMODE_EN" field="Description" versions="4.7.1" englishSha256="b0168094eb205c4b7eae91adac413c89ad8863e5513cebaeed4c538f8df97931" recordSha256="b47b15b7f197cebc6dcc26809a98d4da76d155fb894d0870d199517adf6cea14">
+    <english>Displays flight mode</english>
+    <chinese>选择是否在 OSD 第 2 屏显示当前飞行模式。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD2_FLTMODE_X" field="Description" versions="4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="47e83c277ead26ca8ff4357a73729666ae60ad3eec0c7c26e3168ef519a76a40">
+    <english>Horizontal position on screen</english>
+    <chinese>设置 OSD 第 2 屏上飞行模式文字的水平位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD2_FLTMODE_Y" field="Description" versions="4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="456418c88643b6ab327b5bc81a30fc2ae1513a61fcafa54df6a5ab724ce62a6b">
+    <english>Vertical position on screen</english>
+    <chinese>设置 OSD 第 2 屏上飞行模式文字的垂直位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD2_MESSAGE_EN" field="Description" versions="4.7.1" englishSha256="5ffbc4608fc1cb18b72447c0cf142e2d23d0dbd4db1cba09de838adf7e55a765" recordSha256="db629d8e79e303dab5d6ce2d0da65f131433fff14498eb34ba55e22eda0d5289">
+    <english>Displays Mavlink messages</english>
+    <chinese>选择是否在 OSD 第 2 屏显示飞控当前的文字提示，例如 MAVLink 状态文本。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD2_MESSAGE_X" field="Description" versions="4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="e7d42ea37236e036111b04eb1727a8c57ab07ff7c6f00f7fb444f9ac5ca5f6a0">
+    <english>Horizontal position on screen</english>
+    <chinese>设置 OSD 第 2 屏上文字提示的水平位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD2_MESSAGE_Y" field="Description" versions="4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="2433e0ebb1089b74c7603459e24a75646af33e29ca8280be5dfffb3b99693ee1">
+    <english>Vertical position on screen</english>
+    <chinese>设置 OSD 第 2 屏上文字提示的垂直位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD2_CLK_EN" field="Description" versions="4.7.1" englishSha256="1eb85821ce72f9a8e886491712d12536562474bfb9246d81b799a43e45d6c398" recordSha256="39c8896feaeaae291aed9a0747fcf5923d65c7114df0f9d363fa8ced97d610b1">
+    <english>Displays a clock panel based on AP_RTC local time</english>
+    <chinese>选择是否在 OSD 第 2 屏显示飞控实时时钟（AP_RTC）的本地时间。飞控以 24 小时制显示小时和分钟。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD2_CLK_X" field="Description" versions="4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="aa772f8f12830a2e32165b6b4bfa820602391b94da849ccbc17bc44b7fc5730e">
+    <english>Horizontal position on screen</english>
+    <chinese>设置 OSD 第 2 屏上时钟的水平位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD2_CLK_Y" field="Description" versions="4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="1ef3f8c81a9f2e1b2e64c29adbc39ea1443ed8d6c165eb5558cf9e4f22c90db2">
+    <english>Vertical position on screen</english>
+    <chinese>设置 OSD 第 2 屏上时钟的垂直位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD3_FLTMODE_EN" field="Description" versions="4.7.1" englishSha256="b0168094eb205c4b7eae91adac413c89ad8863e5513cebaeed4c538f8df97931" recordSha256="88387a64e7fba5e3503b88fbff30cb4e791d339fe4d503548d851000068351af">
+    <english>Displays flight mode</english>
+    <chinese>选择是否在 OSD 第 3 屏显示当前飞行模式。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD3_FLTMODE_X" field="Description" versions="4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="e4ab037106bc4cb363304c474717bf85eb210fb43b38bf4c61455dc9dcf8ec34">
+    <english>Horizontal position on screen</english>
+    <chinese>设置 OSD 第 3 屏上飞行模式文字的水平位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD3_FLTMODE_Y" field="Description" versions="4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="affe61999aa1f3074cb1723f551d96b903565415a58fe60663b2ba7bb1e85f51">
+    <english>Vertical position on screen</english>
+    <chinese>设置 OSD 第 3 屏上飞行模式文字的垂直位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD3_MESSAGE_EN" field="Description" versions="4.7.1" englishSha256="5ffbc4608fc1cb18b72447c0cf142e2d23d0dbd4db1cba09de838adf7e55a765" recordSha256="29721441b67e91913b995d3edcfccb33ebff07d2c94007e9661cb0164df66622">
+    <english>Displays Mavlink messages</english>
+    <chinese>选择是否在 OSD 第 3 屏显示飞控当前的文字提示，例如 MAVLink 状态文本。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD3_MESSAGE_X" field="Description" versions="4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="77c72e083e38236aace1a64a5f8b8c4f90f49ba5936d5026a13307595b8740d9">
+    <english>Horizontal position on screen</english>
+    <chinese>设置 OSD 第 3 屏上文字提示的水平位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD3_MESSAGE_Y" field="Description" versions="4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="b0ab4d41813fff84ad5858252b3f7f271dfae2e3d3f45131ae76555ae399419b">
+    <english>Vertical position on screen</english>
+    <chinese>设置 OSD 第 3 屏上文字提示的垂直位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD3_CLK_EN" field="Description" versions="4.7.1" englishSha256="1eb85821ce72f9a8e886491712d12536562474bfb9246d81b799a43e45d6c398" recordSha256="0d6a4fc786ed2bce1596466723cbd18b18b80ae980b69f38bd1b0d8e558249f0">
+    <english>Displays a clock panel based on AP_RTC local time</english>
+    <chinese>选择是否在 OSD 第 3 屏显示飞控实时时钟（AP_RTC）的本地时间。飞控以 24 小时制显示小时和分钟。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD3_CLK_X" field="Description" versions="4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="9e9d316245fc0c08667c65e6cf0946fce24cc5e572a1ae72cfa33d5ee391f252">
+    <english>Horizontal position on screen</english>
+    <chinese>设置 OSD 第 3 屏上时钟的水平位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD3_CLK_Y" field="Description" versions="4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="a634608ed2da392b68db32c5ef853140437a48f25c74e92dba6f06342ffb2420">
+    <english>Vertical position on screen</english>
+    <chinese>设置 OSD 第 3 屏上时钟的垂直位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD4_FLTMODE_EN" field="Description" versions="4.7.1" englishSha256="b0168094eb205c4b7eae91adac413c89ad8863e5513cebaeed4c538f8df97931" recordSha256="dd9ad82c93ca8dfe90d4ad6fc4d9308d5ee84f0ed09c791b3036b57f3109e193">
+    <english>Displays flight mode</english>
+    <chinese>选择是否在 OSD 第 4 屏显示当前飞行模式。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD4_FLTMODE_X" field="Description" versions="4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="202369c04466890ac93f312833e5c49c88f696fed5785dc350b318a473b8b53c">
+    <english>Horizontal position on screen</english>
+    <chinese>设置 OSD 第 4 屏上飞行模式文字的水平位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD4_FLTMODE_Y" field="Description" versions="4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="47ecd3a967c06c0d413994d9adbe6a26764562e2c42973a7bc2228ee5e693ec6">
+    <english>Vertical position on screen</english>
+    <chinese>设置 OSD 第 4 屏上飞行模式文字的垂直位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD4_MESSAGE_EN" field="Description" versions="4.7.1" englishSha256="5ffbc4608fc1cb18b72447c0cf142e2d23d0dbd4db1cba09de838adf7e55a765" recordSha256="432b12c2b708484c1d2fd977ffdfd0904110065c04e15e13157d08ad2647c6da">
+    <english>Displays Mavlink messages</english>
+    <chinese>选择是否在 OSD 第 4 屏显示飞控当前的文字提示，例如 MAVLink 状态文本。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD4_MESSAGE_X" field="Description" versions="4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="6b48defc702afd117d1c7e6c5898189d50750899c7e8c4ba7b1098b87ca76efc">
+    <english>Horizontal position on screen</english>
+    <chinese>设置 OSD 第 4 屏上文字提示的水平位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD4_MESSAGE_Y" field="Description" versions="4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="4d2cc033a2ca3b83d17fc665ff3c03bbf8996ae08c47d0188b15a1598f86e23c">
+    <english>Vertical position on screen</english>
+    <chinese>设置 OSD 第 4 屏上文字提示的垂直位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD4_CLK_EN" field="Description" versions="4.7.1" englishSha256="1eb85821ce72f9a8e886491712d12536562474bfb9246d81b799a43e45d6c398" recordSha256="44d1a77e89319b8daf209a44b49427c751c0396b8d12e0a854ef42bbe94280dc">
+    <english>Displays a clock panel based on AP_RTC local time</english>
+    <chinese>选择是否在 OSD 第 4 屏显示飞控实时时钟（AP_RTC）的本地时间。飞控以 24 小时制显示小时和分钟。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD4_CLK_X" field="Description" versions="4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="06d030b1dc8af23d74b30beb88d9208b49fd4fea8643d72a1503be2a60b0ffcb">
+    <english>Horizontal position on screen</english>
+    <chinese>设置 OSD 第 4 屏上时钟的水平位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD4_CLK_Y" field="Description" versions="4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="c54c250baa4edb4a1fa14f5cc96d0ec96c48c8b9f1c96e70d0a93e84517afdd7">
+    <english>Vertical position on screen</english>
+    <chinese>设置 OSD 第 4 屏上时钟的垂直位置。</chinese>
+  </translation>
 </parameterTranslations>
