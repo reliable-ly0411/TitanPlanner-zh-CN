@@ -27,7 +27,7 @@ These source-level captures use synthetic data; they are not full product or use
 
 - **#34**, exact `5a8247c0`: Windows WinForms, actual 120 DPI. The 933/1230 px toolbar and 933 px overflow case use inert port, baud and Connect controls. The emblem is the existing repository logo. The full navigation and device paths are not used.
 - **#36**, exact `6b37cbb7`: actual Windows 120 DPI, compact controls at 420 and 670 px. Synthetic preview and no system file picker. The 420 px image shows truncation in the closed startup-image selector; it is retained as a known issue, not a pass.
-- **#40**, exact `dfbe3531`: actual Windows 120 DPI native options-list window, synthetic values. It identifies a remaining problem: the `lowairspeed` label appears as “空速”, not as “低空速标志”. This is not evidence of correct translation for all Boolean fields.
+- **#40**, exact `dfbe3531`: actual Windows 120 DPI native options-list window, synthetic values. The earlier fixture incorrectly mapped all fields containing “airspeed” to “空速”. This legacy evidence image is withdrawn from the issue and PR; the text in the image does not represent the actual lowairspeed mapping.
 - **#188**: actual Mono WinForms tooltip in isolated X11 (requested 120 DPI; logical width 558). Screenshot demonstrates the two lines, not Windows, the complete checkbox, or persistence.
 
 | File | SHA-256 |
@@ -44,3 +44,7 @@ These source-level captures use synthetic data; they are not full product or use
 ## Opening image #22 / #225
 
 Same synthetic 3840×480 input, genuine Windows GDI+ production renderer into a 660×400 bitmap tagged **144 DPI**. This is offscreen render DPI, not the computer's scaling. The old source already did not paint a background; the comparison isolates the change from zero to three visible outline credit lines on the same ultra-wide image. Before `ac9ebb4`; after `405a7bd`. No full application or vendor imagery.
+
+## Startup-image dropdown #36
+
+Windows WinForms, true 120 DPI, enhanced Chinese, the same 420 px isolated control. Before `6b37cbb7`, the real list width was 260 px; after `36cfa698`, the font measured the widest label at 269 px and the list grew to 300 px. The main selector and adjacent button did not grow. The two PNGs show the **actual dropdown list**, not a file picker, mock screen or tooltip capture.
