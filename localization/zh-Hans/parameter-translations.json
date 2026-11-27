@@ -4748,6 +4748,82 @@
       "recordSha256": "57521736e880daa6710720ba4dc13f33eb504683f3899efa2e1a54f1278dd235",
       "english": "GPS Node id for GPS.  Detected node unless CAN_OVRIDE is set",
       "chinese": "GPS 节点编号。除非设置了 CAN_OVRIDE，否则显示检测到的节点编号。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD_SB_H_OFS",
+      "field": "Description",
+      "versions": [
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "e93cd039cf7a71710d2754c8658a5517cb1264586f243703f6982a8c503853d1",
+      "recordSha256": "8483f78c4aeec35c22dc605686e3ec1cd74479fad31b9f63b88c91367cb81f7f",
+      "english": "Extends the spacing between the sidebar elements by this amount of columns. Positive values increases the width to the right of the screen.",
+      "chinese": "以列为单位增加侧栏元素之间的间距。正值使侧栏间距向屏幕右侧扩展。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD_SB_V_EXT",
+      "field": "Description",
+      "versions": [
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "e6ea20c11bf4d5599aae9e34695e639c2c12994e510d0ce26f5163bc04e91f7f",
+      "recordSha256": "6b6c374f98d54a6a0dec7314eff3e9952cfc44e55b450450054d22ba1c3a5dbd",
+      "english": "Increase of vertical length of the sidebar itens by this amount of lines. Applied equally both above and below the default setting.",
+      "chinese": "以行为单位延长侧栏元素的垂直长度，向默认位置的上方和下方等量延伸。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD_SB_H_OFS",
+      "field": "Description",
+      "versions": [
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "e93cd039cf7a71710d2754c8658a5517cb1264586f243703f6982a8c503853d1",
+      "recordSha256": "8483f78c4aeec35c22dc605686e3ec1cd74479fad31b9f63b88c91367cb81f7f",
+      "english": "Extends the spacing between the sidebar elements by this amount of columns. Positive values increases the width to the right of the screen.",
+      "chinese": "以列为单位增加侧栏元素之间的间距。正值使侧栏间距向屏幕右侧扩展。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD_SB_V_EXT",
+      "field": "Description",
+      "versions": [
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "e6ea20c11bf4d5599aae9e34695e639c2c12994e510d0ce26f5163bc04e91f7f",
+      "recordSha256": "6b6c374f98d54a6a0dec7314eff3e9952cfc44e55b450450054d22ba1c3a5dbd",
+      "english": "Increase of vertical length of the sidebar itens by this amount of lines. Applied equally both above and below the default setting.",
+      "chinese": "以行为单位延长侧栏元素的垂直长度，向默认位置的上方和下方等量延伸。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD_SB_H_OFS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "e93cd039cf7a71710d2754c8658a5517cb1264586f243703f6982a8c503853d1",
+      "recordSha256": "8483f78c4aeec35c22dc605686e3ec1cd74479fad31b9f63b88c91367cb81f7f",
+      "english": "Extends the spacing between the sidebar elements by this amount of columns. Positive values increases the width to the right of the screen.",
+      "chinese": "以列为单位增加侧栏元素之间的间距。正值使侧栏间距向屏幕右侧扩展。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD_SB_V_EXT",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "e6ea20c11bf4d5599aae9e34695e639c2c12994e510d0ce26f5163bc04e91f7f",
+      "recordSha256": "6b6c374f98d54a6a0dec7314eff3e9952cfc44e55b450450054d22ba1c3a5dbd",
+      "english": "Increase of vertical length of the sidebar itens by this amount of lines. Applied equally both above and below the default setting.",
+      "chinese": "以行为单位延长侧栏元素的垂直长度，向默认位置的上方和下方等量延伸。"
     }
   ]
 }
