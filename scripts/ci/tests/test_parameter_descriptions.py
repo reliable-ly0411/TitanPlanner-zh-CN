@@ -26,9 +26,10 @@ OSD_DISPLAY_HELP_KEYS = {
     *(f'OSD{screen}_{item}_{field}' for screen in range(1, 5)
       for item in ('WIND', 'FLTMODE', 'MESSAGE', 'CLK', 'FLTIME', 'TEMP', 'BTEMP') for field in ('EN', 'X', 'Y')),
 }
+LOCAL_DIAGNOSTIC_LOG_HELP_KEYS = {'INS_RAW_LOG_OPT','EK3_LOG_LEVEL','TEMP_LOG','PRX_LOG_RAW'}
 DISPLAY_AND_LOG_HELP_KEYS = (
     SIDEBAR_GEOMETRY_KEYS | IMU_DIAGNOSTIC_HELP_KEYS | OSD_MESSAGE_TIME_HELP_KEYS
-    | SITL_ENVIRONMENT_HELP_KEYS | LOG_STORAGE_HELP_KEYS | OSD_FONT_KEYS | ONBOARD_DISPLAY_HELP_KEYS | LOGGER_BACKEND_HELP_KEYS
+    | LOCAL_DIAGNOSTIC_LOG_HELP_KEYS | SITL_ENVIRONMENT_HELP_KEYS | LOG_STORAGE_HELP_KEYS | OSD_FONT_KEYS | ONBOARD_DISPLAY_HELP_KEYS | LOGGER_BACKEND_HELP_KEYS
     | OSD_DISPLAY_HELP_KEYS
     | {'LOG_BITMASK', 'LOG_FILE_BUFSIZE', 'OSD_H_OFFSET', 'OSD_V_OFFSET', 'SCHED_DEBUG'}
 )
@@ -60,8 +61,8 @@ class ParameterCatalogTests(unittest.TestCase):
     def test_scope_counts_and_held_versions(self):
         notes = self.catalog['translations']
         descriptions = {(n['family'], v, n['parameter']) for n in notes if n['field'] == 'Description' for v in n['versions']}
-        self.assertEqual(1496, len(descriptions))
-        self.assertEqual(671, len({(f, p) for f, v, p in descriptions}))
+        self.assertEqual(1521, len(descriptions))
+        self.assertEqual(682, len({(f, p) for f, v, p in descriptions}))
         self.assertFalse(any(v == '4.7.2' for f, v, p in descriptions))
         excluded_copter = {'RTL_CONE_SLOPE', 'LAND_SPEED', 'LAND_SPD_MS', 'FS_GCS_ENABLE'}
         excluded_plane = {'TECS_CLMB_MAX', 'TECS_SINK_MIN', 'ROLL_LIMIT_DEG'}
@@ -347,6 +348,27 @@ class ParameterCatalogTests(unittest.TestCase):
         next(changed.iterfind(".//param[@name='SCHED_DEBUG']/values/value[@code='2']")).text = 'Changed'
         with self.assertRaisesRegex(ValueError, 'requires manual review'):
             catalog_module.resource(self.catalog, changed)
+
+    def test_local_diagnostic_log_help_preserves_each_version_fields(self):
+        count=0
+        for release in self.bundle:
+            f,v=release.get('family'),release.get('version')
+            expected=LOCAL_DIAGNOSTIC_LOG_HELP_KEYS-({'PRX_LOG_RAW'} if f=='Plane' else set())
+            records={r.get('name'):r for r in release.iter('param') if r.get('name') in expected}
+            self.assertEqual(expected,records.keys())
+            for k,r in records.items():
+                [n]=[n for n in self.catalog['translations'] if n['family']==f and n['parameter']==k and v in n['versions']]
+                self.assertEqual(('Description',r.get('documentation'),catalog_module.record_fingerprint(r)),
+                                 (n['field'],n['english'],n['recordSha256']))
+                count+=1
+            options=[(x.get('code'),x.text) for x in records['TEMP_LOG'].findall('values/value')]
+            self.assertEqual(['0','1'] if v=='4.5.7' else ['0','1','2'],[k for k,_ in options])
+        self.assertEqual(25,count)
+        mutated=copy.deepcopy(self.bundle)
+        value=mutated.find(".//param[@name='TEMP_LOG']/values/value[@code='1']")
+        value.text='changed logging option'
+        with self.assertRaisesRegex(ValueError,'requires manual review'):
+            catalog_module.resource(self.catalog,mutated)
 
     def test_source_changes_cannot_automatically_reapprove_notes(self):
         for change in ('English', 'Range', 'Unit'):

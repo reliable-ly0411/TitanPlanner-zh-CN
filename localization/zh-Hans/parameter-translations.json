@@ -10616,6 +10616,196 @@
       "recordSha256": "39ca0d19036c1e425fd50866ce8987f92a83d94f425ba832094ed4e74e277e33",
       "english": "Vertical position on screen",
       "chinese": "设置 OSD 第 4 屏上第二个气压计温度的垂直位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "EK3_LOG_LEVEL",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "f620cce9c4dd3353c5f1b409fcde6fc28d69ddb0b9fd3c3051a897bfc509c024",
+      "recordSha256": "4d9cfb7c3c74e123f6aa9f43614451511ea6972ceb886a153f5e65e76d6af009",
+      "english": "Determines how verbose the EKF3 streaming logging is. A value of 0 provides full logging(default), a value of 1 only XKF4 scaled innovations are logged, a value of 2 both XKF4 and GSF are logged, and a value of 3 disables all streaming logging of EKF3.",
+      "chinese": "决定 EKF3 流式日志的记录详略。0（默认）记录全部内容；1 仅记录 XKF4 的缩放后新息；2 记录 XKF4 和 GSF；3 关闭 EKF3 的全部流式日志记录。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "INS_RAW_LOG_OPT",
+      "field": "Description",
+      "versions": [
+        "4.5.7"
+      ],
+      "englishSha256": "ed32bb9be5cce596c6283ca16b1d83f3a286d08ab312b879902473a49d8c3ef6",
+      "recordSha256": "0c0caabeef6edfe55c1ff35eb2a4d6eced3aa4d615161d5c3929bca9a960f373",
+      "english": "Raw logging options bitmask",
+      "chinese": "原始陀螺仪日志选项的位掩码。原选项区分仅记录主陀螺仪或记录全部陀螺仪，以及记录滤波后或同时记录滤波前后的数据。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "INS_RAW_LOG_OPT",
+      "field": "Description",
+      "versions": [
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "ed32bb9be5cce596c6283ca16b1d83f3a286d08ab312b879902473a49d8c3ef6",
+      "recordSha256": "405acc8e5d4d9b53f01543906097cfedc34e3050eed772b4f0312d40b4a8ea58",
+      "english": "Raw logging options bitmask",
+      "chinese": "原始陀螺仪日志选项的位掩码。原选项区分仅记录主陀螺仪或记录全部陀螺仪，以及记录滤波后或同时记录滤波前后的数据。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "PRX_LOG_RAW",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "6c0fb656176d8ad0588f0f52f4aed8d2fa890cbbfc6aca79c39d63385415a636",
+      "recordSha256": "14015b3aa37cc9ea30700b36449f39db69781445cb9a3d82041aa19f1cd4d9dd",
+      "english": "Set this parameter to one if logging unfiltered(raw) distances from sensor should be enabled",
+      "chinese": "值为 1 时，日志记录传感器未经滤波的原始距离。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "TEMP_LOG",
+      "field": "Description",
+      "versions": [
+        "4.5.7"
+      ],
+      "englishSha256": "9539b90f00c964532b3744c4e12bf1ecae162c5ea33dfaec618fa644b3d20d6a",
+      "recordSha256": "9de120030276cf7665d443b790af03697704558b83b6e86c3af3a380f65ab6e0",
+      "english": "Enables temperature sensor logging",
+      "chinese": "控制温度传感器数据的日志记录。0 表示不记录，1 表示启用记录。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "TEMP_LOG",
+      "field": "Description",
+      "versions": [
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "9539b90f00c964532b3744c4e12bf1ecae162c5ea33dfaec618fa644b3d20d6a",
+      "recordSha256": "b61b297813d5d7af48578ac6824e92883bdd709c749e891c42a236d414a49b73",
+      "english": "Enables temperature sensor logging",
+      "chinese": "控制温度传感器数据的日志记录。0 表示不记录，1 表示记录所有实例，2 表示只记录传感器来源设为 None 的实例。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "EK3_LOG_LEVEL",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "f620cce9c4dd3353c5f1b409fcde6fc28d69ddb0b9fd3c3051a897bfc509c024",
+      "recordSha256": "4d9cfb7c3c74e123f6aa9f43614451511ea6972ceb886a153f5e65e76d6af009",
+      "english": "Determines how verbose the EKF3 streaming logging is. A value of 0 provides full logging(default), a value of 1 only XKF4 scaled innovations are logged, a value of 2 both XKF4 and GSF are logged, and a value of 3 disables all streaming logging of EKF3.",
+      "chinese": "决定 EKF3 流式日志的记录详略。0（默认）记录全部内容；1 仅记录 XKF4 的缩放后新息；2 记录 XKF4 和 GSF；3 关闭 EKF3 的全部流式日志记录。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "INS_RAW_LOG_OPT",
+      "field": "Description",
+      "versions": [
+        "4.5.7"
+      ],
+      "englishSha256": "ed32bb9be5cce596c6283ca16b1d83f3a286d08ab312b879902473a49d8c3ef6",
+      "recordSha256": "0c0caabeef6edfe55c1ff35eb2a4d6eced3aa4d615161d5c3929bca9a960f373",
+      "english": "Raw logging options bitmask",
+      "chinese": "原始陀螺仪日志选项的位掩码。原选项区分仅记录主陀螺仪或记录全部陀螺仪，以及记录滤波后或同时记录滤波前后的数据。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "INS_RAW_LOG_OPT",
+      "field": "Description",
+      "versions": [
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "ed32bb9be5cce596c6283ca16b1d83f3a286d08ab312b879902473a49d8c3ef6",
+      "recordSha256": "405acc8e5d4d9b53f01543906097cfedc34e3050eed772b4f0312d40b4a8ea58",
+      "english": "Raw logging options bitmask",
+      "chinese": "原始陀螺仪日志选项的位掩码。原选项区分仅记录主陀螺仪或记录全部陀螺仪，以及记录滤波后或同时记录滤波前后的数据。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "TEMP_LOG",
+      "field": "Description",
+      "versions": [
+        "4.5.7"
+      ],
+      "englishSha256": "9539b90f00c964532b3744c4e12bf1ecae162c5ea33dfaec618fa644b3d20d6a",
+      "recordSha256": "9de120030276cf7665d443b790af03697704558b83b6e86c3af3a380f65ab6e0",
+      "english": "Enables temperature sensor logging",
+      "chinese": "控制温度传感器数据的日志记录。0 表示不记录，1 表示启用记录。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "TEMP_LOG",
+      "field": "Description",
+      "versions": [
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "9539b90f00c964532b3744c4e12bf1ecae162c5ea33dfaec618fa644b3d20d6a",
+      "recordSha256": "b61b297813d5d7af48578ac6824e92883bdd709c749e891c42a236d414a49b73",
+      "english": "Enables temperature sensor logging",
+      "chinese": "控制温度传感器数据的日志记录。0 表示不记录，1 表示记录所有实例，2 表示只记录传感器来源设为 None 的实例。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "EK3_LOG_LEVEL",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "f620cce9c4dd3353c5f1b409fcde6fc28d69ddb0b9fd3c3051a897bfc509c024",
+      "recordSha256": "4d9cfb7c3c74e123f6aa9f43614451511ea6972ceb886a153f5e65e76d6af009",
+      "english": "Determines how verbose the EKF3 streaming logging is. A value of 0 provides full logging(default), a value of 1 only XKF4 scaled innovations are logged, a value of 2 both XKF4 and GSF are logged, and a value of 3 disables all streaming logging of EKF3.",
+      "chinese": "决定 EKF3 流式日志的记录详略。0（默认）记录全部内容；1 仅记录 XKF4 的缩放后新息；2 记录 XKF4 和 GSF；3 关闭 EKF3 的全部流式日志记录。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "INS_RAW_LOG_OPT",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "ed32bb9be5cce596c6283ca16b1d83f3a286d08ab312b879902473a49d8c3ef6",
+      "recordSha256": "405acc8e5d4d9b53f01543906097cfedc34e3050eed772b4f0312d40b4a8ea58",
+      "english": "Raw logging options bitmask",
+      "chinese": "原始陀螺仪日志选项的位掩码。原选项区分仅记录主陀螺仪或记录全部陀螺仪，以及记录滤波后或同时记录滤波前后的数据。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "PRX_LOG_RAW",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "6c0fb656176d8ad0588f0f52f4aed8d2fa890cbbfc6aca79c39d63385415a636",
+      "recordSha256": "14015b3aa37cc9ea30700b36449f39db69781445cb9a3d82041aa19f1cd4d9dd",
+      "english": "Set this parameter to one if logging unfiltered(raw) distances from sensor should be enabled",
+      "chinese": "值为 1 时，日志记录传感器未经滤波的原始距离。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "TEMP_LOG",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "9539b90f00c964532b3744c4e12bf1ecae162c5ea33dfaec618fa644b3d20d6a",
+      "recordSha256": "b61b297813d5d7af48578ac6824e92883bdd709c749e891c42a236d414a49b73",
+      "english": "Enables temperature sensor logging",
+      "chinese": "控制温度传感器数据的日志记录。0 表示不记录，1 表示记录所有实例，2 表示只记录传感器来源设为 None 的实例。"
     }
   ]
 }

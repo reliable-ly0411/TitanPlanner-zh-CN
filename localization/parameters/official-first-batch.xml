@@ -347,6 +347,9 @@
           <param humanName="Accelerometer3 ID" name="INS_ACC3_ID" documentation="Accelerometer3 sensor ID, taking into account its type, bus and instance" user="Advanced">
             <field name="ReadOnly">True</field>
           </param>
+          <param humanName="Raw logging options" name="INS_RAW_LOG_OPT" documentation="Raw logging options bitmask" user="Advanced">
+            <field name="Bitmask">0:Log primary gyro only, 1:Log all gyros, 2:Post filter, 3: Pre and post filter</field>
+          </param>
         </parameters>
         <parameters name="LOG">
           <param humanName="Enable logging while disarmed" name="LOG_DISARMED" documentation="If LOG_DISARMED is set to 1 then logging will be enabled at all times including when disarmed. Logging before arming can make for very large logfiles but can help a lot when tracking down startup issues and is necessary if logging of EKF replay data is selected via the LOG_REPLAY parameter. If LOG_DISARMED is set to 2, then logging will be enabled when disarmed, but not if a USB connection is detected. This can be used to prevent unwanted data logs being generated when the vehicle is connected via USB for log downloading or parameter changes. If LOG_DISARMED is set to 3 then logging will happen while disarmed, but if the vehicle never arms then the logs using the filesystem backend will be discarded on the next boot." user="Standard">
@@ -1077,6 +1080,28 @@
             </values>
           </param>
         </parameters>
+        <parameters name="EK3_">
+          <param humanName="Logging Level" name="EK3_LOG_LEVEL" documentation="Determines how verbose the EKF3 streaming logging is. A value of 0 provides full logging(default), a value of 1 only XKF4 scaled innovations are logged, a value of 2 both XKF4 and GSF are logged, and a value of 3 disables all streaming logging of EKF3." user="Advanced">
+            <field name="Range">0 3</field>
+            <field name="Increment">1</field>
+          </param>
+        </parameters>
+        <parameters name="PRX">
+          <param humanName="Proximity raw distances log" name="PRX_LOG_RAW" documentation="Set this parameter to one if logging unfiltered(raw) distances from sensor should be enabled" user="Advanced">
+            <values>
+              <value code="0">Off</value>
+              <value code="1">On</value>
+            </values>
+          </param>
+        </parameters>
+        <parameters name="TEMP">
+          <param humanName="Logging" name="TEMP_LOG" documentation="Enables temperature sensor logging" user="Standard">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+        </parameters>
       </libraries>
     </paramfile>
   </release>
@@ -1454,6 +1479,15 @@
           </param>
           <param humanName="Accelerometer3 ID" name="INS_ACC3_ID" documentation="Accelerometer3 sensor ID, taking into account its type, bus and instance" user="Advanced">
             <field name="ReadOnly">True</field>
+          </param>
+          <param humanName="Raw logging options" name="INS_RAW_LOG_OPT" documentation="Raw logging options bitmask" user="Advanced">
+            <bitmask>
+              <bit code="0">Log primary gyro only</bit>
+              <bit code="1">Log all gyros</bit>
+              <bit code="2">Post filter</bit>
+              <bit code="3">Pre and post filter</bit>
+            </bitmask>
+            <field name="Bitmask">0:Log primary gyro only, 1:Log all gyros, 2:Post filter, 3: Pre and post filter</field>
           </param>
         </parameters>
         <parameters name="LOG">
@@ -2252,6 +2286,29 @@
             </values>
           </param>
         </parameters>
+        <parameters name="EK3_">
+          <param humanName="Logging Level" name="EK3_LOG_LEVEL" documentation="Determines how verbose the EKF3 streaming logging is. A value of 0 provides full logging(default), a value of 1 only XKF4 scaled innovations are logged, a value of 2 both XKF4 and GSF are logged, and a value of 3 disables all streaming logging of EKF3." user="Advanced">
+            <field name="Range">0 3</field>
+            <field name="Increment">1</field>
+          </param>
+        </parameters>
+        <parameters name="PRX">
+          <param humanName="Proximity raw distances log" name="PRX_LOG_RAW" documentation="Set this parameter to one if logging unfiltered(raw) distances from sensor should be enabled" user="Advanced">
+            <values>
+              <value code="0">Off</value>
+              <value code="1">On</value>
+            </values>
+          </param>
+        </parameters>
+        <parameters name="TEMP">
+          <param humanName="Logging" name="TEMP_LOG" documentation="Enables temperature sensor logging" user="Standard">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Log all instances</value>
+              <value code="2">Log only instances with sensor source set to None</value>
+            </values>
+          </param>
+        </parameters>
       </libraries>
     </paramfile>
   </release>
@@ -2622,6 +2679,15 @@
           </param>
           <param humanName="Accelerometer3 ID" name="INS_ACC3_ID" documentation="Accelerometer3 sensor ID, taking into account its type, bus and instance" user="Advanced">
             <field name="ReadOnly">True</field>
+          </param>
+          <param humanName="Raw logging options" name="INS_RAW_LOG_OPT" documentation="Raw logging options bitmask" user="Advanced">
+            <bitmask>
+              <bit code="0">Log primary gyro only</bit>
+              <bit code="1">Log all gyros</bit>
+              <bit code="2">Post filter</bit>
+              <bit code="3">Pre and post filter</bit>
+            </bitmask>
+            <field name="Bitmask">0:Log primary gyro only, 1:Log all gyros, 2:Post filter, 3: Pre and post filter</field>
           </param>
         </parameters>
         <parameters name="LOG">
@@ -3462,6 +3528,29 @@
             </values>
           </param>
         </parameters>
+        <parameters name="EK3_">
+          <param humanName="Logging Level" name="EK3_LOG_LEVEL" documentation="Determines how verbose the EKF3 streaming logging is. A value of 0 provides full logging(default), a value of 1 only XKF4 scaled innovations are logged, a value of 2 both XKF4 and GSF are logged, and a value of 3 disables all streaming logging of EKF3." user="Advanced">
+            <field name="Range">0 3</field>
+            <field name="Increment">1</field>
+          </param>
+        </parameters>
+        <parameters name="PRX">
+          <param humanName="Proximity raw distances log" name="PRX_LOG_RAW" documentation="Set this parameter to one if logging unfiltered(raw) distances from sensor should be enabled" user="Advanced">
+            <values>
+              <value code="0">Off</value>
+              <value code="1">On</value>
+            </values>
+          </param>
+        </parameters>
+        <parameters name="TEMP">
+          <param humanName="Logging" name="TEMP_LOG" documentation="Enables temperature sensor logging" user="Standard">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Log all instances</value>
+              <value code="2">Log only instances with sensor source set to None</value>
+            </values>
+          </param>
+        </parameters>
       </libraries>
     </paramfile>
   </release>
@@ -3857,6 +3946,9 @@
           </param>
           <param humanName="Accelerometer3 ID" name="INS_ACC3_ID" documentation="Accelerometer3 sensor ID, taking into account its type, bus and instance" user="Advanced">
             <field name="ReadOnly">True</field>
+          </param>
+          <param humanName="Raw logging options" name="INS_RAW_LOG_OPT" documentation="Raw logging options bitmask" user="Advanced">
+            <field name="Bitmask">0:Log primary gyro only, 1:Log all gyros, 2:Post filter, 3: Pre and post filter</field>
           </param>
         </parameters>
         <parameters name="LOG">
@@ -4605,6 +4697,20 @@
             </values>
           </param>
         </parameters>
+        <parameters name="EK3_">
+          <param humanName="Logging Level" name="EK3_LOG_LEVEL" documentation="Determines how verbose the EKF3 streaming logging is. A value of 0 provides full logging(default), a value of 1 only XKF4 scaled innovations are logged, a value of 2 both XKF4 and GSF are logged, and a value of 3 disables all streaming logging of EKF3." user="Advanced">
+            <field name="Range">0 3</field>
+            <field name="Increment">1</field>
+          </param>
+        </parameters>
+        <parameters name="TEMP">
+          <param humanName="Logging" name="TEMP_LOG" documentation="Enables temperature sensor logging" user="Standard">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+        </parameters>
       </libraries>
     </paramfile>
   </release>
@@ -5020,6 +5126,15 @@
           </param>
           <param humanName="Accelerometer3 ID" name="INS_ACC3_ID" documentation="Accelerometer3 sensor ID, taking into account its type, bus and instance" user="Advanced">
             <field name="ReadOnly">True</field>
+          </param>
+          <param humanName="Raw logging options" name="INS_RAW_LOG_OPT" documentation="Raw logging options bitmask" user="Advanced">
+            <bitmask>
+              <bit code="0">Log primary gyro only</bit>
+              <bit code="1">Log all gyros</bit>
+              <bit code="2">Post filter</bit>
+              <bit code="3">Pre and post filter</bit>
+            </bitmask>
+            <field name="Bitmask">0:Log primary gyro only, 1:Log all gyros, 2:Post filter, 3: Pre and post filter</field>
           </param>
         </parameters>
         <parameters name="LOG">
@@ -5835,6 +5950,21 @@
             </values>
           </param>
         </parameters>
+        <parameters name="EK3_">
+          <param humanName="Logging Level" name="EK3_LOG_LEVEL" documentation="Determines how verbose the EKF3 streaming logging is. A value of 0 provides full logging(default), a value of 1 only XKF4 scaled innovations are logged, a value of 2 both XKF4 and GSF are logged, and a value of 3 disables all streaming logging of EKF3." user="Advanced">
+            <field name="Range">0 3</field>
+            <field name="Increment">1</field>
+          </param>
+        </parameters>
+        <parameters name="TEMP">
+          <param humanName="Logging" name="TEMP_LOG" documentation="Enables temperature sensor logging" user="Standard">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Log all instances</value>
+              <value code="2">Log only instances with sensor source set to None</value>
+            </values>
+          </param>
+        </parameters>
       </libraries>
     </paramfile>
   </release>
@@ -6262,6 +6392,15 @@
           </param>
           <param humanName="Accelerometer3 ID" name="INS_ACC3_ID" documentation="Accelerometer3 sensor ID, taking into account its type, bus and instance" user="Advanced">
             <field name="ReadOnly">True</field>
+          </param>
+          <param humanName="Raw logging options" name="INS_RAW_LOG_OPT" documentation="Raw logging options bitmask" user="Advanced">
+            <bitmask>
+              <bit code="0">Log primary gyro only</bit>
+              <bit code="1">Log all gyros</bit>
+              <bit code="2">Post filter</bit>
+              <bit code="3">Pre and post filter</bit>
+            </bitmask>
+            <field name="Bitmask">0:Log primary gyro only, 1:Log all gyros, 2:Post filter, 3: Pre and post filter</field>
           </param>
         </parameters>
         <parameters name="LOG">
@@ -7109,6 +7248,21 @@
             </values>
           </param>
         </parameters>
+        <parameters name="EK3_">
+          <param humanName="Logging Level" name="EK3_LOG_LEVEL" documentation="Determines how verbose the EKF3 streaming logging is. A value of 0 provides full logging(default), a value of 1 only XKF4 scaled innovations are logged, a value of 2 both XKF4 and GSF are logged, and a value of 3 disables all streaming logging of EKF3." user="Advanced">
+            <field name="Range">0 3</field>
+            <field name="Increment">1</field>
+          </param>
+        </parameters>
+        <parameters name="TEMP">
+          <param humanName="Logging" name="TEMP_LOG" documentation="Enables temperature sensor logging" user="Standard">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Log all instances</value>
+              <value code="2">Log only instances with sensor source set to None</value>
+            </values>
+          </param>
+        </parameters>
       </libraries>
     </paramfile>
   </release>
@@ -7273,6 +7427,15 @@
           </param>
           <param humanName="Accelerometer3 ID" name="INS_ACC3_ID" documentation="Accelerometer3 sensor ID, taking into account its type, bus and instance" user="Advanced">
             <field name="ReadOnly">True</field>
+          </param>
+          <param humanName="Raw logging options" name="INS_RAW_LOG_OPT" documentation="Raw logging options bitmask" user="Advanced">
+            <bitmask>
+              <bit code="0">Log primary gyro only</bit>
+              <bit code="1">Log all gyros</bit>
+              <bit code="2">Post filter</bit>
+              <bit code="3">Pre and post filter</bit>
+            </bitmask>
+            <field name="Bitmask">0:Log primary gyro only, 1:Log all gyros, 2:Post filter, 3: Pre and post filter</field>
           </param>
         </parameters>
         <parameters name="INS4_">
@@ -7929,6 +8092,29 @@
               <value code="0">Disabled</value>
               <value code="2">ShowSlips</value>
               <value code="3">ShowOverruns</value>
+            </values>
+          </param>
+        </parameters>
+        <parameters name="EK3_">
+          <param humanName="Logging Level" name="EK3_LOG_LEVEL" documentation="Determines how verbose the EKF3 streaming logging is. A value of 0 provides full logging(default), a value of 1 only XKF4 scaled innovations are logged, a value of 2 both XKF4 and GSF are logged, and a value of 3 disables all streaming logging of EKF3." user="Advanced">
+            <field name="Range">0 3</field>
+            <field name="Increment">1</field>
+          </param>
+        </parameters>
+        <parameters name="PRX">
+          <param humanName="Proximity raw distances log" name="PRX_LOG_RAW" documentation="Set this parameter to one if logging unfiltered(raw) distances from sensor should be enabled" user="Advanced">
+            <values>
+              <value code="0">Off</value>
+              <value code="1">On</value>
+            </values>
+          </param>
+        </parameters>
+        <parameters name="TEMP">
+          <param humanName="Logging" name="TEMP_LOG" documentation="Enables temperature sensor logging" user="Standard">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Log all instances</value>
+              <value code="2">Log only instances with sensor source set to None</value>
             </values>
           </param>
         </parameters>
