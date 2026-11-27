@@ -4824,6 +4824,126 @@
       "recordSha256": "6b6c374f98d54a6a0dec7314eff3e9952cfc44e55b450450054d22ba1c3a5dbd",
       "english": "Increase of vertical length of the sidebar itens by this amount of lines. Applied equally both above and below the default setting.",
       "chinese": "以行为单位延长侧栏元素的垂直长度，向默认位置的上方和下方等量延伸。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "INS_LOG_BAT_CNT",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "69c53a9a3952c0ff2bab4a5511db9004344b2d22dc63cd7981280059039f5fd1",
+      "recordSha256": "44c74c1ba7bccf7ba45c6b7f3311ea441fa947f2cc01dc3583b4b1b1c2cd2e64",
+      "english": "Number of samples to take when logging streams of IMU sensor readings.  Will be rounded down to a multiple of 32. This option takes effect on the next reboot.",
+      "chinese": "记录惯性测量单元（IMU）传感器数据流时采集的样本数，向下取为 32 的整数倍。此项在下次重启后生效。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "INS_LOG_BAT_LGIN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "88d4707985ce4dbe319eae3070adc1b4ade4a7015bb7277667b5ee4cc6f0f0f2",
+      "recordSha256": "172b1147424e190cfba5b9ce2f05f190780e11dbde64cdc3893e3fffbbe39ad2",
+      "english": "Interval between pushing samples to the AP_Logger log",
+      "chinese": "将样本写入 AP_Logger 日志的时间间隔。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "INS_LOG_BAT_LGCT",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "ce08a4e5d9cdeab22ea346a40f20811e1b6bc48680add24dc02d57e94746492c",
+      "recordSha256": "6a9d8add717a8d64a9e0c51508a47bbd8d9f23d4cd86a2a5e5598de3c71b1f48",
+      "english": "Number of samples to push to count every INS_LOG_BAT_LGIN",
+      "chinese": "每隔 INS_LOG_BAT_LGIN 指定的时间，写入日志的样本数。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "INS_LOG_BAT_CNT",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "69c53a9a3952c0ff2bab4a5511db9004344b2d22dc63cd7981280059039f5fd1",
+      "recordSha256": "44c74c1ba7bccf7ba45c6b7f3311ea441fa947f2cc01dc3583b4b1b1c2cd2e64",
+      "english": "Number of samples to take when logging streams of IMU sensor readings.  Will be rounded down to a multiple of 32. This option takes effect on the next reboot.",
+      "chinese": "记录惯性测量单元（IMU）传感器数据流时采集的样本数，向下取为 32 的整数倍。此项在下次重启后生效。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "INS_LOG_BAT_LGIN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "88d4707985ce4dbe319eae3070adc1b4ade4a7015bb7277667b5ee4cc6f0f0f2",
+      "recordSha256": "172b1147424e190cfba5b9ce2f05f190780e11dbde64cdc3893e3fffbbe39ad2",
+      "english": "Interval between pushing samples to the AP_Logger log",
+      "chinese": "将样本写入 AP_Logger 日志的时间间隔。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "INS_LOG_BAT_LGCT",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "ce08a4e5d9cdeab22ea346a40f20811e1b6bc48680add24dc02d57e94746492c",
+      "recordSha256": "6a9d8add717a8d64a9e0c51508a47bbd8d9f23d4cd86a2a5e5598de3c71b1f48",
+      "english": "Number of samples to push to count every INS_LOG_BAT_LGIN",
+      "chinese": "每隔 INS_LOG_BAT_LGIN 指定的时间，写入日志的样本数。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "INS_LOG_BAT_CNT",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "69c53a9a3952c0ff2bab4a5511db9004344b2d22dc63cd7981280059039f5fd1",
+      "recordSha256": "44c74c1ba7bccf7ba45c6b7f3311ea441fa947f2cc01dc3583b4b1b1c2cd2e64",
+      "english": "Number of samples to take when logging streams of IMU sensor readings.  Will be rounded down to a multiple of 32. This option takes effect on the next reboot.",
+      "chinese": "记录惯性测量单元（IMU）传感器数据流时采集的样本数，向下取为 32 的整数倍。此项在下次重启后生效。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "INS_LOG_BAT_LGIN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "88d4707985ce4dbe319eae3070adc1b4ade4a7015bb7277667b5ee4cc6f0f0f2",
+      "recordSha256": "172b1147424e190cfba5b9ce2f05f190780e11dbde64cdc3893e3fffbbe39ad2",
+      "english": "Interval between pushing samples to the AP_Logger log",
+      "chinese": "将样本写入 AP_Logger 日志的时间间隔。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "INS_LOG_BAT_LGCT",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "ce08a4e5d9cdeab22ea346a40f20811e1b6bc48680add24dc02d57e94746492c",
+      "recordSha256": "6a9d8add717a8d64a9e0c51508a47bbd8d9f23d4cd86a2a5e5598de3c71b1f48",
+      "english": "Number of samples to push to count every INS_LOG_BAT_LGIN",
+      "chinese": "每隔 INS_LOG_BAT_LGIN 指定的时间，写入日志的样本数。"
     }
   ]
 }

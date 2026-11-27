@@ -537,6 +537,20 @@
             <field name="ReadOnly">True</field>
           </param>
         </parameters>
+        <parameters name="INS_LOG_">
+          <param humanName="sample count per batch" name="INS_LOG_BAT_CNT" documentation="Number of samples to take when logging streams of IMU sensor readings.  Will be rounded down to a multiple of 32. This option takes effect on the next reboot." user="Advanced">
+            <field name="Increment">32</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="logging interval" name="INS_LOG_BAT_LGIN" documentation="Interval between pushing samples to the AP_Logger log">
+            <field name="Units">ms</field>
+            <field name="UnitText">milliseconds</field>
+            <field name="Increment">10</field>
+          </param>
+          <param humanName="logging count" name="INS_LOG_BAT_LGCT" documentation="Number of samples to push to count every INS_LOG_BAT_LGIN">
+            <field name="Increment">1</field>
+          </param>
+        </parameters>
       </libraries>
     </paramfile>
   </release>
@@ -1091,6 +1105,20 @@
           </param>
           <param humanName="Sidebar vertical extension" name="OSD_SB_V_EXT" documentation="Increase of vertical length of the sidebar itens by this amount of lines. Applied equally both above and below the default setting." user="Standard">
             <field name="Range">0 10</field>
+          </param>
+        </parameters>
+        <parameters name="INS_LOG_">
+          <param humanName="sample count per batch" name="INS_LOG_BAT_CNT" documentation="Number of samples to take when logging streams of IMU sensor readings.  Will be rounded down to a multiple of 32. This option takes effect on the next reboot." user="Advanced">
+            <field name="Increment">32</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="logging interval" name="INS_LOG_BAT_LGIN" documentation="Interval between pushing samples to the AP_Logger log">
+            <field name="Units">ms</field>
+            <field name="UnitText">milliseconds</field>
+            <field name="Increment">10</field>
+          </param>
+          <param humanName="logging count" name="INS_LOG_BAT_LGCT" documentation="Number of samples to push to count every INS_LOG_BAT_LGIN">
+            <field name="Increment">1</field>
           </param>
         </parameters>
       </libraries>
@@ -1682,6 +1710,20 @@
           </param>
           <param humanName="Sidebar vertical extension" name="OSD_SB_V_EXT" documentation="Increase of vertical length of the sidebar itens by this amount of lines. Applied equally both above and below the default setting." user="Standard">
             <field name="Range">0 10</field>
+          </param>
+        </parameters>
+        <parameters name="INS_LOG_">
+          <param humanName="sample count per batch" name="INS_LOG_BAT_CNT" documentation="Number of samples to take when logging streams of IMU sensor readings.  Will be rounded down to a multiple of 32. This option takes effect on the next reboot." user="Advanced">
+            <field name="Increment">32</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="logging interval" name="INS_LOG_BAT_LGIN" documentation="Interval between pushing samples to the AP_Logger log">
+            <field name="Units">ms</field>
+            <field name="UnitText">milliseconds</field>
+            <field name="Increment">10</field>
+          </param>
+          <param humanName="logging count" name="INS_LOG_BAT_LGCT" documentation="Number of samples to push to count every INS_LOG_BAT_LGIN">
+            <field name="Increment">1</field>
           </param>
         </parameters>
       </libraries>
@@ -2285,6 +2327,20 @@
           </param>
           <param humanName="GPS Node ID 2" name="GPS_CAN_NODEID2" documentation="GPS Node id for second-discovered GPS." user="Advanced">
             <field name="ReadOnly">True</field>
+          </param>
+        </parameters>
+        <parameters name="INS_LOG_">
+          <param humanName="sample count per batch" name="INS_LOG_BAT_CNT" documentation="Number of samples to take when logging streams of IMU sensor readings.  Will be rounded down to a multiple of 32. This option takes effect on the next reboot." user="Advanced">
+            <field name="Increment">32</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="logging interval" name="INS_LOG_BAT_LGIN" documentation="Interval between pushing samples to the AP_Logger log">
+            <field name="Units">ms</field>
+            <field name="UnitText">milliseconds</field>
+            <field name="Increment">10</field>
+          </param>
+          <param humanName="logging count" name="INS_LOG_BAT_LGCT" documentation="Number of samples to push to count every INS_LOG_BAT_LGIN">
+            <field name="Increment">1</field>
           </param>
         </parameters>
       </libraries>
@@ -2898,6 +2954,20 @@
           </param>
           <param humanName="Sidebar vertical extension" name="OSD_SB_V_EXT" documentation="Increase of vertical length of the sidebar itens by this amount of lines. Applied equally both above and below the default setting." user="Standard">
             <field name="Range">0 10</field>
+          </param>
+        </parameters>
+        <parameters name="INS_LOG_">
+          <param humanName="sample count per batch" name="INS_LOG_BAT_CNT" documentation="Number of samples to take when logging streams of IMU sensor readings.  Will be rounded down to a multiple of 32. This option takes effect on the next reboot." user="Advanced">
+            <field name="Increment">32</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="logging interval" name="INS_LOG_BAT_LGIN" documentation="Interval between pushing samples to the AP_Logger log">
+            <field name="Units">ms</field>
+            <field name="UnitText">milliseconds</field>
+            <field name="Increment">10</field>
+          </param>
+          <param humanName="logging count" name="INS_LOG_BAT_LGCT" documentation="Number of samples to push to count every INS_LOG_BAT_LGIN">
+            <field name="Increment">1</field>
           </param>
         </parameters>
       </libraries>
@@ -3557,6 +3627,20 @@
             <field name="Range">0 10</field>
           </param>
         </parameters>
+        <parameters name="INS_LOG_">
+          <param humanName="sample count per batch" name="INS_LOG_BAT_CNT" documentation="Number of samples to take when logging streams of IMU sensor readings.  Will be rounded down to a multiple of 32. This option takes effect on the next reboot." user="Advanced">
+            <field name="Increment">32</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="logging interval" name="INS_LOG_BAT_LGIN" documentation="Interval between pushing samples to the AP_Logger log">
+            <field name="Units">ms</field>
+            <field name="UnitText">milliseconds</field>
+            <field name="Increment">10</field>
+          </param>
+          <param humanName="logging count" name="INS_LOG_BAT_LGCT" documentation="Number of samples to push to count every INS_LOG_BAT_LGIN">
+            <field name="Increment">1</field>
+          </param>
+        </parameters>
       </libraries>
     </paramfile>
   </release>
@@ -3738,6 +3822,20 @@
           </param>
           <param humanName="Sidebar vertical extension" name="OSD_SB_V_EXT" documentation="Increase of vertical length of the sidebar itens by this amount of lines. Applied equally both above and below the default setting." user="Standard">
             <field name="Range">0 10</field>
+          </param>
+        </parameters>
+        <parameters name="INS_LOG_">
+          <param humanName="sample count per batch" name="INS_LOG_BAT_CNT" documentation="Number of samples to take when logging streams of IMU sensor readings.  Will be rounded down to a multiple of 32. This option takes effect on the next reboot." user="Advanced">
+            <field name="Increment">32</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="logging interval" name="INS_LOG_BAT_LGIN" documentation="Interval between pushing samples to the AP_Logger log">
+            <field name="Units">ms</field>
+            <field name="UnitText">milliseconds</field>
+            <field name="Increment">10</field>
+          </param>
+          <param humanName="logging count" name="INS_LOG_BAT_LGCT" documentation="Number of samples to push to count every INS_LOG_BAT_LGIN">
+            <field name="Increment">1</field>
           </param>
         </parameters>
       </libraries>
