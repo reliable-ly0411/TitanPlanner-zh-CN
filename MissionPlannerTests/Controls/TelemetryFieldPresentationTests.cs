@@ -413,6 +413,7 @@ namespace MissionPlannerTests.Controls
                     foreach (var pair in new[] {
                         Tuple.Create("i2cerrors", "上报的 I²C 错误次数"),
                         Tuple.Create("rxerrors", "数传接收错误次数"),
+                        Tuple.Create("packetdropremote", "远端上报的通信丢包率 (c%)"),
                         Tuple.Create("txbuffer", "数传发送缓冲区剩余（%）"),
                         Tuple.Create("fixedp", "数传已纠错的数据包数"),
                         Tuple.Create("brklevel", "上报的堆顶"),
@@ -429,7 +430,7 @@ namespace MissionPlannerTests.Controls
                         if (locale == "zh-CN")
                             Assert.IsTrue(TelemetryFieldPresentation.Matches(pair.Item2, label));
                     }
-                    foreach (var key in new[] { "landed", "packetdropremote", "rpm3" })
+                    foreach (var key in new[] { "landed", "packetdropremote_future", "rpm3" })
                         Assert.AreEqual(key, TelemetryFieldPresentation.FieldLabel(key));
                 }
             }

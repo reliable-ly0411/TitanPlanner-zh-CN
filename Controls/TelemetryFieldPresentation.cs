@@ -80,6 +80,8 @@ namespace MissionPlanner.Controls
                 case "ratestatus": return UiText.Translate("Requested extended status stream rate (Hz)");
                 case "i2cerrors": return UiText.Translate("Reported I2C error count");
                 case "rxerrors": return UiText.Translate("Radio receive error count");
+                // SYS_STATUS.drop_rate_comm is copied without scaling in CurrentState.
+                case "packetdropremote": return UiText.Translate("Remote-reported communication drop rate (c%)");
                 case "txbuffer": return UiText.Translate("Free radio transmit buffer (%)");
                 case "fixedp": return UiText.Translate("Error-corrected radio packet count");
                 case "brklevel": return UiText.Translate("Reported heap top");

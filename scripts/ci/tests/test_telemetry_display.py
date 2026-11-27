@@ -3,6 +3,7 @@ import json
 import re
 from pathlib import Path
 import unittest
+import xml.etree.ElementTree as ET
 
 ROOT = Path(__file__).resolve().parents[3]
 
@@ -70,6 +71,20 @@ class TelemetryDisplayTest(unittest.TestCase):
             self.assertIn('GetHeight(graphics)', source)
             self.assertIn('_contentPanel.AutoScrollMinSize', source)
         self.assertIn('new Size(x - _columnGap + _padding, bottom + _padding)', chart)
+
+    def test_remote_packet_drop_caption_uses_unscaled_mavlink_unit_and_raw_key(self):
+        message_schema = ET.parse(ROOT / 'ExtLibs/Mavlink/message_definitions/common.xml')
+        field = message_schema.find("./messages/message[@name='SYS_STATUS']/field[@name='drop_rate_comm']")
+        self.assertEqual(('uint16_t', 'c%'), (field.get('type'), field.get('units')))
+        state = (ROOT / 'ExtLibs/ArduPilot/CurrentState.cs').read_text(encoding='utf-8-sig')
+        self.assertIn('public ushort packetdropremote { get; set; }', state)
+        self.assertIn('packetdropremote = sysstatus.drop_rate_comm;', state)
+        catalog = json.loads((ROOT / 'localization/zh-Hans/code-translations.json').read_text())
+        self.assertEqual('远端上报的通信丢包率 (c%)', catalog['Remote-reported communication drop rate (c%)'])
+        quick_view = (ROOT / 'Controls/QuickViewOptions.cs').read_text(encoding='utf-8-sig')
+        self.assertIn('TelemetryFieldPresentation.FieldLabel(field.Name)', quick_view)
+        self.assertIn('new Tuple<string, string>(field.Name, display)', quick_view)
+        self.assertIn('CMB_Source.ValueMember = "Item1";', quick_view)
 
     def test_group_catalog_does_not_reuse_distance_terrain(self):
         catalog = json.loads((ROOT / 'localization/zh-Hans/code-translations.json').read_text())

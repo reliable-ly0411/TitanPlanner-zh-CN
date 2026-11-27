@@ -2330,6 +2330,7 @@
   "Requested extended status stream rate (Hz)": "请求的扩展状态流频率 (Hz)",
   "Reported I2C error count": "上报的 I²C 错误次数",
   "Radio receive error count": "数传接收错误次数",
+  "Remote-reported communication drop rate (c%)": "远端上报的通信丢包率 (c%)",
   "Free radio transmit buffer (%)": "数传发送缓冲区剩余（%）",
   "Error-corrected radio packet count": "数传已纠错的数据包数",
   "Reported heap top": "上报的堆顶",
