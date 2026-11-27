@@ -154,15 +154,22 @@ internal static class AppearanceIsolatedHost
                 using (var form = new Form())
                 using (var page = new MissionPlanner.GCSViews.ConfigurationView.ConfigAppearance())
                 {
-                    form.AutoScaleMode = AutoScaleMode.None; page.Dock = DockStyle.Fill; form.Controls.Add(page); form.Show();
                     DesktopAppearance.Import(AppearanceAsset.WindowIcon, source);
-                    Descendants(page).OfType<Button>().Single(b => b.Text == UiText.Translate("Restore default icon")).PerformClick();
-                    Check(DesktopAppearance.WindowIcon == null, "restore icon button did not reset selection");
                     DesktopAppearance.Import(AppearanceAsset.StartupImage, AppearanceAssetStoreTests.ImageFile(output, ".png", Color.White));
-                    Descendants(page).OfType<Button>().Single(b => b.Text == UiText.Translate("Restore default startup image")).PerformClick();
+                    form.AutoScaleMode = AutoScaleMode.None; page.Dock = DockStyle.Fill; form.Controls.Add(page); form.Show();
+                    // Reconstruct after externally seeding so the selectors initialize from saved preferences.
+                    using (var seeded = new MissionPlanner.GCSViews.ConfigurationView.ConfigAppearance())
+                    {
+                        var icon = (ComboBox)seeded.Controls.Find("WindowIconPreset", true).Single();
+                        var startup = (ComboBox)seeded.Controls.Find("StartupImagePreset", true).Single();
+                        Check(icon.SelectedIndex == 4 && startup.SelectedIndex == 3, "saved choices not restored");
+                        icon.SelectedIndex = 0;
+                        startup.SelectedIndex = 0;
+                    }
+                    Check(DesktopAppearance.WindowIcon == null, "default icon did not reset selection");
                     string resetWarning;
                     using (var resetImage = DesktopAppearance.Store.LoadStartupImage(out resetWarning))
-                        Check(resetImage == null && resetWarning == null, "restore startup button did not reset selection");
+                        Check(resetImage == null && resetWarning == null, "default startup did not reset selection");
                     foreach (int width in new[] { 320, 640, 1024 })
                     foreach (float scale in new[] { 1f, 1.5f, 2f })
                     {
@@ -207,7 +214,20 @@ internal static class AppearanceIsolatedHost
                         Check(!embedded.AutoScroll, "embedded appearance uses nested scrolling");
                         Check(embedded.AutoSize, "embedded appearance does not size to its contents");
                         Check(Descendants(embedded).OfType<PictureBox>().Count() == 2, "embedded previews are missing");
-                        Check(Descendants(embedded).OfType<Button>().Count() == 4, "embedded import/reset controls are missing");
+                        Check(Descendants(embedded).OfType<Button>().Count() == 2, "embedded picker count changed");
+                        foreach (var names in new[] { new[] { "WindowIconPreset", "ChooseLocalWindowIcon" },
+                                                      new[] { "StartupImagePreset", "ChooseLocalStartupImage" } })
+                        {
+                            var selector = embedded.Controls.Find(names[0], true).Single();
+                            var picker = embedded.Controls.Find(names[1], true).Single();
+                            Check(selector.Parent == picker.Parent && picker.Left >= selector.Right &&
+                                  picker.Right <= picker.Parent.ClientSize.Width, "picker is not adjacent to its preset");
+                        }
+                        var iconPreview = embedded.Controls.Find("WindowIconPreview", true).Single();
+                        var splashPreview = embedded.Controls.Find("StartupImagePreview", true).Single();
+                        Check(iconPreview.Parent == splashPreview.Parent && iconPreview.Height <= 56 &&
+                              splashPreview.Height <= 56, "thumbnails are not compact");
+                        Check(embedded.Height <= 220, "appearance group exceeds compact height");
                         var last = Descendants(embedded).OfType<Label>().Last();
                         settings.AutoScrollPosition = new Point(0, settings.DisplayRectangle.Height);
                         Application.DoEvents();

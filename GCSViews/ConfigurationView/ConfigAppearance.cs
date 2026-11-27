@@ -11,10 +11,11 @@ namespace MissionPlanner.GCSViews.ConfigurationView
     /// <summary>Desktop appearance controls; imports and resets remain independent of vehicle settings.</summary>
     public sealed class ConfigAppearance : MyUserControl
     {
-        private readonly PictureBox iconPreview = new PictureBox { SizeMode = PictureBoxSizeMode.CenterImage, Height = 64, Dock = DockStyle.Fill };
-        private readonly PictureBox startupPreview = new PictureBox { SizeMode = PictureBoxSizeMode.Zoom, Height = 200, Dock = DockStyle.Fill, BackColor = Color.Black };
+        private readonly PictureBox iconPreview = new PictureBox { SizeMode = PictureBoxSizeMode.Zoom, Height = 40, Dock = DockStyle.Fill };
+        private readonly PictureBox startupPreview = new PictureBox { SizeMode = PictureBoxSizeMode.Zoom, Height = 48, Dock = DockStyle.Fill, BackColor = Color.Black };
         private ComboBox iconChoices, startupChoices;
         private readonly bool simplifiedChinese;
+        private readonly ToolTip details = new ToolTip();
         private bool synchronizingPresets;
 
         private sealed class Preset
@@ -49,22 +50,33 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                 Padding = embedded ? Padding.Empty : new Padding(12)
             };
             layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
-            if (!embedded)
-                AddText(layout, "Window icon and startup image");
-            AddText(layout, "ICO: up to 4 MiB, 1-256 pixels per frame (up to 64 frames). Window icons apply now and on restart.");
             var culture = System.Globalization.CultureInfo.CurrentUICulture.Name;
             simplifiedChinese = culture == "zh-CN" || culture == "zh-Hans";
-            layout.Controls.Add(iconPreview);
+            if (!embedded)
+                AddText(layout, Local("窗口图标和启动图", "Window icon and startup image"));
+            var iconTitle = AddText(layout, Local("窗口图标 · 即时生效", "Window icon · applies now"));
             layout.Controls.Add(PresetRow(AppearanceAsset.WindowIcon, out iconChoices));
-            AddText(layout, "PNG, JPEG or BMP: up to 16 MiB, 4096 pixels per side. The full image is fitted without cropping. Applies on next startup.");
-            layout.Controls.Add(startupPreview);
+            var startupTitle = AddText(layout, Local("启动图 · 下次启动生效", "Startup image · applies on next start"));
             layout.Controls.Add(PresetRow(AppearanceAsset.StartupImage, out startupChoices));
-            AddText(layout, Local(
-                "先选预设再选文件，可为该预设导入本地素材。选中默认项或内置启动图时，文件按钮会导入为自定义素材。厂商图标不会随包附带或自动下载。",
-                "Select a preset before choosing a file to import into that preset. Choosing a file beside a built-in image or default imports it as custom. Vendor icons are not bundled or downloaded."));
-            AddText(layout, "These preferences apply to this user's profiles. Imported copies are saved separately; original files, logs and flight settings are preserved.");
-            AddText(layout, "EXE, installer and Explorer icons require a rebuild. Existing or pinned shortcuts keep their own icons; change or recreate them separately. Windows may retain a cached taskbar icon.");
-            AddText(layout, "Use images you have permission to use. Restoring defaults preserves imported copies and preference backups.");
+
+            var previews = new TableLayoutPanel { Dock = DockStyle.Top, AutoSize = true, ColumnCount = 2 };
+            previews.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25));
+            previews.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 75));
+            iconPreview.Name = "WindowIconPreview";
+            iconPreview.AccessibleName = Local("当前窗口图标预览", "Active window icon preview");
+            iconPreview.MaximumSize = new Size(40, 40);
+            startupPreview.Name = "StartupImagePreview";
+            startupPreview.AccessibleName = Local("下次启动图预览", "Next startup image preview");
+            previews.Controls.Add(iconPreview, 0, 0);
+            previews.Controls.Add(startupPreview, 1, 0);
+            layout.Controls.Add(previews);
+            details.SetToolTip(iconTitle, UiText.Translate("ICO: up to 4 MiB, 1-256 pixels per frame (up to 64 frames). Window icons apply now and on restart.") +
+                "\n" + UiText.Translate("EXE, installer and Explorer icons require a rebuild. Existing or pinned shortcuts keep their own icons; change or recreate them separately. Windows may retain a cached taskbar icon."));
+            details.SetToolTip(startupTitle, UiText.Translate("PNG, JPEG or BMP: up to 16 MiB, 4096 pixels per side. The full image is fitted without cropping. Applies on next startup."));
+            details.SetToolTip(status, Local(
+                "选中默认项或内置启动图时，文件按钮会导入为自定义素材。厂商图标不会随包附带或自动下载。",
+                "Choosing a file beside a built-in image or default imports it as custom. Vendor icons are not bundled or downloaded.") +
+                "\n" + UiText.Translate("Use images you have permission to use. Restoring defaults preserves imported copies and preference backups."));
             layout.Controls.Add(status);
             Controls.Add(layout);
             layout.SizeChanged += (sender, args) => WrapLabels(layout);
@@ -73,13 +85,15 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             catch (Exception) { status.Text = UiText.Translate("Appearance preview unavailable."); }
         }
 
-        private static void AddText(TableLayoutPanel layout, string text)
+        private static Label AddText(TableLayoutPanel layout, string text)
         {
-            layout.Controls.Add(new Label
+            var label = new Label
             {
                 Text = UiText.Translate(text), AutoSize = true, Dock = DockStyle.Fill,
-                Margin = new Padding(3, 6, 3, 6)
-            });
+                Margin = new Padding(3, 2, 3, 2)
+            };
+            layout.Controls.Add(label);
+            return label;
         }
 
         private static void WrapLabels(TableLayoutPanel layout)
@@ -96,17 +110,23 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             var icon = kind == AppearanceAsset.WindowIcon;
             var pickerName = icon ? Local("窗口图标", "Window icon") : Local("启动图", "Startup image");
             var fileName = icon ? Local("选择本地图标…", "Choose local icon…") : Local("选择本地启动图…", "Choose local startup image…");
-            var row = new FlowLayoutPanel { AutoSize = true, Dock = DockStyle.Fill, WrapContents = true };
+            var row = new TableLayoutPanel
+            {
+                AutoSize = true, AutoSizeMode = AutoSizeMode.GrowAndShrink, Dock = DockStyle.Fill,
+                Margin = Padding.Empty, ColumnCount = 2
+            };
+            row.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
+            row.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
             var menu = new ComboBox
             {
                 Name = icon ? "WindowIconPreset" : "StartupImagePreset",
                 AccessibleName = pickerName, DropDownStyle = ComboBoxStyle.DropDownList,
-                Width = 200, Anchor = AnchorStyles.Left
+                DropDownWidth = 260, Anchor = AnchorStyles.Left | AnchorStyles.Right
             };
-            menu.Items.Add(new Preset("default", icon ? Local("默认图标", "Default icon") : Local("TitanPlanner 原启动图（默认）", "TitanPlanner artwork (default)")));
-            menu.Items.Add(new Preset("mission-planner", icon ? "Mission Planner" : Local("Mission Planner 原启动图", "Mission Planner artwork")));
+            menu.Items.Add(new Preset("default", icon ? Local("包内默认图标", "Packaged default icon") : Local("TitanPlanner 原启动图（默认）", "TitanPlanner artwork (default)")));
+            menu.Items.Add(new Preset("mission-planner", icon ? Local("Mission Planner（本地）", "Mission Planner (local)") : Local("Mission Planner 原启动图", "Mission Planner artwork")));
             if (icon)
-                menu.Items.Add(new Preset("titan-planner", "TitanPlanner"));
+                menu.Items.Add(new Preset("titan-planner", Local("TitanPlanner（本地）", "TitanPlanner (local)")));
             menu.Items.Add(new Preset("mfe", Local("奋斗者", "MakeFlyEasy")));
             menu.Items.Add(new Preset("custom", Local("自定义", "Custom")));
             menu.SelectedIndex = 0;
@@ -154,14 +174,8 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                 Text = fileName, AutoSize = true, Anchor = AnchorStyles.Left
             };
             choose.Click += (sender, args) => ChooseLocalAsset(kind, (Preset)menu.SelectedItem, fileName);
-            row.SizeChanged += (sender, args) =>
-            {
-                int available = row.ClientSize.Width - choose.PreferredSize.Width - menu.Margin.Horizontal - choose.Margin.Horizontal;
-                int width = Math.Min(240, Math.Max(132, available));
-                if (menu.Width != width) menu.Width = width;
-            };
-            row.Controls.Add(menu);
-            row.Controls.Add(choose);
+            row.Controls.Add(menu, 0, 0);
+            row.Controls.Add(choose, 1, 0);
             combo = menu;
             return row;
         }
@@ -171,7 +185,8 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             if (synchronizingPresets || preset == null) return;
             var icon = kind == AppearanceAsset.WindowIcon;
             var store = DesktopAppearance.Store;
-            if (store.CurrentPreset(kind) == preset.Id) return;
+            var active = store.CurrentPreset(kind);
+            if (active == preset.Id) return;
             Action select;
             bool available;
             switch (preset.Id)
@@ -200,8 +215,9 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             }
             if (!available)
             {
-                status.Text = Local("该选项尚未导入素材。请使用旁边的文件按钮；当前外观保持不变。",
-                    "No local file has been imported for this option. Use the adjacent file button; the current appearance is unchanged.");
+                status.Text = string.Format(Local("“{0}”尚未导入。请选本地文件；实际仍用“{1}”。",
+                    "“{0}” has no local file. Choose one; “{1}” remains active."), preset,
+                    CaptionFor(kind, active));
                 return;
             }
             Change(select);
@@ -236,6 +252,15 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             }
         }
 
+        private string CaptionFor(AppearanceAsset kind, string id)
+        {
+            var menu = kind == AppearanceAsset.WindowIcon ? iconChoices : startupChoices;
+            if (menu != null)
+                foreach (Preset preset in menu.Items)
+                    if (preset.Id == id) return preset.ToString();
+            return id;
+        }
+
         private void SetChoice(AppearanceAsset kind, string id)
         {
             var menu = kind == AppearanceAsset.WindowIcon ? iconChoices : startupChoices;
@@ -263,7 +288,9 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                 status.Text = UiText.Translate("Unable to save appearance. Previous selection is unchanged.");
                 // Paths and decoder exception text can contain personal information. Show only known validation messages.
                 if (ex is InvalidDataException)
-                    status.Text += " " + UiText.Translate(ex.Message);
+                    status.Text += " " + (ex.Message == new InvalidDataException().Message
+                        ? Local("保存的素材不可用，请重新导入本地文件。", "Saved artwork is unavailable. Reimport the local file.")
+                        : UiText.Translate(ex.Message));
                 return;
             }
             string warning;
@@ -275,26 +302,39 @@ namespace MissionPlanner.GCSViews.ConfigurationView
 
         private string RefreshPreviews()
         {
-            var icon = ThemeManager.FormIcon;
-            var previous = iconPreview.Image;
-            iconPreview.Image = icon == null ? null : icon.ToBitmap();
-            previous?.Dispose();
-            string warning;
-            var image = DesktopAppearance.CreateStartupPreview(out warning);
-            previous = startupPreview.Image;
-            startupPreview.Image = image;
-            previous?.Dispose();
+            // Synchronize selectors even when a thumbnail cannot be decoded or rendered.
             SetChoice(AppearanceAsset.WindowIcon, DesktopAppearance.Store.CurrentPreset(AppearanceAsset.WindowIcon));
             SetChoice(AppearanceAsset.StartupImage, DesktopAppearance.Store.CurrentPreset(AppearanceAsset.StartupImage));
-            warning = DesktopAppearance.IconWarning ?? warning;
-            status.Text = UiText.Translate(warning ?? "Default or saved appearance is shown above.");
+            string warning = null;
+            string previewWarning = null;
+            try
+            {
+                var icon = ThemeManager.FormIcon;
+                ReplacePreview(iconPreview, icon == null ? null : icon.ToBitmap());
+            }
+            catch (Exception) { previewWarning = "Appearance preview unavailable."; }
+            try { ReplacePreview(startupPreview, DesktopAppearance.CreateStartupPreview(out warning)); }
+            catch (Exception) { previewWarning = "Appearance preview unavailable."; }
+            warning = DesktopAppearance.IconWarning ?? warning ?? previewWarning;
+            status.Text = warning == null
+                ? Local("预设缺素材时，先选该项，再导入本地文件。",
+                    "To supply a missing preset, select it, then choose a local file.")
+                : UiText.Translate(warning);
             return warning;
+        }
+
+        private static void ReplacePreview(PictureBox preview, Image image)
+        {
+            var previous = preview.Image;
+            preview.Image = image;
+            previous?.Dispose();
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
+                details.Dispose();
                 iconPreview.Image?.Dispose();
                 startupPreview.Image?.Dispose();
             }
