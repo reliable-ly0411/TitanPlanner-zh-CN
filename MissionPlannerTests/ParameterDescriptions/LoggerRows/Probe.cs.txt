@@ -1,0 +1,210 @@
+using System;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Windows.Forms;
+using System.Xml.Linq;
+using MissionPlanner.Utilities;
+
+namespace MissionPlanner.GCSViews.ConfigurationView
+{
+    public partial class ConfigRawParams
+    {
+        private const string Firmware = "ArduCopter2";
+        private const string ProductCommit = "594333121fee8a5f624f945035eaa3cefc6d05b4";
+        private const string SourceDigest = "e6375727b7a05a0c820b7b5c3e28c755d52c1e6da6b4506682d1dd3b19552190";
+        private const string CurrentBits = "5c7b458c3f172dfdf78ecc1e0613001c1c7d62bc5fb96a58b5487a111bf20e11";
+        private const string LegacyBits = "ef94558023286f9ac6eb483a2afdd4e406afc98bd66adc85c271f2e134c512db";
+        private static int checks;
+
+        private sealed class ExpectedRow
+        {
+            internal readonly string Key, English, Chinese, Units, Options, Fingerprint;
+            internal readonly object Value;
+            internal readonly Regex Search;
+
+            internal ExpectedRow(string key, object value, string units, string options, string fingerprint,
+                string english, string chinese, string keyword)
+            {
+                Key = key; Value = value; Units = units; Options = options; Fingerprint = fingerprint;
+                English = english; Chinese = chinese; Search = new Regex(Regex.Escape(keyword));
+            }
+        }
+
+        private static readonly ExpectedRow Backend = new ExpectedRow("LOG_BACKEND_TYPE", 5, "",
+            "bit 0: File\nbit 1: MAVLink\nbit 2: Block", CurrentBits,
+            "Bitmap of what Logger backend types to enable. Block-based logging is available on SITL and boards with dataflash chips. Multiple backends can be selected.",
+            "用位掩码选择要启用的日志后端，可同时选择多个。SITL（软件在环仿真）和带有 DataFlash 芯片的飞控板支持块存储日志后端。", "位掩码");
+        private static readonly ExpectedRow[] Cases =
+        {
+            Backend,
+            new ExpectedRow("LOG_DARM_RATEMAX", 0m, "Hz", "0 1000",
+                "e42c7e8ed72ea4bd72754cfdbdafdfc6ccd56716acbf5fe87640b287a6299996",
+                "This sets the maximum rate that streaming log messages will be logged to any backend when disarmed. A value of zero means that the normal backend rate limit is applied.",
+                "飞行器处于上锁状态时，各日志后端记录流式日志消息的最高频率。设为 0 时，沿用各后端通常的限速设置。", "沿用各后端"),
+            new ExpectedRow("LOG_FILE_DSRMROT", 1, "", "0: Disabled\n1: Enabled",
+                "81c296dc63cb2561212561f205097d80a588332be8150f1b52a82dc17194db6c",
+                "When set, the current log file is closed when the vehicle is disarmed.  If LOG_DISARMED is set then a fresh log will be opened. Applies to the File and Block logging backends.",
+                "启用后，飞行器从解锁转为上锁时会关闭当前日志文件。若已启用 LOG_DISARMED，则另开一份日志。适用于文件和块存储日志后端。", "另开一份日志")
+        };
+
+        // Supplies the legacy lookup of this partial test host with offline English fixture data.
+        // The compiled production ReadParameterDescription method still performs the fallback.
+        private static class ParameterMetaDataRepository
+        {
+            internal static ParameterDescriptionSnapshot EnglishFixture;
+            internal static string GetParameterMetaData(string key, string field, string firmware)
+            {
+                if (firmware != Firmware || EnglishFixture == null)
+                    throw new InvalidOperationException("旧元数据替身不接受这次调用");
+                var r = EnglishFixture.Find(key);
+                switch (field)
+                {
+                    case ParameterMetaDataConstants.Description: return r.English;
+                    case ParameterMetaDataConstants.Range: return r.Range;
+                    case ParameterMetaDataConstants.Units: return r.Units;
+                    case ParameterMetaDataConstants.Values:
+                        return string.Join(",", r.Values.Select(v => v.Code + ": " + v.English));
+                    default: throw new InvalidOperationException("旧元数据替身未定义字段 " + field);
+                }
+            }
+        }
+
+        [STAThread]
+        internal static int Main()
+        {
+            Console.OutputEncoding = new UTF8Encoding(false);
+            try
+            {
+                CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+                CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo("zh-CN");
+                using (var view = new ConfigRawParams()) view.CheckLoggerRows();
+                Console.WriteLine("PASS {0} checks | Copter 4.6.3 | 3 logger rows | product {1}", checks, ProductCommit);
+                return 0;
+            }
+            catch (Exception e)
+            {
+                Console.Error.WriteLine("FAIL " + e);
+                return 1;
+            }
+        }
+
+        private static void Require(bool ok, string label)
+        {
+            if (!ok) throw new InvalidOperationException(label);
+            checks++;
+        }
+
+        private void CheckLoggerRows()
+        {
+            var ctx = ParameterDescriptionContext.TryCreate(Firmware, "ArduCopter V4.6.3 (92b0cd78)", new Version(4, 6, 3, 255));
+            var known = DescriptionStore.Value.Bundled(ctx);
+            Require(known != null && known.MatchesReportedBuild && known.SourceSha256 == SourceDigest, "Copter 4.6.3 来源或构建不符");
+            _descriptionSession = new DescriptionSession { Chinese = true, Context = ctx, Snapshot = known };
+            Params.ReadOnly = true;
+            Params.AllowUserToAddRows = false;
+            Params.Columns.AddRange(Command, Value, Units, Options, Desc);
+            Controls.Add(Params);
+            InitializeParameterDescriptions();
+            for (int i = 0; i < Cases.Length; i++)
+            {
+                var c = Cases[i];
+                var row = Params.Rows[Params.Rows.Add()];
+                row.Cells[Command.Index].Value = c.Key;
+                row.Cells[Value.Index].Value = c.Value;
+                var record = known.Find(c.Key);
+                Require(record != null && record.English == c.English && record.Fingerprint == c.Fingerprint, c.Key + " 固定原记录");
+                Require(row.Cells[Desc.Index].Value == null && MatchesParameterDescription(c.Key, c.Search), c.Key + " 尚未填行时中文检索");
+                ApplyParameterDescriptionToRow(row, ReadParameterDescription(c.Key, Firmware, _descriptionSession));
+                CheckIdentity(row, c);
+                Require(Equals(row.Cells[Units.Index].Value, c.Units) && Equals(row.Cells[Options.Index].Value, c.Options), c.Key + " 原单位、范围和编号");
+                string bilingual = c.English + "\n\n中文说明：\n" + c.Chinese;
+                Require(Equals(row.Cells[Desc.Index].Value, bilingual), c.Key + " 完整双语");
+                string tip = row.Cells[Command.Index].ToolTipText;
+                Require(tip.StartsWith(bilingual, StringComparison.Ordinal) && tip.Contains(SourceDigest)
+                    && row.Cells[Value.Index].ToolTipText == tip && row.Cells[Desc.Index].ToolTipText == tip, c.Key + " 来源提示");
+                using (var details = CreateParameterDescriptionDetails(row))
+                {
+                    var body = details.Controls.OfType<RichTextBox>().Single();
+                    Require(details.Text == c.Key && body.ReadOnly && body.Text.Contains(c.English) && body.Text.Contains(c.Chinese), c.Key + " 只读详情");
+                }
+            }
+            foreach (var culture in new[] { "zh-Hans", "en-US" })
+            {
+                CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo(culture);
+                foreach (var c in Cases)
+                    Require(ExactDescription(c.Key, _descriptionSession) == null && !MatchesParameterDescription(c.Key, c.Search),
+                        culture + " " + c.Key + " 增强中文仍在缓存中");
+            }
+            CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo("zh-CN");
+            CheckOtherBitmask(ctx);
+            CheckUnregistered(known);
+        }
+
+        private void CheckIdentity(DataGridViewRow row, ExpectedRow c)
+        {
+            Require(Params.ReadOnly && Equals(row.Cells[Command.Index].Value, c.Key)
+                && Equals(row.Cells[Value.Index].Value, c.Value), c.Key + " 原键、原始数值与类型");
+        }
+
+        private void CheckOtherBitmask(ParameterDescriptionContext ctx)
+        {
+            using (var bytes = new MemoryStream(ReadDescriptionResource("ParameterDescriptions.official.xml")))
+            {
+                var bundle = XDocument.Load(bytes).Root;
+                var xml = CopterParams(bundle, "4.6.3");
+                // Both original records have the same English and bits. Only the serialized bit fields differ.
+                var donor = CopterParams(bundle, "4.5.7");
+                FindBackend(xml).ReplaceWith(new XElement(FindBackend(donor)));
+                var changed = ParameterDescriptionSnapshot.Parse(Encoding.UTF8.GetBytes(xml.ToString()), ctx);
+                var record = changed.Find(Backend.Key);
+                Require(changed.MatchesReportedBuild && record.Fingerprint == LegacyBits && record.English == Backend.English, "4.5.7 原始位掩码指纹对照");
+                _descriptionSession = new DescriptionSession { Chinese = true, Context = ctx, Snapshot = changed };
+                var row = Params.Rows[0];
+                ApplyParameterDescriptionToRow(row, ReadParameterDescription(Backend.Key, Firmware, _descriptionSession));
+                string text = (string)row.Cells[Desc.Index].Value;
+                Require(text.StartsWith(Backend.English, StringComparison.Ordinal) && text.Contains("待复核") && !text.Contains(Backend.Chinese)
+                    && !MatchesParameterDescription(Backend.Key, Backend.Search), "错误指纹沿用已审中文或丢失英文");
+                Require(!row.Cells[Command.Index].ToolTipText.Contains(Backend.Chinese)
+                    && Equals(row.Cells[Options.Index].Value, Backend.Options) && Equals(row.Cells[Units.Index].Value, ""), "旧格式的位序、单位和提示");
+                CheckIdentity(row, Backend);
+                foreach (var c in Cases.Skip(1))
+                    Require(MatchesParameterDescription(c.Key, c.Search), c.Key + " 其它记录应继续匹配");
+            }
+        }
+
+        private static XElement CopterParams(XElement bundle, string version)
+        {
+            return bundle.Elements("release").Single(r => (string)r.Attribute("family") == "Copter"
+                && (string)r.Attribute("version") == version).Element("paramfile");
+        }
+
+        private static XElement FindBackend(XElement xml)
+        {
+            return xml.Descendants("param").Single(p => (string)p.Attribute("name") == Backend.Key);
+        }
+
+        private void CheckUnregistered(ParameterDescriptionSnapshot known)
+        {
+            var ctx = ParameterDescriptionContext.TryCreate(Firmware, "ArduCopter V4.7.2", new Version(4, 7, 2, 255));
+            Require(ctx != null && DescriptionStore.Value.Bundled(ctx) == null, "4.7.2 应为未登记版本");
+            _descriptionSession = new DescriptionSession { Chinese = true, Context = ctx };
+            ParameterMetaDataRepository.EnglishFixture = known;
+            ResetParameterDescriptionRows();
+            for (int i = 0; i < Cases.Length; i++)
+            {
+                var c = Cases[i]; var row = Params.Rows[i];
+                Require(row.Cells[Desc.Index].Value == null && row.Cells[Command.Index].ToolTipText == "", c.Key + " 重置后残留旧文本");
+                Require(ExactDescription(c.Key, _descriptionSession) == null && !MatchesParameterDescription(c.Key, c.Search), c.Key + " 未登记版本仍命中中文");
+                ApplyParameterDescriptionToRow(row, ReadParameterDescription(c.Key, Firmware, _descriptionSession));
+                Require(Equals(row.Cells[Desc.Index].Value, c.English) && row.Cells[Command.Index].ToolTipText.Contains("未核实")
+                    && !row.Cells[Command.Index].ToolTipText.Contains(c.Chinese), c.Key + " 未登记版本的旧仓英文回退");
+                Require(Equals(row.Cells[Units.Index].Value, c.Units) && Equals(row.Cells[Options.Index].Value, c == Backend ? "" : c.Options),
+                    c.Key + " 旧仓提供的单位、范围或枚举");
+                CheckIdentity(row, c);
+            }
+        }
+    }
+}
