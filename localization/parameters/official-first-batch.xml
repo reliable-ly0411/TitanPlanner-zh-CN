@@ -2582,4 +2582,32 @@
       </libraries>
     </paramfile>
   </release>
+  <release family="Sub" version="4.7.1" sourceUrl="https://autotest.ardupilot.org/Parameters/versioned/Sub/stable-4.7.1/apm.pdef.xml" sourceSha256="c543ae155e6c48c98ca6f5fc803c7ce9b6161780fc79aa9e35e8c808891bb5ba" gitSha="dbe792162d06cab66c3475fd5556bf7a120f119e">
+    <paramfile>
+      <firmware git_tag="Sub-4.7.1" git_sha="dbe792162d06cab66c3475fd5556bf7a120f119e" />
+      <vehicles>
+        <parameters name="ArduSub" />
+      </vehicles>
+      <libraries>
+        <parameters name="STAT">
+          <param humanName="Boot Count" name="STAT_BOOTCNT" documentation="Number of times board has been booted" user="Standard">
+            <field name="ReadOnly">True</field>
+          </param>
+          <param humanName="Total FlightTime" name="STAT_FLTTIME" documentation="Total FlightTime (seconds)" user="Standard">
+            <field name="Units">s</field>
+            <field name="UnitText">seconds</field>
+            <field name="ReadOnly">True</field>
+          </param>
+          <param humanName="Total RunTime" name="STAT_RUNTIME" documentation="Total time autopilot has run" user="Standard">
+            <field name="Units">s</field>
+            <field name="UnitText">seconds</field>
+            <field name="ReadOnly">True</field>
+          </param>
+          <param humanName="Total Flight Count" name="STAT_FLTCNT" documentation="Total number of flights" user="Standard">
+            <field name="ReadOnly">True</field>
+          </param>
+        </parameters>
+      </libraries>
+    </paramfile>
+  </release>
 </parameterDescriptionBundle>

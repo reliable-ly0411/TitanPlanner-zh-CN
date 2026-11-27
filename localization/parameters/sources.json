@@ -57,6 +57,16 @@
       "gitTag": "Plane-4.7.1",
       "gitSha": "dbe792162d06cab66c3475fd5556bf7a120f119e",
       "parameters": 53
+    },
+    {
+      "family": "Sub",
+      "version": "4.7.1",
+      "sourceUrl": "https://autotest.ardupilot.org/Parameters/versioned/Sub/stable-4.7.1/apm.pdef.xml",
+      "sourceSha256": "c543ae155e6c48c98ca6f5fc803c7ce9b6161780fc79aa9e35e8c808891bb5ba",
+      "gitTag": "Sub-4.7.1",
+      "gitSha": "dbe792162d06cab66c3475fd5556bf7a120f119e",
+      "parameters": 4,
+      "retrievedUtc": "2026-11-27"
     }
   ]
 }
