@@ -130,6 +130,8 @@ namespace MissionPlanner.Controls.PreFlight
                 case "alt":
                 case "airspeed":
                 case "groundspeed":
+                case "rpm1":
+                case "rpm2":
                 case "battery_voltage":
                 case "wp_dist":
                 case "armed":
