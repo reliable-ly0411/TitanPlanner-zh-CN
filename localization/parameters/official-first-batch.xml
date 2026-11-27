@@ -565,6 +565,29 @@
           <param humanName="Message display duration in seconds" name="OSD_MSG_TIME" documentation="Sets message duration seconds" user="Standard">
             <field name="Range">1 20</field>
           </param>
+          <param humanName="OSD Font" name="OSD_FONT" documentation="This sets which OSD font to use. It is an integer from 0 to the number of fonts available" user="Standard">
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="OSD1_">
+          <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD1_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
+            <field name="Range">0 21</field>
+          </param>
+        </parameters>
+        <parameters name="OSD2_">
+          <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
+            <field name="Range">0 21</field>
+          </param>
+        </parameters>
+        <parameters name="OSD3_">
+          <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD3_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
+            <field name="Range">0 21</field>
+          </param>
+        </parameters>
+        <parameters name="OSD4_">
+          <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="NTF_">
           <param humanName="Type of on-board I2C display" name="NTF_DISPLAY_TYPE" documentation="This sets up the type of on-board I2C display. Disabled by default." user="Advanced">
@@ -1143,6 +1166,29 @@
           </param>
           <param humanName="Message display duration in seconds" name="OSD_MSG_TIME" documentation="Sets message duration seconds" user="Standard">
             <field name="Range">1 20</field>
+          </param>
+          <param humanName="OSD Font" name="OSD_FONT" documentation="This sets which OSD font to use. It is an integer from 0 to the number of fonts available" user="Standard">
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="OSD1_">
+          <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD1_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
+            <field name="Range">0 21</field>
+          </param>
+        </parameters>
+        <parameters name="OSD2_">
+          <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
+            <field name="Range">0 21</field>
+          </param>
+        </parameters>
+        <parameters name="OSD3_">
+          <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD3_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
+            <field name="Range">0 21</field>
+          </param>
+        </parameters>
+        <parameters name="OSD4_">
+          <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
+            <field name="Range">0 21</field>
           </param>
         </parameters>
         <parameters name="INS_LOG_">
@@ -1771,6 +1817,29 @@
           </param>
           <param humanName="Message display duration in seconds" name="OSD_MSG_TIME" documentation="Sets message duration seconds" user="Standard">
             <field name="Range">1 20</field>
+          </param>
+          <param humanName="OSD Font" name="OSD_FONT" documentation="This sets which OSD font to use. It is an integer from 0 to the number of fonts available" user="Standard">
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="OSD1_">
+          <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD1_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
+            <field name="Range">0 21</field>
+          </param>
+        </parameters>
+        <parameters name="OSD2_">
+          <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
+            <field name="Range">0 21</field>
+          </param>
+        </parameters>
+        <parameters name="OSD3_">
+          <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD3_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
+            <field name="Range">0 21</field>
+          </param>
+        </parameters>
+        <parameters name="OSD4_">
+          <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
+            <field name="Range">0 21</field>
           </param>
         </parameters>
         <parameters name="INS_LOG_">
@@ -2428,6 +2497,29 @@
           <param humanName="Message display duration in seconds" name="OSD_MSG_TIME" documentation="Sets message duration seconds" user="Standard">
             <field name="Range">1 20</field>
           </param>
+          <param humanName="OSD Font" name="OSD_FONT" documentation="This sets which OSD font to use. It is an integer from 0 to the number of fonts available" user="Standard">
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="OSD1_">
+          <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD1_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
+            <field name="Range">0 21</field>
+          </param>
+        </parameters>
+        <parameters name="OSD2_">
+          <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
+            <field name="Range">0 21</field>
+          </param>
+        </parameters>
+        <parameters name="OSD3_">
+          <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD3_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
+            <field name="Range">0 21</field>
+          </param>
+        </parameters>
+        <parameters name="OSD4_">
+          <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="NTF_">
           <param humanName="Type of on-board I2C display" name="NTF_DISPLAY_TYPE" documentation="This sets up the type of on-board I2C display. Disabled by default." user="Advanced">
@@ -3063,6 +3155,29 @@
           </param>
           <param humanName="Message display duration in seconds" name="OSD_MSG_TIME" documentation="Sets message duration seconds" user="Standard">
             <field name="Range">1 20</field>
+          </param>
+          <param humanName="OSD Font" name="OSD_FONT" documentation="This sets which OSD font to use. It is an integer from 0 to the number of fonts available" user="Standard">
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="OSD1_">
+          <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD1_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
+            <field name="Range">0 21</field>
+          </param>
+        </parameters>
+        <parameters name="OSD2_">
+          <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
+            <field name="Range">0 21</field>
+          </param>
+        </parameters>
+        <parameters name="OSD3_">
+          <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD3_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
+            <field name="Range">0 21</field>
+          </param>
+        </parameters>
+        <parameters name="OSD4_">
+          <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
+            <field name="Range">0 21</field>
           </param>
         </parameters>
         <parameters name="INS_LOG_">
@@ -3758,6 +3873,29 @@
           <param humanName="Message display duration in seconds" name="OSD_MSG_TIME" documentation="Sets message duration seconds" user="Standard">
             <field name="Range">1 20</field>
           </param>
+          <param humanName="OSD Font" name="OSD_FONT" documentation="This sets which OSD font to use. It is an integer from 0 to the number of fonts available" user="Standard">
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="OSD1_">
+          <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD1_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
+            <field name="Range">0 21</field>
+          </param>
+        </parameters>
+        <parameters name="OSD2_">
+          <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
+            <field name="Range">0 21</field>
+          </param>
+        </parameters>
+        <parameters name="OSD3_">
+          <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD3_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
+            <field name="Range">0 21</field>
+          </param>
+        </parameters>
+        <parameters name="OSD4_">
+          <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="INS_LOG_">
           <param humanName="sample count per batch" name="INS_LOG_BAT_CNT" documentation="Number of samples to take when logging streams of IMU sensor readings.  Will be rounded down to a multiple of 32. This option takes effect on the next reboot." user="Advanced">
@@ -3967,6 +4105,29 @@
           </param>
           <param humanName="Message display duration in seconds" name="OSD_MSG_TIME" documentation="Sets message duration seconds" user="Standard">
             <field name="Range">1 20</field>
+          </param>
+          <param humanName="OSD Font" name="OSD_FONT" documentation="This sets which OSD font to use. It is an integer from 0 to the number of fonts available" user="Standard">
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="OSD1_">
+          <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD1_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
+            <field name="Range">0 21</field>
+          </param>
+        </parameters>
+        <parameters name="OSD2_">
+          <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
+            <field name="Range">0 21</field>
+          </param>
+        </parameters>
+        <parameters name="OSD3_">
+          <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD3_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
+            <field name="Range">0 21</field>
+          </param>
+        </parameters>
+        <parameters name="OSD4_">
+          <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
+            <field name="Range">0 21</field>
           </param>
         </parameters>
         <parameters name="INS_LOG_">
