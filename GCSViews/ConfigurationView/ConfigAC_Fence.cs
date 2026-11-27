@@ -11,7 +11,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
 {
     public partial class ConfigAC_Fence : MyUserControl, IActivate
     {
-        private readonly ToolTip fenceActionTooltip = new ToolTip();
+        private readonly ToolTip fenceTooltip = new ToolTip();
         private bool showFenceActionDetails;
 
         public ConfigAC_Fence()
@@ -20,7 +20,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             mavlinkComboBox2.DropDown += (sender, args) => UpdateFenceActionDropDownWidth();
             mavlinkComboBox2.MouseEnter += (sender, args) => UpdateFenceActionTooltip();
             mavlinkComboBox2.SelectedIndexChanged += (sender, args) => UpdateFenceActionTooltip();
-            Disposed += (sender, args) => fenceActionTooltip.Dispose();
+            Disposed += (sender, args) => fenceTooltip.Dispose();
 
             label6maxalt.Text += "[" + CurrentState.DistanceUnit + "]";
             label8minalt.Text += "[" + CurrentState.DistanceUnit + "]";
@@ -68,7 +68,10 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                 !string.Equals(CultureInfo.CurrentUICulture.Name, "zh-CN", StringComparison.Ordinal))
             {
                 if (fenceTypeReadback != null)
+                {
+                    fenceTooltip.SetToolTip(fenceTypeReadback, null);
                     fenceTypeReadback.Visible = false;
+                }
                 return;
             }
 
@@ -82,6 +85,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             }
 
             var item = parameters["FENCE_TYPE"];
+            string details = null;
             string text = "围栏类型缓存：未读取";
             if (item != null)
             {
@@ -93,11 +97,54 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                 // Preserve the entire number and do not guess what extra bits mean.
                 if (valid && ((int)value & ~15) != 0)
                     text += "（含未识别位）";
+                if (valid && ((int)value & 15) != 0)
+                {
+                    details = DescribeFenceTypeBits((int)value,
+                        ParameterMetaDataRepository.GetParameterBitMaskInt("FENCE_TYPE", firmware.ToString()));
+                    if (details != null)
+                        text += " · 悬停查看类型";
+                }
             }
 
             fenceTypeReadback.Text = text;
+            fenceTooltip.SetToolTip(fenceTypeReadback, details);
             fenceTypeReadback.Visible = true;
             LayoutFenceTypeReadback();
+        }
+
+        internal static string DescribeFenceTypeBits(int value, IEnumerable<KeyValuePair<int, string>> metadata)
+        {
+            if (value <= 0 || metadata == null)
+                return null;
+
+            var labels = new List<string>();
+            foreach (var match in metadata.Where(option => option.Key >= 0 && option.Key <= 3)
+                         .GroupBy(option => option.Key).OrderBy(group => group.Key))
+            {
+                if ((value & (1 << match.Key)) == 0 || match.Count() != 1)
+                    continue;
+
+                // Verify index and text against Copter's AC_Fence TYPE plus the packaged short names.
+                string source = match.First().Value;
+                string zh = null;
+                switch (match.Key)
+                {
+                    case 0: if (source == "Max altitude") zh = "最高高度"; break;
+                    case 1:
+                        if (source == "Circle Centered on Home") zh = "以起始点为中心的圆形围栏";
+                        else if (source == "Circle") zh = "圆形围栏";
+                        break;
+                    case 2:
+                        if (source == "Inclusion/Exclusion Circles+Polygons") zh = "允许区／禁入区的圆形及多边形围栏";
+                        else if (source == "Polygon") zh = "多边形围栏";
+                        break;
+                    case 3: if (source == "Min altitude") zh = "最低高度"; break;
+                }
+                if (zh != null)
+                    labels.Add(source + " · " + zh);
+            }
+            return labels.Count == 0 ? null : string.Join(Environment.NewLine, labels) +
+                Environment.NewLine + "仅说明缓存中的已识别类型，不代表围栏正在生效。";
         }
 
         private void LayoutFenceTypeReadback()
@@ -122,7 +169,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
 
         private void UpdateFenceActionTooltip()
         {
-            fenceActionTooltip.SetToolTip(mavlinkComboBox2, showFenceActionDetails ? mavlinkComboBox2.Text : null);
+            fenceTooltip.SetToolTip(mavlinkComboBox2, showFenceActionDetails ? mavlinkComboBox2.Text : null);
         }
 
         private void UpdateFenceActionDropDownWidth()
