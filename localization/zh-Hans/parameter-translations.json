@@ -14120,6 +14120,486 @@
       "recordSha256": "75ee8b5115a2446853808707a869578f28563f9689a4973fcfc67c28b3b21c67",
       "english": "Displays battery usage bar (MSP OSD only)",
       "chinese": "显示第 4 屏的电池用量条（仅适用于 MSP OSD）。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD1_CELLVOLT_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "206fa72abfd56a74d17f9830bc63f7249b7091855ffeeb0439400694a482ca22",
+      "recordSha256": "4b6b3732de07ba8a179a68355bccfa3d7697c56d1632656e438ee0c2f05687d0",
+      "english": "Displays average cell voltage (MSP OSD only)",
+      "chinese": "显示第 1 屏的平均单体电压（仅适用于 MSP OSD）。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD1_CELLVOLT_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "02aca05522f64799691d614ea7cc6ed5dcf04809a532d4962406f9ae769d84a4",
+      "english": "Horizontal position on screen",
+      "chinese": "第 1 屏中平均单体电压显示项的水平位置（仅适用于 MSP OSD）。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD1_CELLVOLT_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "873e033f10dd9dd6c6ebfe2bff1e6b4f81a8213d8090968a03401bfb518a061b",
+      "english": "Vertical position on screen",
+      "chinese": "第 1 屏中平均单体电压显示项的垂直位置（仅适用于 MSP OSD）。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD2_CELLVOLT_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "206fa72abfd56a74d17f9830bc63f7249b7091855ffeeb0439400694a482ca22",
+      "recordSha256": "bc2387fd7ad0c2b01c218a9ae47b144b986b48bee8ed142ef6f1335a87e5f7c0",
+      "english": "Displays average cell voltage (MSP OSD only)",
+      "chinese": "显示第 2 屏的平均单体电压（仅适用于 MSP OSD）。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD2_CELLVOLT_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "2a53a5141c2774f7caf05b496dd7b735984091be76904c3919544710dfbfdcfb",
+      "english": "Horizontal position on screen",
+      "chinese": "第 2 屏中平均单体电压显示项的水平位置（仅适用于 MSP OSD）。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD2_CELLVOLT_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "66e6cd9c8ed0ce0364c333eeb1829c0b7e5e091678c2693947a210b851a7fdde",
+      "english": "Vertical position on screen",
+      "chinese": "第 2 屏中平均单体电压显示项的垂直位置（仅适用于 MSP OSD）。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD3_CELLVOLT_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "206fa72abfd56a74d17f9830bc63f7249b7091855ffeeb0439400694a482ca22",
+      "recordSha256": "3822c2b58a0deb9cb6b8ea1539d4ac5ce5147b1d6e9db2c13b14854a663011cc",
+      "english": "Displays average cell voltage (MSP OSD only)",
+      "chinese": "显示第 3 屏的平均单体电压（仅适用于 MSP OSD）。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD3_CELLVOLT_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "9b135b25e76cbba308d0d4186f0db72183345be5ccb16d37a8576788ad98f434",
+      "english": "Horizontal position on screen",
+      "chinese": "第 3 屏中平均单体电压显示项的水平位置（仅适用于 MSP OSD）。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD3_CELLVOLT_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "b0c0cd8c5257fd9b099a5f21a26eadef72d74f5bd22c370c10cb18b679caa6c3",
+      "english": "Vertical position on screen",
+      "chinese": "第 3 屏中平均单体电压显示项的垂直位置（仅适用于 MSP OSD）。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD4_CELLVOLT_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "206fa72abfd56a74d17f9830bc63f7249b7091855ffeeb0439400694a482ca22",
+      "recordSha256": "da0a47d8d240e0c9d65db79b61cab7c61be760e46379a96fc93258a6704a98ae",
+      "english": "Displays average cell voltage (MSP OSD only)",
+      "chinese": "显示第 4 屏的平均单体电压（仅适用于 MSP OSD）。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD4_CELLVOLT_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "51025d40fb5308f22a42986eded43e8bbe5bf085a2733813dff3946a5b7919dc",
+      "english": "Horizontal position on screen",
+      "chinese": "第 4 屏中平均单体电压显示项的水平位置（仅适用于 MSP OSD）。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD4_CELLVOLT_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "5d8245581d63c13b992af20858fa3c7d3e0c20c46647b2964a5e525e85341c62",
+      "english": "Vertical position on screen",
+      "chinese": "第 4 屏中平均单体电压显示项的垂直位置（仅适用于 MSP OSD）。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD1_CELLVOLT_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "206fa72abfd56a74d17f9830bc63f7249b7091855ffeeb0439400694a482ca22",
+      "recordSha256": "4b6b3732de07ba8a179a68355bccfa3d7697c56d1632656e438ee0c2f05687d0",
+      "english": "Displays average cell voltage (MSP OSD only)",
+      "chinese": "显示第 1 屏的平均单体电压（仅适用于 MSP OSD）。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD1_CELLVOLT_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "02aca05522f64799691d614ea7cc6ed5dcf04809a532d4962406f9ae769d84a4",
+      "english": "Horizontal position on screen",
+      "chinese": "第 1 屏中平均单体电压显示项的水平位置（仅适用于 MSP OSD）。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD1_CELLVOLT_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "873e033f10dd9dd6c6ebfe2bff1e6b4f81a8213d8090968a03401bfb518a061b",
+      "english": "Vertical position on screen",
+      "chinese": "第 1 屏中平均单体电压显示项的垂直位置（仅适用于 MSP OSD）。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD2_CELLVOLT_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "206fa72abfd56a74d17f9830bc63f7249b7091855ffeeb0439400694a482ca22",
+      "recordSha256": "bc2387fd7ad0c2b01c218a9ae47b144b986b48bee8ed142ef6f1335a87e5f7c0",
+      "english": "Displays average cell voltage (MSP OSD only)",
+      "chinese": "显示第 2 屏的平均单体电压（仅适用于 MSP OSD）。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD2_CELLVOLT_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "2a53a5141c2774f7caf05b496dd7b735984091be76904c3919544710dfbfdcfb",
+      "english": "Horizontal position on screen",
+      "chinese": "第 2 屏中平均单体电压显示项的水平位置（仅适用于 MSP OSD）。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD2_CELLVOLT_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "66e6cd9c8ed0ce0364c333eeb1829c0b7e5e091678c2693947a210b851a7fdde",
+      "english": "Vertical position on screen",
+      "chinese": "第 2 屏中平均单体电压显示项的垂直位置（仅适用于 MSP OSD）。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD3_CELLVOLT_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "206fa72abfd56a74d17f9830bc63f7249b7091855ffeeb0439400694a482ca22",
+      "recordSha256": "3822c2b58a0deb9cb6b8ea1539d4ac5ce5147b1d6e9db2c13b14854a663011cc",
+      "english": "Displays average cell voltage (MSP OSD only)",
+      "chinese": "显示第 3 屏的平均单体电压（仅适用于 MSP OSD）。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD3_CELLVOLT_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "9b135b25e76cbba308d0d4186f0db72183345be5ccb16d37a8576788ad98f434",
+      "english": "Horizontal position on screen",
+      "chinese": "第 3 屏中平均单体电压显示项的水平位置（仅适用于 MSP OSD）。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD3_CELLVOLT_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "b0c0cd8c5257fd9b099a5f21a26eadef72d74f5bd22c370c10cb18b679caa6c3",
+      "english": "Vertical position on screen",
+      "chinese": "第 3 屏中平均单体电压显示项的垂直位置（仅适用于 MSP OSD）。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD4_CELLVOLT_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "206fa72abfd56a74d17f9830bc63f7249b7091855ffeeb0439400694a482ca22",
+      "recordSha256": "da0a47d8d240e0c9d65db79b61cab7c61be760e46379a96fc93258a6704a98ae",
+      "english": "Displays average cell voltage (MSP OSD only)",
+      "chinese": "显示第 4 屏的平均单体电压（仅适用于 MSP OSD）。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD4_CELLVOLT_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "51025d40fb5308f22a42986eded43e8bbe5bf085a2733813dff3946a5b7919dc",
+      "english": "Horizontal position on screen",
+      "chinese": "第 4 屏中平均单体电压显示项的水平位置（仅适用于 MSP OSD）。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD4_CELLVOLT_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "5d8245581d63c13b992af20858fa3c7d3e0c20c46647b2964a5e525e85341c62",
+      "english": "Vertical position on screen",
+      "chinese": "第 4 屏中平均单体电压显示项的垂直位置（仅适用于 MSP OSD）。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD1_CELLVOLT_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "206fa72abfd56a74d17f9830bc63f7249b7091855ffeeb0439400694a482ca22",
+      "recordSha256": "4b6b3732de07ba8a179a68355bccfa3d7697c56d1632656e438ee0c2f05687d0",
+      "english": "Displays average cell voltage (MSP OSD only)",
+      "chinese": "显示第 1 屏的平均单体电压（仅适用于 MSP OSD）。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD1_CELLVOLT_X",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "02aca05522f64799691d614ea7cc6ed5dcf04809a532d4962406f9ae769d84a4",
+      "english": "Horizontal position on screen",
+      "chinese": "第 1 屏中平均单体电压显示项的水平位置（仅适用于 MSP OSD）。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD1_CELLVOLT_Y",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "873e033f10dd9dd6c6ebfe2bff1e6b4f81a8213d8090968a03401bfb518a061b",
+      "english": "Vertical position on screen",
+      "chinese": "第 1 屏中平均单体电压显示项的垂直位置（仅适用于 MSP OSD）。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD2_CELLVOLT_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "206fa72abfd56a74d17f9830bc63f7249b7091855ffeeb0439400694a482ca22",
+      "recordSha256": "bc2387fd7ad0c2b01c218a9ae47b144b986b48bee8ed142ef6f1335a87e5f7c0",
+      "english": "Displays average cell voltage (MSP OSD only)",
+      "chinese": "显示第 2 屏的平均单体电压（仅适用于 MSP OSD）。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD2_CELLVOLT_X",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "2a53a5141c2774f7caf05b496dd7b735984091be76904c3919544710dfbfdcfb",
+      "english": "Horizontal position on screen",
+      "chinese": "第 2 屏中平均单体电压显示项的水平位置（仅适用于 MSP OSD）。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD2_CELLVOLT_Y",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "66e6cd9c8ed0ce0364c333eeb1829c0b7e5e091678c2693947a210b851a7fdde",
+      "english": "Vertical position on screen",
+      "chinese": "第 2 屏中平均单体电压显示项的垂直位置（仅适用于 MSP OSD）。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD3_CELLVOLT_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "206fa72abfd56a74d17f9830bc63f7249b7091855ffeeb0439400694a482ca22",
+      "recordSha256": "3822c2b58a0deb9cb6b8ea1539d4ac5ce5147b1d6e9db2c13b14854a663011cc",
+      "english": "Displays average cell voltage (MSP OSD only)",
+      "chinese": "显示第 3 屏的平均单体电压（仅适用于 MSP OSD）。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD3_CELLVOLT_X",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "9b135b25e76cbba308d0d4186f0db72183345be5ccb16d37a8576788ad98f434",
+      "english": "Horizontal position on screen",
+      "chinese": "第 3 屏中平均单体电压显示项的水平位置（仅适用于 MSP OSD）。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD3_CELLVOLT_Y",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "b0c0cd8c5257fd9b099a5f21a26eadef72d74f5bd22c370c10cb18b679caa6c3",
+      "english": "Vertical position on screen",
+      "chinese": "第 3 屏中平均单体电压显示项的垂直位置（仅适用于 MSP OSD）。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD4_CELLVOLT_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "206fa72abfd56a74d17f9830bc63f7249b7091855ffeeb0439400694a482ca22",
+      "recordSha256": "da0a47d8d240e0c9d65db79b61cab7c61be760e46379a96fc93258a6704a98ae",
+      "english": "Displays average cell voltage (MSP OSD only)",
+      "chinese": "显示第 4 屏的平均单体电压（仅适用于 MSP OSD）。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD4_CELLVOLT_X",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "51025d40fb5308f22a42986eded43e8bbe5bf085a2733813dff3946a5b7919dc",
+      "english": "Horizontal position on screen",
+      "chinese": "第 4 屏中平均单体电压显示项的水平位置（仅适用于 MSP OSD）。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD4_CELLVOLT_Y",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "5d8245581d63c13b992af20858fa3c7d3e0c20c46647b2964a5e525e85341c62",
+      "english": "Vertical position on screen",
+      "chinese": "第 4 屏中平均单体电压显示项的垂直位置（仅适用于 MSP OSD）。"
     }
   ]
 }

@@ -781,6 +781,18 @@
               <value code="1">Enabled</value>
             </values>
           </param>
+          <param humanName="CELL_VOLT_EN" name="OSD1_CELLVOLT_EN" documentation="Displays average cell voltage (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CELL_VOLT_X" name="OSD1_CELLVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="CELL_VOLT_Y" name="OSD1_CELLVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -881,6 +893,18 @@
               <value code="0">Disabled</value>
               <value code="1">Enabled</value>
             </values>
+          </param>
+          <param humanName="CELL_VOLT_EN" name="OSD2_CELLVOLT_EN" documentation="Displays average cell voltage (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CELL_VOLT_X" name="OSD2_CELLVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="CELL_VOLT_Y" name="OSD2_CELLVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
           </param>
         </parameters>
         <parameters name="OSD3_">
@@ -983,6 +1007,18 @@
               <value code="1">Enabled</value>
             </values>
           </param>
+          <param humanName="CELL_VOLT_EN" name="OSD3_CELLVOLT_EN" documentation="Displays average cell voltage (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CELL_VOLT_X" name="OSD3_CELLVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="CELL_VOLT_Y" name="OSD3_CELLVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -1083,6 +1119,18 @@
               <value code="0">Disabled</value>
               <value code="1">Enabled</value>
             </values>
+          </param>
+          <param humanName="CELL_VOLT_EN" name="OSD4_CELLVOLT_EN" documentation="Displays average cell voltage (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CELL_VOLT_X" name="OSD4_CELLVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="CELL_VOLT_Y" name="OSD4_CELLVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
           </param>
         </parameters>
         <parameters name="NTF_">
@@ -2092,6 +2140,18 @@
               <value code="1">Enabled</value>
             </values>
           </param>
+          <param humanName="CELL_VOLT_EN" name="OSD1_CELLVOLT_EN" documentation="Displays average cell voltage (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CELL_VOLT_X" name="OSD1_CELLVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="CELL_VOLT_Y" name="OSD1_CELLVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -2192,6 +2252,18 @@
               <value code="0">Disabled</value>
               <value code="1">Enabled</value>
             </values>
+          </param>
+          <param humanName="CELL_VOLT_EN" name="OSD2_CELLVOLT_EN" documentation="Displays average cell voltage (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CELL_VOLT_X" name="OSD2_CELLVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="CELL_VOLT_Y" name="OSD2_CELLVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
           </param>
         </parameters>
         <parameters name="OSD3_">
@@ -2294,6 +2366,18 @@
               <value code="1">Enabled</value>
             </values>
           </param>
+          <param humanName="CELL_VOLT_EN" name="OSD3_CELLVOLT_EN" documentation="Displays average cell voltage (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CELL_VOLT_X" name="OSD3_CELLVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="CELL_VOLT_Y" name="OSD3_CELLVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -2394,6 +2478,18 @@
               <value code="0">Disabled</value>
               <value code="1">Enabled</value>
             </values>
+          </param>
+          <param humanName="CELL_VOLT_EN" name="OSD4_CELLVOLT_EN" documentation="Displays average cell voltage (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CELL_VOLT_X" name="OSD4_CELLVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="CELL_VOLT_Y" name="OSD4_CELLVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
           </param>
         </parameters>
         <parameters name="INS_LOG_">
@@ -3494,6 +3590,18 @@
               <value code="1">Enabled</value>
             </values>
           </param>
+          <param humanName="CELL_VOLT_EN" name="OSD1_CELLVOLT_EN" documentation="Displays average cell voltage (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CELL_VOLT_X" name="OSD1_CELLVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="CELL_VOLT_Y" name="OSD1_CELLVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -3594,6 +3702,18 @@
               <value code="0">Disabled</value>
               <value code="1">Enabled</value>
             </values>
+          </param>
+          <param humanName="CELL_VOLT_EN" name="OSD2_CELLVOLT_EN" documentation="Displays average cell voltage (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CELL_VOLT_X" name="OSD2_CELLVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="CELL_VOLT_Y" name="OSD2_CELLVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
           </param>
         </parameters>
         <parameters name="OSD3_">
@@ -3696,6 +3816,18 @@
               <value code="1">Enabled</value>
             </values>
           </param>
+          <param humanName="CELL_VOLT_EN" name="OSD3_CELLVOLT_EN" documentation="Displays average cell voltage (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CELL_VOLT_X" name="OSD3_CELLVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="CELL_VOLT_Y" name="OSD3_CELLVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -3796,6 +3928,18 @@
               <value code="0">Disabled</value>
               <value code="1">Enabled</value>
             </values>
+          </param>
+          <param humanName="CELL_VOLT_EN" name="OSD4_CELLVOLT_EN" documentation="Displays average cell voltage (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CELL_VOLT_X" name="OSD4_CELLVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="CELL_VOLT_Y" name="OSD4_CELLVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
           </param>
         </parameters>
         <parameters name="INS_LOG_">
@@ -5214,6 +5358,18 @@
               <value code="1">Enabled</value>
             </values>
           </param>
+          <param humanName="CELL_VOLT_EN" name="OSD1_CELLVOLT_EN" documentation="Displays average cell voltage (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CELL_VOLT_X" name="OSD1_CELLVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="CELL_VOLT_Y" name="OSD1_CELLVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -5314,6 +5470,18 @@
               <value code="0">Disabled</value>
               <value code="1">Enabled</value>
             </values>
+          </param>
+          <param humanName="CELL_VOLT_EN" name="OSD2_CELLVOLT_EN" documentation="Displays average cell voltage (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CELL_VOLT_X" name="OSD2_CELLVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="CELL_VOLT_Y" name="OSD2_CELLVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
           </param>
         </parameters>
         <parameters name="OSD3_">
@@ -5416,6 +5584,18 @@
               <value code="1">Enabled</value>
             </values>
           </param>
+          <param humanName="CELL_VOLT_EN" name="OSD3_CELLVOLT_EN" documentation="Displays average cell voltage (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CELL_VOLT_X" name="OSD3_CELLVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="CELL_VOLT_Y" name="OSD3_CELLVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -5516,6 +5696,18 @@
               <value code="0">Disabled</value>
               <value code="1">Enabled</value>
             </values>
+          </param>
+          <param humanName="CELL_VOLT_EN" name="OSD4_CELLVOLT_EN" documentation="Displays average cell voltage (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CELL_VOLT_X" name="OSD4_CELLVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="CELL_VOLT_Y" name="OSD4_CELLVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
           </param>
         </parameters>
         <parameters name="NTF_">
@@ -6558,6 +6750,18 @@
               <value code="1">Enabled</value>
             </values>
           </param>
+          <param humanName="CELL_VOLT_EN" name="OSD1_CELLVOLT_EN" documentation="Displays average cell voltage (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CELL_VOLT_X" name="OSD1_CELLVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="CELL_VOLT_Y" name="OSD1_CELLVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -6658,6 +6862,18 @@
               <value code="0">Disabled</value>
               <value code="1">Enabled</value>
             </values>
+          </param>
+          <param humanName="CELL_VOLT_EN" name="OSD2_CELLVOLT_EN" documentation="Displays average cell voltage (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CELL_VOLT_X" name="OSD2_CELLVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="CELL_VOLT_Y" name="OSD2_CELLVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
           </param>
         </parameters>
         <parameters name="OSD3_">
@@ -6760,6 +6976,18 @@
               <value code="1">Enabled</value>
             </values>
           </param>
+          <param humanName="CELL_VOLT_EN" name="OSD3_CELLVOLT_EN" documentation="Displays average cell voltage (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CELL_VOLT_X" name="OSD3_CELLVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="CELL_VOLT_Y" name="OSD3_CELLVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -6860,6 +7088,18 @@
               <value code="0">Disabled</value>
               <value code="1">Enabled</value>
             </values>
+          </param>
+          <param humanName="CELL_VOLT_EN" name="OSD4_CELLVOLT_EN" documentation="Displays average cell voltage (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CELL_VOLT_X" name="OSD4_CELLVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="CELL_VOLT_Y" name="OSD4_CELLVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
           </param>
         </parameters>
         <parameters name="INS_LOG_">
@@ -8002,6 +8242,18 @@
               <value code="1">Enabled</value>
             </values>
           </param>
+          <param humanName="CELL_VOLT_EN" name="OSD1_CELLVOLT_EN" documentation="Displays average cell voltage (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CELL_VOLT_X" name="OSD1_CELLVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="CELL_VOLT_Y" name="OSD1_CELLVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -8102,6 +8354,18 @@
               <value code="0">Disabled</value>
               <value code="1">Enabled</value>
             </values>
+          </param>
+          <param humanName="CELL_VOLT_EN" name="OSD2_CELLVOLT_EN" documentation="Displays average cell voltage (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CELL_VOLT_X" name="OSD2_CELLVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="CELL_VOLT_Y" name="OSD2_CELLVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
           </param>
         </parameters>
         <parameters name="OSD3_">
@@ -8204,6 +8468,18 @@
               <value code="1">Enabled</value>
             </values>
           </param>
+          <param humanName="CELL_VOLT_EN" name="OSD3_CELLVOLT_EN" documentation="Displays average cell voltage (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CELL_VOLT_X" name="OSD3_CELLVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="CELL_VOLT_Y" name="OSD3_CELLVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -8304,6 +8580,18 @@
               <value code="0">Disabled</value>
               <value code="1">Enabled</value>
             </values>
+          </param>
+          <param humanName="CELL_VOLT_EN" name="OSD4_CELLVOLT_EN" documentation="Displays average cell voltage (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CELL_VOLT_X" name="OSD4_CELLVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="CELL_VOLT_Y" name="OSD4_CELLVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
           </param>
         </parameters>
         <parameters name="INS_LOG_">
@@ -9268,6 +9556,18 @@
               <value code="1">Enabled</value>
             </values>
           </param>
+          <param humanName="CELL_VOLT_EN" name="OSD1_CELLVOLT_EN" documentation="Displays average cell voltage (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CELL_VOLT_X" name="OSD1_CELLVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="CELL_VOLT_Y" name="OSD1_CELLVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -9368,6 +9668,18 @@
               <value code="0">Disabled</value>
               <value code="1">Enabled</value>
             </values>
+          </param>
+          <param humanName="CELL_VOLT_EN" name="OSD2_CELLVOLT_EN" documentation="Displays average cell voltage (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CELL_VOLT_X" name="OSD2_CELLVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="CELL_VOLT_Y" name="OSD2_CELLVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
           </param>
         </parameters>
         <parameters name="OSD3_">
@@ -9470,6 +9782,18 @@
               <value code="1">Enabled</value>
             </values>
           </param>
+          <param humanName="CELL_VOLT_EN" name="OSD3_CELLVOLT_EN" documentation="Displays average cell voltage (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CELL_VOLT_X" name="OSD3_CELLVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="CELL_VOLT_Y" name="OSD3_CELLVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -9570,6 +9894,18 @@
               <value code="0">Disabled</value>
               <value code="1">Enabled</value>
             </values>
+          </param>
+          <param humanName="CELL_VOLT_EN" name="OSD4_CELLVOLT_EN" documentation="Displays average cell voltage (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CELL_VOLT_X" name="OSD4_CELLVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="CELL_VOLT_Y" name="OSD4_CELLVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
           </param>
         </parameters>
         <parameters name="INS_LOG_">

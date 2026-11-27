@@ -31,10 +31,11 @@ VFR_HUD_RATE_HELP_KEYS = {f"SR{i}_EXTRA2" for i in range(7)} | {f"MAV{i}_EXTRA2"
 RAW_SENSOR_RATE_HELP_KEYS = {f"SR{i}_RAW_SENS" for i in range(7)} | {f"MAV{i}_RAW_SENS" for i in range(1, 33)}
 OSD_BATTERY_BAR_POSITION_KEYS = {f'OSD{screen}_BATTBAR_{axis}' for screen in range(1, 5) for axis in ('X', 'Y')}
 OSD_BATTERY_BAR_ENABLE_KEYS = {f'OSD{screen}_BATTBAR_EN' for screen in range(1, 5)}
+OSD_MSP_CELL_VOLTAGE_HELP_KEYS = {f'OSD{screen}_CELLVOLT_{field}' for screen in range(1, 5) for field in ('EN', 'X', 'Y')}
 DISPLAY_AND_LOG_HELP_KEYS = (
     SIDEBAR_GEOMETRY_KEYS | IMU_DIAGNOSTIC_HELP_KEYS | OSD_MESSAGE_TIME_HELP_KEYS
     | LOCAL_DIAGNOSTIC_LOG_HELP_KEYS | SITL_ENVIRONMENT_HELP_KEYS | LOG_STORAGE_HELP_KEYS | OSD_FONT_KEYS | ONBOARD_DISPLAY_HELP_KEYS | LOGGER_BACKEND_HELP_KEYS
-    | OSD_DISPLAY_HELP_KEYS | OSD_BATTERY_BAR_ENABLE_KEYS | OSD_BATTERY_BAR_POSITION_KEYS | RAW_SENSOR_RATE_HELP_KEYS | VFR_HUD_RATE_HELP_KEYS
+    | OSD_DISPLAY_HELP_KEYS | OSD_MSP_CELL_VOLTAGE_HELP_KEYS | OSD_BATTERY_BAR_ENABLE_KEYS | OSD_BATTERY_BAR_POSITION_KEYS | RAW_SENSOR_RATE_HELP_KEYS | VFR_HUD_RATE_HELP_KEYS
     | {'LOG_BITMASK', 'LOG_FILE_BUFSIZE', 'OSD_H_OFFSET', 'OSD_V_OFFSET', 'SCHED_DEBUG'}
 )
 catalog_module = importlib.util.module_from_spec(spec)
@@ -65,8 +66,8 @@ class ParameterCatalogTests(unittest.TestCase):
     def test_scope_counts_and_held_versions(self):
         notes = self.catalog['translations']
         descriptions = {(n['family'], v, n['parameter']) for n in notes if n['field'] == 'Description' for v in n['versions']}
-        self.assertEqual(1854, len(descriptions))
-        self.assertEqual(939, len({(f, p) for f, v, p in descriptions}))
+        self.assertEqual(1938, len(descriptions))
+        self.assertEqual(975, len({(f, p) for f, v, p in descriptions}))
         self.assertFalse(any(v == '4.7.2' for f, v, p in descriptions))
         excluded_copter = {'RTL_CONE_SLOPE', 'LAND_SPEED', 'LAND_SPD_MS', 'FS_GCS_ENABLE'}
         excluded_plane = {'TECS_CLMB_MAX', 'TECS_SINK_MIN', 'ROLL_LIMIT_DEG'}
@@ -393,6 +394,24 @@ class ParameterCatalogTests(unittest.TestCase):
                                  [(a.get('code'), a.text) for a in r.findall('values/value')])
         changed = copy.deepcopy(self.bundle)
         changed.find(".//param[@name='OSD1_BATTBAR_EN']/values/value[@code='1']").text = 'Changed'
+        with self.assertRaisesRegex(ValueError, 'requires manual review'):
+            catalog_module.resource(self.catalog, changed)
+
+    def test_osd_cellvolt_is_a_display_only_three_record_group(self):
+        for release in self.bundle:
+            records = {p.get('name'): p for p in release.iter('param') if p.get('name') in OSD_MSP_CELL_VOLTAGE_HELP_KEYS}
+            self.assertEqual(OSD_MSP_CELL_VOLTAGE_HELP_KEYS, records.keys())
+            for key, record in records.items():
+                self.assertIsNone(record.find("field[@name='Units']"))
+                if key.endswith('_EN'):
+                    self.assertEqual('Displays average cell voltage (MSP OSD only)', record.get('documentation'))
+                    self.assertEqual([('0', 'Disabled'), ('1', 'Enabled')],
+                                     [(v.get('code'), v.text) for v in record.findall('values/value')])
+                else:
+                    self.assertEqual('0 59' if key.endswith('_X') else '0 21', record.findtext("field[@name='Range']"))
+                    self.assertFalse(record.findall('values'))
+        changed = copy.deepcopy(self.bundle)
+        changed.find(".//param[@name='OSD1_CELLVOLT_X']/field[@name='Range']").text = '0 60'
         with self.assertRaisesRegex(ValueError, 'requires manual review'):
             catalog_module.resource(self.catalog, changed)
 

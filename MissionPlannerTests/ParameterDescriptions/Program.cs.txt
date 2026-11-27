@@ -333,6 +333,26 @@ internal static class Program
             "identical English cannot authorize the other release's record");
     }
 
+    private static void CheckMspCellVoltage(ParameterDescriptionStore store, ParameterDescriptionCatalog catalog)
+    {
+        var context = Context("Copter", "4.6.3", "92b0cd788ec29406f26c6f9c31d5ceedbd1cc538");
+        var snapshot = store.Bundled(context);
+        Check(snapshot.MatchesReportedBuild, "exact fixed release");
+        var expected = new[] {
+            new { Key = "OSD2_CELLVOLT_EN", Raw = "Displays average cell voltage (MSP OSD only)", Options = "0: Disabled\n1: Enabled", Zh = "显示第 2 屏的平均单体电压" },
+            new { Key = "OSD2_CELLVOLT_X", Raw = "Horizontal position on screen", Options = "0 59", Zh = "水平位置" },
+            new { Key = "OSD2_CELLVOLT_Y", Raw = "Vertical position on screen", Options = "0 21", Zh = "垂直位置" }
+        };
+        foreach (var row in expected)
+        {
+            var result = catalog.Present(snapshot, row.Key, true);
+            Check(result.Description.StartsWith(row.Raw, StringComparison.Ordinal) &&
+                  result.SearchText.Contains(row.Zh) && result.Description.Contains("仅适用于 MSP OSD"),
+                  "expanded description/search: " + row.Key);
+            Check(result.Options == row.Options && result.Units == "", "raw options and units remain: " + row.Key);
+        }
+    }
+
     private static async Task MainAsync(string[] args)
     {
         var bundle = Resource("official"); var catalog = new ParameterDescriptionCatalog(Resource("zh-CN"));
@@ -348,6 +368,12 @@ internal static class Program
         {
             CheckOsdScreenInfo(releases, bundled, catalog);
             Console.WriteLine("OSD screen information: " + assertions + " assertions passed.");
+            return;
+        }
+        if (args.Length == 1 && args[0] == "--osd-msp-cell-voltage")
+        {
+            CheckMspCellVoltage(bundled, catalog);
+            Console.WriteLine("MSP cell voltage: " + assertions + " assertions passed.");
             return;
         }
         if (args.Length == 1 && args[0] == "--osd-display-format")
@@ -370,13 +396,13 @@ internal static class Program
         }
         var expectedCounts = new Dictionary<string, int>
         {
-            ["Copter-4.5.7"] = 234,
-            ["Copter-4.6.3"] = 245,
-            ["Copter-4.7.1"] = 301,
-            ["Plane-4.5.7"] = 243,
-            ["Plane-4.6.3"] = 255,
-            ["Plane-4.7.1"] = 313,
-            ["Sub-4.7.1"] = 263
+            ["Copter-4.5.7"] = 246,
+            ["Copter-4.6.3"] = 257,
+            ["Copter-4.7.1"] = 313,
+            ["Plane-4.5.7"] = 255,
+            ["Plane-4.6.3"] = 267,
+            ["Plane-4.7.1"] = 325,
+            ["Sub-4.7.1"] = 275
         };
         Check(releases.Length == expectedCounts.Count, "seven pinned release subsets");
         foreach (var release in releases)
