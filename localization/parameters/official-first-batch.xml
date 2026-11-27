@@ -931,6 +931,42 @@
           <param humanName="RPM_Y" name="OSD1_RPM_Y" documentation="Vertical position on screen">
             <field name="Range">0 15</field>
           </param>
+          <param humanName="ACRVOLT_X" name="OSD1_ACRVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ACRVOLT_Y" name="OSD1_ACRVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="LINK_Q_X" name="OSD1_LINK_Q_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="LINK_Q_Y" name="OSD1_LINK_Q_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_ANT_X" name="OSD1_RC_ANT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_ANT_Y" name="OSD1_RC_ANT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_LQ_X" name="OSD1_RC_LQ_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_LQ_Y" name="OSD1_RC_LQ_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_PWR_X" name="OSD1_RC_PWR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_PWR_Y" name="OSD1_RC_PWR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_SNR_X" name="OSD1_RC_SNR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_SNR_Y" name="OSD1_RC_SNR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -1187,6 +1223,42 @@
           </param>
           <param humanName="RPM_Y" name="OSD2_RPM_Y" documentation="Vertical position on screen">
             <field name="Range">0 15</field>
+          </param>
+          <param humanName="ACRVOLT_X" name="OSD2_ACRVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ACRVOLT_Y" name="OSD2_ACRVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="LINK_Q_X" name="OSD2_LINK_Q_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="LINK_Q_Y" name="OSD2_LINK_Q_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_ANT_X" name="OSD2_RC_ANT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_ANT_Y" name="OSD2_RC_ANT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_LQ_X" name="OSD2_RC_LQ_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_LQ_Y" name="OSD2_RC_LQ_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_PWR_X" name="OSD2_RC_PWR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_PWR_Y" name="OSD2_RC_PWR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_SNR_X" name="OSD2_RC_SNR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_SNR_Y" name="OSD2_RC_SNR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
           </param>
         </parameters>
         <parameters name="OSD3_">
@@ -1445,6 +1517,42 @@
           <param humanName="RPM_Y" name="OSD3_RPM_Y" documentation="Vertical position on screen">
             <field name="Range">0 15</field>
           </param>
+          <param humanName="ACRVOLT_X" name="OSD3_ACRVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ACRVOLT_Y" name="OSD3_ACRVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="LINK_Q_X" name="OSD3_LINK_Q_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="LINK_Q_Y" name="OSD3_LINK_Q_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_ANT_X" name="OSD3_RC_ANT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_ANT_Y" name="OSD3_RC_ANT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_LQ_X" name="OSD3_RC_LQ_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_LQ_Y" name="OSD3_RC_LQ_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_PWR_X" name="OSD3_RC_PWR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_PWR_Y" name="OSD3_RC_PWR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_SNR_X" name="OSD3_RC_SNR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_SNR_Y" name="OSD3_RC_SNR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -1701,6 +1809,42 @@
           </param>
           <param humanName="RPM_Y" name="OSD4_RPM_Y" documentation="Vertical position on screen">
             <field name="Range">0 15</field>
+          </param>
+          <param humanName="ACRVOLT_X" name="OSD4_ACRVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ACRVOLT_Y" name="OSD4_ACRVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="LINK_Q_X" name="OSD4_LINK_Q_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="LINK_Q_Y" name="OSD4_LINK_Q_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_ANT_X" name="OSD4_RC_ANT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_ANT_Y" name="OSD4_RC_ANT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_LQ_X" name="OSD4_RC_LQ_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_LQ_Y" name="OSD4_RC_LQ_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_PWR_X" name="OSD4_RC_PWR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_PWR_Y" name="OSD4_RC_PWR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_SNR_X" name="OSD4_RC_SNR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_SNR_Y" name="OSD4_RC_SNR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
           </param>
         </parameters>
         <parameters name="NTF_">
@@ -2723,6 +2867,42 @@
           <param humanName="RPM_Y" name="OSD1_RPM_Y" documentation="Vertical position on screen">
             <field name="Range">0 15</field>
           </param>
+          <param humanName="ACRVOLT_X" name="OSD1_ACRVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ACRVOLT_Y" name="OSD1_ACRVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="LINK_Q_X" name="OSD1_LINK_Q_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="LINK_Q_Y" name="OSD1_LINK_Q_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_ANT_X" name="OSD1_RC_ANT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_ANT_Y" name="OSD1_RC_ANT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_LQ_X" name="OSD1_RC_LQ_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_LQ_Y" name="OSD1_RC_LQ_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_PWR_X" name="OSD1_RC_PWR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_PWR_Y" name="OSD1_RC_PWR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_SNR_X" name="OSD1_RC_SNR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_SNR_Y" name="OSD1_RC_SNR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -2979,6 +3159,42 @@
           </param>
           <param humanName="RPM_Y" name="OSD2_RPM_Y" documentation="Vertical position on screen">
             <field name="Range">0 15</field>
+          </param>
+          <param humanName="ACRVOLT_X" name="OSD2_ACRVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ACRVOLT_Y" name="OSD2_ACRVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="LINK_Q_X" name="OSD2_LINK_Q_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="LINK_Q_Y" name="OSD2_LINK_Q_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_ANT_X" name="OSD2_RC_ANT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_ANT_Y" name="OSD2_RC_ANT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_LQ_X" name="OSD2_RC_LQ_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_LQ_Y" name="OSD2_RC_LQ_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_PWR_X" name="OSD2_RC_PWR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_PWR_Y" name="OSD2_RC_PWR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_SNR_X" name="OSD2_RC_SNR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_SNR_Y" name="OSD2_RC_SNR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
           </param>
         </parameters>
         <parameters name="OSD3_">
@@ -3237,6 +3453,42 @@
           <param humanName="RPM_Y" name="OSD3_RPM_Y" documentation="Vertical position on screen">
             <field name="Range">0 15</field>
           </param>
+          <param humanName="ACRVOLT_X" name="OSD3_ACRVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ACRVOLT_Y" name="OSD3_ACRVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="LINK_Q_X" name="OSD3_LINK_Q_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="LINK_Q_Y" name="OSD3_LINK_Q_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_ANT_X" name="OSD3_RC_ANT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_ANT_Y" name="OSD3_RC_ANT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_LQ_X" name="OSD3_RC_LQ_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_LQ_Y" name="OSD3_RC_LQ_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_PWR_X" name="OSD3_RC_PWR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_PWR_Y" name="OSD3_RC_PWR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_SNR_X" name="OSD3_RC_SNR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_SNR_Y" name="OSD3_RC_SNR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -3493,6 +3745,42 @@
           </param>
           <param humanName="RPM_Y" name="OSD4_RPM_Y" documentation="Vertical position on screen">
             <field name="Range">0 15</field>
+          </param>
+          <param humanName="ACRVOLT_X" name="OSD4_ACRVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ACRVOLT_Y" name="OSD4_ACRVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="LINK_Q_X" name="OSD4_LINK_Q_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="LINK_Q_Y" name="OSD4_LINK_Q_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_ANT_X" name="OSD4_RC_ANT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_ANT_Y" name="OSD4_RC_ANT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_LQ_X" name="OSD4_RC_LQ_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_LQ_Y" name="OSD4_RC_LQ_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_PWR_X" name="OSD4_RC_PWR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_PWR_Y" name="OSD4_RC_PWR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_SNR_X" name="OSD4_RC_SNR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_SNR_Y" name="OSD4_RC_SNR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
           </param>
         </parameters>
         <parameters name="INS_LOG_">
@@ -4605,6 +4893,42 @@
           <param humanName="RPM_Y" name="OSD1_RPM_Y" documentation="Vertical position on screen">
             <field name="Range">0 15</field>
           </param>
+          <param humanName="ACRVOLT_X" name="OSD1_ACRVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ACRVOLT_Y" name="OSD1_ACRVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="LINK_Q_X" name="OSD1_LINK_Q_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="LINK_Q_Y" name="OSD1_LINK_Q_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_ANT_X" name="OSD1_RC_ANT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_ANT_Y" name="OSD1_RC_ANT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_LQ_X" name="OSD1_RC_LQ_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_LQ_Y" name="OSD1_RC_LQ_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_PWR_X" name="OSD1_RC_PWR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_PWR_Y" name="OSD1_RC_PWR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_SNR_X" name="OSD1_RC_SNR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_SNR_Y" name="OSD1_RC_SNR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -4861,6 +5185,42 @@
           </param>
           <param humanName="RPM_Y" name="OSD2_RPM_Y" documentation="Vertical position on screen">
             <field name="Range">0 15</field>
+          </param>
+          <param humanName="ACRVOLT_X" name="OSD2_ACRVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ACRVOLT_Y" name="OSD2_ACRVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="LINK_Q_X" name="OSD2_LINK_Q_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="LINK_Q_Y" name="OSD2_LINK_Q_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_ANT_X" name="OSD2_RC_ANT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_ANT_Y" name="OSD2_RC_ANT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_LQ_X" name="OSD2_RC_LQ_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_LQ_Y" name="OSD2_RC_LQ_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_PWR_X" name="OSD2_RC_PWR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_PWR_Y" name="OSD2_RC_PWR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_SNR_X" name="OSD2_RC_SNR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_SNR_Y" name="OSD2_RC_SNR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
           </param>
         </parameters>
         <parameters name="OSD3_">
@@ -5119,6 +5479,42 @@
           <param humanName="RPM_Y" name="OSD3_RPM_Y" documentation="Vertical position on screen">
             <field name="Range">0 15</field>
           </param>
+          <param humanName="ACRVOLT_X" name="OSD3_ACRVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ACRVOLT_Y" name="OSD3_ACRVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="LINK_Q_X" name="OSD3_LINK_Q_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="LINK_Q_Y" name="OSD3_LINK_Q_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_ANT_X" name="OSD3_RC_ANT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_ANT_Y" name="OSD3_RC_ANT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_LQ_X" name="OSD3_RC_LQ_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_LQ_Y" name="OSD3_RC_LQ_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_PWR_X" name="OSD3_RC_PWR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_PWR_Y" name="OSD3_RC_PWR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_SNR_X" name="OSD3_RC_SNR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_SNR_Y" name="OSD3_RC_SNR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -5375,6 +5771,42 @@
           </param>
           <param humanName="RPM_Y" name="OSD4_RPM_Y" documentation="Vertical position on screen">
             <field name="Range">0 15</field>
+          </param>
+          <param humanName="ACRVOLT_X" name="OSD4_ACRVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ACRVOLT_Y" name="OSD4_ACRVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="LINK_Q_X" name="OSD4_LINK_Q_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="LINK_Q_Y" name="OSD4_LINK_Q_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_ANT_X" name="OSD4_RC_ANT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_ANT_Y" name="OSD4_RC_ANT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_LQ_X" name="OSD4_RC_LQ_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_LQ_Y" name="OSD4_RC_LQ_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_PWR_X" name="OSD4_RC_PWR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_PWR_Y" name="OSD4_RC_PWR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_SNR_X" name="OSD4_RC_SNR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_SNR_Y" name="OSD4_RC_SNR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
           </param>
         </parameters>
         <parameters name="INS_LOG_">
@@ -6475,6 +6907,42 @@
           <param humanName="RPM_Y" name="OSD1_RPM_Y" documentation="Vertical position on screen">
             <field name="Range">0 15</field>
           </param>
+          <param humanName="ACRVOLT_X" name="OSD1_ACRVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ACRVOLT_Y" name="OSD1_ACRVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="LINK_Q_X" name="OSD1_LINK_Q_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="LINK_Q_Y" name="OSD1_LINK_Q_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_ANT_X" name="OSD1_RC_ANT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_ANT_Y" name="OSD1_RC_ANT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_LQ_X" name="OSD1_RC_LQ_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_LQ_Y" name="OSD1_RC_LQ_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_PWR_X" name="OSD1_RC_PWR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_PWR_Y" name="OSD1_RC_PWR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_SNR_X" name="OSD1_RC_SNR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_SNR_Y" name="OSD1_RC_SNR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -6731,6 +7199,42 @@
           </param>
           <param humanName="RPM_Y" name="OSD2_RPM_Y" documentation="Vertical position on screen">
             <field name="Range">0 15</field>
+          </param>
+          <param humanName="ACRVOLT_X" name="OSD2_ACRVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ACRVOLT_Y" name="OSD2_ACRVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="LINK_Q_X" name="OSD2_LINK_Q_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="LINK_Q_Y" name="OSD2_LINK_Q_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_ANT_X" name="OSD2_RC_ANT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_ANT_Y" name="OSD2_RC_ANT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_LQ_X" name="OSD2_RC_LQ_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_LQ_Y" name="OSD2_RC_LQ_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_PWR_X" name="OSD2_RC_PWR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_PWR_Y" name="OSD2_RC_PWR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_SNR_X" name="OSD2_RC_SNR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_SNR_Y" name="OSD2_RC_SNR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
           </param>
         </parameters>
         <parameters name="OSD3_">
@@ -6989,6 +7493,42 @@
           <param humanName="RPM_Y" name="OSD3_RPM_Y" documentation="Vertical position on screen">
             <field name="Range">0 15</field>
           </param>
+          <param humanName="ACRVOLT_X" name="OSD3_ACRVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ACRVOLT_Y" name="OSD3_ACRVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="LINK_Q_X" name="OSD3_LINK_Q_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="LINK_Q_Y" name="OSD3_LINK_Q_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_ANT_X" name="OSD3_RC_ANT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_ANT_Y" name="OSD3_RC_ANT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_LQ_X" name="OSD3_RC_LQ_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_LQ_Y" name="OSD3_RC_LQ_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_PWR_X" name="OSD3_RC_PWR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_PWR_Y" name="OSD3_RC_PWR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_SNR_X" name="OSD3_RC_SNR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_SNR_Y" name="OSD3_RC_SNR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -7245,6 +7785,42 @@
           </param>
           <param humanName="RPM_Y" name="OSD4_RPM_Y" documentation="Vertical position on screen">
             <field name="Range">0 15</field>
+          </param>
+          <param humanName="ACRVOLT_X" name="OSD4_ACRVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ACRVOLT_Y" name="OSD4_ACRVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="LINK_Q_X" name="OSD4_LINK_Q_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="LINK_Q_Y" name="OSD4_LINK_Q_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_ANT_X" name="OSD4_RC_ANT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_ANT_Y" name="OSD4_RC_ANT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_LQ_X" name="OSD4_RC_LQ_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_LQ_Y" name="OSD4_RC_LQ_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_PWR_X" name="OSD4_RC_PWR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_PWR_Y" name="OSD4_RC_PWR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_SNR_X" name="OSD4_RC_SNR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_SNR_Y" name="OSD4_RC_SNR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
           </param>
         </parameters>
         <parameters name="NTF_">
@@ -8322,6 +8898,42 @@
           <param humanName="RPM_Y" name="OSD1_RPM_Y" documentation="Vertical position on screen">
             <field name="Range">0 15</field>
           </param>
+          <param humanName="ACRVOLT_X" name="OSD1_ACRVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ACRVOLT_Y" name="OSD1_ACRVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="LINK_Q_X" name="OSD1_LINK_Q_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="LINK_Q_Y" name="OSD1_LINK_Q_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_ANT_X" name="OSD1_RC_ANT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_ANT_Y" name="OSD1_RC_ANT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_LQ_X" name="OSD1_RC_LQ_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_LQ_Y" name="OSD1_RC_LQ_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_PWR_X" name="OSD1_RC_PWR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_PWR_Y" name="OSD1_RC_PWR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_SNR_X" name="OSD1_RC_SNR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_SNR_Y" name="OSD1_RC_SNR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -8578,6 +9190,42 @@
           </param>
           <param humanName="RPM_Y" name="OSD2_RPM_Y" documentation="Vertical position on screen">
             <field name="Range">0 15</field>
+          </param>
+          <param humanName="ACRVOLT_X" name="OSD2_ACRVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ACRVOLT_Y" name="OSD2_ACRVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="LINK_Q_X" name="OSD2_LINK_Q_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="LINK_Q_Y" name="OSD2_LINK_Q_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_ANT_X" name="OSD2_RC_ANT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_ANT_Y" name="OSD2_RC_ANT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_LQ_X" name="OSD2_RC_LQ_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_LQ_Y" name="OSD2_RC_LQ_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_PWR_X" name="OSD2_RC_PWR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_PWR_Y" name="OSD2_RC_PWR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_SNR_X" name="OSD2_RC_SNR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_SNR_Y" name="OSD2_RC_SNR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
           </param>
         </parameters>
         <parameters name="OSD3_">
@@ -8836,6 +9484,42 @@
           <param humanName="RPM_Y" name="OSD3_RPM_Y" documentation="Vertical position on screen">
             <field name="Range">0 15</field>
           </param>
+          <param humanName="ACRVOLT_X" name="OSD3_ACRVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ACRVOLT_Y" name="OSD3_ACRVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="LINK_Q_X" name="OSD3_LINK_Q_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="LINK_Q_Y" name="OSD3_LINK_Q_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_ANT_X" name="OSD3_RC_ANT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_ANT_Y" name="OSD3_RC_ANT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_LQ_X" name="OSD3_RC_LQ_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_LQ_Y" name="OSD3_RC_LQ_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_PWR_X" name="OSD3_RC_PWR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_PWR_Y" name="OSD3_RC_PWR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_SNR_X" name="OSD3_RC_SNR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_SNR_Y" name="OSD3_RC_SNR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -9092,6 +9776,42 @@
           </param>
           <param humanName="RPM_Y" name="OSD4_RPM_Y" documentation="Vertical position on screen">
             <field name="Range">0 15</field>
+          </param>
+          <param humanName="ACRVOLT_X" name="OSD4_ACRVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ACRVOLT_Y" name="OSD4_ACRVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="LINK_Q_X" name="OSD4_LINK_Q_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="LINK_Q_Y" name="OSD4_LINK_Q_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_ANT_X" name="OSD4_RC_ANT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_ANT_Y" name="OSD4_RC_ANT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_LQ_X" name="OSD4_RC_LQ_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_LQ_Y" name="OSD4_RC_LQ_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_PWR_X" name="OSD4_RC_PWR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_PWR_Y" name="OSD4_RC_PWR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_SNR_X" name="OSD4_RC_SNR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_SNR_Y" name="OSD4_RC_SNR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
           </param>
         </parameters>
         <parameters name="INS_LOG_">
@@ -10268,6 +10988,42 @@
           <param humanName="RPM_Y" name="OSD1_RPM_Y" documentation="Vertical position on screen">
             <field name="Range">0 15</field>
           </param>
+          <param humanName="ACRVOLT_X" name="OSD1_ACRVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ACRVOLT_Y" name="OSD1_ACRVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="LINK_Q_X" name="OSD1_LINK_Q_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="LINK_Q_Y" name="OSD1_LINK_Q_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_ANT_X" name="OSD1_RC_ANT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_ANT_Y" name="OSD1_RC_ANT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_LQ_X" name="OSD1_RC_LQ_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_LQ_Y" name="OSD1_RC_LQ_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_PWR_X" name="OSD1_RC_PWR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_PWR_Y" name="OSD1_RC_PWR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_SNR_X" name="OSD1_RC_SNR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_SNR_Y" name="OSD1_RC_SNR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -10524,6 +11280,42 @@
           </param>
           <param humanName="RPM_Y" name="OSD2_RPM_Y" documentation="Vertical position on screen">
             <field name="Range">0 15</field>
+          </param>
+          <param humanName="ACRVOLT_X" name="OSD2_ACRVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ACRVOLT_Y" name="OSD2_ACRVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="LINK_Q_X" name="OSD2_LINK_Q_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="LINK_Q_Y" name="OSD2_LINK_Q_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_ANT_X" name="OSD2_RC_ANT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_ANT_Y" name="OSD2_RC_ANT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_LQ_X" name="OSD2_RC_LQ_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_LQ_Y" name="OSD2_RC_LQ_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_PWR_X" name="OSD2_RC_PWR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_PWR_Y" name="OSD2_RC_PWR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_SNR_X" name="OSD2_RC_SNR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_SNR_Y" name="OSD2_RC_SNR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
           </param>
         </parameters>
         <parameters name="OSD3_">
@@ -10782,6 +11574,42 @@
           <param humanName="RPM_Y" name="OSD3_RPM_Y" documentation="Vertical position on screen">
             <field name="Range">0 15</field>
           </param>
+          <param humanName="ACRVOLT_X" name="OSD3_ACRVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ACRVOLT_Y" name="OSD3_ACRVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="LINK_Q_X" name="OSD3_LINK_Q_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="LINK_Q_Y" name="OSD3_LINK_Q_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_ANT_X" name="OSD3_RC_ANT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_ANT_Y" name="OSD3_RC_ANT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_LQ_X" name="OSD3_RC_LQ_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_LQ_Y" name="OSD3_RC_LQ_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_PWR_X" name="OSD3_RC_PWR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_PWR_Y" name="OSD3_RC_PWR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_SNR_X" name="OSD3_RC_SNR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_SNR_Y" name="OSD3_RC_SNR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -11038,6 +11866,42 @@
           </param>
           <param humanName="RPM_Y" name="OSD4_RPM_Y" documentation="Vertical position on screen">
             <field name="Range">0 15</field>
+          </param>
+          <param humanName="ACRVOLT_X" name="OSD4_ACRVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ACRVOLT_Y" name="OSD4_ACRVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="LINK_Q_X" name="OSD4_LINK_Q_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="LINK_Q_Y" name="OSD4_LINK_Q_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_ANT_X" name="OSD4_RC_ANT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_ANT_Y" name="OSD4_RC_ANT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_LQ_X" name="OSD4_RC_LQ_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_LQ_Y" name="OSD4_RC_LQ_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_PWR_X" name="OSD4_RC_PWR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_PWR_Y" name="OSD4_RC_PWR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_SNR_X" name="OSD4_RC_SNR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_SNR_Y" name="OSD4_RC_SNR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
           </param>
         </parameters>
         <parameters name="INS_LOG_">
@@ -11686,6 +12550,42 @@
           <param humanName="RPM_Y" name="OSD1_RPM_Y" documentation="Vertical position on screen">
             <field name="Range">0 15</field>
           </param>
+          <param humanName="ACRVOLT_X" name="OSD1_ACRVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ACRVOLT_Y" name="OSD1_ACRVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="LINK_Q_X" name="OSD1_LINK_Q_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="LINK_Q_Y" name="OSD1_LINK_Q_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_ANT_X" name="OSD1_RC_ANT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_ANT_Y" name="OSD1_RC_ANT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_LQ_X" name="OSD1_RC_LQ_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_LQ_Y" name="OSD1_RC_LQ_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_PWR_X" name="OSD1_RC_PWR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_PWR_Y" name="OSD1_RC_PWR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_SNR_X" name="OSD1_RC_SNR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_SNR_Y" name="OSD1_RC_SNR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -11942,6 +12842,42 @@
           </param>
           <param humanName="RPM_Y" name="OSD2_RPM_Y" documentation="Vertical position on screen">
             <field name="Range">0 15</field>
+          </param>
+          <param humanName="ACRVOLT_X" name="OSD2_ACRVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ACRVOLT_Y" name="OSD2_ACRVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="LINK_Q_X" name="OSD2_LINK_Q_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="LINK_Q_Y" name="OSD2_LINK_Q_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_ANT_X" name="OSD2_RC_ANT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_ANT_Y" name="OSD2_RC_ANT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_LQ_X" name="OSD2_RC_LQ_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_LQ_Y" name="OSD2_RC_LQ_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_PWR_X" name="OSD2_RC_PWR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_PWR_Y" name="OSD2_RC_PWR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_SNR_X" name="OSD2_RC_SNR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_SNR_Y" name="OSD2_RC_SNR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
           </param>
         </parameters>
         <parameters name="OSD3_">
@@ -12200,6 +13136,42 @@
           <param humanName="RPM_Y" name="OSD3_RPM_Y" documentation="Vertical position on screen">
             <field name="Range">0 15</field>
           </param>
+          <param humanName="ACRVOLT_X" name="OSD3_ACRVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ACRVOLT_Y" name="OSD3_ACRVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="LINK_Q_X" name="OSD3_LINK_Q_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="LINK_Q_Y" name="OSD3_LINK_Q_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_ANT_X" name="OSD3_RC_ANT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_ANT_Y" name="OSD3_RC_ANT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_LQ_X" name="OSD3_RC_LQ_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_LQ_Y" name="OSD3_RC_LQ_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_PWR_X" name="OSD3_RC_PWR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_PWR_Y" name="OSD3_RC_PWR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_SNR_X" name="OSD3_RC_SNR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_SNR_Y" name="OSD3_RC_SNR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -12456,6 +13428,42 @@
           </param>
           <param humanName="RPM_Y" name="OSD4_RPM_Y" documentation="Vertical position on screen">
             <field name="Range">0 15</field>
+          </param>
+          <param humanName="ACRVOLT_X" name="OSD4_ACRVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ACRVOLT_Y" name="OSD4_ACRVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="LINK_Q_X" name="OSD4_LINK_Q_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="LINK_Q_Y" name="OSD4_LINK_Q_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_ANT_X" name="OSD4_RC_ANT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_ANT_Y" name="OSD4_RC_ANT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_LQ_X" name="OSD4_RC_LQ_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_LQ_Y" name="OSD4_RC_LQ_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_PWR_X" name="OSD4_RC_PWR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_PWR_Y" name="OSD4_RC_PWR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RC_SNR_X" name="OSD4_RC_SNR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RC_SNR_Y" name="OSD4_RC_SNR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
           </param>
         </parameters>
         <parameters name="INS_LOG_">
