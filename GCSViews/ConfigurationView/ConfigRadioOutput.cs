@@ -13,6 +13,9 @@ namespace MissionPlanner.GCSViews.ConfigurationView
         // PWM range the min/trim/max boxes and trim slider allow
         private const int ServoMin = 500;
         private const int ServoMax = 2500;
+        private const int OutputBarWidth = 200;
+        private const int TrimSliderWidth = 420;
+        private bool resizingOutputColumns;
 
         public ConfigRadioOutput()
         {
@@ -36,6 +39,66 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             }
 
             ResumeLayout(true);
+            flowLayoutPanel1.ClientSizeChanged += (sender, args) => SizeOutputColumns();
+            SizeOutputColumns();
+        }
+
+        private void SizeOutputColumns()
+        {
+            if (resizingOutputColumns || flowLayoutPanel1.ClientSize.Width <= 0)
+                return;
+
+            const int minOutputWidth = 90, minTrimWidth = 160;
+            var minimumColumns = new int[tableLayoutPanel1.ColumnCount];
+            var bars = tableLayoutPanel1.Controls.OfType<HorizontalProgressBar2>().ToArray();
+            var sliders = tableLayoutPanel1.Controls.OfType<TrackBar>().ToArray();
+            if (bars.Length == 0 || sliders.Length == 0)
+                return;
+
+            foreach (Control control in tableLayoutPanel1.Controls)
+            {
+                if (control is HorizontalProgressBar2 || control is TrackBar)
+                    continue;
+                int column = tableLayoutPanel1.GetColumn(control);
+                if (column >= 0)
+                    minimumColumns[column] = Math.Max(minimumColumns[column],
+                        (control.AutoSize ? control.GetPreferredSize(System.Drawing.Size.Empty).Width : control.Width) +
+                        control.Margin.Horizontal);
+            }
+
+            int barMargin = bars[0].Margin.Horizontal;
+            int sliderMargin = sliders[0].Margin.Horizontal;
+            int minBar = Math.Min(OutputBarWidth, Math.Max(minOutputWidth, minimumColumns[1] - barMargin));
+            int minSlider = Math.Min(TrimSliderWidth, Math.Max(minTrimWidth, minimumColumns[5] - sliderMargin));
+            minimumColumns[1] = minimumColumns[5] = 0;
+            int available = flowLayoutPanel1.ClientSize.Width - flowLayoutPanel1.Padding.Horizontal -
+                tableLayoutPanel1.Margin.Horizontal - tableLayoutPanel1.Padding.Horizontal -
+                minimumColumns.Sum() - barMargin - sliderMargin;
+            // Keep both controls at a usable minimum and let the existing horizontal scroll reveal the rest.
+            int minTotal = minBar + minSlider, maxTotal = OutputBarWidth + TrimSliderWidth;
+            int budget = Math.Max(minTotal, Math.Min(available, maxTotal));
+            int barWidth = minBar + (budget - minTotal) * (OutputBarWidth - minBar) / Math.Max(1, maxTotal - minTotal);
+            int sliderWidth = budget - barWidth;
+            if (bars.All(bar => bar.Width == barWidth) && sliders.All(slider => slider.Width == sliderWidth))
+                return;
+
+            resizingOutputColumns = true;
+            tableLayoutPanel1.SuspendLayout();
+            try
+            {
+                foreach (var bar in bars)
+                    bar.Width = barWidth;
+                foreach (var slider in sliders)
+                    slider.Width = sliderWidth;
+                // A growing table can retain the old extent after its children shrink.
+                tableLayoutPanel1.Width = Math.Max(tableLayoutPanel1.GetPreferredSize(System.Drawing.Size.Empty).Width,
+                    flowLayoutPanel1.ClientSize.Width - flowLayoutPanel1.Padding.Horizontal - tableLayoutPanel1.Margin.Horizontal);
+            }
+            finally
+            {
+                try { tableLayoutPanel1.ResumeLayout(true); }
+                finally { resizingOutputColumns = false; }
+            }
         }
 
         private void setup(int servono)
@@ -67,7 +130,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                 DrawLabel = true,
                 Name = "BAR" + servono,
                 Height = controlHeight,
-                Width = 200,
+                Width = OutputBarWidth,
                 Anchor = AnchorStyles.None,
                 Margin = horizontalMargin
             };
@@ -112,7 +175,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                 Minimum = 500,
                 Maximum = 2500,
                 Value = 1500,
-                Width = 420,
+                Width = TrimSliderWidth,
                 Height = controlHeight,
                 AutoSize = false,
                 TickFrequency = 100,
