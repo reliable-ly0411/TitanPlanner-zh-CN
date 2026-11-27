@@ -111,7 +111,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             this.but_fft.Name = "but_fft";
             this.but_fft.Size = new System.Drawing.Size(75, 23);
             this.but_fft.TabIndex = 5;
-            this.but_fft.Text = "FFT";
+            this.but_fft.Text = UiText.Translate("FFT");
             this.but_fft.UseVisualStyleBackColor = true;
             this.but_fft.Click += new System.EventHandler(this.but_fft_Click);
             // 

@@ -3640,6 +3640,10 @@ Ctrl+O 从文件加载</value>
     <value>围栏 (FENCE)</value>
     <comment>"FENCE"</comment>
   </data>
+  <data name="94fa3fe96ddeefe8e4e7f203318826a72c95c5ebe448ebb244268b1380f6a700" xml:space="preserve">
+    <value>FFT 分析</value>
+    <comment>"FFT"</comment>
+  </data>
   <data name="15fde6edd95f7323f1edd158fc777082ea5bed5cced87eed157c7655a4704bbf" xml:space="preserve">
     <value>FFT 设置</value>
     <comment>"FFT Setup"</comment>
