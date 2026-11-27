@@ -1,4 +1,7 @@
 {
+  "GCSViews/ConfigurationView/ConfigHWRangeFinder.resx": {
+    "label4.Text": "电压 (V)"
+  },
   "GCSViews/ConfigurationView/ConfigHWOptFlow.resx": {
     "label4.Text": "FX 修正（‰）",
     "label5.Text": "FY 修正（‰）",

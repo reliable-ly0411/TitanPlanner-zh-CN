@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -127,9 +127,7 @@
   <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
     <value>48, 18</value>
   </data>
-  <data name="label4.Text" xml:space="preserve">
-    <value>电压: </value>
-  </data>
+  <data name="label4.Text" xml:space="preserve"><value>电压 (V)</value></data>
   <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
     <value>48, 18</value>
   </data>
