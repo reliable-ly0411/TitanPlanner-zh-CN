@@ -1,0 +1,143 @@
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Threading;
+using System.Windows.Forms;
+using Plan29PreviewProbe;
+
+internal static class ReadOnlyPlanSnapshotProbe
+{
+    private static readonly CultureInfo Culture = CultureInfo.GetCultureInfo("de-DE");
+    private static int passed;
+
+    [STAThread]
+    public static void Main()
+    {
+        using (var host = new Form())
+        using (var grid = Grid())
+        {
+            host.Controls.Add(grid);
+            host.Show();
+            Application.DoEvents();
+            var scales = new Dictionary<string, double[]> { ["WAYPOINT"] = new double[] { 10, 2, 4, 8, 10, 100, 2 } };
+            var ids = new Dictionary<string, ushort> { ["WAYPOINT"] = 16, ["FENCE_RETURN_POINT"] = 5000, ["RALLY_POINT"] = 5100 };
+            var blocked = new List<ushort> { 5000, 5100 };
+            var reader = new ReadOnlyPlanReader(grid, new PlanCommandCatalog(ids, scales, blocked, new ushort[] { 62000, 5100 }));
+            scales["WAYPOINT"][0] = 0;
+            ids["WAYPOINT"] = 5000;
+            blocked.Clear();
+            var snapshot = Capture(reader);
+            Check("planned Home sequence, native altitude and frame exact", snapshot.Home.Sequence == 0 &&
+                snapshot.Home.Latitude == -12.25 && snapshot.Home.Longitude == 123.125 &&
+                snapshot.Home.AltitudeMetres == 50.25 && snapshot.Home.Frame == 10);
+            Check("empty plan is a valid complete Home-only snapshot", snapshot.Rows.Count == 0);
+
+            grid.Rows.Add("WAYPOINT", "-30,5", "5,0", "14,0", "17,6", "123,4", "3000,0", "85,0", 3);
+            const double typedPrecision = 400.12500000000017d;
+            grid.Rows.Add("UNKNOWN", 1, 2, 3, 4, 300.5d, typedPrecision, -1, 1);
+            grid.Rows[1].Cells["Command"].Tag = (ushort)62000;
+            int valueEvents = 0;
+            grid.CellValueChanged += (_, __) => valueEvents++;
+            snapshot = Capture(reader);
+            var first = snapshot.Rows[0];
+            Check("frozen catalog survives caller dictionary mutations", first.CommandId == 16 && first.CommandKey == "WAYPOINT");
+            Check("row order and independent Home / command frames", snapshot.Rows.Select(r => r.Sequence).SequenceEqual(new[] { 1, 2 })
+                && first.Frame == 3 && snapshot.Rows[1].Frame == 1 && snapshot.Home.Frame == 10);
+            Check("parameters and XYZ use exact field-specific scaling", Equal(first.Values, -3.05, 2.5, 3.5, 2.2, 12.34, 30.0, 42.5));
+            Check("negative WAYPOINT delay preserved without a grid change or event",
+                grid.Rows[0].Cells["Param1"].Value.Equals("-30,5") && valueEvents == 0);
+            Check("local/general fields are not interpreted as geodetic",
+                Equal(snapshot.Rows[1].Values, 1, 2, 3, 4, 300.5, 400.125, -1) && snapshot.Rows[1].CommandId == 62000);
+            Check("captures display values and culture apart from normalized fields",
+                snapshot.DisplayCulture == "de-DE" &&
+                Equal(first.DisplayValues, -30.5, 5.0, 14.0, 17.6, 123.4, 3000.0, 85.0));
+            Check("typed coordinate retains double precision without text round-trip",
+                snapshot.Rows[1].Values[5] == typedPrecision && snapshot.Rows[1].DisplayValues[5] == typedPrecision);
+            Check("frozen value list and rows reject mutation",
+                Throws<NotSupportedException>(() => ((IList<double>)first.Values)[0] = 0)
+                && Throws<NotSupportedException>(() => ((IList<PlanRow>)snapshot.Rows).Clear()));
+            Check("Fence and Rally scopes reject capture",
+                Throws<InvalidOperationException>(() => Capture(reader, PlanKind.Fence))
+                && Throws<InvalidOperationException>(() => Capture(reader, PlanKind.Rally)));
+            Check("unavailable scope fails closed", Throws<InvalidOperationException>(() => Capture(reader, PlanKind.Unavailable)));
+
+            var old = snapshot;
+            grid.Rows[1].Cells["Command"].Tag = (ushort)5100;
+            Check("UNKNOWN with RALLY id cannot masquerade as mission", Throws<FormatException>(() => Capture(reader)));
+            grid.Rows[1].Cells["Command"].Value = "FENCE_RETURN_POINT";
+            Check("Fence-named row in mission is rejected", Throws<FormatException>(() => Capture(reader)));
+            grid.Rows[1].Cells["Command"].Value = "UNKNOWN";
+            grid.Rows[1].Cells["Command"].Tag = 62000; // wrong CLR type, unlike the real UNKNOWN tag
+            Check("unknown command without typed id is rejected", Throws<FormatException>(() => Capture(reader)));
+
+            grid.Rows[1].Cells["Command"].Tag = (ushort)62001;
+            Check("unclassified numeric tag cannot prove mission provenance", Throws<FormatException>(() => Capture(reader)));
+            grid.Rows[1].Cells["Command"].Tag = (ushort)62000;
+            grid.Rows[1].Cells["Param4"].Value = "not numeric";
+            valueEvents = 0;
+            try { snapshot = Capture(reader); throw new Exception("expected invalid late row"); }
+            catch (FormatException) { }
+            Check("invalid late row does not alter old complete output or any grid values",
+                ReferenceEquals(old, snapshot) && old.Rows.Count == 2 && first.Values[0] == -3.05 &&
+                grid.Rows[1].Cells["Param4"].Value.Equals("not numeric") && valueEvents == 0);
+            grid.Rows[1].Cells["Param4"].Value = "NaN";
+            Check("nonfinite values fail closed", Throws<FormatException>(() => Capture(reader)));
+            grid.Rows[1].Cells["Param4"].Value = 2;
+            grid.Rows[1].Cells["Frame"].Value = 256;
+            Check("out-of-range frame is rejected, not silently cast", Throws<FormatException>(() => Capture(reader)));
+            grid.Rows[1].Cells["Frame"].Value = 1;
+            Check("invalid or missing Home and bad altitude units are rejected",
+                Throws<FormatException>(() => reader.Capture(PlanKind.Mission, "", "123,125", "2", 2, 10, Culture)) &&
+                Throws<FormatException>(() => reader.Capture(PlanKind.Mission, "91", "123,125", "2", 2, 10, Culture)) &&
+                Throws<FormatException>(() => reader.Capture(PlanKind.Mission, "90", "123,125", "2", 0, 10, Culture)));
+
+            grid.CurrentCell = grid.Rows[0].Cells["Param1"];
+            if (!grid.BeginEdit(false)) throw new Exception("fixture could not enter edit");
+            ((DataGridViewTextBoxEditingControl)grid.EditingControl).Text = "uncommitted";
+            Check("does not commit or cancel active cell edit",
+                Throws<InvalidOperationException>(() => Capture(reader)) &&
+                grid.IsCurrentCellInEditMode && grid.EditingControl.Text == "uncommitted");
+            grid.CancelEdit();
+            Exception wrongThread = null;
+            var other = new Thread(() => { try { Capture(reader); } catch (Exception e) { wrongThread = e; } });
+            other.Start(); other.Join();
+            Check("rejects cross-thread capture", wrongThread is InvalidOperationException);
+
+            grid.Rows.RemoveAt(1);
+            var shorter = Capture(reader);
+            Check("shorter snapshot does not mutate retained prior snapshot", shorter.Rows.Count == 1 && old.Rows.Count == 2);
+            grid.Rows.Clear();
+            Check("empty replacement leaves older references complete", Capture(reader).Rows.Count == 0 && shorter.Rows.Count == 1);
+            var brokenUnit = new ReadOnlyPlanReader(grid, new PlanCommandCatalog(
+                new Dictionary<string, ushort> { ["WAYPOINT"] = 16 },
+                new Dictionary<string, double[]> { ["WAYPOINT"] = new double[] { 0, 2, 4, 8, 10, 100, 2 } },
+                new ushort[] { 5000, 5100 }));
+            grid.Rows.Add("WAYPOINT", 1, 0, 0, 0, 0, 0, 0, 3);
+            Check("broken command multiplier cannot publish a snapshot", Throws<FormatException>(() => Capture(brokenUnit)));
+        }
+        Console.WriteLine(passed + " checks passed");
+    }
+
+    private static ReadOnlyPlanSnapshot Capture(ReadOnlyPlanReader r, PlanKind kind = PlanKind.Mission) =>
+        r.Capture(kind, "-12,25", "123,125", "100,5", 2.0, 10, Culture);
+    private static bool Throws<T>(Action f) where T : Exception
+    {
+        try { f(); return false; } catch(T) { return true; }
+    }
+    private static void Check(string name, bool condition)
+    {
+        if (!condition) throw new Exception("Failed: " + name);
+        Console.WriteLine("PASS " + name);
+        passed++;
+    }
+    private static bool Equal(IList<double> input, params double[] expected) =>
+        input.Count == expected.Length && !input.Where((v, i) => Math.Abs(v - expected[i]) > 1e-10).Any();
+    private static DataGridView Grid()
+    {
+        var grid = new DataGridView { AllowUserToAddRows = false, Dock = DockStyle.Fill };
+        foreach (var key in new[]{"Command","Param1","Param2","Param3","Param4","Lat","Lon","Alt","Frame"})
+            grid.Columns.Add(key, key);
+        return grid;
+    }
+}
