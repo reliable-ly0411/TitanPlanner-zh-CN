@@ -1,4 +1,7 @@
 {
+  "GCSViews/InitialSetup.resx": {
+    "backstageViewPageAntTrack.Text": "跟踪器参数"
+  },
   "GCSViews/ConfigurationView/ConfigHWRangeFinder.resx": {
     "label4.Text": "电压 (V)"
   },
