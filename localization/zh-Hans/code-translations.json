@@ -167,6 +167,7 @@
   "Fence type list has no options": "下拉无选项",
   "No fence type options are available from the loaded metadata.": "本次加载的元数据没有提供围栏类型选项。",
   "The cached fence type is not one item in this list. The cached value is shown below.": "列表中没有与缓存围栏类型对应的单项。\n原始缓存值见下方。",
+  "FFT": "FFT 分析",
   "FFT Setup": "FFT 设置",
   "FPV Mode (camera at aircraft)": "第一人称视角（相机位于飞行器处）",
   "Fail": "失败",
