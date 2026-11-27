@@ -3570,6 +3570,10 @@ Ctrl+O 从文件加载</value>
     <value>IMU 时间相对于实际时间的估算倍率</value>
     <comment>"Estimated IMU time to wall clock ratio"</comment>
   </data>
+  <data name="731be68dd3c5ff9010ee531b33cd8a66d853779d66382376587ef7510798673f" xml:space="preserve">
+    <value>估算海平面气压</value>
+    <comment>"Estimated sea-level pressure"</comment>
+  </data>
   <data name="8d14f6e72de8f18ab1ee5c5330f00653c0c3ce099e63024454f80af97e72d333" xml:space="preserve">
     <value>事件</value>
     <comment>"Events"</comment>

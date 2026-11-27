@@ -102,6 +102,7 @@ namespace MissionPlanner.Controls
                 case "targetaltd100": return UiText.Translate("Target altitude hundreds component (fractional)");
                 case "load": return UiText.Translate("Reported autopilot processing load (%)");
                 case "KIndex": return UiText.Translate("Geomagnetic K-index");
+                case "QNH": return UiText.Translate("Estimated sea-level pressure");
                 case "speedup": return UiText.Translate("Estimated IMU time to wall clock ratio");
                 case "ter_load": return UiText.Translate("Terrain blocks loaded in memory");
                 case "ter_pend": return UiText.Translate("Terrain blocks awaiting receipt or disk read");
