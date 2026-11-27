@@ -24,6 +24,9 @@ namespace MissionPlanner
         }
         private static readonly UTF8Encoding StrictUtf8 = new UTF8Encoding(false, true);
 
+        private static bool IsBarometerCalibrationComplete(int version, string message, byte severity)
+            => version == 1 && severity == (byte)MAVLink.MAV_SEVERITY.INFO && message == "Barometer 1 calibration complete";
+
         private static bool IsPx4(int version) => version == 2 || version == 5 || version == 6 || version == 9;
         private static int FamilyForVersion(int version) => IsPx4(version) ? 2 : version != 0 ? 1 : 0;
 
@@ -93,7 +96,8 @@ namespace MissionPlanner
             catch (DecoderFallbackException) { return; }
 
             // Keep only known supported raw literals, never translated text at receive time.
-            bool known = IsPx4(s.Version)
+            bool known = IsBarometerCalibrationComplete(s.Version, row.message, row.severity);
+            known |= IsPx4(s.Version)
                 ? row.message == Px4BatteryText(s.Version) && row.severity == 2
                 : (row.message == "EKF3 IMU0 origin set" && (s.Version == 1 || row.severity == 6)) ||
                   (s.Version == 1 && row.message == "GPS 1: detected u-blox");
@@ -128,6 +132,9 @@ namespace MissionPlanner
                 if (row.message == null || !states.TryGetValue(list, out s) || s.Conflict ||
                     !s.Rows.TryGetValue(row.message, out proof) || proof.Time != row.time ||
                     proof.Severity != row.severity) return null;
+
+                if (IsBarometerCalibrationComplete(s.Version, row.message, row.severity))
+                    return "1 号气压计校准完成";
 
                 if (IsPx4(s.Version))
                     return row.message == Px4BatteryText(s.Version) ? (s.Version == 9 ? "1 号电池已断开" : "未检测到 1 号电池") : null;
