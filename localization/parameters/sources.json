@@ -11,7 +11,8 @@
       "sourceSha256": "61599e773eadeba781d69c124aff3acfbeea884b2a159d9ca6f7891f379513c9",
       "gitTag": "Copter-4.5.7",
       "gitSha": "2a3dc4b7bf2507120f7378a7b2fde73185e0c325",
-      "parameters": 37
+      "parameters": 73,
+      "legacySourceStamp": "Generated from git tag Copter-4.5.7 on 2025-05-26 19:05:40"
     },
     {
       "family": "Copter",
@@ -20,7 +21,7 @@
       "sourceSha256": "e6375727b7a05a0c820b7b5c3e28c755d52c1e6da6b4506682d1dd3b19552190",
       "gitTag": "Copter-4.6.3",
       "gitSha": "92b0cd788ec29406f26c6f9c31d5ceedbd1cc538",
-      "parameters": 37
+      "parameters": 73
     },
     {
       "family": "Copter",
@@ -29,7 +30,7 @@
       "sourceSha256": "9e5e674c6029bd9f680540c62119086c26991d3ba586c585f4e98484036c0518",
       "gitTag": "Copter-4.7.1",
       "gitSha": "dbe792162d06cab66c3475fd5556bf7a120f119e",
-      "parameters": 37
+      "parameters": 79
     },
     {
       "family": "Plane",
