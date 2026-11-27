@@ -358,7 +358,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             txt_current.Text = MainV2.comPort.MAV.cs.current.ToString();
         }
 
-        private static bool TryGetBatteryHardwareSelection(object item, int index, out int selection)
+        internal static bool TryGetBatteryHardwareSelection(object item, int index, out int selection)
         {
             selection = -1;
             if (index < 0 || index > 10 || !(item is string caption))
