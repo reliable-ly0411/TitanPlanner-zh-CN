@@ -471,9 +471,22 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                     return;
                 int keysWidth = keysLabels.Count == 0 ? 0 : keysLabels.Max(label => label.PreferredWidth + label.Margin.Horizontal);
                 int width = Math.Max(1, group.ClientSize.Width - group.Padding.Horizontal - table.Margin.Horizontal - keysWidth - 6);
-                foreach (var description in descriptions)
-                    if (description.MaximumSize.Width != width)
-                        description.MaximumSize = new Size(width, 0);
+                int firstChanged = descriptions.FindIndex(description => description.MaximumSize.Width != width);
+                if (firstChanged < 0)
+                    return;
+
+                // Avoid laying out the whole shortcut table for each changed description.
+                table.SuspendLayout();
+                try
+                {
+                    for (int i = firstChanged; i < descriptions.Count; i++)
+                        if (descriptions[i].MaximumSize.Width != width)
+                            descriptions[i].MaximumSize = new Size(width, 0);
+                }
+                finally
+                {
+                    table.ResumeLayout(true);
+                }
             };
             group.SizeChanged += (sender, args) => constrainDescriptions();
             constrainDescriptions();
