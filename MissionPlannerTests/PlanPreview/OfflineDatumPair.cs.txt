@@ -81,6 +81,9 @@ namespace Plan29PreviewProbe
         private Epoch current;
         private bool disposed;
         internal Payload Published { get; private set; }
+        internal Payload GetPublished(ReadOnlyPlanSnapshot plan) =>
+            current != null && ReferenceEquals(current.Plan, plan) ? Published : null;
+
         internal Epoch Switch(ReadOnlyPlanSnapshot plan, FixtureGrid grid, params Receipt[] receipts)
         {
             current = null; Published = null;

@@ -119,7 +119,7 @@ PlanHomeDatumSessionProbe.cs.txt 与 PlanHomeDatumSession.cs.txt、ReadOnlyPlanS
 
 ### 复验范围
 
-PairedPlanPreviewProbe.cs.txt（独立入口）另带 PairedPlanPreview、LocalPlanPreviewSession、ReadOnlyPlanOverlay、LocalPlan3DLineAdapter、LocalPlan3DProjection、LocalPlanElevationEvidence、ReadOnlyPlanSnapshot，及第五阶段的实际 GMap.NET、OpenTK、WorldFrame 与 LineRenderer/着色器依赖。一律复制去掉 .txt 后单独编译。空地图源、软件 GL 和合成路线，不加载真实地形、运行正式程序或连接设备。
+PairedPlanPreviewProbe.cs.txt（独立入口）另带 PairedPlanPreview、LocalPlanPreviewSession、ReadOnlyPlanOverlay、LocalPlan3DLineAdapter、LocalPlan3DProjection、LocalPlanElevationEvidence、ReadOnlyPlanSnapshot、OfflineDatumPair，及第五阶段的实际 GMap.NET、OpenTK、WorldFrame 与 LineRenderer/着色器依赖。一律复制去掉 .txt 后单独编译。空地图源、软件 GL 和合成路线，不加载真实地形、运行正式程序或连接设备。
 
 Acer 隔离实际 GMap Paint + Mesa llvmpipe OpenGL 测 24 项；像素证明成对初次发布、替换、过期回调、失败清理、只读 2D 不在边界 API、已发布的场景重定位同时取消两边绘制、以及模拟设备的黄色像素完全不变。此前单独的 2D 会话 19 项也重新验证。尚需上线前的真实离线 PLAN→FLY 事件与景观验证、运行时高度来源／垂直基准和发布准入，以及整合后 UI 错误提示；不得将夹具当作产品已完成。
 
@@ -226,3 +226,11 @@ Stop repeating fixtures once this boundary is covered. Remaining work is introdu
 - 无窗口对照保留候选的计划版本、投影和成对提交代码，用替身代替窗口和地图集合。旧版在清空后仍接受旧投影，修正后该投影和提交均被拒绝，16 项生命周期断言通过。
 - `OfflineDatumPairProbe` 的 23 项纯 CPU 断言通过。绝对高、相对计划 Home 和相对地形高的输入仍使用合成凭据。
 - 完整成对夹具已按 .NET Framework 4.7.2 引用程序集局部编译。本次环境不允许创建 Xvfb 所需的 Unix socket，新增的 19 个像素与状态断言尚待运行。原有 28 项记录对应此前版本。Windows 的两个实际视图、真实离线高程来源及垂直基准仍待共同验收，Ctrl+M 继续沿用现行入口。
+
+## 成对绘制采用已核验的三种高度
+
+在 `ae92cb59` 的成对入口，一个只有绝对高度 frame 编号的点仍能在没有高程凭据时进入待显示状态并提交。现在绘制入口只接收 `OfflineDatumPair` 为同一冻结计划发布的高程结果。绝对高逐行对照凭据，相对高使用这份计划的 Home，地形高使用该版本网格在点位的有效样本。三维只做水平投影，高程不会再加一次。在准备后或显示中重新核验数据，旧结果在提交和下次绘制时都会失效。两个视图的来源标签标明「本地计划 · 只读 · 合成高程」。
+
+- 运行第七阶段的成对夹具时，编译输入还需加上 `OfflineDatumPair.cs.txt`。新样本用 -12 米绝对高、120 米 Home 上的 -5 米偏移，以及有效零地形上的 7 米偏移，断言投影结果为 -12、115、7 米。逐一去掉凭据时，两边均应为空；同计划重新核验后，旧提交也应失效。
+- 云端无窗口对照共 25 项通过，包含上一批的 16 项生命周期检查。原 CPU 高程夹具 23 项、独立投影 17 项、线段与高度凭据 18 项均通过。后两组运行早期独立入口；成对入口使用同计划的新版高度结果。
+- 含 GMap 和 OpenGL 的完整夹具已定向编译。本批的真实像素与原窗口首帧留待可运行的显示环境。所有高度仍来自纯内存的虚构基准。实际本地计划与地形的来源、垂直基准和覆盖仍待确认。

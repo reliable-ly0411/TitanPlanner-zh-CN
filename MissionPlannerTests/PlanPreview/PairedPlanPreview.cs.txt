@@ -30,12 +30,22 @@ namespace Plan29PreviewProbe
             internal readonly PointLatLng[][] Geometry;
             internal readonly LocalPlan3DLineAdapter Layer;
 
+            private readonly OfflineDatumPair resolver;
+            private readonly OfflineDatumPair.Payload elevations;
+
             internal Pair(Revision revision, ReadOnlyPlanSnapshot source, WorldFrame frame,
-                PointLatLng[][] geometry, LocalPlan3DLineAdapter layer)
-            { Revision = revision; Source = source; Frame = frame; Geometry = geometry; Layer = layer; }
+                PointLatLng[][] geometry, LocalPlan3DLineAdapter layer,
+                OfflineDatumPair resolver, OfflineDatumPair.Payload elevations)
+            {
+                Revision = revision; Source = source; Frame = frame; Geometry = geometry; Layer = layer;
+                this.resolver = resolver;
+                this.elevations = elevations;
+            }
+
+            internal bool HasCurrentElevations => ReferenceEquals(resolver.GetPublished(Source), elevations);
         }
 
-        private const string LocalCaption = "Local plan · read-only";
+        internal const string SourceCaption = "本地计划 · 只读 · 合成高程";
         private readonly object editor;
         private readonly GMapControl flight;
         private readonly Control sceneView;
@@ -90,8 +100,8 @@ namespace Plan29PreviewProbe
             return false;
         }
 
-        public Result TryStage(object owner, Revision revision, ReadOnlyPlanSnapshot candidate, WorldFrame scene,
-            LocalPlanElevationEvidence evidence, out Stage stage)
+        internal Result TryStage(object owner, Revision revision, ReadOnlyPlanSnapshot candidate, WorldFrame scene,
+            OfflineDatumPair resolver, out Stage stage)
         {
             CheckThread();
             stage = null;
@@ -106,12 +116,14 @@ namespace Plan29PreviewProbe
             if (!source.TryCopyProjection(revision.Plan, candidate, out var geometry) || geometry.Length == 0)
             { ClearPair(); return Result.MissingProjection; }
 
-            var layer = new LocalPlan3DLineAdapter();
-            if (layer.Prepare(candidate, scene, evidence) != Local3DResult.Ready)
+            var elevations = resolver?.GetPublished(candidate);
+            var projection = LocalPlan3DProjectionBuilder.ProjectResolved(scene, elevations?.Scene);
+            if (projection == null)
             { ClearPair(); return Result.Missing3D; }
+            var layer = LocalPlan3DLineAdapter.FromProjection(candidate, projection);
 
             // No draw or UI updates are needed to stage the pair. The last complete pair stays visible.
-            pending = new Pair(revision, candidate, scene, geometry, layer);
+            pending = new Pair(revision, candidate, scene, geometry, layer, resolver, elevations);
             stage = pending.Key;
             return Result.Staged;
         }
@@ -123,7 +135,7 @@ namespace Plan29PreviewProbe
                 return false;
             var candidate = pending;
             if (!ReferenceEquals(active, candidate.Source) || !ReferenceEquals(scene, candidate.Frame) ||
-                candidate.Layer.Caption(active, scene) == null)
+                !candidate.HasCurrentElevations || !candidate.Layer.HasGeometry(active, scene))
             { ClearPair(); return false; }
 
             // Both paints use this pointer. No map collection events and no writes between the two layers.
@@ -154,7 +166,8 @@ namespace Plan29PreviewProbe
         {
             CheckThread();
             if (!IsCurrent(owner, revision) || published == null) return false;
-            if (LocalPlanPreviewSession.SamePlan(published.Source, freshCapture)) return true;
+            if (published.HasCurrentElevations && LocalPlanPreviewSession.SamePlan(published.Source, freshCapture))
+                return true;
             Invalidate(owner);
             return false;
         }
@@ -163,7 +176,7 @@ namespace Plan29PreviewProbe
         {
             CheckThread();
             var pair = Visible;
-            return pair != null && ReferenceEquals(pair.Frame, scene) ? pair.Layer.Caption(pair.Source, scene) : null;
+            return pair != null && ReferenceEquals(pair.Frame, scene) ? SourceCaption : null;
         }
 
         public bool Draw3D(LineRenderer lines, WorldFrame scene, ref Matrix4 projection, ref Matrix4 view)
@@ -179,8 +192,8 @@ namespace Plan29PreviewProbe
             get
             {
                 var pair = published;
-                return pair != null && ReferenceEquals(pair.Revision, current) &&
-                    pair.Layer.Caption(pair.Source, pair.Frame) != null ? pair : null;
+                return pair != null && ReferenceEquals(pair.Revision, current) && pair.HasCurrentElevations &&
+                    pair.Layer.HasGeometry(pair.Source, pair.Frame) ? pair : null;
             }
         }
 
@@ -202,7 +215,7 @@ namespace Plan29PreviewProbe
                     var first = pixels[0];
                     graphics.FillEllipse(Brushes.MediumPurple, first.X - 3, first.Y - 3, 6, 6);
                 }
-                TextRenderer.DrawText(graphics, LocalCaption, flight.Font,
+                TextRenderer.DrawText(graphics, SourceCaption, flight.Font,
                     new Point(8, 8), Color.Purple, Color.White);
             }
             finally { graphics.Restore(state); }

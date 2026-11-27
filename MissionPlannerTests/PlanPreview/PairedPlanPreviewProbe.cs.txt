@@ -60,7 +60,7 @@ internal static class PairedPlanPreviewProbe
             Check("one commit publishes both paths for the same owner and frame", pair.TryCommit(plan, rev, first, original, frame));
             var visible = ReadPixels(pair, flight, frame, lines);
             Check("actual GMap and OpenGL pixels both appear and canonical GL remains exactly unchanged",
-                visible.map > 40 && visible.local > 10 && visible.device == start.device && pair.Caption3D(frame) == LocalPlan3DLineAdapter.SourceCaption);
+                visible.map > 40 && visible.local > 10 && visible.device == start.device && pair.Caption3D(frame) == PairedPlanPreview.SourceCaption);
             Check("local 2D does not participate in any map overlay/marker/bounds API",
                 flight.Overlays.Count == 1 && ReferenceEquals(flight.Overlays.Single(), canonical) &&
                 originalBounds.Equals(flight.GetRectOfAllMarkers(null)));
@@ -191,6 +191,7 @@ internal static class PairedPlanPreviewProbe
                     ReadPixels(pair, flight, frame, lines).Equals(start));
             }
             CheckRouteReplacement(pair, plan, flight, frame, lines, canonical);
+            CheckResolvedHeights(pair, plan, flight, frame, lines);
         }
         Console.WriteLine(passed + " checks passed");
     }
@@ -291,6 +292,72 @@ internal static class PairedPlanPreviewProbe
             pair.TryCommit(plan, revision, longStage, longPlan, frame) && Capture().Matches(longPixels));
     }
 
+
+    static void CheckResolvedHeights(PairedPlanPreview pair, GMapControl plan, GMapControl flight,
+        WorldFrame frame, LineRenderer renderer)
+    {
+        var revision = pair.BeginRevision(plan, PlanKind.Mission);
+        var baseline = ReadPixels(pair, flight, frame, renderer);
+        var shape = new[] { Shape[0], Shape[1], new PointLatLng(10.1195, 2.1008) };
+        var frames = new byte[] { 0, 3, 10 };
+        var heights = new double[] { -12, -5, 7 };
+        var rows = shape.Select((p, i) =>
+        {
+            var values = new[] { 0d, 0, 0, 0, p.Lat, p.Lng, heights[i] };
+            return new PlanRow(i + 1, "WAYPOINT", 16, frames[i], values, values);
+        }).ToArray();
+        var mixed = new ReadOnlyPlanSnapshot(new PlanHome(3, 10.12, 2.10, 120), rows, "en-US");
+        var old = plan.Overlays.Single(o => o.Id == "WPOverlay");
+        plan.Overlays.Remove(old); old.Dispose();
+        var layer = PublishPlannerLayer(plan, shape);
+        Check("三种高度共用同一版计划投影",
+            pair.RecordPlanProjection(plan, revision, mixed, mixed, layer));
+
+        var absolute = new OfflineDatumPair.Receipt(mixed, OfflineDatumPair.HeightKind.Absolute, 1,
+            shape[0].Lat, shape[0].Lng, -12, OfflineDatumPair.Vertical, OfflineDatumPair.Unit.Metres);
+        var home = new OfflineDatumPair.Receipt(mixed, OfflineDatumPair.HeightKind.Home, 0,
+            10.12, 2.10, 120, OfflineDatumPair.Vertical, OfflineDatumPair.Unit.Metres);
+        var grid = new OfflineDatumPair.FixtureGrid("fixture:generated-grid", "v1",
+            OfflineDatumPair.Horizontal, OfflineDatumPair.Vertical, "fixture:generated-for-test",
+            OfflineDatumPair.Unit.Metres, 10.1, 2.09, 0.05, new double?[,] { { 0, 0 }, { 0, 0 } });
+
+        using (var resolver = new OfflineDatumPair())
+        {
+            void Reject(string name, OfflineDatumPair.Outcome expected, OfflineDatumPair.FixtureGrid terrain,
+                params OfflineDatumPair.Receipt[] receipts)
+            {
+                var epoch = resolver.Switch(mixed, terrain, receipts);
+                Check(name, resolver.Publish(epoch, mixed) == expected &&
+                    pair.TryStage(plan, revision, mixed, frame, resolver, out _) == PairedPlanPreview.Result.Missing3D &&
+                    ReadPixels(pair, flight, frame, renderer).Equals(baseline));
+            }
+            Reject("仅有绝对高度编号不能显示任一视图", OfflineDatumPair.Outcome.MissingEvidence, grid, home);
+            Reject("缺本计划 Home 凭据时两边都为空", OfflineDatumPair.Outcome.MissingEvidence, grid, absolute);
+            Reject("缺地形样本时两边都为空", OfflineDatumPair.Outcome.OutsideOrMissing, null, absolute, home);
+
+            var epoch = resolver.Switch(mixed, grid, absolute, home);
+            Check("三种合成高度在进入渲染前已解析",
+                resolver.Publish(epoch, mixed) == OfflineDatumPair.Outcome.Ready);
+            var projection = LocalPlan3DProjectionBuilder.ProjectResolved(frame, resolver.GetPublished(mixed).Scene);
+            Check("投影保留绝对负高、Home 负偏移和有效零地形的结果",
+                projection != null && projection.Vertices.Select(v => v.HeightMetres).SequenceEqual(new[] { -12d, 115, 7 }));
+            Check("两边使用同一份合成高程并标明来源",
+                pair.TryStage(plan, revision, mixed, frame, resolver, out var current) == PairedPlanPreview.Result.Staged &&
+                pair.TryCommit(plan, revision, current, mixed, frame) &&
+                pair.Caption3D(frame) == PairedPlanPreview.SourceCaption);
+            var visible = ReadPixels(pair, flight, frame, renderer);
+            Check("两个视图都有本地像素，模拟设备线仍完整",
+                visible.map > 40 && visible.local > 10 && visible.device == baseline.device);
+
+            var result = pair.TryStage(plan, revision, mixed, frame, resolver, out var late);
+            var next = resolver.Switch(mixed, grid, absolute, home);
+            Check("同一计划重新核验后旧高程结果不能绘制或迟到提交",
+                result == PairedPlanPreview.Result.Staged && resolver.Publish(next, mixed) == OfflineDatumPair.Outcome.Ready &&
+                ReadPixels(pair, flight, frame, renderer).Equals(baseline) &&
+                !pair.TryCommit(plan, revision, late, mixed, frame));
+        }
+    }
+
     static ReadOnlyPlanSnapshot Snapshot(double first = 20, bool empty = false, PointLatLng[] shape = null)
     {
         var rows = empty ? new PlanRow[0] : (shape ?? Shape).Select((p,i) =>
@@ -301,9 +368,16 @@ internal static class PairedPlanPreviewProbe
         return new ReadOnlyPlanSnapshot(new PlanHome(3, 10.12, 2.10, 120), rows, "en-US");
     }
 
-    static LocalPlanElevationEvidence Evidence(ReadOnlyPlanSnapshot p) =>
-        new LocalPlanElevationEvidence(p, new PlanElevationReceipt(PlanElevationSource.VerifiedPlanHome,
-            PlanElevationDatum.SceneCompatibleAmsl, "synthetic evidence fixture", 10.12, 2.10, 120), null);
+    static OfflineDatumPair Evidence(ReadOnlyPlanSnapshot p)
+    {
+        var resolver = new OfflineDatumPair();
+        var home = new OfflineDatumPair.Receipt(p, OfflineDatumPair.HeightKind.Home, 0,
+            p.Home.Latitude, p.Home.Longitude, p.Home.AltitudeMetres, OfflineDatumPair.Vertical,
+            OfflineDatumPair.Unit.Metres);
+        if (resolver.Publish(resolver.Switch(p, null, home), p) != OfflineDatumPair.Outcome.Ready)
+            throw new InvalidOperationException("相对计划 Home 的测试凭据无效");
+        return resolver;
+    }
 
     static GMapOverlay PublishPlannerLayer(GMapControl map, PointLatLng[] points)
     {
