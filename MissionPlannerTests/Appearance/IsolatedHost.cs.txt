@@ -226,6 +226,37 @@ internal static class AppearanceIsolatedHost
                     Check(File.ReadAllText(manifest) == before, "missing vendor icon persisted");
                     Check(Descendants(embedded).OfType<Label>().Any(l => l.Text.Contains(enhanced ? "尚未导入" : "has no local file")),
                         "missing vendor icon not reported");
+                    Check(iconPreset.AccessibleDescription == iconPreset.GetItemText(iconPreset.SelectedItem),
+                        "pending selection must expose its full display caption");
+                    var details = (ToolTip)embedded.GetType().GetField("details", BindingFlags.Instance | BindingFlags.NonPublic)
+                        .GetValue(embedded);
+                    Check(details.GetToolTip(iconPreset) == iconPreset.AccessibleDescription,
+                        "pending selection tooltip does not expose the full caption");
+                    // Open the actual combo box without triggering an import or selection.
+                    form.ClientSize = new Size(430, 320);
+                    appearanceGroup.MaximumSize = new Size(405, 0);
+                    appearanceGroup.MinimumSize = new Size(405, 0);
+                    Application.DoEvents();
+                    using (var big = new Font(startupPreset.Font.FontFamily, 20))
+                    {
+                        var priorFont = startupPreset.Font;
+                        startupPreset.Font = big;
+                        startupPreset.DroppedDown = true;
+                        Application.DoEvents();
+                        Check(startupPreset.DroppedDown, "expected an open preset list");
+                        Check(startupPreset.AccessibleDescription == startupPreset.GetItemText(startupPreset.SelectedItem),
+                            "full default caption unavailable at enlarged font");
+                        using (var graphics = startupPreset.CreateGraphics())
+                        foreach (var item in startupPreset.Items)
+                            Check(startupPreset.DropDownWidth >= TextRenderer.MeasureText(graphics, startupPreset.GetItemText(item),
+                                startupPreset.Font, Size.Empty, TextFormatFlags.SingleLine | TextFormatFlags.NoPrefix).Width,
+                                "open preset popup cannot fit the caption");
+                        startupPreset.DroppedDown = false;
+                        startupPreset.Font = priorFont;
+                        Application.DoEvents();
+                    }
+                    Check(startupPreset.SelectedIndex == 0 && File.ReadAllText(manifest) == before,
+                        "opening the preset list changed the selected or persisted appearance");
                     foreach (int width in new[] { 430, 700, 1100 })
                     {
                         form.ClientSize = new Size(width, 320);

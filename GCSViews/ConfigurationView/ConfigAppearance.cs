@@ -122,10 +122,13 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             menu.Items.Add(new Preset("mfe", UiText.Translate("MakeFlyEasy")));
             menu.Items.Add(new Preset("custom", UiText.Translate("Custom")));
             menu.SelectedIndex = 0;
+            UpdatePresetCaption(menu);
+            menu.DropDown += (sender, args) => SizePresetPopup(menu);
             // Closed-list arrow keys can change the index without raising SelectionChangeCommitted
             // (in particular on Mono). Do not apply intermediate choices in an open list.
             menu.SelectedIndexChanged += (sender, args) =>
             {
+                UpdatePresetCaption(menu);
                 if (!menu.DroppedDown) SelectPreset(kind, menu.SelectedItem as Preset);
             };
             menu.SelectionChangeCommitted += (sender, args) => SelectPreset(kind, menu.SelectedItem as Preset);
@@ -170,6 +173,27 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             row.Controls.Add(choose, 1, 0);
             combo = menu;
             return row;
+        }
+
+        private void UpdatePresetCaption(ComboBox menu)
+        {
+            string caption = menu.GetItemText(menu.SelectedItem);
+            details.SetToolTip(menu, caption);
+            menu.AccessibleDescription = caption;
+        }
+
+        private static void SizePresetPopup(ComboBox menu)
+        {
+            using (var graphics = menu.CreateGraphics())
+            {
+                int widest = 0;
+                foreach (var item in menu.Items)
+                    widest = Math.Max(widest, TextRenderer.MeasureText(graphics, menu.GetItemText(item), menu.Font,
+                        Size.Empty, TextFormatFlags.SingleLine | TextFormatFlags.NoPrefix).Width);
+                int chrome = SystemInformation.VerticalScrollBarWidth + (int)Math.Ceiling(8 * graphics.DpiX / 96);
+                int desired = Math.Max(Math.Max(260, menu.Width), widest + chrome);
+                menu.DropDownWidth = Math.Max(1, Math.Min(desired, Screen.FromControl(menu).WorkingArea.Width));
+            }
         }
 
         private void SelectPreset(AppearanceAsset kind, Preset preset)
