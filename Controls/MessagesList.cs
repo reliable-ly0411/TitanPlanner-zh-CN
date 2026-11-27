@@ -420,7 +420,7 @@ namespace MissionPlanner.Controls
         {
             Color bgColor = GetSeverityBackgroundColor(msg.severity);
             Color textColor = GetSeverityTextColor(msg.severity);
-            string severityText = GetSeverityText(msg.severity);
+            string severityText = GetSeverityBadgeText(msg.severity);
 
             // Get theme colors for separator and timestamp
             Color separatorColor, timestampColor;
@@ -563,6 +563,28 @@ namespace MissionPlanner.Controls
                 default:
                     return Color.FromArgb(70, 70, 70);
             }
+        }
+
+        private string GetSeverityBadgeText(byte severity)
+        {
+            if (System.Globalization.CultureInfo.CurrentUICulture.Name != "zh-CN")
+                return GetSeverityText(severity);
+
+            string key;
+            switch ((MAV_SEVERITY)severity)
+            {
+                case MAV_SEVERITY.INFO:
+                    key = "Info";
+                    break;
+                case MAV_SEVERITY.DEBUG:
+                    key = "Debug";
+                    break;
+                default:
+                    return GetSeverityText(severity);
+            }
+
+            var translated = UiText.Translate(key);
+            return translated == key ? GetSeverityText(severity) : translated;
         }
 
         private string GetSeverityText(byte severity)
