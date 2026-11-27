@@ -28,6 +28,9 @@
   "GCSViews/FlightPlanner.resx": {
     "Frame.HeaderText": "高度基准"
   },
+  "GCSViews/ConfigurationView/ConfigPlanner.resx": {
+    "CHK_speechArmedOnly.Text": "仅在已解锁状态播报"
+  },
   "GCSViews/ConfigurationView/ConfigRawParams.resx": {
     "ParameterTreeRoot.Text": "全部",
     "SearchPlaceholder.Text": "搜索"
