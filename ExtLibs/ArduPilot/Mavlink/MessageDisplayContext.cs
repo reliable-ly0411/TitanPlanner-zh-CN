@@ -76,6 +76,21 @@ namespace MissionPlanner
 
         private static string Px4BatteryText(int version) => version == 9 ? "Battery 1 disconnected\t" : "Battery 1 missing\t";
 
+        // Fixed official release banners only. The preexisting version proof must
+        // match the exact banner from the same receiver generation before use.
+        private static bool IsPlaneReleaseBanner(int version, string raw, byte severity)
+        {
+            if (severity != 6) return false;
+            switch (version)
+            {
+                case 7: return raw == "ArduPlane V4.4.4 (16b78382)";
+                case 8: return raw == "ArduPlane V4.5.7 (0358a9c2)";
+                case 4: return raw == "ArduPlane V4.6.3 (3fc7011a)";
+                case 1: return raw == "ArduPlane V4.7.3 (d9c5097c)";
+                default: return false;
+            }
+        }
+
         internal void Mark(List<(DateTime time, string message, byte severity)> list, MAVLink.MAVLinkMessage packet,
             MAVLink.mavlink_statustext_t text, (DateTime time, string message, byte severity) row)
         {
@@ -99,7 +114,8 @@ namespace MissionPlanner
                 ? row.message == Px4BatteryText(s.Version) && row.severity == 2
                 : (row.message == "EKF3 IMU0 origin set" && (s.Version == 1 || row.severity == 6)) ||
                   (s.Version == 1 && row.message == "GPS 1: detected u-blox") ||
-                  (s.Version == 7 && row.severity == 5 && row.message == Plane444CrashDumpSaved);
+                  (s.Version == 7 && row.severity == 5 && row.message == Plane444CrashDumpSaved) ||
+                  IsPlaneReleaseBanner(s.Version, row.message, row.severity);
             if (!known) return;
             if (s.Rows.TryGetValue(row.message, out var existing))
             {
@@ -137,6 +153,11 @@ namespace MissionPlanner
                 if (s.Version == 7 && row.severity == 5 && row.message == Plane444CrashDumpSaved)
                 {
                     var translated = UiText.Translate(Plane444CrashDumpSaved);
+                    return string.Equals(translated, row.message, StringComparison.Ordinal) ? null : translated;
+                }
+                if (IsPlaneReleaseBanner(s.Version, row.message, row.severity))
+                {
+                    var translated = UiText.Translate(row.message);
                     return string.Equals(translated, row.message, StringComparison.Ordinal) ? null : translated;
                 }
                 if (row.message == "GPS 1: detected u-blox") return "检测到 GPS 1：u-blox";
