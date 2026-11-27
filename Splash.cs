@@ -94,6 +94,9 @@ namespace MissionPlanner
             FontStyle style = picture.Font.Style | FontStyle.Bold;
             if (!picture.Font.FontFamily.IsStyleAvailable(style)) style = picture.Font.Style;
             float preferred = picture.Font.SizeInPoints;
+            // Preserve the normal half-height limit. A very wide, letterboxed image can
+            // fit these credits inside the image but not its bottom half.
+            for (int pass = 0; pass < 2; pass++)
             for (float points = preferred; points >= 6; points -= .5f)
             {
                 using (var font = new Font(picture.Font.FontFamily, points, style, GraphicsUnit.Point))
@@ -109,7 +112,8 @@ namespace MissionPlanner
                         height += measured.Height;
                     }
 
-                    if (width > maxWidth || height > image.Height / 2) continue;
+                    int maxHeight = pass == 0 ? image.Height / 2 : image.Height;
+                    if (width > maxWidth || height > maxHeight) continue;
                     fontPx = points;
                     var bounds = new Rectangle(image.Left, image.Bottom - height, width + 2 * pad, height);
                     rows = new Rectangle[lines.Length];
