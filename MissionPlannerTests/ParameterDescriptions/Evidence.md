@@ -15,3 +15,19 @@ The cloud .NET SDK CLI's first-use migration mutex was unavailable in this sandb
 The Framework compatibility compile used the same core and UI partial, `UiCompilationStubs.cs.txt`, and the `mscorlib`, `System`, `System.Core`, `System.Drawing`, `System.Windows.Forms`, `System.Xml`, `System.Xml.Linq`, and `System.Net.Http` reference assemblies from Microsoft's net472 reference package. Only the stub's unused field warning was emitted. This does not substitute for compiling the actual application host.
 
 Version-source evidence: direct HTTPS read of the official Copter stable metadata release tag returned `Copter-4.7.2`. Reads of the Copter/Plane `stable-4.7.3/__METADATA__/apm.pdef.xml` endpoints returned 404. The tests verify that a 4.7.2-tagged response cannot be cached or translated as 4.7.3. They do not establish which file an already running installed ground station loaded; its firmware identity, logs, directories and loaded metadata still need to be inspected.
+
+## 2026-11-27: exact Sub 4.7.1 statistics subset (#21)
+
+- Downloaded the seven versioned official XML files and verified their complete
+  SHA-256 digests. For Sub 4.7.1, the XML provenance comment's commit
+  `dbe792162d06cab66c3475fd5556bf7a120f119e` also matches the official Git tag.
+- The targeted, unmodified-runtime C# core and `Program.cs.txt` compiled on
+  Mono 6.8 with both catalog resources embedded. Running with
+  `--source-directory` passed **3,365 assertions**, including exact source,
+  attributes and field fingerprints, family/build/version isolation,
+  unchanged English/units, and Chinese search. Seven focused Python checks
+  and the generator's `--check` also passed.
+- This is a display/catalog-only change covering four officially marked
+  read-only statistics. It does not add `STAT_RESET`, infer flight-time
+  handling in Sub, or change what can be edited. No full build, GUI probe,
+  SITL, connected device or parameter write was performed.
