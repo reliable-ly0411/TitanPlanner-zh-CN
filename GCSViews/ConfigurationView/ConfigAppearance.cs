@@ -347,9 +347,17 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                 var icon = ThemeManager.FormIcon;
                 ReplacePreview(iconPreview, icon == null ? null : icon.ToBitmap());
             }
-            catch (Exception) { previewWarning = "Appearance preview unavailable."; }
+            catch (Exception)
+            {
+                ReplacePreview(iconPreview, null);
+                previewWarning = "Appearance preview unavailable.";
+            }
             try { ReplacePreview(startupPreview, DesktopAppearance.CreateStartupPreview(out warning)); }
-            catch (Exception) { previewWarning = "Appearance preview unavailable."; }
+            catch (Exception)
+            {
+                ReplacePreview(startupPreview, null);
+                previewWarning = "Appearance preview unavailable.";
+            }
             warning = DesktopAppearance.IconWarning ?? warning ?? previewWarning;
             status.Text = warning == null
                 ? UiText.Translate("To supply a missing preset, select it, then choose a local file.")
