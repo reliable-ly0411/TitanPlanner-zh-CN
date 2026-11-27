@@ -18,10 +18,11 @@ LOGGER_BACKEND_HELP_KEYS = {
     'LOG_BACKEND_TYPE', 'LOG_FILE_DSRMROT', 'LOG_MAV_BUFSIZE', 'LOG_FILE_TIMEOUT',
     'LOG_FILE_RATEMAX', 'LOG_MAV_RATEMAX', 'LOG_BLK_RATEMAX', 'LOG_DARM_RATEMAX',
 }
+SITL_ENVIRONMENT_HELP_KEYS = {'SIM_THML_SCENARI', 'SIM_TIDE_DIR', 'SIM_TIDE_SPEED', 'SIM_WAVE_AMP', 'SIM_WAVE_DIR', 'SIM_WAVE_ENABLE', 'SIM_WAVE_LENGTH', 'SIM_WAVE_SPEED', 'SIM_WIND_DIR', 'SIM_WIND_DIR_Z', 'SIM_WIND_SPD', 'SIM_WIND_T', 'SIM_WIND_TC', 'SIM_WIND_TURB', 'SIM_WIND_T_ALT', 'SIM_WIND_T_COEF'}
 DISPLAY_AND_LOG_HELP_KEYS = (
     SIDEBAR_GEOMETRY_KEYS | IMU_DIAGNOSTIC_HELP_KEYS | OSD_MESSAGE_TIME_HELP_KEYS
-    | LOG_STORAGE_HELP_KEYS | OSD_FONT_KEYS | ONBOARD_DISPLAY_HELP_KEYS | LOGGER_BACKEND_HELP_KEYS
-    | {'LOG_BITMASK', 'LOG_FILE_BUFSIZE', 'OSD_H_OFFSET', 'OSD_V_OFFSET'}
+    | SITL_ENVIRONMENT_HELP_KEYS | LOG_STORAGE_HELP_KEYS | OSD_FONT_KEYS | ONBOARD_DISPLAY_HELP_KEYS | LOGGER_BACKEND_HELP_KEYS
+    | {'LOG_BITMASK', 'LOG_FILE_BUFSIZE', 'OSD_H_OFFSET', 'OSD_V_OFFSET', 'SCHED_DEBUG'}
 )
 catalog_module = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(catalog_module)
@@ -51,8 +52,8 @@ class ParameterCatalogTests(unittest.TestCase):
     def test_scope_counts_and_held_versions(self):
         notes = self.catalog['translations']
         descriptions = {(n['family'], v, n['parameter']) for n in notes if n['field'] == 'Description' for v in n['versions']}
-        self.assertEqual(703, len(descriptions))
-        self.assertEqual(322, len({(f, p) for f, v, p in descriptions}))
+        self.assertEqual(803, len(descriptions))
+        self.assertEqual(374, len({(f, p) for f, v, p in descriptions}))
         self.assertFalse(any(v == '4.7.2' for f, v, p in descriptions))
         excluded_copter = {'RTL_CONE_SLOPE', 'LAND_SPEED', 'LAND_SPD_MS', 'FS_GCS_ENABLE'}
         excluded_plane = {'TECS_CLMB_MAX', 'TECS_SINK_MIN', 'ROLL_LIMIT_DEG'}
@@ -101,18 +102,19 @@ class ParameterCatalogTests(unittest.TestCase):
                                  (notes[0]['field'], notes[0]['english'], notes[0]['recordSha256']))
 
     def test_sub_slice_contains_only_exact_release_read_only_statistics(self):
-        reviewed = {'STAT_BOOTCNT', 'STAT_FLTTIME', 'STAT_RUNTIME', 'STAT_FLTCNT'}
+        reviewed = {'STAT_BOOTCNT', 'STAT_FLTTIME', 'STAT_RUNTIME', 'STAT_FLTCNT', 'STAT_DISTFLWN'}
         release = self.bundle.find("release[@family='Sub']")
         self.assertEqual('4.7.1', release.get('version'))
         official = {param.get('name'): param for param in release.iter('param') if param.get('name').startswith('STAT_')}
         self.assertEqual(reviewed, set(official))
         for name, param in official.items():
             self.assertEqual('True', param.find("field[@name='ReadOnly']").text)
-            self.assertEqual('s' if name.endswith('TIME') else None, param.findtext("field[@name='Units']"))
+            self.assertEqual('m' if name == 'STAT_DISTFLWN' else 's' if name.endswith('TIME') else None,
+                             param.findtext("field[@name='Units']"))
             self.assertIsNone(param.find("field[@name='Range']"))
             self.assertIsNone(param.find('values'))
         notes = [note for note in self.catalog['translations'] if note['family'] == 'Sub' and note['parameter'].startswith('STAT_')]
-        self.assertEqual(4, len(notes))
+        self.assertEqual(5, len(notes))
         self.assertEqual(reviewed, {note['parameter'] for note in notes})
         self.assertTrue(all(note['versions'] == ['4.7.1'] and note['field'] == 'Description' for note in notes))
 
@@ -317,6 +319,26 @@ class ParameterCatalogTests(unittest.TestCase):
                 self.assertEqual([('field', 'Range', '0 21')], [(c.tag, c.get('name'), c.text) for c in row])
                 self.assertIn(f'第 {screen} 屏', chinese[key])
                 self.assertIn('仅适用于 MSP DisplayPort', chinese[key])
+
+    def test_scheduler_debug_reports_only_exact_diagnostic_modes(self):
+        for release in self.bundle.findall('release'):
+            family, version = release.get('family'), release.get('version')
+            matches = [row for row in release.iter('param') if row.get('name') == 'SCHED_DEBUG']
+            self.assertEqual(1, len(matches))
+            row = matches[0]
+            self.assertEqual([('0', 'Disabled'), ('2', 'ShowSlips'), ('3', 'ShowOverruns')],
+                             [(value.get('code'), value.text) for value in row.findall('values/value')])
+            self.assertFalse(row.findall('field'))
+            notes = [n for n in self.catalog['translations'] if n['family'] == family and version in n['versions']
+                     and n['parameter'] == 'SCHED_DEBUG']
+            self.assertEqual(1, len(notes))
+            self.assertEqual(('Description', row.get('documentation'), catalog_module.record_fingerprint(row)),
+                             (notes[0]['field'], notes[0]['english'], notes[0]['recordSha256']))
+            self.assertTrue(all(s in notes[0]['chinese'] for s in ('ShowSlips', 'ShowOverruns', 'CPU 负载', '任务表')))
+        changed = copy.deepcopy(self.bundle)
+        next(changed.iterfind(".//param[@name='SCHED_DEBUG']/values/value[@code='2']")).text = 'Changed'
+        with self.assertRaisesRegex(ValueError, 'requires manual review'):
+            catalog_module.resource(self.catalog, changed)
 
     def test_source_changes_cannot_automatically_reapprove_notes(self):
         for change in ('English', 'Range', 'Unit'):
