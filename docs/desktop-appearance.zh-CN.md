@@ -37,7 +37,7 @@ Windows 的 `Form.Icon` 决定窗体在控制框及任务栏中的表示，但�
 
 ## 署名、默认资源与许可
 
-启动页仅将本次修改者明确为用户要求的 `lyy0405`。已存在的作者 Michael Oborne 保留，另外一行标明上游 TitanPlanner 的 Mohammad Adib；不新增或推断版权持有人。署名和版本显示在不透明、按内容计算高度的深色页脚，避免任意自定义图片遮挡文字。
+启动页仅将本次修改者明确为用户要求的 `lyy0405`。已存在的作者 Michael Oborne 保留，另外一行标明上游 TitanPlanner 的 Mohammad Adib；不新增或推断版权持有人。署名等文字直接叠在启动图上，用浅色粗体和深色描边保证可读性，不加遮挡图片的底色。
 
 `Splash.Designer.cs`、`Splash.resx`、`mpdesktop.ico`、`Properties/Resources*`、原版 `zh-Hans` 资源和 `COPYING.txt` 均保留。可见署名在构造启动页时设置，不改写上游原图片或既有历史署名文本。用户导入素材的使用权限由其自身来源决定；不会将用户素材纳入本仓上游资源或改换原有许可。
 
