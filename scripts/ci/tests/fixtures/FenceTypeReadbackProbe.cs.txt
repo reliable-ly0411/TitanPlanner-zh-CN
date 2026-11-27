@@ -1,0 +1,210 @@
+// Compile only with ConfigAC_Fence.cs, designer and resources. This fixture has no vehicle implementation.
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Globalization;
+using System.Linq;
+using System.Reflection;
+using System.Windows.Forms;
+using MissionPlanner.GCSViews.ConfigurationView;
+using MissionPlanner.Utilities;
+using MissionPlanner.Controls;
+
+namespace MissionPlanner.ArduPilot { }
+namespace MissionPlanner
+{
+    static class MainV2 { public static readonly NoDevice comPort = new NoDevice(); }
+    sealed class NoDevice
+    {
+        public Model MAV = new Model();
+        public int Requests;
+        public void getParamList() { Requests++; throw new Exception("device requests are prohibited"); }
+    }
+    sealed class Model
+    {
+        public readonly State cs = new State();
+        public readonly MAVLink.MAVLinkParamList param = new MAVLink.MAVLinkParamList();
+    }
+    sealed class State { public Firmwares firmware; }
+}
+public static class MAVLink
+{
+    public sealed class Entry { public double Value; }
+    public sealed class MAVLinkParamList : Dictionary<string, Entry>
+    {
+        public new Entry this[string key] { get => TryGetValue(key, out var item) ? item : null; set => base[key] = value; }
+    }
+}
+namespace MissionPlanner.Utilities
+{
+    public enum Firmwares { ArduCopter2, ArduPlane, PX4 }
+    public interface IActivate { void Activate(); }
+    public static class CurrentState
+    {
+        public static string DistanceUnit => "m";
+        public static double fromDistDisplayUnit(double x) => x;
+    }
+    public static class ParameterMetaDataRepository
+    {
+        public static List<KeyValuePair<int,string>> Bits;
+        public static int BitReads;
+        public static readonly List<KeyValuePair<int,string>> Raw = new List<KeyValuePair<int,string>>
+            { new KeyValuePair<int,string>(1, "one"), new KeyValuePair<int,string>(2, "two") };
+        public static List<KeyValuePair<int,string>> GetParameterOptionsInt(string key, string fw) =>
+            key == "FENCE_TYPE" ? Raw : new List<KeyValuePair<int,string>> { new KeyValuePair<int,string>(1,"RTL or Land") };
+        public static List<KeyValuePair<int,string>> GetParameterBitMaskInt(string key, string fw)
+        {
+            if (key != "FENCE_TYPE" || fw != "ArduCopter2") throw new Exception("incorrect metadata scope");
+            BitReads++;
+            return Bits;
+        }
+    }
+}
+namespace MissionPlanner.Controls
+{
+    public class MyUserControl : UserControl { }
+    public class MavlinkComboBox : ComboBox
+    {
+        public string ParamName { get; set; }
+        public Control SubControl { get; set; }
+        public List<KeyValuePair<int,string>> Source;
+        public void setup(List<KeyValuePair<int,string>> list, string p, MAVLink.MAVLinkParamList raw)
+        {
+            Source = list; ParamName = p;
+            DisplayMember = "Value"; ValueMember = "Key"; DataSource = list;
+            var pval = raw[p]?.Value;
+            SelectedIndex = pval.HasValue ? list.FindIndex(option => option.Key == pval.Value) : -1;
+        }
+    }
+    public class MavlinkNumericUpDown : NumericUpDown
+    {
+        public float Min { get; set; } public float Max { get; set; } public string ParamName { get; set; }
+        public void setup(float min,float max,float scale,float increment,string key,MAVLink.MAVLinkParamList raw) { }
+    }
+    public class MavlinkCheckBox : CheckBox
+    {
+        public double OnValue { get; set; } public double OffValue { get; set; } public string ParamName { get; set; }
+        public void setup(double on,double off,string key,MAVLink.MAVLinkParamList raw,Control c,Action touched) { }
+    }
+    public class LineSeparator : Control
+    {
+        public float Opacity1 { get; set; } public float Opacity2 { get; set; } public float Opacity3 { get; set; }
+        public Color PrimaryColor { get; set; } public Color SecondaryColor { get; set; }
+    }
+}
+internal static class FenceTypeReadbackProbe
+{
+    private static int passed;
+    static KeyValuePair<int,string> Bit(int index, string label) => new KeyValuePair<int,string>(index,label);
+
+    [STAThread]
+    public static void Main()
+    {
+        var copter = Miss().MAV;
+        copter.cs.firmware = Firmwares.ArduCopter2;
+        CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo("zh-CN");
+        ParameterMetaDataRepository.Bits = new List<KeyValuePair<int,string>>
+        {
+            Bit(3, "Min altitude"), Bit(0, "Max altitude"), Bit(2, "Inclusion/Exclusion Circles+Polygons"),
+            Bit(1,"Circle Centered on Home"), Bit(5, "Unexpected")
+        };
+        var bitLabels = new [] { "Max altitude", "Circle Centered on Home",
+            "Inclusion/Exclusion Circles+Polygons", "Min altitude" };
+        for (int mask = 0; mask < 16; mask++)
+        {
+            string text = ConfigAC_Fence.DescribeFenceTypeBits(mask, ParameterMetaDataRepository.Bits);
+            Check("exact set and ordering " + mask,
+                mask == 0 ? text == null : text.Split(new[]{Environment.NewLine}, StringSplitOptions.None)
+                    .TakeWhile(line => !line.StartsWith("仅说明")).Select(line => line.Split(new[]{ " · " }, StringSplitOptions.None)[0])
+                    .SequenceEqual(bitLabels.Where((_, bit) => (mask & (1 << bit)) != 0)));
+        }
+        using (var form = new Form { ClientSize = new Size(650, 450) })
+        using (var fence = new ConfigAC_Fence())
+        {
+            form.Controls.Add(fence); form.Show();
+            Application.DoEvents();
+            copter.param["FENCE_TYPE"] = new MAVLink.Entry { Value = 47 };
+            fence.Activate();
+            var readback = Get<Label>(fence, "fenceTypeReadback");
+            var tip = Get<ToolTip>(fence, "fenceTooltip");
+            var ddl = Get<MavlinkComboBox>(fence, "mavlinkComboBox1");
+            var action = Get<MavlinkComboBox>(fence, "mavlinkComboBox2");
+            var detail = tip.GetToolTip(readback);
+            Check("raw composite plus unknown bit remains visible and indicated", readback.Visible &&
+                readback.Text.Contains("47") && readback.Text.Contains("未识别位") && readback.Text.Contains("悬停"));
+            Check("full verified labels rendered in metadata bit order",
+                detail.Split(new[]{Environment.NewLine}, StringSplitOptions.None).Take(4).SequenceEqual(new [] {
+                    "Max altitude · 最高高度", "Circle Centered on Home · 以起始点为中心的圆形围栏",
+                    "Inclusion/Exclusion Circles+Polygons · 允许区／禁入区的圆形及多边形围栏",
+                    "Min altitude · 最低高度" }));
+            Check("no invented extra bits or real-time enable claims", !detail.Contains("Unexpected") &&
+                detail.Contains("不代表围栏正在生效"));
+            Check("raw dropdown untouched and unmatched combo remains blank",
+                ddl.ParamName == "FENCE_TYPE" && ReferenceEquals(ddl.Source, ParameterMetaDataRepository.Raw)
+                && ddl.SelectedIndex == -1 && copter.param["FENCE_TYPE"].Value == 47);
+            Check("existing FENCE_ACTION translation unchanged",
+                action.Source.Single().Key == 1 && action.Source.Single().Value == "RTL or Land · 返航或降落");
+            foreach (var size in new[] { new Size(360, 300), new Size(510, 300) })
+            {
+                fence.Size = size; Application.DoEvents();
+                Check("readback fits content width " + size.Width, readback.Right <= size.Width &&
+                    readback.Bottom <= size.Height);
+            }
+            copter.param["FENCE_TYPE"].Value = 4;
+            fence.Activate();
+            Check("value 4 is bit index 2 only; never mistaken for index number", tip.GetToolTip(readback)
+                .StartsWith("Inclusion/Exclusion Circles+Polygons") && !tip.GetToolTip(readback).Contains("Max altitude"));
+            ParameterMetaDataRepository.Bits = new List<KeyValuePair<int,string>> { Bit(1,"Circle"), Bit(2,"Polygon") };
+            copter.param["FENCE_TYPE"].Value = 6;
+            fence.Activate();
+            Check("vetted short backup forms", tip.GetToolTip(readback).Contains("Circle · 圆形围栏") &&
+                tip.GetToolTip(readback).Contains("Polygon · 多边形围栏"));
+            ParameterMetaDataRepository.Bits = new List<KeyValuePair<int,string>> { Bit(1,"Circle"), Bit(1,"conflict"), Bit(2,"Circle") };
+            fence.Activate();
+            Check("duplicates and mismatched index/text fail closed", readback.Text == "围栏类型缓存：6" &&
+                string.IsNullOrEmpty(tip.GetToolTip(readback)));
+            copter.param["FENCE_TYPE"].Value = 2;
+            fence.Activate();
+            Check("ordinary legacy enum selection key is unchanged",
+                ((int)ddl.SelectedValue) == 2 && copter.param["FENCE_TYPE"].Value == 2);
+            copter.param["FENCE_TYPE"].Value = 6;
+            ParameterMetaDataRepository.Bits = null; fence.Activate();
+            Check("absent metadata leaves original raw readback", readback.Text == "围栏类型缓存：6" &&
+                string.IsNullOrEmpty(tip.GetToolTip(readback)));
+            foreach (double value in new [] { 0.0, 32.0, -1.0, 3.5, double.NaN, double.PositiveInfinity, int.MaxValue + 1.0 })
+            {
+                var reads = ParameterMetaDataRepository.BitReads;
+                copter.param["FENCE_TYPE"].Value = value; fence.Activate();
+                Check("zero/unknown-only/invalid cache skips decoding: " + value, reads == ParameterMetaDataRepository.BitReads &&
+                    string.IsNullOrEmpty(tip.GetToolTip(readback)));
+            }
+            copter.param.Remove("FENCE_TYPE"); fence.Activate();
+            Check("missing cache remains unread", readback.Text == "围栏类型缓存：未读取");
+            ParameterMetaDataRepository.Bits = new List<KeyValuePair<int,string>> { Bit(0,"Max altitude") };
+            foreach (string culture in new [] { "en-US", "zh-Hans" })
+            {
+                CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo("zh-CN");
+                copter.param["FENCE_TYPE"] = new MAVLink.Entry { Value = 1 }; fence.Activate();
+                CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo(culture); fence.Activate();
+                Check("nonenhanced culture hides readback and clears old hover text " + culture,
+                    !readback.Visible && string.IsNullOrEmpty(tip.GetToolTip(readback)));
+            }
+            CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo("zh-CN");
+            foreach (var firmware in new [] { Firmwares.ArduPlane, Firmwares.PX4 })
+            {
+                copter.cs.firmware = firmware; fence.Activate();
+                Check("no labels for " + firmware, !readback.Visible);
+            }
+            Check("no requests sent", Miss().Requests == 0);
+        }
+        Console.WriteLine(passed + " checks passed");
+    }
+    private static MissionPlanner.NoDevice Miss() => MissionPlanner.MainV2.comPort;
+    private static T Get<T>(object o,string name) => (T)o.GetType().GetField(name,
+        BindingFlags.Instance | BindingFlags.NonPublic).GetValue(o);
+    private static void Check(string name,bool result)
+    {
+        if (!result) throw new Exception("Failed: " + name);
+        Console.WriteLine("PASS " + name); passed++;
+    }
+}
