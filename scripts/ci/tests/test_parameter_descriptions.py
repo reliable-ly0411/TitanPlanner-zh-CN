@@ -35,8 +35,8 @@ class ParameterCatalogTests(unittest.TestCase):
     def test_scope_counts_and_held_versions(self):
         notes = self.catalog['translations']
         descriptions = {(n['family'], v, n['parameter']) for n in notes if n['field'] == 'Description' for v in n['versions']}
-        self.assertEqual(385, len(descriptions))
-        self.assertEqual(168, len({(f, p) for f, v, p in descriptions}))
+        self.assertEqual(489, len(descriptions))
+        self.assertEqual(208, len({(f, p) for f, v, p in descriptions}))
         self.assertFalse(any(v == '4.7.2' for f, v, p in descriptions))
         excluded_copter = {'RTL_CONE_SLOPE', 'LAND_SPEED', 'LAND_SPD_MS', 'LOG_FILE_BUFSIZE', 'FS_GCS_ENABLE'}
         excluded_plane = {'TECS_CLMB_MAX', 'TECS_SINK_MIN', 'ROLL_LIMIT_DEG'}
@@ -65,6 +65,23 @@ class ParameterCatalogTests(unittest.TestCase):
                 self.assertEqual(('Description', catalog_module.record_fingerprint(record)),
                                  (notes[0]['field'], notes[0]['recordSha256']))
                 self.assertEqual(record.get('documentation'), notes[0]['english'])
+
+    def test_plane_read_only_additions_preserve_version_and_field_identity(self):
+        expected = {'4.5.7': 33, '4.6.3': 33, '4.7.1': 39}  # includes the earlier 4.6.3 BARO1
+        for release in self.bundle.findall("release[@family='Plane']"):
+            v = release.get('version')
+            selected = {r.get('name'): r for r in release.iter('param') if r.findtext("field[@name='ReadOnly']") == 'True'}
+            self.assertEqual(expected[v], len(selected))
+            self.assertIn('BARO1_DEVID', selected)
+            self.assertEqual(v == '4.7.1', 'ARSPD3_DEVID' in selected)
+            self.assertEqual(v == '4.5.7', 'GPS_CAN_NODEID1' in selected)
+            self.assertNotIn('STAT_RESET', selected)
+            for key, record in selected.items():
+                notes = [n for n in self.catalog['translations'] if n['family'] == 'Plane'
+                         and n['parameter'] == key and v in n['versions']]
+                self.assertEqual(1, len(notes))
+                self.assertEqual(('Description', record.get('documentation'), catalog_module.record_fingerprint(record)),
+                                 (notes[0]['field'], notes[0]['english'], notes[0]['recordSha256']))
 
     def test_sub_slice_contains_only_exact_release_read_only_statistics(self):
         reviewed = {'STAT_BOOTCNT', 'STAT_FLTTIME', 'STAT_RUNTIME', 'STAT_FLTCNT'}
