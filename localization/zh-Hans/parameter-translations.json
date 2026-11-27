@@ -12152,6 +12152,1494 @@
       "recordSha256": "1998e31f5a4f48bdb1452746842f6d0f4ce0315c5d62f3abc694e5b13dec3658",
       "english": "MAVLink Stream rate of VFR_HUD",
       "chinese": "VFR_HUD 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "MAV10_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "3a39ba19884df351ee9758c9f4cdfd5f6946f307697525c2df612056f26a3c7a",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "MAV11_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "ef18b6dee7893f06c0fb100ec61898cd61678ca0ebbf3cf712382413af2f47c2",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "MAV12_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "1ecb66de6772731f3ee5c18cbceda558dce0ed9d1225ee257130b274d6389fd3",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "MAV13_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "fd26c49a1ec00d908f551fb0700c146fc6522b5def5e6f790f5dd4e2d70b98c9",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "MAV14_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "54411b8ecff5dac81e9bc71c04e602324c4e11157d9b8b1463e7e5948edf4261",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "MAV15_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "a3db4a062f3ca0d9ce278f02ab8f6087535a5601bd30f9caa7c136c9d34c7168",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "MAV16_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "7054a13f0a7fad5184dd6a4ce2be8899ea47b715199d043dbf78c2eabcfb2bc6",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "MAV17_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "c5f3036f0101d8d3db8f922d5e76da27d36c147027eced7ad87f942dc0b230ca",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "MAV18_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "cf6615a2c348129798698d5427c8a6dd69cac8d70d17840b0667714c1d6eb4c3",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "MAV19_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "74d4e1e6a4deb20b13f83e0b2e926acd04381d65b5f9fdde5e9276831bc20d9f",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "MAV1_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "fcf949c47f627480cf9e419dc3cae57469bb86eddfb4522b10664940a99d92c0",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "MAV20_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "2e89b860102ca7b33fd1651432f49e0ce557b2dfe72211beceaa8c73242cbb4f",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "MAV21_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "976616be794242815fa867508623468dfb2b24e7b36793ee7830ac0c34133edb",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "MAV22_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "073fea5b0c30f6da909f31c5cb154633d4000ff1c1274d43e4576d335901fb95",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "MAV23_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "a71e4ffe92a39d042431c1a210a5353f4063bbcccce16c9d9dbf5acc0cc98f41",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "MAV24_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "e9dc29473677637431818bda5de449c364b2d7b8a24c03e63e8d65e8fe00b205",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "MAV25_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "a10b9151e891750b29d96372202625e05545245295f1119a864181b23c9fa794",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "MAV26_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "49fbb05f1218748f941e312edb73dd69828f8ebb2e9b5075f3d0a511dfa7cdb5",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "MAV27_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "819fc644f1c6f891fc3783b2212c5e709f7e8fc55d13041206f1d075d168622f",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "MAV28_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "fd08a79bed760d02cec53607d3b10352249e8e4accf1dc2394efd583ce0b8e7f",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "MAV29_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "867f84a0678895eb2bb2359227e01161774b3ea09e9f6e8fa57aff42da2e6d6c",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "MAV2_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "ddc4f86146306ef22b802138b7bd4a418d16ed9472cd546562bf40c07f507536",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "MAV30_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "8a935db92c9e974c94489c7b0d40e05f2457becdc391105dcef6e9257743917f",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "MAV31_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "a5ed449ec8f48854a010f64b9990285ee3bc8b0493faaf6b28a41ffe311d3cfd",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "MAV32_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "30cf0d1f4951e39202a531d5a6e73a38616973ee21ad57337a1ee40dbccfb6d6",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "MAV3_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "6e2e2f0527bd8d91bad62af68c6d607fd358707f22a79778dd8c3e5fdd528fee",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "MAV4_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "b9bb113cd123af6a9cd873173d6c4d53a484a47c114df30f4b3eb212be5151c7",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "MAV5_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "5a5de1389bc1f52aef470f34eadc356a4f21cc52aa461748748f5870a8169f52",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "MAV6_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "b319eef2f76048da3181e21ca14537fde73c166858f6a8a7308676499c4519d5",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "MAV7_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "36018710c16a33ddb2c72d966d66196b2767d8728572f06839170b6a4969f09d",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "MAV8_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "bce3886470dc05a6e8469615a3bafe555578dfc898275d2273f342e2ba067e0b",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "MAV9_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "8129abcd53da62a11c215ecc8d0a43d5a02bdba33f866a1adcc163caadc9d5da",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "SR0_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.6.3"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "6494e8f9363431a8d54ad9688dd7bea62b463417a01878b0e0d4b8ad8de28c9a",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "SR0_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.5.7"
+      ],
+      "englishSha256": "1eae564bd442a73d10fe807427fa761fcc768daf777afc20e8ccd933fc70cef4",
+      "recordSha256": "61032ee1d8d2c9fa16613716a16e684f437a3eb727f99487faf152da02b8b4a7",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, and SCALED_PRESSURE3",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2 和 SCALED_PRESSURE3 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "SR1_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.6.3"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "a194740e9feb42ad395bec8e057f690fa9795b03e886d69314ce682cef314e94",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "SR1_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.5.7"
+      ],
+      "englishSha256": "1eae564bd442a73d10fe807427fa761fcc768daf777afc20e8ccd933fc70cef4",
+      "recordSha256": "2b8daa2e33f1c53c2539a42b96a172e3ccbad6d30f69f1222ca6d786c7cb8974",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, and SCALED_PRESSURE3",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2 和 SCALED_PRESSURE3 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "SR2_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.6.3"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "b4f95ca21dada8943e1508921e9d85df2c56d01c73079c19ddec675f2aed42be",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "SR2_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.5.7"
+      ],
+      "englishSha256": "1eae564bd442a73d10fe807427fa761fcc768daf777afc20e8ccd933fc70cef4",
+      "recordSha256": "5e12cbbd8d0a4f652ef6a06545c67937a5722ed77805f30fc798651c8c85d753",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, and SCALED_PRESSURE3",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2 和 SCALED_PRESSURE3 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "SR3_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.6.3"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "78b96b9991db0fa15d3a43566546bcf2f1685fa9f069f533f89a8db68d1e41a2",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "SR3_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.5.7"
+      ],
+      "englishSha256": "1eae564bd442a73d10fe807427fa761fcc768daf777afc20e8ccd933fc70cef4",
+      "recordSha256": "86059d15612d80e87759f9270c75c4f66316d2ed2bd819e092d51db3fa606017",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, and SCALED_PRESSURE3",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2 和 SCALED_PRESSURE3 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "SR4_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.6.3"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "309c6c2d651cb8eeee25a16ccb159f0cd9b7839a86ed72d5099eb32b128e5203",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "SR4_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.5.7"
+      ],
+      "englishSha256": "1eae564bd442a73d10fe807427fa761fcc768daf777afc20e8ccd933fc70cef4",
+      "recordSha256": "82bf0fe53bde58c1ce069eb5b000b3d9ab5e887daa92b2cdfe8ae4cd76a83487",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, and SCALED_PRESSURE3",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2 和 SCALED_PRESSURE3 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "SR5_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.6.3"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "43e7adf95113b07ae819d3144ddfc4ff3ee94d45984859d964ca619f98b932f3",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "SR5_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.5.7"
+      ],
+      "englishSha256": "1eae564bd442a73d10fe807427fa761fcc768daf777afc20e8ccd933fc70cef4",
+      "recordSha256": "31bf4380e05de0a0503804b659b7436b18a67e20e04d60796df3f55cc388a4d5",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, and SCALED_PRESSURE3",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2 和 SCALED_PRESSURE3 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "SR6_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.6.3"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "4a1689d8a7ec5aaa65f82161240c4bf696d44f339a3ae23879e033aca7aab695",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "SR6_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.5.7"
+      ],
+      "englishSha256": "1eae564bd442a73d10fe807427fa761fcc768daf777afc20e8ccd933fc70cef4",
+      "recordSha256": "69ce87144f885eca489bf9584bb9b35c0a9e55b4b007617feb6093a7205a22fe",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, and SCALED_PRESSURE3",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2 和 SCALED_PRESSURE3 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "MAV10_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "3a39ba19884df351ee9758c9f4cdfd5f6946f307697525c2df612056f26a3c7a",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "MAV11_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "ef18b6dee7893f06c0fb100ec61898cd61678ca0ebbf3cf712382413af2f47c2",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "MAV12_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "1ecb66de6772731f3ee5c18cbceda558dce0ed9d1225ee257130b274d6389fd3",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "MAV13_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "fd26c49a1ec00d908f551fb0700c146fc6522b5def5e6f790f5dd4e2d70b98c9",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "MAV14_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "54411b8ecff5dac81e9bc71c04e602324c4e11157d9b8b1463e7e5948edf4261",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "MAV15_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "a3db4a062f3ca0d9ce278f02ab8f6087535a5601bd30f9caa7c136c9d34c7168",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "MAV16_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "7054a13f0a7fad5184dd6a4ce2be8899ea47b715199d043dbf78c2eabcfb2bc6",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "MAV17_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "c5f3036f0101d8d3db8f922d5e76da27d36c147027eced7ad87f942dc0b230ca",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "MAV18_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "cf6615a2c348129798698d5427c8a6dd69cac8d70d17840b0667714c1d6eb4c3",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "MAV19_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "74d4e1e6a4deb20b13f83e0b2e926acd04381d65b5f9fdde5e9276831bc20d9f",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "MAV1_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "fcf949c47f627480cf9e419dc3cae57469bb86eddfb4522b10664940a99d92c0",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "MAV20_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "2e89b860102ca7b33fd1651432f49e0ce557b2dfe72211beceaa8c73242cbb4f",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "MAV21_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "976616be794242815fa867508623468dfb2b24e7b36793ee7830ac0c34133edb",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "MAV22_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "073fea5b0c30f6da909f31c5cb154633d4000ff1c1274d43e4576d335901fb95",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "MAV23_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "a71e4ffe92a39d042431c1a210a5353f4063bbcccce16c9d9dbf5acc0cc98f41",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "MAV24_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "e9dc29473677637431818bda5de449c364b2d7b8a24c03e63e8d65e8fe00b205",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "MAV25_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "a10b9151e891750b29d96372202625e05545245295f1119a864181b23c9fa794",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "MAV26_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "49fbb05f1218748f941e312edb73dd69828f8ebb2e9b5075f3d0a511dfa7cdb5",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "MAV27_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "819fc644f1c6f891fc3783b2212c5e709f7e8fc55d13041206f1d075d168622f",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "MAV28_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "fd08a79bed760d02cec53607d3b10352249e8e4accf1dc2394efd583ce0b8e7f",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "MAV29_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "867f84a0678895eb2bb2359227e01161774b3ea09e9f6e8fa57aff42da2e6d6c",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "MAV2_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "ddc4f86146306ef22b802138b7bd4a418d16ed9472cd546562bf40c07f507536",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "MAV30_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "8a935db92c9e974c94489c7b0d40e05f2457becdc391105dcef6e9257743917f",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "MAV31_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "a5ed449ec8f48854a010f64b9990285ee3bc8b0493faaf6b28a41ffe311d3cfd",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "MAV32_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "30cf0d1f4951e39202a531d5a6e73a38616973ee21ad57337a1ee40dbccfb6d6",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "MAV3_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "6e2e2f0527bd8d91bad62af68c6d607fd358707f22a79778dd8c3e5fdd528fee",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "MAV4_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "b9bb113cd123af6a9cd873173d6c4d53a484a47c114df30f4b3eb212be5151c7",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "MAV5_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "5a5de1389bc1f52aef470f34eadc356a4f21cc52aa461748748f5870a8169f52",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "MAV6_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "b319eef2f76048da3181e21ca14537fde73c166858f6a8a7308676499c4519d5",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "MAV7_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "36018710c16a33ddb2c72d966d66196b2767d8728572f06839170b6a4969f09d",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "MAV8_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "bce3886470dc05a6e8469615a3bafe555578dfc898275d2273f342e2ba067e0b",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "MAV9_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "8129abcd53da62a11c215ecc8d0a43d5a02bdba33f866a1adcc163caadc9d5da",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "SR0_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.6.3"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "6494e8f9363431a8d54ad9688dd7bea62b463417a01878b0e0d4b8ad8de28c9a",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "SR0_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.5.7"
+      ],
+      "englishSha256": "1eae564bd442a73d10fe807427fa761fcc768daf777afc20e8ccd933fc70cef4",
+      "recordSha256": "61032ee1d8d2c9fa16613716a16e684f437a3eb727f99487faf152da02b8b4a7",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, and SCALED_PRESSURE3",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2 和 SCALED_PRESSURE3 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "SR1_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.6.3"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "a194740e9feb42ad395bec8e057f690fa9795b03e886d69314ce682cef314e94",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "SR1_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.5.7"
+      ],
+      "englishSha256": "1eae564bd442a73d10fe807427fa761fcc768daf777afc20e8ccd933fc70cef4",
+      "recordSha256": "2b8daa2e33f1c53c2539a42b96a172e3ccbad6d30f69f1222ca6d786c7cb8974",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, and SCALED_PRESSURE3",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2 和 SCALED_PRESSURE3 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "SR2_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.6.3"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "b4f95ca21dada8943e1508921e9d85df2c56d01c73079c19ddec675f2aed42be",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "SR2_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.5.7"
+      ],
+      "englishSha256": "1eae564bd442a73d10fe807427fa761fcc768daf777afc20e8ccd933fc70cef4",
+      "recordSha256": "5e12cbbd8d0a4f652ef6a06545c67937a5722ed77805f30fc798651c8c85d753",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, and SCALED_PRESSURE3",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2 和 SCALED_PRESSURE3 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "SR3_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.6.3"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "78b96b9991db0fa15d3a43566546bcf2f1685fa9f069f533f89a8db68d1e41a2",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "SR3_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.5.7"
+      ],
+      "englishSha256": "1eae564bd442a73d10fe807427fa761fcc768daf777afc20e8ccd933fc70cef4",
+      "recordSha256": "86059d15612d80e87759f9270c75c4f66316d2ed2bd819e092d51db3fa606017",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, and SCALED_PRESSURE3",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2 和 SCALED_PRESSURE3 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "SR4_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.6.3"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "309c6c2d651cb8eeee25a16ccb159f0cd9b7839a86ed72d5099eb32b128e5203",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "SR4_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.5.7"
+      ],
+      "englishSha256": "1eae564bd442a73d10fe807427fa761fcc768daf777afc20e8ccd933fc70cef4",
+      "recordSha256": "82bf0fe53bde58c1ce069eb5b000b3d9ab5e887daa92b2cdfe8ae4cd76a83487",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, and SCALED_PRESSURE3",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2 和 SCALED_PRESSURE3 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "SR5_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.6.3"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "43e7adf95113b07ae819d3144ddfc4ff3ee94d45984859d964ca619f98b932f3",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "SR5_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.5.7"
+      ],
+      "englishSha256": "1eae564bd442a73d10fe807427fa761fcc768daf777afc20e8ccd933fc70cef4",
+      "recordSha256": "31bf4380e05de0a0503804b659b7436b18a67e20e04d60796df3f55cc388a4d5",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, and SCALED_PRESSURE3",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2 和 SCALED_PRESSURE3 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "SR6_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.6.3"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "4a1689d8a7ec5aaa65f82161240c4bf696d44f339a3ae23879e033aca7aab695",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "SR6_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.5.7"
+      ],
+      "englishSha256": "1eae564bd442a73d10fe807427fa761fcc768daf777afc20e8ccd933fc70cef4",
+      "recordSha256": "69ce87144f885eca489bf9584bb9b35c0a9e55b4b007617feb6093a7205a22fe",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, and SCALED_PRESSURE3",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2 和 SCALED_PRESSURE3 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "MAV10_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "3a39ba19884df351ee9758c9f4cdfd5f6946f307697525c2df612056f26a3c7a",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "MAV11_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "ef18b6dee7893f06c0fb100ec61898cd61678ca0ebbf3cf712382413af2f47c2",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "MAV12_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "1ecb66de6772731f3ee5c18cbceda558dce0ed9d1225ee257130b274d6389fd3",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "MAV13_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "fd26c49a1ec00d908f551fb0700c146fc6522b5def5e6f790f5dd4e2d70b98c9",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "MAV14_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "54411b8ecff5dac81e9bc71c04e602324c4e11157d9b8b1463e7e5948edf4261",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "MAV15_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "a3db4a062f3ca0d9ce278f02ab8f6087535a5601bd30f9caa7c136c9d34c7168",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "MAV16_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "7054a13f0a7fad5184dd6a4ce2be8899ea47b715199d043dbf78c2eabcfb2bc6",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "MAV17_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "c5f3036f0101d8d3db8f922d5e76da27d36c147027eced7ad87f942dc0b230ca",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "MAV18_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "cf6615a2c348129798698d5427c8a6dd69cac8d70d17840b0667714c1d6eb4c3",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "MAV19_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "74d4e1e6a4deb20b13f83e0b2e926acd04381d65b5f9fdde5e9276831bc20d9f",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "MAV1_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "fcf949c47f627480cf9e419dc3cae57469bb86eddfb4522b10664940a99d92c0",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "MAV20_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "2e89b860102ca7b33fd1651432f49e0ce557b2dfe72211beceaa8c73242cbb4f",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "MAV21_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "976616be794242815fa867508623468dfb2b24e7b36793ee7830ac0c34133edb",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "MAV22_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "073fea5b0c30f6da909f31c5cb154633d4000ff1c1274d43e4576d335901fb95",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "MAV23_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "a71e4ffe92a39d042431c1a210a5353f4063bbcccce16c9d9dbf5acc0cc98f41",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "MAV24_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "e9dc29473677637431818bda5de449c364b2d7b8a24c03e63e8d65e8fe00b205",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "MAV25_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "a10b9151e891750b29d96372202625e05545245295f1119a864181b23c9fa794",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "MAV26_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "49fbb05f1218748f941e312edb73dd69828f8ebb2e9b5075f3d0a511dfa7cdb5",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "MAV27_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "819fc644f1c6f891fc3783b2212c5e709f7e8fc55d13041206f1d075d168622f",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "MAV28_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "fd08a79bed760d02cec53607d3b10352249e8e4accf1dc2394efd583ce0b8e7f",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "MAV29_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "867f84a0678895eb2bb2359227e01161774b3ea09e9f6e8fa57aff42da2e6d6c",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "MAV2_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "ddc4f86146306ef22b802138b7bd4a418d16ed9472cd546562bf40c07f507536",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "MAV30_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "8a935db92c9e974c94489c7b0d40e05f2457becdc391105dcef6e9257743917f",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "MAV31_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "a5ed449ec8f48854a010f64b9990285ee3bc8b0493faaf6b28a41ffe311d3cfd",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "MAV32_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "30cf0d1f4951e39202a531d5a6e73a38616973ee21ad57337a1ee40dbccfb6d6",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "MAV3_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "6e2e2f0527bd8d91bad62af68c6d607fd358707f22a79778dd8c3e5fdd528fee",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "MAV4_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "b9bb113cd123af6a9cd873173d6c4d53a484a47c114df30f4b3eb212be5151c7",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "MAV5_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "5a5de1389bc1f52aef470f34eadc356a4f21cc52aa461748748f5870a8169f52",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "MAV6_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "b319eef2f76048da3181e21ca14537fde73c166858f6a8a7308676499c4519d5",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "MAV7_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "36018710c16a33ddb2c72d966d66196b2767d8728572f06839170b6a4969f09d",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "MAV8_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "bce3886470dc05a6e8469615a3bafe555578dfc898275d2273f342e2ba067e0b",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "MAV9_RAW_SENS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "29008dab56888a5eff4a99a511d5799f3fcbcab9603c806a03c3a821da9ee22a",
+      "recordSha256": "8129abcd53da62a11c215ecc8d0a43d5a02bdba33f866a1adcc163caadc9d5da",
+      "english": "MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED",
+      "chinese": "RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。"
     }
   ]
 }

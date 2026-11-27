@@ -1113,9 +1113,23 @@
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="Raw sensor stream rate" name="SR0_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, and SCALED_PRESSURE3" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="SR1_">
           <param humanName="Extra data type 2 stream rate" name="SR1_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Raw sensor stream rate" name="SR1_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, and SCALED_PRESSURE3" user="Advanced">
             <field name="Units">Hz</field>
             <field name="UnitText">hertz</field>
             <field name="Range">0 50</field>
@@ -1131,9 +1145,23 @@
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="Raw sensor stream rate" name="SR2_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, and SCALED_PRESSURE3" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="SR3_">
           <param humanName="Extra data type 2 stream rate" name="SR3_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Raw sensor stream rate" name="SR3_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, and SCALED_PRESSURE3" user="Advanced">
             <field name="Units">Hz</field>
             <field name="UnitText">hertz</field>
             <field name="Range">0 50</field>
@@ -1149,6 +1177,13 @@
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="Raw sensor stream rate" name="SR4_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, and SCALED_PRESSURE3" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="SR5_">
           <param humanName="Extra data type 2 stream rate" name="SR5_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
@@ -1158,9 +1193,23 @@
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="Raw sensor stream rate" name="SR5_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, and SCALED_PRESSURE3" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="SR6_">
           <param humanName="Extra data type 2 stream rate" name="SR6_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Raw sensor stream rate" name="SR6_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, and SCALED_PRESSURE3" user="Advanced">
             <field name="Units">Hz</field>
             <field name="UnitText">hertz</field>
             <field name="Range">0 50</field>
@@ -2383,9 +2432,23 @@
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="Raw sensor stream rate" name="SR0_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="SR1_">
           <param humanName="Extra data type 2 stream rate" name="SR1_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Raw sensor stream rate" name="SR1_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
             <field name="Units">Hz</field>
             <field name="UnitText">hertz</field>
             <field name="Range">0 50</field>
@@ -2401,9 +2464,23 @@
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="Raw sensor stream rate" name="SR2_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="SR3_">
           <param humanName="Extra data type 2 stream rate" name="SR3_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Raw sensor stream rate" name="SR3_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
             <field name="Units">Hz</field>
             <field name="UnitText">hertz</field>
             <field name="Range">0 50</field>
@@ -2419,6 +2496,13 @@
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="Raw sensor stream rate" name="SR4_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="SR5_">
           <param humanName="Extra data type 2 stream rate" name="SR5_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
@@ -2428,9 +2512,23 @@
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="Raw sensor stream rate" name="SR5_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="SR6_">
           <param humanName="Extra data type 2 stream rate" name="SR6_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Raw sensor stream rate" name="SR6_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
             <field name="Units">Hz</field>
             <field name="UnitText">hertz</field>
             <field name="Range">0 50</field>
@@ -3686,9 +3784,23 @@
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="Raw sensor stream rate" name="MAV10_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="MAV11">
           <param humanName="Extra data type 2 stream rate" name="MAV11_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Raw sensor stream rate" name="MAV11_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
             <field name="Range">0 50</field>
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
@@ -3700,9 +3812,23 @@
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="Raw sensor stream rate" name="MAV12_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="MAV13">
           <param humanName="Extra data type 2 stream rate" name="MAV13_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Raw sensor stream rate" name="MAV13_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
             <field name="Range">0 50</field>
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
@@ -3714,9 +3840,23 @@
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="Raw sensor stream rate" name="MAV14_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="MAV15">
           <param humanName="Extra data type 2 stream rate" name="MAV15_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Raw sensor stream rate" name="MAV15_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
             <field name="Range">0 50</field>
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
@@ -3728,9 +3868,23 @@
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="Raw sensor stream rate" name="MAV16_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="MAV17">
           <param humanName="Extra data type 2 stream rate" name="MAV17_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Raw sensor stream rate" name="MAV17_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
             <field name="Range">0 50</field>
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
@@ -3742,9 +3896,23 @@
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="Raw sensor stream rate" name="MAV18_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="MAV19">
           <param humanName="Extra data type 2 stream rate" name="MAV19_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Raw sensor stream rate" name="MAV19_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
             <field name="Range">0 50</field>
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
@@ -3756,9 +3924,23 @@
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="Raw sensor stream rate" name="MAV1_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="MAV20">
           <param humanName="Extra data type 2 stream rate" name="MAV20_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Raw sensor stream rate" name="MAV20_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
             <field name="Range">0 50</field>
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
@@ -3770,9 +3952,23 @@
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="Raw sensor stream rate" name="MAV21_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="MAV22">
           <param humanName="Extra data type 2 stream rate" name="MAV22_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Raw sensor stream rate" name="MAV22_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
             <field name="Range">0 50</field>
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
@@ -3784,9 +3980,23 @@
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="Raw sensor stream rate" name="MAV23_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="MAV24">
           <param humanName="Extra data type 2 stream rate" name="MAV24_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Raw sensor stream rate" name="MAV24_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
             <field name="Range">0 50</field>
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
@@ -3798,9 +4008,23 @@
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="Raw sensor stream rate" name="MAV25_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="MAV26">
           <param humanName="Extra data type 2 stream rate" name="MAV26_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Raw sensor stream rate" name="MAV26_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
             <field name="Range">0 50</field>
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
@@ -3812,9 +4036,23 @@
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="Raw sensor stream rate" name="MAV27_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="MAV28">
           <param humanName="Extra data type 2 stream rate" name="MAV28_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Raw sensor stream rate" name="MAV28_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
             <field name="Range">0 50</field>
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
@@ -3826,9 +4064,23 @@
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="Raw sensor stream rate" name="MAV29_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="MAV2">
           <param humanName="Extra data type 2 stream rate" name="MAV2_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Raw sensor stream rate" name="MAV2_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
             <field name="Range">0 50</field>
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
@@ -3840,9 +4092,23 @@
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="Raw sensor stream rate" name="MAV30_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="MAV31">
           <param humanName="Extra data type 2 stream rate" name="MAV31_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Raw sensor stream rate" name="MAV31_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
             <field name="Range">0 50</field>
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
@@ -3854,9 +4120,23 @@
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="Raw sensor stream rate" name="MAV32_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="MAV3">
           <param humanName="Extra data type 2 stream rate" name="MAV3_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Raw sensor stream rate" name="MAV3_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
             <field name="Range">0 50</field>
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
@@ -3868,9 +4148,23 @@
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="Raw sensor stream rate" name="MAV4_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="MAV5">
           <param humanName="Extra data type 2 stream rate" name="MAV5_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Raw sensor stream rate" name="MAV5_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
             <field name="Range">0 50</field>
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
@@ -3882,9 +4176,23 @@
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="Raw sensor stream rate" name="MAV6_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="MAV7">
           <param humanName="Extra data type 2 stream rate" name="MAV7_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Raw sensor stream rate" name="MAV7_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
             <field name="Range">0 50</field>
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
@@ -3896,9 +4204,23 @@
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="Raw sensor stream rate" name="MAV8_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="MAV9">
           <param humanName="Extra data type 2 stream rate" name="MAV9_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Raw sensor stream rate" name="MAV9_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
             <field name="Range">0 50</field>
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
@@ -5070,9 +5392,23 @@
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="Raw sensor stream rate" name="SR0_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, and SCALED_PRESSURE3" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="SR1_">
           <param humanName="Extra data type 2 stream rate" name="SR1_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Raw sensor stream rate" name="SR1_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, and SCALED_PRESSURE3" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
             <field name="Range">0 50</field>
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
@@ -5084,9 +5420,23 @@
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="Raw sensor stream rate" name="SR2_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, and SCALED_PRESSURE3" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="SR3_">
           <param humanName="Extra data type 2 stream rate" name="SR3_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Raw sensor stream rate" name="SR3_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, and SCALED_PRESSURE3" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
             <field name="Range">0 50</field>
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
@@ -5098,6 +5448,13 @@
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="Raw sensor stream rate" name="SR4_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, and SCALED_PRESSURE3" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="SR5_">
           <param humanName="Extra data type 2 stream rate" name="SR5_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
@@ -5105,9 +5462,23 @@
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="Raw sensor stream rate" name="SR5_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, and SCALED_PRESSURE3" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="SR6_">
           <param humanName="Extra data type 2 stream rate" name="SR6_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Raw sensor stream rate" name="SR6_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, and SCALED_PRESSURE3" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
             <field name="Range">0 50</field>
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
@@ -6373,9 +6744,23 @@
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="Raw sensor stream rate" name="SR0_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="SR1_">
           <param humanName="Extra data type 2 stream rate" name="SR1_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Raw sensor stream rate" name="SR1_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
             <field name="Range">0 50</field>
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
@@ -6387,9 +6772,23 @@
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="Raw sensor stream rate" name="SR2_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="SR3_">
           <param humanName="Extra data type 2 stream rate" name="SR3_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Raw sensor stream rate" name="SR3_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
             <field name="Range">0 50</field>
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
@@ -6401,6 +6800,13 @@
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="Raw sensor stream rate" name="SR4_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="SR5_">
           <param humanName="Extra data type 2 stream rate" name="SR5_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
@@ -6408,9 +6814,23 @@
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="Raw sensor stream rate" name="SR5_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="SR6_">
           <param humanName="Extra data type 2 stream rate" name="SR6_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Raw sensor stream rate" name="SR6_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
             <field name="Range">0 50</field>
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
@@ -7720,9 +8140,23 @@
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="Raw sensor stream rate" name="MAV10_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="MAV11">
           <param humanName="Extra data type 2 stream rate" name="MAV11_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Raw sensor stream rate" name="MAV11_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
             <field name="Range">0 50</field>
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
@@ -7734,9 +8168,23 @@
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="Raw sensor stream rate" name="MAV12_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="MAV13">
           <param humanName="Extra data type 2 stream rate" name="MAV13_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Raw sensor stream rate" name="MAV13_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
             <field name="Range">0 50</field>
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
@@ -7748,9 +8196,23 @@
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="Raw sensor stream rate" name="MAV14_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="MAV15">
           <param humanName="Extra data type 2 stream rate" name="MAV15_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Raw sensor stream rate" name="MAV15_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
             <field name="Range">0 50</field>
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
@@ -7762,9 +8224,23 @@
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="Raw sensor stream rate" name="MAV16_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="MAV17">
           <param humanName="Extra data type 2 stream rate" name="MAV17_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Raw sensor stream rate" name="MAV17_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
             <field name="Range">0 50</field>
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
@@ -7776,9 +8252,23 @@
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="Raw sensor stream rate" name="MAV18_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="MAV19">
           <param humanName="Extra data type 2 stream rate" name="MAV19_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Raw sensor stream rate" name="MAV19_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
             <field name="Range">0 50</field>
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
@@ -7790,9 +8280,23 @@
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="Raw sensor stream rate" name="MAV1_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="MAV20">
           <param humanName="Extra data type 2 stream rate" name="MAV20_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Raw sensor stream rate" name="MAV20_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
             <field name="Range">0 50</field>
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
@@ -7804,9 +8308,23 @@
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="Raw sensor stream rate" name="MAV21_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="MAV22">
           <param humanName="Extra data type 2 stream rate" name="MAV22_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Raw sensor stream rate" name="MAV22_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
             <field name="Range">0 50</field>
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
@@ -7818,9 +8336,23 @@
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="Raw sensor stream rate" name="MAV23_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="MAV24">
           <param humanName="Extra data type 2 stream rate" name="MAV24_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Raw sensor stream rate" name="MAV24_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
             <field name="Range">0 50</field>
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
@@ -7832,9 +8364,23 @@
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="Raw sensor stream rate" name="MAV25_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="MAV26">
           <param humanName="Extra data type 2 stream rate" name="MAV26_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Raw sensor stream rate" name="MAV26_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
             <field name="Range">0 50</field>
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
@@ -7846,9 +8392,23 @@
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="Raw sensor stream rate" name="MAV27_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="MAV28">
           <param humanName="Extra data type 2 stream rate" name="MAV28_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Raw sensor stream rate" name="MAV28_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
             <field name="Range">0 50</field>
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
@@ -7860,9 +8420,23 @@
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="Raw sensor stream rate" name="MAV29_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="MAV2">
           <param humanName="Extra data type 2 stream rate" name="MAV2_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Raw sensor stream rate" name="MAV2_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
             <field name="Range">0 50</field>
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
@@ -7874,9 +8448,23 @@
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="Raw sensor stream rate" name="MAV30_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="MAV31">
           <param humanName="Extra data type 2 stream rate" name="MAV31_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Raw sensor stream rate" name="MAV31_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
             <field name="Range">0 50</field>
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
@@ -7888,9 +8476,23 @@
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="Raw sensor stream rate" name="MAV32_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="MAV3">
           <param humanName="Extra data type 2 stream rate" name="MAV3_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Raw sensor stream rate" name="MAV3_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
             <field name="Range">0 50</field>
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
@@ -7902,9 +8504,23 @@
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="Raw sensor stream rate" name="MAV4_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="MAV5">
           <param humanName="Extra data type 2 stream rate" name="MAV5_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Raw sensor stream rate" name="MAV5_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
             <field name="Range">0 50</field>
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
@@ -7916,9 +8532,23 @@
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="Raw sensor stream rate" name="MAV6_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="MAV7">
           <param humanName="Extra data type 2 stream rate" name="MAV7_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Raw sensor stream rate" name="MAV7_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
             <field name="Range">0 50</field>
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
@@ -7930,9 +8560,23 @@
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="Raw sensor stream rate" name="MAV8_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="MAV9">
           <param humanName="Extra data type 2 stream rate" name="MAV9_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Raw sensor stream rate" name="MAV9_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
             <field name="Range">0 50</field>
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
@@ -8799,9 +9443,23 @@
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="Raw sensor stream rate" name="MAV10_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="MAV11">
           <param humanName="Extra data type 2 stream rate" name="MAV11_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Raw sensor stream rate" name="MAV11_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
             <field name="Range">0 50</field>
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
@@ -8813,9 +9471,23 @@
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="Raw sensor stream rate" name="MAV12_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="MAV13">
           <param humanName="Extra data type 2 stream rate" name="MAV13_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Raw sensor stream rate" name="MAV13_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
             <field name="Range">0 50</field>
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
@@ -8827,9 +9499,23 @@
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="Raw sensor stream rate" name="MAV14_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="MAV15">
           <param humanName="Extra data type 2 stream rate" name="MAV15_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Raw sensor stream rate" name="MAV15_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
             <field name="Range">0 50</field>
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
@@ -8841,9 +9527,23 @@
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="Raw sensor stream rate" name="MAV16_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="MAV17">
           <param humanName="Extra data type 2 stream rate" name="MAV17_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Raw sensor stream rate" name="MAV17_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
             <field name="Range">0 50</field>
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
@@ -8855,9 +9555,23 @@
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="Raw sensor stream rate" name="MAV18_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="MAV19">
           <param humanName="Extra data type 2 stream rate" name="MAV19_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Raw sensor stream rate" name="MAV19_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
             <field name="Range">0 50</field>
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
@@ -8869,9 +9583,23 @@
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="Raw sensor stream rate" name="MAV1_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="MAV20">
           <param humanName="Extra data type 2 stream rate" name="MAV20_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Raw sensor stream rate" name="MAV20_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
             <field name="Range">0 50</field>
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
@@ -8883,9 +9611,23 @@
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="Raw sensor stream rate" name="MAV21_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="MAV22">
           <param humanName="Extra data type 2 stream rate" name="MAV22_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Raw sensor stream rate" name="MAV22_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
             <field name="Range">0 50</field>
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
@@ -8897,9 +9639,23 @@
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="Raw sensor stream rate" name="MAV23_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="MAV24">
           <param humanName="Extra data type 2 stream rate" name="MAV24_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Raw sensor stream rate" name="MAV24_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
             <field name="Range">0 50</field>
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
@@ -8911,9 +9667,23 @@
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="Raw sensor stream rate" name="MAV25_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="MAV26">
           <param humanName="Extra data type 2 stream rate" name="MAV26_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Raw sensor stream rate" name="MAV26_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
             <field name="Range">0 50</field>
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
@@ -8925,9 +9695,23 @@
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="Raw sensor stream rate" name="MAV27_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="MAV28">
           <param humanName="Extra data type 2 stream rate" name="MAV28_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Raw sensor stream rate" name="MAV28_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
             <field name="Range">0 50</field>
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
@@ -8939,9 +9723,23 @@
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="Raw sensor stream rate" name="MAV29_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="MAV2">
           <param humanName="Extra data type 2 stream rate" name="MAV2_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Raw sensor stream rate" name="MAV2_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
             <field name="Range">0 50</field>
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
@@ -8953,9 +9751,23 @@
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="Raw sensor stream rate" name="MAV30_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="MAV31">
           <param humanName="Extra data type 2 stream rate" name="MAV31_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Raw sensor stream rate" name="MAV31_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
             <field name="Range">0 50</field>
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
@@ -8967,9 +9779,23 @@
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="Raw sensor stream rate" name="MAV32_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="MAV3">
           <param humanName="Extra data type 2 stream rate" name="MAV3_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Raw sensor stream rate" name="MAV3_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
             <field name="Range">0 50</field>
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
@@ -8981,9 +9807,23 @@
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="Raw sensor stream rate" name="MAV4_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="MAV5">
           <param humanName="Extra data type 2 stream rate" name="MAV5_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Raw sensor stream rate" name="MAV5_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
             <field name="Range">0 50</field>
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
@@ -8995,9 +9835,23 @@
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="Raw sensor stream rate" name="MAV6_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="MAV7">
           <param humanName="Extra data type 2 stream rate" name="MAV7_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Raw sensor stream rate" name="MAV7_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
             <field name="Range">0 50</field>
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
@@ -9009,9 +9863,23 @@
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="Raw sensor stream rate" name="MAV8_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
         </parameters>
         <parameters name="MAV9">
           <param humanName="Extra data type 2 stream rate" name="MAV9_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="Raw sensor stream rate" name="MAV9_RAW_SENS" documentation="MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
             <field name="Range">0 50</field>
             <field name="Increment">1</field>
             <field name="RebootRequired">True</field>
