@@ -10799,6 +10799,10 @@ Acc：当前测定位置的精度
     <value>振动</value>
     <comment>"Telemetry group: Vibe"</comment>
   </data>
+  <data name="860d42091d83352850a96c668270d7874527bab170c35296d20975269f7427bc" xml:space="preserve">
+    <value>模板变量：{wpn} 航点，{alt} 高度，{gsp} 地速。请保留花括号和变量名。</value>
+    <comment>"Template variables: {wpn} waypoint, {alt} altitude, {gsp} ground speed. Keep the braces and variable names unchanged."</comment>
+  </data>
   <data name="e0926fdac700b09497b5f0218ea3dd54fa13c0bdeaee6caa7b85e50b852aa05f" xml:space="preserve">
     <value>终端</value>
     <comment>"Terminal"</comment>

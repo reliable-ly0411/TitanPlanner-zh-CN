@@ -39,6 +39,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             CHK_startFullscreen.CheckedChanged += CHK_startFullscreen_CheckedChanged;
 
             InitializeComponent();
+            AddCustomSpeechTemplateHelp(CHK_speechcustom);
             CMB_distunits.Format += FormatUnit;
             CMB_speedunits.Format += FormatUnit;
             CMB_altunits.Format += FormatUnit;
@@ -475,6 +476,16 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                 constrainDescriptions();
             }
             return group;
+        }
+
+        private static void AddCustomSpeechTemplateHelp(CheckBox control)
+        {
+            if (!string.Equals(CultureInfo.CurrentUICulture.Name, "zh-CN", StringComparison.Ordinal))
+                return;
+            var tip = new ToolTip();
+            tip.SetToolTip(control, UiText.Translate(
+                "Template variables: {wpn} waypoint, {alt} altitude, {gsp} ground speed. Keep the braces and variable names unchanged."));
+            control.Disposed += (sender, args) => tip.Dispose();
         }
 
         private Control CreateSpeechAndAudioGroup()
