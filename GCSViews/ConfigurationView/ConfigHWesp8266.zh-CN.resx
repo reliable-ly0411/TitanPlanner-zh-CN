@@ -65,7 +65,7 @@
   <data name="label4.Text" xml:space="preserve"><value>Wi-Fi 信道</value></data>
   <data name="but_resetdefault.Text" xml:space="preserve"><value>重置为默认</value></data>
   <data name="chk_mode.Text" xml:space="preserve"><value>客户端模式</value></data>
-  <data name="groupBoxsta.Text" xml:space="preserve"><value>STA 模式</value></data>
+  <data name="groupBoxsta.Text" xml:space="preserve"><value>STA（客户端）模式</value></data>
   <data name="label8.Text" xml:space="preserve"><value>子网掩码</value></data>
   <data name="label9.Text" xml:space="preserve"><value>网关</value></data>
 </root>
