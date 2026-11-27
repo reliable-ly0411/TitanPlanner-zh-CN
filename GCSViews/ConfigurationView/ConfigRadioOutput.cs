@@ -192,8 +192,10 @@ namespace MissionPlanner.GCSViews.ConfigurationView
 
             bAR1.DataBindings.Add("Value", bindingSource1, "ch" + servono + "out");
             rev1.setup(1, 0, servo + "_REVERSED", MainV2.comPort.MAV.param);
-            func1.setup(ParameterMetaDataRepository.GetParameterOptionsInt(servo + "_FUNCTION",
-                    MainV2.comPort.MAV.cs.firmware.ToString()), servo + "_FUNCTION", MainV2.comPort.MAV.param);
+            var firmware = MainV2.comPort.MAV.cs.firmware;
+            var functions = ParameterMetaDataRepository.GetParameterOptionsInt(servo + "_FUNCTION", firmware.ToString());
+            ServoFunctionCaptions.Attach(func1, functions, firmware);
+            func1.setup(functions, servo + "_FUNCTION", MainV2.comPort.MAV.param);
             min1.setup(ServoMin, ServoMax, 1, 1, servo + "_MIN", MainV2.comPort.MAV.param);
             trim1.setup(ServoMin, ServoMax, 1, 1, servo + "_TRIM", MainV2.comPort.MAV.param);
             max1.setup(ServoMin, ServoMax, 1, 1, servo + "_MAX", MainV2.comPort.MAV.param);
