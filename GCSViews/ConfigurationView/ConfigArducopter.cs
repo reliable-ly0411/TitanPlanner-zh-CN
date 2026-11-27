@@ -87,29 +87,63 @@ namespace MissionPlanner.GCSViews.ConfigurationView
 
         private void UpdateFilterCaptions(Func<string, bool> hasParameter)
         {
-            if (!string.Equals(CultureInfo.CurrentUICulture.Name, "zh-CN", StringComparison.Ordinal))
-                return;
-
-            ApplyFilterCaption(label18, RATE_PIT_FILT, "PIT", "FLTE", "误差信号滤波频率", hasParameter);
-            ApplyFilterCaption(label32, ATC_RAT_PIT_FLTD, "PIT", "FLTD", "微分项滤波频率", hasParameter);
-            ApplyFilterCaption(label33, ATC_RAT_PIT_FLTT, "PIT", "FLTT", "目标信号滤波频率", hasParameter);
-            ApplyFilterCaption(label14, RATE_RLL_FILT, "RLL", "FLTE", "误差信号滤波频率", hasParameter);
-            ApplyFilterCaption(label29, ATC_RAT_RLL_FLTD, "RLL", "FLTD", "微分项滤波频率", hasParameter);
-            ApplyFilterCaption(label30, ATC_RAT_RLL_FLTT, "RLL", "FLTT", "目标信号滤波频率", hasParameter);
-            ApplyFilterCaption(label12, RATE_YAW_FILT, "YAW", "FLTE", "误差信号滤波频率", hasParameter);
-            ApplyFilterCaption(P_FLTD, ATC_RAT_YAW_FLTD, "YAW", "FLTD", "微分项滤波频率", hasParameter);
-            ApplyFilterCaption(label28, ATC_RAT_YAW_FLTT, "YAW", "FLTT", "目标信号滤波频率", hasParameter);
+            ApplyFilterCaption(label18, RATE_PIT_FILT, "PIT_FLTE", hasParameter);
+            ApplyFilterCaption(label32, ATC_RAT_PIT_FLTD, "PIT_FLTD", hasParameter);
+            ApplyFilterCaption(label33, ATC_RAT_PIT_FLTT, "PIT_FLTT", hasParameter);
+            ApplyFilterCaption(label14, RATE_RLL_FILT, "RLL_FLTE", hasParameter);
+            ApplyFilterCaption(label29, ATC_RAT_RLL_FLTD, "RLL_FLTD", hasParameter);
+            ApplyFilterCaption(label30, ATC_RAT_RLL_FLTT, "RLL_FLTT", hasParameter);
+            ApplyFilterCaption(label12, RATE_YAW_FILT, "YAW_FLTE", hasParameter);
+            ApplyFilterCaption(P_FLTD, ATC_RAT_YAW_FLTD, "YAW_FLTD", hasParameter);
+            ApplyFilterCaption(label28, ATC_RAT_YAW_FLTT, "YAW_FLTT", hasParameter);
         }
 
-        private void ApplyFilterCaption(Label label, MavlinkNumericUpDown value, string axis,
-            string abbreviation, string description, Func<string, bool> hasParameter)
+        private static string FilterCaption(string firmware, string key)
         {
-            string key = value.ParamName;
-            string suffix = axis + "_" + abbreviation;
-            bool known = (key == "ATC_RAT_" + suffix || key == "Q_A_RAT_" + suffix) && hasParameter(key);
-            string detail = known ? abbreviation + " · " + description + " (Hz)" : null;
+            if (key == null || CultureInfo.CurrentUICulture.Name != "zh-CN")
+                return null;
+            var prefix = firmware == "ArduCopter2" ? "ATC_RAT_" : firmware == "ArduPlane" ? "Q_A_RAT_" : null;
+            if (prefix == null || key.Length != prefix.Length + 8 || !key.StartsWith(prefix, StringComparison.Ordinal))
+                return null;
+
+            string axis = key.Substring(prefix.Length, 4);
+            if (axis != "PIT_" && axis != "RLL_" && axis != "YAW_")
+                return null;
+
+            // ArduPilot AC_PID/AC_PID.cpp metadata: FLTE, FLTD and FLTT are distinct
+            // low-pass frequencies in Hz, never legacy _FILT labels.
+            switch (key.Substring(prefix.Length + 4))
+            {
+                case "FLTE": return "FLTE · 误差信号滤波频率 (Hz)";
+                case "FLTD": return "FLTD · 微分项滤波频率 (Hz)";
+                case "FLTT": return "FLTT · 目标信号滤波频率 (Hz)";
+                default: return null;
+            }
+        }
+
+        private void ApplyFilterCaption(Label label, MavlinkNumericUpDown value, string slot,
+            Func<string, bool> hasParameter)
+        {
+            var key = value.ParamName;
+            string detail = key != null && key.EndsWith(slot, StringComparison.Ordinal) && hasParameter(key)
+                ? FilterCaption(rcOptionFirmware, key) : null;
             label.AccessibleName = detail;
             toolTip1.SetToolTip(label, detail);
+            // Preserve the same explanation when the adjacent editable number has focus.
+            value.AccessibleDescription = detail;
+        }
+
+        private string WithFilterTooltipCaption(Control control, string tooltip)
+        {
+            // The parameter text comes from a background lookup. Do not append an
+            // explanation to a result for a control that has since changed bindings.
+            if (!(control is MavlinkNumericUpDown numeric) || string.IsNullOrEmpty(numeric.ParamName) ||
+                canPresentRcOption == null || !canPresentRcOption(numeric.ParamName) ||
+                !tooltip.StartsWith(numeric.ParamName + ":\n", StringComparison.Ordinal))
+                return tooltip;
+
+            var detail = FilterCaption(rcOptionFirmware, numeric.ParamName);
+            return detail == null ? tooltip : detail + "\n" + tooltip;
         }
 
         public void Activate()
@@ -321,7 +355,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                         {
                             try
                             {
-                                toolTip1.SetToolTip(control, tooltip);
+                                toolTip1.SetToolTip(control, WithFilterTooltipCaption(control, tooltip));
                             }
                             catch { }
                         }
