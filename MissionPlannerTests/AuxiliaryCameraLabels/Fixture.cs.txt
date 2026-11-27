@@ -1,0 +1,108 @@
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Globalization;
+using System.Linq;
+using System.Windows.Forms;
+
+partial class Fixture
+{
+    private const string Tracking = "Camera Image Tracking";
+    private const string Lens = "Camera Lens";
+    private const string TrackingZh = "Camera Image Tracking · 相机图像跟踪";
+    private const string LensZh = "Camera Lens · 相机镜头选择";
+    private static int assertions;
+
+    private static void Check(bool condition, string failure)
+    {
+        assertions++;
+        if (!condition) throw new Exception(failure);
+    }
+
+    private static void CheckCatalog()
+    {
+        foreach (string firmware in new[] { "ArduCopter2", "ArduPlane", "ArduRover", "ArduSub", "PX4",
+            "ArduTracker", "Blimp", "Plugin", "", null })
+        foreach (bool chinese in new[] { false, true })
+        {
+            bool applies = chinese && (firmware == "ArduCopter2" || firmware == "ArduPlane" || firmware == "ArduRover");
+            Check(FormatAuxiliaryOption(firmware, 174, Tracking, chinese) == (applies ? TrackingZh : Tracking), "Wrong tracking translation " + firmware);
+            Check(FormatAuxiliaryOption(firmware, 175, Lens, chinese) == (applies ? LensZh : Lens), "Wrong lens translation " + firmware);
+            Check(FormatAuxiliaryOption(firmware, 173, Tracking, chinese) == Tracking, "Wrong tracking ID must stay raw");
+            Check(FormatAuxiliaryOption(firmware, 176, Lens, chinese) == Lens, "Wrong lens ID must stay raw");
+            Check(FormatAuxiliaryOption(firmware, 174, Lens, chinese) == Lens, "Unmatched ID/name pair must stay raw");
+            Check(FormatAuxiliaryOption(firmware, 175, "Camera Lens (custom)", chinese) == "Camera Lens (custom)", "Unreviewed alias must stay raw");
+            Check(FormatAuxiliaryOption(firmware, 175, "camera lens", chinese) == "camera lens", "Changed case must stay raw");
+            Check(FormatAuxiliaryOption(firmware, 175, null, chinese) == null, "Null value changed");
+        }
+        Check(FormatAuxiliaryOption("ArduCopter2", 78, "RunCam Control", true) == "RunCam Control · RunCam 控制", "RunCam regressed");
+        Check(FormatAuxiliaryOption("ArduRover", 300, "Scripting1", true) == "Scripting1 · 脚本功能 1", "Scripting regressed");
+        Check(FormatAuxiliaryOption("ArduPlane", 0, "Do Nothing", true) == "Do Nothing · 无操作", "No-op display regressed");
+    }
+
+    private void CheckDropdown(string culture, int width)
+    {
+        CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo(culture);
+        bool chinese = culture == "zh-CN";
+        var rows = new List<KeyValuePair<int, string>>
+        {
+            new KeyValuePair<int, string>(0, "Do Nothing"),
+            new KeyValuePair<int, string>(174, Tracking),
+            new KeyValuePair<int, string>(175, Lens)
+        };
+        using (var window = new Form { ClientSize = new Size(430, 150) })
+        using (var combo = new ComboBox { Width = width, DropDownWidth = width, DropDownStyle = ComboBoxStyle.DropDownList,
+            DisplayMember = "Value", ValueMember = "Key", Font = new Font(SystemFonts.DefaultFont.FontFamily, 12) })
+        {
+            window.Controls.Add(combo);
+            ConfigureAuxiliaryDisplay(combo);
+            window.Show();
+            foreach (var firmware in new[] { "ArduCopter2", "ArduRover", "ArduPlane", "PX4", "ArduCopter2" })
+            {
+                _auxFunctionsFirmware = firmware;
+                bool applies = chinese && firmware != "PX4";
+                combo.DataSource = rows.ToList();
+                combo.SelectedValue = 175;
+                Application.DoEvents();
+                Check(combo.DrawMode == (chinese ? DrawMode.OwnerDrawFixed : DrawMode.Normal), "Locale owner-drawing scope");
+                Func<int, string> visible = index => combo.DrawMode == DrawMode.OwnerDrawFixed
+                    ? DisplayAuxiliaryOption(combo, index) : combo.GetItemText(combo.Items[index]);
+                Check(visible(1) == (applies ? TrackingZh : Tracking), "Wrong current firmware label: " + culture + "/" + firmware);
+                Check(visible(2) == (applies ? LensZh : Lens), "Wrong lens label: " + culture + "/" + firmware);
+                combo.Focus();
+                combo.DroppedDown = true;
+                Application.DoEvents();
+                Check(combo.DroppedDown, "Actual dropdown did not open");
+                if (chinese)
+                {
+                    int minimum = TextRenderer.MeasureText(applies ? TrackingZh : Tracking, combo.Font).Width;
+                    Check(combo.DropDownWidth >= minimum, "Dropdown width clipped reviewed label");
+                    Check(combo.DropDownWidth <= Screen.FromControl(combo).WorkingArea.Width, "Dropdown exceeds screen");
+                }
+                combo.DroppedDown = false;
+                Check((int)combo.SelectedValue == 175 && combo.Text == Lens, "Selection changed raw value");
+                Check(combo.Items.Cast<KeyValuePair<int, string>>().SequenceEqual(rows), "The raw list changed");
+            }
+        }
+    }
+
+    [STAThread]
+    private static int Main()
+    {
+        try
+        {
+            CheckCatalog();
+            var fixture = new Fixture();
+            foreach (var culture in new[] { "zh-CN", "zh-Hans", "en-US" })
+            foreach (var width in new[] { 120, 220 })
+                fixture.CheckDropdown(culture, width);
+            Console.WriteLine("Auxiliary camera caption / dropdown: " + assertions + " assertions passed.");
+            return 0;
+        }
+        catch (Exception error)
+        {
+            Console.Error.WriteLine(error);
+            return 1;
+        }
+    }
+}

@@ -178,6 +178,8 @@ namespace MissionPlanner.Controls
                 [(167, "Camera Zoom")] = "相机变焦",
                 [(168, "Camera Manual Focus")] = "相机手动对焦",
                 [(169, "Camera Auto Focus")] = "相机自动对焦",
+                [(174, "Camera Image Tracking")] = "相机图像跟踪",
+                [(175, "Camera Lens")] = "相机镜头选择",
             };
 
         internal static string FormatAuxiliaryOption(string firmware, int id, string raw, bool enhancedChinese)
