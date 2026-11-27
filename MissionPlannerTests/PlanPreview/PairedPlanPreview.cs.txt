@@ -98,7 +98,11 @@ namespace Plan29PreviewProbe
             if (!IsCurrent(owner, revision)) return Result.Retired;
             pending = null;
             if (candidate != null && candidate.Rows.Count == 0)
-            { ClearPair(); return Result.Cleared; }
+            {
+                // 清空也结束本次计划版本，迟到的投影不能重新取得旧路线。
+                Invalidate(owner);
+                return Result.Cleared;
+            }
             if (!source.TryCopyProjection(revision.Plan, candidate, out var geometry) || geometry.Length == 0)
             { ClearPair(); return Result.MissingProjection; }
 

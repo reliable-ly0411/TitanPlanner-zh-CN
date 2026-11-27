@@ -140,11 +140,15 @@ internal static class PairedPlanPreviewProbe
             Check("Home-only clears both without drawing stale route",
                 pair.TryStage(plan, rev, Snapshot(empty: true), frame, null, out _) == PairedPlanPreview.Result.Cleared &&
                 ReadPixels(pair, flight, frame, lines).Equals(start));
-            pair.TryStage(plan, rev, original, frame, proof, out initial);
-            pair.TryCommit(plan, rev, initial, original, frame);
+            rev = pair.BeginRevision(plan, PlanKind.Mission);
+            plan.Overlays.Remove(planLayer); planLayer.Dispose();
+            planLayer = PublishPlannerLayer(plan, Shape);
+            var restored = pair.RecordPlanProjection(plan, rev, original, original, planLayer) &&
+                pair.TryStage(plan, rev, original, frame, proof, out initial) == PairedPlanPreview.Result.Staged &&
+                pair.TryCommit(plan, rev, initial, original, frame) && ReadPixels(pair, flight, frame, lines).Equals(visible);
             pair.Invalidate(plan);
             Check("disconnect clears pair, retires callback, preserves canonical device products",
-                !pair.TryCommit(plan, rev, initial, original, frame) && ReadPixels(pair, flight, frame, lines).Equals(start) &&
+                restored && !pair.TryCommit(plan, rev, initial, original, frame) && ReadPixels(pair, flight, frame, lines).Equals(start) &&
                 ReferenceEquals(flight.Overlays.Single(), canonical) &&
                 originalBounds.Equals(flight.GetRectOfAllMarkers(null)));
             using (var grid = new DataGridView { AllowUserToAddRows = false })
@@ -186,8 +190,105 @@ internal static class PairedPlanPreviewProbe
                     !pair.TryCommitRechecked(plan, rev, stagedGrid, read(), frame) &&
                     ReadPixels(pair, flight, frame, lines).Equals(start));
             }
+            CheckRouteReplacement(pair, plan, flight, frame, lines, canonical);
         }
         Console.WriteLine(passed + " checks passed");
+    }
+
+
+    sealed class PreviewPixels
+    {
+        internal readonly HashSet<int> Map = new HashSet<int>();
+        internal readonly HashSet<int> Scene = new HashSet<int>();
+        internal readonly HashSet<int> Device = new HashSet<int>();
+
+        internal bool Matches(PreviewPixels other) =>
+            Map.SetEquals(other.Map) && Scene.SetEquals(other.Scene) && Device.SetEquals(other.Device);
+    }
+
+    static void CheckRouteReplacement(PairedPlanPreview pair, GMapControl plan, GMapControl flight,
+        WorldFrame frame, LineRenderer renderer, GMapOverlay device)
+    {
+        var longShape = Shape.Concat(new[]
+        {
+            new PointLatLng(10.1215, 2.0965),
+            new PointLatLng(10.1175, 2.0968),
+            new PointLatLng(10.1170, 2.1035)
+        }).ToArray();
+        var shortPlan = Snapshot();
+        var longPlan = Snapshot(shape: longShape);
+        var revision = pair.BeginRevision(plan, PlanKind.Mission);
+        var layer = plan.Overlays.Single(o => o.Id == "WPOverlay");
+
+        PreviewPixels Capture()
+        {
+            var pixels = new PreviewPixels();
+            ReadPixels(pair, flight, frame, renderer, pixels);
+            return pixels;
+        }
+
+        PairedPlanPreview.Stage Prepare(ReadOnlyPlanSnapshot snapshot, PointLatLng[] shape)
+        {
+            plan.Overlays.Remove(layer);
+            layer.Dispose();
+            layer = PublishPlannerLayer(plan, shape);
+            if (!pair.RecordPlanProjection(plan, revision, snapshot, snapshot, layer) ||
+                pair.TryStage(plan, revision, snapshot, frame, Evidence(snapshot), out var stage) !=
+                    PairedPlanPreview.Result.Staged)
+                throw new InvalidOperationException("测试路线未能进入待显示状态");
+            return stage;
+        }
+
+        var shortStage = Prepare(shortPlan, Shape);
+        Check("两点基线可成对提交",
+            pair.TryCommit(plan, revision, shortStage, shortPlan, frame));
+        var shortPixels = Capture();
+        Check("两点基线包含地图、场景与模拟设备线像素",
+            shortPixels.Map.Count > 40 && shortPixels.Scene.Count > 10 && shortPixels.Device.Count > 10);
+        var longStage = Prepare(longPlan, longShape);
+        Check("五点路线准备期间两个视图仍显示原来的两点", Capture().Matches(shortPixels));
+        Check("五点路线在同一次提交中替换两点路线",
+            pair.TryCommit(plan, revision, longStage, longPlan, frame));
+        var longPixels = Capture();
+        Check("两边都有超出两点基线的尾段像素，设备线的位置不变",
+            longPixels.Map.Except(shortPixels.Map).Count() > 10 &&
+            longPixels.Scene.Except(shortPixels.Scene).Count() > 10 &&
+            longPixels.Device.SetEquals(shortPixels.Device));
+
+        var late = Prepare(longPlan, longShape);
+        shortStage = Prepare(shortPlan, Shape);
+        var update = new GMapRoute(new[] { new PointLatLng(11, 2), new PointLatLng(11.01, 2) }, "设备更新样本");
+        device.Routes.Add(update);
+        Check("长换短后两边与独立两点基线逐像素相同，迟到的五点结果不能恢复旧尾",
+            pair.TryCommit(plan, revision, shortStage, shortPlan, frame) &&
+            !pair.TryCommit(plan, revision, late, longPlan, frame) && Capture().Matches(shortPixels));
+        Check("预览提交期间更新的模拟设备图层和路线仍在",
+            ReferenceEquals(flight.Overlays.Single(), device) && device.Routes.Contains(update));
+        for (int i = 0; i < 8; i++)
+        {
+            bool expand = i % 2 == 0;
+            var snapshot = expand ? longPlan : shortPlan;
+            var stage = Prepare(snapshot, expand ? longShape : Shape);
+            Check("第 " + (i + 1) + " 次长短替换在两边都匹配对应像素基线",
+                pair.TryCommit(plan, revision, stage, snapshot, frame) &&
+                Capture().Matches(expand ? longPixels : shortPixels));
+        }
+
+        late = Prepare(longPlan, longShape);
+        Check("清空同时撤下两边的路线并拒绝已暂存的旧提交",
+            pair.TryStage(plan, revision, Snapshot(empty: true), frame, null, out _) ==
+                PairedPlanPreview.Result.Cleared && !pair.TryCommit(plan, revision, late, longPlan, frame));
+        var cleared = Capture();
+        Check("空计划在两边的本地路线像素均为零，设备线像素完整",
+            cleared.Map.Count == 0 && cleared.Scene.Count == 0 && cleared.Device.SetEquals(shortPixels.Device));
+        Check("清空后迟到的旧投影和准备请求均不能重新占用本代",
+            !pair.RecordPlanProjection(plan, revision, longPlan, longPlan, layer) &&
+            pair.TryStage(plan, revision, longPlan, frame, Evidence(longPlan), out _) ==
+                PairedPlanPreview.Result.Retired && Capture().Matches(cleared));
+        revision = pair.BeginRevision(plan, PlanKind.Mission);
+        longStage = Prepare(longPlan, longShape);
+        Check("清空后新一代可重新载入相同的五点路线",
+            pair.TryCommit(plan, revision, longStage, longPlan, frame) && Capture().Matches(longPixels));
     }
 
     static ReadOnlyPlanSnapshot Snapshot(double first = 20, bool empty = false, PointLatLng[] shape = null)
@@ -217,7 +318,8 @@ internal static class PairedPlanPreviewProbe
         { Location = new Point(x, 0), Size = new Size(310, 320), MapProvider = GMapProviders.EmptyProvider,
             RoutesEnabled = true, MinZoom = 1, MaxZoom = 20 };
 
-    static (int map, int local, int device) ReadPixels(PairedPlanPreview pair, GMapControl flight, WorldFrame frame, LineRenderer renderer)
+    static (int map, int local, int device) ReadPixels(PairedPlanPreview pair, GMapControl flight, WorldFrame frame, LineRenderer renderer,
+        PreviewPixels positions = null)
     {
         int map = 0, local = 0, device = 0;
         using (var frame2D = new Bitmap(flight.Width, flight.Height))
@@ -228,7 +330,11 @@ internal static class PairedPlanPreviewProbe
             for (int x = 0; x < frame2D.Width; x++)
             {
                 var c = frame2D.GetPixel(x, y);
-                if (c.B > c.R + 25 && c.R > c.G + 25) map++;
+                if (c.B > c.R + 25 && c.R > c.G + 25)
+                {
+                    map++;
+                    positions?.Map.Add(y * frame2D.Width + x);
+                }
             }
         }
         var projection = Matrix4.CreateOrthographicOffCenter(-450, 450, -380, 460, -250, 250);
@@ -244,8 +350,16 @@ internal static class PairedPlanPreviewProbe
         GL.ReadPixels(0, 0, 320, 320, PixelFormat.Rgba, PixelType.UnsignedByte, rgba);
         for (int i = 0; i < rgba.Length; i += 4)
         {
-            if (rgba[i + 2] > 170 && rgba[i] > 100 && rgba[i] < 170 && rgba[i + 1] < 90) local++;
-            if (rgba[i] > 220 && rgba[i + 1] > 220 && rgba[i + 2] < 25) device++;
+            if (rgba[i + 2] > 170 && rgba[i] > 100 && rgba[i] < 170 && rgba[i + 1] < 90)
+            {
+                local++;
+                positions?.Scene.Add(i / 4);
+            }
+            if (rgba[i] > 220 && rgba[i + 1] > 220 && rgba[i + 2] < 25)
+            {
+                device++;
+                positions?.Device.Add(i / 4);
+            }
         }
         return (map, local, device);
     }

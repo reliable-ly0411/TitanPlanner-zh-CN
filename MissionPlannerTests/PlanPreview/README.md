@@ -214,3 +214,15 @@ Isolated WinForms/Xvfb probe: **20/20**, covering disabled default, explicit fix
 A single integration probe composes the existing phase-8 dispatcher, phase-12 fixture resolver and phase-14 host without altering their implementations. Two distinct actual WinForms panes display fixture-only harmless paint marks, and share no publish callback inside Paint. Under Xvfb **16/16** assertions passed: opening stays disabled until explicit fixture-only enablement; rapidly revising the same PLAN owner prevents its earlier first-frame ticket from publishing; the later frame queues instead of publishing inline; both independently painted panes draw only the latest immutable pair bearing the non-navigation label; hiding or closing before the queued callback suppresses both. This tests control painting and queue timing, not a production GL swap, actual route rendering, nor simultaneous physical frames. Phase 8's isolated GL test remains the render-side evidence; no GL or legacy dynamic services here.
 
 Stop repeating fixtures once this boundary is covered. Remaining work is introducing independent app-owned rendering hosts and a real, locally admitted PLAN and elevation-source chain under the established three-reference and paired-release acceptance. No production shortcuts, registration or data access were added.
+
+## 清空后不再接收旧计划的投影
+
+在 `8fa7b267` 的成对预览中，Home-only 会撤下两个图层，但原先的计划版本仍可接收投影。如果清空前的五点路线稍后再完成投影，它能重新准备并提交。现在清空会一起撤销旧版本和已缓存的投影。重新载入相同路线时，从新的普通计划版本开始。
+
+沿用第七阶段的 `PairedPlanPreviewProbe` 和编译依赖。新增 19 个断言，先取两点基线，再加三个位置彼此分开的尾点。五点换回两点时，在地图与 OpenGL 场景分别比较整份本地路线的像素位置，再交替替换八次。清空期间重发旧投影与旧提交，同时核对模拟设备路线和像素。可从同一入口复验断开、场景重定位及缺少计划 Home 基准。
+
+本次云端局部结果如下。
+
+- 无窗口对照保留候选的计划版本、投影和成对提交代码，用替身代替窗口和地图集合。旧版在清空后仍接受旧投影，修正后该投影和提交均被拒绝，16 项生命周期断言通过。
+- `OfflineDatumPairProbe` 的 23 项纯 CPU 断言通过。绝对高、相对计划 Home 和相对地形高的输入仍使用合成凭据。
+- 完整成对夹具已按 .NET Framework 4.7.2 引用程序集局部编译。本次环境不允许创建 Xvfb 所需的 Unix socket，新增的 19 个像素与状态断言尚待运行。原有 28 项记录对应此前版本。Windows 的两个实际视图、真实离线高程来源及垂直基准仍待共同验收，Ctrl+M 继续沿用现行入口。
