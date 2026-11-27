@@ -14,8 +14,14 @@ SIDEBAR_GEOMETRY_KEYS = {'OSD_SB_H_OFS', 'OSD_SB_V_EXT'}
 IMU_DIAGNOSTIC_HELP_KEYS = {'INS_LOG_BAT_CNT', 'INS_LOG_BAT_LGIN', 'INS_LOG_BAT_LGCT'}
 OSD_SCREEN_FONT_KEYS = [f'OSD{screen}_FONT' for screen in range(1, 5)]
 OSD_FONT_KEYS = {'OSD_FONT', *OSD_SCREEN_FONT_KEYS}
-DISPLAY_AND_LOG_HELP_KEYS = (SIDEBAR_GEOMETRY_KEYS | IMU_DIAGNOSTIC_HELP_KEYS | OSD_MESSAGE_TIME_HELP_KEYS
-                         | LOG_STORAGE_HELP_KEYS | OSD_FONT_KEYS | ONBOARD_DISPLAY_HELP_KEYS)
+LOGGER_BACKEND_HELP_KEYS = {
+    'LOG_BACKEND_TYPE', 'LOG_FILE_DSRMROT', 'LOG_MAV_BUFSIZE', 'LOG_FILE_TIMEOUT',
+    'LOG_FILE_RATEMAX', 'LOG_MAV_RATEMAX', 'LOG_BLK_RATEMAX', 'LOG_DARM_RATEMAX',
+}
+DISPLAY_AND_LOG_HELP_KEYS = (
+    SIDEBAR_GEOMETRY_KEYS | IMU_DIAGNOSTIC_HELP_KEYS | OSD_MESSAGE_TIME_HELP_KEYS
+    | LOG_STORAGE_HELP_KEYS | OSD_FONT_KEYS | ONBOARD_DISPLAY_HELP_KEYS | LOGGER_BACKEND_HELP_KEYS
+)
 catalog_module = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(catalog_module)
 
@@ -44,8 +50,8 @@ class ParameterCatalogTests(unittest.TestCase):
     def test_scope_counts_and_held_versions(self):
         notes = self.catalog['translations']
         descriptions = {(n['family'], v, n['parameter']) for n in notes if n['field'] == 'Description' for v in n['versions']}
-        self.assertEqual(617, len(descriptions))
-        self.assertEqual(284, len({(f, p) for f, v, p in descriptions}))
+        self.assertEqual(673, len(descriptions))
+        self.assertEqual(308, len({(f, p) for f, v, p in descriptions}))
         self.assertFalse(any(v == '4.7.2' for f, v, p in descriptions))
         excluded_copter = {'RTL_CONE_SLOPE', 'LAND_SPEED', 'LAND_SPD_MS', 'LOG_FILE_BUFSIZE', 'FS_GCS_ENABLE'}
         excluded_plane = {'TECS_CLMB_MAX', 'TECS_SINK_MIN', 'ROLL_LIMIT_DEG'}
@@ -200,6 +206,33 @@ class ParameterCatalogTests(unittest.TestCase):
                 self.assertEqual(('Description',r.get('documentation'),catalog_module.record_fingerprint(r)),
                                  (entries[0]['field'],entries[0]['english'],entries[0]['recordSha256']))
         self.assertEqual(2, len(seen))
+
+    def test_logger_descriptions_preserve_bitmask_formats_and_zero_rate_meanings(self):
+        bits = [('0', 'File'), ('1', 'MAVLink'), ('2', 'Block')]
+        for release in self.bundle:
+            family, version = release.get('family'), release.get('version')
+            with self.subTest(family=family, version=version):
+                notes = [n for n in self.catalog['translations'] if n['family'] == family
+                         and version in n['versions'] and n['parameter'] in LOGGER_BACKEND_HELP_KEYS]
+                self.assertCountEqual(LOGGER_BACKEND_HELP_KEYS, [n['parameter'] for n in notes])
+                self.assertTrue(all(n['field'] == 'Description' for n in notes))
+                chinese = {n['parameter']: n['chinese'] for n in notes}
+
+                group = release.find("paramfile/libraries/parameters[@name='LOG']")
+                rows = {p.get('name'): p for p in group.findall('param')}
+                backend = rows['LOG_BACKEND_TYPE']
+                self.assertEqual('0:File,1:MAVLink,2:Block', backend.findtext("field[@name='Bitmask']"))
+                self.assertEqual([] if version == '4.5.7' else bits,
+                                 [(bit.get('code'), bit.text) for bit in backend.findall('bitmask/bit')])
+                self.assertEqual([('0', 'Disabled'), ('1', 'Enabled')],
+                                 [(v.get('code'), v.text) for v in rows['LOG_FILE_DSRMROT'].findall('values/value')])
+                self.assertIn('LOG_DISARMED', chinese['LOG_FILE_DSRMROT'])
+                self.assertEqual('kB', rows['LOG_MAV_BUFSIZE'].findtext("field[@name='Units']"))
+                self.assertEqual('s', rows['LOG_FILE_TIMEOUT'].findtext("field[@name='Units']"))
+                for key in sorted(k for k in LOGGER_BACKEND_HELP_KEYS if k.endswith('_RATEMAX')):
+                    self.assertEqual(('Hz', '0 1000', '0.1'), tuple(
+                        rows[key].findtext(f"field[@name='{name}']") for name in ('Units', 'Range', 'Increment')))
+                    self.assertIn('沿用' if key == 'LOG_DARM_RATEMAX' else '关闭此项限速', chinese[key])
 
     def test_onboard_display_help_preserves_four_choices_and_documented_default(self):
         for release in self.bundle:

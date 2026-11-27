@@ -5326,6 +5326,348 @@
       "recordSha256": "62d9546df633efbec1eba0abb94e4d622057f509d3984a2582d87aeaa97e1938",
       "english": "Sets the font index for this screen (MSP DisplayPort only)",
       "chinese": "设置 OSD 第 4 屏的字体编号，仅适用于 MSP DisplayPort。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "LOG_BACKEND_TYPE",
+      "field": "Description",
+      "versions": [
+        "4.5.7"
+      ],
+      "englishSha256": "6c3ee3405c5b1b6e3fd34b0438b8a864a8df0109fd8c1de0db0e081083e50ed0",
+      "recordSha256": "ef94558023286f9ac6eb483a2afdd4e406afc98bd66adc85c271f2e134c512db",
+      "english": "Bitmap of what Logger backend types to enable. Block-based logging is available on SITL and boards with dataflash chips. Multiple backends can be selected.",
+      "chinese": "用位掩码选择要启用的日志后端，可同时选择多个。SITL（软件在环仿真）和带有 DataFlash 芯片的飞控板支持块存储日志后端。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "LOG_FILE_DSRMROT",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "c7a5af24d1ef0561e124a714fe4fbd21cb2a77a9655b765a478483aa29955dff",
+      "recordSha256": "81c296dc63cb2561212561f205097d80a588332be8150f1b52a82dc17194db6c",
+      "english": "When set, the current log file is closed when the vehicle is disarmed.  If LOG_DISARMED is set then a fresh log will be opened. Applies to the File and Block logging backends.",
+      "chinese": "启用后，飞行器从解锁转为上锁时会关闭当前日志文件。若已启用 LOG_DISARMED，则另开一份日志。适用于文件和块存储日志后端。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "LOG_MAV_BUFSIZE",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "c516c2567e7b8eaca3409f78772780d847ab91b4804dd426e0b1d1b3846494d5",
+      "recordSha256": "3493e4ff3458542ee54e003e20eef455ba0e43999fd8cae302b194eab76ba4a8",
+      "english": "Maximum amount of memory to allocate to AP_Logger-over-mavlink",
+      "chinese": "MAVLink 日志后端可分配给缓冲区的最大内存。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "LOG_FILE_TIMEOUT",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "55c33051b5d4f9e9757bd51949ab4d2ae0dc7e8d1c865e5b85ba905bee9cf9a9",
+      "recordSha256": "d4985805dd930ee411cd17c5ea829e3e8777ef43edc64ecf47526b48c28646bd",
+      "english": "This controls the amount of time before failing writes to a log file cause the file to be closed and logging stopped.",
+      "chinese": "日志文件持续写入失败时允许等待的时间，单位为秒。超过此时间，文件后端会关闭当前文件并停止记录。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "LOG_FILE_RATEMAX",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "2d2354ce13ec9159ffbd1baa88734c3cce0894a1506966c4ee048c6f886bbb87",
+      "recordSha256": "c0addcb9630b5a2ddda679df0625360eef5fe4fac1c9b96cbd97c322fb5d2d05",
+      "english": "This sets the maximum rate that streaming log messages will be logged to the file backend. A value of zero means that rate limiting is disabled.",
+      "chinese": "流式日志消息写入文件后端的最高频率。设为 0 时，关闭此项限速。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "LOG_MAV_RATEMAX",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "ba09aefd684ad71f4cdf1c76ed5fd12ea9e98af815363b00308856149c8e394a",
+      "recordSha256": "a3b8ff056baa1eb8420a59ca6424a919116a8b1a0706d63bff3c820319f9c2dd",
+      "english": "This sets the maximum rate that streaming log messages will be logged to the mavlink backend. A value of zero means that rate limiting is disabled.",
+      "chinese": "通过 MAVLink 日志后端记录流式日志消息的最高频率。设为 0 时，关闭此项限速。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "LOG_BLK_RATEMAX",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "eaab717ef56a427be8887b9c8a60a5ca7f622b6c6dafbc290954f65d87e03acc",
+      "recordSha256": "19cfe966d9940534e105847279e7375edcf1dc54b8536571dbb6bddba722e31c",
+      "english": "This sets the maximum rate that streaming log messages will be logged to the block backend. A value of zero means that rate limiting is disabled.",
+      "chinese": "流式日志消息写入块存储后端的最高频率。设为 0 时，关闭此项限速。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "LOG_DARM_RATEMAX",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "a8805c094c340b70572ad0b59844739748b56ee376dcfc99a669ba7ea896e61d",
+      "recordSha256": "e42c7e8ed72ea4bd72754cfdbdafdfc6ccd56716acbf5fe87640b287a6299996",
+      "english": "This sets the maximum rate that streaming log messages will be logged to any backend when disarmed. A value of zero means that the normal backend rate limit is applied.",
+      "chinese": "飞行器处于上锁状态时，各日志后端记录流式日志消息的最高频率。设为 0 时，沿用各后端通常的限速设置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "LOG_BACKEND_TYPE",
+      "field": "Description",
+      "versions": [
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "6c3ee3405c5b1b6e3fd34b0438b8a864a8df0109fd8c1de0db0e081083e50ed0",
+      "recordSha256": "5c7b458c3f172dfdf78ecc1e0613001c1c7d62bc5fb96a58b5487a111bf20e11",
+      "english": "Bitmap of what Logger backend types to enable. Block-based logging is available on SITL and boards with dataflash chips. Multiple backends can be selected.",
+      "chinese": "用位掩码选择要启用的日志后端，可同时选择多个。SITL（软件在环仿真）和带有 DataFlash 芯片的飞控板支持块存储日志后端。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "LOG_BACKEND_TYPE",
+      "field": "Description",
+      "versions": [
+        "4.5.7"
+      ],
+      "englishSha256": "6c3ee3405c5b1b6e3fd34b0438b8a864a8df0109fd8c1de0db0e081083e50ed0",
+      "recordSha256": "ef94558023286f9ac6eb483a2afdd4e406afc98bd66adc85c271f2e134c512db",
+      "english": "Bitmap of what Logger backend types to enable. Block-based logging is available on SITL and boards with dataflash chips. Multiple backends can be selected.",
+      "chinese": "用位掩码选择要启用的日志后端，可同时选择多个。SITL（软件在环仿真）和带有 DataFlash 芯片的飞控板支持块存储日志后端。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "LOG_FILE_DSRMROT",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "c7a5af24d1ef0561e124a714fe4fbd21cb2a77a9655b765a478483aa29955dff",
+      "recordSha256": "81c296dc63cb2561212561f205097d80a588332be8150f1b52a82dc17194db6c",
+      "english": "When set, the current log file is closed when the vehicle is disarmed.  If LOG_DISARMED is set then a fresh log will be opened. Applies to the File and Block logging backends.",
+      "chinese": "启用后，飞行器从解锁转为上锁时会关闭当前日志文件。若已启用 LOG_DISARMED，则另开一份日志。适用于文件和块存储日志后端。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "LOG_MAV_BUFSIZE",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "c516c2567e7b8eaca3409f78772780d847ab91b4804dd426e0b1d1b3846494d5",
+      "recordSha256": "3493e4ff3458542ee54e003e20eef455ba0e43999fd8cae302b194eab76ba4a8",
+      "english": "Maximum amount of memory to allocate to AP_Logger-over-mavlink",
+      "chinese": "MAVLink 日志后端可分配给缓冲区的最大内存。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "LOG_FILE_TIMEOUT",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "55c33051b5d4f9e9757bd51949ab4d2ae0dc7e8d1c865e5b85ba905bee9cf9a9",
+      "recordSha256": "d4985805dd930ee411cd17c5ea829e3e8777ef43edc64ecf47526b48c28646bd",
+      "english": "This controls the amount of time before failing writes to a log file cause the file to be closed and logging stopped.",
+      "chinese": "日志文件持续写入失败时允许等待的时间，单位为秒。超过此时间，文件后端会关闭当前文件并停止记录。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "LOG_FILE_RATEMAX",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "2d2354ce13ec9159ffbd1baa88734c3cce0894a1506966c4ee048c6f886bbb87",
+      "recordSha256": "c0addcb9630b5a2ddda679df0625360eef5fe4fac1c9b96cbd97c322fb5d2d05",
+      "english": "This sets the maximum rate that streaming log messages will be logged to the file backend. A value of zero means that rate limiting is disabled.",
+      "chinese": "流式日志消息写入文件后端的最高频率。设为 0 时，关闭此项限速。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "LOG_MAV_RATEMAX",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "ba09aefd684ad71f4cdf1c76ed5fd12ea9e98af815363b00308856149c8e394a",
+      "recordSha256": "a3b8ff056baa1eb8420a59ca6424a919116a8b1a0706d63bff3c820319f9c2dd",
+      "english": "This sets the maximum rate that streaming log messages will be logged to the mavlink backend. A value of zero means that rate limiting is disabled.",
+      "chinese": "通过 MAVLink 日志后端记录流式日志消息的最高频率。设为 0 时，关闭此项限速。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "LOG_BLK_RATEMAX",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "eaab717ef56a427be8887b9c8a60a5ca7f622b6c6dafbc290954f65d87e03acc",
+      "recordSha256": "19cfe966d9940534e105847279e7375edcf1dc54b8536571dbb6bddba722e31c",
+      "english": "This sets the maximum rate that streaming log messages will be logged to the block backend. A value of zero means that rate limiting is disabled.",
+      "chinese": "流式日志消息写入块存储后端的最高频率。设为 0 时，关闭此项限速。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "LOG_DARM_RATEMAX",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "a8805c094c340b70572ad0b59844739748b56ee376dcfc99a669ba7ea896e61d",
+      "recordSha256": "e42c7e8ed72ea4bd72754cfdbdafdfc6ccd56716acbf5fe87640b287a6299996",
+      "english": "This sets the maximum rate that streaming log messages will be logged to any backend when disarmed. A value of zero means that the normal backend rate limit is applied.",
+      "chinese": "飞行器处于上锁状态时，各日志后端记录流式日志消息的最高频率。设为 0 时，沿用各后端通常的限速设置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "LOG_BACKEND_TYPE",
+      "field": "Description",
+      "versions": [
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "6c3ee3405c5b1b6e3fd34b0438b8a864a8df0109fd8c1de0db0e081083e50ed0",
+      "recordSha256": "5c7b458c3f172dfdf78ecc1e0613001c1c7d62bc5fb96a58b5487a111bf20e11",
+      "english": "Bitmap of what Logger backend types to enable. Block-based logging is available on SITL and boards with dataflash chips. Multiple backends can be selected.",
+      "chinese": "用位掩码选择要启用的日志后端，可同时选择多个。SITL（软件在环仿真）和带有 DataFlash 芯片的飞控板支持块存储日志后端。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "LOG_BACKEND_TYPE",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "6c3ee3405c5b1b6e3fd34b0438b8a864a8df0109fd8c1de0db0e081083e50ed0",
+      "recordSha256": "5c7b458c3f172dfdf78ecc1e0613001c1c7d62bc5fb96a58b5487a111bf20e11",
+      "english": "Bitmap of what Logger backend types to enable. Block-based logging is available on SITL and boards with dataflash chips. Multiple backends can be selected.",
+      "chinese": "用位掩码选择要启用的日志后端，可同时选择多个。SITL（软件在环仿真）和带有 DataFlash 芯片的飞控板支持块存储日志后端。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "LOG_FILE_DSRMROT",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "c7a5af24d1ef0561e124a714fe4fbd21cb2a77a9655b765a478483aa29955dff",
+      "recordSha256": "81c296dc63cb2561212561f205097d80a588332be8150f1b52a82dc17194db6c",
+      "english": "When set, the current log file is closed when the vehicle is disarmed.  If LOG_DISARMED is set then a fresh log will be opened. Applies to the File and Block logging backends.",
+      "chinese": "启用后，飞行器从解锁转为上锁时会关闭当前日志文件。若已启用 LOG_DISARMED，则另开一份日志。适用于文件和块存储日志后端。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "LOG_MAV_BUFSIZE",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "c516c2567e7b8eaca3409f78772780d847ab91b4804dd426e0b1d1b3846494d5",
+      "recordSha256": "3493e4ff3458542ee54e003e20eef455ba0e43999fd8cae302b194eab76ba4a8",
+      "english": "Maximum amount of memory to allocate to AP_Logger-over-mavlink",
+      "chinese": "MAVLink 日志后端可分配给缓冲区的最大内存。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "LOG_FILE_TIMEOUT",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "55c33051b5d4f9e9757bd51949ab4d2ae0dc7e8d1c865e5b85ba905bee9cf9a9",
+      "recordSha256": "d4985805dd930ee411cd17c5ea829e3e8777ef43edc64ecf47526b48c28646bd",
+      "english": "This controls the amount of time before failing writes to a log file cause the file to be closed and logging stopped.",
+      "chinese": "日志文件持续写入失败时允许等待的时间，单位为秒。超过此时间，文件后端会关闭当前文件并停止记录。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "LOG_FILE_RATEMAX",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "2d2354ce13ec9159ffbd1baa88734c3cce0894a1506966c4ee048c6f886bbb87",
+      "recordSha256": "c0addcb9630b5a2ddda679df0625360eef5fe4fac1c9b96cbd97c322fb5d2d05",
+      "english": "This sets the maximum rate that streaming log messages will be logged to the file backend. A value of zero means that rate limiting is disabled.",
+      "chinese": "流式日志消息写入文件后端的最高频率。设为 0 时，关闭此项限速。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "LOG_MAV_RATEMAX",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "ba09aefd684ad71f4cdf1c76ed5fd12ea9e98af815363b00308856149c8e394a",
+      "recordSha256": "a3b8ff056baa1eb8420a59ca6424a919116a8b1a0706d63bff3c820319f9c2dd",
+      "english": "This sets the maximum rate that streaming log messages will be logged to the mavlink backend. A value of zero means that rate limiting is disabled.",
+      "chinese": "通过 MAVLink 日志后端记录流式日志消息的最高频率。设为 0 时，关闭此项限速。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "LOG_BLK_RATEMAX",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "eaab717ef56a427be8887b9c8a60a5ca7f622b6c6dafbc290954f65d87e03acc",
+      "recordSha256": "19cfe966d9940534e105847279e7375edcf1dc54b8536571dbb6bddba722e31c",
+      "english": "This sets the maximum rate that streaming log messages will be logged to the block backend. A value of zero means that rate limiting is disabled.",
+      "chinese": "流式日志消息写入块存储后端的最高频率。设为 0 时，关闭此项限速。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "LOG_DARM_RATEMAX",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "a8805c094c340b70572ad0b59844739748b56ee376dcfc99a669ba7ea896e61d",
+      "recordSha256": "e42c7e8ed72ea4bd72754cfdbdafdfc6ccd56716acbf5fe87640b287a6299996",
+      "english": "This sets the maximum rate that streaming log messages will be logged to any backend when disarmed. A value of zero means that the normal backend rate limit is applied.",
+      "chinese": "飞行器处于上锁状态时，各日志后端记录流式日志消息的最高频率。设为 0 时，沿用各后端通常的限速设置。"
     }
   ]
 }
