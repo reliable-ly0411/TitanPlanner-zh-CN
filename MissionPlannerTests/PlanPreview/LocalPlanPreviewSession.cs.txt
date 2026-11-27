@@ -105,6 +105,7 @@ namespace Plan29PreviewProbe
             a.DisplayCulture == b.DisplayCulture && a.Home.Frame == b.Home.Frame &&
             a.Home.Latitude == b.Home.Latitude && a.Home.Longitude == b.Home.Longitude &&
             a.Home.AltitudeMetres == b.Home.AltitudeMetres &&
+            a.Home.DisplayUnitsPerMetre == b.Home.DisplayUnitsPerMetre &&
             a.Rows.Count == b.Rows.Count && a.Rows.Zip(b.Rows, (x, y) =>
                 x.Sequence == y.Sequence && x.CommandKey == y.CommandKey && x.CommandId == y.CommandId &&
                 x.Frame == y.Frame && x.DisplayValues.SequenceEqual(y.DisplayValues) &&

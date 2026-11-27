@@ -84,3 +84,26 @@ LocalPlanPreviewSession.cs.txt 及 LocalPlanPreviewSessionProbe.cs.txt 验证独
 LocalPlanElevationProbe.cs.txt 的入口单独编译，附 ReadOnlyPlanSnapshot.cs.txt、LocalPlan3DProjection.cs.txt、LocalPlanElevationEvidence.cs.txt、LocalPlan3DLineAdapter.cs.txt，去掉 .txt 后与项目真源 WorldFrame.cs、UtmProjection.cs、GLResources.cs、GLProgram.cs、Renderers.cs、Shaders.cs 编译。沿用上一节依赖，另加同包的 OpenTK.dll 和 OpenTK.GLControl.dll。夹具显式禁止真实地形/影像调用。默认只跑 18 项凭据/批次检查；隔离软件 GL 会话加 --gl-smoke，多跑两项实际像素读回。Acer 使用 Xvfb 软件 Mesa llvmpipe，验证同一帧中本地紫色及独立模拟设备黄色都可见，清除本地后黄色像素保持、紫色消失。17 项上一阶段投影回归也单独运行。
 
 下一步仍须在真实 PLAN 的输入/读取入口记录可验证的 Home 来源及单位，确定离线地形版本与垂直基准，再审实际 Map3D 更新/销毁生命周期以及 2D+3D 接线是否只有一条本地数据流。必须跑真实离线入口，覆盖高程缺失的醒目提示、单点/复杂指令限制，确认不会向设备路线、缓存、动作和 3D 指示器传入本地值。此阶段凭据仅是合成验证，结构化记录本身不是外部数据真实性证明；未更新生产快捷键或发布。
+
+## 第六阶段：实际 PLAN 来源考证与显式 Home 基准确认
+
+**没有现有事件能单独出具可信的 Home AMSL 凭据。** 以下是具体入口，而不是笼统说“文件不支持”：
+
+| 当前入口 | 可用事实 / 不能推断的事项 |
+|---|---|
+| FlightPlanner.TXT_homealt_TextChanged / TXT_homelat_TextChanged / TXT_homelng_TextChanged | 来源可为自写、选点、文件或车辆状态，事件只观测值，不声明 datum；现有处理还有规划 Home / writeKML 副作用。新层借用事件做本地凭据失效，不能调用旧处理来提取证明。 |
+| FlightPlanner.readQGC110wpfile → WaypointFile.ReadWaypointFile → processToScreen | [MAVLink WPL](https://mavlink.io/en/file_formats/index.html) 记录有每行 frame，但当前读入器可补没有 index 0 的空 Home，审批式 Reset Home 也可能被取消。当前保存器给 Home 强制 frame 0，无论文字从何而来，甚至写过全零占位。因此仅凭旧文件首行或扩展名不能证明真值。可信外部文件若明确给出独立 Home AMSL，后续应在同一次确证载入、用户已采用该 Home 的分支取得来源及单位，不能在通用 processToScreen 入口重新认可。 |
+| JSON 分支 MissionFile.ReadFile / ConvertToLocationwps / processToScreen | plannedHomePosition 只给经纬高数组，自己的 MissionFile.ConvertFromLocationwpsCore 不给它附 datum，读入还转成 float。名称、groundStation 标记和外部文件模式都不是测量来源认证；Home 可能被保留。 |
+| setHomeHereToolStripMenuItem_Click，updateHomeText，label4_LinkClicked | 分别可能来自地形、车辆缓存、车辆当前位置。旧数据基准或显示单位混用，且新本地层不能借设备值。现有地形读取也不可代替独立、可查版本且基准已核验的地形凭据。 |
+
+### 已证实的明确边界
+
+PlanHomeDatumSession 原型使用独立的显式确认事件。当前冻结计划展示实际 Home 坐标、单位和数值；必须另行选择与场景兼容的 AMSL、填可核查的来源说明，确认的坐标和经同一显示比例归一化的值须等于捕获快照。允许明确声明的零，不从空值、加载提示或 frame 推断。试验对照现行英尺系数及米制 1，拒绝未知或不匹配的比例。普通文本事件无权生成，编辑（即使后来打回同值）、单位改变、任务范围/来源更换都要失效；同数据的新对象、旧票据、异主和后台线程均不得附用。该认可是本地操作者声明，不能被当作测量、定位或文件作者真实性的认证。
+
+PlanHomeDatumSessionProbe.cs.txt 与 PlanHomeDatumSession.cs.txt、ReadOnlyPlanSnapshot.cs.txt、LocalPlanElevationEvidence.cs.txt、LocalPlan3DProjection.cs.txt 去除 .txt 后编译，加实际 WorldFrame.cs 和 UtmProjection.cs，引用上一节相同基础 WinForms/Utilities/地图库依赖，不需 OpenGL。隔离 WinForms 看真实 TextChanged、Button.Click 和数据表，通过 21 项，额外从显式事件送入真实投影代码并检查相对 Home 高度；失效后证明同样点不再得到任何 3D 几何。旧读表 25、图层寿命 19、凭据和软件 OpenGL 20 项均重新通过。没有加入任何产品确认按钮，也没有启动正式程序。
+
+### 最小生产接线位置（仍未接）
+
+在 Map3D.EnsureRenderers 附近给本地批次一个独立、受当前 Map3D 实例拥有的适配器。RenderScene 第二遍复用同一视矩阵和 WorldFrame，在正式 MissionOverlay.DrawPlanLine 后、设备 NavigationTarget 及其指示器之前走独立分支，只吃经过同一 PLAN 所有者、世代及数据源守卫的只读批次。另用既有屏幕覆盖层形式输出常驻“本地规划 · 只读”说明；不要借设备的 marker、目标或动作列表，不把标签由缓存存在与否反向推断。WorldFrame 原点变动时从同一当前证据重投影。Suspend/Deactivate 期间不画且清除旧渲染批次和标签；重新显示时只接受仍当前的同一个 PLAN 上下文。DisposeRenderers 里先撤自己的批次，不接管共享 LineRenderer 或现有 GL 状态的所有权；销毁或切换会话同时撤 2D 及 3D。异步转发只能携带当前票据，晚到时丢弃。
+
+应先在真实离线 PLAN↔FLY 验证源身份及选择确认，不假定新按钮或导入规则已批准。Ctrl+M 必须安排 2D+3D 一起切换；无合法高度数据就明确提示 3D 不能绘制，绝不能读 live wps、Home、当前目标来补。原型未将任何结果或记录写回用户规划、设备、参数或实际运行环境。

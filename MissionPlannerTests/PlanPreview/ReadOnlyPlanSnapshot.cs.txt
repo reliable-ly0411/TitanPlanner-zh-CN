@@ -62,15 +62,17 @@ namespace Plan29PreviewProbe
 
     public sealed class PlanHome
     {
-        internal PlanHome(byte frame, double latitude, double longitude, double altitudeMetres)
+        internal PlanHome(byte frame, double latitude, double longitude, double altitudeMetres, double displayUnitsPerMetre = 1)
         {
             Frame = frame; Latitude = latitude; Longitude = longitude; AltitudeMetres = altitudeMetres;
+            DisplayUnitsPerMetre = displayUnitsPerMetre;
         }
         public int Sequence => 0;
         public byte Frame { get; }
         public double Latitude { get; }
         public double Longitude { get; }
         public double AltitudeMetres { get; }
+        public double DisplayUnitsPerMetre { get; }
     }
 
     public sealed class PlanRow
@@ -132,7 +134,7 @@ namespace Plan29PreviewProbe
             double alt = Parse(homeAltitude, culture) / homeDisplayUnitsPerMetre;
             if (Math.Abs(lat) > 90 || Math.Abs(lon) > 180 || !IsFinite(alt))
                 throw new FormatException("Invalid planned Home.");
-            var home = new PlanHome(homeFrame, lat, lon, alt);
+            var home = new PlanHome(homeFrame, lat, lon, alt, homeDisplayUnitsPerMetre);
 
             var rows = new List<PlanRow>();
             foreach (DataGridViewRow row in grid.Rows)

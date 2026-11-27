@@ -1,0 +1,147 @@
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Globalization;
+using System.Threading;
+using System.Windows.Forms;
+using Plan29PreviewProbe;
+using MissionPlanner.Controls.Scene3D;
+
+internal static class PlanHomeDatumSessionProbe
+{
+    private static int passed;
+    private static readonly CultureInfo Culture = CultureInfo.GetCultureInfo("de-DE");
+    const float FeetFactor = 3.2808399f;
+
+    [STAThread]
+    static void Main()
+    {
+        using (var host = new Form { ClientSize = new Size(620, 240) })
+        using (var grid = SetupGrid())
+        using (var plannerText = new TextBox { Top = 20, Width = 130, Text = "120" })
+        using (var explicitText = new TextBox { Top = 50, Width = 130 })
+        using (var explicitConfirm = new Button { Top = 80, Text = "Confirm local-only AMSL" })
+        {
+            host.Controls.AddRange(new Control[] { plannerText, explicitText, explicitConfirm, grid });
+            host.Show();
+            Application.DoEvents();
+            var owner = grid; var otherOwner = new object();
+            var reader = new ReadOnlyPlanReader(grid, new PlanCommandCatalog(
+                new Dictionary<string, ushort> { ["WAYPOINT"] = 16 }, new Dictionary<string,double[]>(),
+                new ushort[] { 5000, 5100 }));
+            var tracker = new PlanHomeDatumSession(owner);
+            ReadOnlyPlanSnapshot snapshot = Capture(reader, plannerText, 1);
+            PlanHomeDatumSession.Ticket ticket = tracker.BeginRevision(owner, PlanKind.Mission, snapshot, PlanAltitudeUnit.Metres);
+            var choice = PlanElevationDatum.Unverified;
+            var unit = PlanAltitudeUnit.Metres;
+            string note = "";
+            double shownLatitude = 10.12, shownLongitude = 2.1;
+            bool accepted = false;
+            plannerText.TextChanged += (_, __) => tracker.Invalidate(owner);
+            explicitConfirm.Click += (_, __) => accepted = tracker.TryConfirmAmsl(owner, ticket, snapshot,
+                choice, unit, explicitText.Text, shownLatitude, shownLongitude, note);
+
+            Check("displayed Home number does not mint proof", ticket != null && tracker.Proof(owner, ticket, snapshot) == null);
+            explicitText.Text = "120";
+            explicitConfirm.PerformClick();
+            Check("confirm without an explicit datum and source cannot mint proof", !accepted && tracker.Proof(owner,ticket,snapshot) == null);
+            choice = PlanElevationDatum.SceneCompatibleAmsl;
+            explicitConfirm.PerformClick();
+            Check("AMSL choice without source attribution cannot mint proof", !accepted);
+            note = "synthetic test datum";
+            unit = PlanAltitudeUnit.Feet;
+            explicitConfirm.PerformClick();
+            Check("entered unit must match the frozen plan's display unit", !accepted);
+            unit = PlanAltitudeUnit.Metres;
+            shownLatitude = 10.14;
+            explicitConfirm.PerformClick();
+            Check("confirmation must display the actual frozen Home point", !accepted);
+            shownLatitude = 10.12;
+            explicitText.Text = "119";
+            explicitConfirm.PerformClick();
+            Check("same point with a different height not accepted", !accepted);
+            explicitText.Text = "120,0";
+            explicitConfirm.PerformClick();
+            var proof = tracker.Proof(owner,ticket,snapshot);
+            Check("explicit local confirmation mints exact plan-owned receipt without changing planner text",
+                accepted && proof != null && proof.MetresAmsl == 120 && proof.Latitude == 10.12 && proof.Longitude == 2.1 &&
+                proof.SourceIdentity.Contains("synthetic test datum") && plannerText.Text == "120");
+            var frame = new WorldFrame();
+            frame.Update(10.12, 2.1);
+            Check("the real projection consumes the explicit local receipt and relative height",
+                LocalPlan3DProjectionBuilder.TryBuild(snapshot, frame,
+                    new LocalPlanElevationEvidence(snapshot, tracker.Proof(owner, ticket, snapshot), null), out var layer)
+                == Local3DResult.Ready && layer.Vertices[0].MetresAmsl == 135);
+            Check("foreign owner cannot read nor invalidate an active receipt",
+                tracker.Proof(otherOwner, ticket, snapshot) == null);
+            tracker.Invalidate(otherOwner);
+            Check("foreign owner invalidation leaves valid local proof alone",
+                ReferenceEquals(proof, tracker.Proof(owner, ticket, snapshot)));
+            Check("even equivalent numbers from another snapshot do not get receipt",
+                tracker.Proof(owner, ticket, Capture(reader, plannerText, 1)) == null);
+            var previous = ticket;
+            plannerText.Text = "121";
+            plannerText.Text = "120";
+            Check("TextChanged plus returning to old value invalidates proof",
+                tracker.Proof(owner, previous, snapshot) == null);
+            Check("proof invalidated by display change cannot feed any relative geometry",
+                LocalPlan3DProjectionBuilder.TryBuild(snapshot, frame,
+                    new LocalPlanElevationEvidence(snapshot, tracker.Proof(owner, previous, snapshot), null), out var staleLayer)
+                    == Local3DResult.MissingElevationEvidence && staleLayer == null);
+            ticket = tracker.BeginRevision(owner, PlanKind.Mission, snapshot, PlanAltitudeUnit.Metres);
+            Check("new revision cannot reuse previous ticket and starts unconfirmed",
+                tracker.Proof(owner, previous, snapshot) == null && tracker.Proof(owner,ticket,snapshot) == null);
+            explicitText.Text = "NaN"; explicitConfirm.PerformClick();
+            Check("nonfinite input fails closed", !accepted);
+            explicitText.Text = "1.20,0"; explicitConfirm.PerformClick();
+            Check("ambiguous grouping not accepted in explicit altitude", !accepted);
+
+            plannerText.Text = "330,5";
+            snapshot = Capture(reader, plannerText, FeetFactor);
+            ticket = tracker.BeginRevision(owner, PlanKind.Mission, snapshot, PlanAltitudeUnit.Feet);
+            unit = PlanAltitudeUnit.Feet; explicitText.Text = "330,5"; explicitConfirm.PerformClick();
+            Check("feet capture uses exact original configuration multiplier and culture once",
+                accepted && tracker.Proof(owner, ticket, snapshot).MetresAmsl == 330.5 / FeetFactor);
+            var stale = ticket;
+            Check("reject different or invalid scale, and previous feet receipt is revoked",
+                tracker.BeginRevision(owner, PlanKind.Mission, snapshot, PlanAltitudeUnit.Metres) == null &&
+                tracker.BeginRevision(owner, PlanKind.Mission, Capture(reader, plannerText, 2.0), PlanAltitudeUnit.Feet) == null &&
+                tracker.Proof(owner, stale, snapshot) == null);
+            Check("fence and rally, as well as unavailable scope, cannot mint evidence",
+                tracker.BeginRevision(owner, PlanKind.Fence, snapshot, PlanAltitudeUnit.Feet) == null &&
+                tracker.BeginRevision(owner, PlanKind.Rally, snapshot, PlanAltitudeUnit.Feet) == null &&
+                tracker.BeginRevision(owner, PlanKind.Unavailable, snapshot, PlanAltitudeUnit.Feet) == null);
+            plannerText.Text = "0";
+            snapshot = Capture(reader, plannerText, 1);
+            ticket = tracker.BeginRevision(owner, PlanKind.Mission, snapshot, PlanAltitudeUnit.Metres);
+            unit = PlanAltitudeUnit.Metres; explicitText.Text = "0"; explicitConfirm.PerformClick();
+            Check("explicitly attested zero is not silently fabricated by a missing receipt",
+                accepted && tracker.Proof(owner,ticket,snapshot).MetresAmsl == 0);
+            Exception failure = null;
+            var wrongThread = new Thread(() => { try { tracker.Invalidate(owner); } catch(Exception e) { failure = e; } });
+            wrongThread.Start(); wrongThread.Join();
+            Check("non-owner thread cannot change receipt", failure is InvalidOperationException &&
+                tracker.Proof(owner,ticket,snapshot) != null);
+        }
+        Console.WriteLine(passed + " checks passed");
+    }
+
+    static ReadOnlyPlanSnapshot Capture(ReadOnlyPlanReader reader, TextBox home, double scale) =>
+        reader.Capture(PlanKind.Mission, "10,12", "2,1", home.Text, scale, 3, Culture);
+
+    static DataGridView SetupGrid()
+    {
+        var grid = new DataGridView { AllowUserToAddRows = false, Top = 120, Width = 610, Height = 110 };
+        foreach (var key in new[] { "Command", "Param1", "Param2", "Param3", "Param4", "Lat", "Lon", "Alt", "Frame" })
+            grid.Columns.Add(key, key);
+        grid.Rows.Add("WAYPOINT", 0, 0, 0, 0, 10.123, 2.103, 15, 3);
+        return grid;
+    }
+
+    static void Check(string description, bool ok)
+    {
+        if (!ok) throw new Exception("Failed: " + description);
+        passed++;
+        Console.WriteLine("PASS " + description);
+    }
+}
