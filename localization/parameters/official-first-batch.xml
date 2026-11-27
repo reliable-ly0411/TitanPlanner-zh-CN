@@ -763,6 +763,30 @@
           <param humanName="BTEMP_Y" name="OSD1_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="COMPASS_X" name="OSD1_COMPASS_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="COMPASS_Y" name="OSD1_COMPASS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GPSLAT_X" name="OSD1_GPSLAT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GPSLAT_Y" name="OSD1_GPSLAT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GPSLONG_X" name="OSD1_GPSLONG_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GPSLONG_Y" name="OSD1_GPSLONG_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HEADING_X" name="OSD1_HEADING_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HEADING_Y" name="OSD1_HEADING_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -850,6 +874,30 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="BTEMP_Y" name="OSD2_BTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="COMPASS_X" name="OSD2_COMPASS_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="COMPASS_Y" name="OSD2_COMPASS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GPSLAT_X" name="OSD2_GPSLAT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GPSLAT_Y" name="OSD2_GPSLAT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GPSLONG_X" name="OSD2_GPSLONG_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GPSLONG_Y" name="OSD2_GPSLONG_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HEADING_X" name="OSD2_HEADING_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HEADING_Y" name="OSD2_HEADING_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -941,6 +989,30 @@
           <param humanName="BTEMP_Y" name="OSD3_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="COMPASS_X" name="OSD3_COMPASS_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="COMPASS_Y" name="OSD3_COMPASS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GPSLAT_X" name="OSD3_GPSLAT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GPSLAT_Y" name="OSD3_GPSLAT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GPSLONG_X" name="OSD3_GPSLONG_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GPSLONG_Y" name="OSD3_GPSLONG_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HEADING_X" name="OSD3_HEADING_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HEADING_Y" name="OSD3_HEADING_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -1028,6 +1100,30 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="BTEMP_Y" name="OSD4_BTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="COMPASS_X" name="OSD4_COMPASS_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="COMPASS_Y" name="OSD4_COMPASS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GPSLAT_X" name="OSD4_GPSLAT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GPSLAT_Y" name="OSD4_GPSLAT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GPSLONG_X" name="OSD4_GPSLONG_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GPSLONG_Y" name="OSD4_GPSLONG_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HEADING_X" name="OSD4_HEADING_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HEADING_Y" name="OSD4_HEADING_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -1883,6 +1979,30 @@
           <param humanName="BTEMP_Y" name="OSD1_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="COMPASS_X" name="OSD1_COMPASS_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="COMPASS_Y" name="OSD1_COMPASS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GPSLAT_X" name="OSD1_GPSLAT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GPSLAT_Y" name="OSD1_GPSLAT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GPSLONG_X" name="OSD1_GPSLONG_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GPSLONG_Y" name="OSD1_GPSLONG_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HEADING_X" name="OSD1_HEADING_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HEADING_Y" name="OSD1_HEADING_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -1970,6 +2090,30 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="BTEMP_Y" name="OSD2_BTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="COMPASS_X" name="OSD2_COMPASS_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="COMPASS_Y" name="OSD2_COMPASS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GPSLAT_X" name="OSD2_GPSLAT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GPSLAT_Y" name="OSD2_GPSLAT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GPSLONG_X" name="OSD2_GPSLONG_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GPSLONG_Y" name="OSD2_GPSLONG_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HEADING_X" name="OSD2_HEADING_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HEADING_Y" name="OSD2_HEADING_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -2061,6 +2205,30 @@
           <param humanName="BTEMP_Y" name="OSD3_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="COMPASS_X" name="OSD3_COMPASS_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="COMPASS_Y" name="OSD3_COMPASS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GPSLAT_X" name="OSD3_GPSLAT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GPSLAT_Y" name="OSD3_GPSLAT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GPSLONG_X" name="OSD3_GPSLONG_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GPSLONG_Y" name="OSD3_GPSLONG_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HEADING_X" name="OSD3_HEADING_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HEADING_Y" name="OSD3_HEADING_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -2148,6 +2316,30 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="BTEMP_Y" name="OSD4_BTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="COMPASS_X" name="OSD4_COMPASS_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="COMPASS_Y" name="OSD4_COMPASS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GPSLAT_X" name="OSD4_GPSLAT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GPSLAT_Y" name="OSD4_GPSLAT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GPSLONG_X" name="OSD4_GPSLONG_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GPSLONG_Y" name="OSD4_GPSLONG_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HEADING_X" name="OSD4_HEADING_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HEADING_Y" name="OSD4_HEADING_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -3093,6 +3285,30 @@
           <param humanName="BTEMP_Y" name="OSD1_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="COMPASS_X" name="OSD1_COMPASS_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="COMPASS_Y" name="OSD1_COMPASS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GPSLAT_X" name="OSD1_GPSLAT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GPSLAT_Y" name="OSD1_GPSLAT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GPSLONG_X" name="OSD1_GPSLONG_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GPSLONG_Y" name="OSD1_GPSLONG_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HEADING_X" name="OSD1_HEADING_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HEADING_Y" name="OSD1_HEADING_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -3180,6 +3396,30 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="BTEMP_Y" name="OSD2_BTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="COMPASS_X" name="OSD2_COMPASS_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="COMPASS_Y" name="OSD2_COMPASS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GPSLAT_X" name="OSD2_GPSLAT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GPSLAT_Y" name="OSD2_GPSLAT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GPSLONG_X" name="OSD2_GPSLONG_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GPSLONG_Y" name="OSD2_GPSLONG_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HEADING_X" name="OSD2_HEADING_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HEADING_Y" name="OSD2_HEADING_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -3271,6 +3511,30 @@
           <param humanName="BTEMP_Y" name="OSD3_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="COMPASS_X" name="OSD3_COMPASS_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="COMPASS_Y" name="OSD3_COMPASS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GPSLAT_X" name="OSD3_GPSLAT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GPSLAT_Y" name="OSD3_GPSLAT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GPSLONG_X" name="OSD3_GPSLONG_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GPSLONG_Y" name="OSD3_GPSLONG_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HEADING_X" name="OSD3_HEADING_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HEADING_Y" name="OSD3_HEADING_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -3358,6 +3622,30 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="BTEMP_Y" name="OSD4_BTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="COMPASS_X" name="OSD4_COMPASS_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="COMPASS_Y" name="OSD4_COMPASS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GPSLAT_X" name="OSD4_GPSLAT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GPSLAT_Y" name="OSD4_GPSLAT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GPSLONG_X" name="OSD4_GPSLONG_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GPSLONG_Y" name="OSD4_GPSLONG_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HEADING_X" name="OSD4_HEADING_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HEADING_Y" name="OSD4_HEADING_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -4291,6 +4579,30 @@
           <param humanName="BTEMP_Y" name="OSD1_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="COMPASS_X" name="OSD1_COMPASS_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="COMPASS_Y" name="OSD1_COMPASS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GPSLAT_X" name="OSD1_GPSLAT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GPSLAT_Y" name="OSD1_GPSLAT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GPSLONG_X" name="OSD1_GPSLONG_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GPSLONG_Y" name="OSD1_GPSLONG_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HEADING_X" name="OSD1_HEADING_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HEADING_Y" name="OSD1_HEADING_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -4378,6 +4690,30 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="BTEMP_Y" name="OSD2_BTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="COMPASS_X" name="OSD2_COMPASS_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="COMPASS_Y" name="OSD2_COMPASS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GPSLAT_X" name="OSD2_GPSLAT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GPSLAT_Y" name="OSD2_GPSLAT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GPSLONG_X" name="OSD2_GPSLONG_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GPSLONG_Y" name="OSD2_GPSLONG_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HEADING_X" name="OSD2_HEADING_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HEADING_Y" name="OSD2_HEADING_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -4469,6 +4805,30 @@
           <param humanName="BTEMP_Y" name="OSD3_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="COMPASS_X" name="OSD3_COMPASS_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="COMPASS_Y" name="OSD3_COMPASS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GPSLAT_X" name="OSD3_GPSLAT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GPSLAT_Y" name="OSD3_GPSLAT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GPSLONG_X" name="OSD3_GPSLONG_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GPSLONG_Y" name="OSD3_GPSLONG_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HEADING_X" name="OSD3_HEADING_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HEADING_Y" name="OSD3_HEADING_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -4556,6 +4916,30 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="BTEMP_Y" name="OSD4_BTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="COMPASS_X" name="OSD4_COMPASS_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="COMPASS_Y" name="OSD4_COMPASS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GPSLAT_X" name="OSD4_GPSLAT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GPSLAT_Y" name="OSD4_GPSLAT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GPSLONG_X" name="OSD4_GPSLONG_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GPSLONG_Y" name="OSD4_GPSLONG_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HEADING_X" name="OSD4_HEADING_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HEADING_Y" name="OSD4_HEADING_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -5466,6 +5850,30 @@
           <param humanName="BTEMP_Y" name="OSD1_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="COMPASS_X" name="OSD1_COMPASS_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="COMPASS_Y" name="OSD1_COMPASS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GPSLAT_X" name="OSD1_GPSLAT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GPSLAT_Y" name="OSD1_GPSLAT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GPSLONG_X" name="OSD1_GPSLONG_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GPSLONG_Y" name="OSD1_GPSLONG_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HEADING_X" name="OSD1_HEADING_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HEADING_Y" name="OSD1_HEADING_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -5553,6 +5961,30 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="BTEMP_Y" name="OSD2_BTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="COMPASS_X" name="OSD2_COMPASS_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="COMPASS_Y" name="OSD2_COMPASS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GPSLAT_X" name="OSD2_GPSLAT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GPSLAT_Y" name="OSD2_GPSLAT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GPSLONG_X" name="OSD2_GPSLONG_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GPSLONG_Y" name="OSD2_GPSLONG_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HEADING_X" name="OSD2_HEADING_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HEADING_Y" name="OSD2_HEADING_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -5644,6 +6076,30 @@
           <param humanName="BTEMP_Y" name="OSD3_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="COMPASS_X" name="OSD3_COMPASS_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="COMPASS_Y" name="OSD3_COMPASS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GPSLAT_X" name="OSD3_GPSLAT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GPSLAT_Y" name="OSD3_GPSLAT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GPSLONG_X" name="OSD3_GPSLONG_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GPSLONG_Y" name="OSD3_GPSLONG_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HEADING_X" name="OSD3_HEADING_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HEADING_Y" name="OSD3_HEADING_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -5731,6 +6187,30 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="BTEMP_Y" name="OSD4_BTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="COMPASS_X" name="OSD4_COMPASS_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="COMPASS_Y" name="OSD4_COMPASS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GPSLAT_X" name="OSD4_GPSLAT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GPSLAT_Y" name="OSD4_GPSLAT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GPSLONG_X" name="OSD4_GPSLONG_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GPSLONG_Y" name="OSD4_GPSLONG_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HEADING_X" name="OSD4_HEADING_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HEADING_Y" name="OSD4_HEADING_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -6740,6 +7220,30 @@
           <param humanName="BTEMP_Y" name="OSD1_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="COMPASS_X" name="OSD1_COMPASS_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="COMPASS_Y" name="OSD1_COMPASS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GPSLAT_X" name="OSD1_GPSLAT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GPSLAT_Y" name="OSD1_GPSLAT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GPSLONG_X" name="OSD1_GPSLONG_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GPSLONG_Y" name="OSD1_GPSLONG_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HEADING_X" name="OSD1_HEADING_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HEADING_Y" name="OSD1_HEADING_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -6827,6 +7331,30 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="BTEMP_Y" name="OSD2_BTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="COMPASS_X" name="OSD2_COMPASS_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="COMPASS_Y" name="OSD2_COMPASS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GPSLAT_X" name="OSD2_GPSLAT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GPSLAT_Y" name="OSD2_GPSLAT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GPSLONG_X" name="OSD2_GPSLONG_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GPSLONG_Y" name="OSD2_GPSLONG_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HEADING_X" name="OSD2_HEADING_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HEADING_Y" name="OSD2_HEADING_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -6918,6 +7446,30 @@
           <param humanName="BTEMP_Y" name="OSD3_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="COMPASS_X" name="OSD3_COMPASS_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="COMPASS_Y" name="OSD3_COMPASS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GPSLAT_X" name="OSD3_GPSLAT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GPSLAT_Y" name="OSD3_GPSLAT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GPSLONG_X" name="OSD3_GPSLONG_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GPSLONG_Y" name="OSD3_GPSLONG_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HEADING_X" name="OSD3_HEADING_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HEADING_Y" name="OSD3_HEADING_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -7005,6 +7557,30 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="BTEMP_Y" name="OSD4_BTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="COMPASS_X" name="OSD4_COMPASS_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="COMPASS_Y" name="OSD4_COMPASS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GPSLAT_X" name="OSD4_GPSLAT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GPSLAT_Y" name="OSD4_GPSLAT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GPSLONG_X" name="OSD4_GPSLONG_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GPSLONG_Y" name="OSD4_GPSLONG_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HEADING_X" name="OSD4_HEADING_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HEADING_Y" name="OSD4_HEADING_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -7486,6 +8062,30 @@
           <param humanName="BTEMP_Y" name="OSD1_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="COMPASS_X" name="OSD1_COMPASS_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="COMPASS_Y" name="OSD1_COMPASS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GPSLAT_X" name="OSD1_GPSLAT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GPSLAT_Y" name="OSD1_GPSLAT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GPSLONG_X" name="OSD1_GPSLONG_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GPSLONG_Y" name="OSD1_GPSLONG_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HEADING_X" name="OSD1_HEADING_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HEADING_Y" name="OSD1_HEADING_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -7573,6 +8173,30 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="BTEMP_Y" name="OSD2_BTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="COMPASS_X" name="OSD2_COMPASS_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="COMPASS_Y" name="OSD2_COMPASS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GPSLAT_X" name="OSD2_GPSLAT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GPSLAT_Y" name="OSD2_GPSLAT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GPSLONG_X" name="OSD2_GPSLONG_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GPSLONG_Y" name="OSD2_GPSLONG_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HEADING_X" name="OSD2_HEADING_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HEADING_Y" name="OSD2_HEADING_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -7664,6 +8288,30 @@
           <param humanName="BTEMP_Y" name="OSD3_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="COMPASS_X" name="OSD3_COMPASS_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="COMPASS_Y" name="OSD3_COMPASS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GPSLAT_X" name="OSD3_GPSLAT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GPSLAT_Y" name="OSD3_GPSLAT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GPSLONG_X" name="OSD3_GPSLONG_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GPSLONG_Y" name="OSD3_GPSLONG_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HEADING_X" name="OSD3_HEADING_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HEADING_Y" name="OSD3_HEADING_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -7751,6 +8399,30 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="BTEMP_Y" name="OSD4_BTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="COMPASS_X" name="OSD4_COMPASS_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="COMPASS_Y" name="OSD4_COMPASS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GPSLAT_X" name="OSD4_GPSLAT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GPSLAT_Y" name="OSD4_GPSLAT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GPSLONG_X" name="OSD4_GPSLONG_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GPSLONG_Y" name="OSD4_GPSLONG_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HEADING_X" name="OSD4_HEADING_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HEADING_Y" name="OSD4_HEADING_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
