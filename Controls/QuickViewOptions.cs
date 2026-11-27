@@ -367,13 +367,17 @@ namespace MissionPlanner.Controls
 
         private void TXT_scale_offset_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.') && (e.KeyChar != '-'))
+            // Match the culture already used to display and parse these values.
+            var separator = System.Globalization.CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator;
+            // KeyPress supplies one character; keep the previous behavior for custom multi-character separators.
+            char decimalKey = separator.Length == 1 ? separator[0] : '.';
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != decimalKey) && (e.KeyChar != '-'))
             {
                 e.Handled = true;
             }
 
             // only allow one decimal point
-            if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
+            if ((e.KeyChar == decimalKey) && ((sender as TextBox).Text.IndexOf(decimalKey) > -1))
             {
                 e.Handled = true;
             }
