@@ -132,6 +132,10 @@ namespace MissionPlanner.Controls.PreFlight
                 case "groundspeed":
                 case "rpm1":
                 case "rpm2":
+                // VIBRATION exposes the three raw clipping counters.
+                case "vibeclip0":
+                case "vibeclip1":
+                case "vibeclip2":
                 case "battery_voltage":
                 case "wp_dist":
                 case "armed":
