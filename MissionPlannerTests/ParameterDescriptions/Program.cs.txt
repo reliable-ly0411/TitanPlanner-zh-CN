@@ -30,6 +30,50 @@ internal static class Program
         var text = (family == "Copter" ? "ArduCopter" : Firmware(family)) + " V" + version + (sha == null ? "" : " (" + sha.Substring(0, 8) + ")");
         return ParameterDescriptionContext.TryCreate(Firmware(family), text, new Version(version + ".255"));
     }
+    private static void CheckOsdTimeTemperature(XElement[] releases, ParameterDescriptionStore store, ParameterDescriptionCatalog catalog)
+    {
+        const string heading = "\n\n中文说明：\n";
+        var rows = new[]
+        {
+            new { Key = "OSD1_FLTIME_EN", English = "Displays total flight time", Chinese = "选择是否在 OSD 第 1 屏以分钟和秒显示飞控在本次开机期间累计的飞行时间。", Range = "",
+                Options = "0: Disabled\n1: Enabled", Fingerprint = "7f5452eea28000eb38aa9605f9782207a4b1c0f0c36e4cd8274fc3f600a0cb71" },
+            new { Key = "OSD4_BTEMP_X", English = "Horizontal position on screen", Chinese = "设置 OSD 第 4 屏上第二个气压计温度的水平位置。", Range = "0 59",
+                Options = "0 59", Fingerprint = "f72665adcafe0aad91db91901ccb639406afe01ba26e938ee93cdd139e19a57a" }
+        };
+        var copter = releases.Single(r => (string)r.Attribute("family") == "Copter" && (string)r.Attribute("version") == "4.6.3");
+        var context = Context("Copter", "4.6.3", (string)copter.Attribute("gitSha"));
+        var snapshot = store.Bundled(context);
+        Check(snapshot != null && snapshot.MatchesReportedBuild && snapshot.SourceSha256 == (string)copter.Attribute("sourceSha256"),
+            "Copter 4.6.3 pinned time and temperature metadata");
+        foreach (var row in rows)
+        {
+            var record = snapshot.Find(row.Key);
+            var text = catalog.Present(snapshot, row.Key, true);
+            Check(record != null && text != null && record.Name == row.Key && record.Fingerprint == row.Fingerprint
+                && record.Range == row.Range && text.Units == "" && text.Options == row.Options
+                && text.Description == row.English + heading + row.Chinese && text.SearchText.Contains(row.Chinese),
+                row.Key + " bilingual description, search and official fields");
+        }
+        var temperature = rows[1];
+        var altered = new XElement(copter.Element("paramfile"));
+        var target = altered.Descendants("param").Single(p => (string)p.Attribute("name") == temperature.Key);
+        var donor = altered.Descendants("param").Single(p => (string)p.Attribute("name") == "OSD4_TEMP_X");
+        Check((string)donor.Attribute("documentation") == temperature.English && donor.Elements("field").Single().Value == temperature.Range,
+            "both temperature records share the same official English and range");
+        // This is a synthetic mismatch assembled from two official records.
+        target.SetAttributeValue("humanName", (string)donor.Attribute("humanName"));
+        var mixed = ParameterDescriptionSnapshot.Parse(Bytes(altered.ToString()), context);
+        var fallback = catalog.Present(mixed, temperature.Key, true);
+        Check(fallback != null && mixed.Find(temperature.Key).Fingerprint == "0c322940b4ce09f1c470d2811a9343724140b55e3ab31fa34170a9caa310bcf2"
+            && fallback.Description == temperature.English + "\n\n[中文说明待复核：英文或关联字段已变化]"
+            && fallback.Options == "0 59" && fallback.Units == "" && !fallback.SearchText.Contains(temperature.Chinese),
+            "synthetic fingerprint withdraws Chinese and preserves English and range");
+        var unknown = Context("Copter", "4.7.2");
+        Check(unknown != null && store.Bundled(unknown) == null
+            && catalog.Chinese(unknown, temperature.Key, "Description", null, temperature.English, out bool pending, temperature.Fingerprint) == null
+            && !pending, "unregistered 4.7.2 cannot borrow reviewed Chinese");
+    }
+
     private static void CheckOsdScreenInfo(XElement[] releases, ParameterDescriptionStore store, ParameterDescriptionCatalog catalog)
     {
         const string bilingualHeading = "\n\n中文说明：\n";
@@ -294,6 +338,12 @@ internal static class Program
         var bundle = Resource("official"); var catalog = new ParameterDescriptionCatalog(Resource("zh-CN"));
         var bundled = new ParameterDescriptionStore("unused", bundle);
         var releases = XDocument.Parse(Encoding.UTF8.GetString(bundle)).Root.Elements("release").ToArray();
+        if (args.Length == 1 && args[0] == "--osd-time-temperature")
+        {
+            CheckOsdTimeTemperature(releases, bundled, catalog);
+            Console.WriteLine("OSD time and temperature: " + assertions + " assertions passed.");
+            return;
+        }
         if (args.Length == 1 && args[0] == "--osd-screen-info")
         {
             CheckOsdScreenInfo(releases, bundled, catalog);
@@ -320,13 +370,13 @@ internal static class Program
         }
         var expectedCounts = new Dictionary<string, int>
         {
-            ["Copter-4.5.7"] = 167,
-            ["Copter-4.6.3"] = 179,
-            ["Copter-4.7.1"] = 185,
-            ["Plane-4.5.7"] = 178,
-            ["Plane-4.6.3"] = 190,
-            ["Plane-4.7.1"] = 198,
-            ["Sub-4.7.1"] = 147
+            ["Copter-4.5.7"] = 203,
+            ["Copter-4.6.3"] = 215,
+            ["Copter-4.7.1"] = 221,
+            ["Plane-4.5.7"] = 214,
+            ["Plane-4.6.3"] = 226,
+            ["Plane-4.7.1"] = 234,
+            ["Sub-4.7.1"] = 183
         };
         Check(releases.Length == expectedCounts.Count, "seven pinned release subsets");
         foreach (var release in releases)
