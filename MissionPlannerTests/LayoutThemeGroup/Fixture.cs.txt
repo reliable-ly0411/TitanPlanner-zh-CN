@@ -1,0 +1,182 @@
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Globalization;
+using System.Linq;
+using System.Windows.Forms;
+using MissionPlanner.Controls.BackstageView;
+using MissionPlanner.Utilities;
+
+namespace MissionPlanner.Controls
+{
+    public class MyUserControl : UserControl { }
+    public interface IActivate { void Activate(); }
+    public interface IDeactivate { void Deactivate(); }
+}
+namespace MissionPlanner.Utilities
+{
+    public static class UiText { public static string Translate(string value) => value; }
+    public sealed class Settings
+    {
+        public static readonly Settings Instance = new Settings();
+        private readonly Dictionary<string, string> values = new Dictionary<string, string>();
+        public string this[string key]
+        {
+            get => values.TryGetValue(key, out var value) ? value : null;
+            set => values[key] = value;
+        }
+        public bool GetBoolean(string key, bool fallback) => bool.TryParse(this[key], out var value) ? value : fallback;
+    }
+}
+namespace log4net
+{
+    public interface ILog { void Error(object value); void DebugFormat(string format, params object[] args); }
+    public static class LogManager
+    {
+        private class SilentLog : ILog
+        {
+            public void Error(object value) { throw new Exception("Unexpected Backstage error", value as Exception); }
+            public void DebugFormat(string format, params object[] args) { }
+        }
+        public static ILog GetLogger(Type type) => new SilentLog();
+    }
+}
+
+partial class ThemeRegression
+{
+    internal static int FixtureDpi;
+    private readonly Label label5 = LabelFor("Layout"), label4 = LabelFor("Theme"),
+        label93 = LabelFor("Language"), label94 = LabelFor("Color"), label8 = LabelFor("More");
+    private readonly ComboBox CMB_Layout = ComboFor(), CMB_theme = ComboFor(), CMB_language = ComboFor(),
+        CMB_osdcolor = ComboFor(), CMB_severity = ComboFor();
+    private readonly Button BUT_themecustom = new Button { Text = "Custom" };
+    private readonly CheckBox chk_analytics = CheckFor("Analytics"), CHK_beta = CheckFor("Beta"),
+        CHK_Password = CheckFor("Password"), CHK_params_bg = CheckFor("Parameters in background"),
+        CHK_AutoParamCommit = CheckFor("Auto commit"), chk_slowMachine = CheckFor("Slow computer"),
+        CHK_startFullscreen = CheckFor("Always start fullscreen");
+
+    private static Label LabelFor(string text) => new Label { AutoSize = true, Text = text };
+    private static CheckBox CheckFor(string text) => new CheckBox { AutoSize = true, Text = text };
+    private static ComboBox ComboFor()
+    {
+        var box = new ComboBox { Dock = DockStyle.Fill, DropDownStyle = ComboBoxStyle.DropDownList };
+        box.Items.AddRange(new[] { "Choice 1", "Choice 2", "Choice 3" });
+        box.SelectedIndex = 0;
+        return box;
+    }
+
+    private Control OtherGroup(int index)
+    {
+        var group = CreateGroupBox("Settings " + index);
+        var table = CreateTableLayout(2);
+        table.Dock = DockStyle.Top;
+        for (int row = 0; row < 4 + index % 5; row++)
+        {
+            table.Controls.Add(LabelFor("Option " + row), 0, row);
+            table.Controls.Add(row % 2 == 0 ? (Control)ComboFor() : CheckFor("Enabled"), 1, row);
+        }
+        group.Controls.Add(table);
+        return group;
+    }
+
+    private static void Check(bool condition, string failure)
+    {
+        if (!condition) throw new Exception(failure);
+    }
+
+    private static string Geometry(Panel columns, Control group) =>
+        columns.ClientSize.Width + "/" + group.Width + "/" + group.Height + "/" + columns.DisplayRectangle.Height;
+
+    private static void CheckContents(Panel columns, Control group)
+    {
+        var table = group.Controls.OfType<TableLayoutPanel>().Single();
+        var flow = table.Controls.OfType<FlowLayoutPanel>().Single();
+        Check(table.Bottom <= group.ClientSize.Height && table.Right <= group.ClientSize.Width, "Table escapes its group");
+        Check(flow.Bottom <= table.ClientSize.Height && flow.Right <= table.ClientSize.Width, "Wrapped choices escape their table");
+        Check(flow.Controls.Cast<Control>().All(control => flow.ClientRectangle.Contains(control.Bounds)), "Setting is clipped");
+        Check(columns.Controls.Cast<Control>().Where(c => c != group).All(c => !c.Bounds.IntersectsWith(group.Bounds)),
+            "Layout/Theme overlaps other settings");
+    }
+
+    [STAThread]
+    private static int Main(string[] args)
+    {
+        try
+        {
+            FixtureDpi = int.Parse(args[0]);
+            CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo(args[1]);
+            Application.EnableVisualStyles();
+            var fixture = new ThemeRegression();
+            using (var form = new Form { Size = new Size(1024, 465) })
+            using (var backstage = new BackstageView { Dock = DockStyle.Fill, UseSingleDpiMenuWidth = true,
+                WidthMenu = (int)(200.0 * FixtureDpi / 96) })
+            using (var page = new UserControl { Dock = DockStyle.Fill })
+            using (var columns = new GroupColumnsPanel { Dock = DockStyle.Fill, AutoScroll = true, Padding = new Padding(10) })
+            {
+                var group = fixture.CreateLayoutAndAppearanceGroup();
+                columns.Controls.Add(fixture.OtherGroup(0));
+                columns.Controls.Add(group);
+                for (int row = 1; row < 9; row++) columns.Controls.Add(fixture.OtherGroup(row));
+                PrepareLayoutControls(columns);
+                page.Controls.Add(columns);
+                form.Controls.Add(backstage);
+                var settings = backstage.AddPage(typeof(UserControl), "Settings", null, false);
+                settings.Page = page;
+                var other = backstage.AddPage(typeof(UserControl), "Other", null, false);
+                form.Show();
+                Action revisit = () =>
+                {
+                    backstage.ActivatePage(other);
+                    Application.DoEvents();
+                    backstage.ActivatePage(settings);
+                    Application.DoEvents();
+                    Check(backstage.SelectedPage == settings, "Settings did not become active");
+                };
+
+                revisit();
+                revisit();
+                string standard = Geometry(columns, group);
+                for (int i = 0; i < 12; i++)
+                {
+                    revisit();
+                    string actual = Geometry(columns, group);
+                    Check(actual == standard, "Layout/Theme grew during same-width revisit: " + standard + " -> " + actual);
+                }
+
+                CheckContents(columns, group);
+                foreach (int width in new[] { 850, 1450, 1024, 850, 1024 })
+                {
+                    form.Width = width;
+                    Application.DoEvents();
+                    revisit();
+                    string settled = Geometry(columns, group);
+                    CheckContents(columns, group);
+                    revisit();
+                    Check(Geometry(columns, group) == settled, "Unstable Layout/Theme after resize");
+                    if (width == 1024) Check(settled == standard, "Restored width does not match original geometry");
+                }
+
+                var cutoff = columns.RectangleToClient(fixture.CHK_startFullscreen.RectangleToScreen(fixture.CHK_startFullscreen.ClientRectangle));
+                columns.AutoScrollPosition = new Point(0, Math.Max(0, cutoff.Bottom - columns.ClientRectangle.Height + 12));
+                Application.DoEvents();
+                Check(columns.ClientRectangle.Contains(columns.RectangleToClient(fixture.CHK_startFullscreen.RectangleToScreen(fixture.CHK_startFullscreen.ClientRectangle))),
+                    "Scrolled option not reachable");
+                Check(fixture.CHK_startFullscreen.Focus(), "Setting cannot still receive keyboard focus");
+                int selection = fixture.CMB_Layout.SelectedIndex;
+                var toggle = group.Controls.Find("CHK_firmware_list_background", true).OfType<CheckBox>().SingleOrDefault();
+                if (toggle != null)
+                {
+                    Check(toggle.Checked && toggle.Focus(), "Default checkbox is not keyboard reachable");
+                    toggle.Checked = false;
+                    revisit();
+                    Check(toggle.Focused || toggle.CanFocus, "Firmware preference became unreachable after revisit");
+                    Check(!toggle.Checked && Settings.Instance["firmware_list_background"] == "False", "Firmware checkbox lost its setting");
+                }
+                Check(fixture.CMB_Layout.SelectedIndex == selection, "Layout choice changed during resize/scroll");
+                Console.WriteLine("PASS Layout/Theme " + args[1] + " dpi=" + FixtureDpi + " checkbox=" + (toggle != null) + " stable=" + standard);
+            }
+            return 0;
+        }
+        catch (Exception error) { Console.Error.WriteLine(error); return 1; }
+    }
+}
