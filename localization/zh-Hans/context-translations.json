@@ -1,4 +1,7 @@
 {
+  "GCSViews/ConfigurationView/ConfigHWRangeFinder.resx": {
+    "label4.Text": "电压 (V)"
+  },
   "Controls/Vibration.resx": {
     "label3.Text": "X",
     "label8.Text": "加速度计削波"
