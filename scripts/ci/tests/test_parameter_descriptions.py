@@ -35,12 +35,36 @@ class ParameterCatalogTests(unittest.TestCase):
     def test_scope_counts_and_held_versions(self):
         notes = self.catalog['translations']
         descriptions = {(n['family'], v, n['parameter']) for n in notes if n['field'] == 'Description' for v in n['versions']}
-        self.assertEqual(271, len(descriptions))
-        self.assertEqual(124, len({(f, p) for f, v, p in descriptions}))
+        self.assertEqual(385, len(descriptions))
+        self.assertEqual(168, len({(f, p) for f, v, p in descriptions}))
         self.assertFalse(any(v == '4.7.2' for f, v, p in descriptions))
         excluded_copter = {'RTL_CONE_SLOPE', 'LAND_SPEED', 'LAND_SPD_MS', 'LOG_FILE_BUFSIZE', 'FS_GCS_ENABLE'}
         excluded_plane = {'TECS_CLMB_MAX', 'TECS_SINK_MIN', 'ROLL_LIMIT_DEG'}
         self.assertFalse(any(p in (excluded_copter if f == 'Copter' else excluded_plane) for f, v, p in descriptions))
+
+    def test_copter_catalog_additions_are_version_exact_read_only_descriptions(self):
+        # Snapshot of the original accepted coverage per version. This assertion
+        # guards the narrowly reviewed expansion, not actual vehicle inventory.
+        legacy_counts = {'4.5.7': 37, '4.6.3': 37, '4.7.1': 37}
+        reviewed_counts = {'4.5.7': 36, '4.6.3': 36, '4.7.1': 42}
+        pairs = (('GPS_CAN_NODEID1', 'GPS_CAN_NODEID2'), ('GPS1_CAN_NODEID', 'GPS2_CAN_NODEID'))
+        for release in self.bundle.findall("release[@family='Copter']"):
+            v = release.get('version')
+            records = {r.get('name').split(':')[-1]: r for r in release.iter('param')}
+            self.assertEqual(legacy_counts[v] + reviewed_counts[v], len(records))
+            readonly = {k: r for k, r in records.items() if r.findtext("field[@name='ReadOnly']") == 'True'}
+            self.assertEqual(reviewed_counts[v], len(readonly))
+            self.assertNotIn('STAT_RESET', readonly)
+            selected, held = pairs if v == '4.5.7' else pairs[::-1]
+            self.assertTrue(set(selected) <= readonly.keys())
+            self.assertFalse(set(held) & readonly.keys())
+            for key, record in readonly.items():
+                notes = [n for n in self.catalog['translations'] if n['family'] == 'Copter'
+                         and n['parameter'] == key and v in n['versions']]
+                self.assertEqual(1, len(notes))
+                self.assertEqual(('Description', catalog_module.record_fingerprint(record)),
+                                 (notes[0]['field'], notes[0]['recordSha256']))
+                self.assertEqual(record.get('documentation'), notes[0]['english'])
 
     def test_sub_slice_contains_only_exact_release_read_only_statistics(self):
         reviewed = {'STAT_BOOTCNT', 'STAT_FLTTIME', 'STAT_RUNTIME', 'STAT_FLTCNT'}
