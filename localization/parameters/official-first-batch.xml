@@ -370,6 +370,47 @@
             <field name="UnitText">megabyte</field>
             <field name="Range">10 1000</field>
           </param>
+          <param humanName="AP_Logger Backend Storage type" name="LOG_BACKEND_TYPE" documentation="Bitmap of what Logger backend types to enable. Block-based logging is available on SITL and boards with dataflash chips. Multiple backends can be selected." user="Standard">
+            <field name="Bitmask">0:File,1:MAVLink,2:Block</field>
+          </param>
+          <param humanName="Stop logging to current file on disarm" name="LOG_FILE_DSRMROT" documentation="When set, the current log file is closed when the vehicle is disarmed.  If LOG_DISARMED is set then a fresh log will be opened. Applies to the File and Block logging backends." user="Standard">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="Maximum AP_Logger MAVLink Backend buffer size" name="LOG_MAV_BUFSIZE" documentation="Maximum amount of memory to allocate to AP_Logger-over-mavlink" user="Advanced">
+            <field name="Units">kB</field>
+            <field name="UnitText">kilobytes</field>
+          </param>
+          <param humanName="Timeout before giving up on file writes" name="LOG_FILE_TIMEOUT" documentation="This controls the amount of time before failing writes to a log file cause the file to be closed and logging stopped." user="Standard">
+            <field name="Units">s</field>
+            <field name="UnitText">seconds</field>
+          </param>
+          <param humanName="Maximum logging rate for file backend" name="LOG_FILE_RATEMAX" documentation="This sets the maximum rate that streaming log messages will be logged to the file backend. A value of zero means that rate limiting is disabled." user="Standard">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 1000</field>
+            <field name="Increment">0.1</field>
+          </param>
+          <param humanName="Maximum logging rate for mavlink backend" name="LOG_MAV_RATEMAX" documentation="This sets the maximum rate that streaming log messages will be logged to the mavlink backend. A value of zero means that rate limiting is disabled." user="Standard">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 1000</field>
+            <field name="Increment">0.1</field>
+          </param>
+          <param humanName="Maximum logging rate for block backend" name="LOG_BLK_RATEMAX" documentation="This sets the maximum rate that streaming log messages will be logged to the block backend. A value of zero means that rate limiting is disabled." user="Standard">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 1000</field>
+            <field name="Increment">0.1</field>
+          </param>
+          <param humanName="Maximum logging rate when disarmed" name="LOG_DARM_RATEMAX" documentation="This sets the maximum rate that streaming log messages will be logged to any backend when disarmed. A value of zero means that the normal backend rate limit is applied." user="Standard">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 1000</field>
+            <field name="Increment">0.1</field>
+          </param>
         </parameters>
         <parameters name="LOIT_">
           <param humanName="Loiter pilot angle max" name="LOIT_ANG_MAX" documentation="Loiter maximum pilot requested lean angle. Set to zero for 2/3 of PSC_ANGLE_MAX/ANGLE_MAX. The maximum vehicle lean angle is still limited by PSC_ANGLE_MAX/ANGLE_MAX" user="Advanced">
@@ -977,6 +1018,52 @@
             <field name="Units">MB</field>
             <field name="UnitText">megabyte</field>
             <field name="Range">10 1000</field>
+          </param>
+          <param humanName="AP_Logger Backend Storage type" name="LOG_BACKEND_TYPE" documentation="Bitmap of what Logger backend types to enable. Block-based logging is available on SITL and boards with dataflash chips. Multiple backends can be selected." user="Standard">
+            <bitmask>
+              <bit code="0">File</bit>
+              <bit code="1">MAVLink</bit>
+              <bit code="2">Block</bit>
+            </bitmask>
+            <field name="Bitmask">0:File,1:MAVLink,2:Block</field>
+          </param>
+          <param humanName="Stop logging to current file on disarm" name="LOG_FILE_DSRMROT" documentation="When set, the current log file is closed when the vehicle is disarmed.  If LOG_DISARMED is set then a fresh log will be opened. Applies to the File and Block logging backends." user="Standard">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="Maximum AP_Logger MAVLink Backend buffer size" name="LOG_MAV_BUFSIZE" documentation="Maximum amount of memory to allocate to AP_Logger-over-mavlink" user="Advanced">
+            <field name="Units">kB</field>
+            <field name="UnitText">kilobytes</field>
+          </param>
+          <param humanName="Timeout before giving up on file writes" name="LOG_FILE_TIMEOUT" documentation="This controls the amount of time before failing writes to a log file cause the file to be closed and logging stopped." user="Standard">
+            <field name="Units">s</field>
+            <field name="UnitText">seconds</field>
+          </param>
+          <param humanName="Maximum logging rate for file backend" name="LOG_FILE_RATEMAX" documentation="This sets the maximum rate that streaming log messages will be logged to the file backend. A value of zero means that rate limiting is disabled." user="Standard">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 1000</field>
+            <field name="Increment">0.1</field>
+          </param>
+          <param humanName="Maximum logging rate for mavlink backend" name="LOG_MAV_RATEMAX" documentation="This sets the maximum rate that streaming log messages will be logged to the mavlink backend. A value of zero means that rate limiting is disabled." user="Standard">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 1000</field>
+            <field name="Increment">0.1</field>
+          </param>
+          <param humanName="Maximum logging rate for block backend" name="LOG_BLK_RATEMAX" documentation="This sets the maximum rate that streaming log messages will be logged to the block backend. A value of zero means that rate limiting is disabled." user="Standard">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 1000</field>
+            <field name="Increment">0.1</field>
+          </param>
+          <param humanName="Maximum logging rate when disarmed" name="LOG_DARM_RATEMAX" documentation="This sets the maximum rate that streaming log messages will be logged to any backend when disarmed. A value of zero means that the normal backend rate limit is applied." user="Standard">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 1000</field>
+            <field name="Increment">0.1</field>
           </param>
         </parameters>
         <parameters name="LOIT_">
@@ -1586,6 +1673,52 @@
             <field name="Units">MB</field>
             <field name="UnitText">megabyte</field>
             <field name="Range">2 1000</field>
+          </param>
+          <param humanName="AP_Logger Backend Storage type" name="LOG_BACKEND_TYPE" documentation="Bitmap of what Logger backend types to enable. Block-based logging is available on SITL and boards with dataflash chips. Multiple backends can be selected." user="Standard">
+            <bitmask>
+              <bit code="0">File</bit>
+              <bit code="1">MAVLink</bit>
+              <bit code="2">Block</bit>
+            </bitmask>
+            <field name="Bitmask">0:File,1:MAVLink,2:Block</field>
+          </param>
+          <param humanName="Stop logging to current file on disarm" name="LOG_FILE_DSRMROT" documentation="When set, the current log file is closed when the vehicle is disarmed.  If LOG_DISARMED is set then a fresh log will be opened. Applies to the File and Block logging backends." user="Standard">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="Maximum AP_Logger MAVLink Backend buffer size" name="LOG_MAV_BUFSIZE" documentation="Maximum amount of memory to allocate to AP_Logger-over-mavlink" user="Advanced">
+            <field name="Units">kB</field>
+            <field name="UnitText">kilobytes</field>
+          </param>
+          <param humanName="Timeout before giving up on file writes" name="LOG_FILE_TIMEOUT" documentation="This controls the amount of time before failing writes to a log file cause the file to be closed and logging stopped." user="Standard">
+            <field name="Units">s</field>
+            <field name="UnitText">seconds</field>
+          </param>
+          <param humanName="Maximum logging rate for file backend" name="LOG_FILE_RATEMAX" documentation="This sets the maximum rate that streaming log messages will be logged to the file backend. A value of zero means that rate limiting is disabled." user="Standard">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 1000</field>
+            <field name="Increment">0.1</field>
+          </param>
+          <param humanName="Maximum logging rate for mavlink backend" name="LOG_MAV_RATEMAX" documentation="This sets the maximum rate that streaming log messages will be logged to the mavlink backend. A value of zero means that rate limiting is disabled." user="Standard">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 1000</field>
+            <field name="Increment">0.1</field>
+          </param>
+          <param humanName="Maximum logging rate for block backend" name="LOG_BLK_RATEMAX" documentation="This sets the maximum rate that streaming log messages will be logged to the block backend. A value of zero means that rate limiting is disabled." user="Standard">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 1000</field>
+            <field name="Increment">0.1</field>
+          </param>
+          <param humanName="Maximum logging rate when disarmed" name="LOG_DARM_RATEMAX" documentation="This sets the maximum rate that streaming log messages will be logged to any backend when disarmed. A value of zero means that the normal backend rate limit is applied." user="Standard">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 1000</field>
+            <field name="Increment">0.1</field>
           </param>
         </parameters>
         <parameters name="LOIT_">
@@ -2285,6 +2418,47 @@
             <field name="UnitText">megabyte</field>
             <field name="Range">10 1000</field>
           </param>
+          <param humanName="AP_Logger Backend Storage type" name="LOG_BACKEND_TYPE" documentation="Bitmap of what Logger backend types to enable. Block-based logging is available on SITL and boards with dataflash chips. Multiple backends can be selected." user="Standard">
+            <field name="Bitmask">0:File,1:MAVLink,2:Block</field>
+          </param>
+          <param humanName="Stop logging to current file on disarm" name="LOG_FILE_DSRMROT" documentation="When set, the current log file is closed when the vehicle is disarmed.  If LOG_DISARMED is set then a fresh log will be opened. Applies to the File and Block logging backends." user="Standard">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="Maximum AP_Logger MAVLink Backend buffer size" name="LOG_MAV_BUFSIZE" documentation="Maximum amount of memory to allocate to AP_Logger-over-mavlink" user="Advanced">
+            <field name="Units">kB</field>
+            <field name="UnitText">kilobytes</field>
+          </param>
+          <param humanName="Timeout before giving up on file writes" name="LOG_FILE_TIMEOUT" documentation="This controls the amount of time before failing writes to a log file cause the file to be closed and logging stopped." user="Standard">
+            <field name="Units">s</field>
+            <field name="UnitText">seconds</field>
+          </param>
+          <param humanName="Maximum logging rate for file backend" name="LOG_FILE_RATEMAX" documentation="This sets the maximum rate that streaming log messages will be logged to the file backend. A value of zero means that rate limiting is disabled." user="Standard">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 1000</field>
+            <field name="Increment">0.1</field>
+          </param>
+          <param humanName="Maximum logging rate for mavlink backend" name="LOG_MAV_RATEMAX" documentation="This sets the maximum rate that streaming log messages will be logged to the mavlink backend. A value of zero means that rate limiting is disabled." user="Standard">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 1000</field>
+            <field name="Increment">0.1</field>
+          </param>
+          <param humanName="Maximum logging rate for block backend" name="LOG_BLK_RATEMAX" documentation="This sets the maximum rate that streaming log messages will be logged to the block backend. A value of zero means that rate limiting is disabled." user="Standard">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 1000</field>
+            <field name="Increment">0.1</field>
+          </param>
+          <param humanName="Maximum logging rate when disarmed" name="LOG_DARM_RATEMAX" documentation="This sets the maximum rate that streaming log messages will be logged to any backend when disarmed. A value of zero means that the normal backend rate limit is applied." user="Standard">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 1000</field>
+            <field name="Increment">0.1</field>
+          </param>
         </parameters>
         <parameters name="NAVL1_">
           <param humanName="L1 control damping ratio" name="NAVL1_DAMPING" documentation="Damping ratio for L1 control. Increase this in increments of 0.05 if you are getting overshoot in path tracking. You should not need a value below 0.7 or above 0.85." user="Advanced">
@@ -2949,6 +3123,52 @@
             <field name="Units">MB</field>
             <field name="UnitText">megabyte</field>
             <field name="Range">10 1000</field>
+          </param>
+          <param humanName="AP_Logger Backend Storage type" name="LOG_BACKEND_TYPE" documentation="Bitmap of what Logger backend types to enable. Block-based logging is available on SITL and boards with dataflash chips. Multiple backends can be selected." user="Standard">
+            <bitmask>
+              <bit code="0">File</bit>
+              <bit code="1">MAVLink</bit>
+              <bit code="2">Block</bit>
+            </bitmask>
+            <field name="Bitmask">0:File,1:MAVLink,2:Block</field>
+          </param>
+          <param humanName="Stop logging to current file on disarm" name="LOG_FILE_DSRMROT" documentation="When set, the current log file is closed when the vehicle is disarmed.  If LOG_DISARMED is set then a fresh log will be opened. Applies to the File and Block logging backends." user="Standard">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="Maximum AP_Logger MAVLink Backend buffer size" name="LOG_MAV_BUFSIZE" documentation="Maximum amount of memory to allocate to AP_Logger-over-mavlink" user="Advanced">
+            <field name="Units">kB</field>
+            <field name="UnitText">kilobytes</field>
+          </param>
+          <param humanName="Timeout before giving up on file writes" name="LOG_FILE_TIMEOUT" documentation="This controls the amount of time before failing writes to a log file cause the file to be closed and logging stopped." user="Standard">
+            <field name="Units">s</field>
+            <field name="UnitText">seconds</field>
+          </param>
+          <param humanName="Maximum logging rate for file backend" name="LOG_FILE_RATEMAX" documentation="This sets the maximum rate that streaming log messages will be logged to the file backend. A value of zero means that rate limiting is disabled." user="Standard">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 1000</field>
+            <field name="Increment">0.1</field>
+          </param>
+          <param humanName="Maximum logging rate for mavlink backend" name="LOG_MAV_RATEMAX" documentation="This sets the maximum rate that streaming log messages will be logged to the mavlink backend. A value of zero means that rate limiting is disabled." user="Standard">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 1000</field>
+            <field name="Increment">0.1</field>
+          </param>
+          <param humanName="Maximum logging rate for block backend" name="LOG_BLK_RATEMAX" documentation="This sets the maximum rate that streaming log messages will be logged to the block backend. A value of zero means that rate limiting is disabled." user="Standard">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 1000</field>
+            <field name="Increment">0.1</field>
+          </param>
+          <param humanName="Maximum logging rate when disarmed" name="LOG_DARM_RATEMAX" documentation="This sets the maximum rate that streaming log messages will be logged to any backend when disarmed. A value of zero means that the normal backend rate limit is applied." user="Standard">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 1000</field>
+            <field name="Increment">0.1</field>
           </param>
         </parameters>
         <parameters name="NAVL1_">
@@ -3635,6 +3855,52 @@
             <field name="UnitText">megabyte</field>
             <field name="Range">2 1000</field>
           </param>
+          <param humanName="AP_Logger Backend Storage type" name="LOG_BACKEND_TYPE" documentation="Bitmap of what Logger backend types to enable. Block-based logging is available on SITL and boards with dataflash chips. Multiple backends can be selected." user="Standard">
+            <bitmask>
+              <bit code="0">File</bit>
+              <bit code="1">MAVLink</bit>
+              <bit code="2">Block</bit>
+            </bitmask>
+            <field name="Bitmask">0:File,1:MAVLink,2:Block</field>
+          </param>
+          <param humanName="Stop logging to current file on disarm" name="LOG_FILE_DSRMROT" documentation="When set, the current log file is closed when the vehicle is disarmed.  If LOG_DISARMED is set then a fresh log will be opened. Applies to the File and Block logging backends." user="Standard">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="Maximum AP_Logger MAVLink Backend buffer size" name="LOG_MAV_BUFSIZE" documentation="Maximum amount of memory to allocate to AP_Logger-over-mavlink" user="Advanced">
+            <field name="Units">kB</field>
+            <field name="UnitText">kilobytes</field>
+          </param>
+          <param humanName="Timeout before giving up on file writes" name="LOG_FILE_TIMEOUT" documentation="This controls the amount of time before failing writes to a log file cause the file to be closed and logging stopped." user="Standard">
+            <field name="Units">s</field>
+            <field name="UnitText">seconds</field>
+          </param>
+          <param humanName="Maximum logging rate for file backend" name="LOG_FILE_RATEMAX" documentation="This sets the maximum rate that streaming log messages will be logged to the file backend. A value of zero means that rate limiting is disabled." user="Standard">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 1000</field>
+            <field name="Increment">0.1</field>
+          </param>
+          <param humanName="Maximum logging rate for mavlink backend" name="LOG_MAV_RATEMAX" documentation="This sets the maximum rate that streaming log messages will be logged to the mavlink backend. A value of zero means that rate limiting is disabled." user="Standard">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 1000</field>
+            <field name="Increment">0.1</field>
+          </param>
+          <param humanName="Maximum logging rate for block backend" name="LOG_BLK_RATEMAX" documentation="This sets the maximum rate that streaming log messages will be logged to the block backend. A value of zero means that rate limiting is disabled." user="Standard">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 1000</field>
+            <field name="Increment">0.1</field>
+          </param>
+          <param humanName="Maximum logging rate when disarmed" name="LOG_DARM_RATEMAX" documentation="This sets the maximum rate that streaming log messages will be logged to any backend when disarmed. A value of zero means that the normal backend rate limit is applied." user="Standard">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 1000</field>
+            <field name="Increment">0.1</field>
+          </param>
         </parameters>
         <parameters name="NAVL1_">
           <param humanName="L1 control damping ratio" name="NAVL1_DAMPING" documentation="Damping ratio for L1 control. Increase this in increments of 0.05 if you are getting overshoot in path tracking. You should not need a value below 0.7 or above 0.85." user="Advanced">
@@ -4154,6 +4420,52 @@
             <field name="Units">MB</field>
             <field name="UnitText">megabyte</field>
             <field name="Range">2 1000</field>
+          </param>
+          <param humanName="AP_Logger Backend Storage type" name="LOG_BACKEND_TYPE" documentation="Bitmap of what Logger backend types to enable. Block-based logging is available on SITL and boards with dataflash chips. Multiple backends can be selected." user="Standard">
+            <bitmask>
+              <bit code="0">File</bit>
+              <bit code="1">MAVLink</bit>
+              <bit code="2">Block</bit>
+            </bitmask>
+            <field name="Bitmask">0:File,1:MAVLink,2:Block</field>
+          </param>
+          <param humanName="Stop logging to current file on disarm" name="LOG_FILE_DSRMROT" documentation="When set, the current log file is closed when the vehicle is disarmed.  If LOG_DISARMED is set then a fresh log will be opened. Applies to the File and Block logging backends." user="Standard">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="Maximum AP_Logger MAVLink Backend buffer size" name="LOG_MAV_BUFSIZE" documentation="Maximum amount of memory to allocate to AP_Logger-over-mavlink" user="Advanced">
+            <field name="Units">kB</field>
+            <field name="UnitText">kilobytes</field>
+          </param>
+          <param humanName="Timeout before giving up on file writes" name="LOG_FILE_TIMEOUT" documentation="This controls the amount of time before failing writes to a log file cause the file to be closed and logging stopped." user="Standard">
+            <field name="Units">s</field>
+            <field name="UnitText">seconds</field>
+          </param>
+          <param humanName="Maximum logging rate for file backend" name="LOG_FILE_RATEMAX" documentation="This sets the maximum rate that streaming log messages will be logged to the file backend. A value of zero means that rate limiting is disabled." user="Standard">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 1000</field>
+            <field name="Increment">0.1</field>
+          </param>
+          <param humanName="Maximum logging rate for mavlink backend" name="LOG_MAV_RATEMAX" documentation="This sets the maximum rate that streaming log messages will be logged to the mavlink backend. A value of zero means that rate limiting is disabled." user="Standard">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 1000</field>
+            <field name="Increment">0.1</field>
+          </param>
+          <param humanName="Maximum logging rate for block backend" name="LOG_BLK_RATEMAX" documentation="This sets the maximum rate that streaming log messages will be logged to the block backend. A value of zero means that rate limiting is disabled." user="Standard">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 1000</field>
+            <field name="Increment">0.1</field>
+          </param>
+          <param humanName="Maximum logging rate when disarmed" name="LOG_DARM_RATEMAX" documentation="This sets the maximum rate that streaming log messages will be logged to any backend when disarmed. A value of zero means that the normal backend rate limit is applied." user="Standard">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 1000</field>
+            <field name="Increment">0.1</field>
           </param>
         </parameters>
         <parameters name="NTF_">
