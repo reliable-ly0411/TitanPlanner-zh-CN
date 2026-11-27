@@ -1,0 +1,86 @@
+// Compile with exact ConfigAC_Fence/Designer/UiText, resources, and only the inert declarations preceding FenceTypeReadbackProbe in its fixture.
+// This independent entry invokes the private display method with synthetic state; never run the previous full probe or Activate.
+using System;
+using System.Drawing;
+using System.Globalization;
+using System.Reflection;
+using System.Windows.Forms;
+using System.Collections.Generic;
+using MissionPlanner.Controls;
+using MissionPlanner.Utilities;
+using MissionPlanner.GCSViews.ConfigurationView;
+
+class Probe
+{
+    static int checks;
+    static void Check(bool pass, string label) { if(!pass) throw new Exception("Failed "+label); checks++; }
+    static T Get<T>(object item,string name) => (T)item.GetType().GetField(name,BindingFlags.NonPublic|BindingFlags.Instance).GetValue(item);
+
+    [STAThread] static void Main()
+    {
+        using(var host=new Form())
+        using(var fence=new ConfigAC_Fence())
+        {
+            host.Controls.Add(fence); host.Show(); Application.DoEvents();
+            var combo=Get<MavlinkComboBox>(fence,"mavlinkComboBox1");
+            var action=Get<MavlinkComboBox>(fence,"mavlinkComboBox2");
+            var tip=Get<ToolTip>(fence,"fenceTooltip");
+            combo.AccessibleDescription="Existing accessibility";
+            tip.SetToolTip(combo,"Existing editor help");
+            tip.SetToolTip(action,"Existing action help");
+            var originalStyle=combo.DropDownStyle;
+            var originalTab=combo.TabIndex;
+            combo.Enabled=true; combo.Focus(); Application.DoEvents(); var hadFocus=combo.Focused;
+            Check(hadFocus,"fixture selector focused");
+            var source=new MAVLink.MAVLinkParamList();
+            source["FENCE_TYPE"]=new MAVLink.Entry { Value=77 };
+            var readback=typeof(ConfigAC_Fence).GetMethod("UpdateFenceTypeReadback",BindingFlags.NonPublic|BindingFlags.Instance);
+            Action refresh=()=>readback.Invoke(fence,new object[]{source,Firmwares.ArduCopter2});
+            foreach(int width in new[]{360,510})
+            foreach(var lang in new[]{"zh-CN","zh-Hans","en-US","zh-CN"})
+            {
+                fence.Width=width;
+                Application.DoEvents();
+                var originalBounds=combo.Bounds;
+                CultureInfo.CurrentUICulture=CultureInfo.GetCultureInfo(lang);
+                combo.setup(ParameterMetaDataRepository.Raw,"FENCE_TYPE",source);
+                combo.SelectedIndex=-1;
+                refresh();
+                string before=combo.AccessibleDescription;
+                if(lang=="zh-CN")
+                {
+                    Check(before.StartsWith("Existing accessibility"+Environment.NewLine) &&
+                        before.Contains("列表中没有与缓存围栏类型对应的单项"),"unmatched accessibility appended");
+                    Check(tip.GetToolTip(combo).StartsWith("Existing editor help"+Environment.NewLine) &&
+                        tip.GetToolTip(combo).Contains("原始缓存值见下方"),"unmatched primary tooltip appended");
+                }
+                else
+                {
+                    Check(before=="Existing accessibility" && tip.GetToolTip(combo)=="Existing editor help","stock metadata and tooltip unchanged");
+                }
+                Check(ReferenceEquals(combo.DataSource,ParameterMetaDataRepository.Raw) && combo.SelectedIndex==-1 &&
+                    source["FENCE_TYPE"].Value==77,"underlying combo and cache untouched");
+                // Simulates the original binder achieving a match; fixture has no device link.
+                combo.SelectedIndex=0;
+                Check(combo.AccessibleDescription=="Existing accessibility" && tip.GetToolTip(combo)=="Existing editor help",
+                    "original hint restored on real selection change");
+                Check(tip.GetToolTip(action)=="Existing action help","other editor unchanged");
+                Check(combo.DropDownStyle==originalStyle && combo.TabIndex==originalTab && combo.Focused==hadFocus &&
+                    combo.Bounds==originalBounds,"focus and geometry preserved");
+            }
+            combo.setup(new List<KeyValuePair<int,string>>(),"FENCE_TYPE",source);
+            refresh();
+            Check(tip.GetToolTip(combo).Contains("元数据没有提供围栏类型选项"),"empty options own help");
+            Check(!tip.GetToolTip(combo).Contains("没有与缓存围栏类型对应的单项"),"empty reason not conflated");
+            combo.AccessibleDescription="Updated underlying description";
+            tip.SetToolTip(combo,"Updated underlying help");
+            refresh();
+            Check(combo.AccessibleDescription.StartsWith("Updated underlying description"+Environment.NewLine),"external description not overwritten");
+            CultureInfo.CurrentUICulture=CultureInfo.GetCultureInfo("en-US");
+            refresh();
+            Check(combo.AccessibleDescription=="Updated underlying description" && tip.GetToolTip(combo)=="Updated underlying help","new underlying text restored");
+            Check(MissionPlanner.MainV2.comPort.Requests==0,"never invokes device");
+        }
+        Console.WriteLine("Fence editor cue: "+checks+" checks passed");
+    }
+}

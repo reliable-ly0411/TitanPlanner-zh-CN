@@ -13,10 +13,19 @@ namespace MissionPlanner.GCSViews.ConfigurationView
     {
         private readonly ToolTip fenceTooltip = new ToolTip();
         private bool showFenceActionDetails;
+        private bool fenceTypeEditorInScope;
+        private bool bindingFenceTypeEditor;
+        private bool fenceTypeEditorHasCachedValue;
+        private string savedFenceTypeDescription;
+        private string savedFenceTypeTooltip;
+        private string appliedFenceTypeDescription;
+        private string appliedFenceTypeTooltip;
 
         public ConfigAC_Fence()
         {
             InitializeComponent();
+            ((ComboBox)mavlinkComboBox1).SelectedIndexChanged += (sender, args) => UpdateFenceTypeEditorHint();
+            mavlinkComboBox1.MouseEnter += (sender, args) => UpdateFenceTypeEditorHint();
             mavlinkComboBox2.DropDown += (sender, args) => UpdateFenceActionDropDownWidth();
             mavlinkComboBox2.MouseEnter += (sender, args) => UpdateFenceActionTooltip();
             mavlinkComboBox2.SelectedIndexChanged += (sender, args) => UpdateFenceActionTooltip();
@@ -32,9 +41,18 @@ namespace MissionPlanner.GCSViews.ConfigurationView
         {
             mavlinkCheckBox1.setup(1, 0, "FENCE_ENABLE", MainV2.comPort.MAV.param, null, () => { if (mavlinkCheckBox1.Checked) MainV2.comPort.getParamList(); });
 
-            mavlinkComboBox1.setup(
-                ParameterMetaDataRepository.GetParameterOptionsInt("FENCE_TYPE",
-                    MainV2.comPort.MAV.cs.firmware.ToString()), "FENCE_TYPE", MainV2.comPort.MAV.param);
+            // Do not publish transient display state while the original parameter binding runs.
+            bindingFenceTypeEditor = true;
+            try
+            {
+                mavlinkComboBox1.setup(
+                    ParameterMetaDataRepository.GetParameterOptionsInt("FENCE_TYPE",
+                        MainV2.comPort.MAV.cs.firmware.ToString()), "FENCE_TYPE", MainV2.comPort.MAV.param);
+            }
+            finally
+            {
+                bindingFenceTypeEditor = false;
+            }
 
 
             var firmware = MainV2.comPort.MAV.cs.firmware;
@@ -64,9 +82,11 @@ namespace MissionPlanner.GCSViews.ConfigurationView
 
         private void UpdateFenceTypeReadback(MAVLink.MAVLinkParamList parameters, Firmwares firmware)
         {
-            if (firmware != Firmwares.ArduCopter2 ||
-                !string.Equals(CultureInfo.CurrentUICulture.Name, "zh-CN", StringComparison.Ordinal))
+            fenceTypeEditorInScope = firmware == Firmwares.ArduCopter2 &&
+                string.Equals(CultureInfo.CurrentUICulture.Name, "zh-CN", StringComparison.Ordinal);
+            if (!fenceTypeEditorInScope)
             {
+                UpdateFenceTypeEditorHint();
                 if (fenceTypeReadback != null)
                 {
                     fenceTooltip.SetToolTip(fenceTypeReadback, null);
@@ -106,7 +126,9 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                 }
             }
 
-            text += FenceTypeListStatus(item != null);
+            fenceTypeEditorHasCachedValue = item != null;
+            text += FenceTypeListStatus(fenceTypeEditorHasCachedValue);
+            UpdateFenceTypeEditorHint();
 
             fenceTypeReadback.Text = text;
             fenceTooltip.SetToolTip(fenceTypeReadback, details);
@@ -160,19 +182,67 @@ namespace MissionPlanner.GCSViews.ConfigurationView
         }
 
 
-        private string FenceTypeListStatus(bool hasCachedValue)
+        private enum FenceTypeEditorState { Ordinary, Empty, Unmatched }
+
+        private FenceTypeEditorState FenceTypeOptionState(bool hasCachedValue)
         {
             // Read the bound list only; never give the editor a synthetic selectable value.
             var boundOptions = mavlinkComboBox1.DataSource as List<KeyValuePair<int, string>>;
-            var key = boundOptions != null && boundOptions.Count == 0 ? "Fence type list has no options"
-                : hasCachedValue && mavlinkComboBox1.SelectedIndex < 0 ? "Fence type list has no matching option"
-                : null;
-            if (key == null)
-                return "";
-            var caption = UiText.Translate(key);
-            return string.IsNullOrEmpty(caption) || string.Equals(caption, key, StringComparison.Ordinal)
-                ? "" : " · " + caption;
+            return boundOptions != null && boundOptions.Count == 0 ? FenceTypeEditorState.Empty
+                : hasCachedValue && mavlinkComboBox1.SelectedIndex < 0 ? FenceTypeEditorState.Unmatched
+                : FenceTypeEditorState.Ordinary;
         }
+
+        private string FenceTypeListStatus(bool hasCachedValue)
+        {
+            var state = FenceTypeOptionState(hasCachedValue);
+            var key = state == FenceTypeEditorState.Empty ? "Fence type list has no options"
+                : state == FenceTypeEditorState.Unmatched ? "Fence type list has no matching option" : null;
+            var caption = TranslateFenceTypeEditorCue(key);
+            return caption == null ? "" : " · " + caption;
+        }
+
+        private static string TranslateFenceTypeEditorCue(string key)
+        {
+            if (key == null)
+                return null;
+            var caption = UiText.Translate(key);
+            return string.IsNullOrEmpty(caption) || string.Equals(caption, key, StringComparison.Ordinal) ? null : caption;
+        }
+
+        private void UpdateFenceTypeEditorHint()
+        {
+            if (bindingFenceTypeEditor || mavlinkComboBox1.IsDisposed)
+                return;
+            var state = fenceTypeEditorInScope && CultureInfo.CurrentUICulture.Name == "zh-CN"
+                ? FenceTypeOptionState(fenceTypeEditorHasCachedValue) : FenceTypeEditorState.Ordinary;
+            var hint = TranslateFenceTypeEditorCue(state == FenceTypeEditorState.Empty
+                ? "No fence type options are available from the loaded metadata."
+                : state == FenceTypeEditorState.Unmatched
+                    ? "The cached fence type is not one item in this list. The cached value is shown below."
+                    : null);
+
+            var description = mavlinkComboBox1.AccessibleDescription;
+            var toolTip = fenceTooltip.GetToolTip(mavlinkComboBox1);
+            if (appliedFenceTypeDescription == null || description != appliedFenceTypeDescription)
+                savedFenceTypeDescription = description;
+            if (appliedFenceTypeTooltip == null || toolTip != appliedFenceTypeTooltip)
+                savedFenceTypeTooltip = toolTip;
+            if (hint == null && appliedFenceTypeDescription == null && appliedFenceTypeTooltip == null)
+                return;
+
+            appliedFenceTypeDescription = hint == null ? null : AppendFenceTypeHint(savedFenceTypeDescription, hint);
+            appliedFenceTypeTooltip = hint == null ? null : AppendFenceTypeHint(savedFenceTypeTooltip, hint);
+            var nextDescription = appliedFenceTypeDescription ?? savedFenceTypeDescription;
+            var nextToolTip = appliedFenceTypeTooltip ?? savedFenceTypeTooltip;
+            if (description != nextDescription)
+                mavlinkComboBox1.AccessibleDescription = nextDescription;
+            if (toolTip != nextToolTip)
+                fenceTooltip.SetToolTip(mavlinkComboBox1, nextToolTip);
+        }
+
+        private static string AppendFenceTypeHint(string original, string hint) =>
+            string.IsNullOrEmpty(original) ? hint : original + Environment.NewLine + hint;
 
         private void BindFenceAction(List<KeyValuePair<int, string>> options, Firmwares firmware,
             MAVLink.MAVLinkParamList parameters)

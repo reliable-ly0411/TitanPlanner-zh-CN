@@ -7692,6 +7692,10 @@ Ctrl+O 从文件加载</value>
     <value>尚无现有译文</value>
     <comment>"No existing translation has been done"</comment>
   </data>
+  <data name="5265a7915f71431b0a844f4f9e0ebabe985dea187d6604c7e9b1d126ad471266" xml:space="preserve">
+    <value>本次加载的元数据没有提供围栏类型选项。</value>
+    <comment>"No fence type options are available from the loaded metadata."</comment>
+  </data>
   <data name="f929f49026ee9fd15270196da3589f5d3c275130fb566f75a35d78c81b161396" xml:space="preserve">
     <value>此飞控板没有可用固件！</value>
     <comment>"No firmware available for this board!"</comment>
@@ -10996,6 +11000,11 @@ Acc：当前测定位置的精度
 红灯闪烁：正在发送数据
 红灯常亮：处于固件更新模式</value>
     <comment>"The Sik Radios have 2 status LEDs, one red and one green.\ngreen LED blinking - searching for another radio \ngreen LED solid - link is established with another radio \nred LED flashing - transmitting data \nred LED solid - in firmware update mode"</comment>
+  </data>
+  <data name="a79547d9cc49b49962bbb8dcab808e51cbca4509ce5da528bbf0f7acd5613b75" xml:space="preserve">
+    <value>列表中没有与缓存围栏类型对应的单项。
+原始缓存值见下方。</value>
+    <comment>"The cached fence type is not one item in this list. The cached value is shown below."</comment>
   </data>
   <data name="0dc1dae035ddb38f1bbd522f3860230d95d5f2203c6b0a7822adc54854bd6778" xml:space="preserve">
     <value>采集设备未能启动： </value>
