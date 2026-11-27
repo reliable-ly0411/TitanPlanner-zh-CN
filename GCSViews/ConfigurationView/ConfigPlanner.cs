@@ -1560,7 +1560,9 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             nameof(KnownColor.Black), nameof(KnownColor.White), nameof(KnownColor.Red), nameof(KnownColor.Blue),
             nameof(KnownColor.Green), nameof(KnownColor.Yellow), nameof(KnownColor.Orange), nameof(KnownColor.Brown),
             nameof(KnownColor.Snow), nameof(KnownColor.Ivory), nameof(KnownColor.Beige), nameof(KnownColor.Linen),
-            nameof(KnownColor.Wheat), nameof(KnownColor.Cornsilk)
+            nameof(KnownColor.Wheat), nameof(KnownColor.Cornsilk),
+            nameof(KnownColor.CornflowerBlue), nameof(KnownColor.LightBlue), nameof(KnownColor.RoyalBlue),
+            nameof(KnownColor.SkyBlue), nameof(KnownColor.SlateBlue), nameof(KnownColor.SteelBlue)
         };
 
         internal static void SizeHudColorDropDown(ComboBox combo)

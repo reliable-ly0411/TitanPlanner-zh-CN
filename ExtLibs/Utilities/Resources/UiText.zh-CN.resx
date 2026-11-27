@@ -4939,6 +4939,10 @@ Ctrl+O 从文件加载</value>
     <value>棕色</value>
     <comment>"HUD color compact: Brown"</comment>
   </data>
+  <data name="2a5d1473dc9f29c4bfc178774f5df8291fd2429d400159f96de804e9b2f7342e" xml:space="preserve">
+    <value>矢车菊蓝</value>
+    <comment>"HUD color compact: CornflowerBlue"</comment>
+  </data>
   <data name="7572e13a92ce1e09b7b51f085d0038baa693fcfd5910fda11f69a94c35628922" xml:space="preserve">
     <value>玉米丝色</value>
     <comment>"HUD color compact: Cornsilk"</comment>
@@ -4955,6 +4959,10 @@ Ctrl+O 从文件加载</value>
     <value>象牙白</value>
     <comment>"HUD color compact: Ivory"</comment>
   </data>
+  <data name="02660ab0971bcb1f0cca6ab34f05b12524e299f665587840f8f7af76c7e84961" xml:space="preserve">
+    <value>浅蓝色</value>
+    <comment>"HUD color compact: LightBlue"</comment>
+  </data>
   <data name="824285034106f379262e7fdd3b76348876f5ff55637bd63093df489eb99ebeaa" xml:space="preserve">
     <value>亚麻色</value>
     <comment>"HUD color compact: Linen"</comment>
@@ -4967,9 +4975,25 @@ Ctrl+O 从文件加载</value>
     <value>红色</value>
     <comment>"HUD color compact: Red"</comment>
   </data>
+  <data name="9218eafc85727b55dea27ed7f3a5e660c0dbe74c4f10ac9d688f8a687f85b80f" xml:space="preserve">
+    <value>宝蓝色</value>
+    <comment>"HUD color compact: RoyalBlue"</comment>
+  </data>
+  <data name="d425cc4a2d76ec3edd44d635975ab4d972a0263129d38e9bceeeb2ccab0367f1" xml:space="preserve">
+    <value>天蓝色</value>
+    <comment>"HUD color compact: SkyBlue"</comment>
+  </data>
+  <data name="08f3904e1ef030a7faa4b7fd42642674d0cfeb8895a7cc3e1f277689900b639e" xml:space="preserve">
+    <value>石板蓝</value>
+    <comment>"HUD color compact: SlateBlue"</comment>
+  </data>
   <data name="e25b0d2f306020c969193ac7d3f3ad298d58cf9a1546bee674a3358b9f8e9bfa" xml:space="preserve">
     <value>雪白色</value>
     <comment>"HUD color compact: Snow"</comment>
+  </data>
+  <data name="81b7de063227f21a4b309eefc573ac118168e1aa893e87330e2f47a4790e3f71" xml:space="preserve">
+    <value>钢蓝色</value>
+    <comment>"HUD color compact: SteelBlue"</comment>
   </data>
   <data name="dd16cccfd42f3da0c82d7bf3f259b195acc93cb5d5d114b5aa2ac29e04cb4302" xml:space="preserve">
     <value>小麦色</value>
@@ -5007,6 +5031,10 @@ Ctrl+O 从文件加载</value>
     <value>棕色（Brown）</value>
     <comment>"HUD color: Brown"</comment>
   </data>
+  <data name="aea0de0eab324d9862e25ab1944ff2c13e6140e6441d38900db719540145b8ca" xml:space="preserve">
+    <value>矢车菊蓝（CornflowerBlue）</value>
+    <comment>"HUD color: CornflowerBlue"</comment>
+  </data>
   <data name="081a17ce4cd963b332a12a86f74a7f6a3696a177bfbc8a97874cfb873a3dca5e" xml:space="preserve">
     <value>玉米丝色（Cornsilk）</value>
     <comment>"HUD color: Cornsilk"</comment>
@@ -5023,6 +5051,10 @@ Ctrl+O 从文件加载</value>
     <value>象牙白（Ivory）</value>
     <comment>"HUD color: Ivory"</comment>
   </data>
+  <data name="ee34bff67ee462daae1b6d3020b270bfa9c915a9e40ba9219ad468d9e83a79d0" xml:space="preserve">
+    <value>浅蓝色（LightBlue）</value>
+    <comment>"HUD color: LightBlue"</comment>
+  </data>
   <data name="1c091c391c4f0c332d4df2b80f1a5be1e6339c36b4e9e1f54896be3918473a1a" xml:space="preserve">
     <value>亚麻色（Linen）</value>
     <comment>"HUD color: Linen"</comment>
@@ -5035,9 +5067,25 @@ Ctrl+O 从文件加载</value>
     <value>红色（Red）</value>
     <comment>"HUD color: Red"</comment>
   </data>
+  <data name="584fcf0dd68e7e966d42827aa08911d7e9037c2675036ba436f3e341547734be" xml:space="preserve">
+    <value>宝蓝色（RoyalBlue）</value>
+    <comment>"HUD color: RoyalBlue"</comment>
+  </data>
+  <data name="5dcfe7af655b1dd1e50fc51a4eb43318f745be6d0ab55b3cbd7b399ddd762edb" xml:space="preserve">
+    <value>天蓝色（SkyBlue）</value>
+    <comment>"HUD color: SkyBlue"</comment>
+  </data>
+  <data name="c75cbd62af0e8757828bf2d81ac0edb88cba80f96970bb67aacf232ea6e79383" xml:space="preserve">
+    <value>石板蓝（SlateBlue）</value>
+    <comment>"HUD color: SlateBlue"</comment>
+  </data>
   <data name="7233bcdc83244b798d1a5234822097f8b6d2beb2bdc2a61f6f4d743c8a00033b" xml:space="preserve">
     <value>雪白色（Snow）</value>
     <comment>"HUD color: Snow"</comment>
+  </data>
+  <data name="8aedf9235c5430caaaba716294272b9d74818944e6128840499c8974fb6be7d3" xml:space="preserve">
+    <value>钢蓝色（SteelBlue）</value>
+    <comment>"HUD color: SteelBlue"</comment>
   </data>
   <data name="cdc7ec380ce75a1ed9ed1be69d36af1daa1d0ef38aba48283ff05ea68b2a509d" xml:space="preserve">
     <value>小麦色（Wheat）</value>
