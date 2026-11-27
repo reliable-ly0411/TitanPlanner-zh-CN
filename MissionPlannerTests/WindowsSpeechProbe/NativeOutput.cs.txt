@@ -1,0 +1,169 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Speech.Synthesis;
+using System.Text;
+using System.Threading;
+using System.Xml;
+using MissionPlanner.Utilities;
+
+internal sealed class NativeOutput : IDisposable
+{
+    internal sealed class Trace
+    {
+        internal Prompt Prompt;
+        internal bool Started, Cancelled;
+        internal int Completed;
+        internal Exception Error;
+        internal readonly HashSet<string> Voices = new HashSet<string>(StringComparer.Ordinal);
+        internal readonly StringBuilder Words = new StringBuilder();
+
+        internal bool CheckPromptText(string expected)
+        {
+            // .NET Framework 的 PromptBuilder 将本次提交的 SSML 保存在提示对象中。
+            // 实现不公开该字段时仍可用真实词边界事件核对正文。
+            var field = typeof(Prompt).GetField("_text", BindingFlags.Instance | BindingFlags.NonPublic);
+            var ssml = field?.GetValue(Prompt) as string;
+            if (string.IsNullOrEmpty(ssml) || !ssml.TrimStart().StartsWith("<", StringComparison.Ordinal)) return false;
+            var document = new XmlDocument { XmlResolver = null };
+            var options = new XmlReaderSettings { DtdProcessing = DtdProcessing.Prohibit, XmlResolver = null };
+            using (var reader = XmlReader.Create(new StringReader(ssml), options)) document.Load(reader);
+            if (document.DocumentElement?.LocalName != "speak") return false;
+            if (document.DocumentElement.InnerText.Trim() != expected)
+                throw new InvalidDataException("实际提交到 Windows 的提示正文与资源不符。");
+            return true;
+        }
+
+        internal void RequireSuccess()
+        {
+            if (Cancelled || Error != null)
+                throw new InvalidOperationException("合成未正常完成。", Error);
+        }
+    }
+
+    internal readonly Speech Speech;
+    internal readonly SpeechSynthesizer Synth;
+    private readonly MemoryStream wave = new MemoryStream();
+    private readonly List<Trace> traces = new List<Trace>();
+    private readonly object gate = new object();
+    private int completed;
+
+    internal NativeOutput()
+    {
+        Speech = new Speech { speechEnable = true };
+        try
+        {
+            // 仅为重定向和观察取得产品使用的同一个后端。重定向失败时不能提交任何提示。
+            var field = typeof(Speech).GetField("_speechwindows", BindingFlags.Instance | BindingFlags.NonPublic);
+            Synth = field?.GetValue(Speech) as SpeechSynthesizer ??
+                throw new InvalidOperationException("无法取得 Windows 播报后端。");
+            Synth.SetOutputToWaveStream(wave);
+            Synth.SpeakStarted += (s, e) => Record(e.Prompt, trace => trace.Started = true);
+            Synth.VoiceChange += (s, e) => Record(e.Prompt, trace => trace.Voices.Add(e.Voice.Id));
+            Synth.SpeakProgress += (s, e) => Record(e.Prompt, trace => trace.Words.Append(e.Text));
+            Synth.SpeakCompleted += (s, e) => Record(e.Prompt, trace =>
+            {
+                trace.Cancelled = e.Cancelled;
+                trace.Error = e.Error;
+                trace.Completed = ++completed;
+            });
+        }
+        catch
+        {
+            Speech.Dispose();
+            wave.Dispose();
+            throw;
+        }
+    }
+
+    private void Record(Prompt prompt, Action<Trace> update)
+    {
+        lock (gate)
+        {
+            var trace = traces.Find(item => ReferenceEquals(item.Prompt, prompt));
+            if (trace == null)
+            {
+                trace = new Trace { Prompt = prompt };
+                traces.Add(trace);
+            }
+            update(trace);
+            Monitor.PulseAll(gate);
+        }
+    }
+
+    private T WaitFor<T>(Func<T> find) where T : class
+    {
+        var elapsed = Stopwatch.StartNew();
+        lock (gate)
+        {
+            for (;;)
+            {
+                var result = find();
+                if (result != null) return result;
+                var remaining = TimeSpan.FromSeconds(15) - elapsed.Elapsed;
+                if (remaining <= TimeSpan.Zero) throw new TimeoutException("等待 Windows 语音事件超时。");
+                Monitor.Wait(gate, remaining);
+            }
+        }
+    }
+
+    internal Prompt FirstStarted() => WaitFor(() => traces.FirstOrDefault(t => t.Started)?.Prompt);
+
+    internal Trace[] Finished(int count) => WaitFor(() => completed >= count
+        ? traces.Where(t => t.Completed > 0).OrderBy(t => t.Completed).ToArray() : null);
+
+    internal long CheckWave()
+    {
+        // 先从合成器解除流，让真实 WAV 头和数据长度落定。
+        Synth.SetOutputToNull();
+        var bytes = wave.ToArray();
+        using (var reader = new BinaryReader(new MemoryStream(bytes)))
+        {
+            Func<string> tag = () => Encoding.ASCII.GetString(reader.ReadBytes(4));
+            if (bytes.Length < 44 || tag() != "RIFF" || reader.ReadUInt32() != bytes.Length - 8 || tag() != "WAVE")
+                throw new InvalidDataException("输出缺少完整 RIFF/WAVE 头。");
+            bool pcm = false, signal = false;
+            ushort bits = 0, channels = 0, block = 0;
+            uint rate = 0;
+            long frames = 0;
+            while (reader.BaseStream.Position + 8 <= bytes.Length)
+            {
+                string id = tag();
+                uint size = reader.ReadUInt32();
+                long end = reader.BaseStream.Position + size;
+                if (end > bytes.Length) throw new InvalidDataException("WAV 数据块被截断。");
+                if (id == "fmt " && size >= 16)
+                {
+                    ushort format = reader.ReadUInt16();
+                    channels = reader.ReadUInt16();
+                    rate = reader.ReadUInt32();
+                    reader.ReadUInt32();
+                    block = reader.ReadUInt16();
+                    bits = reader.ReadUInt16();
+                    pcm = format == 1 && channels > 0 && rate > 0 &&
+                          (bits == 8 || bits == 16 || bits == 24 || bits == 32) && block == channels * bits / 8;
+                }
+                if (id == "data")
+                {
+                    if (!pcm || size % block != 0) throw new InvalidDataException("PCM 格式或数据块无效。");
+                    frames += size / block;
+                    while (reader.BaseStream.Position < end)
+                        if (reader.ReadByte() != (bits == 8 ? 128 : 0)) signal = true;
+                }
+                reader.BaseStream.Position = end + (size & 1);
+            }
+            if (!pcm || !signal) throw new InvalidDataException("未观察到符合约定格式的非静音 PCM 样本。");
+            Console.WriteLine("WAV  {0} Hz，{1} 位，{2} 声道，{3} 帧非空音频", rate, bits, channels, frames);
+            return frames;
+        }
+    }
+
+    public void Dispose()
+    {
+        try { Speech.Dispose(); }
+        finally { wave.Dispose(); }
+    }
+}

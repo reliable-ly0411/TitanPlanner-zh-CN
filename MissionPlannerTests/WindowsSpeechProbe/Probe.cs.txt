@@ -1,0 +1,238 @@
+using System;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Speech.Synthesis;
+using System.Text;
+using System.Threading;
+using MissionPlanner.Utilities;
+
+internal static class Probe
+{
+    private const string PreviewKey = "This is the ground station voice preview.";
+    private const string ChinesePreview = "这是地面站语音试听。";
+    private const string AlertText = "日志存储芯片已满，已停止记录日志";
+    private const string MissingName = "TitanPlanner-Probe-absent-b64da0f3";
+    private static string root;
+    private static int result;
+
+    private static void Require(bool ok, string message)
+    {
+        if (!ok) throw new InvalidOperationException(message);
+    }
+
+    private static void Unverified(string message)
+    {
+        Console.WriteLine("待验  " + message);
+        result = 2;
+    }
+
+    private static string PrivateFile(string name) => Path.Combine(root, name);
+
+    private static string VoiceIdLabel(string value)
+    {
+        using (var hash = SHA256.Create())
+            return BitConverter.ToString(hash.ComputeHash(Encoding.UTF8.GetBytes(value)), 0, 8).Replace("-", "");
+    }
+
+    private static void Isolate(string scenario)
+    {
+        Require(Environment.OSVersion.Platform == PlatformID.Win32NT && Environment.Is64BitProcess &&
+            Type.GetType("Mono.Runtime") == null, "此入口需要 64 位 Windows .NET Framework。");
+        var bin = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);
+        var staging = bin.Parent;
+        string temp = Path.GetFullPath(Path.GetTempPath()).TrimEnd(Path.DirectorySeparatorChar);
+        const string prefix = "TitanPlanner-SpeechProbe-";
+        Require(staging?.Parent != null &&
+            string.Equals(staging.Parent.FullName.TrimEnd(Path.DirectorySeparatorChar), temp, StringComparison.OrdinalIgnoreCase) &&
+            staging.Name.StartsWith(prefix, StringComparison.Ordinal) &&
+            Guid.TryParseExact(staging.Name.Substring(prefix.Length), "N", out _) &&
+            bin.Name == (scenario == "neutral" ? "neutral" : "full"),
+            "请使用 run.ps1 创建独立的临时工作目录。");
+        root = staging.FullName;
+        Require(!File.Exists(Path.Combine(bin.FullName, "custom.config.xml")) &&
+                !File.Exists(Path.Combine(bin.FullName, "voice-probe.xml")), "临时程序目录含有外部配置。");
+        Require(File.Exists(Path.Combine(bin.FullName, "zh-CN", "WindowsSpeechProbe.resources.dll")) ==
+                (scenario != "neutral"), "临时目录中的增强简中资源与本组条件不符。");
+
+        // 在第一次访问 Instance 之前隔离用户目录、程序目录和配置文件名。
+        Settings.CustomUserDataDirectory = PrivateFile("settings");
+        Settings.AppConfigName = "SpeechProbe";
+        Settings.PreviousAppConfigNames = new string[0];
+        Settings.FileName = "voice-probe.xml";
+        CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo("zh-CN");
+        Require(SynchronizationContext.Current == null, "请在独立控制台进程中运行。");
+    }
+
+    private static int Main(string[] args)
+    {
+        try
+        {
+            Console.OutputEncoding = new UTF8Encoding(false);
+            Require(args.Length == 1, "请从 run.ps1 运行。");
+            string scenario = args[0];
+            Isolate(scenario);
+            var config = Settings.Instance;
+            if (scenario == "reload")
+            {
+                if (!File.Exists(PrivateFile("chosen-name"))) { Unverified("没有已保存的音色可供独立进程读取。"); return result; }
+                Require(config["language"] == "zh-CN", "新进程没有读回保存的语言。");
+            }
+            else config["language"] = "zh-CN";
+
+            string expected = scenario == "neutral" ? PreviewKey : ChinesePreview;
+            Require(UiText.Translate(PreviewKey) == expected, "实际资源回退与预期不符。");
+            Console.WriteLine("资源  " + expected);
+            Console.WriteLine("后端  " + typeof(SpeechSynthesizer).Assembly.FullName);
+
+            switch (scenario)
+            {
+                case "choose": SelectAndSave(); break;
+                case "auto":
+                case "reload":
+                case "missing":
+                case "neutral": Render(scenario, expected); break;
+                case "priority": CheckPriority(); break;
+                default: throw new ArgumentException("未知验证项。");
+            }
+            Console.WriteLine(result == 0 ? "通过  " + scenario : "部分待验  " + scenario);
+            return result;
+        }
+        catch (Exception ex)
+        {
+            var cause = ex.GetBaseException();
+            Console.Error.WriteLine("失败  {0}: {1}", cause.GetType().Name, cause.Message);
+            return 1;
+        }
+    }
+
+    private static void SelectAndSave()
+    {
+        using (var output = new NativeOutput())
+        {
+            var enabled = output.Synth.GetInstalledVoices().Where(v => v.Enabled).Select(v => v.VoiceInfo).ToArray();
+            var names = output.Speech.RefreshChineseVoiceNames();
+            Console.WriteLine("本机已启用 {0} 个音色，设置页可选 {1} 个。", enabled.Length, names.Length);
+            foreach (string name in names) Console.WriteLine("可选  " + name);
+            if (names.Length == 0)
+            {
+                Unverified("本机返回的可选微软中文音色为空，无法验证选中和跨进程读回音色。");
+                return;
+            }
+            string auto = File.Exists(PrivateFile("auto-id")) ? File.ReadAllText(PrivateFile("auto-id")) : null;
+            var choices = enabled.Where(v => names.Contains(v.Name, StringComparer.Ordinal) && !string.IsNullOrEmpty(v.Id))
+                .GroupBy(v => v.Name, StringComparer.Ordinal).Where(group => group.Count() == 1)
+                .Select(group => group.Single()).OrderBy(v => v.Name, StringComparer.Ordinal).ToArray();
+            if (choices.Length == 0) { Unverified("可选名称未唯一对应到本机语音身份。"); return; }
+            var choice = choices.FirstOrDefault(v => v.Id != auto) ?? choices[0];
+            var config = Settings.Instance;
+            config[Speech.ChineseVoiceSetting] = choice.Name;
+            config.Save();
+            Require(File.Exists(Path.Combine(Settings.GetUserDataDirectory(), Settings.FileName)), "临时配置没有落盘。");
+            File.WriteAllText(PrivateFile("chosen-name"), choice.Name);
+            File.WriteAllText(PrivateFile("chosen-id"), choice.Id);
+            Console.WriteLine("已保存  {0} ({1})", choice.Name, VoiceIdLabel(choice.Id));
+            if (choice.Id == auto) Unverified("可选音色与自动模式的实际音色相同，无法观察切换到另一种音色。");
+        }
+    }
+
+    private static void Render(string scenario, string expectedText)
+    {
+        var config = Settings.Instance;
+        if (scenario == "reload")
+        {
+            Require(config[Speech.ChineseVoiceSetting] == File.ReadAllText(PrivateFile("chosen-name")),
+                "新进程读回的音色与保存值不同。");
+        }
+        else config[Speech.ChineseVoiceSetting] = scenario == "missing" ? MissingName : "";
+
+        using (var output = new NativeOutput())
+        {
+            var installed = output.Synth.GetInstalledVoices().Where(v => v.Enabled).ToArray();
+            if (installed.Length == 0) { Unverified("真实后端未枚举到任何已启用的音色。"); return; }
+            if (scenario == "missing")
+                Require(!installed.Any(v => v.VoiceInfo.Name == MissingName), "用于回退测试的名称在本机存在。");
+            Require(output.Speech.TryPreviewChineseVoice(), "Windows 后端没有接受试听提示。");
+            var trace = output.Finished(1).Single();
+            trace.RequireSuccess();
+            output.CheckWave();
+
+            string words = string.Concat(trace.Words.ToString().Where(char.IsLetterOrDigit));
+            string expected = string.Concat(expectedText.Where(char.IsLetterOrDigit));
+            bool ssml = trace.CheckPromptText(expectedText);
+            if (!ssml && words != expected)
+                Unverified("此后端未提供可核对的完整 SSML 或词边界正文。");
+            else
+                Console.WriteLine("正文  已用{0}核对真实提示", ssml ? "提交的 SSML" : "语音进度事件");
+            if (trace.Voices.Count != 1 || string.IsNullOrEmpty(trace.Voices.FirstOrDefault()))
+            {
+                Unverified("本条提示没有唯一可观察的 VoiceChange 身份。");
+                return;
+            }
+            string actual = trace.Voices.Single();
+            Console.WriteLine("实际音色  {0} ({1})", installed.FirstOrDefault(v => v.VoiceInfo.Id == actual)?.VoiceInfo.Name,
+                VoiceIdLabel(actual));
+            if (scenario == "auto") File.WriteAllText(PrivateFile("auto-id"), actual);
+            if (scenario == "reload") Require(actual == File.ReadAllText(PrivateFile("chosen-id")), "实际发声音色与保存选择不符。");
+            if (scenario == "missing")
+            {
+                if (!File.Exists(PrivateFile("auto-id"))) Unverified("自动模式缺少可比较的实际音色身份。");
+                else Require(actual == File.ReadAllText(PrivateFile("auto-id")), "缺失选择与自动模式的实际音色不符。");
+            }
+        }
+    }
+
+    private static void CheckPriority()
+    {
+        bool ordinaryObserved = false, interruptionObserved = false;
+        for (int i = 0; i < 3 && !ordinaryObserved; i++)
+        {
+            using (var output = new NativeOutput())
+            {
+                if (!output.Synth.GetInstalledVoices().Any(v => v.Enabled)) { Unverified("没有可用音色。"); return; }
+                Require(output.Speech.TrySpeakAsync("正在检查本机语音。请等待这条普通播报完成。"), "普通提示未入队。");
+                var ordinary = output.FirstStarted();
+                bool active = !ordinary.IsCompleted;
+                bool accepted = output.Speech.TryPreviewChineseVoice();
+                if (active && accepted && !ordinary.IsCompleted) throw new InvalidOperationException("普通播报未完成时试听已获准。");
+                ordinaryObserved = active && !accepted;
+                foreach (var t in output.Finished(accepted ? 2 : 1)) t.RequireSuccess();
+                output.CheckWave();
+            }
+        }
+        if (!ordinaryObserved) Unverified("三次尝试均未观察到普通播报期间的试听拒绝。");
+
+        for (int i = 0; i < 3 && !interruptionObserved; i++)
+        {
+            using (var output = new NativeOutput())
+            {
+                Require(output.Speech.TryPreviewChineseVoice(), "空闲时试听未入队。");
+                var preview = output.FirstStarted();
+                if (preview.IsCompleted) { output.Finished(1).Single().RequireSuccess(); continue; }
+                // 与正式固件告警入口保持先检查 IsReady 再入队的顺序。
+                if (!output.Speech.IsReady)
+                {
+                    if (preview.IsCompleted) { output.Finished(1).Single().RequireSuccess(); continue; }
+                    throw new InvalidOperationException("试听占用了正式播报的就绪门槛。");
+                }
+                Require(output.Speech.TrySpeakAsync(AlertText), "试听中到达的正式播报未入队。");
+                var finished = output.Finished(2);
+                var previewEnd = finished.Single(t => ReferenceEquals(t.Prompt, preview));
+                var alertEnd = finished.Single(t => !ReferenceEquals(t.Prompt, preview));
+                alertEnd.RequireSuccess();
+                if (previewEnd.Cancelled)
+                {
+                    Require(previewEnd.Error == null || previewEnd.Error is OperationCanceledException,
+                        "试听因后端错误结束，不能计为被告警打断。");
+                    Require(previewEnd.Completed < alertEnd.Completed, "取消试听和完成告警的事件次序异常。");
+                    interruptionObserved = true;
+                    Console.WriteLine("事件  试听已开始 → 同一试听被取消 → 告警正常完成");
+                }
+                else previewEnd.RequireSuccess();
+                output.CheckWave();
+            }
+        }
+        if (!interruptionObserved) Unverified("短试听自然结束，三次尝试未取得同一提示被告警取消的事件。");
+    }
+}
