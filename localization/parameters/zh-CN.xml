@@ -1052,4 +1052,140 @@
     <english>Barometer sensor ID, taking into account its type, bus and instance</english>
     <chinese>气压计传感器的设备编号，由类型、总线和实例共同确定。</chinese>
   </translation>
+  <translation family="Sub" parameter="ARSPD2_DEVID" field="Description" versions="4.7.1" englishSha256="8b605c9e85c11fbad9680a71e91b529a08d198271577e83224ca42358a10ab97" recordSha256="e190d024d08ae50bd8dbdc4f3fa61ae0107fad0390018d9749ed9ba089b71ae3">
+    <english>Airspeed sensor ID, taking into account its type, bus and instance</english>
+    <chinese>空速传感器的设备编号，由类型、总线和实例共同确定。</chinese>
+  </translation>
+  <translation family="Sub" parameter="ARSPD3_DEVID" field="Description" versions="4.7.1" englishSha256="8b605c9e85c11fbad9680a71e91b529a08d198271577e83224ca42358a10ab97" recordSha256="66339939b41421a316ca0c0389f9d115ab7a1e53784954ae1128a2aabd7d4b99">
+    <english>Airspeed sensor ID, taking into account its type, bus and instance</english>
+    <chinese>空速传感器的设备编号，由类型、总线和实例共同确定。</chinese>
+  </translation>
+  <translation family="Sub" parameter="ARSPD4_DEVID" field="Description" versions="4.7.1" englishSha256="8b605c9e85c11fbad9680a71e91b529a08d198271577e83224ca42358a10ab97" recordSha256="f4489aa4dcb2dc7c7ea1a29337b885cfab3e09666f5943963f899462f64aafd4">
+    <english>Airspeed sensor ID, taking into account its type, bus and instance</english>
+    <chinese>空速传感器的设备编号，由类型、总线和实例共同确定。</chinese>
+  </translation>
+  <translation family="Sub" parameter="ARSPD5_DEVID" field="Description" versions="4.7.1" englishSha256="8b605c9e85c11fbad9680a71e91b529a08d198271577e83224ca42358a10ab97" recordSha256="62f0021cb41a29e487cff5451a1cea6b4c95ac36a36328d0f9b2097ea3d81e8a">
+    <english>Airspeed sensor ID, taking into account its type, bus and instance</english>
+    <chinese>空速传感器的设备编号，由类型、总线和实例共同确定。</chinese>
+  </translation>
+  <translation family="Sub" parameter="ARSPD6_DEVID" field="Description" versions="4.7.1" englishSha256="8b605c9e85c11fbad9680a71e91b529a08d198271577e83224ca42358a10ab97" recordSha256="e7193bc6fae205ade2ba94dffc467568ec34952f4547887279e46db65c1a3486">
+    <english>Airspeed sensor ID, taking into account its type, bus and instance</english>
+    <chinese>空速传感器的设备编号，由类型、总线和实例共同确定。</chinese>
+  </translation>
+  <translation family="Sub" parameter="ARSPD_DEVID" field="Description" versions="4.7.1" englishSha256="8b605c9e85c11fbad9680a71e91b529a08d198271577e83224ca42358a10ab97" recordSha256="c6f988328cebe45b810f348c69151d3f761a3b272a3c14d92f0711700818b5e0">
+    <english>Airspeed sensor ID, taking into account its type, bus and instance</english>
+    <chinese>空速传感器的设备编号，由类型、总线和实例共同确定。</chinese>
+  </translation>
+  <translation family="Sub" parameter="BARO1_DEVID" field="Description" versions="4.7.1" englishSha256="ac0c83c6f8e60a7308f0583d344d4f1307894f4eb09eeba3dd841d44ff279192" recordSha256="780e5d7ba504c9ffc440d4664348141fcf51c63725b472ed7ead2032e24d52dd">
+    <english>Barometer sensor ID, taking into account its type, bus and instance</english>
+    <chinese>气压计传感器的设备编号，由类型、总线和实例共同确定。</chinese>
+  </translation>
+  <translation family="Sub" parameter="BARO2_DEVID" field="Description" versions="4.7.1" englishSha256="f4d6275cf88a37ee40bc121bdf9d4702448237d6a65bda0e3f3bd69c410b25d0" recordSha256="593b8362a582cd06857bf3bc9f79c79263064590defc2805a2268f71df198288">
+    <english>Barometer2 sensor ID, taking into account its type, bus and instance</english>
+    <chinese>2 号气压计传感器的设备编号，由类型、总线和实例共同确定。</chinese>
+  </translation>
+  <translation family="Sub" parameter="BARO3_DEVID" field="Description" versions="4.7.1" englishSha256="c41498787095100a1632d39dfdb3cfc8cc9b90094776e8054a221e7deb851c2f" recordSha256="8d3d608b1572852b4a34db786292c7e1c29d203ba0b0cd5067e6d5edcee64451">
+    <english>Barometer3 sensor ID, taking into account its type, bus and instance</english>
+    <chinese>3 号气压计传感器的设备编号，由类型、总线和实例共同确定。</chinese>
+  </translation>
+  <translation family="Sub" parameter="COMPASS_DEV_ID" field="Description" versions="4.7.1" englishSha256="373eead8c2bd89c98a654d43bb8e6bd5b6ff10597831e15e224aa42e14cd7342" recordSha256="50aef9943bbff09d7c528fa7d063c9bcd32e4bd881b3345407f3be4f694e2a41">
+    <english>Compass device id.  Automatically detected, do not set manually</english>
+    <chinese>罗盘的设备编号。自动检测，请勿手动设置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="COMPASS_DEV_ID2" field="Description" versions="4.7.1" englishSha256="af3fbb9c4f74b52ee1b9c5773959670fb244309ea67968b6ced0b5bfab774287" recordSha256="97cb3618dbcb226abce62b43149b1dccd57def12d5347fb1e38cba2cab6926fc">
+    <english>Second compass's device id.  Automatically detected, do not set manually</english>
+    <chinese>2 号罗盘的设备编号。自动检测，请勿手动设置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="COMPASS_DEV_ID3" field="Description" versions="4.7.1" englishSha256="cda47bd49a4e31ce268c2390a193d3e33c9733848e440a911aaedd8012ba6887" recordSha256="459a7dfc38c23d77411726ea819f551f2d76cfab9e203222b32f0640c53230c3">
+    <english>Third compass's device id.  Automatically detected, do not set manually</english>
+    <chinese>3 号罗盘的设备编号。自动检测，请勿手动设置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="COMPASS_DEV_ID4" field="Description" versions="4.7.1" englishSha256="42d8fd6aa1923cd50afde0c69ba6dc91fc87733ecf2d1954289cd5b5fc257a0e" recordSha256="578e9df82b076b00a3413b51a24eea8c1cbe1a2342bba3f17bb5326ac996e6a9">
+    <english>Extra 4th compass's device id.  Automatically detected, do not set manually</english>
+    <chinese>附加的第 4 个罗盘的设备编号。自动检测，请勿手动设置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="COMPASS_DEV_ID5" field="Description" versions="4.7.1" englishSha256="343f6d4e16188881ec55bb6e9efef6816e903850773ef150cf379033288883e9" recordSha256="3d48860a818ad00cd145e62e040069bbf019724778f6d57face3c2f791ad9a11">
+    <english>Extra 5th compass's device id.  Automatically detected, do not set manually</english>
+    <chinese>附加的第 5 个罗盘的设备编号。自动检测，请勿手动设置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="COMPASS_DEV_ID6" field="Description" versions="4.7.1" englishSha256="f10282d12eb297d056114c9058f9a6d09fc433bc3fae42aacaa67928f43e065f" recordSha256="ce844449cc4108f5729bb0d00ec3758171b8f12505a7e9dd774dd13d827da049">
+    <english>Extra 6th compass's device id.  Automatically detected, do not set manually</english>
+    <chinese>附加的第 6 个罗盘的设备编号。自动检测，请勿手动设置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="COMPASS_DEV_ID7" field="Description" versions="4.7.1" englishSha256="7567d59380190d0e749c541dc3c8625ffabe6a459390cc7a9aa64cd203af2acd" recordSha256="0741aec1e1e003e218cdc5b100ca85559a074ca616e8ced0b4785207e19e0bd8">
+    <english>Extra 7th compass's device id.  Automatically detected, do not set manually</english>
+    <chinese>附加的第 7 个罗盘的设备编号。自动检测，请勿手动设置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="COMPASS_DEV_ID8" field="Description" versions="4.7.1" englishSha256="6be3b647b48d83b449c438b4a73c4011a1bb3420c3b09c819697fcc7c268a558" recordSha256="794630b65e6943c0da86766ffce33633ed2734ee8448baa2b7f583775e5c585a">
+    <english>Extra 8th compass's device id.  Automatically detected, do not set manually</english>
+    <chinese>附加的第 8 个罗盘的设备编号。自动检测，请勿手动设置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="INS_GYR_ID" field="Description" versions="4.7.1" englishSha256="4099f4165d90dedaab631952345beba940e642b8feb1b52034f3a8b1f4b1cc71" recordSha256="030dfc2a5481c1c5e3cef940686d193fbe6244133b7c7dd1053f6ec1db7e580a">
+    <english>Gyro sensor ID, taking into account its type, bus and instance</english>
+    <chinese>陀螺仪传感器的设备编号，由类型、总线和实例共同确定。</chinese>
+  </translation>
+  <translation family="Sub" parameter="INS_GYR2_ID" field="Description" versions="4.7.1" englishSha256="d5ddef549446c1b219ceefc6e2bc124a30cbfd4e1276f78042cf0cee2b41ea51" recordSha256="dc998ca620839e2ea97f90e725bc23dc288fb0d46f003e36a3c6abae2bbe2fec">
+    <english>Gyro2 sensor ID, taking into account its type, bus and instance</english>
+    <chinese>2 号陀螺仪传感器的设备编号，由类型、总线和实例共同确定。</chinese>
+  </translation>
+  <translation family="Sub" parameter="INS_GYR3_ID" field="Description" versions="4.7.1" englishSha256="eafc6c5cc9b0a0e5a4d041a777dfb1b9ce1febffce2b15e56df660b23f126f1d" recordSha256="d77b15a0dd77a304741ab71b8777fc882929b21e72cbc7adedec45fd9917139d">
+    <english>Gyro3 sensor ID, taking into account its type, bus and instance</english>
+    <chinese>3 号陀螺仪传感器的设备编号，由类型、总线和实例共同确定。</chinese>
+  </translation>
+  <translation family="Sub" parameter="INS_ACC_ID" field="Description" versions="4.7.1" englishSha256="5e1c0b203b6426981579e0b6aad22eedc0217702ce5f37a20a1688b7b032106f" recordSha256="d21016b6f6d421c430ee102c4af4d6fbcedab00044c7d309537a6150ed8de7cc">
+    <english>Accelerometer sensor ID, taking into account its type, bus and instance</english>
+    <chinese>加速度计传感器的设备编号，由类型、总线和实例共同确定。</chinese>
+  </translation>
+  <translation family="Sub" parameter="INS_ACC2_ID" field="Description" versions="4.7.1" englishSha256="ebf10446347dbe5f4b2be1de1eb3a57756d96cd55dac2a3014911f13f580b884" recordSha256="543e7fab01ad54aad2e5c94381beaaee74def1ad08d5aa36db9d0a10dd5e35b0">
+    <english>Accelerometer2 sensor ID, taking into account its type, bus and instance</english>
+    <chinese>2 号加速度计传感器的设备编号，由类型、总线和实例共同确定。</chinese>
+  </translation>
+  <translation family="Sub" parameter="INS_ACC3_ID" field="Description" versions="4.7.1" englishSha256="8e62fefd5ae2cbbe4f7148f164a434f9285dfa0af2325fd97689590406e935d2" recordSha256="70f938bbbca98cf4f5b556b6ee09bd3e53ead7da694087f88bf2e5dc67a231ae">
+    <english>Accelerometer3 sensor ID, taking into account its type, bus and instance</english>
+    <chinese>3 号加速度计传感器的设备编号，由类型、总线和实例共同确定。</chinese>
+  </translation>
+  <translation family="Sub" parameter="INS4_ACC_ID" field="Description" versions="4.7.1" englishSha256="5e1c0b203b6426981579e0b6aad22eedc0217702ce5f37a20a1688b7b032106f" recordSha256="9b5450db33af1122cd6dbee27ecff642ed770588b4cc81f009851c26dfd7cba2">
+    <english>Accelerometer sensor ID, taking into account its type, bus and instance</english>
+    <chinese>加速度计传感器的设备编号，由类型、总线和实例共同确定。</chinese>
+  </translation>
+  <translation family="Sub" parameter="INS4_GYR_ID" field="Description" versions="4.7.1" englishSha256="4099f4165d90dedaab631952345beba940e642b8feb1b52034f3a8b1f4b1cc71" recordSha256="80c1658e4ffef6969ffeead236793ceaaf1573f5418500db74a77ca0d87e7936">
+    <english>Gyro sensor ID, taking into account its type, bus and instance</english>
+    <chinese>陀螺仪传感器的设备编号，由类型、总线和实例共同确定。</chinese>
+  </translation>
+  <translation family="Sub" parameter="INS5_ACC_ID" field="Description" versions="4.7.1" englishSha256="5e1c0b203b6426981579e0b6aad22eedc0217702ce5f37a20a1688b7b032106f" recordSha256="9a4d9b47f1a1cde7aaa2c8ecf7479674faee257628d61904ed18839eb5910889">
+    <english>Accelerometer sensor ID, taking into account its type, bus and instance</english>
+    <chinese>加速度计传感器的设备编号，由类型、总线和实例共同确定。</chinese>
+  </translation>
+  <translation family="Sub" parameter="INS5_GYR_ID" field="Description" versions="4.7.1" englishSha256="4099f4165d90dedaab631952345beba940e642b8feb1b52034f3a8b1f4b1cc71" recordSha256="8a7d6d100b495f726820588e5e01918cab4fc62721a4f24ff4d9d51a880edaf7">
+    <english>Gyro sensor ID, taking into account its type, bus and instance</english>
+    <chinese>陀螺仪传感器的设备编号，由类型、总线和实例共同确定。</chinese>
+  </translation>
+  <translation family="Sub" parameter="BARO1_GND_PRESS" field="Description" versions="4.7.1" englishSha256="3513e9bcb8523ca39db7853c9b71b750497cb5ab7a57908200fdd27eb1ecadff" recordSha256="c52350989ef3d793e01f39ff8d52ef553224080adc78e4fdebbd65f13e6720e4">
+    <english>calibrated ground pressure in Pascals</english>
+    <chinese>校准后的地面气压（帕）。</chinese>
+  </translation>
+  <translation family="Sub" parameter="BARO2_GND_PRESS" field="Description" versions="4.7.1" englishSha256="3513e9bcb8523ca39db7853c9b71b750497cb5ab7a57908200fdd27eb1ecadff" recordSha256="fea7ab5b707cc099b008bba86787c280293aed6b4d3914007defd1d62f73344d">
+    <english>calibrated ground pressure in Pascals</english>
+    <chinese>校准后的地面气压（帕）。</chinese>
+  </translation>
+  <translation family="Sub" parameter="BARO3_GND_PRESS" field="Description" versions="4.7.1" englishSha256="3513e9bcb8523ca39db7853c9b71b750497cb5ab7a57908200fdd27eb1ecadff" recordSha256="5c0cdb5863bceb8417d11869285a69e8da146b42677238fae1c82c6e37d50bbe">
+    <english>calibrated ground pressure in Pascals</english>
+    <chinese>校准后的地面气压（帕）。</chinese>
+  </translation>
+  <translation family="Sub" parameter="MIS_TOTAL" field="Description" versions="4.7.1" englishSha256="82ae4f8c3239c323855a27b1b22de163b0414b06192c33632c7de12688d51218" recordSha256="24ef2dad73cf3a7960db3aa2ab5776880f77e06f24874d3f31e042328631dfa6">
+    <english>The number of mission mission items that has been loaded by the ground station. Do not change this manually.</english>
+    <chinese>地面站已加载的任务项数量。请勿手动修改。</chinese>
+  </translation>
+  <translation family="Sub" parameter="VTX_FREQ" field="Description" versions="4.7.1" englishSha256="80a4520379c2027729984dafdcc217a929028ddcb14174363763a8a211d264f5" recordSha256="c0527b58602fbdfa8f7b90de7ce2d5d102e39ccbd0aaf0a6790e789c389c4f94">
+    <english>Video Transmitter Frequency. The frequency is derived from the setting of BAND and CHANNEL</english>
+    <chinese>图传发射频率，由频段和频道设定共同确定。</chinese>
+  </translation>
+  <translation family="Sub" parameter="GPS1_CAN_NODEID" field="Description" versions="4.7.1" englishSha256="2282c6dcc3fa5c6660877ba722b1ff324eed4a781013ed2db75f2e76e4165924" recordSha256="7359d27ef9c5b3068f6111951c09ebe317d9905768d61e49a2a680743999c16b">
+    <english>GPS Node id for GPS.  Detected node unless CAN_OVRIDE is set</english>
+    <chinese>GPS 节点编号。除非设置了 CAN_OVRIDE，否则显示检测到的节点编号。</chinese>
+  </translation>
+  <translation family="Sub" parameter="GPS2_CAN_NODEID" field="Description" versions="4.7.1" englishSha256="2282c6dcc3fa5c6660877ba722b1ff324eed4a781013ed2db75f2e76e4165924" recordSha256="57521736e880daa6710720ba4dc13f33eb504683f3899efa2e1a54f1278dd235">
+    <english>GPS Node id for GPS.  Detected node unless CAN_OVRIDE is set</english>
+    <chinese>GPS 节点编号。除非设置了 CAN_OVRIDE，否则显示检测到的节点编号。</chinese>
+  </translation>
 </parameterTranslations>
