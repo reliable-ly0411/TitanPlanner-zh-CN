@@ -622,9 +622,73 @@
             <field name="Range">0 63</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="OSD Options" name="OSD_OPTIONS" documentation="This sets options that change the display" user="Standard">
+            <field name="Bitmask">0:UseDecimalPack, 1:InvertedWindArrow, 2:InvertedAHRoll, 3:Convert feet to miles at 5280ft instead of 10000ft, 4:DisableCrosshair, 5:TranslateArrows, 6:AviationStyleAH, 7:Prefix LQ with RF Mode</field>
+          </param>
+          <param humanName="Display Units" name="OSD_UNITS" documentation="Sets the units to use in displaying items" user="Standard">
+            <values>
+              <value code="0">Metric</value>
+              <value code="1">Imperial</value>
+              <value code="2">SI</value>
+              <value code="3">Aviation</value>
+            </values>
+          </param>
+          <param humanName="RSSI warn level (in %)" name="OSD_W_RSSI" documentation="Set level at which RSSI item will flash (in positive % or negative dBm values as applicable). 30% or -100dBm are defaults." user="Standard">
+            <field name="Range">-128 100</field>
+          </param>
+          <param humanName="NSAT warn level" name="OSD_W_NSAT" documentation="Set level at which NSAT item will flash" user="Standard">
+            <field name="Range">1 30</field>
+          </param>
+          <param humanName="BAT_VOLT warn level" name="OSD_W_BATVOLT" documentation="Set level at which BAT_VOLT item will flash" user="Standard">
+            <field name="Range">0 100</field>
+          </param>
+          <param humanName="Terrain warn level" name="OSD_W_TERR" documentation="Set level below which TER_HGT item will flash. -1 disables." user="Standard">
+            <field name="Range">-1 3000</field>
+            <field name="Units">m</field>
+            <field name="UnitText">meters</field>
+          </param>
+          <param humanName="AVGCELLV warn level" name="OSD_W_AVGCELLV" documentation="Set level at which AVGCELLV item will flash" user="Standard">
+            <field name="Range">0 100</field>
+          </param>
+          <param humanName="RESTVOLT warn level" name="OSD_W_RESTVOLT" documentation="Set level at which RESTVOLT item will flash" user="Standard">
+            <field name="Range">0 100</field>
+          </param>
+          <param humanName="Avg Cell Resting Volt warn level" name="OSD_W_ACRVOLT" documentation="Set level at which ACRVOLT item will flash" user="Standard">
+            <field name="Range">0 100</field>
+          </param>
+          <param humanName="RC link quality warn level (in %)" name="OSD_W_LQ" documentation="Set level at which RC_LQ item will flash (%)" user="Standard">
+            <field name="Range">0 100</field>
+          </param>
+          <param humanName="RC link SNR warn level (in %)" name="OSD_W_SNR" documentation="Set level at which RC_SNR item will flash (in db)" user="Standard">
+            <field name="Range">-20 10</field>
+          </param>
+          <param humanName="Arm screen" name="OSD_ARM_SCR" documentation="Screen to be shown on Arm event. Zero to disable the feature." user="Standard">
+            <field name="Range">0 4</field>
+          </param>
+          <param humanName="Disarm screen" name="OSD_DSARM_SCR" documentation="Screen to be shown on disarm event. Zero to disable the feature." user="Standard">
+            <field name="Range">0 4</field>
+          </param>
+          <param humanName="Failsafe screen" name="OSD_FS_SCR" documentation="Screen to be shown on failsafe event. Zero to disable the feature." user="Standard">
+            <field name="Range">0 4</field>
+          </param>
+          <param humanName="Battery cell count" name="OSD_CELL_COUNT" documentation="Used for average cell voltage display. -1 disables, 0 uses cell count autodetection for well charged LIPO/LIION batteries at connection, other values manually select cell count used." user="Advanced">
+            <field name="Increment">1</field>
+          </param>
         </parameters>
         <parameters name="OSD1_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD1_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="WIND_EN" name="OSD1_WIND_EN" documentation="Displays wind speed and relative direction, on Rover this is the apparent wind speed and direction from the windvane, if fitted">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="WIND_X" name="OSD1_WIND_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="WIND_Y" name="OSD1_WIND_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -632,14 +696,50 @@
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="WIND_EN" name="OSD2_WIND_EN" documentation="Displays wind speed and relative direction, on Rover this is the apparent wind speed and direction from the windvane, if fitted">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="WIND_X" name="OSD2_WIND_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="WIND_Y" name="OSD2_WIND_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD3_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD3_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="WIND_EN" name="OSD3_WIND_EN" documentation="Displays wind speed and relative direction, on Rover this is the apparent wind speed and direction from the windvane, if fitted">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="WIND_X" name="OSD3_WIND_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="WIND_Y" name="OSD3_WIND_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="WIND_EN" name="OSD4_WIND_EN" documentation="Displays wind speed and relative direction, on Rover this is the apparent wind speed and direction from the windvane, if fitted">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="WIND_X" name="OSD4_WIND_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="WIND_Y" name="OSD4_WIND_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -1344,9 +1444,83 @@
             <field name="Range">0 63</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="OSD Options" name="OSD_OPTIONS" documentation="This sets options that change the display" user="Standard">
+            <bitmask>
+              <bit code="0">UseDecimalPack</bit>
+              <bit code="1">InvertedWindArrow</bit>
+              <bit code="2">InvertedAHRoll</bit>
+              <bit code="3">Convert feet to miles at 5280ft instead of 10000ft</bit>
+              <bit code="4">DisableCrosshair</bit>
+              <bit code="5">TranslateArrows</bit>
+              <bit code="6">AviationStyleAH</bit>
+              <bit code="7">Prefix LQ with RF Mode</bit>
+            </bitmask>
+            <field name="Bitmask">0:UseDecimalPack, 1:InvertedWindArrow, 2:InvertedAHRoll, 3:Convert feet to miles at 5280ft instead of 10000ft, 4:DisableCrosshair, 5:TranslateArrows, 6:AviationStyleAH, 7:Prefix LQ with RF Mode</field>
+          </param>
+          <param humanName="Display Units" name="OSD_UNITS" documentation="Sets the units to use in displaying items" user="Standard">
+            <values>
+              <value code="0">Metric</value>
+              <value code="1">Imperial</value>
+              <value code="2">SI</value>
+              <value code="3">Aviation</value>
+            </values>
+          </param>
+          <param humanName="RSSI warn level (in %)" name="OSD_W_RSSI" documentation="Set level at which RSSI item will flash (in positive % or negative dBm values as applicable). 30% or -100dBm are defaults." user="Standard">
+            <field name="Range">-128 100</field>
+          </param>
+          <param humanName="NSAT warn level" name="OSD_W_NSAT" documentation="Set level at which NSAT item will flash" user="Standard">
+            <field name="Range">1 30</field>
+          </param>
+          <param humanName="BAT_VOLT warn level" name="OSD_W_BATVOLT" documentation="Set level at which BAT_VOLT item will flash" user="Standard">
+            <field name="Range">0 100</field>
+          </param>
+          <param humanName="Terrain warn level" name="OSD_W_TERR" documentation="Set level below which TER_HGT item will flash. -1 disables." user="Standard">
+            <field name="Range">-1 3000</field>
+            <field name="Units">m</field>
+            <field name="UnitText">meters</field>
+          </param>
+          <param humanName="AVGCELLV warn level" name="OSD_W_AVGCELLV" documentation="Set level at which AVGCELLV item will flash" user="Standard">
+            <field name="Range">0 100</field>
+          </param>
+          <param humanName="RESTVOLT warn level" name="OSD_W_RESTVOLT" documentation="Set level at which RESTVOLT item will flash" user="Standard">
+            <field name="Range">0 100</field>
+          </param>
+          <param humanName="Avg Cell Resting Volt warn level" name="OSD_W_ACRVOLT" documentation="Set level at which ACRVOLT item will flash" user="Standard">
+            <field name="Range">0 100</field>
+          </param>
+          <param humanName="RC link quality warn level (in %)" name="OSD_W_LQ" documentation="Set level at which RC_LQ item will flash (%)" user="Standard">
+            <field name="Range">0 100</field>
+          </param>
+          <param humanName="RC link SNR warn level (in %)" name="OSD_W_SNR" documentation="Set level at which RC_SNR item will flash (in db)" user="Standard">
+            <field name="Range">-20 10</field>
+          </param>
+          <param humanName="Arm screen" name="OSD_ARM_SCR" documentation="Screen to be shown on Arm event. Zero to disable the feature." user="Standard">
+            <field name="Range">0 4</field>
+          </param>
+          <param humanName="Disarm screen" name="OSD_DSARM_SCR" documentation="Screen to be shown on disarm event. Zero to disable the feature." user="Standard">
+            <field name="Range">0 4</field>
+          </param>
+          <param humanName="Failsafe screen" name="OSD_FS_SCR" documentation="Screen to be shown on failsafe event. Zero to disable the feature." user="Standard">
+            <field name="Range">0 4</field>
+          </param>
+          <param humanName="Battery cell count" name="OSD_CELL_COUNT" documentation="Used for average cell voltage display. -1 disables, 0 uses cell count autodetection for well charged LIPO/LIION batteries at connection, other values manually select cell count used." user="Advanced">
+            <field name="Increment">1</field>
+          </param>
         </parameters>
         <parameters name="OSD1_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD1_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="WIND_EN" name="OSD1_WIND_EN" documentation="Displays wind speed and relative direction, on Rover this is the apparent wind speed and direction from the windvane, if fitted">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="WIND_X" name="OSD1_WIND_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="WIND_Y" name="OSD1_WIND_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -1354,14 +1528,50 @@
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="WIND_EN" name="OSD2_WIND_EN" documentation="Displays wind speed and relative direction, on Rover this is the apparent wind speed and direction from the windvane, if fitted">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="WIND_X" name="OSD2_WIND_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="WIND_Y" name="OSD2_WIND_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD3_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD3_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="WIND_EN" name="OSD3_WIND_EN" documentation="Displays wind speed and relative direction, on Rover this is the apparent wind speed and direction from the windvane, if fitted">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="WIND_X" name="OSD3_WIND_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="WIND_Y" name="OSD3_WIND_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="WIND_EN" name="OSD4_WIND_EN" documentation="Displays wind speed and relative direction, on Rover this is the apparent wind speed and direction from the windvane, if fitted">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="WIND_X" name="OSD4_WIND_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="WIND_Y" name="OSD4_WIND_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -2156,9 +2366,83 @@
             <field name="Range">0 63</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="OSD Options" name="OSD_OPTIONS" documentation="This sets options that change the display" user="Standard">
+            <bitmask>
+              <bit code="0">UseDecimalPack</bit>
+              <bit code="1">InvertedWindArrow</bit>
+              <bit code="2">InvertedAHRoll</bit>
+              <bit code="3">Convert feet to miles at 5280ft instead of 10000ft</bit>
+              <bit code="4">DisableCrosshair</bit>
+              <bit code="5">TranslateArrows</bit>
+              <bit code="6">AviationStyleAH</bit>
+              <bit code="7">Prefix LQ with RF Mode</bit>
+            </bitmask>
+            <field name="Bitmask">0:UseDecimalPack, 1:InvertedWindArrow, 2:InvertedAHRoll, 3:Convert feet to miles at 5280ft instead of 10000ft, 4:DisableCrosshair, 5:TranslateArrows, 6:AviationStyleAH, 7:Prefix LQ with RF Mode</field>
+          </param>
+          <param humanName="Display Units" name="OSD_UNITS" documentation="Sets the units to use in displaying items" user="Standard">
+            <values>
+              <value code="0">Metric</value>
+              <value code="1">Imperial</value>
+              <value code="2">SI</value>
+              <value code="3">Aviation</value>
+            </values>
+          </param>
+          <param humanName="RSSI warn level (in %)" name="OSD_W_RSSI" documentation="Set level at which RSSI item will flash (in positive % or negative dBm values as applicable). 30% or -100dBm are defaults." user="Standard">
+            <field name="Range">-128 100</field>
+          </param>
+          <param humanName="NSAT warn level" name="OSD_W_NSAT" documentation="Set level at which NSAT item will flash" user="Standard">
+            <field name="Range">1 30</field>
+          </param>
+          <param humanName="BAT_VOLT warn level" name="OSD_W_BATVOLT" documentation="Set level at which BAT_VOLT item will flash" user="Standard">
+            <field name="Range">0 100</field>
+          </param>
+          <param humanName="Terrain warn level" name="OSD_W_TERR" documentation="Set level below which TER_HGT item will flash. -1 disables." user="Standard">
+            <field name="Range">-1 3000</field>
+            <field name="Units">m</field>
+            <field name="UnitText">meters</field>
+          </param>
+          <param humanName="AVGCELLV warn level" name="OSD_W_AVGCELLV" documentation="Set level at which AVGCELLV item will flash" user="Standard">
+            <field name="Range">0 100</field>
+          </param>
+          <param humanName="RESTVOLT warn level" name="OSD_W_RESTVOLT" documentation="Set level at which RESTVOLT item will flash" user="Standard">
+            <field name="Range">0 100</field>
+          </param>
+          <param humanName="Avg Cell Resting Volt warn level" name="OSD_W_ACRVOLT" documentation="Set level at which ACRVOLT item will flash" user="Standard">
+            <field name="Range">0 100</field>
+          </param>
+          <param humanName="RC link quality warn level (in %)" name="OSD_W_LQ" documentation="Set level at which RC_LQ item will flash (%)" user="Standard">
+            <field name="Range">0 100</field>
+          </param>
+          <param humanName="RC link SNR warn level (in %)" name="OSD_W_SNR" documentation="Set level at which RC_SNR item will flash (in db)" user="Standard">
+            <field name="Range">-20 10</field>
+          </param>
+          <param humanName="Arm screen" name="OSD_ARM_SCR" documentation="Screen to be shown on Arm event. Zero to disable the feature." user="Standard">
+            <field name="Range">0 4</field>
+          </param>
+          <param humanName="Disarm screen" name="OSD_DSARM_SCR" documentation="Screen to be shown on disarm event. Zero to disable the feature." user="Standard">
+            <field name="Range">0 4</field>
+          </param>
+          <param humanName="Failsafe screen" name="OSD_FS_SCR" documentation="Screen to be shown on failsafe event. Zero to disable the feature." user="Standard">
+            <field name="Range">0 4</field>
+          </param>
+          <param humanName="Battery cell count" name="OSD_CELL_COUNT" documentation="Used for average cell voltage display. -1 disables, 0 uses cell count autodetection for well charged LIPO/LIION batteries at connection, other values manually select cell count used." user="Advanced">
+            <field name="Increment">1</field>
+          </param>
         </parameters>
         <parameters name="OSD1_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD1_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="WIND_EN" name="OSD1_WIND_EN" documentation="Displays wind speed and relative direction, on Rover this is the apparent wind speed and direction from the windvane, if fitted">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="WIND_X" name="OSD1_WIND_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="WIND_Y" name="OSD1_WIND_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -2166,14 +2450,50 @@
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="WIND_EN" name="OSD2_WIND_EN" documentation="Displays wind speed and relative direction, on Rover this is the apparent wind speed and direction from the windvane, if fitted">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="WIND_X" name="OSD2_WIND_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="WIND_Y" name="OSD2_WIND_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD3_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD3_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="WIND_EN" name="OSD3_WIND_EN" documentation="Displays wind speed and relative direction, on Rover this is the apparent wind speed and direction from the windvane, if fitted">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="WIND_X" name="OSD3_WIND_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="WIND_Y" name="OSD3_WIND_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="WIND_EN" name="OSD4_WIND_EN" documentation="Displays wind speed and relative direction, on Rover this is the apparent wind speed and direction from the windvane, if fitted">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="WIND_X" name="OSD4_WIND_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="WIND_Y" name="OSD4_WIND_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -2966,9 +3286,73 @@
             <field name="Range">0 63</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="OSD Options" name="OSD_OPTIONS" documentation="This sets options that change the display" user="Standard">
+            <field name="Bitmask">0:UseDecimalPack, 1:InvertedWindArrow, 2:InvertedAHRoll, 3:Convert feet to miles at 5280ft instead of 10000ft, 4:DisableCrosshair, 5:TranslateArrows, 6:AviationStyleAH, 7:Prefix LQ with RF Mode</field>
+          </param>
+          <param humanName="Display Units" name="OSD_UNITS" documentation="Sets the units to use in displaying items" user="Standard">
+            <values>
+              <value code="0">Metric</value>
+              <value code="1">Imperial</value>
+              <value code="2">SI</value>
+              <value code="3">Aviation</value>
+            </values>
+          </param>
+          <param humanName="RSSI warn level (in %)" name="OSD_W_RSSI" documentation="Set level at which RSSI item will flash (in positive % or negative dBm values as applicable). 30% or -100dBm are defaults." user="Standard">
+            <field name="Range">-128 100</field>
+          </param>
+          <param humanName="NSAT warn level" name="OSD_W_NSAT" documentation="Set level at which NSAT item will flash" user="Standard">
+            <field name="Range">1 30</field>
+          </param>
+          <param humanName="BAT_VOLT warn level" name="OSD_W_BATVOLT" documentation="Set level at which BAT_VOLT item will flash" user="Standard">
+            <field name="Range">0 100</field>
+          </param>
+          <param humanName="Terrain warn level" name="OSD_W_TERR" documentation="Set level below which TER_HGT item will flash. -1 disables." user="Standard">
+            <field name="Range">-1 3000</field>
+            <field name="Units">m</field>
+            <field name="UnitText">meters</field>
+          </param>
+          <param humanName="AVGCELLV warn level" name="OSD_W_AVGCELLV" documentation="Set level at which AVGCELLV item will flash" user="Standard">
+            <field name="Range">0 100</field>
+          </param>
+          <param humanName="RESTVOLT warn level" name="OSD_W_RESTVOLT" documentation="Set level at which RESTVOLT item will flash" user="Standard">
+            <field name="Range">0 100</field>
+          </param>
+          <param humanName="Avg Cell Resting Volt warn level" name="OSD_W_ACRVOLT" documentation="Set level at which ACRVOLT item will flash" user="Standard">
+            <field name="Range">0 100</field>
+          </param>
+          <param humanName="RC link quality warn level (in %)" name="OSD_W_LQ" documentation="Set level at which RC_LQ item will flash (%)" user="Standard">
+            <field name="Range">0 100</field>
+          </param>
+          <param humanName="RC link SNR warn level (in %)" name="OSD_W_SNR" documentation="Set level at which RC_SNR item will flash (in db)" user="Standard">
+            <field name="Range">-20 10</field>
+          </param>
+          <param humanName="Arm screen" name="OSD_ARM_SCR" documentation="Screen to be shown on Arm event. Zero to disable the feature." user="Standard">
+            <field name="Range">0 4</field>
+          </param>
+          <param humanName="Disarm screen" name="OSD_DSARM_SCR" documentation="Screen to be shown on disarm event. Zero to disable the feature." user="Standard">
+            <field name="Range">0 4</field>
+          </param>
+          <param humanName="Failsafe screen" name="OSD_FS_SCR" documentation="Screen to be shown on failsafe event. Zero to disable the feature." user="Standard">
+            <field name="Range">0 4</field>
+          </param>
+          <param humanName="Battery cell count" name="OSD_CELL_COUNT" documentation="Used for average cell voltage display. -1 disables, 0 uses cell count autodetection for well charged LIPO/LIION batteries at connection, other values manually select cell count used." user="Advanced">
+            <field name="Increment">1</field>
+          </param>
         </parameters>
         <parameters name="OSD1_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD1_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="WIND_EN" name="OSD1_WIND_EN" documentation="Displays wind speed and relative direction, on Rover this is the apparent wind speed and direction from the windvane, if fitted">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="WIND_X" name="OSD1_WIND_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="WIND_Y" name="OSD1_WIND_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -2976,14 +3360,50 @@
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="WIND_EN" name="OSD2_WIND_EN" documentation="Displays wind speed and relative direction, on Rover this is the apparent wind speed and direction from the windvane, if fitted">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="WIND_X" name="OSD2_WIND_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="WIND_Y" name="OSD2_WIND_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD3_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD3_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="WIND_EN" name="OSD3_WIND_EN" documentation="Displays wind speed and relative direction, on Rover this is the apparent wind speed and direction from the windvane, if fitted">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="WIND_X" name="OSD3_WIND_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="WIND_Y" name="OSD3_WIND_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="WIND_EN" name="OSD4_WIND_EN" documentation="Displays wind speed and relative direction, on Rover this is the apparent wind speed and direction from the windvane, if fitted">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="WIND_X" name="OSD4_WIND_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="WIND_Y" name="OSD4_WIND_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -3743,9 +4163,83 @@
             <field name="Range">0 63</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="OSD Options" name="OSD_OPTIONS" documentation="This sets options that change the display" user="Standard">
+            <bitmask>
+              <bit code="0">UseDecimalPack</bit>
+              <bit code="1">InvertedWindArrow</bit>
+              <bit code="2">InvertedAHRoll</bit>
+              <bit code="3">Convert feet to miles at 5280ft instead of 10000ft</bit>
+              <bit code="4">DisableCrosshair</bit>
+              <bit code="5">TranslateArrows</bit>
+              <bit code="6">AviationStyleAH</bit>
+              <bit code="7">Prefix LQ with RF Mode</bit>
+            </bitmask>
+            <field name="Bitmask">0:UseDecimalPack, 1:InvertedWindArrow, 2:InvertedAHRoll, 3:Convert feet to miles at 5280ft instead of 10000ft, 4:DisableCrosshair, 5:TranslateArrows, 6:AviationStyleAH, 7:Prefix LQ with RF Mode</field>
+          </param>
+          <param humanName="Display Units" name="OSD_UNITS" documentation="Sets the units to use in displaying items" user="Standard">
+            <values>
+              <value code="0">Metric</value>
+              <value code="1">Imperial</value>
+              <value code="2">SI</value>
+              <value code="3">Aviation</value>
+            </values>
+          </param>
+          <param humanName="RSSI warn level (in %)" name="OSD_W_RSSI" documentation="Set level at which RSSI item will flash (in positive % or negative dBm values as applicable). 30% or -100dBm are defaults." user="Standard">
+            <field name="Range">-128 100</field>
+          </param>
+          <param humanName="NSAT warn level" name="OSD_W_NSAT" documentation="Set level at which NSAT item will flash" user="Standard">
+            <field name="Range">1 30</field>
+          </param>
+          <param humanName="BAT_VOLT warn level" name="OSD_W_BATVOLT" documentation="Set level at which BAT_VOLT item will flash" user="Standard">
+            <field name="Range">0 100</field>
+          </param>
+          <param humanName="Terrain warn level" name="OSD_W_TERR" documentation="Set level below which TER_HGT item will flash. -1 disables." user="Standard">
+            <field name="Range">-1 3000</field>
+            <field name="Units">m</field>
+            <field name="UnitText">meters</field>
+          </param>
+          <param humanName="AVGCELLV warn level" name="OSD_W_AVGCELLV" documentation="Set level at which AVGCELLV item will flash" user="Standard">
+            <field name="Range">0 100</field>
+          </param>
+          <param humanName="RESTVOLT warn level" name="OSD_W_RESTVOLT" documentation="Set level at which RESTVOLT item will flash" user="Standard">
+            <field name="Range">0 100</field>
+          </param>
+          <param humanName="Avg Cell Resting Volt warn level" name="OSD_W_ACRVOLT" documentation="Set level at which ACRVOLT item will flash" user="Standard">
+            <field name="Range">0 100</field>
+          </param>
+          <param humanName="RC link quality warn level (in %)" name="OSD_W_LQ" documentation="Set level at which RC_LQ item will flash (%)" user="Standard">
+            <field name="Range">0 100</field>
+          </param>
+          <param humanName="RC link SNR warn level (in %)" name="OSD_W_SNR" documentation="Set level at which RC_SNR item will flash (in db)" user="Standard">
+            <field name="Range">-20 10</field>
+          </param>
+          <param humanName="Arm screen" name="OSD_ARM_SCR" documentation="Screen to be shown on Arm event. Zero to disable the feature." user="Standard">
+            <field name="Range">0 4</field>
+          </param>
+          <param humanName="Disarm screen" name="OSD_DSARM_SCR" documentation="Screen to be shown on disarm event. Zero to disable the feature." user="Standard">
+            <field name="Range">0 4</field>
+          </param>
+          <param humanName="Failsafe screen" name="OSD_FS_SCR" documentation="Screen to be shown on failsafe event. Zero to disable the feature." user="Standard">
+            <field name="Range">0 4</field>
+          </param>
+          <param humanName="Battery cell count" name="OSD_CELL_COUNT" documentation="Used for average cell voltage display. -1 disables, 0 uses cell count autodetection for well charged LIPO/LIION batteries at connection, other values manually select cell count used." user="Advanced">
+            <field name="Increment">1</field>
+          </param>
         </parameters>
         <parameters name="OSD1_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD1_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="WIND_EN" name="OSD1_WIND_EN" documentation="Displays wind speed and relative direction, on Rover this is the apparent wind speed and direction from the windvane, if fitted">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="WIND_X" name="OSD1_WIND_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="WIND_Y" name="OSD1_WIND_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -3753,14 +4247,50 @@
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="WIND_EN" name="OSD2_WIND_EN" documentation="Displays wind speed and relative direction, on Rover this is the apparent wind speed and direction from the windvane, if fitted">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="WIND_X" name="OSD2_WIND_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="WIND_Y" name="OSD2_WIND_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD3_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD3_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="WIND_EN" name="OSD3_WIND_EN" documentation="Displays wind speed and relative direction, on Rover this is the apparent wind speed and direction from the windvane, if fitted">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="WIND_X" name="OSD3_WIND_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="WIND_Y" name="OSD3_WIND_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="WIND_EN" name="OSD4_WIND_EN" documentation="Displays wind speed and relative direction, on Rover this is the apparent wind speed and direction from the windvane, if fitted">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="WIND_X" name="OSD4_WIND_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="WIND_Y" name="OSD4_WIND_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -4619,9 +5149,83 @@
             <field name="Range">0 63</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="OSD Options" name="OSD_OPTIONS" documentation="This sets options that change the display" user="Standard">
+            <bitmask>
+              <bit code="0">UseDecimalPack</bit>
+              <bit code="1">InvertedWindArrow</bit>
+              <bit code="2">InvertedAHRoll</bit>
+              <bit code="3">Convert feet to miles at 5280ft instead of 10000ft</bit>
+              <bit code="4">DisableCrosshair</bit>
+              <bit code="5">TranslateArrows</bit>
+              <bit code="6">AviationStyleAH</bit>
+              <bit code="7">Prefix LQ with RF Mode</bit>
+            </bitmask>
+            <field name="Bitmask">0:UseDecimalPack, 1:InvertedWindArrow, 2:InvertedAHRoll, 3:Convert feet to miles at 5280ft instead of 10000ft, 4:DisableCrosshair, 5:TranslateArrows, 6:AviationStyleAH, 7:Prefix LQ with RF Mode</field>
+          </param>
+          <param humanName="Display Units" name="OSD_UNITS" documentation="Sets the units to use in displaying items" user="Standard">
+            <values>
+              <value code="0">Metric</value>
+              <value code="1">Imperial</value>
+              <value code="2">SI</value>
+              <value code="3">Aviation</value>
+            </values>
+          </param>
+          <param humanName="RSSI warn level (in %)" name="OSD_W_RSSI" documentation="Set level at which RSSI item will flash (in positive % or negative dBm values as applicable). 30% or -100dBm are defaults." user="Standard">
+            <field name="Range">-128 100</field>
+          </param>
+          <param humanName="NSAT warn level" name="OSD_W_NSAT" documentation="Set level at which NSAT item will flash" user="Standard">
+            <field name="Range">1 30</field>
+          </param>
+          <param humanName="BAT_VOLT warn level" name="OSD_W_BATVOLT" documentation="Set level at which BAT_VOLT item will flash" user="Standard">
+            <field name="Range">0 100</field>
+          </param>
+          <param humanName="Terrain warn level" name="OSD_W_TERR" documentation="Set level below which TER_HGT item will flash. -1 disables." user="Standard">
+            <field name="Range">-1 3000</field>
+            <field name="Units">m</field>
+            <field name="UnitText">meters</field>
+          </param>
+          <param humanName="AVGCELLV warn level" name="OSD_W_AVGCELLV" documentation="Set level at which AVGCELLV item will flash" user="Standard">
+            <field name="Range">0 100</field>
+          </param>
+          <param humanName="RESTVOLT warn level" name="OSD_W_RESTVOLT" documentation="Set level at which RESTVOLT item will flash" user="Standard">
+            <field name="Range">0 100</field>
+          </param>
+          <param humanName="Avg Cell Resting Volt warn level" name="OSD_W_ACRVOLT" documentation="Set level at which ACRVOLT item will flash" user="Standard">
+            <field name="Range">0 100</field>
+          </param>
+          <param humanName="RC link quality warn level (in %)" name="OSD_W_LQ" documentation="Set level at which RC_LQ item will flash (%)" user="Standard">
+            <field name="Range">0 100</field>
+          </param>
+          <param humanName="RC link SNR warn level (in %)" name="OSD_W_SNR" documentation="Set level at which RC_SNR item will flash (in db)" user="Standard">
+            <field name="Range">-20 10</field>
+          </param>
+          <param humanName="Arm screen" name="OSD_ARM_SCR" documentation="Screen to be shown on Arm event. Zero to disable the feature." user="Standard">
+            <field name="Range">0 4</field>
+          </param>
+          <param humanName="Disarm screen" name="OSD_DSARM_SCR" documentation="Screen to be shown on disarm event. Zero to disable the feature." user="Standard">
+            <field name="Range">0 4</field>
+          </param>
+          <param humanName="Failsafe screen" name="OSD_FS_SCR" documentation="Screen to be shown on failsafe event. Zero to disable the feature." user="Standard">
+            <field name="Range">0 4</field>
+          </param>
+          <param humanName="Battery cell count" name="OSD_CELL_COUNT" documentation="Used for average cell voltage display. -1 disables, 0 uses cell count autodetection for well charged LIPO/LIION batteries at connection, other values manually select cell count used." user="Advanced">
+            <field name="Increment">1</field>
+          </param>
         </parameters>
         <parameters name="OSD1_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD1_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="WIND_EN" name="OSD1_WIND_EN" documentation="Displays wind speed and relative direction, on Rover this is the apparent wind speed and direction from the windvane, if fitted">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="WIND_X" name="OSD1_WIND_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="WIND_Y" name="OSD1_WIND_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -4629,14 +5233,50 @@
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="WIND_EN" name="OSD2_WIND_EN" documentation="Displays wind speed and relative direction, on Rover this is the apparent wind speed and direction from the windvane, if fitted">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="WIND_X" name="OSD2_WIND_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="WIND_Y" name="OSD2_WIND_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD3_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD3_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="WIND_EN" name="OSD3_WIND_EN" documentation="Displays wind speed and relative direction, on Rover this is the apparent wind speed and direction from the windvane, if fitted">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="WIND_X" name="OSD3_WIND_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="WIND_Y" name="OSD3_WIND_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="WIND_EN" name="OSD4_WIND_EN" documentation="Displays wind speed and relative direction, on Rover this is the apparent wind speed and direction from the windvane, if fitted">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="WIND_X" name="OSD4_WIND_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="WIND_Y" name="OSD4_WIND_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -4967,9 +5607,83 @@
             <field name="Range">0 63</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="OSD Options" name="OSD_OPTIONS" documentation="This sets options that change the display" user="Standard">
+            <bitmask>
+              <bit code="0">UseDecimalPack</bit>
+              <bit code="1">InvertedWindArrow</bit>
+              <bit code="2">InvertedAHRoll</bit>
+              <bit code="3">Convert feet to miles at 5280ft instead of 10000ft</bit>
+              <bit code="4">DisableCrosshair</bit>
+              <bit code="5">TranslateArrows</bit>
+              <bit code="6">AviationStyleAH</bit>
+              <bit code="7">Prefix LQ with RF Mode</bit>
+            </bitmask>
+            <field name="Bitmask">0:UseDecimalPack, 1:InvertedWindArrow, 2:InvertedAHRoll, 3:Convert feet to miles at 5280ft instead of 10000ft, 4:DisableCrosshair, 5:TranslateArrows, 6:AviationStyleAH, 7:Prefix LQ with RF Mode</field>
+          </param>
+          <param humanName="Display Units" name="OSD_UNITS" documentation="Sets the units to use in displaying items" user="Standard">
+            <values>
+              <value code="0">Metric</value>
+              <value code="1">Imperial</value>
+              <value code="2">SI</value>
+              <value code="3">Aviation</value>
+            </values>
+          </param>
+          <param humanName="RSSI warn level (in %)" name="OSD_W_RSSI" documentation="Set level at which RSSI item will flash (in positive % or negative dBm values as applicable). 30% or -100dBm are defaults." user="Standard">
+            <field name="Range">-128 100</field>
+          </param>
+          <param humanName="NSAT warn level" name="OSD_W_NSAT" documentation="Set level at which NSAT item will flash" user="Standard">
+            <field name="Range">1 30</field>
+          </param>
+          <param humanName="BAT_VOLT warn level" name="OSD_W_BATVOLT" documentation="Set level at which BAT_VOLT item will flash" user="Standard">
+            <field name="Range">0 100</field>
+          </param>
+          <param humanName="Terrain warn level" name="OSD_W_TERR" documentation="Set level below which TER_HGT item will flash. -1 disables." user="Standard">
+            <field name="Range">-1 3000</field>
+            <field name="Units">m</field>
+            <field name="UnitText">meters</field>
+          </param>
+          <param humanName="AVGCELLV warn level" name="OSD_W_AVGCELLV" documentation="Set level at which AVGCELLV item will flash" user="Standard">
+            <field name="Range">0 100</field>
+          </param>
+          <param humanName="RESTVOLT warn level" name="OSD_W_RESTVOLT" documentation="Set level at which RESTVOLT item will flash" user="Standard">
+            <field name="Range">0 100</field>
+          </param>
+          <param humanName="Avg Cell Resting Volt warn level" name="OSD_W_ACRVOLT" documentation="Set level at which ACRVOLT item will flash" user="Standard">
+            <field name="Range">0 100</field>
+          </param>
+          <param humanName="RC link quality warn level (in %)" name="OSD_W_LQ" documentation="Set level at which RC_LQ item will flash (%)" user="Standard">
+            <field name="Range">0 100</field>
+          </param>
+          <param humanName="RC link SNR warn level (in %)" name="OSD_W_SNR" documentation="Set level at which RC_SNR item will flash (in db)" user="Standard">
+            <field name="Range">-20 10</field>
+          </param>
+          <param humanName="Arm screen" name="OSD_ARM_SCR" documentation="Screen to be shown on Arm event. Zero to disable the feature." user="Standard">
+            <field name="Range">0 4</field>
+          </param>
+          <param humanName="Disarm screen" name="OSD_DSARM_SCR" documentation="Screen to be shown on disarm event. Zero to disable the feature." user="Standard">
+            <field name="Range">0 4</field>
+          </param>
+          <param humanName="Failsafe screen" name="OSD_FS_SCR" documentation="Screen to be shown on failsafe event. Zero to disable the feature." user="Standard">
+            <field name="Range">0 4</field>
+          </param>
+          <param humanName="Battery cell count" name="OSD_CELL_COUNT" documentation="Used for average cell voltage display. -1 disables, 0 uses cell count autodetection for well charged LIPO/LIION batteries at connection, other values manually select cell count used." user="Advanced">
+            <field name="Increment">1</field>
+          </param>
         </parameters>
         <parameters name="OSD1_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD1_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="WIND_EN" name="OSD1_WIND_EN" documentation="Displays wind speed and relative direction, on Rover this is the apparent wind speed and direction from the windvane, if fitted">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="WIND_X" name="OSD1_WIND_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="WIND_Y" name="OSD1_WIND_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -4977,14 +5691,50 @@
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="WIND_EN" name="OSD2_WIND_EN" documentation="Displays wind speed and relative direction, on Rover this is the apparent wind speed and direction from the windvane, if fitted">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="WIND_X" name="OSD2_WIND_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="WIND_Y" name="OSD2_WIND_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD3_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD3_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="WIND_EN" name="OSD3_WIND_EN" documentation="Displays wind speed and relative direction, on Rover this is the apparent wind speed and direction from the windvane, if fitted">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="WIND_X" name="OSD3_WIND_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="WIND_Y" name="OSD3_WIND_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="WIND_EN" name="OSD4_WIND_EN" documentation="Displays wind speed and relative direction, on Rover this is the apparent wind speed and direction from the windvane, if fitted">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="WIND_X" name="OSD4_WIND_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="WIND_Y" name="OSD4_WIND_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
