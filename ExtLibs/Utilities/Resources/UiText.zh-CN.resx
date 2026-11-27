@@ -4915,6 +4915,14 @@ Ctrl+O 从文件加载</value>
     <value>活动窗口边框（ActiveBorder）</value>
     <comment>"HUD color: ActiveBorder"</comment>
   </data>
+  <data name="136f7e1a96abd716e2f4e1c3641151c2ad386f655f118ad525443ed150279a33" xml:space="preserve">
+    <value>爱丽丝蓝（AliceBlue）</value>
+    <comment>"HUD color: AliceBlue"</comment>
+  </data>
+  <data name="c167f475666fcae6d9ff5f0691c3a57cb2ecd4df4364a5b7fc339bfe9147758a" xml:space="preserve">
+    <value>非活动标题栏渐变（GradientInactiveCaption）</value>
+    <comment>"HUD color: GradientInactiveCaption"</comment>
+  </data>
   <data name="b78c87853562c9b3190e421567f209d284f857a06d81fbce490e3950c2775a28" xml:space="preserve">
     <value>叠加 HUD</value>
     <comment>"HUD overlay"</comment>

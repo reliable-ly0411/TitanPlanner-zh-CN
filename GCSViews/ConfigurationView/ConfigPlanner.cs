@@ -838,9 +838,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             CMB_osdcolor.DataSource = Enum.GetNames(typeof(KnownColor));
             if (CultureInfo.CurrentUICulture.Name == "zh-CN")
             {
-                var activeBorderCaption = FormatHudColorCaption(nameof(KnownColor.ActiveBorder));
-                var captionWidth = TextRenderer.MeasureText(activeBorderCaption, CMB_osdcolor.Font).Width;
-                CMB_osdcolor.DropDownWidth = Math.Max(CMB_osdcolor.Width, captionWidth + 35 + SystemInformation.VerticalScrollBarWidth);
+                SizeHudColorDropDown(CMB_osdcolor);
             }
 
             // set distance/speed unit states
@@ -1557,11 +1555,27 @@ namespace MissionPlanner.GCSViews.ConfigurationView
         {
         }
 
+        internal static void SizeHudColorDropDown(ComboBox combo)
+        {
+            var width = new[] { nameof(KnownColor.ActiveBorder), nameof(KnownColor.AliceBlue),
+                    nameof(KnownColor.GradientInactiveCaption) }
+                .Select(key => TextRenderer.MeasureText(FormatHudColorCaption(key), combo.Font).Width)
+                .Max();
+            combo.DropDownWidth = Math.Max(combo.Width, width + 35 + SystemInformation.VerticalScrollBarWidth);
+        }
+
         internal static string FormatHudColorCaption(string key)
         {
-            return CultureInfo.CurrentUICulture.Name == "zh-CN" && key == nameof(KnownColor.ActiveBorder)
-                ? UiText.Translate("HUD color: ActiveBorder")
-                : key;
+            if (CultureInfo.CurrentUICulture.Name != "zh-CN")
+                return key;
+
+            switch (key)
+            {
+                case nameof(KnownColor.ActiveBorder): return UiText.Translate("HUD color: ActiveBorder");
+                case nameof(KnownColor.AliceBlue): return UiText.Translate("HUD color: AliceBlue");
+                case nameof(KnownColor.GradientInactiveCaption): return UiText.Translate("HUD color: GradientInactiveCaption");
+                default: return key;
+            }
         }
 
         private void CMB_osdcolor_DrawItem(object sender, DrawItemEventArgs e)
