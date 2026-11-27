@@ -1,0 +1,124 @@
+using System;
+using System.Collections.Concurrent;
+using System.IO;
+using System.Reflection;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+
+// Deliberately not System.Net.Http.HttpClient. All response bodies are private in-memory strings.
+sealed class HttpClient
+{
+    public TimeSpan Timeout { get; set; }
+    public HeaderCollection DefaultRequestHeaders { get; } = new HeaderCollection();
+    public static Func<string, string> Body;
+    public static readonly ConcurrentDictionary<string, int> Calls = new ConcurrentDictionary<string, int>();
+    public Task<Response> GetAsync(Uri uri)
+    {
+        Probe.OutOfLock("HTTP factory");
+        var k = uri.AbsoluteUri;
+        Calls.AddOrUpdate(k, 1, (_, count) => count + 1);
+        return Task.FromResult(new Response(Body(k)));
+    }
+}
+sealed class HeaderCollection { public void Add(string name, string value) {} }
+sealed class Response
+{
+    public Response(string body) { Content = new FixtureContent(body); }
+    public FixtureContent Content { get; }
+}
+sealed class FixtureContent
+{
+    readonly string body;
+    internal FixtureContent(string body) { this.body = body; }
+    public Task<Stream> ReadAsStreamAsync()
+    {
+        Probe.OutOfLock("response stream");
+        return Task.FromResult<Stream>(new MemoryStream(Encoding.UTF8.GetBytes(body)));
+    }
+}
+sealed class FixtureLog
+{
+    public void Info(string text) { Probe.OutOfLock("logger"); }
+}
+sealed class Settings
+{
+    public static readonly Settings Instance = new Settings();
+    public string UserAgent => "fixture";
+}
+static class Probe
+{
+    static object cacheGate;
+    static int assertions;
+    internal static void OutOfLock(string phase)
+    {
+        if (Monitor.IsEntered(cacheGate)) throw new Exception(phase + " ran under shared lock");
+    }
+    static void Check(bool ok, string description)
+    {
+        if (!ok) throw new Exception(description);
+        assertions++;
+        Console.WriteLine("PASS " + description);
+    }
+    static Uri Key(string path) => new Uri("https://fixture.invalid/" + path);
+    static int Hits(Uri uri) => HttpClient.Calls.TryGetValue(uri.AbsoluteUri, out var count) ? count : 0;
+    static void Main()
+    {
+        const BindingFlags staticBits = BindingFlags.Static | BindingFlags.NonPublic;
+        var gateField = typeof(Firmware).GetField("urlcachelock", staticBits);
+        Check(gateField != null && gateField.IsInitOnly, "value cache has one fixed process-wide lock");
+        cacheGate = gateField.GetValue(null);
+        var a = new Firmware();
+        var b = new Firmware();
+        var c = new Firmware();
+        using (var arrived = new CountdownEvent(3))
+        using (var release = new ManualResetEventSlim())
+        {
+            HttpClient.Body = key =>
+            {
+                arrived.Signal();
+                if (!release.Wait(4000)) throw new TimeoutException("fixture holds every distinct key");
+                return "noise\nAPMVERSION: " + key;
+            };
+            var k1 = Key("default?route=A");
+            var k2 = Key("history?route=B");
+            var k3 = Key("default?route=C"); // Adds a second semaphore inside the first instance.
+            var pending = new[] { Task.Run(() => a.GetAPMVERSIONFile(k1)), Task.Run(() => b.GetAPMVERSIONFile(k2)),
+                Task.Run(() => a.GetAPMVERSIONFile(k3)) };
+            try { Check(arrived.Wait(2500), "distinct source keys enter I/O concurrently, also within one instance"); }
+            finally { release.Set(); }
+            Check(Task.WaitAll(pending, 2500), "workers finish without the cache lock remaining held");
+            foreach (var key in new[] { k1, k2, k3 })
+                Check(c.GetAPMVERSIONFile(key) == "APMVERSION: " + key.AbsoluteUri && Hits(key) == 1,
+                      "another loader reads cached exact absolute URI " + key);
+        }
+        var same = Key("same-local-key");
+        using (var firstEntered = new ManualResetEventSlim())
+        using (var allow = new ManualResetEventSlim())
+        {
+            HttpClient.Body = key =>
+            {
+                firstEntered.Set();
+                if (!allow.Wait(3500)) throw new TimeoutException("fixture holds same key");
+                return "APMVERSION: test";
+            };
+            var first = Task.Run(() => a.GetAPMVERSIONFile(same));
+            Check(firstEntered.Wait(1500), "first same-instance request is pending");
+            var second = Task.Run(() => a.GetAPMVERSIONFile(same));
+            try { Check(!second.Wait(100) && Hits(same) == 1, "same instance waits on its captured semaphore"); }
+            finally { allow.Set(); }
+            Check(Task.WaitAll(new Task[] { first, second }, 2000) && first.Result == second.Result && Hits(same) == 1,
+                  "same-instance waiter reuses cached response");
+        }
+        var fail = Key("retry");
+        HttpClient.Body = key => Hits(fail) == 1 ? throw new IOException("synthetic I/O error") : "APMVERSION: retry";
+        bool expectedFailure = false;
+        try { a.GetAPMVERSIONFile(fail); } catch (IOException) { expectedFailure = true; }
+        Check(expectedFailure, "first worker's failure is visible, no fallback response");
+        var retry = Task.Run(() => a.GetAPMVERSIONFile(fail));
+        Check(retry.Wait(2000) && retry.Result == "APMVERSION: retry" && Hits(fail) == 2,
+              "same-instance retry succeeds after failed worker releases");
+        Check(b.GetAPMVERSIONFile(fail) == retry.Result && Hits(fail) == 2, "only success populates shared cache");
+        Console.WriteLine(assertions + " assertions passed.");
+    }
+}
