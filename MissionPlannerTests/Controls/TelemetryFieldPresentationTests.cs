@@ -30,6 +30,28 @@ namespace MissionPlannerTests.Controls
         }
 
         [TestMethod]
+        public void QuickViewLowSpeedFlagsRemainBooleansWithoutUnitsOrThresholds()
+        {
+            var previous = CultureInfo.CurrentUICulture;
+            try
+            {
+                foreach (var culture in new[] { "zh-CN", "zh-Hans", "en-US" })
+                {
+                    CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo(culture);
+                    foreach (var field in new[] { Tuple.Create("lowairspeed", "低空速标志"), Tuple.Create("lowgroundspeed", "低地速标志") })
+                    {
+                        Assert.AreEqual(typeof(bool), typeof(CurrentState).GetProperty(field.Item1).PropertyType);
+                        string label = TelemetryFieldPresentation.FieldLabel(field.Item1);
+                        Assert.AreEqual(culture == "zh-CN" ? field.Item1 + " (" + field.Item2 + ")" : field.Item1, label);
+                        Assert.IsTrue(TelemetryFieldPresentation.Matches(field.Item1, label));
+                    }
+                    Assert.AreEqual("lowairspeed_future", TelemetryFieldPresentation.FieldLabel("lowairspeed_future"));
+                }
+            }
+            finally { CultureInfo.CurrentUICulture = previous; }
+        }
+
+        [TestMethod]
         public void AbstractUnitLabelsDoNotInferUnitsAcrossMessagePaths()
         {
             var previousCulture = CultureInfo.CurrentUICulture;
@@ -496,6 +518,64 @@ namespace MissionPlannerTests.Controls
                     }
                     foreach (var key in new[] { "campointa", "press_temp2", "targetaltd1000", "ch3percent" })
                         Assert.AreEqual(key, TelemetryFieldPresentation.FieldLabel(key));
+                }
+            }
+            finally { CultureInfo.CurrentUICulture = previous; }
+        }
+
+        [TestMethod]
+        public void QuickViewStateFlagsUseDescriptionsWithoutChangingKeysOrOtherLocales()
+        {
+            var previous = CultureInfo.CurrentUICulture;
+            try
+            {
+                var flags = new[]
+                {
+                    Tuple.Create("landed", "地面站在地面状态标志"),
+                    Tuple.Create("safetyactive", "地面站安全标志（电机控制未启用）"),
+                    Tuple.Create("prearmstatus", "地面站解锁前状态标志（已连接，且检查正常或未启用）"),
+                };
+                foreach (var culture in new[] { "zh-CN", "zh-Hans", "en-US", "zh-TW" })
+                {
+                    CultureInfo.CurrentUICulture = new CultureInfo(culture);
+                    foreach (var flag in flags)
+                    {
+                        Assert.AreEqual(typeof(bool), typeof(CurrentState).GetProperty(flag.Item1).PropertyType);
+                        string label = TelemetryFieldPresentation.FieldLabel(flag.Item1);
+                        Assert.AreEqual(culture == "zh-CN" ? flag.Item1 + " (" + flag.Item2 + ")" : flag.Item1, label);
+                        Assert.IsTrue(TelemetryFieldPresentation.Matches(flag.Item1, label));
+                        Assert.AreEqual(culture == "zh-CN", TelemetryFieldPresentation.Matches(flag.Item2, label));
+                    }
+
+                    Assert.AreEqual("landed_future", TelemetryFieldPresentation.FieldLabel("landed_future"));
+                    // Keep the separate protocol code distinct from the ground station flag.
+                    string code = TelemetryFieldPresentation.FieldLabel("landed_state");
+                    Assert.AreEqual(culture == "zh-CN" ? "landed_state (上报的着陆状态代码)" : "landed_state", code);
+                }
+            }
+            finally { CultureInfo.CurrentUICulture = previous; }
+        }
+
+        [TestMethod]
+        public void QuickViewQnhDescribesTheEstimateWithoutChangingItsKeyOrInferringUnits()
+        {
+            const string key = "QNH";
+            const string chinese = "估算海平面气压";
+            var property = typeof(CurrentState).GetProperty(key);
+            Assert.AreEqual(typeof(float), property.PropertyType);
+            Assert.IsFalse(property.CanWrite);
+
+            var previous = CultureInfo.CurrentUICulture;
+            try
+            {
+                foreach (var culture in new[] { "zh-CN", "zh-Hans", "en-US" })
+                {
+                    CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo(culture);
+                    var label = TelemetryFieldPresentation.FieldLabel(key);
+                    Assert.AreEqual(culture == "zh-CN" ? key + " (" + chinese + ")" : key, label);
+                    Assert.IsTrue(TelemetryFieldPresentation.Matches(key, label));
+                    Assert.AreEqual(culture == "zh-CN", TelemetryFieldPresentation.Matches(chinese, label));
+                    Assert.AreEqual("QNH_future", TelemetryFieldPresentation.FieldLabel("QNH_future"));
                 }
             }
             finally { CultureInfo.CurrentUICulture = previous; }
