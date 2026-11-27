@@ -53,6 +53,17 @@ namespace MissionPlannerTests.Utilities
                     Assert.AreEqual(ToolStripItemPlacement.Main, fixture.Connect.Placement);
                     Assert.IsTrue(menu.ClientRectangle.Contains(fixture.Connection.Bounds));
                     Assert.IsTrue(menu.ClientRectangle.Contains(fixture.Connect.Bounds));
+                    Assert.AreEqual(fixture.Connect.Bounds.Left, fixture.Connection.Bounds.Right,
+                        "Connect remains the rightmost control in the uninterrupted telemetry block");
+                    Assert.IsTrue(menu.Items.Cast<ToolStripItem>().Where(item => item.Available &&
+                        item.Alignment == ToolStripItemAlignment.Right && item.Placement == ToolStripItemPlacement.Main)
+                        .All(item => item.Bounds.Right <= fixture.Connect.Bounds.Right),
+                        "No right-aligned toolbar item may be beyond Connect");
+                    if (scale == 1.0 && width == 1231)
+                        Assert.AreEqual(ToolStripItemPlacement.Main, brand.Placement, "Standard layout keeps the brand visible");
+                    if (scale == 2.0 && width == 847)
+                        Assert.AreEqual(ToolStripItemPlacement.Overflow, brand.Placement,
+                            "Compact 200%-scale toolbar overflows the brand instead of covering the telemetry controls");
                     int expectedGap = (int)Math.Round(menu.DisplayRectangle.Height * 8.0 / 58);
                     Assert.AreEqual(expectedGap, brand.Margin.Left);
                     Assert.AreEqual(expectedGap, brand.Margin.Right);
@@ -70,10 +81,8 @@ namespace MissionPlannerTests.Utilities
                     if (brand.Placement == ToolStripItemPlacement.Main)
                     {
                         Assert.IsTrue(menu.ClientRectangle.Contains(brand.Bounds));
-                        Assert.IsTrue(menu.ClientRectangle.Right - brand.Bounds.Right >= expectedGap,
-                            "Logo must have a gap to the window edge");
-                        Assert.IsTrue(brand.Bounds.Left - fixture.Connect.Bounds.Right >= expectedGap,
-                            "Logo must have a gap to the connection button");
+                        Assert.AreEqual(expectedGap, fixture.Connection.Bounds.Left - brand.Bounds.Right,
+                            "Brand must sit immediately to the left of the telemetry block with its normal gap");
                         foreach (ToolStripItem item in menu.Items)
                         {
                             if (item == brand || !item.Available || item.Placement != ToolStripItemPlacement.Main) continue;

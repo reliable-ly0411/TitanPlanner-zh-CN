@@ -44,15 +44,18 @@ namespace MissionPlanner.Utilities
                 original.Available = false;
                 original.Tag = LogoMarker;
                 original.Click += (sender, args) => open(ArduPilotUrl);
-                int index = 0;
-                while (index < menu.Items.Count && menu.Items[index].Alignment != ToolStripItemAlignment.Right)
-                    index++;
+                // ToolStrip places right-aligned items from the right edge in collection
+                // order. Insert after both connection items so they keep their relative
+                // order and the brand sits immediately to their left.
+                int index = menu.Items.IndexOf(original);
+                foreach (var item in connectionItems)
+                    index = Math.Max(index, menu.Items.IndexOf(item) + 1);
                 menu.Items.Insert(index, host);
 
                 // MenuStrip defaults to CanOverflow=false, which lets left-hand hosted
                 // controls overlap right-hand items when their combined widths exceed
                 // the window. Keep connection controls on the bar; other items can use
-                // the native overflow menu. The logo stays at the far right as a unit.
+                // the native overflow menu. The logo moves into overflow as a unit.
                 menu.CanOverflow = true;
                 foreach (var item in connectionItems)
                     item.Overflow = ToolStripItemOverflow.Never;
