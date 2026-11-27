@@ -6634,6 +6634,1108 @@
       "recordSha256": "54683d3eefef6d601701c7af87c4a5dbe8b04206de1037cc9df142dab15c85d4",
       "english": "Set to non-zero to enable scheduler debug messages. When set to show \"Slips\" the scheduler will display a message whenever a scheduled task is delayed due to too much CPU load. When set to ShowOverruns the scheduled will display a message whenever a task takes longer than the limit promised in the task table.",
       "chinese": "非零值表示启用调度器调试消息。选择 ShowSlips 时，如果 CPU 负载过高导致计划任务延迟，调度器会显示消息；选择 ShowOverruns 时，如果任务耗时超过任务表规定的上限，调度器会显示消息。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD_OPTIONS",
+      "field": "Description",
+      "versions": [
+        "4.5.7"
+      ],
+      "englishSha256": "c9e98941cb9f160c1ca638c528c482a563509d7316839c670e676e6de5a7ec43",
+      "recordSha256": "5cb8e55ecc7d0714db266538cc01b3e6531862a6a516d7c7e4e87b513ee38849",
+      "english": "This sets options that change the display",
+      "chinese": "按位组合 OSD 显示选项。例如，位 1 用于反转风向箭头的显示方向。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD_UNITS",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "7a24664f3890586df8cb9e709847a4df21165e39ff3bd07c0a08c739af0be467",
+      "recordSha256": "998d77d0bc87d54119261aee4d58b8177ba7c5d506d5aa414dff01e8198e3708",
+      "english": "Sets the units to use in displaying items",
+      "chinese": "选择 OSD 显示项目所用的单位制。0 为公制，1 为英制，2 为国际单位制（SI），3 为航空单位制。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD_W_RSSI",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "f906666afd19daba434b4691ac65fb9e67b6af5fa8c08c0676c4003235a62942",
+      "recordSha256": "d15e7a205ca0952241c0ba3d0049cb519a7e381b71052eecabbb812dc2038c6b",
+      "english": "Set level at which RSSI item will flash (in positive % or negative dBm values as applicable). 30% or -100dBm are defaults.",
+      "chinese": "设置 OSD 的 RSSI 项目闪烁阈值。按所用的显示方式填写正百分比或负 dBm 值，默认分别为 30% 和 -100 dBm。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD_W_NSAT",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "841e7d0afc10244d5c9001fe8cc3076030473fb62632d4f5dfcaca6d0cbb9e5c",
+      "recordSha256": "a85b63ecb2a2f7304a3e2482747194131e99e62c6bff3289507817338821253d",
+      "english": "Set level at which NSAT item will flash",
+      "chinese": "当卫星数低于此阈值时，OSD 的 NSAT 项目闪烁。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD_W_BATVOLT",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "800a212062b1ade396d728b12dc8d2587bd5f8fac3df0e57a126c7c2da219df2",
+      "recordSha256": "8708697a5a5674e1b81aaf3d27152ed46eaa4b4bab917f0cc23c6e18e4cea705",
+      "english": "Set level at which BAT_VOLT item will flash",
+      "chinese": "当电池电压低于此阈值时，OSD 的 BAT_VOLT 项目闪烁。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD_W_TERR",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "aba1adb4d2ef39313745ac200426b085272df82e7377fd0403ce2faab6027f2c",
+      "recordSha256": "f769e176e3265393ec4a23aecbc6e19cd2092f068b93149b3eb2c1e11761b78e",
+      "english": "Set level below which TER_HGT item will flash. -1 disables.",
+      "chinese": "当距地形的高度低于此阈值时，OSD 的 TER_HGT 项目闪烁。阈值单位为米，设为 -1 可关闭此闪烁提示。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD_W_AVGCELLV",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d0b2f3a6af292d6e535656a35ee6e8be98e5561ea0b149443426adedfee94e06",
+      "recordSha256": "b4c475e865e1b016b5e4a765b3b180deb0c4c540058190119c1f0127b0f2d4e6",
+      "english": "Set level at which AVGCELLV item will flash",
+      "chinese": "当单节平均电压低于此阈值时，OSD 的 AVGCELLV 项目闪烁。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD_W_RESTVOLT",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "288e5179716467aa8102da772ef24df9a9a382d138830dc3bb5cb9e76800e630",
+      "recordSha256": "801f169b49f9a10bc278e522d22bccff2d04e41ca697050b2dcef23308903ad3",
+      "english": "Set level at which RESTVOLT item will flash",
+      "chinese": "当估算的电池静置电压低于此阈值时，OSD 的 RESTVOLT 项目闪烁。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD_W_ACRVOLT",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "f2a11a868a4562079332afcaf19a905015ce6bca6a5b9f7382a67bb350164c3e",
+      "recordSha256": "e97655ed6339d4e025ba3d285d3551bea750102e3de05c21e075f9375bdd2579",
+      "english": "Set level at which ACRVOLT item will flash",
+      "chinese": "当估算的单节平均静置电压低于此阈值时，OSD 的 ACRVOLT 项目闪烁。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD_W_LQ",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "a595e03f6395d6af9069a4edd614b8cc51393513ef96922392b24cd396ae5315",
+      "recordSha256": "df6a481d0aad2922fcaf4c496e936378855020f0a0434a9f902092b5c3dcbffe",
+      "english": "Set level at which RC_LQ item will flash (%)",
+      "chinese": "当遥控链路质量低于此阈值时，OSD 的 RC_LQ 项目闪烁。阈值以百分比表示。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD_W_SNR",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "807afb5cb12dd24e080964eb029c293cc114ace249ae1451906ef4e87ff1d2d5",
+      "recordSha256": "abcdc5fc6d98ed341c0239dc8900b5a7c9e29bffa1273780e2e0c57aa75238db",
+      "english": "Set level at which RC_SNR item will flash (in db)",
+      "chinese": "当遥控链路信噪比低于此阈值时，OSD 的 RC_SNR 项目闪烁。阈值单位为 dB。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD_ARM_SCR",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "617d7957f06dc7b2d84bc11ada7098df265150db18aab5ca7caad97b09b55223",
+      "recordSha256": "dddc2629c21af12485155d240c85c0a2c143d2f6fcca762a8d0cc29ab651ff9a",
+      "english": "Screen to be shown on Arm event. Zero to disable the feature.",
+      "chinese": "飞控由上锁转为解锁时，切换到所选且已启用的 OSD 画面。设为 0 时，不因解锁事件切换画面。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD_DSARM_SCR",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "044ae8d1ccd268614d827ef7f4a590b1ece2692bf02d46e036b30bb98b53e8cb",
+      "recordSha256": "842ff29fabb87a6aff8ec7789811eead04bf29b8ab9b94a5681baa5b31b1dd8a",
+      "english": "Screen to be shown on disarm event. Zero to disable the feature.",
+      "chinese": "飞控由解锁转为上锁时，切换到所选且已启用的 OSD 画面。设为 0 时，不因上锁事件切换画面。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD_FS_SCR",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "26736fb1a8858441e4b062894a16c68eb5e0bc9d7ace05c8ced185f742ce55f8",
+      "recordSha256": "a30d5a8eb7fe5a93f98fb0f64d797af0bc7351752606ddf073d888d538620bcb",
+      "english": "Screen to be shown on failsafe event. Zero to disable the feature.",
+      "chinese": "遥控或电池失效保护开始时，切换到所选且已启用的 OSD 画面。设为 0 时，不指定进入保护时要切换到的画面。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD_CELL_COUNT",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "2ee95445baf4da195977e54134c52d206b77c38089abc382bb93480e894c2a92",
+      "recordSha256": "ac88fcbce0379ccb7fc51a1c78ab1ff2f2ae5e607437667245605ffdd193e32b",
+      "english": "Used for average cell voltage display. -1 disables, 0 uses cell count autodetection for well charged LIPO/LIION batteries at connection, other values manually select cell count used.",
+      "chinese": "仅用于计算 OSD 显示的平均单体电压和平均单体静置电压。设为 -1 时，这两项不显示电压数值。设为 0 时自动估算电芯数，接入时电量较低的锂聚合物或锂离子电池可能估算不准。正整数表示手动指定的电芯数。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD1_WIND_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "9e5123434fea049dbfd7ae044d0b8f59a4b3a9dcccd8ea015dfe94137bbf12b5",
+      "recordSha256": "71be8eaa4f056fe250da76741620544525a3cf300e40fced51c77ea4d62735f6",
+      "english": "Displays wind speed and relative direction, on Rover this is the apparent wind speed and direction from the windvane, if fitted",
+      "chinese": "控制第 1 个 OSD 画面是否显示风速和相对风向。Rover 若装有风向标，则显示由风向标测得的表观风速和风向。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD1_WIND_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "9faec3c9cf8a78f9bf3177b09a0c6a3e5878faaf6f59f35222833ffa4d174b53",
+      "english": "Horizontal position on screen",
+      "chinese": "设置第 1 个 OSD 画面中风速和风向显示项的水平位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD1_WIND_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "b81e434b8d8394a36ac237ed450544d2e94d66d375438238ede7cd8a836ba30e",
+      "english": "Vertical position on screen",
+      "chinese": "设置第 1 个 OSD 画面中风速和风向显示项的垂直位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD2_WIND_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "9e5123434fea049dbfd7ae044d0b8f59a4b3a9dcccd8ea015dfe94137bbf12b5",
+      "recordSha256": "519aca4e363ff800920937127bb78ab825738933193e3e8313bb39f8b197ae3f",
+      "english": "Displays wind speed and relative direction, on Rover this is the apparent wind speed and direction from the windvane, if fitted",
+      "chinese": "控制第 2 个 OSD 画面是否显示风速和相对风向。Rover 若装有风向标，则显示由风向标测得的表观风速和风向。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD2_WIND_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "63444786dcc9f0cee699d0db86cf2ab8426f6d654540a96e8dca3f637669b820",
+      "english": "Horizontal position on screen",
+      "chinese": "设置第 2 个 OSD 画面中风速和风向显示项的水平位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD2_WIND_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "c22a8620529ffcbc111eaa7a29f195c58715b995e7977301afc8ff6a44b2318f",
+      "english": "Vertical position on screen",
+      "chinese": "设置第 2 个 OSD 画面中风速和风向显示项的垂直位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD3_WIND_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "9e5123434fea049dbfd7ae044d0b8f59a4b3a9dcccd8ea015dfe94137bbf12b5",
+      "recordSha256": "ae9b150de3c80573ec50e4eff193a0a212b8d313aba0bbf84843be0da5eb8f67",
+      "english": "Displays wind speed and relative direction, on Rover this is the apparent wind speed and direction from the windvane, if fitted",
+      "chinese": "控制第 3 个 OSD 画面是否显示风速和相对风向。Rover 若装有风向标，则显示由风向标测得的表观风速和风向。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD3_WIND_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "45b14906d30081636b8f4091088f69cd371671f4e88335298a42e952054c3f90",
+      "english": "Horizontal position on screen",
+      "chinese": "设置第 3 个 OSD 画面中风速和风向显示项的水平位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD3_WIND_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "5399988d3df2d38a4048f09b30c9715f835e06cb5480132e542b6951c6fa40ee",
+      "english": "Vertical position on screen",
+      "chinese": "设置第 3 个 OSD 画面中风速和风向显示项的垂直位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD4_WIND_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "9e5123434fea049dbfd7ae044d0b8f59a4b3a9dcccd8ea015dfe94137bbf12b5",
+      "recordSha256": "ff96ae1b07d8bd41cbf29b02b85e90c1169ae1e2432ebb303718c961a6423410",
+      "english": "Displays wind speed and relative direction, on Rover this is the apparent wind speed and direction from the windvane, if fitted",
+      "chinese": "控制第 4 个 OSD 画面是否显示风速和相对风向。Rover 若装有风向标，则显示由风向标测得的表观风速和风向。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD4_WIND_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "a0ebc5a9d615511305b63981979353e43d2fb427a7d9943e26406ca76b9fce64",
+      "english": "Horizontal position on screen",
+      "chinese": "设置第 4 个 OSD 画面中风速和风向显示项的水平位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD4_WIND_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "a81dd3aca7b3e75a91bb2a4637e7d34ac03433e1a9089804797d4f6336762798",
+      "english": "Vertical position on screen",
+      "chinese": "设置第 4 个 OSD 画面中风速和风向显示项的垂直位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD_OPTIONS",
+      "field": "Description",
+      "versions": [
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "c9e98941cb9f160c1ca638c528c482a563509d7316839c670e676e6de5a7ec43",
+      "recordSha256": "48e4dd0416fa33e71c155cfa3f2ecef918586795fe3d20b12071258e5a8b0b84",
+      "english": "This sets options that change the display",
+      "chinese": "按位组合 OSD 显示选项。例如，位 1 用于反转风向箭头的显示方向。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD_OPTIONS",
+      "field": "Description",
+      "versions": [
+        "4.5.7"
+      ],
+      "englishSha256": "c9e98941cb9f160c1ca638c528c482a563509d7316839c670e676e6de5a7ec43",
+      "recordSha256": "5cb8e55ecc7d0714db266538cc01b3e6531862a6a516d7c7e4e87b513ee38849",
+      "english": "This sets options that change the display",
+      "chinese": "按位组合 OSD 显示选项。例如，位 1 用于反转风向箭头的显示方向。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD_UNITS",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "7a24664f3890586df8cb9e709847a4df21165e39ff3bd07c0a08c739af0be467",
+      "recordSha256": "998d77d0bc87d54119261aee4d58b8177ba7c5d506d5aa414dff01e8198e3708",
+      "english": "Sets the units to use in displaying items",
+      "chinese": "选择 OSD 显示项目所用的单位制。0 为公制，1 为英制，2 为国际单位制（SI），3 为航空单位制。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD_W_RSSI",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "f906666afd19daba434b4691ac65fb9e67b6af5fa8c08c0676c4003235a62942",
+      "recordSha256": "d15e7a205ca0952241c0ba3d0049cb519a7e381b71052eecabbb812dc2038c6b",
+      "english": "Set level at which RSSI item will flash (in positive % or negative dBm values as applicable). 30% or -100dBm are defaults.",
+      "chinese": "设置 OSD 的 RSSI 项目闪烁阈值。按所用的显示方式填写正百分比或负 dBm 值，默认分别为 30% 和 -100 dBm。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD_W_NSAT",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "841e7d0afc10244d5c9001fe8cc3076030473fb62632d4f5dfcaca6d0cbb9e5c",
+      "recordSha256": "a85b63ecb2a2f7304a3e2482747194131e99e62c6bff3289507817338821253d",
+      "english": "Set level at which NSAT item will flash",
+      "chinese": "当卫星数低于此阈值时，OSD 的 NSAT 项目闪烁。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD_W_BATVOLT",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "800a212062b1ade396d728b12dc8d2587bd5f8fac3df0e57a126c7c2da219df2",
+      "recordSha256": "8708697a5a5674e1b81aaf3d27152ed46eaa4b4bab917f0cc23c6e18e4cea705",
+      "english": "Set level at which BAT_VOLT item will flash",
+      "chinese": "当电池电压低于此阈值时，OSD 的 BAT_VOLT 项目闪烁。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD_W_TERR",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "aba1adb4d2ef39313745ac200426b085272df82e7377fd0403ce2faab6027f2c",
+      "recordSha256": "f769e176e3265393ec4a23aecbc6e19cd2092f068b93149b3eb2c1e11761b78e",
+      "english": "Set level below which TER_HGT item will flash. -1 disables.",
+      "chinese": "当距地形的高度低于此阈值时，OSD 的 TER_HGT 项目闪烁。阈值单位为米，设为 -1 可关闭此闪烁提示。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD_W_AVGCELLV",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d0b2f3a6af292d6e535656a35ee6e8be98e5561ea0b149443426adedfee94e06",
+      "recordSha256": "b4c475e865e1b016b5e4a765b3b180deb0c4c540058190119c1f0127b0f2d4e6",
+      "english": "Set level at which AVGCELLV item will flash",
+      "chinese": "当单节平均电压低于此阈值时，OSD 的 AVGCELLV 项目闪烁。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD_W_RESTVOLT",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "288e5179716467aa8102da772ef24df9a9a382d138830dc3bb5cb9e76800e630",
+      "recordSha256": "801f169b49f9a10bc278e522d22bccff2d04e41ca697050b2dcef23308903ad3",
+      "english": "Set level at which RESTVOLT item will flash",
+      "chinese": "当估算的电池静置电压低于此阈值时，OSD 的 RESTVOLT 项目闪烁。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD_W_ACRVOLT",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "f2a11a868a4562079332afcaf19a905015ce6bca6a5b9f7382a67bb350164c3e",
+      "recordSha256": "e97655ed6339d4e025ba3d285d3551bea750102e3de05c21e075f9375bdd2579",
+      "english": "Set level at which ACRVOLT item will flash",
+      "chinese": "当估算的单节平均静置电压低于此阈值时，OSD 的 ACRVOLT 项目闪烁。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD_W_LQ",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "a595e03f6395d6af9069a4edd614b8cc51393513ef96922392b24cd396ae5315",
+      "recordSha256": "df6a481d0aad2922fcaf4c496e936378855020f0a0434a9f902092b5c3dcbffe",
+      "english": "Set level at which RC_LQ item will flash (%)",
+      "chinese": "当遥控链路质量低于此阈值时，OSD 的 RC_LQ 项目闪烁。阈值以百分比表示。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD_W_SNR",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "807afb5cb12dd24e080964eb029c293cc114ace249ae1451906ef4e87ff1d2d5",
+      "recordSha256": "abcdc5fc6d98ed341c0239dc8900b5a7c9e29bffa1273780e2e0c57aa75238db",
+      "english": "Set level at which RC_SNR item will flash (in db)",
+      "chinese": "当遥控链路信噪比低于此阈值时，OSD 的 RC_SNR 项目闪烁。阈值单位为 dB。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD_ARM_SCR",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "617d7957f06dc7b2d84bc11ada7098df265150db18aab5ca7caad97b09b55223",
+      "recordSha256": "dddc2629c21af12485155d240c85c0a2c143d2f6fcca762a8d0cc29ab651ff9a",
+      "english": "Screen to be shown on Arm event. Zero to disable the feature.",
+      "chinese": "飞控由上锁转为解锁时，切换到所选且已启用的 OSD 画面。设为 0 时，不因解锁事件切换画面。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD_DSARM_SCR",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "044ae8d1ccd268614d827ef7f4a590b1ece2692bf02d46e036b30bb98b53e8cb",
+      "recordSha256": "842ff29fabb87a6aff8ec7789811eead04bf29b8ab9b94a5681baa5b31b1dd8a",
+      "english": "Screen to be shown on disarm event. Zero to disable the feature.",
+      "chinese": "飞控由解锁转为上锁时，切换到所选且已启用的 OSD 画面。设为 0 时，不因上锁事件切换画面。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD_FS_SCR",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "26736fb1a8858441e4b062894a16c68eb5e0bc9d7ace05c8ced185f742ce55f8",
+      "recordSha256": "a30d5a8eb7fe5a93f98fb0f64d797af0bc7351752606ddf073d888d538620bcb",
+      "english": "Screen to be shown on failsafe event. Zero to disable the feature.",
+      "chinese": "遥控或电池失效保护开始时，切换到所选且已启用的 OSD 画面。设为 0 时，不指定进入保护时要切换到的画面。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD_CELL_COUNT",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "2ee95445baf4da195977e54134c52d206b77c38089abc382bb93480e894c2a92",
+      "recordSha256": "ac88fcbce0379ccb7fc51a1c78ab1ff2f2ae5e607437667245605ffdd193e32b",
+      "english": "Used for average cell voltage display. -1 disables, 0 uses cell count autodetection for well charged LIPO/LIION batteries at connection, other values manually select cell count used.",
+      "chinese": "仅用于计算 OSD 显示的平均单体电压和平均单体静置电压。设为 -1 时，这两项不显示电压数值。设为 0 时自动估算电芯数，接入时电量较低的锂聚合物或锂离子电池可能估算不准。正整数表示手动指定的电芯数。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD1_WIND_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "9e5123434fea049dbfd7ae044d0b8f59a4b3a9dcccd8ea015dfe94137bbf12b5",
+      "recordSha256": "71be8eaa4f056fe250da76741620544525a3cf300e40fced51c77ea4d62735f6",
+      "english": "Displays wind speed and relative direction, on Rover this is the apparent wind speed and direction from the windvane, if fitted",
+      "chinese": "控制第 1 个 OSD 画面是否显示风速和相对风向。Rover 若装有风向标，则显示由风向标测得的表观风速和风向。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD1_WIND_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "9faec3c9cf8a78f9bf3177b09a0c6a3e5878faaf6f59f35222833ffa4d174b53",
+      "english": "Horizontal position on screen",
+      "chinese": "设置第 1 个 OSD 画面中风速和风向显示项的水平位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD1_WIND_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "b81e434b8d8394a36ac237ed450544d2e94d66d375438238ede7cd8a836ba30e",
+      "english": "Vertical position on screen",
+      "chinese": "设置第 1 个 OSD 画面中风速和风向显示项的垂直位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD2_WIND_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "9e5123434fea049dbfd7ae044d0b8f59a4b3a9dcccd8ea015dfe94137bbf12b5",
+      "recordSha256": "519aca4e363ff800920937127bb78ab825738933193e3e8313bb39f8b197ae3f",
+      "english": "Displays wind speed and relative direction, on Rover this is the apparent wind speed and direction from the windvane, if fitted",
+      "chinese": "控制第 2 个 OSD 画面是否显示风速和相对风向。Rover 若装有风向标，则显示由风向标测得的表观风速和风向。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD2_WIND_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "63444786dcc9f0cee699d0db86cf2ab8426f6d654540a96e8dca3f637669b820",
+      "english": "Horizontal position on screen",
+      "chinese": "设置第 2 个 OSD 画面中风速和风向显示项的水平位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD2_WIND_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "c22a8620529ffcbc111eaa7a29f195c58715b995e7977301afc8ff6a44b2318f",
+      "english": "Vertical position on screen",
+      "chinese": "设置第 2 个 OSD 画面中风速和风向显示项的垂直位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD3_WIND_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "9e5123434fea049dbfd7ae044d0b8f59a4b3a9dcccd8ea015dfe94137bbf12b5",
+      "recordSha256": "ae9b150de3c80573ec50e4eff193a0a212b8d313aba0bbf84843be0da5eb8f67",
+      "english": "Displays wind speed and relative direction, on Rover this is the apparent wind speed and direction from the windvane, if fitted",
+      "chinese": "控制第 3 个 OSD 画面是否显示风速和相对风向。Rover 若装有风向标，则显示由风向标测得的表观风速和风向。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD3_WIND_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "45b14906d30081636b8f4091088f69cd371671f4e88335298a42e952054c3f90",
+      "english": "Horizontal position on screen",
+      "chinese": "设置第 3 个 OSD 画面中风速和风向显示项的水平位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD3_WIND_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "5399988d3df2d38a4048f09b30c9715f835e06cb5480132e542b6951c6fa40ee",
+      "english": "Vertical position on screen",
+      "chinese": "设置第 3 个 OSD 画面中风速和风向显示项的垂直位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD4_WIND_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "9e5123434fea049dbfd7ae044d0b8f59a4b3a9dcccd8ea015dfe94137bbf12b5",
+      "recordSha256": "ff96ae1b07d8bd41cbf29b02b85e90c1169ae1e2432ebb303718c961a6423410",
+      "english": "Displays wind speed and relative direction, on Rover this is the apparent wind speed and direction from the windvane, if fitted",
+      "chinese": "控制第 4 个 OSD 画面是否显示风速和相对风向。Rover 若装有风向标，则显示由风向标测得的表观风速和风向。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD4_WIND_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "a0ebc5a9d615511305b63981979353e43d2fb427a7d9943e26406ca76b9fce64",
+      "english": "Horizontal position on screen",
+      "chinese": "设置第 4 个 OSD 画面中风速和风向显示项的水平位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD4_WIND_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "a81dd3aca7b3e75a91bb2a4637e7d34ac03433e1a9089804797d4f6336762798",
+      "english": "Vertical position on screen",
+      "chinese": "设置第 4 个 OSD 画面中风速和风向显示项的垂直位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD_OPTIONS",
+      "field": "Description",
+      "versions": [
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "c9e98941cb9f160c1ca638c528c482a563509d7316839c670e676e6de5a7ec43",
+      "recordSha256": "48e4dd0416fa33e71c155cfa3f2ecef918586795fe3d20b12071258e5a8b0b84",
+      "english": "This sets options that change the display",
+      "chinese": "按位组合 OSD 显示选项。例如，位 1 用于反转风向箭头的显示方向。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD_OPTIONS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "c9e98941cb9f160c1ca638c528c482a563509d7316839c670e676e6de5a7ec43",
+      "recordSha256": "48e4dd0416fa33e71c155cfa3f2ecef918586795fe3d20b12071258e5a8b0b84",
+      "english": "This sets options that change the display",
+      "chinese": "按位组合 OSD 显示选项。例如，位 1 用于反转风向箭头的显示方向。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD_UNITS",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "7a24664f3890586df8cb9e709847a4df21165e39ff3bd07c0a08c739af0be467",
+      "recordSha256": "998d77d0bc87d54119261aee4d58b8177ba7c5d506d5aa414dff01e8198e3708",
+      "english": "Sets the units to use in displaying items",
+      "chinese": "选择 OSD 显示项目所用的单位制。0 为公制，1 为英制，2 为国际单位制（SI），3 为航空单位制。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD_W_RSSI",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "f906666afd19daba434b4691ac65fb9e67b6af5fa8c08c0676c4003235a62942",
+      "recordSha256": "d15e7a205ca0952241c0ba3d0049cb519a7e381b71052eecabbb812dc2038c6b",
+      "english": "Set level at which RSSI item will flash (in positive % or negative dBm values as applicable). 30% or -100dBm are defaults.",
+      "chinese": "设置 OSD 的 RSSI 项目闪烁阈值。按所用的显示方式填写正百分比或负 dBm 值，默认分别为 30% 和 -100 dBm。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD_W_NSAT",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "841e7d0afc10244d5c9001fe8cc3076030473fb62632d4f5dfcaca6d0cbb9e5c",
+      "recordSha256": "a85b63ecb2a2f7304a3e2482747194131e99e62c6bff3289507817338821253d",
+      "english": "Set level at which NSAT item will flash",
+      "chinese": "当卫星数低于此阈值时，OSD 的 NSAT 项目闪烁。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD_W_BATVOLT",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "800a212062b1ade396d728b12dc8d2587bd5f8fac3df0e57a126c7c2da219df2",
+      "recordSha256": "8708697a5a5674e1b81aaf3d27152ed46eaa4b4bab917f0cc23c6e18e4cea705",
+      "english": "Set level at which BAT_VOLT item will flash",
+      "chinese": "当电池电压低于此阈值时，OSD 的 BAT_VOLT 项目闪烁。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD_W_TERR",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "aba1adb4d2ef39313745ac200426b085272df82e7377fd0403ce2faab6027f2c",
+      "recordSha256": "f769e176e3265393ec4a23aecbc6e19cd2092f068b93149b3eb2c1e11761b78e",
+      "english": "Set level below which TER_HGT item will flash. -1 disables.",
+      "chinese": "当距地形的高度低于此阈值时，OSD 的 TER_HGT 项目闪烁。阈值单位为米，设为 -1 可关闭此闪烁提示。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD_W_AVGCELLV",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "d0b2f3a6af292d6e535656a35ee6e8be98e5561ea0b149443426adedfee94e06",
+      "recordSha256": "b4c475e865e1b016b5e4a765b3b180deb0c4c540058190119c1f0127b0f2d4e6",
+      "english": "Set level at which AVGCELLV item will flash",
+      "chinese": "当单节平均电压低于此阈值时，OSD 的 AVGCELLV 项目闪烁。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD_W_RESTVOLT",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "288e5179716467aa8102da772ef24df9a9a382d138830dc3bb5cb9e76800e630",
+      "recordSha256": "801f169b49f9a10bc278e522d22bccff2d04e41ca697050b2dcef23308903ad3",
+      "english": "Set level at which RESTVOLT item will flash",
+      "chinese": "当估算的电池静置电压低于此阈值时，OSD 的 RESTVOLT 项目闪烁。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD_W_ACRVOLT",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "f2a11a868a4562079332afcaf19a905015ce6bca6a5b9f7382a67bb350164c3e",
+      "recordSha256": "e97655ed6339d4e025ba3d285d3551bea750102e3de05c21e075f9375bdd2579",
+      "english": "Set level at which ACRVOLT item will flash",
+      "chinese": "当估算的单节平均静置电压低于此阈值时，OSD 的 ACRVOLT 项目闪烁。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD_W_LQ",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "a595e03f6395d6af9069a4edd614b8cc51393513ef96922392b24cd396ae5315",
+      "recordSha256": "df6a481d0aad2922fcaf4c496e936378855020f0a0434a9f902092b5c3dcbffe",
+      "english": "Set level at which RC_LQ item will flash (%)",
+      "chinese": "当遥控链路质量低于此阈值时，OSD 的 RC_LQ 项目闪烁。阈值以百分比表示。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD_W_SNR",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "807afb5cb12dd24e080964eb029c293cc114ace249ae1451906ef4e87ff1d2d5",
+      "recordSha256": "abcdc5fc6d98ed341c0239dc8900b5a7c9e29bffa1273780e2e0c57aa75238db",
+      "english": "Set level at which RC_SNR item will flash (in db)",
+      "chinese": "当遥控链路信噪比低于此阈值时，OSD 的 RC_SNR 项目闪烁。阈值单位为 dB。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD_ARM_SCR",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "617d7957f06dc7b2d84bc11ada7098df265150db18aab5ca7caad97b09b55223",
+      "recordSha256": "dddc2629c21af12485155d240c85c0a2c143d2f6fcca762a8d0cc29ab651ff9a",
+      "english": "Screen to be shown on Arm event. Zero to disable the feature.",
+      "chinese": "飞控由上锁转为解锁时，切换到所选且已启用的 OSD 画面。设为 0 时，不因解锁事件切换画面。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD_DSARM_SCR",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "044ae8d1ccd268614d827ef7f4a590b1ece2692bf02d46e036b30bb98b53e8cb",
+      "recordSha256": "842ff29fabb87a6aff8ec7789811eead04bf29b8ab9b94a5681baa5b31b1dd8a",
+      "english": "Screen to be shown on disarm event. Zero to disable the feature.",
+      "chinese": "飞控由解锁转为上锁时，切换到所选且已启用的 OSD 画面。设为 0 时，不因上锁事件切换画面。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD_FS_SCR",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "26736fb1a8858441e4b062894a16c68eb5e0bc9d7ace05c8ced185f742ce55f8",
+      "recordSha256": "a30d5a8eb7fe5a93f98fb0f64d797af0bc7351752606ddf073d888d538620bcb",
+      "english": "Screen to be shown on failsafe event. Zero to disable the feature.",
+      "chinese": "遥控或电池失效保护开始时，切换到所选且已启用的 OSD 画面。设为 0 时，不指定进入保护时要切换到的画面。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD_CELL_COUNT",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "2ee95445baf4da195977e54134c52d206b77c38089abc382bb93480e894c2a92",
+      "recordSha256": "ac88fcbce0379ccb7fc51a1c78ab1ff2f2ae5e607437667245605ffdd193e32b",
+      "english": "Used for average cell voltage display. -1 disables, 0 uses cell count autodetection for well charged LIPO/LIION batteries at connection, other values manually select cell count used.",
+      "chinese": "仅用于计算 OSD 显示的平均单体电压和平均单体静置电压。设为 -1 时，这两项不显示电压数值。设为 0 时自动估算电芯数，接入时电量较低的锂聚合物或锂离子电池可能估算不准。正整数表示手动指定的电芯数。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD1_WIND_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "9e5123434fea049dbfd7ae044d0b8f59a4b3a9dcccd8ea015dfe94137bbf12b5",
+      "recordSha256": "71be8eaa4f056fe250da76741620544525a3cf300e40fced51c77ea4d62735f6",
+      "english": "Displays wind speed and relative direction, on Rover this is the apparent wind speed and direction from the windvane, if fitted",
+      "chinese": "控制第 1 个 OSD 画面是否显示风速和相对风向。Rover 若装有风向标，则显示由风向标测得的表观风速和风向。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD1_WIND_X",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "9faec3c9cf8a78f9bf3177b09a0c6a3e5878faaf6f59f35222833ffa4d174b53",
+      "english": "Horizontal position on screen",
+      "chinese": "设置第 1 个 OSD 画面中风速和风向显示项的水平位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD1_WIND_Y",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "b81e434b8d8394a36ac237ed450544d2e94d66d375438238ede7cd8a836ba30e",
+      "english": "Vertical position on screen",
+      "chinese": "设置第 1 个 OSD 画面中风速和风向显示项的垂直位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD2_WIND_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "9e5123434fea049dbfd7ae044d0b8f59a4b3a9dcccd8ea015dfe94137bbf12b5",
+      "recordSha256": "519aca4e363ff800920937127bb78ab825738933193e3e8313bb39f8b197ae3f",
+      "english": "Displays wind speed and relative direction, on Rover this is the apparent wind speed and direction from the windvane, if fitted",
+      "chinese": "控制第 2 个 OSD 画面是否显示风速和相对风向。Rover 若装有风向标，则显示由风向标测得的表观风速和风向。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD2_WIND_X",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "63444786dcc9f0cee699d0db86cf2ab8426f6d654540a96e8dca3f637669b820",
+      "english": "Horizontal position on screen",
+      "chinese": "设置第 2 个 OSD 画面中风速和风向显示项的水平位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD2_WIND_Y",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "c22a8620529ffcbc111eaa7a29f195c58715b995e7977301afc8ff6a44b2318f",
+      "english": "Vertical position on screen",
+      "chinese": "设置第 2 个 OSD 画面中风速和风向显示项的垂直位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD3_WIND_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "9e5123434fea049dbfd7ae044d0b8f59a4b3a9dcccd8ea015dfe94137bbf12b5",
+      "recordSha256": "ae9b150de3c80573ec50e4eff193a0a212b8d313aba0bbf84843be0da5eb8f67",
+      "english": "Displays wind speed and relative direction, on Rover this is the apparent wind speed and direction from the windvane, if fitted",
+      "chinese": "控制第 3 个 OSD 画面是否显示风速和相对风向。Rover 若装有风向标，则显示由风向标测得的表观风速和风向。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD3_WIND_X",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "45b14906d30081636b8f4091088f69cd371671f4e88335298a42e952054c3f90",
+      "english": "Horizontal position on screen",
+      "chinese": "设置第 3 个 OSD 画面中风速和风向显示项的水平位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD3_WIND_Y",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "5399988d3df2d38a4048f09b30c9715f835e06cb5480132e542b6951c6fa40ee",
+      "english": "Vertical position on screen",
+      "chinese": "设置第 3 个 OSD 画面中风速和风向显示项的垂直位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD4_WIND_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "9e5123434fea049dbfd7ae044d0b8f59a4b3a9dcccd8ea015dfe94137bbf12b5",
+      "recordSha256": "ff96ae1b07d8bd41cbf29b02b85e90c1169ae1e2432ebb303718c961a6423410",
+      "english": "Displays wind speed and relative direction, on Rover this is the apparent wind speed and direction from the windvane, if fitted",
+      "chinese": "控制第 4 个 OSD 画面是否显示风速和相对风向。Rover 若装有风向标，则显示由风向标测得的表观风速和风向。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD4_WIND_X",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "a0ebc5a9d615511305b63981979353e43d2fb427a7d9943e26406ca76b9fce64",
+      "english": "Horizontal position on screen",
+      "chinese": "设置第 4 个 OSD 画面中风速和风向显示项的水平位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD4_WIND_Y",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "a81dd3aca7b3e75a91bb2a4637e7d34ac03433e1a9089804797d4f6336762798",
+      "english": "Vertical position on screen",
+      "chinese": "设置第 4 个 OSD 画面中风速和风向显示项的垂直位置。"
     }
   ]
 }

@@ -19,9 +19,16 @@ LOGGER_BACKEND_HELP_KEYS = {
     'LOG_FILE_RATEMAX', 'LOG_MAV_RATEMAX', 'LOG_BLK_RATEMAX', 'LOG_DARM_RATEMAX',
 }
 SITL_ENVIRONMENT_HELP_KEYS = {'SIM_THML_SCENARI', 'SIM_TIDE_DIR', 'SIM_TIDE_SPEED', 'SIM_WAVE_AMP', 'SIM_WAVE_DIR', 'SIM_WAVE_ENABLE', 'SIM_WAVE_LENGTH', 'SIM_WAVE_SPEED', 'SIM_WIND_DIR', 'SIM_WIND_DIR_Z', 'SIM_WIND_SPD', 'SIM_WIND_T', 'SIM_WIND_TC', 'SIM_WIND_TURB', 'SIM_WIND_T_ALT', 'SIM_WIND_T_COEF'}
+OSD_DISPLAY_HELP_KEYS = {
+    'OSD_OPTIONS', 'OSD_UNITS', 'OSD_ARM_SCR', 'OSD_DSARM_SCR', 'OSD_FS_SCR', 'OSD_CELL_COUNT',
+    'OSD_W_RSSI', 'OSD_W_NSAT', 'OSD_W_BATVOLT', 'OSD_W_TERR', 'OSD_W_AVGCELLV',
+    'OSD_W_RESTVOLT', 'OSD_W_ACRVOLT', 'OSD_W_LQ', 'OSD_W_SNR',
+    *(f'OSD{screen}_WIND_{field}' for screen in range(1, 5) for field in ('EN', 'X', 'Y')),
+}
 DISPLAY_AND_LOG_HELP_KEYS = (
     SIDEBAR_GEOMETRY_KEYS | IMU_DIAGNOSTIC_HELP_KEYS | OSD_MESSAGE_TIME_HELP_KEYS
     | SITL_ENVIRONMENT_HELP_KEYS | LOG_STORAGE_HELP_KEYS | OSD_FONT_KEYS | ONBOARD_DISPLAY_HELP_KEYS | LOGGER_BACKEND_HELP_KEYS
+    | OSD_DISPLAY_HELP_KEYS
     | {'LOG_BITMASK', 'LOG_FILE_BUFSIZE', 'OSD_H_OFFSET', 'OSD_V_OFFSET', 'SCHED_DEBUG'}
 )
 catalog_module = importlib.util.module_from_spec(spec)
@@ -52,8 +59,8 @@ class ParameterCatalogTests(unittest.TestCase):
     def test_scope_counts_and_held_versions(self):
         notes = self.catalog['translations']
         descriptions = {(n['family'], v, n['parameter']) for n in notes if n['field'] == 'Description' for v in n['versions']}
-        self.assertEqual(803, len(descriptions))
-        self.assertEqual(374, len({(f, p) for f, v, p in descriptions}))
+        self.assertEqual(992, len(descriptions))
+        self.assertEqual(455, len({(f, p) for f, v, p in descriptions}))
         self.assertFalse(any(v == '4.7.2' for f, v, p in descriptions))
         excluded_copter = {'RTL_CONE_SLOPE', 'LAND_SPEED', 'LAND_SPD_MS', 'FS_GCS_ENABLE'}
         excluded_plane = {'TECS_CLMB_MAX', 'TECS_SINK_MIN', 'ROLL_LIMIT_DEG'}
