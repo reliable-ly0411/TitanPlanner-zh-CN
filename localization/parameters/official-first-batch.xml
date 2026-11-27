@@ -859,6 +859,30 @@
           <param humanName="TER_HGT_Y" name="OSD1_TER_HGT_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="AVGCELLV_X" name="OSD1_AVGCELLV_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="AVGCELLV_Y" name="OSD1_AVGCELLV_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BAT2VLT_X" name="OSD1_BAT2_VLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BAT2VLT_Y" name="OSD1_BAT2_VLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BATVOLT_X" name="OSD1_BAT_VOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BATVOLT_Y" name="OSD1_BAT_VOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RESTVOLT_X" name="OSD1_RESTVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RESTVOLT_Y" name="OSD1_RESTVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -1042,6 +1066,30 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="TER_HGT_Y" name="OSD2_TER_HGT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="AVGCELLV_X" name="OSD2_AVGCELLV_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="AVGCELLV_Y" name="OSD2_AVGCELLV_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BAT2VLT_X" name="OSD2_BAT2_VLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BAT2VLT_Y" name="OSD2_BAT2_VLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BATVOLT_X" name="OSD2_BAT_VOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BATVOLT_Y" name="OSD2_BAT_VOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RESTVOLT_X" name="OSD2_RESTVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RESTVOLT_Y" name="OSD2_RESTVOLT_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -1229,6 +1277,30 @@
           <param humanName="TER_HGT_Y" name="OSD3_TER_HGT_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="AVGCELLV_X" name="OSD3_AVGCELLV_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="AVGCELLV_Y" name="OSD3_AVGCELLV_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BAT2VLT_X" name="OSD3_BAT2_VLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BAT2VLT_Y" name="OSD3_BAT2_VLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BATVOLT_X" name="OSD3_BAT_VOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BATVOLT_Y" name="OSD3_BAT_VOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RESTVOLT_X" name="OSD3_RESTVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RESTVOLT_Y" name="OSD3_RESTVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -1412,6 +1484,30 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="TER_HGT_Y" name="OSD4_TER_HGT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="AVGCELLV_X" name="OSD4_AVGCELLV_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="AVGCELLV_Y" name="OSD4_AVGCELLV_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BAT2VLT_X" name="OSD4_BAT2_VLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BAT2VLT_Y" name="OSD4_BAT2_VLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BATVOLT_X" name="OSD4_BAT_VOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BATVOLT_Y" name="OSD4_BAT_VOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RESTVOLT_X" name="OSD4_RESTVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RESTVOLT_Y" name="OSD4_RESTVOLT_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -2363,6 +2459,30 @@
           <param humanName="TER_HGT_Y" name="OSD1_TER_HGT_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="AVGCELLV_X" name="OSD1_AVGCELLV_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="AVGCELLV_Y" name="OSD1_AVGCELLV_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BAT2VLT_X" name="OSD1_BAT2_VLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BAT2VLT_Y" name="OSD1_BAT2_VLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BATVOLT_X" name="OSD1_BAT_VOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BATVOLT_Y" name="OSD1_BAT_VOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RESTVOLT_X" name="OSD1_RESTVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RESTVOLT_Y" name="OSD1_RESTVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -2546,6 +2666,30 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="TER_HGT_Y" name="OSD2_TER_HGT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="AVGCELLV_X" name="OSD2_AVGCELLV_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="AVGCELLV_Y" name="OSD2_AVGCELLV_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BAT2VLT_X" name="OSD2_BAT2_VLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BAT2VLT_Y" name="OSD2_BAT2_VLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BATVOLT_X" name="OSD2_BAT_VOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BATVOLT_Y" name="OSD2_BAT_VOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RESTVOLT_X" name="OSD2_RESTVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RESTVOLT_Y" name="OSD2_RESTVOLT_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -2733,6 +2877,30 @@
           <param humanName="TER_HGT_Y" name="OSD3_TER_HGT_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="AVGCELLV_X" name="OSD3_AVGCELLV_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="AVGCELLV_Y" name="OSD3_AVGCELLV_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BAT2VLT_X" name="OSD3_BAT2_VLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BAT2VLT_Y" name="OSD3_BAT2_VLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BATVOLT_X" name="OSD3_BAT_VOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BATVOLT_Y" name="OSD3_BAT_VOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RESTVOLT_X" name="OSD3_RESTVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RESTVOLT_Y" name="OSD3_RESTVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -2916,6 +3084,30 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="TER_HGT_Y" name="OSD4_TER_HGT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="AVGCELLV_X" name="OSD4_AVGCELLV_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="AVGCELLV_Y" name="OSD4_AVGCELLV_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BAT2VLT_X" name="OSD4_BAT2_VLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BAT2VLT_Y" name="OSD4_BAT2_VLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BATVOLT_X" name="OSD4_BAT_VOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BATVOLT_Y" name="OSD4_BAT_VOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RESTVOLT_X" name="OSD4_RESTVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RESTVOLT_Y" name="OSD4_RESTVOLT_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -3957,6 +4149,30 @@
           <param humanName="TER_HGT_Y" name="OSD1_TER_HGT_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="AVGCELLV_X" name="OSD1_AVGCELLV_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="AVGCELLV_Y" name="OSD1_AVGCELLV_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BAT2VLT_X" name="OSD1_BAT2_VLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BAT2VLT_Y" name="OSD1_BAT2_VLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BATVOLT_X" name="OSD1_BAT_VOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BATVOLT_Y" name="OSD1_BAT_VOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RESTVOLT_X" name="OSD1_RESTVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RESTVOLT_Y" name="OSD1_RESTVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -4140,6 +4356,30 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="TER_HGT_Y" name="OSD2_TER_HGT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="AVGCELLV_X" name="OSD2_AVGCELLV_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="AVGCELLV_Y" name="OSD2_AVGCELLV_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BAT2VLT_X" name="OSD2_BAT2_VLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BAT2VLT_Y" name="OSD2_BAT2_VLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BATVOLT_X" name="OSD2_BAT_VOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BATVOLT_Y" name="OSD2_BAT_VOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RESTVOLT_X" name="OSD2_RESTVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RESTVOLT_Y" name="OSD2_RESTVOLT_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -4327,6 +4567,30 @@
           <param humanName="TER_HGT_Y" name="OSD3_TER_HGT_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="AVGCELLV_X" name="OSD3_AVGCELLV_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="AVGCELLV_Y" name="OSD3_AVGCELLV_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BAT2VLT_X" name="OSD3_BAT2_VLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BAT2VLT_Y" name="OSD3_BAT2_VLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BATVOLT_X" name="OSD3_BAT_VOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BATVOLT_Y" name="OSD3_BAT_VOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RESTVOLT_X" name="OSD3_RESTVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RESTVOLT_Y" name="OSD3_RESTVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -4510,6 +4774,30 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="TER_HGT_Y" name="OSD4_TER_HGT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="AVGCELLV_X" name="OSD4_AVGCELLV_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="AVGCELLV_Y" name="OSD4_AVGCELLV_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BAT2VLT_X" name="OSD4_BAT2_VLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BAT2VLT_Y" name="OSD4_BAT2_VLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BATVOLT_X" name="OSD4_BAT_VOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BATVOLT_Y" name="OSD4_BAT_VOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RESTVOLT_X" name="OSD4_RESTVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RESTVOLT_Y" name="OSD4_RESTVOLT_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -5539,6 +5827,30 @@
           <param humanName="TER_HGT_Y" name="OSD1_TER_HGT_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="AVGCELLV_X" name="OSD1_AVGCELLV_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="AVGCELLV_Y" name="OSD1_AVGCELLV_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BAT2VLT_X" name="OSD1_BAT2_VLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BAT2VLT_Y" name="OSD1_BAT2_VLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BATVOLT_X" name="OSD1_BAT_VOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BATVOLT_Y" name="OSD1_BAT_VOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RESTVOLT_X" name="OSD1_RESTVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RESTVOLT_Y" name="OSD1_RESTVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -5722,6 +6034,30 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="TER_HGT_Y" name="OSD2_TER_HGT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="AVGCELLV_X" name="OSD2_AVGCELLV_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="AVGCELLV_Y" name="OSD2_AVGCELLV_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BAT2VLT_X" name="OSD2_BAT2_VLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BAT2VLT_Y" name="OSD2_BAT2_VLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BATVOLT_X" name="OSD2_BAT_VOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BATVOLT_Y" name="OSD2_BAT_VOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RESTVOLT_X" name="OSD2_RESTVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RESTVOLT_Y" name="OSD2_RESTVOLT_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -5909,6 +6245,30 @@
           <param humanName="TER_HGT_Y" name="OSD3_TER_HGT_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="AVGCELLV_X" name="OSD3_AVGCELLV_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="AVGCELLV_Y" name="OSD3_AVGCELLV_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BAT2VLT_X" name="OSD3_BAT2_VLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BAT2VLT_Y" name="OSD3_BAT2_VLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BATVOLT_X" name="OSD3_BAT_VOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BATVOLT_Y" name="OSD3_BAT_VOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RESTVOLT_X" name="OSD3_RESTVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RESTVOLT_Y" name="OSD3_RESTVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -6092,6 +6452,30 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="TER_HGT_Y" name="OSD4_TER_HGT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="AVGCELLV_X" name="OSD4_AVGCELLV_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="AVGCELLV_Y" name="OSD4_AVGCELLV_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BAT2VLT_X" name="OSD4_BAT2_VLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BAT2VLT_Y" name="OSD4_BAT2_VLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BATVOLT_X" name="OSD4_BAT_VOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BATVOLT_Y" name="OSD4_BAT_VOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RESTVOLT_X" name="OSD4_RESTVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RESTVOLT_Y" name="OSD4_RESTVOLT_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -7098,6 +7482,30 @@
           <param humanName="TER_HGT_Y" name="OSD1_TER_HGT_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="AVGCELLV_X" name="OSD1_AVGCELLV_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="AVGCELLV_Y" name="OSD1_AVGCELLV_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BAT2VLT_X" name="OSD1_BAT2_VLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BAT2VLT_Y" name="OSD1_BAT2_VLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BATVOLT_X" name="OSD1_BAT_VOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BATVOLT_Y" name="OSD1_BAT_VOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RESTVOLT_X" name="OSD1_RESTVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RESTVOLT_Y" name="OSD1_RESTVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -7281,6 +7689,30 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="TER_HGT_Y" name="OSD2_TER_HGT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="AVGCELLV_X" name="OSD2_AVGCELLV_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="AVGCELLV_Y" name="OSD2_AVGCELLV_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BAT2VLT_X" name="OSD2_BAT2_VLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BAT2VLT_Y" name="OSD2_BAT2_VLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BATVOLT_X" name="OSD2_BAT_VOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BATVOLT_Y" name="OSD2_BAT_VOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RESTVOLT_X" name="OSD2_RESTVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RESTVOLT_Y" name="OSD2_RESTVOLT_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -7468,6 +7900,30 @@
           <param humanName="TER_HGT_Y" name="OSD3_TER_HGT_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="AVGCELLV_X" name="OSD3_AVGCELLV_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="AVGCELLV_Y" name="OSD3_AVGCELLV_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BAT2VLT_X" name="OSD3_BAT2_VLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BAT2VLT_Y" name="OSD3_BAT2_VLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BATVOLT_X" name="OSD3_BAT_VOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BATVOLT_Y" name="OSD3_BAT_VOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RESTVOLT_X" name="OSD3_RESTVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RESTVOLT_Y" name="OSD3_RESTVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -7651,6 +8107,30 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="TER_HGT_Y" name="OSD4_TER_HGT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="AVGCELLV_X" name="OSD4_AVGCELLV_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="AVGCELLV_Y" name="OSD4_AVGCELLV_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BAT2VLT_X" name="OSD4_BAT2_VLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BAT2VLT_Y" name="OSD4_BAT2_VLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BATVOLT_X" name="OSD4_BAT_VOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BATVOLT_Y" name="OSD4_BAT_VOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RESTVOLT_X" name="OSD4_RESTVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RESTVOLT_Y" name="OSD4_RESTVOLT_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -8756,6 +9236,30 @@
           <param humanName="TER_HGT_Y" name="OSD1_TER_HGT_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="AVGCELLV_X" name="OSD1_AVGCELLV_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="AVGCELLV_Y" name="OSD1_AVGCELLV_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BAT2VLT_X" name="OSD1_BAT2_VLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BAT2VLT_Y" name="OSD1_BAT2_VLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BATVOLT_X" name="OSD1_BAT_VOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BATVOLT_Y" name="OSD1_BAT_VOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RESTVOLT_X" name="OSD1_RESTVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RESTVOLT_Y" name="OSD1_RESTVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -8939,6 +9443,30 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="TER_HGT_Y" name="OSD2_TER_HGT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="AVGCELLV_X" name="OSD2_AVGCELLV_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="AVGCELLV_Y" name="OSD2_AVGCELLV_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BAT2VLT_X" name="OSD2_BAT2_VLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BAT2VLT_Y" name="OSD2_BAT2_VLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BATVOLT_X" name="OSD2_BAT_VOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BATVOLT_Y" name="OSD2_BAT_VOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RESTVOLT_X" name="OSD2_RESTVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RESTVOLT_Y" name="OSD2_RESTVOLT_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -9126,6 +9654,30 @@
           <param humanName="TER_HGT_Y" name="OSD3_TER_HGT_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="AVGCELLV_X" name="OSD3_AVGCELLV_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="AVGCELLV_Y" name="OSD3_AVGCELLV_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BAT2VLT_X" name="OSD3_BAT2_VLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BAT2VLT_Y" name="OSD3_BAT2_VLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BATVOLT_X" name="OSD3_BAT_VOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BATVOLT_Y" name="OSD3_BAT_VOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RESTVOLT_X" name="OSD3_RESTVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RESTVOLT_Y" name="OSD3_RESTVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -9309,6 +9861,30 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="TER_HGT_Y" name="OSD4_TER_HGT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="AVGCELLV_X" name="OSD4_AVGCELLV_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="AVGCELLV_Y" name="OSD4_AVGCELLV_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BAT2VLT_X" name="OSD4_BAT2_VLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BAT2VLT_Y" name="OSD4_BAT2_VLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BATVOLT_X" name="OSD4_BAT_VOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BATVOLT_Y" name="OSD4_BAT_VOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RESTVOLT_X" name="OSD4_RESTVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RESTVOLT_Y" name="OSD4_RESTVOLT_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -9886,6 +10462,30 @@
           <param humanName="TER_HGT_Y" name="OSD1_TER_HGT_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="AVGCELLV_X" name="OSD1_AVGCELLV_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="AVGCELLV_Y" name="OSD1_AVGCELLV_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BAT2VLT_X" name="OSD1_BAT2_VLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BAT2VLT_Y" name="OSD1_BAT2_VLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BATVOLT_X" name="OSD1_BAT_VOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BATVOLT_Y" name="OSD1_BAT_VOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RESTVOLT_X" name="OSD1_RESTVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RESTVOLT_Y" name="OSD1_RESTVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -10069,6 +10669,30 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="TER_HGT_Y" name="OSD2_TER_HGT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="AVGCELLV_X" name="OSD2_AVGCELLV_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="AVGCELLV_Y" name="OSD2_AVGCELLV_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BAT2VLT_X" name="OSD2_BAT2_VLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BAT2VLT_Y" name="OSD2_BAT2_VLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BATVOLT_X" name="OSD2_BAT_VOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BATVOLT_Y" name="OSD2_BAT_VOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RESTVOLT_X" name="OSD2_RESTVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RESTVOLT_Y" name="OSD2_RESTVOLT_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -10256,6 +10880,30 @@
           <param humanName="TER_HGT_Y" name="OSD3_TER_HGT_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="AVGCELLV_X" name="OSD3_AVGCELLV_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="AVGCELLV_Y" name="OSD3_AVGCELLV_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BAT2VLT_X" name="OSD3_BAT2_VLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BAT2VLT_Y" name="OSD3_BAT2_VLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BATVOLT_X" name="OSD3_BAT_VOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BATVOLT_Y" name="OSD3_BAT_VOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RESTVOLT_X" name="OSD3_RESTVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RESTVOLT_Y" name="OSD3_RESTVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -10439,6 +11087,30 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="TER_HGT_Y" name="OSD4_TER_HGT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="AVGCELLV_X" name="OSD4_AVGCELLV_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="AVGCELLV_Y" name="OSD4_AVGCELLV_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BAT2VLT_X" name="OSD4_BAT2_VLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BAT2VLT_Y" name="OSD4_BAT2_VLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BATVOLT_X" name="OSD4_BAT_VOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BATVOLT_Y" name="OSD4_BAT_VOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RESTVOLT_X" name="OSD4_RESTVOLT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="RESTVOLT_Y" name="OSD4_RESTVOLT_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
