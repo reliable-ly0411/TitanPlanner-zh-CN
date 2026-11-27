@@ -35,20 +35,72 @@ internal static class Program
         try { action(); } catch (Exception e) when (e is InvalidDataException || e is System.Xml.XmlException) { Check(true, message); return; }
         Check(false, message);
     }
+    private static void CheckOsdOverlayOffsets(XElement[] releases, ParameterDescriptionStore store, ParameterDescriptionCatalog catalog)
+    {
+        var rows = new[]
+        {
+            new { Key = "OSD_H_OFFSET", Range = "0 63", English = "Sets horizontal offset of the osd inside image",
+                Chinese = "设置 OSD 叠加内容在视频画面中的水平偏移。", Fingerprint = "1f151c3eee9c597747ef39f85c31bb183f009df0f6a0a91bc15057390e0b07e1" },
+            new { Key = "OSD_V_OFFSET", Range = "0 31", English = "Sets vertical offset of the osd inside image",
+                Chinese = "设置 OSD 叠加内容在视频画面中的垂直偏移。", Fingerprint = "5406cfb2fd53cabeea901c0b56dce20314d98da92b66923aa1c9caae91b292c4" }
+        };
+        foreach (var family in new[] { "Copter", "Plane", "Sub" })
+        {
+            var unknown = Context(family, "4.7.2");
+            Check(store.Bundled(unknown) == null, family + " 4.7.2 has no bundled metadata");
+            var versions = family == "Sub" ? new[] { "4.7.1" } : new[] { "4.5.7", "4.6.3", "4.7.1" };
+            foreach (var version in versions)
+            {
+                var release = releases.Single(r => (string)r.Attribute("family") == family && (string)r.Attribute("version") == version);
+                var context = Context(family, version, (string)release.Attribute("gitSha"));
+                var snapshot = store.Bundled(context);
+                foreach (var row in rows)
+                {
+                    var record = snapshot.Find(row.Key);
+                    var text = catalog.Present(snapshot, row.Key, true);
+                    var label = family + " " + version + " " + row.Key;
+                    Check(snapshot.MatchesReportedBuild && record.Name == row.Key && record.Fingerprint == row.Fingerprint, label + " record");
+                    Check(record.English == row.English && catalog.Present(snapshot, row.Key, false).Description == row.English, label + " English");
+                    Check(text.Description == row.English + "\n\n中文说明：\n" + row.Chinese && text.SearchText.Contains(row.Chinese), label + " Chinese");
+                    Check(text.Units == "" && text.Options == row.Range && record.Values.Count == 0 && record.Bits.Count == 0, label + " range only");
+                    bool pending;
+                    Check(catalog.Chinese(unknown, row.Key, "Description", null, record.English, out pending, record.Fingerprint) == null && !pending,
+                        label + " translation cannot be reused for 4.7.2");
+                }
+            }
+        }
+
+        var copter = releases.Single(r => (string)r.Attribute("family") == "Copter" && (string)r.Attribute("version") == "4.6.3");
+        var altered = new XElement(copter.Element("paramfile"));
+        var horizontal = altered.Descendants("param").Single(p => (string)p.Attribute("name") == "OSD_H_OFFSET");
+        horizontal.Elements("field").Single(f => (string)f.Attribute("name") == "Range").Value = "0 62";
+        var changed = ParameterDescriptionSnapshot.Parse(Bytes(altered.ToString()), Context("Copter", "4.6.3", (string)copter.Attribute("gitSha")));
+        var fallback = catalog.Present(changed, "OSD_H_OFFSET", true);
+        Check(fallback.Description == rows[0].English + "\n\n[中文说明待复核：英文或关联字段已变化]"
+            && fallback.Options == "0 62" && !fallback.SearchText.Contains(rows[0].Chinese), "changed horizontal range discards the old translation");
+        Check(catalog.Present(changed, "OSD_V_OFFSET", true).SearchText.Contains(rows[1].Chinese), "unchanged vertical offset still matches");
+    }
+
     private static async Task MainAsync(string[] args)
     {
         var bundle = Resource("official"); var catalog = new ParameterDescriptionCatalog(Resource("zh-CN"));
         var bundled = new ParameterDescriptionStore("unused", bundle);
         var releases = XDocument.Parse(Encoding.UTF8.GetString(bundle)).Root.Elements("release").ToArray();
+        CheckOsdOverlayOffsets(releases, bundled, catalog);
+        if (args.Length == 1 && args[0] == "--osd-overlay-offsets")
+        {
+            Console.WriteLine("OSD overlay offsets: " + assertions + " assertions passed.");
+            return;
+        }
         var expectedCounts = new Dictionary<string, int>
         {
-            ["Copter-4.5.7"] = 94,
-            ["Copter-4.6.3"] = 96,
-            ["Copter-4.7.1"] = 102,
-            ["Plane-4.5.7"] = 105,
-            ["Plane-4.6.3"] = 107,
-            ["Plane-4.7.1"] = 115,
-            ["Sub-4.7.1"] = 63
+            ["Copter-4.5.7"] = 96,
+            ["Copter-4.6.3"] = 98,
+            ["Copter-4.7.1"] = 104,
+            ["Plane-4.5.7"] = 107,
+            ["Plane-4.6.3"] = 109,
+            ["Plane-4.7.1"] = 117,
+            ["Sub-4.7.1"] = 65
         };
         Check(releases.Length == expectedCounts.Count, "seven pinned release subsets");
         foreach (var release in releases)

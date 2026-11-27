@@ -5776,6 +5776,86 @@
       "recordSha256": "ca015b469df9d92021e1f6233ce045f771cdea5be6411c555e89c4ef6d81d426",
       "english": "If LOG_REPLAY is set to 1 then the EKF2 and EKF3 state estimators will log detailed information needed for diagnosing problems with the Kalman filter. LOG_DISARMED must be set to 1 or 2 or else the log will not contain the pre-flight data required for replay testing of the EKF's. It is suggested that you also raise LOG_FILE_BUFSIZE to give more buffer space for logging and use a high quality microSD card to ensure no sensor data is lost.",
       "chinese": "设为 1 时，EKF2 和 EKF3 状态估计器会记录诊断卡尔曼滤波问题所需的详细数据。要在日志中保留重放测试所需的飞行前数据，LOG_DISARMED 必须设为 1 或 2。ArduPilot 原说明建议增大 LOG_FILE_BUFSIZE 以增加日志缓冲空间，并使用优质 microSD 卡，以免丢失传感器数据。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD_V_OFFSET",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "3febbbd768fc03db24d0e40b919d4db67bed8a43e0f9b9e4d598fc80522d6b3d",
+      "recordSha256": "5406cfb2fd53cabeea901c0b56dce20314d98da92b66923aa1c9caae91b292c4",
+      "english": "Sets vertical offset of the osd inside image",
+      "chinese": "设置 OSD 叠加内容在视频画面中的垂直偏移。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD_H_OFFSET",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "81e8b12ac6f4e13ea24bc5f39fbb8587cd43330dbda68aeab3afe286b5d92b03",
+      "recordSha256": "1f151c3eee9c597747ef39f85c31bb183f009df0f6a0a91bc15057390e0b07e1",
+      "english": "Sets horizontal offset of the osd inside image",
+      "chinese": "设置 OSD 叠加内容在视频画面中的水平偏移。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD_V_OFFSET",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "3febbbd768fc03db24d0e40b919d4db67bed8a43e0f9b9e4d598fc80522d6b3d",
+      "recordSha256": "5406cfb2fd53cabeea901c0b56dce20314d98da92b66923aa1c9caae91b292c4",
+      "english": "Sets vertical offset of the osd inside image",
+      "chinese": "设置 OSD 叠加内容在视频画面中的垂直偏移。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD_H_OFFSET",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "81e8b12ac6f4e13ea24bc5f39fbb8587cd43330dbda68aeab3afe286b5d92b03",
+      "recordSha256": "1f151c3eee9c597747ef39f85c31bb183f009df0f6a0a91bc15057390e0b07e1",
+      "english": "Sets horizontal offset of the osd inside image",
+      "chinese": "设置 OSD 叠加内容在视频画面中的水平偏移。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD_V_OFFSET",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "3febbbd768fc03db24d0e40b919d4db67bed8a43e0f9b9e4d598fc80522d6b3d",
+      "recordSha256": "5406cfb2fd53cabeea901c0b56dce20314d98da92b66923aa1c9caae91b292c4",
+      "english": "Sets vertical offset of the osd inside image",
+      "chinese": "设置 OSD 叠加内容在视频画面中的垂直偏移。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD_H_OFFSET",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "81e8b12ac6f4e13ea24bc5f39fbb8587cd43330dbda68aeab3afe286b5d92b03",
+      "recordSha256": "1f151c3eee9c597747ef39f85c31bb183f009df0f6a0a91bc15057390e0b07e1",
+      "english": "Sets horizontal offset of the osd inside image",
+      "chinese": "设置 OSD 叠加内容在视频画面中的水平偏移。"
     }
   ]
 }
