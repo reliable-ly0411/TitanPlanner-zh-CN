@@ -4,8 +4,8 @@
 
 | 中文说明适用范围 | 已审 `Description` |
 | --- | --- |
-| Copter 4.5.7，Plane / QuadPlane 4.5.7、4.6.3、4.7.1 | 选择飞控要记录的日志类型。参数值等于所选各项对应的掩码值之和。官方说明建议用 65535 启用基本日志类型。 |
-| Copter 4.6.3、4.7.1 | 选择飞控要记录的日志类型。参数值等于所选各项对应的掩码值之和。官方说明建议用 65535 启用基本日志类型。若想减小日志文件，官方建议优先考虑用 LOG_FILE_RATEMAX 限制流式日志消息写入文件的频率。 |
+| Copter 4.5.7，Plane / QuadPlane 4.5.7、4.6.3、4.7.1 | 选择飞控要记录的日志类型。参数值等于所选各项对应的掩码值之和。官方说明建议用 65535 启用全部基本日志类型。 |
+| Copter 4.6.3、4.7.1 | 选择飞控要记录的日志类型。参数值等于所选各项对应的掩码值之和。官方说明建议用 65535 启用全部基本日志类型。若想减小日志文件，官方建议优先考虑用 LOG_FILE_RATEMAX 限制流式日志消息写入文件的频率。 |
 | Sub 4.7.1 | 用 4 字节位掩码选择飞控要记录的日志类型。 |
 
 七份 PDEF 均无结构化默认值、范围、单位或普通枚举字段。Copter 和 Plane 英文中的 `65535` 是官方给出的基本日志掩码建议。Copter 两个较新版本还提到文件后端的流式日志限速。Sub 的英文只说明 4 字节掩码，位 14 保留官方标签 `INAV`。该版源码的日志位宏跳过了 14，单凭标签无法断定这一位会生成记录。[Copter 参数定义](https://github.com/ArduPilot/ardupilot/blob/dbe792162d06cab66c3475fd5556bf7a120f119e/ArduCopter/Parameters.cpp#L207-L212) · [Plane 参数定义](https://github.com/ArduPilot/ardupilot/blob/dbe792162d06cab66c3475fd5556bf7a120f119e/ArduPlane/Parameters.cpp#L628-L633) · [Sub 参数定义](https://github.com/ArduPilot/ardupilot/blob/dbe792162d06cab66c3475fd5556bf7a120f119e/ArduSub/Parameters.cpp#L270-L275) · [Sub 位宏](https://github.com/ArduPilot/ardupilot/blob/dbe792162d06cab66c3475fd5556bf7a120f119e/ArduSub/defines.h#L50-L68)
@@ -47,8 +47,9 @@
 
 Plane 4.5.7 与 4.6.3 的英文和 18 行选项完全相同，整条记录指纹不同。在 4.6.3 会话中用 4.5.7 的官方节点做内存对照时，预期保留英文及 18 个原位标签，显示“待复核”并撤下已审译文。未登记的 4.7.2 需沿用原有版本回退。
 
-对单份完整 PDEF 可在仓库根目录复核来源、精确已译数和两个独立参数组。
+第一条命令在仓库根目录独立运行七版机型日志位掩码的生产读取检查。第二条命令使用完整 PDEF 复核来源、精确已译数和两个独立参数组。
 
 ```sh
+dotnet run --project MissionPlannerTests/ParameterDescriptions/ParameterDescriptions.csproj -c Release -- --vehicle-log-bitmask
 python scripts/localization/audit_parameter_coverage.py Plane 4.6.3 Plane-4.6.3.xml --group ArduPlane --group LOG
 ```

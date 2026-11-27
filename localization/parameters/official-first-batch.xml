@@ -263,6 +263,9 @@
             <field name="Range">0 2000</field>
             <field name="Increment">50</field>
           </param>
+          <param humanName="Log bitmask" name="ArduCopter:LOG_BITMASK" documentation="Bitmap of what on-board log types to enable. This value is made up of the sum of each of the log types you want to be saved. It is usually best just to enable all basiclog types by setting this to 65535." user="Standard">
+            <field name="Bitmask">0:Fast Attitude,1:Medium Attitude,2:GPS,3:System Performance,4:Control Tuning,5:Navigation Tuning,6:RC input,7:IMU,8:Mission Commands,9:Battery Monitor,10:RC output,11:Optical Flow,12:PID,13:Compass,15:Camera,17:Motors,18:Fast IMU,19:Raw IMU,20:Video Stabilization,21:Fast harmonic notch logging</field>
+          </param>
         </parameters>
       </vehicles>
       <libraries>
@@ -922,6 +925,31 @@
             <field name="Range">0 2000</field>
             <field name="Increment">50</field>
           </param>
+          <param humanName="Log bitmask" name="ArduCopter:LOG_BITMASK" documentation="Bitmap of what on-board log types to enable. This value is made up of the sum of each of the log types you want to be saved. It is usually best just to enable all basiclog types by setting this to 65535. Note that if you want to reduce log sizes you should consider using LOG_FILE_RATEMAX instead of disabling logging items with this parameter." user="Standard">
+            <bitmask>
+              <bit code="0">Fast Attitude</bit>
+              <bit code="1">Medium Attitude</bit>
+              <bit code="2">GPS</bit>
+              <bit code="3">System Performance</bit>
+              <bit code="4">Control Tuning</bit>
+              <bit code="5">Navigation Tuning</bit>
+              <bit code="6">RC input</bit>
+              <bit code="7">IMU</bit>
+              <bit code="8">Mission Commands</bit>
+              <bit code="9">Battery Monitor</bit>
+              <bit code="10">RC output</bit>
+              <bit code="11">Optical Flow</bit>
+              <bit code="12">PID</bit>
+              <bit code="13">Compass</bit>
+              <bit code="15">Camera</bit>
+              <bit code="17">Motors</bit>
+              <bit code="18">Fast IMU</bit>
+              <bit code="19">Raw IMU</bit>
+              <bit code="20">Video Stabilization</bit>
+              <bit code="21">Fast harmonic notch logging</bit>
+            </bitmask>
+            <field name="Bitmask">0:Fast Attitude,1:Medium Attitude,2:GPS,3:System Performance,4:Control Tuning,5:Navigation Tuning,6:RC input,7:IMU,8:Mission Commands,9:Battery Monitor,10:RC output,11:Optical Flow,12:PID,13:Compass,15:Camera,17:Motors,18:Fast IMU,19:Raw IMU,20:Video Stabilization,21:Fast harmonic notch logging</field>
+          </param>
         </parameters>
       </vehicles>
       <libraries>
@@ -1560,6 +1588,31 @@
             <field name="UnitText">meters per second</field>
             <field name="Range">0 5</field>
             <field name="Increment">0.1</field>
+          </param>
+          <param humanName="Log bitmask" name="ArduCopter:LOG_BITMASK" documentation="Bitmap of what on-board log types to enable. This value is made up of the sum of each of the log types you want to be saved. It is usually best just to enable all basiclog types by setting this to 65535. Note that if you want to reduce log sizes you should consider using LOG_FILE_RATEMAX instead of disabling logging items with this parameter." user="Standard">
+            <bitmask>
+              <bit code="0">Fast Attitude</bit>
+              <bit code="1">Medium Attitude</bit>
+              <bit code="2">GPS</bit>
+              <bit code="3">System Performance</bit>
+              <bit code="4">Control Tuning</bit>
+              <bit code="5">Navigation Tuning</bit>
+              <bit code="6">RC input</bit>
+              <bit code="7">IMU</bit>
+              <bit code="8">Mission Commands</bit>
+              <bit code="9">Battery Monitor</bit>
+              <bit code="10">RC output</bit>
+              <bit code="11">Optical Flow</bit>
+              <bit code="12">PID</bit>
+              <bit code="13">Compass</bit>
+              <bit code="15">Camera</bit>
+              <bit code="17">Motors</bit>
+              <bit code="18">Fast IMU</bit>
+              <bit code="19">Raw IMU</bit>
+              <bit code="20">Video Stabilization</bit>
+              <bit code="21">Fast harmonic notch logging</bit>
+            </bitmask>
+            <field name="Bitmask">0:Fast Attitude,1:Medium Attitude,2:GPS,3:System Performance,4:Control Tuning,5:Navigation Tuning,6:RC input,7:IMU,8:Mission Commands,9:Battery Monitor,10:RC output,11:Optical Flow,12:PID,13:Compass,15:Camera,17:Motors,18:Fast IMU,19:Raw IMU,20:Video Stabilization,21:Fast harmonic notch logging</field>
           </param>
         </parameters>
       </vehicles>
@@ -2318,6 +2371,9 @@
             <field name="Range">0 32767</field>
             <field name="Increment">1</field>
           </param>
+          <param humanName="Log bitmask" name="ArduPlane:LOG_BITMASK" documentation="Bitmap of what on-board log types to enable. This value is made up of the sum of each of the log types you want to be saved. It is usually best just to enable all basic log types by setting this to 65535." user="Advanced">
+            <field name="Bitmask">0:Fast Attitude,1:Medium Attitude,2:GPS,3:Performance,4:Control Tuning,5:Navigation Tuning,7:IMU,8:Mission Commands,9:Battery Monitor,10:Compass,11:TECS,12:Camera,13:RC Input-Output,14:Rangefinder,19:Raw IMU,20:Fullrate Attitude,21:Video Stabilization,22:Fullrate Notch</field>
+          </param>
         </parameters>
       </vehicles>
       <libraries>
@@ -3033,6 +3089,29 @@
             <field name="UnitText">meters</field>
             <field name="Range">0 32767</field>
             <field name="Increment">1</field>
+          </param>
+          <param humanName="Log bitmask" name="ArduPlane:LOG_BITMASK" documentation="Bitmap of what on-board log types to enable. This value is made up of the sum of each of the log types you want to be saved. It is usually best just to enable all basic log types by setting this to 65535." user="Advanced">
+            <bitmask>
+              <bit code="0">Fast Attitude</bit>
+              <bit code="1">Medium Attitude</bit>
+              <bit code="2">GPS</bit>
+              <bit code="3">Performance</bit>
+              <bit code="4">Control Tuning</bit>
+              <bit code="5">Navigation Tuning</bit>
+              <bit code="7">IMU</bit>
+              <bit code="8">Mission Commands</bit>
+              <bit code="9">Battery Monitor</bit>
+              <bit code="10">Compass</bit>
+              <bit code="11">TECS</bit>
+              <bit code="12">Camera</bit>
+              <bit code="13">RC Input-Output</bit>
+              <bit code="14">Rangefinder</bit>
+              <bit code="19">Raw IMU</bit>
+              <bit code="20">Fullrate Attitude</bit>
+              <bit code="21">Video Stabilization</bit>
+              <bit code="22">Fullrate Notch</bit>
+            </bitmask>
+            <field name="Bitmask">0:Fast Attitude,1:Medium Attitude,2:GPS,3:Performance,4:Control Tuning,5:Navigation Tuning,7:IMU,8:Mission Commands,9:Battery Monitor,10:Compass,11:TECS,12:Camera,13:RC Input-Output,14:Rangefinder,19:Raw IMU,20:Fullrate Attitude,21:Video Stabilization,22:Fullrate Notch</field>
           </param>
         </parameters>
       </vehicles>
@@ -3772,6 +3851,29 @@
             <field name="Range">0 32767</field>
             <field name="Increment">1</field>
           </param>
+          <param humanName="Log bitmask" name="ArduPlane:LOG_BITMASK" documentation="Bitmap of what on-board log types to enable. This value is made up of the sum of each of the log types you want to be saved. It is usually best just to enable all basic log types by setting this to 65535." user="Advanced">
+            <bitmask>
+              <bit code="0">Fast Attitude</bit>
+              <bit code="1">Medium Attitude</bit>
+              <bit code="2">GPS</bit>
+              <bit code="3">Performance</bit>
+              <bit code="4">Control Tuning</bit>
+              <bit code="5">Navigation Tuning</bit>
+              <bit code="7">IMU</bit>
+              <bit code="8">Mission Commands</bit>
+              <bit code="9">Battery Monitor</bit>
+              <bit code="10">Compass</bit>
+              <bit code="11">TECS</bit>
+              <bit code="12">Camera</bit>
+              <bit code="13">RC Input-Output</bit>
+              <bit code="14">Rangefinder</bit>
+              <bit code="19">Raw IMU</bit>
+              <bit code="20">Fullrate Attitude</bit>
+              <bit code="21">Video Stabilization</bit>
+              <bit code="22">Fullrate Notch</bit>
+            </bitmask>
+            <field name="Bitmask">0:Fast Attitude,1:Medium Attitude,2:GPS,3:Performance,4:Control Tuning,5:Navigation Tuning,7:IMU,8:Mission Commands,9:Battery Monitor,10:Compass,11:TECS,12:Camera,13:RC Input-Output,14:Rangefinder,19:Raw IMU,20:Fullrate Attitude,21:Video Stabilization,22:Fullrate Notch</field>
+          </param>
         </parameters>
       </vehicles>
       <libraries>
@@ -4266,7 +4368,32 @@
     <paramfile>
       <firmware git_tag="Sub-4.7.1" git_sha="dbe792162d06cab66c3475fd5556bf7a120f119e" />
       <vehicles>
-        <parameters name="ArduSub" />
+        <parameters name="ArduSub">
+          <param humanName="Log bitmask" name="ArduSub:LOG_BITMASK" documentation="4 byte bitmap of log types to enable" user="Standard">
+            <bitmask>
+              <bit code="0">ATTITUDE_FAST</bit>
+              <bit code="1">ATTITUDE_MED</bit>
+              <bit code="2">GPS</bit>
+              <bit code="3">PM</bit>
+              <bit code="4">CTUN</bit>
+              <bit code="5">NTUN</bit>
+              <bit code="6">RCIN</bit>
+              <bit code="7">IMU</bit>
+              <bit code="8">CMD</bit>
+              <bit code="9">CURRENT</bit>
+              <bit code="10">RCOUT</bit>
+              <bit code="11">OPTFLOW</bit>
+              <bit code="12">PID</bit>
+              <bit code="13">COMPASS</bit>
+              <bit code="14">INAV</bit>
+              <bit code="15">CAMERA</bit>
+              <bit code="17">MOTBATT</bit>
+              <bit code="18">IMU_FAST</bit>
+              <bit code="19">IMU_RAW</bit>
+            </bitmask>
+            <field name="Bitmask">0:ATTITUDE_FAST,1:ATTITUDE_MED,2:GPS,3:PM,4:CTUN,5:NTUN,6:RCIN,7:IMU,8:CMD,9:CURRENT,10:RCOUT,11:OPTFLOW,12:PID,13:COMPASS,14:INAV,15:CAMERA,17:MOTBATT,18:IMU_FAST,19:IMU_RAW</field>
+          </param>
+        </parameters>
       </vehicles>
       <libraries>
         <parameters name="STAT">

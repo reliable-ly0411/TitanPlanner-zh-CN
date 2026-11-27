@@ -1864,4 +1864,24 @@
     <english>Sets horizontal offset of the osd inside image</english>
     <chinese>设置 OSD 叠加内容在视频画面中的水平偏移。</chinese>
   </translation>
+  <translation family="Copter" parameter="LOG_BITMASK" field="Description" versions="4.5.7" englishSha256="e05957d9b84b10457744038d26d3fd9c9f325124b21d146c1c7d371faba96c9f" recordSha256="b11cc07fbe423cad92d9138dcc1b09f763d2a671ee47d84a67bd00231101c095">
+    <english>Bitmap of what on-board log types to enable. This value is made up of the sum of each of the log types you want to be saved. It is usually best just to enable all basiclog types by setting this to 65535.</english>
+    <chinese>选择飞控要记录的日志类型。参数值等于所选各项对应的掩码值之和。官方说明建议用 65535 启用全部基本日志类型。</chinese>
+  </translation>
+  <translation family="Copter" parameter="LOG_BITMASK" field="Description" versions="4.6.3,4.7.1" englishSha256="5d668a442048e3857c1ce5b0bd331f307cd691783d9f623b46aa46735db5bed8" recordSha256="c83cee4f491fc9e2046ff7c6971ab630f16bfe233f5695103611e16d62defb58">
+    <english>Bitmap of what on-board log types to enable. This value is made up of the sum of each of the log types you want to be saved. It is usually best just to enable all basiclog types by setting this to 65535. Note that if you want to reduce log sizes you should consider using LOG_FILE_RATEMAX instead of disabling logging items with this parameter.</english>
+    <chinese>选择飞控要记录的日志类型。参数值等于所选各项对应的掩码值之和。官方说明建议用 65535 启用全部基本日志类型。若想减小日志文件，官方建议优先考虑用 LOG_FILE_RATEMAX 限制流式日志消息写入文件的频率。</chinese>
+  </translation>
+  <translation family="Plane" parameter="LOG_BITMASK" field="Description" versions="4.5.7" englishSha256="eff6fd690bdcd71224a903ce8ec1db8a63222db93fbb9a1a88b7f153fe97b6c2" recordSha256="5d67787b1147b50c7db174c78e49d32c79be0c20d23aadc919eb1be47e0ce501">
+    <english>Bitmap of what on-board log types to enable. This value is made up of the sum of each of the log types you want to be saved. It is usually best just to enable all basic log types by setting this to 65535.</english>
+    <chinese>选择飞控要记录的日志类型。参数值等于所选各项对应的掩码值之和。官方说明建议用 65535 启用全部基本日志类型。</chinese>
+  </translation>
+  <translation family="Plane" parameter="LOG_BITMASK" field="Description" versions="4.6.3,4.7.1" englishSha256="eff6fd690bdcd71224a903ce8ec1db8a63222db93fbb9a1a88b7f153fe97b6c2" recordSha256="252d2b524724372951b69fa095e921b28a574e5945f71101ae81abd09881c02d">
+    <english>Bitmap of what on-board log types to enable. This value is made up of the sum of each of the log types you want to be saved. It is usually best just to enable all basic log types by setting this to 65535.</english>
+    <chinese>选择飞控要记录的日志类型。参数值等于所选各项对应的掩码值之和。官方说明建议用 65535 启用全部基本日志类型。</chinese>
+  </translation>
+  <translation family="Sub" parameter="LOG_BITMASK" field="Description" versions="4.7.1" englishSha256="7db23d2a7c61971ab6f852c5a13a8a35639e8a0ee2c3363a3bd8375dcf76e300" recordSha256="821c54e8f49dcd8ebb6ba29e26f9851daabdad5efd1d8d1d42a33c658c8fc32c">
+    <english>4 byte bitmap of log types to enable</english>
+    <chinese>用 4 字节位掩码选择飞控要记录的日志类型。</chinese>
+  </translation>
 </parameterTranslations>
