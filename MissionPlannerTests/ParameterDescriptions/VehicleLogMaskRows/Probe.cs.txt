@@ -1,0 +1,235 @@
+using System;
+using System.Globalization;
+using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Windows.Forms;
+using System.Xml.Linq;
+using MissionPlanner.Utilities;
+
+namespace MissionPlanner.GCSViews.ConfigurationView
+{
+    public partial class ConfigRawParams
+    {
+        private const string Key = "LOG_BITMASK";
+        private const string ProductCommit = "2bc76b14e6e30b73a5d4734ec868604cf12b45fc";
+        private const int SampleMask = 1 << 10;
+        private const string LegacyPlaneFingerprint = "5d67787b1147b50c7db174c78e49d32c79be0c20d23aadc919eb1be47e0ce501";
+        private const string CopterEnglish =
+            "Bitmap of what on-board log types to enable. This value is made up of the sum of each of the log types you want to be saved. It is usually best just to enable all basiclog types by setting this to 65535.";
+        private const string PlaneEnglish =
+            "Bitmap of what on-board log types to enable. This value is made up of the sum of each of the log types you want to be saved. It is usually best just to enable all basic log types by setting this to 65535.";
+        private const string BasicChinese =
+            "选择飞控要记录的日志类型。参数值等于所选各项对应的掩码值之和。官方说明建议用 65535 启用全部基本日志类型。";
+        private static readonly Regex ChineseSearch = new Regex("掩码");
+        private static int checks;
+
+        private sealed class ExpectedRow
+        {
+            internal readonly string Family, Firmware, Version, Build, SourceDigest;
+            internal readonly string Fingerprint, OptionsDigest, Bit10, English, Chinese;
+            internal readonly int BitCount;
+
+            internal ExpectedRow(string family, string firmware, string version, string build, string sourceDigest,
+                string fingerprint, string optionsDigest, int bitCount, string bit10, string english, string chinese)
+            {
+                Family = family;
+                Firmware = firmware;
+                Version = version;
+                Build = build;
+                SourceDigest = sourceDigest;
+                Fingerprint = fingerprint;
+                OptionsDigest = optionsDigest;
+                BitCount = bitCount;
+                Bit10 = bit10;
+                English = english;
+                Chinese = chinese;
+            }
+
+            internal string Label => Family + " " + Version;
+        }
+
+        private static readonly ExpectedRow Copter = new ExpectedRow("Copter", "ArduCopter2", "4.5.7", "2a3dc4b7",
+            "61599e773eadeba781d69c124aff3acfbeea884b2a159d9ca6f7891f379513c9",
+            "b11cc07fbe423cad92d9138dcc1b09f763d2a671ee47d84a67bd00231101c095",
+            "0deb2d803476fc279e105f6f09d03d99b1795fc4f3c176db641053daabe60b8b",
+            20, "RC output", CopterEnglish, BasicChinese);
+
+        private static readonly ExpectedRow Plane = new ExpectedRow("Plane", "ArduPlane", "4.6.3", "3fc7011a",
+            "154e7bd4c38a75cc09e7109a4b7cfaa7f7a6fbf03125cfe6a849032f3b8389aa",
+            "252d2b524724372951b69fa095e921b28a574e5945f71101ae81abd09881c02d",
+            "ffe8a870fcdaa074b26a42ded3b88654fce0867bd425163121124bc67f95f26a",
+            18, "Compass", PlaneEnglish, BasicChinese);
+
+        private static readonly ExpectedRow Sub = new ExpectedRow("Sub", "ArduSub", "4.7.1", "dbe79216",
+            "c543ae155e6c48c98ca6f5fc803c7ce9b6161780fc79aa9e35e8c808891bb5ba",
+            "821c54e8f49dcd8ebb6ba29e26f9851daabdad5efd1d8d1d42a33c658c8fc32c",
+            "1634b6ff44ee29c0978458746018f05b1d3bae03ce2fb48ba9afbc00f9a27fde",
+            19, "RCOUT", "4 byte bitmap of log types to enable", "用 4 字节位掩码选择飞控要记录的日志类型。");
+
+        [STAThread]
+        internal static int Main()
+        {
+            Console.OutputEncoding = new UTF8Encoding(false);
+            try
+            {
+                CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+                CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo("zh-CN");
+                using (var view = new ConfigRawParams())
+                {
+                    view.CheckVehicleLogMaskRows();
+                }
+                Console.WriteLine("PASS {0} checks | LOG_BITMASK | Copter 4.5.7 / Plane 4.6.3 / Sub 4.7.1 | product {1}",
+                    checks, ProductCommit);
+                return 0;
+            }
+            catch (Exception error)
+            {
+                Console.Error.WriteLine("FAIL " + error);
+                return 1;
+            }
+        }
+
+        private static void Require(bool condition, string label)
+        {
+            if (!condition) throw new InvalidOperationException(label);
+            checks++;
+        }
+
+        private void CheckVehicleLogMaskRows()
+        {
+            Params.ReadOnly = true;
+            Params.AllowUserToAddRows = false;
+            Params.Columns.AddRange(Command, Value, Units, Options, Desc);
+            Controls.Add(Params);
+
+            CheckRow(Copter);
+            var planeRow = CheckRow(Plane);
+            CheckCultureGate();
+            CheckPlaneRecordReview(planeRow);
+            CheckRow(Sub);
+        }
+
+        private DataGridViewRow CheckRow(ExpectedRow expected)
+        {
+            string vehicleName = "Ardu" + expected.Family;
+            string versionText = vehicleName + " V" + expected.Version + " (" + expected.Build + ")";
+            var context = ParameterDescriptionContext.TryCreate(expected.Firmware, versionText, new Version(expected.Version));
+            Require(context != null && context.Family == expected.Family && context.Version == expected.Version,
+                expected.Label + " 固件上下文");
+
+            var snapshot = DescriptionStore.Value.Bundled(context);
+            Require(snapshot != null && snapshot.MatchesReportedBuild && snapshot.SourceSha256 == expected.SourceDigest,
+                expected.Label + " 固定来源与构建");
+
+            var record = snapshot.Find(Key);
+            Require(record != null && !record.Ambiguous && record.English == expected.English
+                && record.Fingerprint == expected.Fingerprint && record.Range == "" && record.Units == ""
+                && record.Values.Count == 0 && record.Bits.Count == expected.BitCount,
+                expected.Label + " 完整官方记录");
+
+            _descriptionSession = new DescriptionSession { Chinese = true, Context = context, Snapshot = snapshot };
+            var row = Params.Rows[Params.Rows.Add()];
+            row.Cells[Command.Index].Value = Key;
+            row.Cells[Value.Index].Value = SampleMask;
+            ApplyParameterDescriptionToRow(row, ReadParameterDescription(Key, expected.Firmware, _descriptionSession));
+
+            string bilingual = expected.English + "\n\n中文说明：\n" + expected.Chinese;
+            Require(Equals(row.Cells[Desc.Index].Value, bilingual), expected.Label + " 完整英文与已审中文");
+            CheckIdentity(row, expected.Label);
+            CheckOptions(row, expected, expected.Label);
+
+            string tip = row.Cells[Command.Index].ToolTipText;
+            Require(tip.StartsWith(bilingual + "\n\n", StringComparison.Ordinal) && tip.Contains(expected.SourceDigest)
+                && row.Cells[Value.Index].ToolTipText == tip && row.Cells[Desc.Index].ToolTipText == tip,
+                expected.Label + " 完整双语与固定来源提示");
+            return row;
+        }
+
+        private void CheckIdentity(DataGridViewRow row, string label)
+        {
+            Require(Params.ReadOnly && Equals(row.Cells[Command.Index].Value, Key)
+                && Equals(row.Cells[Value.Index].Value, SampleMask),
+                label + " 只读、原键与整数 1024");
+        }
+
+        private void CheckOptions(DataGridViewRow row, ExpectedRow expected, string label)
+        {
+            var options = row.Cells[Options.Index].Value as string;
+            Require(options != null && Equals(row.Cells[Units.Index].Value, "")
+                && ParameterDescriptionCatalog.Hash(Encoding.UTF8.GetBytes(options)) == expected.OptionsDigest,
+                label + " 完整选项格 SHA-256 及空单位");
+            var lines = options.Split('\n');
+            Require(lines.Length == expected.BitCount && lines.Contains("bit 10: " + expected.Bit10, StringComparer.Ordinal),
+                label + " 原选项行数和位 10");
+            if (expected.Family == "Sub")
+                Require(lines.Contains("bit 14: INAV", StringComparer.Ordinal), label + " 原位 14");
+        }
+
+        private void CheckCultureGate()
+        {
+            var warmSession = _descriptionSession;
+            Require(warmSession.Text.ContainsKey(Key) && MatchesParameterDescription(Key, ChineseSearch),
+                "Plane 4.6.3 增强中文缓存");
+            try
+            {
+                foreach (string culture in new[] { "zh-Hans", "en-US" })
+                {
+                    CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo(culture);
+                    Require(ExactDescription(Key, warmSession) == null && !MatchesParameterDescription(Key, ChineseSearch),
+                        culture + " 增强中文缓存门控");
+                }
+            }
+            finally
+            {
+                CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo("zh-CN");
+            }
+        }
+
+        private void CheckPlaneRecordReview(DataGridViewRow row)
+        {
+            var current = _descriptionSession;
+            var bundle = ParameterDescriptionSnapshot.ReadXml(ReadDescriptionResource("ParameterDescriptions.official.xml")).Root;
+            var target = new XElement(PlaneParams(bundle, Plane.Version));
+            var newRecord = PlaneLogMask(target);
+            var oldRecord = PlaneLogMask(PlaneParams(bundle, "4.5.7"));
+            Require(newRecord.Element("bitmask") != null && oldRecord.Element("bitmask") == null
+                && oldRecord.Elements("field").Any(field => (string)field.Attribute("name") == "Bitmask"),
+                "Plane 4.5.7 文本位掩码和 4.6.3 结构化位掩码");
+
+            newRecord.ReplaceWith(new XElement(oldRecord));
+            var changed = ParameterDescriptionSnapshot.Parse(Encoding.UTF8.GetBytes(target.ToString(SaveOptions.DisableFormatting)),
+                current.Context, partial: true, bundledGitSha: current.Snapshot.GitSha);
+            var record = changed.Find(Key);
+            Require(changed.MatchesReportedBuild && record != null && !record.Ambiguous
+                && record.English == Plane.English && record.Fingerprint == LegacyPlaneFingerprint
+                && record.Fingerprint != Plane.Fingerprint,
+                "Plane 4.6.3 会话中的 4.5.7 完整原记录");
+
+            _descriptionSession = new DescriptionSession { Chinese = true, Context = current.Context, Snapshot = changed };
+            ApplyParameterDescriptionToRow(row, ReadParameterDescription(Key, Plane.Firmware, _descriptionSession));
+
+            string review = Plane.English + "\n\n[中文说明待复核：英文或关联字段已变化]";
+            Require(Equals(row.Cells[Desc.Index].Value, review), "Plane 指纹变化时保留完整英文并撤下已审中文");
+            CheckIdentity(row, "Plane 指纹回退");
+            CheckOptions(row, Plane, "Plane 指纹回退");
+            string tip = row.Cells[Command.Index].ToolTipText;
+            Require(tip.StartsWith(review + "\n\n", StringComparison.Ordinal) && !tip.Contains(Plane.Chinese),
+                "Plane 指纹回退后的提示");
+            Require(!MatchesParameterDescription(Key, ChineseSearch), "Plane 指纹回退后的增强中文检索");
+        }
+
+        private static XElement PlaneParams(XElement bundle, string version)
+        {
+            return bundle.Elements("release").Single(release => (string)release.Attribute("family") == "Plane"
+                && (string)release.Attribute("version") == version).Element("paramfile");
+        }
+
+        private static XElement PlaneLogMask(XElement paramfile)
+        {
+            return paramfile.Element("vehicles").Elements("parameters")
+                .Single(group => (string)group.Attribute("name") == "ArduPlane")
+                .Elements("param").Single(parameter => (string)parameter.Attribute("name") == "ArduPlane:" + Key);
+        }
+    }
+}
