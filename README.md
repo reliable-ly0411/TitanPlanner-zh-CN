@@ -52,3 +52,7 @@ Windows WinForms, true 120 DPI, enhanced Chinese, the same 420 px isolated contr
 ## Corrected #40 Options evidence
 
 True 120 DPI Windows list, 628×255, exact production QuickView options projected with the real source metadata. Synthetic rows and selected item. The two low-speed flags are verified against their full Chinese captions. Other rows do not assert full metadata coverage. This single photograph replaces the earlier incorrectly modeled fixture image.
+
+## #188 checkbox and #190 layout outcome
+
+Actual Windows 120 DPI, only isolated controls. #188 shows the checked background-list option from package `706cd0c` in a 933×558 host. Other controls intentionally have no activated device/user settings. #190 shows the final shortcut row after a 933→1230→933 resize using source `4129782f`; system text colour is set for the isolated image. The still image does not prove speed, real application activation, or persisted settings.
