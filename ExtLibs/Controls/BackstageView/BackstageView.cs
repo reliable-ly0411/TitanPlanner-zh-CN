@@ -30,6 +30,7 @@ namespace MissionPlanner.Controls.BackstageView
         private readonly BackstageViewCollection _items = new BackstageViewCollection();
         private BackstageViewPage _activePage;
         private Label selectionPrompt;
+        private ToolTip menuCaptionTip;
 
         private const int ButtonHeight = 30;
 
@@ -307,11 +308,39 @@ namespace MissionPlanner.Controls.BackstageView
                                 };
 
             pnlMenu.Controls.Add(lnkButton);
+            if (lnkButton.FitToViewport)
+                RegisterMenuCaptionTip(lnkButton, page.LinkText);
             lnkButton.Click += this.ButtonClick;
             lnkButton.DoubleClick += lnkButton_DoubleClick;
 
             ButtonTopPos += lnkButton.Height;
             pnlMenu.Invalidate();
+        }
+
+        private void RegisterMenuCaptionTip(BackstageViewButton button, string caption)
+        {
+            if (string.IsNullOrWhiteSpace(caption))
+                return;
+
+            if (menuCaptionTip == null)
+            {
+                if (components == null)
+                    components = new Container();
+                menuCaptionTip = new ToolTip(components);
+                menuCaptionTip.Popup += (sender, args) =>
+                {
+                    if (!(args.AssociatedControl is BackstageViewButton row) || !row.IsHandleCreated)
+                    {
+                        args.Cancel = true;
+                        return;
+                    }
+
+                    using (var graphics = row.CreateGraphics())
+                        args.Cancel = !row.NeedsCaptionToolTip(graphics);
+                };
+            }
+
+            menuCaptionTip.SetToolTip(button, caption);
         }
 
         public void DrawMenu(BackstageViewPage CurrentPage, bool force = false)
@@ -329,6 +358,7 @@ namespace MissionPlanner.Controls.BackstageView
             }
 
             pnlMenu.SuspendLayout();
+            menuCaptionTip?.RemoveAll();
             pnlMenu.Controls.Clear();
 
             // reset back to 0
