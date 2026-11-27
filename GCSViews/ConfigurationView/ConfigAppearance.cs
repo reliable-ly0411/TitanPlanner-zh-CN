@@ -117,6 +117,37 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                 if (!menu.DroppedDown) SelectPreset(kind, menu.SelectedItem as Preset);
             };
             menu.SelectionChangeCommitted += (sender, args) => SelectPreset(kind, menu.SelectedItem as Preset);
+            // Mono closes an expanded list before raising KeyDown for Return/Escape,
+            // and may not emit SelectionChangeCommitted for Return. Wait for the key.
+            if (Type.GetType("Mono.Runtime") != null)
+            {
+                Preset openedChoice = null;
+                bool escape = false;
+                bool closing = false;
+                menu.DropDown += (sender, args) =>
+                {
+                    openedChoice = menu.SelectedItem as Preset;
+                    escape = false;
+                    closing = false;
+                };
+                menu.KeyDown += (sender, args) =>
+                {
+                    if ((menu.DroppedDown || closing) && args.KeyCode == Keys.Escape)
+                        escape = true;
+                };
+                menu.DropDownClosed += (sender, args) =>
+                {
+                    closing = true;
+                    menu.BeginInvoke((Action)(() =>
+                    {
+                        closing = false;
+                        if (menu.IsDisposed || openedChoice == null) return;
+                        if (escape) SetChoice(kind, openedChoice.Id);
+                        else if (menu.SelectedItem != openedChoice)
+                            SelectPreset(kind, menu.SelectedItem as Preset);
+                    }));
+                };
+            }
             var choose = new Button
             {
                 Name = icon ? "ChooseLocalWindowIcon" : "ChooseLocalStartupImage",
