@@ -4911,9 +4911,25 @@ Ctrl+O 从文件加载</value>
     <value>HUD 叠加层</value>
     <comment>"HUD Overlay"</comment>
   </data>
+  <data name="06105cd559e9664ea7969d6879221364bae24a727c300cdda795f7f9020e485f" xml:space="preserve">
+    <value>爱丽丝蓝</value>
+    <comment>"HUD color compact: AliceBlue"</comment>
+  </data>
+  <data name="5a9cd3bdbd496d7a697853295328809f7f889568b461723fc4967fe130528959" xml:space="preserve">
+    <value>失焦渐变</value>
+    <comment>"HUD color compact: GradientInactiveCaption"</comment>
+  </data>
   <data name="efa5016086ee3aef29ef4b456382b6b349a3bec5de6f3c239dc07650d5c2f8d6" xml:space="preserve">
     <value>活动窗口边框（ActiveBorder）</value>
     <comment>"HUD color: ActiveBorder"</comment>
+  </data>
+  <data name="136f7e1a96abd716e2f4e1c3641151c2ad386f655f118ad525443ed150279a33" xml:space="preserve">
+    <value>爱丽丝蓝（AliceBlue）</value>
+    <comment>"HUD color: AliceBlue"</comment>
+  </data>
+  <data name="c167f475666fcae6d9ff5f0691c3a57cb2ecd4df4364a5b7fc339bfe9147758a" xml:space="preserve">
+    <value>非活动标题栏渐变（GradientInactiveCaption）</value>
+    <comment>"HUD color: GradientInactiveCaption"</comment>
   </data>
   <data name="b78c87853562c9b3190e421567f209d284f857a06d81fbce490e3950c2775a28" xml:space="preserve">
     <value>叠加 HUD</value>

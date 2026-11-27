@@ -838,9 +838,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             CMB_osdcolor.DataSource = Enum.GetNames(typeof(KnownColor));
             if (CultureInfo.CurrentUICulture.Name == "zh-CN")
             {
-                var activeBorderCaption = FormatHudColorCaption(nameof(KnownColor.ActiveBorder));
-                var captionWidth = TextRenderer.MeasureText(activeBorderCaption, CMB_osdcolor.Font).Width;
-                CMB_osdcolor.DropDownWidth = Math.Max(CMB_osdcolor.Width, captionWidth + 35 + SystemInformation.VerticalScrollBarWidth);
+                SizeHudColorDropDown(CMB_osdcolor);
             }
 
             // set distance/speed unit states
@@ -1557,11 +1555,40 @@ namespace MissionPlanner.GCSViews.ConfigurationView
         {
         }
 
+        internal static void SizeHudColorDropDown(ComboBox combo)
+        {
+            var width = new[] { nameof(KnownColor.ActiveBorder), nameof(KnownColor.AliceBlue),
+                    nameof(KnownColor.GradientInactiveCaption) }
+                .Select(key => TextRenderer.MeasureText(FormatHudColorCaption(key), combo.Font).Width)
+                .Max();
+            combo.DropDownWidth = Math.Max(combo.Width, width + 35 + SystemInformation.VerticalScrollBarWidth);
+        }
+
         internal static string FormatHudColorCaption(string key)
         {
-            return CultureInfo.CurrentUICulture.Name == "zh-CN" && key == nameof(KnownColor.ActiveBorder)
-                ? UiText.Translate("HUD color: ActiveBorder")
-                : key;
+            if (CultureInfo.CurrentUICulture.Name != "zh-CN")
+                return key;
+
+            switch (key)
+            {
+                case nameof(KnownColor.ActiveBorder): return UiText.Translate("HUD color: ActiveBorder");
+                case nameof(KnownColor.AliceBlue): return UiText.Translate("HUD color: AliceBlue");
+                case nameof(KnownColor.GradientInactiveCaption): return UiText.Translate("HUD color: GradientInactiveCaption");
+                default: return key;
+            }
+        }
+
+        internal static string CompactHudColorCaption(string key)
+        {
+            if (CultureInfo.CurrentUICulture.Name != "zh-CN")
+                return null;
+
+            switch (key)
+            {
+                case nameof(KnownColor.AliceBlue): return UiText.Translate("HUD color compact: AliceBlue");
+                case nameof(KnownColor.GradientInactiveCaption): return UiText.Translate("HUD color compact: GradientInactiveCaption");
+                default: return null;
+            }
         }
 
         private void CMB_osdcolor_DrawItem(object sender, DrawItemEventArgs e)
@@ -1589,8 +1616,26 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                 brush = new SolidBrush(CMB_osdcolor.ForeColor);
             else
                 brush = SystemBrushes.HighlightText;
-            g.DrawString(FormatHudColorCaption((string)CMB_osdcolor.Items[e.Index]),
-                CMB_osdcolor.Font, brush, rect.X + 35, rect.Top + rect.Height - CMB_osdcolor.Font.Height);
+            var key = (string)CMB_osdcolor.Items[e.Index];
+            var caption = FormatHudColorCaption(key);
+            var font = CMB_osdcolor.Font;
+            int x = rect.X + 35, y = rect.Bottom - font.Height;
+            var compact = (e.State & DrawItemState.ComboBoxEdit) != 0 ? CompactHudColorCaption(key) : null;
+            if (compact != null && g.MeasureString(caption, font).Width > rect.Right - x)
+            {
+                if (rect.Right > x)
+                {
+                    using (var format = new StringFormat(StringFormat.GenericTypographic)
+                    {
+                        FormatFlags = StringFormatFlags.NoWrap,
+                        Trimming = StringTrimming.EllipsisCharacter
+                    })
+                        g.DrawString(compact, font, brush, new RectangleF(x, y, rect.Right - x, font.Height + 1), format);
+                }
+                return;
+            }
+
+            g.DrawString(caption, font, brush, x, y);
         }
 
         private void CMB_videosources_Click(object sender, EventArgs e)
