@@ -4827,6 +4827,14 @@ Ctrl+O 从文件加载</value>
     <value>叠加 HUD</value>
     <comment>"HUD overlay"</comment>
   </data>
+  <data name="5a98433fa451359caad4d70865dd1ff736eaee0529c13daf8eeccf5dcc34ad77" xml:space="preserve">
+    <value>航点</value>
+    <comment>"HUD readout: WP"</comment>
+  </data>
+  <data name="5341aa1fde1efde7699b3c8018d5b5b35af7ebae5203b5b8c61e8b8d3211b0b7" xml:space="preserve">
+    <value>风</value>
+    <comment>"HUD readout: Wind"</comment>
+  </data>
   <data name="398e761391f51cf2d23900d94cd4a70376236dca7a3e73d1afdb4401dbb1ac00" xml:space="preserve">
     <value>硬件 ID</value>
     <comment>"HW ID"</comment>
