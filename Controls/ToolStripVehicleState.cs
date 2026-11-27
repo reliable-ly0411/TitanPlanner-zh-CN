@@ -1683,7 +1683,7 @@ namespace MissionPlanner.Controls
             // "Pin All" under the configured modes: pins them all to the toolbar
             _pinAllCheck = new CheckBox
             {
-                Text = UiText.Translate("Pin All"),
+                Text = FormatMenuCaption("Pin All"),
                 AutoSize = false,
                 Width = RowWidth,
                 Height = 24,
@@ -1853,12 +1853,21 @@ namespace MissionPlanner.Controls
             _modesPanel.ResumeLayout(true);
         }
 
+        private static string FormatMenuCaption(string english)
+        {
+            string translated = UiText.Translate(english);
+            return System.Globalization.CultureInfo.CurrentUICulture.Name == "zh-CN" &&
+                !string.Equals(english, translated, StringComparison.Ordinal)
+                ? english + " · " + translated
+                : translated;
+        }
+
         private Label CreateSectionTitle(string text, bool first = false)
         {
             // the top title gets room from the popup's edge
             return new Label
             {
-                Text = UiText.Translate(text),
+                Text = FormatMenuCaption(text),
                 AutoSize = false,
                 Width = RowWidth,
                 Height = 20,
