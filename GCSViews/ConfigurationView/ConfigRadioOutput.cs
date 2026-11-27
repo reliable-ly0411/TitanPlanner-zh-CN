@@ -1,6 +1,9 @@
 ﻿using MissionPlanner.Controls;
+using MissionPlanner.ArduPilot;
 using MissionPlanner.Utilities;
 using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -99,6 +102,27 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                 try { tableLayoutPanel1.ResumeLayout(true); }
                 finally { resizingOutputColumns = false; }
             }
+        }
+
+        // The incoming option list and its numeric keys stay bound unchanged.
+        internal static void ApplyServoFunctionPresentation(ComboBox combo, List<KeyValuePair<int, string>> options,
+            Firmwares firmware, CultureInfo culture)
+        {
+            if (firmware != Firmwares.ArduCopter2 || culture.Name != "zh-CN" || options == null ||
+                !options.Any(IsUnassignedServoFunction))
+                return;
+
+            combo.FormattingEnabled = true;
+            combo.Format += (sender, e) =>
+            {
+                if (e.ListItem is KeyValuePair<int, string> item && IsUnassignedServoFunction(item))
+                    e.Value = "Disabled · 未分配功能";
+            };
+        }
+
+        private static bool IsUnassignedServoFunction(KeyValuePair<int, string> item)
+        {
+            return item.Key == 0 && string.Equals(item.Value, "Disabled", StringComparison.Ordinal);
         }
 
         private void setup(int servono)
@@ -255,8 +279,11 @@ namespace MissionPlanner.GCSViews.ConfigurationView
 
             bAR1.DataBindings.Add("Value", bindingSource1, "ch" + servono + "out");
             rev1.setup(1, 0, servo + "_REVERSED", MainV2.comPort.MAV.param);
-            func1.setup(ParameterMetaDataRepository.GetParameterOptionsInt(servo + "_FUNCTION",
-                    MainV2.comPort.MAV.cs.firmware.ToString()), servo + "_FUNCTION", MainV2.comPort.MAV.param);
+            var firmware = MainV2.comPort.MAV.cs.firmware;
+            var functionOptions = ParameterMetaDataRepository.GetParameterOptionsInt(servo + "_FUNCTION",
+                firmware.ToString());
+            ApplyServoFunctionPresentation(func1, functionOptions, firmware, CultureInfo.CurrentUICulture);
+            func1.setup(functionOptions, servo + "_FUNCTION", MainV2.comPort.MAV.param);
             min1.setup(ServoMin, ServoMax, 1, 1, servo + "_MIN", MainV2.comPort.MAV.param);
             trim1.setup(ServoMin, ServoMax, 1, 1, servo + "_TRIM", MainV2.comPort.MAV.param);
             max1.setup(ServoMin, ServoMax, 1, 1, servo + "_MAX", MainV2.comPort.MAV.param);
