@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
+using MissionPlanner.Utilities;
 
 namespace MissionPlanner
 {
@@ -22,6 +23,7 @@ namespace MissionPlanner
             internal DateTime Time;
             internal byte Severity;
         }
+        private const string Plane444CrashDumpSaved = "Saved crash_dump.bin";
         private static readonly UTF8Encoding StrictUtf8 = new UTF8Encoding(false, true);
 
         private static bool IsPx4(int version) => version == 2 || version == 5 || version == 6 || version == 9;
@@ -96,7 +98,8 @@ namespace MissionPlanner
             bool known = IsPx4(s.Version)
                 ? row.message == Px4BatteryText(s.Version) && row.severity == 2
                 : (row.message == "EKF3 IMU0 origin set" && (s.Version == 1 || row.severity == 6)) ||
-                  (s.Version == 1 && row.message == "GPS 1: detected u-blox");
+                  (s.Version == 1 && row.message == "GPS 1: detected u-blox") ||
+                  (s.Version == 7 && row.severity == 5 && row.message == Plane444CrashDumpSaved);
             if (!known) return;
             if (s.Rows.TryGetValue(row.message, out var existing))
             {
@@ -131,6 +134,11 @@ namespace MissionPlanner
 
                 if (IsPx4(s.Version))
                     return row.message == Px4BatteryText(s.Version) ? (s.Version == 9 ? "1 号电池已断开" : "未检测到 1 号电池") : null;
+                if (s.Version == 7 && row.severity == 5 && row.message == Plane444CrashDumpSaved)
+                {
+                    var translated = UiText.Translate(Plane444CrashDumpSaved);
+                    return string.Equals(translated, row.message, StringComparison.Ordinal) ? null : translated;
+                }
                 if (row.message == "GPS 1: detected u-blox") return "检测到 GPS 1：u-blox";
                 if (row.message == "EKF3 IMU0 origin set") return "EKF3 IMU0 原点已设置";
                 return null;

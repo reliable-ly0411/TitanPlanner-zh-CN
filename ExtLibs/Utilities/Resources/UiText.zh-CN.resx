@@ -9769,6 +9769,10 @@ gps_point：跟踪单个地面点</value>
     <value>保存的素材不可用，请重新导入本地文件。</value>
     <comment>"Saved artwork is unavailable. Reimport the local file."</comment>
   </data>
+  <data name="813db7017098bde84e70cdf2518fa870428c098e8e6a64b06ebac2e75d7a6d7d" xml:space="preserve">
+    <value>已保存 crash_dump.bin</value>
+    <comment>"Saved crash_dump.bin"</comment>
+  </data>
   <data name="2158dd3a8b115ce24ad117b6a78e57ce2c969b5c477d7e399b4f4e2e506dc3d9" xml:space="preserve">
     <value>设置已保存到 </value>
     <comment>"Saved settings to "</comment>

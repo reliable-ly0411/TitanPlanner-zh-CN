@@ -415,6 +415,7 @@
   "SPLINE_WAYPOINT command not supported.": "不支持 SPLINE_WAYPOINT 命令。",
   "STL File:": "STL 文件：",
   "Sats: --: ---": "卫星数：--: ---",
+  "Saved crash_dump.bin": "已保存 crash_dump.bin",
   "Saved ": "已保存 ",
   "Saved": "已保存",
   "Saved artwork is unavailable. Reimport the local file.": "保存的素材不可用，请重新导入本地文件。",
