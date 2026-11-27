@@ -1,5 +1,4 @@
 {
-  "Edit the periodic announcement. Keep placeholders such as {wpn}, {alt}, and {gsp} unchanged.": "编辑周期播报内容。请保留 {wpn}、{alt}、{gsp} 等占位符。",
   "Heading to Waypoint {wpn}": "前往航点 {wpn}",
   "Heading to Waypoint {wpn}, altitude is {alt}, Ground speed is {gsp} ": "正在前往航点 {wpn}，高度 {alt}，地速 {gsp} ",
   "Mode changed to {mode}": "当前飞行模式：{mode}",

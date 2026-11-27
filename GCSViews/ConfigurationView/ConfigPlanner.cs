@@ -1274,13 +1274,6 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             return saved ?? UiText.Translate("Heading to Waypoint {wpn}, altitude is {alt}, Ground speed is {gsp} ");
         }
 
-        private static string PeriodicSpeechEditorPrompt()
-        {
-            return CultureInfo.CurrentUICulture.Name == "zh-CN"
-                ? UiText.Translate("Edit the periodic announcement. Keep placeholders such as {wpn}, {alt}, and {gsp} unchanged.")
-                : UiText.Translate("What do you want it to say?");
-        }
-
         private void CHK_speechcustom_CheckedChanged(object sender, EventArgs e)
         {
             if (startup)
@@ -1291,7 +1284,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             {
                 var speechstring = PeriodicSpeechEditorDefault(Settings.Instance["speechcustom"]);
                 if (DialogResult.Cancel ==
-                    InputBox.Show(UiText.Translate("Notification"), PeriodicSpeechEditorPrompt(), ref speechstring))
+                    InputBox.Show(UiText.Translate("Notification"), UiText.Translate("What do you want it to say?"), ref speechstring))
                     return;
                 Settings.Instance["speechcustom"] = speechstring;
             }

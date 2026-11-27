@@ -3133,10 +3133,6 @@ Ctrl+O 从文件加载</value>
     <value>编辑样式</value>
     <comment>"Edit Style"</comment>
   </data>
-  <data name="081785ab6cd1b3ba71191b616936c3a038f739167fecdf5f99c2362eaed5b9b4" xml:space="preserve">
-    <value>编辑周期播报内容。请保留 {wpn}、{alt}、{gsp} 等占位符。</value>
-    <comment>"Edit the periodic announcement. Keep placeholders such as {wpn}, {alt}, and {gsp} unchanged."</comment>
-  </data>
   <data name="66e0eb6bdc88e002564f5acaf2653ceea94c5c59e272faac5fe6eae69a0e9c12" xml:space="preserve">
     <value>控制量限制</value>
     <comment>"Effort Lim"</comment>
