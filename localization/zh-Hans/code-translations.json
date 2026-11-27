@@ -1,6 +1,9 @@
 {
   "Heading to Waypoint {wpn}": "前往航点 {wpn}",
   "Heading to Waypoint {wpn}, altitude is {alt}, Ground speed is {gsp} ": "正在前往航点 {wpn}，高度 {alt}，地速 {gsp} ",
+  "Lost Copter Sound": "多旋翼寻机提示音",
+  "Lost Plane Sound": "固定翼寻机提示音",
+  "Lost Rover Sound": "车船寻回提示音",
   "Mode changed to {mode}": "当前飞行模式：{mode}",
   "3D Map Settings": "3D 地图设置",
   "A Mavlink stream has been detected, ": "检测到 MAVLink 数据流：",
