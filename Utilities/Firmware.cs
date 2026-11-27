@@ -88,6 +88,9 @@ namespace MissionPlanner.Utilities
             public string desc = "";
             public int k_format_version;
 
+            // All list-entry fields are values or immutable strings.
+            internal software CopyForLegacyListView() => (software)MemberwiseClone();
+
             public override string ToString()
             {
                 return this.ToJSON();
@@ -254,9 +257,10 @@ namespace MissionPlanner.Utilities
             }
         }
 
-        object urlcachelock = new object();
-        Dictionary<string, SemaphoreSlim> urlcacheSem = new Dictionary<string, SemaphoreSlim>();
-        static Dictionary<string, string> urlcache = new Dictionary<string, string>();
+        // The version cache is shared across loader instances; same-key waiters remain per instance.
+        private static readonly object urlcachelock = new object();
+        private readonly Dictionary<string, SemaphoreSlim> urlcacheSem = new Dictionary<string, SemaphoreSlim>();
+        private static readonly Dictionary<string, string> urlcache = new Dictionary<string, string>();
 
         /// <summary>
         /// Get fw version from firmeware.diydrones.com
@@ -306,20 +310,27 @@ namespace MissionPlanner.Utilities
 
         public string GetAPMVERSIONFile(Uri url)
         {
+            var key = url.AbsoluteUri;
+            SemaphoreSlim semaphore;
             lock (urlcachelock)
-                if (!urlcacheSem.ContainsKey(url.AbsoluteUri))
-                    urlcacheSem[url.AbsoluteUri] = new SemaphoreSlim(1, 1);
+            {
+                if (!urlcacheSem.TryGetValue(key, out semaphore))
+                    urlcacheSem[key] = semaphore = new SemaphoreSlim(1, 1);
+            }
 
-            urlcacheSem[url.AbsoluteUri].Wait();
+            semaphore.Wait();
 
             try
             {
+                string cached;
+                bool hasCached;
                 lock (urlcachelock)
-                    if (urlcache.ContainsKey(url.AbsoluteUri))
-                    {
-                        log.Info("GetAPMVERSIONFile: using cache " + url.AbsoluteUri);
-                        return urlcache[url.AbsoluteUri];
-                    }
+                    hasCached = urlcache.TryGetValue(key, out cached);
+                if (hasCached)
+                {
+                    log.Info("GetAPMVERSIONFile: using cache " + key);
+                    return cached;
+                }
 
                 var client = new HttpClient();
                 client.DefaultRequestHeaders.Add("User-Agent", Settings.Instance.UserAgent);
@@ -337,7 +348,7 @@ namespace MissionPlanner.Utilities
                             log.Info(line);
 
                             lock (urlcachelock)
-                                urlcache[url.AbsoluteUri] = line;
+                                urlcache[key] = line;
 
                             return line;
                         }
@@ -346,7 +357,7 @@ namespace MissionPlanner.Utilities
             }
             finally
             {
-                urlcacheSem[url.AbsoluteUri].Release();
+                semaphore.Release();
             }
 
             throw new TimeoutException();

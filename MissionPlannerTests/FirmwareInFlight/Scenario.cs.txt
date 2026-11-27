@@ -1,0 +1,185 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using MissionPlanner.Controls;
+using MissionPlanner.Controls.BackstageView;
+using MissionPlanner.GCSViews.ConfigurationView;
+
+public sealed partial class SimulatedSetup : MyUserControl,IActivate {
+ public static string lastpagename;
+ public static readonly List<SimulatedSetup> Instances=new List<SimulatedSetup>();
+ public readonly BackstageView backstageView=new BackstageView{Dock=DockStyle.Fill};
+ public readonly SimulatedFirmware Page;
+ readonly BackstageViewPage item;
+ public SimulatedSetup() {
+   Instances.Add(this);
+   Controls.Add(backstageView);
+   Page=new SimulatedFirmware(Instances.Count);
+   backstageView.AddPage(typeof(UserControl),"Sibling setup tab",null,false);
+   item=backstageView.AddPage(typeof(SimulatedFirmware),"Synthetic Install Firmware",null,false);
+   item.Page=Page;
+   FormClosing += HardwareConfig_FormClosing; // Exact body extracted from InitialSetup.
+ }
+ public void Activate() {}
+ public void OpenFirmware() {backstageView.ActivatePage(item);}
+}
+public sealed class OtherMainScreen:MyUserControl { }
+public sealed class SimulatedFirmware:UserControl,IActivate,IDeactivate {
+ readonly FirmwareListRequest<string,string> requests;
+ public static readonly ManualResetEventSlim Release = new ManualResetEventSlim();
+ public static readonly ManualResetEventSlim FirstStarted = new ManualResetEventSlim();
+ public static int Calls;
+ public static bool Background;
+ public int Writes,Failures,Deactivations;
+ public string Value;
+ readonly int generation;
+ internal static readonly Func<string,string> Fetch = key => {
+   var sequence=Interlocked.Increment(ref Calls);
+   FirstStarted.Set();
+   if(!Release.Wait(5000))throw new TimeoutException("fixture");
+   return "worker-"+sequence;
+ };
+ internal static readonly FirmwareListInFlight<string,string> Pool =
+   new FirmwareListInFlight<string,string>(Fetch,StringComparer.Ordinal);
+ public SimulatedFirmware(int generation) {
+   this.generation=generation;
+   requests=new FirmwareListRequest<string,string>(this);
+ }
+ public void Activate() {
+   requests.Start("synthetic legacy URL key; no network",Fetch,Background,
+     value=>{Value=value+";owner-"+generation;Writes++;},error=>Failures++,sharedInFlight:Pool);
+ }
+ public void Deactivate(){Deactivations++;requests.Invalidate();}
+}
+
+internal static class Scenario {
+ [STAThread] static void Main(){
+   Application.EnableVisualStyles();
+   Run();
+   KeysAndRetries();
+   Detach();
+   OptOut();
+ }
+ static void Run() {
+   SimulatedSetup.Instances.Clear();
+   SimulatedFirmware.Background=true;
+   SimulatedFirmware.Release.Reset();
+   using(var form=new Form{Width=960,Height=540})
+   using(var sw=new MainSwitcher(form)){
+     sw.AddScreen(new MainSwitcher.Screen("HWConfig",typeof(SimulatedSetup),false));
+     sw.AddScreen(new MainSwitcher.Screen("Other",typeof(OtherMainScreen),true));
+     form.Show();Application.DoEvents();
+     sw.ShowScreen("HWConfig");Application.DoEvents();
+     var first=(SimulatedSetup)sw.current.Control;
+     first.OpenFirmware();
+     Wait(()=>SimulatedFirmware.FirstStarted.IsSet);
+     Check(SimulatedFirmware.Calls==1&&!SimulatedFirmware.Release.IsSet,"old worker pending");
+     sw.ShowScreen("Other");
+     Check(sw.current.Name=="Other"&&first.IsDisposed&&first.Page.IsDisposed&&first.Page.Deactivations==1,
+       "outer switch returns with original owner deactivated/disposed while worker pending");
+     sw.ShowScreen("HWConfig");Application.DoEvents();
+     var replacement=(SimulatedSetup)sw.current.Control;
+     Check(!ReferenceEquals(first,replacement)&&!replacement.IsDisposed,"actual MainSwitcher reconstructs nonpersistent owner");
+     replacement.OpenFirmware();
+     for(int n=0;n<20;n++) {Application.DoEvents();Thread.Sleep(10);}
+     Check(SimulatedFirmware.Calls==1&&replacement.Page.Writes==0,"rapid reentry joins exactly one pending worker across owners");
+     SimulatedFirmware.Release.Set();
+     Wait(()=>replacement.Page.Writes==1);
+     Check(replacement.Page.Value=="worker-1;owner-2"&&SimulatedFirmware.Calls==1,"same work applies only to new owner");
+     for(int n=0;n<8;n++) {Application.DoEvents();Thread.Sleep(10);}
+     Check(first.Page.Writes==0&&first.Page.Failures==0&&replacement.Page.Writes==1,
+       "retired view receives no callback even on late shared completion");
+     sw.ShowScreen("Other");
+     sw.ShowScreen("HWConfig");Application.DoEvents();
+     var next=(SimulatedSetup)sw.current.Control;
+     next.OpenFirmware();
+     Wait(()=>next.Page.Writes==1);
+     Check(SimulatedFirmware.Calls==2&&next.Page.Value=="worker-2;owner-3","no completed global cache");
+   }
+ }
+ static void KeysAndRetries() {
+   int calls=0;
+   using(var unblock=new ManualResetEventSlim()){
+     Func<string,string> fetch=key=>{
+       Interlocked.Increment(ref calls);
+       if(key=="failed")throw new InvalidOperationException("inert error");
+       if(key=="cancelled")throw new OperationCanceledException();
+       if(!unblock.Wait(3000))throw new TimeoutException("inert wait");
+       return key;
+     };
+     var cache=new FirmwareListInFlight<string,string>(fetch,StringComparer.Ordinal);
+     var a=cache.Join("A;b",fetch);
+     var same=cache.Join("A;b",fetch);
+     var other=cache.Join("a;b",fetch);
+     Wait(()=>Volatile.Read(ref calls)==2);
+     Check(ReferenceEquals(a,same)&&!ReferenceEquals(a,other),"same exact ordered route shares; case-distinct route runs independently");
+     try { cache.Join("A;b", _=>"forged worker");throw new Exception("different loader accepted"); }
+     catch(ArgumentException) { Console.WriteLine("PASS different fetch identity cannot join"); }
+     unblock.Set(); Wait(()=>Task.WhenAll(a,other).IsCompleted);
+     Check(a.Result=="A;b"&&other.Result=="a;b","cross-key tasks do not block on the map lock");
+     for(int i=0;i<2;i++){
+       var fail=cache.Join("failed",fetch);Wait(()=>fail.IsCompleted);
+       Check(fail.IsFaulted&&fail.Exception!=null,"failed task removed and eligible for retry");
+       var cancel=cache.Join("cancelled",fetch);Wait(()=>cancel.IsCompleted);
+       Check(cancel.IsCanceled,"cancelled task eligible for retry");
+     }
+     Check(calls==6,"failed/cancelled retries each start fresh");
+   }
+ }
+ static void Detach() {
+   using(var host=new Form())
+   using(var one=new Panel{Width=100})
+   using(var two=new Panel{Left=110,Width=100})
+   using(var go=new ManualResetEventSlim()) {
+     host.Controls.AddRange(new Control[]{one,two});host.Show();Application.DoEvents();
+     int calls=0;
+     Func<string,List<string>> fetch=k=>{Interlocked.Increment(ref calls);if(!go.Wait(3000))throw new TimeoutException();return new List<string>{k};};
+     var shared=new FirmwareListInFlight<string,List<string>>(fetch,StringComparer.Ordinal);
+     var a=new FirmwareListRequest<string,List<string>>(one);
+     var b=new FirmwareListRequest<string,List<string>>(two);
+     List<string> left=null,right=null;
+     Action<Exception> error=x=>{throw x;};
+     a.Start("copy",fetch,true,x=>left=x,error,sharedInFlight:shared,detachSharedResult:x=>new List<string>(x));
+     b.Start("copy",fetch,true,x=>right=x,error,sharedInFlight:shared,detachSharedResult:x=>new List<string>(x));
+     Wait(()=>Volatile.Read(ref calls)==1);
+     for(int n=0;n<15;n++){Application.DoEvents();Thread.Sleep(10);}
+     go.Set();Wait(()=>left!=null&&right!=null);
+     left[0]="modified";
+     Check(calls==1&&!ReferenceEquals(left,right)&&right[0]=="copy","shared data detaches per owner before each view cache");
+   }
+ }
+ static void OptOut() {
+   using(var host=new Form()) using(var pane=new Panel())
+   using(var first=new ManualResetEventSlim()) using(var allow=new ManualResetEventSlim()){
+     host.Controls.Add(pane);host.Show();Application.DoEvents();
+     int calls=0;
+     Func<string,string> fetch=key=>{
+       var sequence=Interlocked.Increment(ref calls);
+       if(sequence==1){
+         first.Set();
+         if(!allow.Wait(3000))throw new TimeoutException("fixture");
+       }
+       return "worker-"+sequence;
+     };
+     var pool=new FirmwareListInFlight<string,string>(fetch,StringComparer.Ordinal);
+     var inBackground=pool.Join("route",fetch);
+     Wait(()=>first.IsSet);
+     var request=new FirmwareListRequest<string,string>(pane);
+     string selected=null;
+     request.Start("route",fetch,false,v=>selected=v,x=>{throw x;},sharedInFlight:pool);
+     Wait(()=>selected!=null);
+     Check(calls==2&&selected=="worker-2"&&!inBackground.IsCompleted,"legacy opt-out bypasses shared in-flight task");
+     allow.Set();
+     Wait(()=>inBackground.IsCompleted);
+   }
+ }
+ static void Check(bool b,string label) {if(!b)throw new Exception(label);Console.WriteLine("PASS "+label);}
+ static void Wait(Func<bool> f) {
+   var t=Stopwatch.StartNew();
+   while(!f()&&t.ElapsedMilliseconds<3000){Application.DoEvents();Thread.Sleep(8);}
+   if(!f())throw new Exception("fixture timed out");
+ }
+}

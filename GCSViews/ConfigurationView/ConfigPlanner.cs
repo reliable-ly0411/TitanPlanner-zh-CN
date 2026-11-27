@@ -304,6 +304,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             optionsFlow.Controls.Add(CHK_AutoParamCommit);
             optionsFlow.Controls.Add(chk_slowMachine);
             optionsFlow.Controls.Add(CHK_startFullscreen);
+            optionsFlow.Controls.Add(FirmwareListSettings.CreateToggle());
             table.Controls.Add(optionsFlow, 0, 6);
             table.SetColumnSpan(optionsFlow, 3);
 

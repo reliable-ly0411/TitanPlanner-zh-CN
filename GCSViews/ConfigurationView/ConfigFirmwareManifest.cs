@@ -24,10 +24,21 @@ namespace MissionPlanner.GCSViews.ConfigurationView
         APFirmware.RELEASE_TYPES REL_Type = APFirmware.RELEASE_TYPES.OFFICIAL;
         private string detectedport { get; set; } = "";
         private long? detectedboardid;
+        private readonly FirmwareListRequest<APFirmware.RELEASE_TYPES, Dictionary<string, APFirmware.FirmwareInfo>> listRequest;
+        private readonly Func<APFirmware.RELEASE_TYPES, List<APFirmware.FirmwareInfo>> fetchList;
+        private readonly ImageLabel[] firmwareChoices;
+        private readonly Dictionary<ImageLabel, string> initialFirmwareNames;
+        private bool listReady;
 
-        public ConfigFirmwareManifest()
+        public ConfigFirmwareManifest() : this(FetchFirmwareList)
+        {
+        }
+
+        internal ConfigFirmwareManifest(Func<APFirmware.RELEASE_TYPES, List<APFirmware.FirmwareInfo>> fetchList)
         {
             InitializeComponent();
+            this.fetchList = fetchList;
+            listRequest = new FirmwareListRequest<APFirmware.RELEASE_TYPES, Dictionary<string, APFirmware.FirmwareInfo>>(this);
 
             pictureAntennaTracker.Tag = APFirmware.MAV_TYPE.ANTENNA_TRACKER;
             pictureBoxHeli.Tag = APFirmware.MAV_TYPE.HELICOPTER;
@@ -40,90 +51,83 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             pictureBoxHexa.Tag = APFirmware.MAV_TYPE.Copter;
             pictureBoxQuad.Tag = APFirmware.MAV_TYPE.Copter;
             pictureBoxPlane.Tag = APFirmware.MAV_TYPE.FIXED_WING;
+            firmwareChoices = Controls.OfType<ImageLabel>().Where(label => label.Tag is APFirmware.MAV_TYPE).ToArray();
+            initialFirmwareNames = firmwareChoices.ToDictionary(choice => choice, choice => choice.Text);
         }
 
         public void Activate()
         {
-            MainV2.instance.DeviceChanged -= Instance_DeviceChanged;
-            MainV2.instance.DeviceChanged += Instance_DeviceChanged;
-
-            // Until we connect to the internet, disable all controls that require it
-            // Disable all ImageLabels
-            foreach (Control c in this.Controls)
+            var main = MainV2.instance;
+            if (main != null)
             {
-                if (c is ImageLabel)
-                {
-                    c.Enabled = false;
-                }
+                main.DeviceChanged -= Instance_DeviceChanged;
+                main.DeviceChanged += Instance_DeviceChanged;
             }
-            // Disable "All Options" and "Beta Firmwares"
-            lbl_alloptions.Enabled = false;
-            lbl_devfw.Enabled = false;
 
             flashdone = false;
-
-            Task.Run(() =>
-            {
-                APFirmware.GetList("https://firmware.oborne.me/manifest.json.gz");
-
-                var options = APFirmware.GetRelease(REL_Type);
-
-                // get max version for each mavtype
-                options = options.GroupBy(b => b.MavType).Select(a =>
-                    a.Where(b => a.Key == b.MavType && b.MavFirmwareVersion == a.Max(c => c.MavFirmwareVersion))
-                        .FirstOrDefault()).ToList();
-
-                UpdateIconName(pictureAntennaTracker,
-                    options.First(a => a.MavType == APFirmware.MAV_TYPE.ANTENNA_TRACKER.ToString()));
-                UpdateIconName(pictureBoxHeli,
-                    options.First(a => a.MavType == APFirmware.MAV_TYPE.HELICOPTER.ToString()));
-                UpdateIconName(pictureBoxSub,
-                    options.First(a => a.MavType == APFirmware.MAV_TYPE.SUBMARINE.ToString()));
-                UpdateIconName(pictureBoxRover,
-                    options.First(a => a.MavType == APFirmware.MAV_TYPE.GROUND_ROVER.ToString()));
-                UpdateIconName(pictureBoxOctaQuad,
-                    options.First(a => a.MavType == APFirmware.MAV_TYPE.Copter.ToString()));
-                UpdateIconName(pictureBoxOcta, options.First(a => a.MavType == APFirmware.MAV_TYPE.Copter.ToString()));
-                UpdateIconName(pictureBoxY6, options.First(a => a.MavType == APFirmware.MAV_TYPE.Copter.ToString()));
-                UpdateIconName(pictureBoxTri, options.First(a => a.MavType == APFirmware.MAV_TYPE.Copter.ToString()));
-                UpdateIconName(pictureBoxHexa, options.First(a => a.MavType == APFirmware.MAV_TYPE.Copter.ToString()));
-                UpdateIconName(pictureBoxQuad, options.First(a => a.MavType == APFirmware.MAV_TYPE.Copter.ToString()));
-                UpdateIconName(pictureBoxPlane,
-                    options.First(a => a.MavType == APFirmware.MAV_TYPE.FIXED_WING.ToString()));
-            });
+            RefreshFirmwareList();
         }
 
-        private void UpdateIconName(ImageLabel imageLabel, APFirmware.FirmwareInfo first)
+        private static List<APFirmware.FirmwareInfo> FetchFirmwareList(APFirmware.RELEASE_TYPES release)
         {
-            if (first == null)
-                return;
+            APFirmware.GetList("https://firmware.oborne.me/manifest.json.gz");
+            return APFirmware.GetRelease(release);
+        }
 
-            if (this.Disposing)
-                return;
-            if (this.IsDisposed)
-                return;
+        private void RefreshFirmwareList()
+        {
+            listReady = false;
+            foreach (var choice in firmwareChoices)
+            {
+                choice.Enabled = false;
+                choice.Text = initialFirmwareNames[choice];
+            }
+            lbl_alloptions.Enabled = false;
+            lbl_devfw.Enabled = false;
+            lbl_status.Text = Strings.GettingFWList;
 
-            this.BeginInvoke((MethodInvoker)delegate
-           {
-               if (String.IsNullOrEmpty(first.MavFirmwareVersionStr))
-                   imageLabel.Text = first.VehicleType?.ToString() + " " + first.MavFirmwareVersion.ToString() + " " +
-                                     first.MavFirmwareVersionType.ToString();
-               else
-                   imageLabel.Text = first.VehicleType?.ToString() + " " + first.MavFirmwareVersionStr + " " +
-                                     first.MavFirmwareVersionType.ToString();
-
-               // Re-enable this ImageLabel
-               imageLabel.Enabled = true;
-               // Re-enable the "All Options" and "Beta Firmwares" controls
-               // (only needs to be done once, but easier to do here)
-               lbl_alloptions.Enabled = true;
-               lbl_devfw.Enabled = true;
-           });
+            // Compat mode refreshes on entry, but the manifest page has always fetched off the UI thread.
+            var fetch = fetchList;
+            listRequest.Start(REL_Type, release =>
+            {
+                var options = fetch(release);
+                if (options == null || options.Count == 0)
+                    throw new InvalidDataException("No firmware in the list.");
+                var newestOptions = options.Where(option => option != null && !string.IsNullOrEmpty(option.MavType))
+                    .GroupBy(option => option.MavType)
+                    .ToDictionary(group => group.Key, group => group.OrderByDescending(option => option.MavFirmwareVersion).First());
+                if (newestOptions.Count == 0)
+                    throw new InvalidDataException("No valid firmware in the list.");
+                return newestOptions;
+            }, true, newest =>
+            {
+                foreach (var choice in firmwareChoices)
+                {
+                    if (!newest.TryGetValue(choice.Tag.ToString(), out var firmware))
+                        continue;
+                    var version = string.IsNullOrEmpty(firmware.MavFirmwareVersionStr)
+                        ? firmware.MavFirmwareVersion.ToString() : firmware.MavFirmwareVersionStr;
+                    choice.Text = firmware.VehicleType + " " + version + " " + firmware.MavFirmwareVersionType;
+                    choice.Enabled = true;
+                }
+                listReady = true;
+                lbl_alloptions.Enabled = true;
+                lbl_devfw.Enabled = true;
+                lbl_status.Text = Strings.ReceivedList;
+            }, error =>
+            {
+                log.Error(error);
+                lbl_status.Text = FirmwareListSettings.FailureText(error);
+            }, reuseCompleted: FirmwareListSettings.LoadInBackground);
         }
 
         public void Deactivate()
         {
-            MainV2.instance.DeviceChanged -= Instance_DeviceChanged;
+            listRequest.Invalidate();
+            listReady = false;
+            var main = MainV2.instance;
+            if (main != null)
+                main.DeviceChanged -= Instance_DeviceChanged;
 
             // reset to official on any reload
             REL_Type = APFirmware.RELEASE_TYPES.OFFICIAL;
@@ -181,7 +185,9 @@ namespace MissionPlanner.GCSViews.ConfigurationView
 
         private void PictureBox_Click(object sender, EventArgs e)
         {
-            var mavtype = ((APFirmware.MAV_TYPE)(sender as ImageLabel).Tag);
+            if (!listReady || !(sender is ImageLabel choice) || !choice.Enabled)
+                return;
+            var mavtype = (APFirmware.MAV_TYPE)choice.Tag;
             var dr = CustomMessageBox.Show(Strings.AreYouSureYouWantToUpload + (sender as ImageLabel)?.Text + Strings.QuestionMark,
                 Strings.Continue, MessageBoxButtons.YesNo);
             if (dr == (int)DialogResult.Yes)
@@ -192,6 +198,8 @@ namespace MissionPlanner.GCSViews.ConfigurationView
 
         private void LookForPort(APFirmware.MAV_TYPE mavtype, bool alloptions = false)
         {
+            if (!listReady)
+                return;
             var ports = Win32DeviceMgmt.GetAllCOMPorts();
             ports.AddRange(Linux.GetAllCOMPorts());
 
@@ -395,7 +403,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
         private void Lbl_devfw_Click(object sender, EventArgs e)
         {
             REL_Type = APFirmware.RELEASE_TYPES.BETA;
-            Activate();
+            RefreshFirmwareList();
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -413,7 +421,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
         {
             CustomMessageBox.Show(Strings.TrunkWarning, Strings.Trunk);
             REL_Type = APFirmware.RELEASE_TYPES.DEV;
-            Activate();
+            RefreshFirmwareList();
             return false;
         }
 

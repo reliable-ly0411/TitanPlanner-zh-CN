@@ -1,0 +1,10 @@
+# #187 legacy in-flight lifetime: offline outer navigation regression
+
+Keep configuration and device behavior unchanged. Only the exact, production legacy list delegate can join the process-scoped pending map, only when the existing background option was on for the request. Key strings retain case and ordered mirrors; the empty key denotes the existing fixed loader default. No fallback URL or ordering is changed. No completed result is retained by the shared map; settled failures and cancellation allow a new attempt. Per-view sequencing, cached results, owner/handle generation checks and the original opt-out/manifest pathways are unchanged. Per-view results shallow-copy the existing string/value-only entry data from shared work before caching; legacy URL edits cannot leak to another owner. A retired view does not cancel an already running fetch to be attached to by its replacement. The entry is removed when the worker ends; there is no extra timeout or cancellation policy.
+
+Run on a disposable X display using installed Mono and a C# compiler:
+```sh
+xvfb-run -a python3 MissionPlannerTests/FirmwareInFlight/run-isolated.py
+```
+
+Tests compile the current real MainSwitcher, MyUserControl, Backstage and firmware coordinator. The InitialSetup close handler is extracted verbatim into a harmless shell, not invoked on a real InitialSetup. The fixture drives outer navigation away and back while the synthetic legacy worker is held, then verifies one underlying fetch in total, the live owner's result, and zero late writes to the retired owner. A later fresh host after completion starts a new fetch. Additional cases check different exact route strings and fetch identities, independent keys, failed/cancelled retry, per-owner detached results and lack of shared fetch on opt-out. The opt-out fixture dialog is synchronous and does not prove native modal UI shape (existing Windows regressions cover that separately). No real firmware pages, downloads, device routines, links or actual profiles are used.
