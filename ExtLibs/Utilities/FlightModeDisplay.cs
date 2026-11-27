@@ -8,7 +8,8 @@ namespace MissionPlanner.Utilities
         Unspecified,
         Hover,
         Circle,
-        Rover
+        Rover,
+        Tracker
     }
 
     /// <summary>Presentation only: the source mode remains available for commands and comparisons.</summary>
@@ -51,6 +52,11 @@ namespace MissionPlanner.Utilities
 
             if (System.Globalization.CultureInfo.CurrentUICulture.Name == "zh-CN")
             {
+                // AntennaTracker AUTO tracks a target, not a waypoint mission.
+                if (presentation == ModeMenuPresentation.Tracker
+                    && string.Equals(mode, "Auto", StringComparison.Ordinal))
+                    return mode + " · 自动跟踪";
+
                 if (presentation == ModeMenuPresentation.Rover
                     && string.Equals(mode, "Acro", StringComparison.Ordinal))
                     return mode + " · 转向率与速度控制";
