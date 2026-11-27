@@ -4592,4 +4592,580 @@
     <english>Vertical position on screen</english>
     <chinese>第 4 屏中平均单体电压显示项的垂直位置（仅适用于 MSP OSD）。</chinese>
   </translation>
+  <translation family="Copter" parameter="OSD1_ASPD1_EN" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="ee0ff4cbd205243510d2819374630600cfabb94db321d074e8071977139f2f5b" recordSha256="464a24fde02f0a4db5b055275a2c2582cf04fa527c002ce6a89fc0c276263e25">
+    <english>Displays airspeed reported directly from primary airspeed sensor</english>
+    <chinese>显示主空速传感器直接报告的空速。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD1_ASPD1_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="0a7f0401cd440ef0ba8239446b7361a64ddeba998c1add7adaaf318cc9aa762b">
+    <english>Horizontal position on screen</english>
+    <chinese>主空速传感器读数在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD1_ASPD1_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="71855fed068606dd6f7c923e19b19ec97ce62d3fd8026dfcb8a262b2f7c40e53">
+    <english>Vertical position on screen</english>
+    <chinese>主空速传感器读数在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD1_ASPD2_EN" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="99c2d53de220b30ba70d4654c428bb20b941a67f0c40ae9e84367b01bb781866" recordSha256="8d167701e932b876593816e306c7ad5ba5c03b5da1113c04b0239fc21d40d128">
+    <english>Displays airspeed reported directly from secondary airspeed sensor</english>
+    <chinese>显示副空速传感器直接报告的空速。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD1_ASPD2_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="44d462db92365a837ec909854e3dc140a522c9b70d47ca81de530744e50f6efa">
+    <english>Horizontal position on screen</english>
+    <chinese>副空速传感器读数在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD1_ASPD2_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="10f4d1bf2c2be522ceb7f8a266d3251df93dabfc23e0d0c19167c4098ce22559">
+    <english>Vertical position on screen</english>
+    <chinese>副空速传感器读数在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD1_GSPEED_EN" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="a1e03e0efc4209efa4d55139b1f93afaafd915a1ce16596873c5c28d589eeed5" recordSha256="1072a8887941e825fa869b1ed8fdc4804d869fa5394f59ca7327740f77bb4115">
+    <english>Displays GPS ground speed</english>
+    <chinese>显示 GPS 地速。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD1_GSPEED_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="4b2820e681d79312884c001d508c2519ee7892cb227985085907ee11e6fce4b5">
+    <english>Horizontal position on screen</english>
+    <chinese>GPS 地速在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD1_GSPEED_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="1cbc3fc093ee3cb8e9212828ef7018d772b417e98bd68ee9d3acfa18ca6bd38c">
+    <english>Vertical position on screen</english>
+    <chinese>GPS 地速在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD1_VSPEED_EN" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="0f2b8f2fefdeea7df7ab40c66dd9394f127eb289f893b2368748c0811398692f" recordSha256="2fff57ac518492cff181a251fedc01c8ec1340c2e5bc5fc09bc674d2cf42af8d">
+    <english>Displays climb rate</english>
+    <chinese>显示爬升率。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD1_VSPEED_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="6bd37ab27e07fcb9b0e06c764434321569f60682e188a4e6570cf1998f8c83e9">
+    <english>Horizontal position on screen</english>
+    <chinese>爬升率在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD1_VSPEED_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="7608937e9fb08229aa3063c33fbe89d8087deb39bc5ab62e8384660ec604ad52">
+    <english>Vertical position on screen</english>
+    <chinese>爬升率在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD2_ASPD1_EN" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="ee0ff4cbd205243510d2819374630600cfabb94db321d074e8071977139f2f5b" recordSha256="eb604edc73c210e7e002c6cedfaa4fa368ec98ec4449862abc2c0467abe7784a">
+    <english>Displays airspeed reported directly from primary airspeed sensor</english>
+    <chinese>显示主空速传感器直接报告的空速。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD2_ASPD1_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="24ae52d72f3de7158af10cc1a29f8445538381b0a489b3b3c6e0d988d6775cb1">
+    <english>Horizontal position on screen</english>
+    <chinese>主空速传感器读数在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD2_ASPD1_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="3f1a811793c814e259d9560c548e56cf3a851345181bd6066844ddf6fe0a4efa">
+    <english>Vertical position on screen</english>
+    <chinese>主空速传感器读数在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD2_ASPD2_EN" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="99c2d53de220b30ba70d4654c428bb20b941a67f0c40ae9e84367b01bb781866" recordSha256="89263d94da76c6d31b0e26a78e51ecc95707243bf4e2a41805c08d8a8de21d96">
+    <english>Displays airspeed reported directly from secondary airspeed sensor</english>
+    <chinese>显示副空速传感器直接报告的空速。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD2_ASPD2_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="3e1e8f4806c82e4a63886f3089f9aaaa44a1b0d4a8b9193bf92aa5a4bd51a65e">
+    <english>Horizontal position on screen</english>
+    <chinese>副空速传感器读数在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD2_ASPD2_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="30b466918245b046b44c968c7f04f1706520e5126a27d143158dd09adae5e9cd">
+    <english>Vertical position on screen</english>
+    <chinese>副空速传感器读数在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD2_GSPEED_EN" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="a1e03e0efc4209efa4d55139b1f93afaafd915a1ce16596873c5c28d589eeed5" recordSha256="fa74f78d2667f8f1bd63bbe2c1cc1514f4c038dcb5eb8b6d36bda871dd752c14">
+    <english>Displays GPS ground speed</english>
+    <chinese>显示 GPS 地速。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD2_GSPEED_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="e3e9b2e253156a4573674eb9bfe8743a7c7dcade0a6c73b05bb360a0d6ee0038">
+    <english>Horizontal position on screen</english>
+    <chinese>GPS 地速在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD2_GSPEED_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="3992c56278d939b58e6efde54bc7ef2d31b76ddffa3a956e672255a92e3f38d8">
+    <english>Vertical position on screen</english>
+    <chinese>GPS 地速在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD2_VSPEED_EN" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="0f2b8f2fefdeea7df7ab40c66dd9394f127eb289f893b2368748c0811398692f" recordSha256="6a7dafaf720b1de09d868fdae9631a6d5cf7a1757a435c5d4b635c4d4263aef9">
+    <english>Displays climb rate</english>
+    <chinese>显示爬升率。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD2_VSPEED_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="c6d721e4ee239993d5515a88b7a0c911061681d4437f0771f44a515118e9f7e9">
+    <english>Horizontal position on screen</english>
+    <chinese>爬升率在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD2_VSPEED_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="b366c102c9607eb0c63444daf4ea1b4c41a0d5d6a54323ee312309ac9bb5845a">
+    <english>Vertical position on screen</english>
+    <chinese>爬升率在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD3_ASPD1_EN" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="ee0ff4cbd205243510d2819374630600cfabb94db321d074e8071977139f2f5b" recordSha256="3ae77891515575de587c2edf7ffe852994ee68e66e26c3601986ea848d07bb50">
+    <english>Displays airspeed reported directly from primary airspeed sensor</english>
+    <chinese>显示主空速传感器直接报告的空速。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD3_ASPD1_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="ada910c3e898e3a52ed5ef1eb97be3ad8980d5cbcdff4a1b6283ecf5c687108f">
+    <english>Horizontal position on screen</english>
+    <chinese>主空速传感器读数在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD3_ASPD1_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="e66560765ee8e278f9bb131748dabd4d258ab5013a14a9e4be6bdbed4c7d9b19">
+    <english>Vertical position on screen</english>
+    <chinese>主空速传感器读数在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD3_ASPD2_EN" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="99c2d53de220b30ba70d4654c428bb20b941a67f0c40ae9e84367b01bb781866" recordSha256="aee18a63b72c0072bda49ef86c4030fe878c5747034a2214c70dcdfd265f3d0f">
+    <english>Displays airspeed reported directly from secondary airspeed sensor</english>
+    <chinese>显示副空速传感器直接报告的空速。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD3_ASPD2_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="6d7e8d0bf5b95ca1fb9456ed069bef0454e8808d1bdf091a4315864ce1e83bd2">
+    <english>Horizontal position on screen</english>
+    <chinese>副空速传感器读数在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD3_ASPD2_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="c8fb818f078e78833c5fc7f309e8643af7bd058320902df4fb083fc0ed9cd957">
+    <english>Vertical position on screen</english>
+    <chinese>副空速传感器读数在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD3_GSPEED_EN" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="a1e03e0efc4209efa4d55139b1f93afaafd915a1ce16596873c5c28d589eeed5" recordSha256="413ed6b590d06656d6417c71e7b50e517e1230c63d7d83a911a3bfbc55bf63ee">
+    <english>Displays GPS ground speed</english>
+    <chinese>显示 GPS 地速。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD3_GSPEED_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="8f94279a01c68e3307be90863bd00d53419c8379715b9e1d512fafe5e7ac70b4">
+    <english>Horizontal position on screen</english>
+    <chinese>GPS 地速在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD3_GSPEED_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="6c07f4a9f0cd2987ec557cf22907f4c40f6cc8524fd753baaa0bd8303f69d490">
+    <english>Vertical position on screen</english>
+    <chinese>GPS 地速在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD3_VSPEED_EN" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="0f2b8f2fefdeea7df7ab40c66dd9394f127eb289f893b2368748c0811398692f" recordSha256="f9c6cad1454dfacec798e18e028143e93ab7280fa74062ed81916bfbe61d961b">
+    <english>Displays climb rate</english>
+    <chinese>显示爬升率。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD3_VSPEED_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="a47899630e03e5865d7f7112f2a5437762d77ed9aa2de539133f4d4742611eee">
+    <english>Horizontal position on screen</english>
+    <chinese>爬升率在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD3_VSPEED_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="dc6237ff2231fe7af2d1cff300705dc04d422ccf0d9593c85554a63bac957f9d">
+    <english>Vertical position on screen</english>
+    <chinese>爬升率在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD4_ASPD1_EN" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="ee0ff4cbd205243510d2819374630600cfabb94db321d074e8071977139f2f5b" recordSha256="933770170f2d981ba57cb602eae998a173126160c4f8fdb1bb3e6d517d5767cb">
+    <english>Displays airspeed reported directly from primary airspeed sensor</english>
+    <chinese>显示主空速传感器直接报告的空速。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD4_ASPD1_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="f1487e8c1942a1f88587c8571d6ea1a0101df6614711b494d3d3521b53aba452">
+    <english>Horizontal position on screen</english>
+    <chinese>主空速传感器读数在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD4_ASPD1_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="c8bdd0f20351eadec197b175c68095af7a4e9604278285fb12ac77b15d708d1b">
+    <english>Vertical position on screen</english>
+    <chinese>主空速传感器读数在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD4_ASPD2_EN" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="99c2d53de220b30ba70d4654c428bb20b941a67f0c40ae9e84367b01bb781866" recordSha256="910fd62eb0c94e43372c6abbe80defa9eb5eae7a8b0db7a7f602ce979a45912e">
+    <english>Displays airspeed reported directly from secondary airspeed sensor</english>
+    <chinese>显示副空速传感器直接报告的空速。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD4_ASPD2_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="e702b5e3a5599eeb033f3c066ebd41316e1554674ae902c224109fa8f51fb9ac">
+    <english>Horizontal position on screen</english>
+    <chinese>副空速传感器读数在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD4_ASPD2_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="a7932719560aac8a5eb05f8dee56162a0138cc79a5963ade28b0cf3400d290b0">
+    <english>Vertical position on screen</english>
+    <chinese>副空速传感器读数在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD4_GSPEED_EN" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="a1e03e0efc4209efa4d55139b1f93afaafd915a1ce16596873c5c28d589eeed5" recordSha256="c98d9a8ca1eda1fac6d565dcc5f38260bbaec5a19c785d3cc73be5c16002f0eb">
+    <english>Displays GPS ground speed</english>
+    <chinese>显示 GPS 地速。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD4_GSPEED_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="737a4534ca4166ab065a8af385b338f4c65e53d2fa79b222034da79293036f51">
+    <english>Horizontal position on screen</english>
+    <chinese>GPS 地速在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD4_GSPEED_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="b5cee4946cf6f562ddb2426ec23fbdb127f093dda035837f8cb0731ace05d661">
+    <english>Vertical position on screen</english>
+    <chinese>GPS 地速在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD4_VSPEED_EN" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="0f2b8f2fefdeea7df7ab40c66dd9394f127eb289f893b2368748c0811398692f" recordSha256="a5e33fef9a9471d6f93beedc3861580ffe171000c5fb8d1a49089c393667111b">
+    <english>Displays climb rate</english>
+    <chinese>显示爬升率。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD4_VSPEED_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="ae4c2059ff6bdb2aa34989edfb8068bb33a2ca615b4ab8324d6c7f40eff39d28">
+    <english>Horizontal position on screen</english>
+    <chinese>爬升率在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD4_VSPEED_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="eaf2123f7248a6961951b1a74aa78374d41242054fdcbc4a5969255ba1cfeea5">
+    <english>Vertical position on screen</english>
+    <chinese>爬升率在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD1_ASPD1_EN" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="ee0ff4cbd205243510d2819374630600cfabb94db321d074e8071977139f2f5b" recordSha256="464a24fde02f0a4db5b055275a2c2582cf04fa527c002ce6a89fc0c276263e25">
+    <english>Displays airspeed reported directly from primary airspeed sensor</english>
+    <chinese>显示主空速传感器直接报告的空速。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD1_ASPD1_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="0a7f0401cd440ef0ba8239446b7361a64ddeba998c1add7adaaf318cc9aa762b">
+    <english>Horizontal position on screen</english>
+    <chinese>主空速传感器读数在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD1_ASPD1_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="71855fed068606dd6f7c923e19b19ec97ce62d3fd8026dfcb8a262b2f7c40e53">
+    <english>Vertical position on screen</english>
+    <chinese>主空速传感器读数在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD1_ASPD2_EN" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="99c2d53de220b30ba70d4654c428bb20b941a67f0c40ae9e84367b01bb781866" recordSha256="8d167701e932b876593816e306c7ad5ba5c03b5da1113c04b0239fc21d40d128">
+    <english>Displays airspeed reported directly from secondary airspeed sensor</english>
+    <chinese>显示副空速传感器直接报告的空速。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD1_ASPD2_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="44d462db92365a837ec909854e3dc140a522c9b70d47ca81de530744e50f6efa">
+    <english>Horizontal position on screen</english>
+    <chinese>副空速传感器读数在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD1_ASPD2_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="10f4d1bf2c2be522ceb7f8a266d3251df93dabfc23e0d0c19167c4098ce22559">
+    <english>Vertical position on screen</english>
+    <chinese>副空速传感器读数在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD1_GSPEED_EN" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="a1e03e0efc4209efa4d55139b1f93afaafd915a1ce16596873c5c28d589eeed5" recordSha256="1072a8887941e825fa869b1ed8fdc4804d869fa5394f59ca7327740f77bb4115">
+    <english>Displays GPS ground speed</english>
+    <chinese>显示 GPS 地速。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD1_GSPEED_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="4b2820e681d79312884c001d508c2519ee7892cb227985085907ee11e6fce4b5">
+    <english>Horizontal position on screen</english>
+    <chinese>GPS 地速在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD1_GSPEED_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="1cbc3fc093ee3cb8e9212828ef7018d772b417e98bd68ee9d3acfa18ca6bd38c">
+    <english>Vertical position on screen</english>
+    <chinese>GPS 地速在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD1_VSPEED_EN" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="0f2b8f2fefdeea7df7ab40c66dd9394f127eb289f893b2368748c0811398692f" recordSha256="2fff57ac518492cff181a251fedc01c8ec1340c2e5bc5fc09bc674d2cf42af8d">
+    <english>Displays climb rate</english>
+    <chinese>显示爬升率。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD1_VSPEED_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="6bd37ab27e07fcb9b0e06c764434321569f60682e188a4e6570cf1998f8c83e9">
+    <english>Horizontal position on screen</english>
+    <chinese>爬升率在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD1_VSPEED_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="7608937e9fb08229aa3063c33fbe89d8087deb39bc5ab62e8384660ec604ad52">
+    <english>Vertical position on screen</english>
+    <chinese>爬升率在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD2_ASPD1_EN" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="ee0ff4cbd205243510d2819374630600cfabb94db321d074e8071977139f2f5b" recordSha256="eb604edc73c210e7e002c6cedfaa4fa368ec98ec4449862abc2c0467abe7784a">
+    <english>Displays airspeed reported directly from primary airspeed sensor</english>
+    <chinese>显示主空速传感器直接报告的空速。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD2_ASPD1_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="24ae52d72f3de7158af10cc1a29f8445538381b0a489b3b3c6e0d988d6775cb1">
+    <english>Horizontal position on screen</english>
+    <chinese>主空速传感器读数在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD2_ASPD1_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="3f1a811793c814e259d9560c548e56cf3a851345181bd6066844ddf6fe0a4efa">
+    <english>Vertical position on screen</english>
+    <chinese>主空速传感器读数在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD2_ASPD2_EN" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="99c2d53de220b30ba70d4654c428bb20b941a67f0c40ae9e84367b01bb781866" recordSha256="89263d94da76c6d31b0e26a78e51ecc95707243bf4e2a41805c08d8a8de21d96">
+    <english>Displays airspeed reported directly from secondary airspeed sensor</english>
+    <chinese>显示副空速传感器直接报告的空速。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD2_ASPD2_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="3e1e8f4806c82e4a63886f3089f9aaaa44a1b0d4a8b9193bf92aa5a4bd51a65e">
+    <english>Horizontal position on screen</english>
+    <chinese>副空速传感器读数在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD2_ASPD2_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="30b466918245b046b44c968c7f04f1706520e5126a27d143158dd09adae5e9cd">
+    <english>Vertical position on screen</english>
+    <chinese>副空速传感器读数在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD2_GSPEED_EN" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="a1e03e0efc4209efa4d55139b1f93afaafd915a1ce16596873c5c28d589eeed5" recordSha256="fa74f78d2667f8f1bd63bbe2c1cc1514f4c038dcb5eb8b6d36bda871dd752c14">
+    <english>Displays GPS ground speed</english>
+    <chinese>显示 GPS 地速。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD2_GSPEED_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="e3e9b2e253156a4573674eb9bfe8743a7c7dcade0a6c73b05bb360a0d6ee0038">
+    <english>Horizontal position on screen</english>
+    <chinese>GPS 地速在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD2_GSPEED_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="3992c56278d939b58e6efde54bc7ef2d31b76ddffa3a956e672255a92e3f38d8">
+    <english>Vertical position on screen</english>
+    <chinese>GPS 地速在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD2_VSPEED_EN" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="0f2b8f2fefdeea7df7ab40c66dd9394f127eb289f893b2368748c0811398692f" recordSha256="6a7dafaf720b1de09d868fdae9631a6d5cf7a1757a435c5d4b635c4d4263aef9">
+    <english>Displays climb rate</english>
+    <chinese>显示爬升率。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD2_VSPEED_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="c6d721e4ee239993d5515a88b7a0c911061681d4437f0771f44a515118e9f7e9">
+    <english>Horizontal position on screen</english>
+    <chinese>爬升率在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD2_VSPEED_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="b366c102c9607eb0c63444daf4ea1b4c41a0d5d6a54323ee312309ac9bb5845a">
+    <english>Vertical position on screen</english>
+    <chinese>爬升率在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD3_ASPD1_EN" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="ee0ff4cbd205243510d2819374630600cfabb94db321d074e8071977139f2f5b" recordSha256="3ae77891515575de587c2edf7ffe852994ee68e66e26c3601986ea848d07bb50">
+    <english>Displays airspeed reported directly from primary airspeed sensor</english>
+    <chinese>显示主空速传感器直接报告的空速。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD3_ASPD1_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="ada910c3e898e3a52ed5ef1eb97be3ad8980d5cbcdff4a1b6283ecf5c687108f">
+    <english>Horizontal position on screen</english>
+    <chinese>主空速传感器读数在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD3_ASPD1_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="e66560765ee8e278f9bb131748dabd4d258ab5013a14a9e4be6bdbed4c7d9b19">
+    <english>Vertical position on screen</english>
+    <chinese>主空速传感器读数在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD3_ASPD2_EN" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="99c2d53de220b30ba70d4654c428bb20b941a67f0c40ae9e84367b01bb781866" recordSha256="aee18a63b72c0072bda49ef86c4030fe878c5747034a2214c70dcdfd265f3d0f">
+    <english>Displays airspeed reported directly from secondary airspeed sensor</english>
+    <chinese>显示副空速传感器直接报告的空速。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD3_ASPD2_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="6d7e8d0bf5b95ca1fb9456ed069bef0454e8808d1bdf091a4315864ce1e83bd2">
+    <english>Horizontal position on screen</english>
+    <chinese>副空速传感器读数在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD3_ASPD2_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="c8fb818f078e78833c5fc7f309e8643af7bd058320902df4fb083fc0ed9cd957">
+    <english>Vertical position on screen</english>
+    <chinese>副空速传感器读数在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD3_GSPEED_EN" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="a1e03e0efc4209efa4d55139b1f93afaafd915a1ce16596873c5c28d589eeed5" recordSha256="413ed6b590d06656d6417c71e7b50e517e1230c63d7d83a911a3bfbc55bf63ee">
+    <english>Displays GPS ground speed</english>
+    <chinese>显示 GPS 地速。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD3_GSPEED_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="8f94279a01c68e3307be90863bd00d53419c8379715b9e1d512fafe5e7ac70b4">
+    <english>Horizontal position on screen</english>
+    <chinese>GPS 地速在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD3_GSPEED_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="6c07f4a9f0cd2987ec557cf22907f4c40f6cc8524fd753baaa0bd8303f69d490">
+    <english>Vertical position on screen</english>
+    <chinese>GPS 地速在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD3_VSPEED_EN" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="0f2b8f2fefdeea7df7ab40c66dd9394f127eb289f893b2368748c0811398692f" recordSha256="f9c6cad1454dfacec798e18e028143e93ab7280fa74062ed81916bfbe61d961b">
+    <english>Displays climb rate</english>
+    <chinese>显示爬升率。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD3_VSPEED_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="a47899630e03e5865d7f7112f2a5437762d77ed9aa2de539133f4d4742611eee">
+    <english>Horizontal position on screen</english>
+    <chinese>爬升率在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD3_VSPEED_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="dc6237ff2231fe7af2d1cff300705dc04d422ccf0d9593c85554a63bac957f9d">
+    <english>Vertical position on screen</english>
+    <chinese>爬升率在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD4_ASPD1_EN" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="ee0ff4cbd205243510d2819374630600cfabb94db321d074e8071977139f2f5b" recordSha256="933770170f2d981ba57cb602eae998a173126160c4f8fdb1bb3e6d517d5767cb">
+    <english>Displays airspeed reported directly from primary airspeed sensor</english>
+    <chinese>显示主空速传感器直接报告的空速。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD4_ASPD1_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="f1487e8c1942a1f88587c8571d6ea1a0101df6614711b494d3d3521b53aba452">
+    <english>Horizontal position on screen</english>
+    <chinese>主空速传感器读数在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD4_ASPD1_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="c8bdd0f20351eadec197b175c68095af7a4e9604278285fb12ac77b15d708d1b">
+    <english>Vertical position on screen</english>
+    <chinese>主空速传感器读数在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD4_ASPD2_EN" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="99c2d53de220b30ba70d4654c428bb20b941a67f0c40ae9e84367b01bb781866" recordSha256="910fd62eb0c94e43372c6abbe80defa9eb5eae7a8b0db7a7f602ce979a45912e">
+    <english>Displays airspeed reported directly from secondary airspeed sensor</english>
+    <chinese>显示副空速传感器直接报告的空速。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD4_ASPD2_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="e702b5e3a5599eeb033f3c066ebd41316e1554674ae902c224109fa8f51fb9ac">
+    <english>Horizontal position on screen</english>
+    <chinese>副空速传感器读数在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD4_ASPD2_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="a7932719560aac8a5eb05f8dee56162a0138cc79a5963ade28b0cf3400d290b0">
+    <english>Vertical position on screen</english>
+    <chinese>副空速传感器读数在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD4_GSPEED_EN" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="a1e03e0efc4209efa4d55139b1f93afaafd915a1ce16596873c5c28d589eeed5" recordSha256="c98d9a8ca1eda1fac6d565dcc5f38260bbaec5a19c785d3cc73be5c16002f0eb">
+    <english>Displays GPS ground speed</english>
+    <chinese>显示 GPS 地速。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD4_GSPEED_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="737a4534ca4166ab065a8af385b338f4c65e53d2fa79b222034da79293036f51">
+    <english>Horizontal position on screen</english>
+    <chinese>GPS 地速在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD4_GSPEED_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="b5cee4946cf6f562ddb2426ec23fbdb127f093dda035837f8cb0731ace05d661">
+    <english>Vertical position on screen</english>
+    <chinese>GPS 地速在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD4_VSPEED_EN" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="0f2b8f2fefdeea7df7ab40c66dd9394f127eb289f893b2368748c0811398692f" recordSha256="a5e33fef9a9471d6f93beedc3861580ffe171000c5fb8d1a49089c393667111b">
+    <english>Displays climb rate</english>
+    <chinese>显示爬升率。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD4_VSPEED_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="ae4c2059ff6bdb2aa34989edfb8068bb33a2ca615b4ab8324d6c7f40eff39d28">
+    <english>Horizontal position on screen</english>
+    <chinese>爬升率在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD4_VSPEED_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="eaf2123f7248a6961951b1a74aa78374d41242054fdcbc4a5969255ba1cfeea5">
+    <english>Vertical position on screen</english>
+    <chinese>爬升率在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD1_ASPD1_EN" field="Description" versions="4.7.1" englishSha256="ee0ff4cbd205243510d2819374630600cfabb94db321d074e8071977139f2f5b" recordSha256="464a24fde02f0a4db5b055275a2c2582cf04fa527c002ce6a89fc0c276263e25">
+    <english>Displays airspeed reported directly from primary airspeed sensor</english>
+    <chinese>显示主空速传感器直接报告的空速。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD1_ASPD1_X" field="Description" versions="4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="0a7f0401cd440ef0ba8239446b7361a64ddeba998c1add7adaaf318cc9aa762b">
+    <english>Horizontal position on screen</english>
+    <chinese>主空速传感器读数在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD1_ASPD1_Y" field="Description" versions="4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="71855fed068606dd6f7c923e19b19ec97ce62d3fd8026dfcb8a262b2f7c40e53">
+    <english>Vertical position on screen</english>
+    <chinese>主空速传感器读数在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD1_ASPD2_EN" field="Description" versions="4.7.1" englishSha256="99c2d53de220b30ba70d4654c428bb20b941a67f0c40ae9e84367b01bb781866" recordSha256="8d167701e932b876593816e306c7ad5ba5c03b5da1113c04b0239fc21d40d128">
+    <english>Displays airspeed reported directly from secondary airspeed sensor</english>
+    <chinese>显示副空速传感器直接报告的空速。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD1_ASPD2_X" field="Description" versions="4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="44d462db92365a837ec909854e3dc140a522c9b70d47ca81de530744e50f6efa">
+    <english>Horizontal position on screen</english>
+    <chinese>副空速传感器读数在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD1_ASPD2_Y" field="Description" versions="4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="10f4d1bf2c2be522ceb7f8a266d3251df93dabfc23e0d0c19167c4098ce22559">
+    <english>Vertical position on screen</english>
+    <chinese>副空速传感器读数在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD1_GSPEED_EN" field="Description" versions="4.7.1" englishSha256="a1e03e0efc4209efa4d55139b1f93afaafd915a1ce16596873c5c28d589eeed5" recordSha256="1072a8887941e825fa869b1ed8fdc4804d869fa5394f59ca7327740f77bb4115">
+    <english>Displays GPS ground speed</english>
+    <chinese>显示 GPS 地速。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD1_GSPEED_X" field="Description" versions="4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="4b2820e681d79312884c001d508c2519ee7892cb227985085907ee11e6fce4b5">
+    <english>Horizontal position on screen</english>
+    <chinese>GPS 地速在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD1_GSPEED_Y" field="Description" versions="4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="1cbc3fc093ee3cb8e9212828ef7018d772b417e98bd68ee9d3acfa18ca6bd38c">
+    <english>Vertical position on screen</english>
+    <chinese>GPS 地速在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD1_VSPEED_EN" field="Description" versions="4.7.1" englishSha256="0f2b8f2fefdeea7df7ab40c66dd9394f127eb289f893b2368748c0811398692f" recordSha256="2fff57ac518492cff181a251fedc01c8ec1340c2e5bc5fc09bc674d2cf42af8d">
+    <english>Displays climb rate</english>
+    <chinese>显示爬升率。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD1_VSPEED_X" field="Description" versions="4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="6bd37ab27e07fcb9b0e06c764434321569f60682e188a4e6570cf1998f8c83e9">
+    <english>Horizontal position on screen</english>
+    <chinese>爬升率在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD1_VSPEED_Y" field="Description" versions="4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="7608937e9fb08229aa3063c33fbe89d8087deb39bc5ab62e8384660ec604ad52">
+    <english>Vertical position on screen</english>
+    <chinese>爬升率在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD2_ASPD1_EN" field="Description" versions="4.7.1" englishSha256="ee0ff4cbd205243510d2819374630600cfabb94db321d074e8071977139f2f5b" recordSha256="eb604edc73c210e7e002c6cedfaa4fa368ec98ec4449862abc2c0467abe7784a">
+    <english>Displays airspeed reported directly from primary airspeed sensor</english>
+    <chinese>显示主空速传感器直接报告的空速。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD2_ASPD1_X" field="Description" versions="4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="24ae52d72f3de7158af10cc1a29f8445538381b0a489b3b3c6e0d988d6775cb1">
+    <english>Horizontal position on screen</english>
+    <chinese>主空速传感器读数在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD2_ASPD1_Y" field="Description" versions="4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="3f1a811793c814e259d9560c548e56cf3a851345181bd6066844ddf6fe0a4efa">
+    <english>Vertical position on screen</english>
+    <chinese>主空速传感器读数在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD2_ASPD2_EN" field="Description" versions="4.7.1" englishSha256="99c2d53de220b30ba70d4654c428bb20b941a67f0c40ae9e84367b01bb781866" recordSha256="89263d94da76c6d31b0e26a78e51ecc95707243bf4e2a41805c08d8a8de21d96">
+    <english>Displays airspeed reported directly from secondary airspeed sensor</english>
+    <chinese>显示副空速传感器直接报告的空速。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD2_ASPD2_X" field="Description" versions="4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="3e1e8f4806c82e4a63886f3089f9aaaa44a1b0d4a8b9193bf92aa5a4bd51a65e">
+    <english>Horizontal position on screen</english>
+    <chinese>副空速传感器读数在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD2_ASPD2_Y" field="Description" versions="4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="30b466918245b046b44c968c7f04f1706520e5126a27d143158dd09adae5e9cd">
+    <english>Vertical position on screen</english>
+    <chinese>副空速传感器读数在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD2_GSPEED_EN" field="Description" versions="4.7.1" englishSha256="a1e03e0efc4209efa4d55139b1f93afaafd915a1ce16596873c5c28d589eeed5" recordSha256="fa74f78d2667f8f1bd63bbe2c1cc1514f4c038dcb5eb8b6d36bda871dd752c14">
+    <english>Displays GPS ground speed</english>
+    <chinese>显示 GPS 地速。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD2_GSPEED_X" field="Description" versions="4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="e3e9b2e253156a4573674eb9bfe8743a7c7dcade0a6c73b05bb360a0d6ee0038">
+    <english>Horizontal position on screen</english>
+    <chinese>GPS 地速在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD2_GSPEED_Y" field="Description" versions="4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="3992c56278d939b58e6efde54bc7ef2d31b76ddffa3a956e672255a92e3f38d8">
+    <english>Vertical position on screen</english>
+    <chinese>GPS 地速在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD2_VSPEED_EN" field="Description" versions="4.7.1" englishSha256="0f2b8f2fefdeea7df7ab40c66dd9394f127eb289f893b2368748c0811398692f" recordSha256="6a7dafaf720b1de09d868fdae9631a6d5cf7a1757a435c5d4b635c4d4263aef9">
+    <english>Displays climb rate</english>
+    <chinese>显示爬升率。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD2_VSPEED_X" field="Description" versions="4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="c6d721e4ee239993d5515a88b7a0c911061681d4437f0771f44a515118e9f7e9">
+    <english>Horizontal position on screen</english>
+    <chinese>爬升率在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD2_VSPEED_Y" field="Description" versions="4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="b366c102c9607eb0c63444daf4ea1b4c41a0d5d6a54323ee312309ac9bb5845a">
+    <english>Vertical position on screen</english>
+    <chinese>爬升率在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD3_ASPD1_EN" field="Description" versions="4.7.1" englishSha256="ee0ff4cbd205243510d2819374630600cfabb94db321d074e8071977139f2f5b" recordSha256="3ae77891515575de587c2edf7ffe852994ee68e66e26c3601986ea848d07bb50">
+    <english>Displays airspeed reported directly from primary airspeed sensor</english>
+    <chinese>显示主空速传感器直接报告的空速。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD3_ASPD1_X" field="Description" versions="4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="ada910c3e898e3a52ed5ef1eb97be3ad8980d5cbcdff4a1b6283ecf5c687108f">
+    <english>Horizontal position on screen</english>
+    <chinese>主空速传感器读数在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD3_ASPD1_Y" field="Description" versions="4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="e66560765ee8e278f9bb131748dabd4d258ab5013a14a9e4be6bdbed4c7d9b19">
+    <english>Vertical position on screen</english>
+    <chinese>主空速传感器读数在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD3_ASPD2_EN" field="Description" versions="4.7.1" englishSha256="99c2d53de220b30ba70d4654c428bb20b941a67f0c40ae9e84367b01bb781866" recordSha256="aee18a63b72c0072bda49ef86c4030fe878c5747034a2214c70dcdfd265f3d0f">
+    <english>Displays airspeed reported directly from secondary airspeed sensor</english>
+    <chinese>显示副空速传感器直接报告的空速。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD3_ASPD2_X" field="Description" versions="4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="6d7e8d0bf5b95ca1fb9456ed069bef0454e8808d1bdf091a4315864ce1e83bd2">
+    <english>Horizontal position on screen</english>
+    <chinese>副空速传感器读数在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD3_ASPD2_Y" field="Description" versions="4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="c8fb818f078e78833c5fc7f309e8643af7bd058320902df4fb083fc0ed9cd957">
+    <english>Vertical position on screen</english>
+    <chinese>副空速传感器读数在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD3_GSPEED_EN" field="Description" versions="4.7.1" englishSha256="a1e03e0efc4209efa4d55139b1f93afaafd915a1ce16596873c5c28d589eeed5" recordSha256="413ed6b590d06656d6417c71e7b50e517e1230c63d7d83a911a3bfbc55bf63ee">
+    <english>Displays GPS ground speed</english>
+    <chinese>显示 GPS 地速。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD3_GSPEED_X" field="Description" versions="4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="8f94279a01c68e3307be90863bd00d53419c8379715b9e1d512fafe5e7ac70b4">
+    <english>Horizontal position on screen</english>
+    <chinese>GPS 地速在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD3_GSPEED_Y" field="Description" versions="4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="6c07f4a9f0cd2987ec557cf22907f4c40f6cc8524fd753baaa0bd8303f69d490">
+    <english>Vertical position on screen</english>
+    <chinese>GPS 地速在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD3_VSPEED_EN" field="Description" versions="4.7.1" englishSha256="0f2b8f2fefdeea7df7ab40c66dd9394f127eb289f893b2368748c0811398692f" recordSha256="f9c6cad1454dfacec798e18e028143e93ab7280fa74062ed81916bfbe61d961b">
+    <english>Displays climb rate</english>
+    <chinese>显示爬升率。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD3_VSPEED_X" field="Description" versions="4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="a47899630e03e5865d7f7112f2a5437762d77ed9aa2de539133f4d4742611eee">
+    <english>Horizontal position on screen</english>
+    <chinese>爬升率在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD3_VSPEED_Y" field="Description" versions="4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="dc6237ff2231fe7af2d1cff300705dc04d422ccf0d9593c85554a63bac957f9d">
+    <english>Vertical position on screen</english>
+    <chinese>爬升率在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD4_ASPD1_EN" field="Description" versions="4.7.1" englishSha256="ee0ff4cbd205243510d2819374630600cfabb94db321d074e8071977139f2f5b" recordSha256="933770170f2d981ba57cb602eae998a173126160c4f8fdb1bb3e6d517d5767cb">
+    <english>Displays airspeed reported directly from primary airspeed sensor</english>
+    <chinese>显示主空速传感器直接报告的空速。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD4_ASPD1_X" field="Description" versions="4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="f1487e8c1942a1f88587c8571d6ea1a0101df6614711b494d3d3521b53aba452">
+    <english>Horizontal position on screen</english>
+    <chinese>主空速传感器读数在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD4_ASPD1_Y" field="Description" versions="4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="c8bdd0f20351eadec197b175c68095af7a4e9604278285fb12ac77b15d708d1b">
+    <english>Vertical position on screen</english>
+    <chinese>主空速传感器读数在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD4_ASPD2_EN" field="Description" versions="4.7.1" englishSha256="99c2d53de220b30ba70d4654c428bb20b941a67f0c40ae9e84367b01bb781866" recordSha256="910fd62eb0c94e43372c6abbe80defa9eb5eae7a8b0db7a7f602ce979a45912e">
+    <english>Displays airspeed reported directly from secondary airspeed sensor</english>
+    <chinese>显示副空速传感器直接报告的空速。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD4_ASPD2_X" field="Description" versions="4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="e702b5e3a5599eeb033f3c066ebd41316e1554674ae902c224109fa8f51fb9ac">
+    <english>Horizontal position on screen</english>
+    <chinese>副空速传感器读数在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD4_ASPD2_Y" field="Description" versions="4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="a7932719560aac8a5eb05f8dee56162a0138cc79a5963ade28b0cf3400d290b0">
+    <english>Vertical position on screen</english>
+    <chinese>副空速传感器读数在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD4_GSPEED_EN" field="Description" versions="4.7.1" englishSha256="a1e03e0efc4209efa4d55139b1f93afaafd915a1ce16596873c5c28d589eeed5" recordSha256="c98d9a8ca1eda1fac6d565dcc5f38260bbaec5a19c785d3cc73be5c16002f0eb">
+    <english>Displays GPS ground speed</english>
+    <chinese>显示 GPS 地速。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD4_GSPEED_X" field="Description" versions="4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="737a4534ca4166ab065a8af385b338f4c65e53d2fa79b222034da79293036f51">
+    <english>Horizontal position on screen</english>
+    <chinese>GPS 地速在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD4_GSPEED_Y" field="Description" versions="4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="b5cee4946cf6f562ddb2426ec23fbdb127f093dda035837f8cb0731ace05d661">
+    <english>Vertical position on screen</english>
+    <chinese>GPS 地速在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD4_VSPEED_EN" field="Description" versions="4.7.1" englishSha256="0f2b8f2fefdeea7df7ab40c66dd9394f127eb289f893b2368748c0811398692f" recordSha256="a5e33fef9a9471d6f93beedc3861580ffe171000c5fb8d1a49089c393667111b">
+    <english>Displays climb rate</english>
+    <chinese>显示爬升率。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD4_VSPEED_X" field="Description" versions="4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="ae4c2059ff6bdb2aa34989edfb8068bb33a2ca615b4ab8324d6c7f40eff39d28">
+    <english>Horizontal position on screen</english>
+    <chinese>爬升率在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD4_VSPEED_Y" field="Description" versions="4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="eaf2123f7248a6961951b1a74aa78374d41242054fdcbc4a5969255ba1cfeea5">
+    <english>Vertical position on screen</english>
+    <chinese>爬升率在屏幕上的纵向位置。</chinese>
+  </translation>
 </parameterTranslations>

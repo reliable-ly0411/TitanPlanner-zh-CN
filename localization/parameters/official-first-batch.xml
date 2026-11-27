@@ -793,6 +793,54 @@
           <param humanName="CELL_VOLT_Y" name="OSD1_CELLVOLT_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="ASPD1_EN" name="OSD1_ASPD1_EN" documentation="Displays airspeed reported directly from primary airspeed sensor">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ASPD1_X" name="OSD1_ASPD1_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPD1_Y" name="OSD1_ASPD1_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ASPD2_EN" name="OSD1_ASPD2_EN" documentation="Displays airspeed reported directly from secondary airspeed sensor">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ASPD2_X" name="OSD1_ASPD2_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPD2_Y" name="OSD1_ASPD2_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GSPEED_EN" name="OSD1_GSPEED_EN" documentation="Displays GPS ground speed">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="GSPEED_X" name="OSD1_GSPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GSPEED_Y" name="OSD1_GSPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="VSPEED_EN" name="OSD1_VSPEED_EN" documentation="Displays climb rate">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="VSPEED_X" name="OSD1_VSPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="VSPEED_Y" name="OSD1_VSPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -904,6 +952,54 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="CELL_VOLT_Y" name="OSD2_CELLVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ASPD1_EN" name="OSD2_ASPD1_EN" documentation="Displays airspeed reported directly from primary airspeed sensor">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ASPD1_X" name="OSD2_ASPD1_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPD1_Y" name="OSD2_ASPD1_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ASPD2_EN" name="OSD2_ASPD2_EN" documentation="Displays airspeed reported directly from secondary airspeed sensor">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ASPD2_X" name="OSD2_ASPD2_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPD2_Y" name="OSD2_ASPD2_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GSPEED_EN" name="OSD2_GSPEED_EN" documentation="Displays GPS ground speed">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="GSPEED_X" name="OSD2_GSPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GSPEED_Y" name="OSD2_GSPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="VSPEED_EN" name="OSD2_VSPEED_EN" documentation="Displays climb rate">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="VSPEED_X" name="OSD2_VSPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="VSPEED_Y" name="OSD2_VSPEED_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -1019,6 +1115,54 @@
           <param humanName="CELL_VOLT_Y" name="OSD3_CELLVOLT_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="ASPD1_EN" name="OSD3_ASPD1_EN" documentation="Displays airspeed reported directly from primary airspeed sensor">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ASPD1_X" name="OSD3_ASPD1_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPD1_Y" name="OSD3_ASPD1_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ASPD2_EN" name="OSD3_ASPD2_EN" documentation="Displays airspeed reported directly from secondary airspeed sensor">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ASPD2_X" name="OSD3_ASPD2_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPD2_Y" name="OSD3_ASPD2_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GSPEED_EN" name="OSD3_GSPEED_EN" documentation="Displays GPS ground speed">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="GSPEED_X" name="OSD3_GSPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GSPEED_Y" name="OSD3_GSPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="VSPEED_EN" name="OSD3_VSPEED_EN" documentation="Displays climb rate">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="VSPEED_X" name="OSD3_VSPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="VSPEED_Y" name="OSD3_VSPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -1130,6 +1274,54 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="CELL_VOLT_Y" name="OSD4_CELLVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ASPD1_EN" name="OSD4_ASPD1_EN" documentation="Displays airspeed reported directly from primary airspeed sensor">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ASPD1_X" name="OSD4_ASPD1_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPD1_Y" name="OSD4_ASPD1_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ASPD2_EN" name="OSD4_ASPD2_EN" documentation="Displays airspeed reported directly from secondary airspeed sensor">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ASPD2_X" name="OSD4_ASPD2_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPD2_Y" name="OSD4_ASPD2_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GSPEED_EN" name="OSD4_GSPEED_EN" documentation="Displays GPS ground speed">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="GSPEED_X" name="OSD4_GSPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GSPEED_Y" name="OSD4_GSPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="VSPEED_EN" name="OSD4_VSPEED_EN" documentation="Displays climb rate">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="VSPEED_X" name="OSD4_VSPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="VSPEED_Y" name="OSD4_VSPEED_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -2152,6 +2344,54 @@
           <param humanName="CELL_VOLT_Y" name="OSD1_CELLVOLT_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="ASPD1_EN" name="OSD1_ASPD1_EN" documentation="Displays airspeed reported directly from primary airspeed sensor">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ASPD1_X" name="OSD1_ASPD1_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPD1_Y" name="OSD1_ASPD1_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ASPD2_EN" name="OSD1_ASPD2_EN" documentation="Displays airspeed reported directly from secondary airspeed sensor">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ASPD2_X" name="OSD1_ASPD2_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPD2_Y" name="OSD1_ASPD2_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GSPEED_EN" name="OSD1_GSPEED_EN" documentation="Displays GPS ground speed">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="GSPEED_X" name="OSD1_GSPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GSPEED_Y" name="OSD1_GSPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="VSPEED_EN" name="OSD1_VSPEED_EN" documentation="Displays climb rate">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="VSPEED_X" name="OSD1_VSPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="VSPEED_Y" name="OSD1_VSPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -2263,6 +2503,54 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="CELL_VOLT_Y" name="OSD2_CELLVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ASPD1_EN" name="OSD2_ASPD1_EN" documentation="Displays airspeed reported directly from primary airspeed sensor">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ASPD1_X" name="OSD2_ASPD1_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPD1_Y" name="OSD2_ASPD1_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ASPD2_EN" name="OSD2_ASPD2_EN" documentation="Displays airspeed reported directly from secondary airspeed sensor">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ASPD2_X" name="OSD2_ASPD2_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPD2_Y" name="OSD2_ASPD2_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GSPEED_EN" name="OSD2_GSPEED_EN" documentation="Displays GPS ground speed">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="GSPEED_X" name="OSD2_GSPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GSPEED_Y" name="OSD2_GSPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="VSPEED_EN" name="OSD2_VSPEED_EN" documentation="Displays climb rate">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="VSPEED_X" name="OSD2_VSPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="VSPEED_Y" name="OSD2_VSPEED_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -2378,6 +2666,54 @@
           <param humanName="CELL_VOLT_Y" name="OSD3_CELLVOLT_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="ASPD1_EN" name="OSD3_ASPD1_EN" documentation="Displays airspeed reported directly from primary airspeed sensor">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ASPD1_X" name="OSD3_ASPD1_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPD1_Y" name="OSD3_ASPD1_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ASPD2_EN" name="OSD3_ASPD2_EN" documentation="Displays airspeed reported directly from secondary airspeed sensor">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ASPD2_X" name="OSD3_ASPD2_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPD2_Y" name="OSD3_ASPD2_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GSPEED_EN" name="OSD3_GSPEED_EN" documentation="Displays GPS ground speed">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="GSPEED_X" name="OSD3_GSPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GSPEED_Y" name="OSD3_GSPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="VSPEED_EN" name="OSD3_VSPEED_EN" documentation="Displays climb rate">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="VSPEED_X" name="OSD3_VSPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="VSPEED_Y" name="OSD3_VSPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -2489,6 +2825,54 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="CELL_VOLT_Y" name="OSD4_CELLVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ASPD1_EN" name="OSD4_ASPD1_EN" documentation="Displays airspeed reported directly from primary airspeed sensor">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ASPD1_X" name="OSD4_ASPD1_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPD1_Y" name="OSD4_ASPD1_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ASPD2_EN" name="OSD4_ASPD2_EN" documentation="Displays airspeed reported directly from secondary airspeed sensor">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ASPD2_X" name="OSD4_ASPD2_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPD2_Y" name="OSD4_ASPD2_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GSPEED_EN" name="OSD4_GSPEED_EN" documentation="Displays GPS ground speed">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="GSPEED_X" name="OSD4_GSPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GSPEED_Y" name="OSD4_GSPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="VSPEED_EN" name="OSD4_VSPEED_EN" documentation="Displays climb rate">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="VSPEED_X" name="OSD4_VSPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="VSPEED_Y" name="OSD4_VSPEED_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -3602,6 +3986,54 @@
           <param humanName="CELL_VOLT_Y" name="OSD1_CELLVOLT_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="ASPD1_EN" name="OSD1_ASPD1_EN" documentation="Displays airspeed reported directly from primary airspeed sensor">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ASPD1_X" name="OSD1_ASPD1_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPD1_Y" name="OSD1_ASPD1_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ASPD2_EN" name="OSD1_ASPD2_EN" documentation="Displays airspeed reported directly from secondary airspeed sensor">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ASPD2_X" name="OSD1_ASPD2_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPD2_Y" name="OSD1_ASPD2_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GSPEED_EN" name="OSD1_GSPEED_EN" documentation="Displays GPS ground speed">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="GSPEED_X" name="OSD1_GSPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GSPEED_Y" name="OSD1_GSPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="VSPEED_EN" name="OSD1_VSPEED_EN" documentation="Displays climb rate">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="VSPEED_X" name="OSD1_VSPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="VSPEED_Y" name="OSD1_VSPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -3713,6 +4145,54 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="CELL_VOLT_Y" name="OSD2_CELLVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ASPD1_EN" name="OSD2_ASPD1_EN" documentation="Displays airspeed reported directly from primary airspeed sensor">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ASPD1_X" name="OSD2_ASPD1_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPD1_Y" name="OSD2_ASPD1_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ASPD2_EN" name="OSD2_ASPD2_EN" documentation="Displays airspeed reported directly from secondary airspeed sensor">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ASPD2_X" name="OSD2_ASPD2_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPD2_Y" name="OSD2_ASPD2_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GSPEED_EN" name="OSD2_GSPEED_EN" documentation="Displays GPS ground speed">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="GSPEED_X" name="OSD2_GSPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GSPEED_Y" name="OSD2_GSPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="VSPEED_EN" name="OSD2_VSPEED_EN" documentation="Displays climb rate">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="VSPEED_X" name="OSD2_VSPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="VSPEED_Y" name="OSD2_VSPEED_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -3828,6 +4308,54 @@
           <param humanName="CELL_VOLT_Y" name="OSD3_CELLVOLT_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="ASPD1_EN" name="OSD3_ASPD1_EN" documentation="Displays airspeed reported directly from primary airspeed sensor">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ASPD1_X" name="OSD3_ASPD1_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPD1_Y" name="OSD3_ASPD1_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ASPD2_EN" name="OSD3_ASPD2_EN" documentation="Displays airspeed reported directly from secondary airspeed sensor">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ASPD2_X" name="OSD3_ASPD2_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPD2_Y" name="OSD3_ASPD2_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GSPEED_EN" name="OSD3_GSPEED_EN" documentation="Displays GPS ground speed">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="GSPEED_X" name="OSD3_GSPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GSPEED_Y" name="OSD3_GSPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="VSPEED_EN" name="OSD3_VSPEED_EN" documentation="Displays climb rate">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="VSPEED_X" name="OSD3_VSPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="VSPEED_Y" name="OSD3_VSPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -3939,6 +4467,54 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="CELL_VOLT_Y" name="OSD4_CELLVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ASPD1_EN" name="OSD4_ASPD1_EN" documentation="Displays airspeed reported directly from primary airspeed sensor">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ASPD1_X" name="OSD4_ASPD1_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPD1_Y" name="OSD4_ASPD1_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ASPD2_EN" name="OSD4_ASPD2_EN" documentation="Displays airspeed reported directly from secondary airspeed sensor">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ASPD2_X" name="OSD4_ASPD2_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPD2_Y" name="OSD4_ASPD2_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GSPEED_EN" name="OSD4_GSPEED_EN" documentation="Displays GPS ground speed">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="GSPEED_X" name="OSD4_GSPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GSPEED_Y" name="OSD4_GSPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="VSPEED_EN" name="OSD4_VSPEED_EN" documentation="Displays climb rate">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="VSPEED_X" name="OSD4_VSPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="VSPEED_Y" name="OSD4_VSPEED_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -5370,6 +5946,54 @@
           <param humanName="CELL_VOLT_Y" name="OSD1_CELLVOLT_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="ASPD1_EN" name="OSD1_ASPD1_EN" documentation="Displays airspeed reported directly from primary airspeed sensor">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ASPD1_X" name="OSD1_ASPD1_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPD1_Y" name="OSD1_ASPD1_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ASPD2_EN" name="OSD1_ASPD2_EN" documentation="Displays airspeed reported directly from secondary airspeed sensor">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ASPD2_X" name="OSD1_ASPD2_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPD2_Y" name="OSD1_ASPD2_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GSPEED_EN" name="OSD1_GSPEED_EN" documentation="Displays GPS ground speed">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="GSPEED_X" name="OSD1_GSPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GSPEED_Y" name="OSD1_GSPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="VSPEED_EN" name="OSD1_VSPEED_EN" documentation="Displays climb rate">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="VSPEED_X" name="OSD1_VSPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="VSPEED_Y" name="OSD1_VSPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -5481,6 +6105,54 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="CELL_VOLT_Y" name="OSD2_CELLVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ASPD1_EN" name="OSD2_ASPD1_EN" documentation="Displays airspeed reported directly from primary airspeed sensor">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ASPD1_X" name="OSD2_ASPD1_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPD1_Y" name="OSD2_ASPD1_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ASPD2_EN" name="OSD2_ASPD2_EN" documentation="Displays airspeed reported directly from secondary airspeed sensor">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ASPD2_X" name="OSD2_ASPD2_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPD2_Y" name="OSD2_ASPD2_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GSPEED_EN" name="OSD2_GSPEED_EN" documentation="Displays GPS ground speed">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="GSPEED_X" name="OSD2_GSPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GSPEED_Y" name="OSD2_GSPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="VSPEED_EN" name="OSD2_VSPEED_EN" documentation="Displays climb rate">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="VSPEED_X" name="OSD2_VSPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="VSPEED_Y" name="OSD2_VSPEED_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -5596,6 +6268,54 @@
           <param humanName="CELL_VOLT_Y" name="OSD3_CELLVOLT_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="ASPD1_EN" name="OSD3_ASPD1_EN" documentation="Displays airspeed reported directly from primary airspeed sensor">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ASPD1_X" name="OSD3_ASPD1_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPD1_Y" name="OSD3_ASPD1_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ASPD2_EN" name="OSD3_ASPD2_EN" documentation="Displays airspeed reported directly from secondary airspeed sensor">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ASPD2_X" name="OSD3_ASPD2_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPD2_Y" name="OSD3_ASPD2_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GSPEED_EN" name="OSD3_GSPEED_EN" documentation="Displays GPS ground speed">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="GSPEED_X" name="OSD3_GSPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GSPEED_Y" name="OSD3_GSPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="VSPEED_EN" name="OSD3_VSPEED_EN" documentation="Displays climb rate">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="VSPEED_X" name="OSD3_VSPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="VSPEED_Y" name="OSD3_VSPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -5707,6 +6427,54 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="CELL_VOLT_Y" name="OSD4_CELLVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ASPD1_EN" name="OSD4_ASPD1_EN" documentation="Displays airspeed reported directly from primary airspeed sensor">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ASPD1_X" name="OSD4_ASPD1_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPD1_Y" name="OSD4_ASPD1_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ASPD2_EN" name="OSD4_ASPD2_EN" documentation="Displays airspeed reported directly from secondary airspeed sensor">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ASPD2_X" name="OSD4_ASPD2_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPD2_Y" name="OSD4_ASPD2_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GSPEED_EN" name="OSD4_GSPEED_EN" documentation="Displays GPS ground speed">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="GSPEED_X" name="OSD4_GSPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GSPEED_Y" name="OSD4_GSPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="VSPEED_EN" name="OSD4_VSPEED_EN" documentation="Displays climb rate">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="VSPEED_X" name="OSD4_VSPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="VSPEED_Y" name="OSD4_VSPEED_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -6762,6 +7530,54 @@
           <param humanName="CELL_VOLT_Y" name="OSD1_CELLVOLT_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="ASPD1_EN" name="OSD1_ASPD1_EN" documentation="Displays airspeed reported directly from primary airspeed sensor">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ASPD1_X" name="OSD1_ASPD1_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPD1_Y" name="OSD1_ASPD1_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ASPD2_EN" name="OSD1_ASPD2_EN" documentation="Displays airspeed reported directly from secondary airspeed sensor">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ASPD2_X" name="OSD1_ASPD2_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPD2_Y" name="OSD1_ASPD2_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GSPEED_EN" name="OSD1_GSPEED_EN" documentation="Displays GPS ground speed">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="GSPEED_X" name="OSD1_GSPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GSPEED_Y" name="OSD1_GSPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="VSPEED_EN" name="OSD1_VSPEED_EN" documentation="Displays climb rate">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="VSPEED_X" name="OSD1_VSPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="VSPEED_Y" name="OSD1_VSPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -6873,6 +7689,54 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="CELL_VOLT_Y" name="OSD2_CELLVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ASPD1_EN" name="OSD2_ASPD1_EN" documentation="Displays airspeed reported directly from primary airspeed sensor">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ASPD1_X" name="OSD2_ASPD1_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPD1_Y" name="OSD2_ASPD1_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ASPD2_EN" name="OSD2_ASPD2_EN" documentation="Displays airspeed reported directly from secondary airspeed sensor">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ASPD2_X" name="OSD2_ASPD2_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPD2_Y" name="OSD2_ASPD2_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GSPEED_EN" name="OSD2_GSPEED_EN" documentation="Displays GPS ground speed">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="GSPEED_X" name="OSD2_GSPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GSPEED_Y" name="OSD2_GSPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="VSPEED_EN" name="OSD2_VSPEED_EN" documentation="Displays climb rate">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="VSPEED_X" name="OSD2_VSPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="VSPEED_Y" name="OSD2_VSPEED_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -6988,6 +7852,54 @@
           <param humanName="CELL_VOLT_Y" name="OSD3_CELLVOLT_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="ASPD1_EN" name="OSD3_ASPD1_EN" documentation="Displays airspeed reported directly from primary airspeed sensor">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ASPD1_X" name="OSD3_ASPD1_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPD1_Y" name="OSD3_ASPD1_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ASPD2_EN" name="OSD3_ASPD2_EN" documentation="Displays airspeed reported directly from secondary airspeed sensor">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ASPD2_X" name="OSD3_ASPD2_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPD2_Y" name="OSD3_ASPD2_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GSPEED_EN" name="OSD3_GSPEED_EN" documentation="Displays GPS ground speed">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="GSPEED_X" name="OSD3_GSPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GSPEED_Y" name="OSD3_GSPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="VSPEED_EN" name="OSD3_VSPEED_EN" documentation="Displays climb rate">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="VSPEED_X" name="OSD3_VSPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="VSPEED_Y" name="OSD3_VSPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -7099,6 +8011,54 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="CELL_VOLT_Y" name="OSD4_CELLVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ASPD1_EN" name="OSD4_ASPD1_EN" documentation="Displays airspeed reported directly from primary airspeed sensor">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ASPD1_X" name="OSD4_ASPD1_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPD1_Y" name="OSD4_ASPD1_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ASPD2_EN" name="OSD4_ASPD2_EN" documentation="Displays airspeed reported directly from secondary airspeed sensor">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ASPD2_X" name="OSD4_ASPD2_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPD2_Y" name="OSD4_ASPD2_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GSPEED_EN" name="OSD4_GSPEED_EN" documentation="Displays GPS ground speed">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="GSPEED_X" name="OSD4_GSPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GSPEED_Y" name="OSD4_GSPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="VSPEED_EN" name="OSD4_VSPEED_EN" documentation="Displays climb rate">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="VSPEED_X" name="OSD4_VSPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="VSPEED_Y" name="OSD4_VSPEED_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -8254,6 +9214,54 @@
           <param humanName="CELL_VOLT_Y" name="OSD1_CELLVOLT_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="ASPD1_EN" name="OSD1_ASPD1_EN" documentation="Displays airspeed reported directly from primary airspeed sensor">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ASPD1_X" name="OSD1_ASPD1_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPD1_Y" name="OSD1_ASPD1_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ASPD2_EN" name="OSD1_ASPD2_EN" documentation="Displays airspeed reported directly from secondary airspeed sensor">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ASPD2_X" name="OSD1_ASPD2_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPD2_Y" name="OSD1_ASPD2_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GSPEED_EN" name="OSD1_GSPEED_EN" documentation="Displays GPS ground speed">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="GSPEED_X" name="OSD1_GSPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GSPEED_Y" name="OSD1_GSPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="VSPEED_EN" name="OSD1_VSPEED_EN" documentation="Displays climb rate">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="VSPEED_X" name="OSD1_VSPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="VSPEED_Y" name="OSD1_VSPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -8365,6 +9373,54 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="CELL_VOLT_Y" name="OSD2_CELLVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ASPD1_EN" name="OSD2_ASPD1_EN" documentation="Displays airspeed reported directly from primary airspeed sensor">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ASPD1_X" name="OSD2_ASPD1_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPD1_Y" name="OSD2_ASPD1_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ASPD2_EN" name="OSD2_ASPD2_EN" documentation="Displays airspeed reported directly from secondary airspeed sensor">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ASPD2_X" name="OSD2_ASPD2_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPD2_Y" name="OSD2_ASPD2_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GSPEED_EN" name="OSD2_GSPEED_EN" documentation="Displays GPS ground speed">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="GSPEED_X" name="OSD2_GSPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GSPEED_Y" name="OSD2_GSPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="VSPEED_EN" name="OSD2_VSPEED_EN" documentation="Displays climb rate">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="VSPEED_X" name="OSD2_VSPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="VSPEED_Y" name="OSD2_VSPEED_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -8480,6 +9536,54 @@
           <param humanName="CELL_VOLT_Y" name="OSD3_CELLVOLT_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="ASPD1_EN" name="OSD3_ASPD1_EN" documentation="Displays airspeed reported directly from primary airspeed sensor">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ASPD1_X" name="OSD3_ASPD1_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPD1_Y" name="OSD3_ASPD1_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ASPD2_EN" name="OSD3_ASPD2_EN" documentation="Displays airspeed reported directly from secondary airspeed sensor">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ASPD2_X" name="OSD3_ASPD2_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPD2_Y" name="OSD3_ASPD2_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GSPEED_EN" name="OSD3_GSPEED_EN" documentation="Displays GPS ground speed">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="GSPEED_X" name="OSD3_GSPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GSPEED_Y" name="OSD3_GSPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="VSPEED_EN" name="OSD3_VSPEED_EN" documentation="Displays climb rate">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="VSPEED_X" name="OSD3_VSPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="VSPEED_Y" name="OSD3_VSPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -8591,6 +9695,54 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="CELL_VOLT_Y" name="OSD4_CELLVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ASPD1_EN" name="OSD4_ASPD1_EN" documentation="Displays airspeed reported directly from primary airspeed sensor">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ASPD1_X" name="OSD4_ASPD1_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPD1_Y" name="OSD4_ASPD1_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ASPD2_EN" name="OSD4_ASPD2_EN" documentation="Displays airspeed reported directly from secondary airspeed sensor">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ASPD2_X" name="OSD4_ASPD2_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPD2_Y" name="OSD4_ASPD2_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GSPEED_EN" name="OSD4_GSPEED_EN" documentation="Displays GPS ground speed">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="GSPEED_X" name="OSD4_GSPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GSPEED_Y" name="OSD4_GSPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="VSPEED_EN" name="OSD4_VSPEED_EN" documentation="Displays climb rate">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="VSPEED_X" name="OSD4_VSPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="VSPEED_Y" name="OSD4_VSPEED_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -9568,6 +10720,54 @@
           <param humanName="CELL_VOLT_Y" name="OSD1_CELLVOLT_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="ASPD1_EN" name="OSD1_ASPD1_EN" documentation="Displays airspeed reported directly from primary airspeed sensor">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ASPD1_X" name="OSD1_ASPD1_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPD1_Y" name="OSD1_ASPD1_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ASPD2_EN" name="OSD1_ASPD2_EN" documentation="Displays airspeed reported directly from secondary airspeed sensor">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ASPD2_X" name="OSD1_ASPD2_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPD2_Y" name="OSD1_ASPD2_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GSPEED_EN" name="OSD1_GSPEED_EN" documentation="Displays GPS ground speed">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="GSPEED_X" name="OSD1_GSPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GSPEED_Y" name="OSD1_GSPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="VSPEED_EN" name="OSD1_VSPEED_EN" documentation="Displays climb rate">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="VSPEED_X" name="OSD1_VSPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="VSPEED_Y" name="OSD1_VSPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -9679,6 +10879,54 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="CELL_VOLT_Y" name="OSD2_CELLVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ASPD1_EN" name="OSD2_ASPD1_EN" documentation="Displays airspeed reported directly from primary airspeed sensor">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ASPD1_X" name="OSD2_ASPD1_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPD1_Y" name="OSD2_ASPD1_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ASPD2_EN" name="OSD2_ASPD2_EN" documentation="Displays airspeed reported directly from secondary airspeed sensor">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ASPD2_X" name="OSD2_ASPD2_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPD2_Y" name="OSD2_ASPD2_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GSPEED_EN" name="OSD2_GSPEED_EN" documentation="Displays GPS ground speed">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="GSPEED_X" name="OSD2_GSPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GSPEED_Y" name="OSD2_GSPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="VSPEED_EN" name="OSD2_VSPEED_EN" documentation="Displays climb rate">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="VSPEED_X" name="OSD2_VSPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="VSPEED_Y" name="OSD2_VSPEED_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -9794,6 +11042,54 @@
           <param humanName="CELL_VOLT_Y" name="OSD3_CELLVOLT_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="ASPD1_EN" name="OSD3_ASPD1_EN" documentation="Displays airspeed reported directly from primary airspeed sensor">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ASPD1_X" name="OSD3_ASPD1_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPD1_Y" name="OSD3_ASPD1_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ASPD2_EN" name="OSD3_ASPD2_EN" documentation="Displays airspeed reported directly from secondary airspeed sensor">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ASPD2_X" name="OSD3_ASPD2_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPD2_Y" name="OSD3_ASPD2_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GSPEED_EN" name="OSD3_GSPEED_EN" documentation="Displays GPS ground speed">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="GSPEED_X" name="OSD3_GSPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GSPEED_Y" name="OSD3_GSPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="VSPEED_EN" name="OSD3_VSPEED_EN" documentation="Displays climb rate">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="VSPEED_X" name="OSD3_VSPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="VSPEED_Y" name="OSD3_VSPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -9905,6 +11201,54 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="CELL_VOLT_Y" name="OSD4_CELLVOLT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ASPD1_EN" name="OSD4_ASPD1_EN" documentation="Displays airspeed reported directly from primary airspeed sensor">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ASPD1_X" name="OSD4_ASPD1_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPD1_Y" name="OSD4_ASPD1_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ASPD2_EN" name="OSD4_ASPD2_EN" documentation="Displays airspeed reported directly from secondary airspeed sensor">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ASPD2_X" name="OSD4_ASPD2_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPD2_Y" name="OSD4_ASPD2_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="GSPEED_EN" name="OSD4_GSPEED_EN" documentation="Displays GPS ground speed">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="GSPEED_X" name="OSD4_GSPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="GSPEED_Y" name="OSD4_GSPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="VSPEED_EN" name="OSD4_VSPEED_EN" documentation="Displays climb rate">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="VSPEED_X" name="OSD4_VSPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="VSPEED_Y" name="OSD4_VSPEED_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
