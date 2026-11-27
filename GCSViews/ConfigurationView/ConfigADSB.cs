@@ -412,6 +412,19 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             _params = _params.OrderBy(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
         }
 
+        private static string FormatParameterLabel(string key, string metadataName, string firmware)
+        {
+            // Match the backup names for ArduCopter2 and ArduPlane; keep unknown metadata verbatim.
+            if (string.Equals(CultureInfo.CurrentUICulture.Name, "zh-CN", StringComparison.OrdinalIgnoreCase) &&
+                (firmware == "ArduCopter2" || firmware == "ArduPlane") &&
+                key == "AVD_ENABLE" && metadataName == "Enable Avoidance using ADSB")
+            {
+                metadataName = UiText.Translate("Avoid Adsb");
+            }
+
+            return metadataName + " (" + key + ")";
+        }
+
         /// <summary>
         ///     Binds the param list.
         /// </summary>
@@ -528,7 +541,8 @@ namespace MissionPlanner.GCSViews.ConfigurationView
 
                     var description = ParameterMetaDataRepository.GetParameterMetaData(x.Key,
                         ParameterMetaDataConstants.Description, MainV2.comPort.MAV.cs.firmware.ToString());
-                    var displayName = x.Value + " (" + x.Key + ")";
+                    var displayName = FormatParameterLabel(x.Key, x.Value,
+                        MainV2.comPort.MAV.cs.firmware.ToString());
                     var units = ParameterMetaDataRepository.GetParameterMetaData(x.Key, ParameterMetaDataConstants.Units,
                         MainV2.comPort.MAV.cs.firmware.ToString());
 
