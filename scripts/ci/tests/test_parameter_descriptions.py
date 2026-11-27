@@ -35,8 +35,8 @@ class ParameterCatalogTests(unittest.TestCase):
     def test_scope_counts_and_held_versions(self):
         notes = self.catalog['translations']
         descriptions = {(n['family'], v, n['parameter']) for n in notes if n['field'] == 'Description' for v in n['versions']}
-        self.assertEqual(523, len(descriptions))
-        self.assertEqual(242, len({(f, p) for f, v, p in descriptions}))
+        self.assertEqual(533, len(descriptions))
+        self.assertEqual(248, len({(f, p) for f, v, p in descriptions}))
         self.assertFalse(any(v == '4.7.2' for f, v, p in descriptions))
         excluded_copter = {'RTL_CONE_SLOPE', 'LAND_SPEED', 'LAND_SPD_MS', 'LOG_FILE_BUFSIZE', 'FS_GCS_ENABLE'}
         excluded_plane = {'TECS_CLMB_MAX', 'TECS_SINK_MIN', 'ROLL_LIMIT_DEG'}
@@ -50,7 +50,7 @@ class ParameterCatalogTests(unittest.TestCase):
         pairs = (('GPS_CAN_NODEID1', 'GPS_CAN_NODEID2'), ('GPS1_CAN_NODEID', 'GPS2_CAN_NODEID'))
         for release in self.bundle.findall("release[@family='Copter']"):
             v = release.get('version')
-            records = {r.get('name').split(':')[-1]: r for r in release.iter('param')}
+            records = {r.get('name').split(':')[-1]: r for r in release.iter('param') if not r.get('name').startswith('OSD_SB_')}
             self.assertEqual(legacy_counts[v] + reviewed_counts[v], len(records))
             readonly = {k: r for k, r in records.items() if r.findtext("field[@name='ReadOnly']") == 'True'}
             self.assertEqual(reviewed_counts[v], len(readonly))
@@ -106,7 +106,7 @@ class ParameterCatalogTests(unittest.TestCase):
 
     def test_sub_narrow_expansion_adds_only_unique_read_only_records(self):
         scope = self.bundle.find("release[@family='Sub'][@version='4.7.1']")
-        records = {p.get('name'): p for p in scope.iter('param') if not p.get('name').startswith('STAT_')}
+        records = {p.get('name'): p for p in scope.iter('param') if not p.get('name').startswith(('STAT_', 'OSD_SB_'))}
         self.assertEqual(34, len(records))
         self.assertEqual({'GPS1_CAN_NODEID','GPS2_CAN_NODEID'}, {key for key in records if key.startswith('GPS')})
         self.assertTrue({'MIS_TOTAL','VTX_FREQ'} <= records.keys())
@@ -117,6 +117,23 @@ class ParameterCatalogTests(unittest.TestCase):
             self.assertEqual('True', record.findtext("field[@name='ReadOnly']"))
             self.assertEqual((['4.7.1'], 'Description', catalog_module.record_fingerprint(record)),
                              (notes[0]['versions'], notes[0]['field'], notes[0]['recordSha256']))
+
+    def test_osd_sidebar_geometry_positions_preserve_spacing_direction(self):
+        selected = {'OSD_SB_H_OFS':('0 20','列','右侧'), 'OSD_SB_V_EXT':('0 10','行','等量')}
+        for release in self.bundle:
+            f,v = release.get('family'),release.get('version')
+            records = {r.get('name'):r for r in release.iter('param') if r.get('name') in selected}
+            self.assertEqual(set() if f=='Tracker' or v=='4.5.7' else set(selected),set(records))
+            for key,r in records.items():
+                expected,unit,detail = selected[key]
+                self.assertEqual(expected,r.findtext("field[@name='Range']"))
+                self.assertIsNone(r.find("field[@name='Units']"))
+                notes = [n for n in self.catalog['translations'] if n['family']==f and n['parameter']==key and v in n['versions']]
+                self.assertEqual(1,len(notes))
+                self.assertEqual(('Description',r.get('documentation'),catalog_module.record_fingerprint(r)),
+                                 (notes[0]['field'],notes[0]['english'],notes[0]['recordSha256']))
+                self.assertIn(unit,notes[0]['chinese'])
+                self.assertIn(detail,notes[0]['chinese'])
 
     def test_source_changes_cannot_automatically_reapprove_notes(self):
         for change in ('English', 'Range', 'Unit'):

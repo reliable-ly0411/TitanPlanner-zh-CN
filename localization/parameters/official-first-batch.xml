@@ -1085,6 +1085,14 @@
             <field name="ReadOnly">True</field>
           </param>
         </parameters>
+        <parameters name="OSD">
+          <param humanName="Sidebar horizontal offset" name="OSD_SB_H_OFS" documentation="Extends the spacing between the sidebar elements by this amount of columns. Positive values increases the width to the right of the screen." user="Standard">
+            <field name="Range">0 20</field>
+          </param>
+          <param humanName="Sidebar vertical extension" name="OSD_SB_V_EXT" documentation="Increase of vertical length of the sidebar itens by this amount of lines. Applied equally both above and below the default setting." user="Standard">
+            <field name="Range">0 10</field>
+          </param>
+        </parameters>
       </libraries>
     </paramfile>
   </release>
@@ -1666,6 +1674,14 @@
         <parameters name="GPS2_">
           <param humanName="Detected CAN Node ID for GPS" name="GPS2_CAN_NODEID" documentation="GPS Node id for GPS.  Detected node unless CAN_OVRIDE is set" user="Advanced">
             <field name="ReadOnly">True</field>
+          </param>
+        </parameters>
+        <parameters name="OSD">
+          <param humanName="Sidebar horizontal offset" name="OSD_SB_H_OFS" documentation="Extends the spacing between the sidebar elements by this amount of columns. Positive values increases the width to the right of the screen." user="Standard">
+            <field name="Range">0 20</field>
+          </param>
+          <param humanName="Sidebar vertical extension" name="OSD_SB_V_EXT" documentation="Increase of vertical length of the sidebar itens by this amount of lines. Applied equally both above and below the default setting." user="Standard">
+            <field name="Range">0 10</field>
           </param>
         </parameters>
       </libraries>
@@ -2876,6 +2892,14 @@
             <field name="ReadOnly">True</field>
           </param>
         </parameters>
+        <parameters name="OSD">
+          <param humanName="Sidebar horizontal offset" name="OSD_SB_H_OFS" documentation="Extends the spacing between the sidebar elements by this amount of columns. Positive values increases the width to the right of the screen." user="Standard">
+            <field name="Range">0 20</field>
+          </param>
+          <param humanName="Sidebar vertical extension" name="OSD_SB_V_EXT" documentation="Increase of vertical length of the sidebar itens by this amount of lines. Applied equally both above and below the default setting." user="Standard">
+            <field name="Range">0 10</field>
+          </param>
+        </parameters>
       </libraries>
     </paramfile>
   </release>
@@ -3525,6 +3549,14 @@
             <field name="ReadOnly">True</field>
           </param>
         </parameters>
+        <parameters name="OSD">
+          <param humanName="Sidebar horizontal offset" name="OSD_SB_H_OFS" documentation="Extends the spacing between the sidebar elements by this amount of columns. Positive values increases the width to the right of the screen." user="Standard">
+            <field name="Range">0 20</field>
+          </param>
+          <param humanName="Sidebar vertical extension" name="OSD_SB_V_EXT" documentation="Increase of vertical length of the sidebar itens by this amount of lines. Applied equally both above and below the default setting." user="Standard">
+            <field name="Range">0 10</field>
+          </param>
+        </parameters>
       </libraries>
     </paramfile>
   </release>
@@ -3698,6 +3730,14 @@
         <parameters name="GPS2_">
           <param humanName="Detected CAN Node ID for GPS" name="GPS2_CAN_NODEID" documentation="GPS Node id for GPS.  Detected node unless CAN_OVRIDE is set" user="Advanced">
             <field name="ReadOnly">True</field>
+          </param>
+        </parameters>
+        <parameters name="OSD">
+          <param humanName="Sidebar horizontal offset" name="OSD_SB_H_OFS" documentation="Extends the spacing between the sidebar elements by this amount of columns. Positive values increases the width to the right of the screen." user="Standard">
+            <field name="Range">0 20</field>
+          </param>
+          <param humanName="Sidebar vertical extension" name="OSD_SB_V_EXT" documentation="Increase of vertical length of the sidebar itens by this amount of lines. Applied equally both above and below the default setting." user="Standard">
+            <field name="Range">0 10</field>
           </param>
         </parameters>
       </libraries>
