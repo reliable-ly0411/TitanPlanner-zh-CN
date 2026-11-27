@@ -93,6 +93,7 @@ namespace MissionPlanner.Controls
                     // set instance
                     Instance = frm;
                     // set text
+                    Instance.Text = Text;
                     Instance.label1.Text = Text;
 
                    ThemeManager.ApplyThemeTo(frm);
