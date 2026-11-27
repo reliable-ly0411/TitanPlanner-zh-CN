@@ -200,6 +200,13 @@ namespace MissionPlanner.Utilities
                     double duration = N / firstWindowRate.Value;
                     if (!double.IsInfinity(duration))
                         singleBatchWindowSeconds = duration;
+
+                    // Only the unique, verified FFT window may override the legacy grid.
+                    // A short trailing batch can change sample_rate without contributing any samples to it.
+                    double windowRate = firstWindowRate.Value;
+                    if (windowRate != sample_rate && windowRate >= 1 &&
+                        windowRate <= int.MaxValue / (freqt.Length - 1))
+                        freqt = fft.FreqTable(N, (int)windowRate);
                 }
 
                 freqtout = freqt;
