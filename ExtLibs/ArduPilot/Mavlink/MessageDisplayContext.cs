@@ -72,6 +72,9 @@ namespace MissionPlanner
             }
         }
 
+        private static bool IsUbloxL5Capability(int version, string message, byte severity)
+            => version == 1 && severity == (byte)MAVLink.MAV_SEVERITY.INFO && message == "u-blox supports L5 Band";
+
         private static bool BinaryPrefix(byte[] hash, byte b3, byte b4, byte b5, byte b6, byte b7)
             => hash[3] == b3 && hash[4] == b4 && hash[5] == b5 && hash[6] == b6 && hash[7] == b7;
 
@@ -101,7 +104,7 @@ namespace MissionPlanner
                 ? row.message == Px4BatteryText(s.Version) && row.severity == 2
                 : (row.message == "EKF3 IMU0 origin set" && (s.Version == 1 || row.severity == 6)) ||
                   (s.Version == 1 && row.message == "GPS 1: detected u-blox");
-            if (!known) return;
+            if (!known && !IsUbloxL5Capability(s.Version, row.message, row.severity)) return;
             if (s.Rows.TryGetValue(row.message, out var existing))
             {
                 existing.Time = DateTime.MinValue; // unexpectedly reused token
@@ -140,6 +143,7 @@ namespace MissionPlanner
                     return row.message == Px4BatteryText(s.Version) ? (s.Version == 9 ? "1 号电池已断开" : "未检测到 1 号电池") : null;
                 if (row.message == "GPS 1: detected u-blox") return "检测到 GPS 1：u-blox";
                 if (row.message == "EKF3 IMU0 origin set") return "EKF3 IMU0 原点已设置";
+                if (IsUbloxL5Capability(s.Version, row.message, row.severity)) return "u-blox 支持 L5 频段";
                 return null;
             }
         }
