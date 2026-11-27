@@ -4321,7 +4321,7 @@ namespace MissionPlanner.GCSViews
 
         private void hud_UserItem(object sender, EventArgs e)
         {
-            var form = new Controls.DisplayThisForm(
+            var form = Controls.DisplayThisForm.CreateHudChooser(
                 isChecked: fieldName => hud1.CustomItems.ContainsKey(fieldName),
                 checkChangedHandler: chk_box_hud_UserItem_CheckedChanged);
             form.ShowDialog(this);

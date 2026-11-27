@@ -53,11 +53,17 @@ namespace MissionPlanner.Controls
         }
 
         private bool _includeSelectionClickInChange;
+        private bool _honorCanceledHudSelection;
 
         internal static DisplayThisForm CreateTuningChooser(Func<string, bool> isChecked, EventHandler checkChangedHandler)
         {
             // Tuning needs the axis from this click. Public and HUD callers keep the existing EventArgs.Empty contract.
             return new DisplayThisForm(isChecked, checkChangedHandler) { _includeSelectionClickInChange = true };
+        }
+
+        internal static DisplayThisForm CreateHudChooser(Func<string, bool> isChecked, EventHandler checkChangedHandler)
+        {
+            return new DisplayThisForm(isChecked, checkChangedHandler) { _honorCanceledHudSelection = true };
         }
 
         private void SetupControls()
@@ -389,6 +395,8 @@ namespace MissionPlanner.Controls
             if (e.Button == MouseButtons.Right && _mouseDownHandler != null)
                 _mouseDownHandler(fakeCheckbox, e);
             _checkChangedHandler?.Invoke(fakeCheckbox, _includeSelectionClickInChange ? e : EventArgs.Empty);
+            if (_honorCanceledHudSelection)
+                item.IsChecked = fakeCheckbox.Checked;
             fakeCheckbox.Dispose();
             _contentPanel.Invalidate();
         }
