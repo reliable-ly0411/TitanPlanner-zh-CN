@@ -106,6 +106,13 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                 }
             }
 
+            // Explain why the editor can be blank without giving it a synthetic selectable value.
+            var boundOptions = mavlinkComboBox1.DataSource as List<KeyValuePair<int, string>>;
+            if (boundOptions != null && boundOptions.Count == 0)
+                text += " · 下拉无选项";
+            else if (item != null && mavlinkComboBox1.SelectedIndex < 0)
+                text += " · 下拉无对应项";
+
             fenceTypeReadback.Text = text;
             fenceTooltip.SetToolTip(fenceTypeReadback, details);
             fenceTypeReadback.Visible = true;
