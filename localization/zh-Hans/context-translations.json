@@ -1,4 +1,7 @@
 {
+  "GCSViews/ConfigurationView/ConfigBatteryMonitoring.resx": {
+    "groupBox4.Text": "监测与系数"
+  },
   "Controls/Vibration.resx": {
     "label3.Text": "X",
     "label8.Text": "加速度计削波"
