@@ -48,3 +48,7 @@ Same synthetic 3840×480 input, genuine Windows GDI+ production renderer into a 
 ## Startup-image dropdown #36
 
 Windows WinForms, true 120 DPI, enhanced Chinese, the same 420 px isolated control. Before `6b37cbb7`, the real list width was 260 px; after `36cfa698`, the font measured the widest label at 269 px and the list grew to 300 px. The main selector and adjacent button did not grow. The two PNGs show the **actual dropdown list**, not a file picker, mock screen or tooltip capture.
+
+## Corrected #40 Options evidence
+
+True 120 DPI Windows list, 628×255, exact production QuickView options projected with the real source metadata. Synthetic rows and selected item. The two low-speed flags are verified against their full Chinese captions. Other rows do not assert full metadata coverage. This single photograph replaces the earlier incorrectly modeled fixture image.
