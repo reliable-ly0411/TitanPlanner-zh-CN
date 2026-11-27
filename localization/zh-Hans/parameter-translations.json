@@ -5668,6 +5668,114 @@
       "recordSha256": "e42c7e8ed72ea4bd72754cfdbdafdfc6ccd56716acbf5fe87640b287a6299996",
       "english": "This sets the maximum rate that streaming log messages will be logged to any backend when disarmed. A value of zero means that the normal backend rate limit is applied.",
       "chinese": "飞行器处于上锁状态时，各日志后端记录流式日志消息的最高频率。设为 0 时，沿用各后端通常的限速设置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "LOG_FILE_BUFSIZE",
+      "field": "Description",
+      "versions": [
+        "4.5.7"
+      ],
+      "englishSha256": "f6072cb1e989d58083611cde11d1b35be862980453a2489e693f107087c68ca9",
+      "recordSha256": "677a255dc0e718a8b1b02567e0a2184f804bddbe06ec81cc993970935689fbac",
+      "english": "The File and Block backends use a buffer to store data before writing to the block device.  Raising this value may reduce \"gaps\" in your SD card logging.  This buffer size may be reduced depending on available memory.  PixHawk requires at least 4 kilobytes.  Maximum value available here is 64 kilobytes.",
+      "chinese": "文件和块存储日志后端在写入块设备前先暂存数据。较大的缓冲区可能减少 SD 卡日志中的记录缺口，实际缓冲区可能因可用内存不足而缩小。PixHawk 至少需要 4 千字节，本版说明列出的上限为 64 千字节。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "LOG_FILE_BUFSIZE",
+      "field": "Description",
+      "versions": [
+        "4.6.3"
+      ],
+      "englishSha256": "a8e02c5f7a4c678aaa070a803ee13979a04dd0b043ffa047dcd250312c39cb42",
+      "recordSha256": "572221df9e127cd721859a66b3bdb294fa366a0165bac7ce3b403d11a457e856",
+      "english": "The File and Block backends use a buffer to store data before writing to the block device.  Raising this value may reduce \"gaps\" in your SD card logging but increases memory usage.  This buffer size may be reduced to free up available memory",
+      "chinese": "文件和块存储日志后端在写入块设备前先暂存数据，缓冲区上限以 kB 计。较大的缓冲区可能减少 SD 卡日志中的记录缺口，但会占用更多内存。实际缓冲区可能缩小，以腾出内存。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "LOG_FILE_BUFSIZE",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "a8e02c5f7a4c678aaa070a803ee13979a04dd0b043ffa047dcd250312c39cb42",
+      "recordSha256": "74ba32412e8eb981db82fbb43f8c79c97026b425311df7c1c2d16e49db56cb28",
+      "english": "The File and Block backends use a buffer to store data before writing to the block device.  Raising this value may reduce \"gaps\" in your SD card logging but increases memory usage.  This buffer size may be reduced to free up available memory",
+      "chinese": "文件和块存储日志后端在写入块设备前先暂存数据，缓冲区上限以 KiB 计。较大的缓冲区可能减少 SD 卡日志中的记录缺口，但会占用更多内存。实际缓冲区可能缩小，以腾出内存。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "LOG_FILE_BUFSIZE",
+      "field": "Description",
+      "versions": [
+        "4.5.7"
+      ],
+      "englishSha256": "f6072cb1e989d58083611cde11d1b35be862980453a2489e693f107087c68ca9",
+      "recordSha256": "677a255dc0e718a8b1b02567e0a2184f804bddbe06ec81cc993970935689fbac",
+      "english": "The File and Block backends use a buffer to store data before writing to the block device.  Raising this value may reduce \"gaps\" in your SD card logging.  This buffer size may be reduced depending on available memory.  PixHawk requires at least 4 kilobytes.  Maximum value available here is 64 kilobytes.",
+      "chinese": "文件和块存储日志后端在写入块设备前先暂存数据。较大的缓冲区可能减少 SD 卡日志中的记录缺口，实际缓冲区可能因可用内存不足而缩小。PixHawk 至少需要 4 千字节，本版说明列出的上限为 64 千字节。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "LOG_FILE_BUFSIZE",
+      "field": "Description",
+      "versions": [
+        "4.6.3"
+      ],
+      "englishSha256": "a8e02c5f7a4c678aaa070a803ee13979a04dd0b043ffa047dcd250312c39cb42",
+      "recordSha256": "572221df9e127cd721859a66b3bdb294fa366a0165bac7ce3b403d11a457e856",
+      "english": "The File and Block backends use a buffer to store data before writing to the block device.  Raising this value may reduce \"gaps\" in your SD card logging but increases memory usage.  This buffer size may be reduced to free up available memory",
+      "chinese": "文件和块存储日志后端在写入块设备前先暂存数据，缓冲区上限以 kB 计。较大的缓冲区可能减少 SD 卡日志中的记录缺口，但会占用更多内存。实际缓冲区可能缩小，以腾出内存。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "LOG_FILE_BUFSIZE",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "a8e02c5f7a4c678aaa070a803ee13979a04dd0b043ffa047dcd250312c39cb42",
+      "recordSha256": "74ba32412e8eb981db82fbb43f8c79c97026b425311df7c1c2d16e49db56cb28",
+      "english": "The File and Block backends use a buffer to store data before writing to the block device.  Raising this value may reduce \"gaps\" in your SD card logging but increases memory usage.  This buffer size may be reduced to free up available memory",
+      "chinese": "文件和块存储日志后端在写入块设备前先暂存数据，缓冲区上限以 KiB 计。较大的缓冲区可能减少 SD 卡日志中的记录缺口，但会占用更多内存。实际缓冲区可能缩小，以腾出内存。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "LOG_FILE_BUFSIZE",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "a8e02c5f7a4c678aaa070a803ee13979a04dd0b043ffa047dcd250312c39cb42",
+      "recordSha256": "74ba32412e8eb981db82fbb43f8c79c97026b425311df7c1c2d16e49db56cb28",
+      "english": "The File and Block backends use a buffer to store data before writing to the block device.  Raising this value may reduce \"gaps\" in your SD card logging but increases memory usage.  This buffer size may be reduced to free up available memory",
+      "chinese": "文件和块存储日志后端在写入块设备前先暂存数据，缓冲区上限以 KiB 计。较大的缓冲区可能减少 SD 卡日志中的记录缺口，但会占用更多内存。实际缓冲区可能缩小，以腾出内存。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "LOG_DISARMED",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "306c480a75161b85a8ee48e99d48a11dac16255375adfe60b34150c13b22021e",
+      "recordSha256": "16802fe8a387398fb7730f1c4fb9ce0a1ddd6ab7ef811658b93b95417d86b1b4",
+      "english": "If LOG_DISARMED is set to 1 then logging will be enabled at all times including when disarmed. Logging before arming can make for very large logfiles but can help a lot when tracking down startup issues and is necessary if logging of EKF replay data is selected via the LOG_REPLAY parameter. If LOG_DISARMED is set to 2, then logging will be enabled when disarmed, but not if a USB connection is detected. This can be used to prevent unwanted data logs being generated when the vehicle is connected via USB for log downloading or parameter changes. If LOG_DISARMED is set to 3 then logging will happen while disarmed, but if the vehicle never arms then the logs using the filesystem backend will be discarded on the next boot.",
+      "chinese": "控制未解锁时的日志记录。设为 1 时始终记录，包括未解锁阶段。解锁前的记录有助于排查启动问题，但日志文件可能很大。通过 LOG_REPLAY 启用 EKF 重放数据记录时，也需要这段解锁前的日志。设为 2 时也记录未解锁阶段，检测到 USB 连接时除外，以免下载日志或修改参数时生成多余日志。设为 3 时记录未解锁阶段。若本次运行始终未解锁，文件系统后端会在下次启动时丢弃本次日志。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "LOG_REPLAY",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "af4d5c2e1dccc5b7550d242a7343b73057b99652fee757ee7e552b5e19ac67d8",
+      "recordSha256": "ca015b469df9d92021e1f6233ce045f771cdea5be6411c555e89c4ef6d81d426",
+      "english": "If LOG_REPLAY is set to 1 then the EKF2 and EKF3 state estimators will log detailed information needed for diagnosing problems with the Kalman filter. LOG_DISARMED must be set to 1 or 2 or else the log will not contain the pre-flight data required for replay testing of the EKF's. It is suggested that you also raise LOG_FILE_BUFSIZE to give more buffer space for logging and use a high quality microSD card to ensure no sensor data is lost.",
+      "chinese": "设为 1 时，EKF2 和 EKF3 状态估计器会记录诊断卡尔曼滤波问题所需的详细数据。要在日志中保留重放测试所需的飞行前数据，LOG_DISARMED 必须设为 1 或 2。ArduPilot 原说明建议增大 LOG_FILE_BUFSIZE 以增加日志缓冲空间，并使用优质 microSD 卡，以免丢失传感器数据。"
     }
   ]
 }
