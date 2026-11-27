@@ -1241,7 +1241,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
 
             if (((CheckBox)sender).Checked)
             {
-                var speechstring = "Heading to Waypoint {wpn}";
+                var speechstring = UiText.Translate("Heading to Waypoint {wpn}");
                 if (Settings.Instance["speechwaypoint"] != null)
                     speechstring = Settings.Instance["speechwaypoint"].ToString();
                 if (DialogResult.Cancel ==
@@ -1259,7 +1259,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
 
             if (((CheckBox)sender).Checked)
             {
-                var speechstring = "Mode changed to {mode}";
+                var speechstring = UiText.Translate("Mode changed to {mode}");
                 if (Settings.Instance["speechmode"] != null)
                     speechstring = Settings.Instance["speechmode"].ToString();
                 if (DialogResult.Cancel ==
@@ -1267,6 +1267,18 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                     return;
                 Settings.Instance["speechmode"] = speechstring;
             }
+        }
+
+        private static string PeriodicSpeechEditorDefault(string saved)
+        {
+            return saved ?? UiText.Translate("Heading to Waypoint {wpn}, altitude is {alt}, Ground speed is {gsp} ");
+        }
+
+        private static string PeriodicSpeechEditorPrompt()
+        {
+            return CultureInfo.CurrentUICulture.Name == "zh-CN"
+                ? UiText.Translate("Edit the periodic announcement. Keep placeholders such as {wpn}, {alt}, and {gsp} unchanged.")
+                : UiText.Translate("What do you want it to say?");
         }
 
         private void CHK_speechcustom_CheckedChanged(object sender, EventArgs e)
@@ -1277,11 +1289,9 @@ namespace MissionPlanner.GCSViews.ConfigurationView
 
             if (((CheckBox)sender).Checked)
             {
-                var speechstring = "Heading to Waypoint {wpn}, altitude is {alt}, Ground speed is {gsp} ";
-                if (Settings.Instance["speechcustom"] != null)
-                    speechstring = Settings.Instance["speechcustom"].ToString();
+                var speechstring = PeriodicSpeechEditorDefault(Settings.Instance["speechcustom"]);
                 if (DialogResult.Cancel ==
-                    InputBox.Show(UiText.Translate("Notification"), UiText.Translate("What do you want it to say?"), ref speechstring))
+                    InputBox.Show(UiText.Translate("Notification"), PeriodicSpeechEditorPrompt(), ref speechstring))
                     return;
                 Settings.Instance["speechcustom"] = speechstring;
             }

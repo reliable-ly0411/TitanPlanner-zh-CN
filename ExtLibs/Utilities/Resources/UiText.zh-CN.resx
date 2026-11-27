@@ -3133,6 +3133,10 @@ Ctrl+O 从文件加载</value>
     <value>编辑样式</value>
     <comment>"Edit Style"</comment>
   </data>
+  <data name="081785ab6cd1b3ba71191b616936c3a038f739167fecdf5f99c2362eaed5b9b4" xml:space="preserve">
+    <value>编辑周期播报内容。请保留 {wpn}、{alt}、{gsp} 等占位符。</value>
+    <comment>"Edit the periodic announcement. Keep placeholders such as {wpn}, {alt}, and {gsp} unchanged."</comment>
+  </data>
   <data name="66e0eb6bdc88e002564f5acaf2653ceea94c5c59e272faac5fe6eae69a0e9c12" xml:space="preserve">
     <value>控制量限制</value>
     <comment>"Effort Lim"</comment>
@@ -4946,6 +4950,14 @@ Ctrl+O 从文件加载</value>
   <data name="95add674261fdfe89f440a8e3cf2b534546b865b3ffbf45e5ad54467ed0291da" xml:space="preserve">
     <value>航向转横滚</value>
     <comment>"Heading to Roll"</comment>
+  </data>
+  <data name="e471a806e220d99cafed18e7bcb43c7b6fb5a603289acf9a627d1239e1c234e5" xml:space="preserve">
+    <value>前往航点 {wpn}</value>
+    <comment>"Heading to Waypoint {wpn}"</comment>
+  </data>
+  <data name="91584523ff0ff341f2967d46b2b5250d2c9f713bcfe5bf626256e1e368c7a411" xml:space="preserve">
+    <value>正在前往航点 {wpn}，高度 {alt}，地速 {gsp} </value>
+    <comment>"Heading to Waypoint {wpn}, altitude is {alt}, Ground speed is {gsp} "</comment>
   </data>
   <data name="a647fd8fb1e3d3a1de62d287feaa9d4d3d53aa1af96616c8f7cbcd22c04c0356" xml:space="preserve">
     <value>航向： </value>
@@ -7381,6 +7393,10 @@ Ctrl+O 从文件加载</value>
   <data name="fa19560c0a2ef7e6defd1836a2eecc84e99abd1ddcc4b44e2fc4f1432f5f398b" xml:space="preserve">
     <value>模式 S</value>
     <comment>"Mode S"</comment>
+  </data>
+  <data name="5f1879c76973fb3989667cb17d9955a55a7806a2f9bf0ded402d7da54e2163ab" xml:space="preserve">
+    <value>当前飞行模式：{mode}</value>
+    <comment>"Mode changed to {mode}"</comment>
   </data>
   <data name="6d155e134de00cb6b8f0cc4fd716e1adfe253221c7bb79df47d59ac62f415a3b" xml:space="preserve">
     <value>模式： </value>
