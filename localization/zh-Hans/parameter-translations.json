@@ -6594,6 +6594,46 @@
       "recordSha256": "2c5e7a852a77629f98e360cf59d7a02fa34cd436270c1c2003bbf1aab5402f79",
       "english": "Estimate of total distance flown since statistics reset",
       "chinese": "上次重置统计以来的估算飞行总距离。"
+    },
+    {
+      "family": "Copter",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "parameter": "SCHED_DEBUG",
+      "field": "Description",
+      "englishSha256": "83f03b9b04a5256c4f9a81c944ecdec50dacdeb439f0629cc7599932cc04ebc1",
+      "recordSha256": "54683d3eefef6d601701c7af87c4a5dbe8b04206de1037cc9df142dab15c85d4",
+      "english": "Set to non-zero to enable scheduler debug messages. When set to show \"Slips\" the scheduler will display a message whenever a scheduled task is delayed due to too much CPU load. When set to ShowOverruns the scheduled will display a message whenever a task takes longer than the limit promised in the task table.",
+      "chinese": "非零值表示启用调度器调试消息。选择 ShowSlips 时，如果 CPU 负载过高导致计划任务延迟，调度器会显示消息；选择 ShowOverruns 时，如果任务耗时超过任务表规定的上限，调度器会显示消息。"
+    },
+    {
+      "family": "Plane",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "parameter": "SCHED_DEBUG",
+      "field": "Description",
+      "englishSha256": "83f03b9b04a5256c4f9a81c944ecdec50dacdeb439f0629cc7599932cc04ebc1",
+      "recordSha256": "54683d3eefef6d601701c7af87c4a5dbe8b04206de1037cc9df142dab15c85d4",
+      "english": "Set to non-zero to enable scheduler debug messages. When set to show \"Slips\" the scheduler will display a message whenever a scheduled task is delayed due to too much CPU load. When set to ShowOverruns the scheduled will display a message whenever a task takes longer than the limit promised in the task table.",
+      "chinese": "非零值表示启用调度器调试消息。选择 ShowSlips 时，如果 CPU 负载过高导致计划任务延迟，调度器会显示消息；选择 ShowOverruns 时，如果任务耗时超过任务表规定的上限，调度器会显示消息。"
+    },
+    {
+      "family": "Sub",
+      "versions": [
+        "4.7.1"
+      ],
+      "parameter": "SCHED_DEBUG",
+      "field": "Description",
+      "englishSha256": "83f03b9b04a5256c4f9a81c944ecdec50dacdeb439f0629cc7599932cc04ebc1",
+      "recordSha256": "54683d3eefef6d601701c7af87c4a5dbe8b04206de1037cc9df142dab15c85d4",
+      "english": "Set to non-zero to enable scheduler debug messages. When set to show \"Slips\" the scheduler will display a message whenever a scheduled task is delayed due to too much CPU load. When set to ShowOverruns the scheduled will display a message whenever a task takes longer than the limit promised in the task table.",
+      "chinese": "非零值表示启用调度器调试消息。选择 ShowSlips 时，如果 CPU 负载过高导致计划任务延迟，调度器会显示消息；选择 ShowOverruns 时，如果任务耗时超过任务表规定的上限，调度器会显示消息。"
     }
   ]
 }

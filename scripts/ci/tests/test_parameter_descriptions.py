@@ -22,7 +22,7 @@ SITL_ENVIRONMENT_HELP_KEYS = {'SIM_THML_SCENARI', 'SIM_TIDE_DIR', 'SIM_TIDE_SPEE
 DISPLAY_AND_LOG_HELP_KEYS = (
     SIDEBAR_GEOMETRY_KEYS | IMU_DIAGNOSTIC_HELP_KEYS | OSD_MESSAGE_TIME_HELP_KEYS
     | SITL_ENVIRONMENT_HELP_KEYS | LOG_STORAGE_HELP_KEYS | OSD_FONT_KEYS | ONBOARD_DISPLAY_HELP_KEYS | LOGGER_BACKEND_HELP_KEYS
-    | {'LOG_BITMASK', 'LOG_FILE_BUFSIZE', 'OSD_H_OFFSET', 'OSD_V_OFFSET'}
+    | {'LOG_BITMASK', 'LOG_FILE_BUFSIZE', 'OSD_H_OFFSET', 'OSD_V_OFFSET', 'SCHED_DEBUG'}
 )
 catalog_module = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(catalog_module)
@@ -52,8 +52,8 @@ class ParameterCatalogTests(unittest.TestCase):
     def test_scope_counts_and_held_versions(self):
         notes = self.catalog['translations']
         descriptions = {(n['family'], v, n['parameter']) for n in notes if n['field'] == 'Description' for v in n['versions']}
-        self.assertEqual(796, len(descriptions))
-        self.assertEqual(371, len({(f, p) for f, v, p in descriptions}))
+        self.assertEqual(803, len(descriptions))
+        self.assertEqual(374, len({(f, p) for f, v, p in descriptions}))
         self.assertFalse(any(v == '4.7.2' for f, v, p in descriptions))
         excluded_copter = {'RTL_CONE_SLOPE', 'LAND_SPEED', 'LAND_SPD_MS', 'FS_GCS_ENABLE'}
         excluded_plane = {'TECS_CLMB_MAX', 'TECS_SINK_MIN', 'ROLL_LIMIT_DEG'}
@@ -319,6 +319,26 @@ class ParameterCatalogTests(unittest.TestCase):
                 self.assertEqual([('field', 'Range', '0 21')], [(c.tag, c.get('name'), c.text) for c in row])
                 self.assertIn(f'第 {screen} 屏', chinese[key])
                 self.assertIn('仅适用于 MSP DisplayPort', chinese[key])
+
+    def test_scheduler_debug_reports_only_exact_diagnostic_modes(self):
+        for release in self.bundle.findall('release'):
+            family, version = release.get('family'), release.get('version')
+            matches = [row for row in release.iter('param') if row.get('name') == 'SCHED_DEBUG']
+            self.assertEqual(1, len(matches))
+            row = matches[0]
+            self.assertEqual([('0', 'Disabled'), ('2', 'ShowSlips'), ('3', 'ShowOverruns')],
+                             [(value.get('code'), value.text) for value in row.findall('values/value')])
+            self.assertFalse(row.findall('field'))
+            notes = [n for n in self.catalog['translations'] if n['family'] == family and version in n['versions']
+                     and n['parameter'] == 'SCHED_DEBUG']
+            self.assertEqual(1, len(notes))
+            self.assertEqual(('Description', row.get('documentation'), catalog_module.record_fingerprint(row)),
+                             (notes[0]['field'], notes[0]['english'], notes[0]['recordSha256']))
+            self.assertTrue(all(s in notes[0]['chinese'] for s in ('ShowSlips', 'ShowOverruns', 'CPU 负载', '任务表')))
+        changed = copy.deepcopy(self.bundle)
+        next(changed.iterfind(".//param[@name='SCHED_DEBUG']/values/value[@code='2']")).text = 'Changed'
+        with self.assertRaisesRegex(ValueError, 'requires manual review'):
+            catalog_module.resource(self.catalog, changed)
 
     def test_source_changes_cannot_automatically_reapprove_notes(self):
         for change in ('English', 'Range', 'Unit'):

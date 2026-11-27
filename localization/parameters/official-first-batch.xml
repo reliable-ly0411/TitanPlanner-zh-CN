@@ -680,6 +680,15 @@
           <param humanName="Linear Wind Curve Coeff" name="SIM_WIND_T_COEF" documentation="For linear wind profile,wind is reduced by (Altitude-WIND_T_ALT) x this value" user="Advanced">
 </param>
         </parameters>
+        <parameters name="SCHED_">
+          <param humanName="Scheduler debug level" name="SCHED_DEBUG" documentation="Set to non-zero to enable scheduler debug messages. When set to show &quot;Slips&quot; the scheduler will display a message whenever a scheduled task is delayed due to too much CPU load. When set to ShowOverruns the scheduled will display a message whenever a task takes longer than the limit promised in the task table." user="Advanced">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="2">ShowSlips</value>
+              <value code="3">ShowOverruns</value>
+            </values>
+          </param>
+        </parameters>
       </libraries>
     </paramfile>
   </release>
@@ -1447,6 +1456,15 @@
           </param>
           <param humanName="Thermal scenarios" name="SIM_THML_SCENARI" documentation="Scenario for thermalling simulation, for soaring">
 </param>
+        </parameters>
+        <parameters name="SCHED_">
+          <param humanName="Scheduler debug level" name="SCHED_DEBUG" documentation="Set to non-zero to enable scheduler debug messages. When set to show &quot;Slips&quot; the scheduler will display a message whenever a scheduled task is delayed due to too much CPU load. When set to ShowOverruns the scheduled will display a message whenever a task takes longer than the limit promised in the task table." user="Advanced">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="2">ShowSlips</value>
+              <value code="3">ShowOverruns</value>
+            </values>
+          </param>
         </parameters>
       </libraries>
     </paramfile>
@@ -2251,6 +2269,15 @@
           <param humanName="Thermal scenarios" name="SIM_THML_SCENARI" documentation="Scenario for thermalling simulation, for soaring">
 </param>
         </parameters>
+        <parameters name="SCHED_">
+          <param humanName="Scheduler debug level" name="SCHED_DEBUG" documentation="Set to non-zero to enable scheduler debug messages. When set to show &quot;Slips&quot; the scheduler will display a message whenever a scheduled task is delayed due to too much CPU load. When set to ShowOverruns the scheduled will display a message whenever a task takes longer than the limit promised in the task table." user="Advanced">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="2">ShowSlips</value>
+              <value code="3">ShowOverruns</value>
+            </values>
+          </param>
+        </parameters>
       </libraries>
     </paramfile>
   </release>
@@ -2996,6 +3023,15 @@
           </param>
           <param humanName="Linear Wind Curve Coeff" name="SIM_WIND_T_COEF" documentation="For linear wind profile,wind is reduced by (Altitude-WIND_T_ALT) x this value" user="Advanced">
 </param>
+        </parameters>
+        <parameters name="SCHED_">
+          <param humanName="Scheduler debug level" name="SCHED_DEBUG" documentation="Set to non-zero to enable scheduler debug messages. When set to show &quot;Slips&quot; the scheduler will display a message whenever a scheduled task is delayed due to too much CPU load. When set to ShowOverruns the scheduled will display a message whenever a task takes longer than the limit promised in the task table." user="Advanced">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="2">ShowSlips</value>
+              <value code="3">ShowOverruns</value>
+            </values>
+          </param>
         </parameters>
       </libraries>
     </paramfile>
@@ -3819,6 +3855,15 @@
           </param>
           <param humanName="Thermal scenarios" name="SIM_THML_SCENARI" documentation="Scenario for thermalling simulation, for soaring">
 </param>
+        </parameters>
+        <parameters name="SCHED_">
+          <param humanName="Scheduler debug level" name="SCHED_DEBUG" documentation="Set to non-zero to enable scheduler debug messages. When set to show &quot;Slips&quot; the scheduler will display a message whenever a scheduled task is delayed due to too much CPU load. When set to ShowOverruns the scheduled will display a message whenever a task takes longer than the limit promised in the task table." user="Advanced">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="2">ShowSlips</value>
+              <value code="3">ShowOverruns</value>
+            </values>
+          </param>
         </parameters>
       </libraries>
     </paramfile>
@@ -4687,6 +4732,15 @@
           <param humanName="Thermal scenarios" name="SIM_THML_SCENARI" documentation="Scenario for thermalling simulation, for soaring">
 </param>
         </parameters>
+        <parameters name="SCHED_">
+          <param humanName="Scheduler debug level" name="SCHED_DEBUG" documentation="Set to non-zero to enable scheduler debug messages. When set to show &quot;Slips&quot; the scheduler will display a message whenever a scheduled task is delayed due to too much CPU load. When set to ShowOverruns the scheduled will display a message whenever a task takes longer than the limit promised in the task table." user="Advanced">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="2">ShowSlips</value>
+              <value code="3">ShowOverruns</value>
+            </values>
+          </param>
+        </parameters>
       </libraries>
     </paramfile>
   </release>
@@ -5102,6 +5156,15 @@
           </param>
           <param humanName="Thermal scenarios" name="SIM_THML_SCENARI" documentation="Scenario for thermalling simulation, for soaring">
 </param>
+        </parameters>
+        <parameters name="SCHED_">
+          <param humanName="Scheduler debug level" name="SCHED_DEBUG" documentation="Set to non-zero to enable scheduler debug messages. When set to show &quot;Slips&quot; the scheduler will display a message whenever a scheduled task is delayed due to too much CPU load. When set to ShowOverruns the scheduled will display a message whenever a task takes longer than the limit promised in the task table." user="Advanced">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="2">ShowSlips</value>
+              <value code="3">ShowOverruns</value>
+            </values>
+          </param>
         </parameters>
       </libraries>
     </paramfile>
