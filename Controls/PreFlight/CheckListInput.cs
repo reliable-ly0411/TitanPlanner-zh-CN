@@ -122,6 +122,7 @@ namespace MissionPlanner.Controls.PreFlight
             {
                 case "gpsstatus":
                 case "gpshdop":
+                case "gpsvdop":
                 case "satcount":
                 case "roll":
                 case "pitch":
