@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
+using MissionPlanner.Utilities;
 
 namespace MissionPlanner
 {
@@ -134,7 +135,11 @@ namespace MissionPlanner
                 if (IsPx4(s.Version))
                     return row.message == Px4BatteryText(s.Version) ? (s.Version == 9 ? "1 号电池已断开" : "未检测到 1 号电池") : null;
                 if (row.message == "GPS 1: detected u-blox") return "检测到 GPS 1：u-blox";
-                if (row.message == PlaneGps2UbloxDetection) return "检测到 GPS 2：u-blox";
+                if (row.message == PlaneGps2UbloxDetection)
+                {
+                    var translated = UiText.Translate(PlaneGps2UbloxDetection);
+                    return string.Equals(translated, row.message, StringComparison.Ordinal) ? null : translated;
+                }
                 if (row.message == "EKF3 IMU0 origin set") return "EKF3 IMU0 原点已设置";
                 return null;
             }

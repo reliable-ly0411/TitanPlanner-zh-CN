@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Reflection;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -58,18 +59,44 @@ namespace MissionPlannerTests.Utilities
             }
         }
 
+        private static void InCulture(string name, Action run)
+        {
+            var saved = CultureInfo.CurrentUICulture;
+            try
+            {
+                CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo(name);
+                run();
+            }
+            finally
+            {
+                CultureInfo.CurrentUICulture = saved;
+            }
+        }
+
         [TestMethod]
-        public void Gps2DetectionOnlyAddsAnAuditedDisplaySuffix()
+        public void Gps2DetectionOnlyAddsAnAuditedDisplaySuffix() => InCulture("zh-CN", () =>
         {
             var fixture = new Fixture();
             const string raw = "GPS 2: detected u-blox";
             Assert.AreEqual("检测到 GPS 2：u-blox", fixture.Translate(raw));
             Assert.AreEqual("检测到 GPS 1：u-blox", fixture.Translate("GPS 1: detected u-blox"));
             Assert.AreEqual(2, fixture.Rows.Count);
+        });
+
+        [TestMethod]
+        public void Gps2DetectionWithoutEnhancedResourceHasNoSuffix()
+        {
+            const string raw = "GPS 2: detected u-blox";
+            foreach (var name in new[] { "zh-Hans", "en-US" })
+                InCulture(name, () =>
+                {
+                    Assert.AreEqual(raw, MissionPlanner.Utilities.UiText.Translate(raw));
+                    Assert.IsNull(new Fixture().Translate(raw));
+                });
         }
 
         [TestMethod]
-        public void OtherOriginsAndMessagesKeepTheirOriginalText()
+        public void OtherOriginsAndMessagesKeepTheirOriginalText() => InCulture("zh-CN", () =>
         {
             const string raw = "GPS 2: detected u-blox";
             Assert.IsNull(new Fixture(autopilot: null).Translate(raw));
@@ -87,6 +114,6 @@ namespace MissionPlannerTests.Utilities
                 "GPS 2: detected u-blo", raw + " ", "GPS 2: detected OtherBrand", "GPS 2: detected U-BLOX" })
                 Assert.IsNull(exact.Translate(variant));
             Assert.AreEqual(6, exact.Rows.Count);
-        }
+        });
     }
 }
