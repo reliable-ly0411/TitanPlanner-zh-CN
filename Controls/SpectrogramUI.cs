@@ -86,7 +86,8 @@ namespace MissionPlanner.Controls
                 min: (int) num_min.Value, max: (int) num_max.Value))
             using (var img2 = Spectrogram.GenerateImage(file, out freqt, out allfftdata, cmb_sensor.Text, field[1],
                 min: (int) num_min.Value, max: (int) num_max.Value))
-            using (var img3 = Spectrogram.GenerateImage(file, out freqt, out allfftdata, cmb_sensor.Text, field[2],
+            using (var img3 = Spectrogram.GenerateImage(file, out freqt, out allfftdata,
+                out var singleBatchWindowSeconds, cmb_sensor.Text, field[2],
                 min: (int) num_min.Value, max: (int) num_max.Value))
             {
                 if (img1 == null || img2 == null || img3 == null)
@@ -100,6 +101,11 @@ namespace MissionPlanner.Controls
 
                 var mintime = allfftdata.Min(a => a.timeus)  / 1000000.0;
                 var maxtime = allfftdata.Max(a => a.timeus)  / 1000000.0;
+
+                // A single batch column still spans a full FFT window. Anchor it to the
+                // original plotted timestamp, and give the image and axis the same right edge.
+                if (img3.Width == 1 && singleBatchWindowSeconds > 0)
+                    maxtime = mintime + singleBatchWindowSeconds;
 
                 var tdelta = (maxtime - mintime);
 
