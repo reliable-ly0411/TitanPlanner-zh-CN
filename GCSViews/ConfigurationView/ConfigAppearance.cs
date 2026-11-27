@@ -15,6 +15,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
         private readonly PictureBox startupPreview = new PictureBox { SizeMode = PictureBoxSizeMode.Zoom, Height = 200, Dock = DockStyle.Fill, BackColor = Color.Black };
         private ComboBox iconChoices, startupChoices;
         private readonly bool simplifiedChinese;
+        private bool synchronizingPresets;
 
         private sealed class Preset
         {
@@ -109,7 +110,13 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             menu.Items.Add(new Preset("mfe", Local("奋斗者", "MakeFlyEasy")));
             menu.Items.Add(new Preset("custom", Local("自定义", "Custom")));
             menu.SelectedIndex = 0;
-            menu.SelectionChangeCommitted += (sender, args) => SelectPreset(kind, (Preset)menu.SelectedItem);
+            // Closed-list arrow keys can change the index without raising SelectionChangeCommitted
+            // (in particular on Mono). Do not apply intermediate choices in an open list.
+            menu.SelectedIndexChanged += (sender, args) =>
+            {
+                if (!menu.DroppedDown) SelectPreset(kind, menu.SelectedItem as Preset);
+            };
+            menu.SelectionChangeCommitted += (sender, args) => SelectPreset(kind, menu.SelectedItem as Preset);
             var choose = new Button
             {
                 Name = icon ? "ChooseLocalWindowIcon" : "ChooseLocalStartupImage",
@@ -130,8 +137,10 @@ namespace MissionPlanner.GCSViews.ConfigurationView
 
         private void SelectPreset(AppearanceAsset kind, Preset preset)
         {
+            if (synchronizingPresets || preset == null) return;
             var icon = kind == AppearanceAsset.WindowIcon;
             var store = DesktopAppearance.Store;
+            if (store.CurrentPreset(kind) == preset.Id) return;
             Action select;
             bool available;
             switch (preset.Id)
@@ -203,7 +212,9 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             foreach (Preset preset in menu.Items)
                 if (preset.Id == id)
                 {
-                    menu.SelectedItem = preset;
+                    synchronizingPresets = true;
+                    try { menu.SelectedItem = preset; }
+                    finally { synchronizingPresets = false; }
                     return;
                 }
         }
