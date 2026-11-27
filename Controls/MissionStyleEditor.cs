@@ -38,6 +38,7 @@ namespace MissionPlanner.Controls
         MissionStyleConfig editingConfig;
         Action<MissionStyle> applyStyle;
         bool isLoading = true;
+        string loadedPresetName;
         bool isDirty;
         bool confirmed;
 
@@ -80,8 +81,8 @@ namespace MissionPlanner.Controls
 
             isLoading = false;
 
-            var selectedPreset = styleBox.SelectedItem?.ToString();
-            if (selectedPreset != null && presetStyles.TryGetValue(selectedPreset, out var uri))
+            loadedPresetName = styleBox.SelectedItem?.ToString();
+            if (loadedPresetName != null && presetStyles.TryGetValue(loadedPresetName, out var uri))
                 saveButton.Enabled = (uri != null);
             else
                 saveButton.Enabled = false;
@@ -134,9 +135,27 @@ namespace MissionPlanner.Controls
             if (presetStyles.ContainsKey(selectedPreset))
             {
                 var presetUri = presetStyles[selectedPreset];
-                editingConfig = MissionStyle.LoadConfig(presetUri?.LocalPath) ?? MissionStyleConfig.CreateDefault();
+                var loaded = presetUri == null ? MissionStyleConfig.CreateDefault() : MissionStyle.LoadConfig(presetUri.LocalPath);
+                if (loaded == null)
+                {
+                    // Leave the live preview, edits and save target on the last usable preset.
+                    isLoading = true;
+                    try
+                    {
+                        styleBox.SelectedItem = loadedPresetName;
+                    }
+                    finally
+                    {
+                        isLoading = false;
+                    }
+                    log.Warn("Could not load the selected mission style preset; keeping the current preset.");
+                    return;
+                }
+
+                editingConfig = loaded;
                 applyStyle(new MissionStyle(editingConfig));
                 saveButton.Enabled = (presetUri != null);
+                loadedPresetName = selectedPreset;
             }
             else
             {
@@ -205,6 +224,7 @@ namespace MissionPlanner.Controls
                     styleBox.Items.Add(preset.Key);
                 }
                 styleBox.SelectedItem = presetFilename;
+                loadedPresetName = styleBox.SelectedItem?.ToString();
                 isLoading = false;
                 saveButton.Enabled = true;
                 isDirty = false;
