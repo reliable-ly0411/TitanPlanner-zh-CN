@@ -1414,6 +1414,10 @@
     <value>带宽</value>
     <comment>"Bandwidth"</comment>
   </data>
+  <data name="ce2c876cd934ef57af899b3d2f7439fdee04fbe88aa1245a20e5b04eef7f6f56" xml:space="preserve">
+    <value>1 号气压计校准完成</value>
+    <comment>"Barometer 1 calibration complete"</comment>
+  </data>
   <data name="7b47361aad19bb483aeab081a7df0a55f7cb0fdb3327efe6dd016e6353a17880" xml:space="preserve">
     <value>基站</value>
     <comment>"Base"</comment>
@@ -13183,6 +13187,10 @@ http://www.magnetic-declination.com/</value>
   <data name="5177ab4042cb1b66324592e5a213d58249dd8842a5d941771204ed0489e19ce2" xml:space="preserve">
     <value>翻译语言编辑器</value>
     <comment>"translation language editor"</comment>
+  </data>
+  <data name="bc174bf68fe12ad97027bccad001a73b47fdf76be94713e5185196c1fa1eb928" xml:space="preserve">
+    <value>u-blox 支持 L5 频段</value>
+    <comment>"u-blox supports L5 Band"</comment>
   </data>
   <data name="38dee2f0439c2d7fb946e1e986fae4dc52142a3ab288877dee8cc3fd68455cdd" xml:space="preserve">
     <value>更新引导程序</value>
