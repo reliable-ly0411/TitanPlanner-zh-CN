@@ -20,3 +20,23 @@ Scope labels:
 | `issue-26/shortcut-first.png` | 933 | 385×59 | `5e476f72c52583053cd2b289be4f48cca2ff33da12b11729e1dcf4edcf16aa47` |
 | `issue-26/shortcut-last.png` | 933 | 329×59 | `ba3f903f8aba821e2ab42475abd2d451e86c5c9cf15d883eab927b26d3bd2b53` |
 | `issues-40-42/qnh-573.png` | 573 | 573×312 | `c2006ddeb540370ba457c2cf558f018b3d09a3e442ae5497a05bcab072f014b6` |
+
+## Additional controls
+
+These source-level captures use synthetic data; they are not full product or user desktop captures.
+
+- **#34**, exact `5a8247c0`: Windows WinForms, actual 120 DPI. The 933/1230 px toolbar and 933 px overflow case use inert port, baud and Connect controls. The emblem is the existing repository logo. The full navigation and device paths are not used.
+- **#36**, exact `6b37cbb7`: actual Windows 120 DPI, compact controls at 420 and 670 px. Synthetic preview and no system file picker. The 420 px image shows truncation in the closed startup-image selector; it is retained as a known issue, not a pass.
+- **#40**, exact `dfbe3531`: actual Windows 120 DPI native options-list window, synthetic values. It identifies a remaining problem: the `lowairspeed` label appears as “空速”, not as “低空速标志”. This is not evidence of correct translation for all Boolean fields.
+- **#188**: actual Mono WinForms tooltip in isolated X11 (requested 120 DPI; logical width 558). Screenshot demonstrates the two lines, not Windows, the complete checkbox, or persistence.
+
+| File | SHA-256 |
+| --- | --- |
+| `issue-188/tooltip-mono-x11.png` | `cb2f0e2553e1b106e6a9b10a93a08745a9d874535ef9ca8b5a572cbc48bba1fd` |
+| `issue-34/brand34-min-933.png` | `245d3261552f9f7a808e617531b38c8a6621cc584d7de143cb1c3cff6c5a3183` |
+| `issue-34/brand34-overflow-menu.png` | `9f2b524176e8529202aefedfaa571bd17f0dabff2312437d13c19b823872125d` |
+| `issue-34/brand34-overflow-panel.png` | `27cfa4a57679726c27dc0d811d531467e855882e3a23ce20d1bd8bc7a8ca081a` |
+| `issue-34/brand34-wide-1230.png` | `67bd60c0e7c2021442c61eeaa96a277e9fdc3df2389d5e3c96bdccd1ff565d70` |
+| `issue-36/appearance36-420.png` | `57ee418c2e430aeb1cf024e22e7c0060918b96cd54c2af576e615ec9fa844c29` |
+| `issue-36/appearance36-670.png` | `78c3d7bb07b743d50813a07dbfe5390be15dc1081b2d9aeed0c64b78695a8cef` |
+| `issues-40-42/quickview-options-popup.png` | `1bd3d6b8d42808bf3c6b7d7538f0fd474a05a42c4b5a95e3864a18951d7203b1` |
