@@ -81,11 +81,68 @@ internal static class Program
         Check(catalog.Present(changed, "OSD_V_OFFSET", true).SearchText.Contains(rows[1].Chinese), "unchanged vertical offset still matches");
     }
 
+    private static void CheckVehicleLogBitmask(XElement[] releases, ParameterDescriptionStore store, ParameterDescriptionCatalog catalog)
+    {
+        const string key = "LOG_BITMASK";
+        const string basic = "选择飞控要记录的日志类型。参数值等于所选各项对应的掩码值之和。官方说明建议用 65535 启用全部基本日志类型。";
+        const string rate = "若想减小日志文件，官方建议优先考虑用 LOG_FILE_RATEMAX 限制流式日志消息写入文件的频率。";
+        const string sub = "用 4 字节位掩码选择飞控要记录的日志类型。";
+        var optionDigests = new Dictionary<string, string>
+        {
+            ["Copter"] = "0deb2d803476fc279e105f6f09d03d99b1795fc4f3c176db641053daabe60b8b",
+            ["Plane"] = "ffe8a870fcdaa074b26a42ded3b88654fce0867bd425163121124bc67f95f26a",
+            ["Sub"] = "1634b6ff44ee29c0978458746018f05b1d3bae03ce2fb48ba9afbc00f9a27fde"
+        };
+        foreach (var family in new[] { "Copter", "Plane", "Sub" })
+        {
+            var versions = family == "Sub" ? new[] { "4.7.1" } : new[] { "4.5.7", "4.6.3", "4.7.1" };
+            var unknown = Context(family, "4.7.2");
+            Check(store.Bundled(unknown) == null, family + " unregistered version");
+            foreach (var version in versions)
+            {
+                var release = releases.Single(r => (string)r.Attribute("family") == family && (string)r.Attribute("version") == version);
+                var snapshot = store.Bundled(Context(family, version, (string)release.Attribute("gitSha")));
+                var source = release.Element("paramfile").Element("vehicles").Elements("parameters")
+                    .Single(g => (string)g.Attribute("name") == snapshot.Context.VehicleName)
+                    .Elements("param").Single(p => (string)p.Attribute("name") == snapshot.Context.VehicleName + ":" + key);
+                var record = snapshot.Find(key);
+                var english = (string)source.Attribute("documentation");
+                var chinese = family == "Sub" ? sub : basic;
+                if (family == "Copter" && version != "4.5.7") chinese += rate;
+                var show = catalog.Present(snapshot, key, true);
+                var plain = catalog.Present(snapshot, key, false);
+                var label = family + " " + version + " " + key;
+                Check(snapshot.MatchesReportedBuild && record.Name == key && plain.Description == english, label + " raw key and English");
+                Check(show.Description == english + "\n\n中文说明：\n" + chinese && show.SearchText.Contains(chinese), label + " reviewed description");
+                Check(show.Units == "" && record.Range == "" && record.Values.Count == 0, label + " no invented units, range or enum");
+                Check(show.Options == plain.Options && ParameterDescriptionCatalog.Hash(Bytes(show.Options)) == optionDigests[family],
+                    label + " original bit numbers, labels and order");
+                bool pending;
+                Check(catalog.Chinese(unknown, key, "Description", null, english, out pending, record.Fingerprint) == null && !pending,
+                    label + " unregistered version cannot inherit the note");
+            }
+        }
+
+        var old = store.Bundled(Context("Plane", "4.5.7")).Find(key);
+        var current = store.Bundled(Context("Plane", "4.6.3"));
+        var row = current.Find(key);
+        Check(old.English == row.English && old.Fingerprint != row.Fingerprint, "Plane legacy field and structured bits have distinct fingerprints");
+        bool review;
+        Check(catalog.Chinese(current.Context, key, "Description", null, row.English, out review, old.Fingerprint) == null && review,
+            "identical English cannot authorize the other release's record");
+    }
+
     private static async Task MainAsync(string[] args)
     {
         var bundle = Resource("official"); var catalog = new ParameterDescriptionCatalog(Resource("zh-CN"));
         var bundled = new ParameterDescriptionStore("unused", bundle);
         var releases = XDocument.Parse(Encoding.UTF8.GetString(bundle)).Root.Elements("release").ToArray();
+        if (args.Length == 1 && args[0] == "--vehicle-log-bitmask")
+        {
+            CheckVehicleLogBitmask(releases, bundled, catalog);
+            Console.WriteLine("Vehicle log bitmask: " + assertions + " assertions passed.");
+            return;
+        }
         CheckOsdOverlayOffsets(releases, bundled, catalog);
         if (args.Length == 1 && args[0] == "--osd-overlay-offsets")
         {
@@ -94,13 +151,13 @@ internal static class Program
         }
         var expectedCounts = new Dictionary<string, int>
         {
-            ["Copter-4.5.7"] = 96,
-            ["Copter-4.6.3"] = 98,
-            ["Copter-4.7.1"] = 104,
-            ["Plane-4.5.7"] = 107,
-            ["Plane-4.6.3"] = 109,
-            ["Plane-4.7.1"] = 117,
-            ["Sub-4.7.1"] = 65
+            ["Copter-4.5.7"] = 97,
+            ["Copter-4.6.3"] = 99,
+            ["Copter-4.7.1"] = 105,
+            ["Plane-4.5.7"] = 108,
+            ["Plane-4.6.3"] = 110,
+            ["Plane-4.7.1"] = 118,
+            ["Sub-4.7.1"] = 66
         };
         Check(releases.Length == expectedCounts.Count, "seven pinned release subsets");
         foreach (var release in releases)

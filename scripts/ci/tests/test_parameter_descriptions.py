@@ -21,7 +21,7 @@ LOGGER_BACKEND_HELP_KEYS = {
 DISPLAY_AND_LOG_HELP_KEYS = (
     SIDEBAR_GEOMETRY_KEYS | IMU_DIAGNOSTIC_HELP_KEYS | OSD_MESSAGE_TIME_HELP_KEYS
     | LOG_STORAGE_HELP_KEYS | OSD_FONT_KEYS | ONBOARD_DISPLAY_HELP_KEYS | LOGGER_BACKEND_HELP_KEYS
-    | {'LOG_FILE_BUFSIZE', 'OSD_H_OFFSET', 'OSD_V_OFFSET'}
+    | {'LOG_BITMASK', 'LOG_FILE_BUFSIZE', 'OSD_H_OFFSET', 'OSD_V_OFFSET'}
 )
 catalog_module = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(catalog_module)
@@ -51,8 +51,8 @@ class ParameterCatalogTests(unittest.TestCase):
     def test_scope_counts_and_held_versions(self):
         notes = self.catalog['translations']
         descriptions = {(n['family'], v, n['parameter']) for n in notes if n['field'] == 'Description' for v in n['versions']}
-        self.assertEqual(696, len(descriptions))
-        self.assertEqual(319, len({(f, p) for f, v, p in descriptions}))
+        self.assertEqual(703, len(descriptions))
+        self.assertEqual(322, len({(f, p) for f, v, p in descriptions}))
         self.assertFalse(any(v == '4.7.2' for f, v, p in descriptions))
         excluded_copter = {'RTL_CONE_SLOPE', 'LAND_SPEED', 'LAND_SPD_MS', 'FS_GCS_ENABLE'}
         excluded_plane = {'TECS_CLMB_MAX', 'TECS_SINK_MIN', 'ROLL_LIMIT_DEG'}
@@ -67,7 +67,7 @@ class ParameterCatalogTests(unittest.TestCase):
         for release in self.bundle.findall("release[@family='Copter']"):
             v = release.get('version')
             records = {r.get('name').split(':')[-1]: r for r in release.iter('param')
-                       if r.get('name') not in DISPLAY_AND_LOG_HELP_KEYS}
+                       if r.get('name').rsplit(':', 1)[-1] not in DISPLAY_AND_LOG_HELP_KEYS}
             self.assertEqual(legacy_counts[v] + reviewed_counts[v], len(records))
             readonly = {k: r for k, r in records.items() if r.findtext("field[@name='ReadOnly']") == 'True'}
             self.assertEqual(reviewed_counts[v], len(readonly))
@@ -125,7 +125,7 @@ class ParameterCatalogTests(unittest.TestCase):
         scope = self.bundle.find("release[@family='Sub'][@version='4.7.1']")
         help_keys = DISPLAY_AND_LOG_HELP_KEYS | {'LOG_DISARMED', 'LOG_REPLAY'}
         records = {p.get('name'): p for p in scope.iter('param')
-                   if not p.get('name').startswith('STAT_') and p.get('name') not in help_keys}
+                   if not p.get('name').startswith('STAT_') and p.get('name').rsplit(':', 1)[-1] not in help_keys}
         self.assertEqual(34, len(records))
         self.assertEqual({'GPS1_CAN_NODEID','GPS2_CAN_NODEID'}, {key for key in records if key.startswith('GPS')})
         self.assertTrue({'MIS_TOTAL','VTX_FREQ'} <= records.keys())

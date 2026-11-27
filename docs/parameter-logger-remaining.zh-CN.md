@@ -12,7 +12,7 @@
 | Plane / QuadPlane | [4.7.1](https://autotest.ardupilot.org/Parameters/versioned/Plane/stable-4.7.1/apm.pdef.xml) | 未译 | 已译 | 已译 | 17086 / 17091 / 17099 |
 | Sub | [4.7.1](https://autotest.ardupilot.org/Parameters/versioned/Sub/stable-4.7.1/apm.pdef.xml) | 未译 | 未译 | 未译 | 22994 / 22999 / 23007 |
 
-三个键合计 21 条。原有的 12 条加上本批 9 条，现已全部登记中文 `Description`。七份 PDEF 均未为这三个键标记 `ReadOnly` 或结构化默认值。按 `LOG_` 前缀计算，每版还包括机型组的 `LOG_BITMASK`，该口径已译 91/98 条，七版的 `LOG_BITMASK` 均待翻译。
+三个键合计 21 条。原有的 12 条加上本批 9 条，现已全部登记中文 `Description`。七份 PDEF 均未为这三个键标记 `ReadOnly` 或结构化默认值。这三个键补齐时，按 `LOG_` 前缀计为 91/98。七版机型组的 `LOG_BITMASK` 随后单独登记，该口径现已达到 98/98。[机型日志位掩码的来源和位号](parameter-vehicle-log-bitmask.zh-CN.md)
 
 PX4 v1.16.0 固定参数参考中，这三个 ArduPilot 原键均为零命中。以上分母仅统计七份 ArduPilot 文件，PX4 各构建的完整参数分母尚未核实。[PX4 v1.16.0 参数参考](https://github.com/PX4/PX4-Autopilot/blob/6ea3539157ca358c70a515878b77077af7d4611d/docs/en/advanced_config/parameter_reference.md)
 
