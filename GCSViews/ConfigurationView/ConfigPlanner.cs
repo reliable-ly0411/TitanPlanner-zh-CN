@@ -419,6 +419,8 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             group.Text = ShortcutHelpText("Keyboard Shortcuts", enhancedChinese, " / ");
             group.Tag = GroupColumnsPanel.FullWidth;
             var table = CreateTableLayout(2);
+            // Let the parent grow to the table's preferred height, not the previous filled height.
+            table.Dock = DockStyle.Top;
             var descriptions = new List<Label>();
             var keysLabels = new List<Label>();
 
@@ -460,21 +462,19 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             }
 
             group.Controls.Add(table);
-            if (enhancedChinese)
+            // All languages must measure long descriptions within the visible settings width.
+            Action constrainDescriptions = () =>
             {
-                Action constrainDescriptions = () =>
-                {
-                    if (group.ClientSize.Width <= 0)
-                        return;
-                    int keysWidth = keysLabels.Count == 0 ? 0 : keysLabels.Max(label => label.PreferredWidth + label.Margin.Horizontal);
-                    int width = Math.Max(1, group.ClientSize.Width - group.Padding.Horizontal - table.Margin.Horizontal - keysWidth - 6);
-                    foreach (var description in descriptions)
-                        if (description.MaximumSize.Width != width)
-                            description.MaximumSize = new Size(width, 0);
-                };
-                group.SizeChanged += (sender, args) => constrainDescriptions();
-                constrainDescriptions();
-            }
+                if (group.ClientSize.Width <= 0)
+                    return;
+                int keysWidth = keysLabels.Count == 0 ? 0 : keysLabels.Max(label => label.PreferredWidth + label.Margin.Horizontal);
+                int width = Math.Max(1, group.ClientSize.Width - group.Padding.Horizontal - table.Margin.Horizontal - keysWidth - 6);
+                foreach (var description in descriptions)
+                    if (description.MaximumSize.Width != width)
+                        description.MaximumSize = new Size(width, 0);
+            };
+            group.SizeChanged += (sender, args) => constrainDescriptions();
+            constrainDescriptions();
             return group;
         }
 
