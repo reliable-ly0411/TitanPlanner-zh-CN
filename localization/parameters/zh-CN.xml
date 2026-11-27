@@ -1048,4 +1048,8 @@
     <english>Total number of flights</english>
     <chinese>固件记录的累计飞行次数。</chinese>
   </translation>
+  <translation family="Plane" parameter="BARO1_DEVID" field="Description" versions="4.6.3" englishSha256="ac0c83c6f8e60a7308f0583d344d4f1307894f4eb09eeba3dd841d44ff279192" recordSha256="780e5d7ba504c9ffc440d4664348141fcf51c63725b472ed7ead2032e24d52dd">
+    <english>Barometer sensor ID, taking into account its type, bus and instance</english>
+    <chinese>气压计传感器的设备编号，由类型、总线和实例共同确定。</chinese>
+  </translation>
 </parameterTranslations>
