@@ -67,6 +67,10 @@ namespace MissionPlanner.Controls
 
         private void cmb_sensor_SelectedIndexChanged(object sender, EventArgs e)
         {
+            // The analysis requires a loaded log; controls can change before the file is chosen.
+            if (file == null)
+                return;
+
             var field = new string[] {"AccX", "AccY", "AccZ"};
 
             if (cmb_sensor.Text.Contains("GYR"))
