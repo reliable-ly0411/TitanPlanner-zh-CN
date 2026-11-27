@@ -64,3 +64,9 @@ Windows offscreen GDI rendering using the same exact packaged commit `7dab547c` 
 ## #38 PX4 Hold and #39 optical flow selection
 
 Actual isolated Windows WinForms 120-DPI control crops with synthetic inputs, no hardware or transmitted command. #38 exact `2b8f5cc3` shows the same raw Loiter name for helicopter, fixed wing and generic fallback; the Chinese context differs. #39 exact `2f6cec47` shows the verified ID 158 label in Copter and Plane and raw-English fallback in the ArduSub test case; raw option ID and name unchanged. These figures are source-level, not a complete application or general firmware-coverage claim.
+
+## Actual portable-app test in the Acer Windows VM
+
+Original application-window captures, source package `706cd0c` (portable 1.3.83), captured in the interactive Windows console on 2026-11-27. The actual application window API reported 96 DPI, screen crops from the real 1280×768 session exclude the taskbar and desktop. Red ellipses indicate observations; file paths and coordinate fields are masked. No map imagery was fetched and no physical device was attached.
+
+First-run map notice and the untouched test profile show the default map and Simplified Chinese 2. The cold Settings entry capture at 10.5 s shows the earlier package unresponsive; the window had recovered by the next observed frame at 62.1 s, not a measured total. #188 is a genuine lifecycle test: initial checked, clicked off, ordinary window close with no separate save, then still off in a different process. The photo set deliberately excludes a scroll diagnostic whose picture did not agree with the control bounds; #26 remains open.
