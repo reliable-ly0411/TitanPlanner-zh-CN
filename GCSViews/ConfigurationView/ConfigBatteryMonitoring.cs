@@ -2,6 +2,7 @@
 using MissionPlanner.Utilities;
 using System;
 using System.ComponentModel;
+using System.Globalization;
 using System.Windows.Forms;
 
 namespace MissionPlanner.GCSViews.ConfigurationView
@@ -357,12 +358,30 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             txt_current.Text = MainV2.comPort.MAV.cs.current.ToString();
         }
 
+        private static bool TryGetBatteryHardwareSelection(object item, int index, out int selection)
+        {
+            selection = -1;
+            if (index < 0 || index > 10 || !(item is string caption))
+                return false;
+
+            // Legacy presets are numbered 0–10 in the Designer; their labels may use a localized colon.
+            int separator = caption.IndexOfAny(new[] { ':', '：' });
+            if (separator <= 0 || string.IsNullOrWhiteSpace(caption.Substring(separator + 1)) ||
+                !string.Equals(caption.Substring(0, separator), index.ToString(CultureInfo.InvariantCulture),
+                    StringComparison.Ordinal))
+                return false;
+
+            selection = index;
+            return true;
+        }
+
         private void CMB_apmversion_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (startup)
                 return;
 
-            var selection = int.Parse(CMB_HWVersion.Text.Substring(0, 2).Replace(":", ""));
+            if (!TryGetBatteryHardwareSelection(CMB_HWVersion.SelectedItem, CMB_HWVersion.SelectedIndex, out var selection))
+                return;
 
             try
             {
