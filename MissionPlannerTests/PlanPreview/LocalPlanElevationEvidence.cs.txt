@@ -1,0 +1,69 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Plan29PreviewProbe
+{
+    public enum PlanElevationDatum { Unverified, SceneCompatibleAmsl }
+    public enum PlanElevationSource { Unverified, VerifiedPlanHome, VerifiedOfflineTerrain }
+
+    // Immutable record from a separately verified elevation provider; not a function that reads device/cache.
+    public sealed class PlanElevationReceipt
+    {
+        public PlanElevationReceipt(PlanElevationSource source, PlanElevationDatum datum, string sourceIdentity,
+            double lat, double lng, double metresAmsl)
+        {
+            Source = source; Datum = datum; SourceIdentity = sourceIdentity; Latitude = lat; Longitude = lng;
+            MetresAmsl = metresAmsl;
+        }
+        public PlanElevationSource Source { get; }
+        public PlanElevationDatum Datum { get; }
+        public string SourceIdentity { get; }
+        public double Latitude { get; }
+        public double Longitude { get; }
+        public double MetresAmsl { get; }
+
+        internal bool Matches(PlanElevationSource source, double lat, double lng) =>
+            Source == source && Datum == PlanElevationDatum.SceneCompatibleAmsl &&
+            !string.IsNullOrWhiteSpace(SourceIdentity) &&
+            ReadOnlyPlanReader.IsFinite(MetresAmsl) && Latitude == lat && Longitude == lng;
+    }
+
+    public sealed class LocalPlanElevationEvidence
+    {
+        private readonly ReadOnlyPlanSnapshot source;
+        private readonly PlanElevationReceipt home;
+        private readonly Dictionary<int, PlanElevationReceipt[]> terrain;
+
+        public LocalPlanElevationEvidence(ReadOnlyPlanSnapshot source, PlanElevationReceipt home,
+            IEnumerable<KeyValuePair<int, PlanElevationReceipt>> terrain)
+        {
+            this.source = source ?? throw new ArgumentNullException(nameof(source));
+            this.home = home;
+            this.terrain = (terrain ?? Enumerable.Empty<KeyValuePair<int, PlanElevationReceipt>>())
+                .GroupBy(pair => pair.Key).ToDictionary(group => group.Key, group => group.Select(pair => pair.Value).ToArray());
+        }
+
+        internal bool TryHome(ReadOnlyPlanSnapshot active, out double metres)
+        {
+            metres = 0;
+            if (!ReferenceEquals(source, active) || home == null ||
+                !home.Matches(PlanElevationSource.VerifiedPlanHome, active.Home.Latitude, active.Home.Longitude) ||
+                home.MetresAmsl != active.Home.AltitudeMetres)
+                return false;
+            metres = home.MetresAmsl;
+            return true;
+        }
+
+        internal bool TryTerrain(ReadOnlyPlanSnapshot active, PlanRow row, out double metres)
+        {
+            metres = 0;
+            if (!ReferenceEquals(source, active) || !terrain.TryGetValue(row.Sequence, out var receipts) ||
+                receipts.Length != 1 || receipts[0] == null ||
+                !receipts[0].Matches(PlanElevationSource.VerifiedOfflineTerrain, row.Values[4], row.Values[5]))
+                return false;
+            metres = receipts[0].MetresAmsl;
+            return true;
+        }
+    }
+}

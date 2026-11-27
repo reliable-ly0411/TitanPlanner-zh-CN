@@ -5,8 +5,8 @@ using MissionPlanner.Controls.Scene3D;
 
 namespace Plan29PreviewProbe
 {
-    // Offline feasibility: only explicit absolute-AMSL plain geographic waypoints are supported.
-    public enum Local3DResult { Ready, Empty, FrameUnavailable, UnsupportedCommand, UnsupportedDatum, UnresolvedPosition }
+    // Offline feasibility: only plain geographic waypoints with proven elevations are supported.
+    public enum Local3DResult { Ready, Empty, FrameUnavailable, UnsupportedCommand, UnsupportedDatum, MissingElevationEvidence, UnresolvedPosition }
 
     public sealed class Local3DVertex
     {
@@ -37,7 +37,10 @@ namespace Plan29PreviewProbe
         // Accepts a detached local snapshot (post unit normalization), never a device mission or renderer cache.
         // The output is a geometric preview, not a predicted or executable course.
         public static Local3DResult TryBuild(ReadOnlyPlanSnapshot source, WorldFrame frame,
-            out LocalPlan3DProjection projection)
+            out LocalPlan3DProjection projection) => TryBuild(source, frame, null, out projection);
+
+        public static Local3DResult TryBuild(ReadOnlyPlanSnapshot source, WorldFrame frame,
+            LocalPlanElevationEvidence evidence, out LocalPlan3DProjection projection)
         {
             projection = null;
             if (source == null) throw new ArgumentNullException(nameof(source));
@@ -51,13 +54,26 @@ namespace Plan29PreviewProbe
                 // Keep the feasibility subset conservative. Do not draw across any unsupported command.
                 if (row.CommandKey != "WAYPOINT" || row.CommandId != 16)
                     return Local3DResult.UnsupportedCommand;
-                // GLOBAL and historical GLOBAL_INT; planner-captured Lat/Lon are both already degrees.
-                // Relative requires verified same-source Home AMSL; terrain needs an independent valid sampler.
-                if (row.Frame != 0 && row.Frame != 5)
-                    return Local3DResult.UnsupportedDatum;
+                // Lat/Lon are already degrees for every supported normalized PLAN frame.
                 double lat = row.Values[4], lng = row.Values[5], amsl = row.Values[6];
+                double baseline;
+                switch (row.Frame)
+                {
+                    case 0: case 5: break; // explicit AMSL
+                    case 3: case 6:
+                        if (evidence == null || !evidence.TryHome(source, out baseline))
+                            return Local3DResult.MissingElevationEvidence;
+                        amsl += baseline;
+                        break;
+                    case 10: case 11:
+                        if (evidence == null || !evidence.TryTerrain(source, row, out baseline))
+                            return Local3DResult.MissingElevationEvidence;
+                        amsl += baseline;
+                        break;
+                    default: return Local3DResult.UnsupportedDatum;
+                }
                 if (!ReadOnlyPlanReader.IsFinite(lat) || !ReadOnlyPlanReader.IsFinite(lng) ||
-                    !ReadOnlyPlanReader.IsFinite(amsl) || lat < -80 || lat > 84 || Math.Abs(lng) > 180 ||
+                    !ReadOnlyPlanReader.IsFinite(amsl) || Math.Abs(amsl) > float.MaxValue || lat < -80 || lat > 84 || Math.Abs(lng) > 180 ||
                     (lat == 0 && lng == 0) || UtmProjection.ZoneFor(lat, lng) != frame.Zone)
                     return Local3DResult.UnresolvedPosition;
                 frame.ToLocal(lat, lng, out double east, out double north);

@@ -29,7 +29,8 @@ internal static class LocalPlan3DProjectionProbe
         foreach (byte unsupported in new byte[] { 1, 3, 6, 10, 11, 255 })
             Check("no guessed heights/coordinate interpretation, frame " + unsupported,
                 Build(Snapshot(input.Rows[0], Point(2, unsupported, 10.124, 2.106, 123), input.Rows[2]),
-                    frame, out var blocked) == Local3DResult.UnsupportedDatum && blocked == null);
+                    frame, out var blocked) == (unsupported == 1 || unsupported == 255
+                        ? Local3DResult.UnsupportedDatum : Local3DResult.MissingElevationEvidence) && blocked == null);
         Check("unknown command cannot be silently bridged",
             Build(Snapshot(input.Rows[0], Point(2, 0, 10.124, 2.106, 123, "UNKNOWN"), input.Rows[2]),
                 frame, out var missing) == Local3DResult.UnsupportedCommand && missing == null);

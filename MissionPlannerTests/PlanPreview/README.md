@@ -70,3 +70,17 @@ LocalPlanPreviewSession.cs.txt 及 LocalPlanPreviewSessionProbe.cs.txt 验证独
 
 - **建议：先把 Ctrl+M 明确定义为仅本地 2D，不混设备任务；3D 继续显示它本身的设备来源。** 这会改变旧快捷键间接让 3D 显示本地规划的行为，须先得到产品范围确认；不能称为对旧视觉的完全保持。
 - 如果本地 3D 必须同版交付，可另做明确标注的独立本地 3D 层。此处只证明绝对高度的普通点子集。普通任务的相对 Home 高度应有同一计划、明确的 Home AMSL 数据来源，不能从显示模式猜测或取设备 Home。地形依赖需独立核验同一垂直基准的地形；未知帧、控制点、曲线路径及缺样本需有明确未支持状态。若要求覆盖旧有全部行为，在这些验收完成前保留 Issue，不能以复用旧数据耦合来代替。
+
+## 第五阶段：同一计划的高度凭据与独立 3D 线层
+
+**产品决定：本地 2D 和独立本地 3D 一起接入后才切换 Ctrl+M，不先发布 2D-only。** 上文的备选是历史论证，不代表当前安排；当前结果仍是离线原型。
+
+- 不能从 PLAN 的 Home 输入框、frame 或某个数值反推垂直基准。实际 FlightPlanner 同一输入框可由选择地形点、已保存计划、手工输入、车辆位置/已知 Home 填充；其中现存 PlannedHomeLocation 分支与其他赋值的显示单位处理也不相同。新层不读取活跃飞控 Home、当前位置、设备任务、导航目标或导航状态。
+- 显式 AMSL 帧沿用已归一化值。相对 Home（3/6）要求该冻结计划的只读 Home 凭据，坐标和已归一化高度都相同；地形帧（10/11）要求同一冻结计划、同一行且坐标精确匹配的单份线下地形凭据。各凭据有可核验的来源标识、已确认与地图场景兼容的 AMSL 基准和有限高程；不能用文档或 UI 标记代替数据出处。没有凭据、重复/不匹配/未知基准，整层不画；只接受经确认的 0，而不是把无数据默认为海平面。原有 SRTM TryGetLoadedAltitude 可能排队读取数据，本身没有这套局部计划/数据版本凭据，不可直接充当验证提供者。
+- LocalPlan3DLineAdapter 走完全独立的 VertexList，交给项目原有 LineRenderer 画紫色虚线和只读点标记。该层不进入设备 MissionOverlay、WPs、导航目标、动作和选择列表。呈现要求显示自身来源说明，帧 rebase、快照身份不匹配或上下文变化时不再绘制。没有定位依据时不串接其他点，不把几何显示当作航迹预测或安全验证。
+
+### 验证及仍欠缺
+
+LocalPlanElevationProbe.cs.txt 的入口单独编译，附 ReadOnlyPlanSnapshot.cs.txt、LocalPlan3DProjection.cs.txt、LocalPlanElevationEvidence.cs.txt、LocalPlan3DLineAdapter.cs.txt，去掉 .txt 后与项目真源 WorldFrame.cs、UtmProjection.cs、GLResources.cs、GLProgram.cs、Renderers.cs、Shaders.cs 编译。沿用上一节依赖，另加同包的 OpenTK.dll 和 OpenTK.GLControl.dll。夹具显式禁止真实地形/影像调用。默认只跑 18 项凭据/批次检查；隔离软件 GL 会话加 --gl-smoke，多跑两项实际像素读回。Acer 使用 Xvfb 软件 Mesa llvmpipe，验证同一帧中本地紫色及独立模拟设备黄色都可见，清除本地后黄色像素保持、紫色消失。17 项上一阶段投影回归也单独运行。
+
+下一步仍须在真实 PLAN 的输入/读取入口记录可验证的 Home 来源及单位，确定离线地形版本与垂直基准，再审实际 Map3D 更新/销毁生命周期以及 2D+3D 接线是否只有一条本地数据流。必须跑真实离线入口，覆盖高程缺失的醒目提示、单点/复杂指令限制，确认不会向设备路线、缓存、动作和 3D 指示器传入本地值。此阶段凭据仅是合成验证，结构化记录本身不是外部数据真实性证明；未更新生产快捷键或发布。
