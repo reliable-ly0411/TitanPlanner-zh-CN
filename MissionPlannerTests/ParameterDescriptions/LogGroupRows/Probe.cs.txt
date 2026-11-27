@@ -1,0 +1,225 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Drawing;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Xml.Linq;
+using MissionPlanner.Utilities;
+
+namespace MissionPlanner.GCSViews.ConfigurationView
+{
+    public partial class ConfigRawParams
+    {
+        private const string Product = "d82da902b031b05e3f241449b15fa5373eed92f9";
+        private sealed class Sample
+        {
+            internal string Firmware, Report, Digest, Key, English, Chinese, Units, Options, Fingerprint, Keyword;
+            internal int Value;
+            internal Version Version;
+        }
+
+        private static readonly Sample Copter = new Sample
+        {
+            Firmware = "ArduCopter2", Report = "ArduCopter V4.6.3 (92b0cd78)", Version = new Version(4, 6, 3, 255),
+            Digest = "e6375727b7a05a0c820b7b5c3e28c755d52c1e6da6b4506682d1dd3b19552190",
+            Key = "LOG_FILE_BUFSIZE", Value = 16, Units = "kB", Options = "4 200", Keyword = "写入块设备",
+            Fingerprint = "572221df9e127cd721859a66b3bdb294fa366a0165bac7ce3b403d11a457e856",
+            English = "The File and Block backends use a buffer to store data before writing to the block device.  Raising this value may reduce \"gaps\" in your SD card logging but increases memory usage.  This buffer size may be reduced to free up available memory",
+            Chinese = "文件和块存储日志后端在写入块设备前先暂存数据，缓冲区上限以 kB 计。较大的缓冲区可能减少 SD 卡日志中的记录缺口，但会占用更多内存。实际缓冲区可能缩小，以腾出内存。"
+        };
+        private static readonly Sample Sub = new Sample
+        {
+            Firmware = "ArduSub", Report = "ArduSub V4.7.1 (dbe79216)", Version = new Version(4, 7, 1, 255),
+            Digest = "c543ae155e6c48c98ca6f5fc803c7ce9b6161780fc79aa9e35e8c808891bb5ba",
+            Key = "LOG_DISARMED", Value = 3, Units = "", Keyword = "文件系统后端",
+            Options = "0: Disabled\n1: Enabled\n2: Disabled on USB connection\n3: Discard log on reboot if never armed",
+            Fingerprint = "16802fe8a387398fb7730f1c4fb9ce0a1ddd6ab7ef811658b93b95417d86b1b4",
+            English = "If LOG_DISARMED is set to 1 then logging will be enabled at all times including when disarmed. Logging before arming can make for very large logfiles but can help a lot when tracking down startup issues and is necessary if logging of EKF replay data is selected via the LOG_REPLAY parameter. If LOG_DISARMED is set to 2, then logging will be enabled when disarmed, but not if a USB connection is detected. This can be used to prevent unwanted data logs being generated when the vehicle is connected via USB for log downloading or parameter changes. If LOG_DISARMED is set to 3 then logging will happen while disarmed, but if the vehicle never arms then the logs using the filesystem backend will be discarded on the next boot.",
+            Chinese = "控制未解锁时的日志记录。设为 1 时始终记录，包括未解锁阶段。解锁前的记录有助于排查启动问题，但日志文件可能很大。通过 LOG_REPLAY 启用 EKF 重放数据记录时，也需要这段解锁前的日志。设为 2 时也记录未解锁阶段，检测到 USB 连接时除外，以免下载日志或修改参数时生成多余日志。设为 3 时记录未解锁阶段。若本次运行始终未解锁，文件系统后端会在下次启动时丢弃本次日志。"
+        };
+
+        // Only the legacy metadata lookup is replaced. Its caller and grid-update delegates are production code.
+        private static class ParameterMetaDataRepository
+        {
+            internal static ParameterDescriptionSnapshot Fixture;
+            internal static string Firmware, Key;
+            internal static string GetParameterMetaData(string name, string field, string firmware)
+            {
+                if (name != Key || firmware != Firmware || Fixture == null) throw new InvalidDataException("旧元数据样本不匹配");
+                var record = Fixture.Find(name);
+                switch (field)
+                {
+                    case ParameterMetaDataConstants.Description: return record.English;
+                    case ParameterMetaDataConstants.Range: return record.Range;
+                    case ParameterMetaDataConstants.Units: return record.Units;
+                    case ParameterMetaDataConstants.Values:
+                        return string.Join(",", record.Values.Select(v => v.Code + ": " + v.English));
+                    default: throw new InvalidDataException("未知的旧元数据字段 " + field);
+                }
+            }
+        }
+
+        [STAThread]
+        internal static int Main()
+        {
+            Console.OutputEncoding = new UTF8Encoding(false);
+            CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+            try
+            {
+                foreach (var sample in new[] { Copter, Sub })
+                {
+                    CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo("zh-CN");
+                    using (var form = new Form { Text = "日志参数只读代表行", ClientSize = new Size(820, 260), ShowInTaskbar = false })
+                    using (var view = new ConfigRawParams { Dock = DockStyle.Fill })
+                    {
+                        form.Controls.Add(view);
+                        view.CheckSample(form, sample);
+                    }
+                }
+                Console.WriteLine("PASS 2 rows x 3 languages + 1 unit-fingerprint fallback | product " + Product);
+                return 0;
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine("FAIL " + ex);
+                return 1;
+            }
+        }
+
+        private static void Require(bool ok, string reason)
+        {
+            if (!ok) throw new InvalidDataException(reason);
+        }
+
+        private DescriptionSession Session(ParameterDescriptionSnapshot snapshot)
+        {
+            var vehicle = MainV2.comPort.MAV;
+            return new DescriptionSession
+            {
+                Vehicle = vehicle, Chinese = true, Context = snapshot.Context, Snapshot = snapshot,
+                Identity = vehicle.cs.firmware + "|" + vehicle.VersionString + "|" + vehicle.cs.version + "|" + CultureInfo.CurrentUICulture.Name
+            };
+        }
+
+        private void CheckSample(Form form, Sample s)
+        {
+            var vehicle = MainV2.comPort.MAV;
+            vehicle.cs.firmware = s.Firmware;
+            vehicle.VersionString = s.Report;
+            vehicle.cs.version = s.Version;
+            var context = ParameterDescriptionContext.TryCreate(s.Firmware, s.Report, s.Version);
+            var known = DescriptionStore.Value.Bundled(context);
+            Require(known != null && known.MatchesReportedBuild && known.SourceSha256 == s.Digest, s.Key + " 固定固件来源");
+            var record = known.Find(s.Key);
+            Require(record != null && record.English == s.English && record.Fingerprint == s.Fingerprint, s.Key + " 原始字段指纹");
+
+            Params.Dock = DockStyle.Fill;
+            Params.ReadOnly = true;
+            Params.AllowUserToAddRows = false;
+            Command.HeaderText = "Key"; Value.HeaderText = "Value"; Units.HeaderText = "Units";
+            Options.HeaderText = "Options"; Desc.HeaderText = "Description";
+            Params.Columns.AddRange(Command, Value, Units, Options, Desc);
+            Controls.Add(Params);
+            InitializeParameterDescriptions();
+            var row = Params.Rows[Params.Rows.Add()];
+            row.Cells[Command.Index].Value = s.Key;
+            row.Cells[Value.Index].Value = s.Value;
+            form.Show();
+            Require(Params.IsHandleCreated && Params.Rows.Count == 1, s.Key + " WinForms 句柄和行数");
+            _descriptionSession = Session(known);
+            ParameterMetaDataRepository.Fixture = known;
+            ParameterMetaDataRepository.Firmware = s.Firmware;
+            ParameterMetaDataRepository.Key = s.Key;
+            var search = new Regex(Regex.Escape(s.Keyword));
+            string bilingual = s.English + "\n\n中文说明：\n" + s.Chinese;
+            ReadGrid(row, s, bilingual, s.Units, true, "zh-CN");
+            Require(MatchesParameterDescription(s.Key, search) && row.Cells[Command.Index].ToolTipText.Contains(s.Digest),
+                    s.Key + " 已审中文检索与来源提示");
+
+            foreach (var language in new[] { "zh-Hans", "en-US" })
+            {
+                CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo(language);
+                // Under both legacy languages this production entry only clears the enhanced session, without fetching.
+                PrepareParameterDescriptions();
+                Require(_descriptionSession == null && !UseEnhancedParameterDescriptions, language + " 增强会话");
+                ReadGrid(row, s, s.English, s.Units, false, language);
+                Require(!MatchesParameterDescription(s.Key, search) && !row.Cells[Command.Index].ToolTipText.Contains(s.Keyword),
+                        s.Key + " 旧语言残留增强中文");
+            }
+
+            if (s == Copter)
+            {
+                CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo("zh-CN");
+                CheckWrongUnit(row, known, s, search);
+            }
+        }
+
+        private void ReadGrid(DataGridViewRow row, Sample s, string expected, string units, bool enhanced, string label)
+        {
+            ResetParameterDescriptionRows();
+            Require(startup && row.Cells[Desc.Index].Value == null && row.Cells[Command.Index].ToolTipText == "", label + " 未清空旧行");
+            var rows = new List<KeyValuePair<DataGridViewRow, string>> { new KeyValuePair<DataGridViewRow, string>(row, s.Key) };
+            var uiCulture = CultureInfo.CurrentUICulture;
+            var session = _descriptionSession;
+            Require(UseEnhancedParameterDescriptions == enhanced, label + " 语言分支");
+            var worker = Task.Run(() =>
+            {
+                CultureInfo.CurrentUICulture = uiCulture;
+                if (enhanced) LoadEnhancedMetadataAndUpdateCells(rows, s.Firmware, session);
+                else LoadMetadataAndUpdateCells(rows, s.Firmware);
+            });
+            var wait = Stopwatch.StartNew();
+            while (!worker.IsCompleted || row.Cells[Desc.Index].Value == null)
+            {
+                Application.DoEvents();
+                if (worker.IsFaulted) worker.GetAwaiter().GetResult();
+                if (wait.Elapsed.TotalSeconds > 10) throw new TimeoutException(label + " " + s.Key + " 行回填超时");
+                Thread.Sleep(1);
+            }
+            worker.GetAwaiter().GetResult();
+            string key = Convert.ToString(row.Cells[Command.Index].FormattedValue);
+            string value = Convert.ToString(row.Cells[Value.Index].FormattedValue);
+            string actualUnits = Convert.ToString(row.Cells[Units.Index].FormattedValue);
+            string options = Convert.ToString(row.Cells[Options.Index].FormattedValue);
+            string desc = Convert.ToString(row.Cells[Desc.Index].FormattedValue);
+            Require(Params.ReadOnly && key == s.Key && Equals(row.Cells[Value.Index].Value, s.Value)
+                && value == s.Value.ToString(CultureInfo.InvariantCulture), label + " 原键和原始整数");
+            Require(actualUnits == units && options == s.Options && desc == expected, label + " " + s.Key + " 格内单位、范围、选项或说明");
+            Console.WriteLine("ROW {0} | {1} | {2} | {3} | {4} | {5}", label, key, value, actualUnits,
+                options.Replace("\n", "\\n"), desc.Replace("\n", "\\n"));
+        }
+
+        private void CheckWrongUnit(DataGridViewRow row, ParameterDescriptionSnapshot known, Sample s, Regex search)
+        {
+            using (var input = new MemoryStream(ReadDescriptionResource("ParameterDescriptions.official.xml")))
+            {
+                var releases = XDocument.Load(input).Root.Elements("release").Where(r => (string)r.Attribute("family") == "Copter");
+                var target = releases.Single(r => (string)r.Attribute("version") == "4.6.3").Element("paramfile");
+                var donor = releases.Single(r => (string)r.Attribute("version") == "4.7.1");
+                target.Descendants("param").Single(p => (string)p.Attribute("name") == s.Key)
+                    .ReplaceWith(new XElement(donor.Descendants("param").Single(p => (string)p.Attribute("name") == s.Key)));
+                var changed = ParameterDescriptionSnapshot.Parse(Encoding.UTF8.GetBytes(target.ToString()), known.Context);
+                var record = changed.Find(s.Key);
+                Require(changed.MatchesReportedBuild && record.English == s.English
+                    && record.Fingerprint == "74ba32412e8eb981db82fbb43f8c79c97026b425311df7c1c2d16e49db56cb28", "不同单位的官方记录");
+                _descriptionSession = Session(changed);
+                ReadGrid(row, s, s.English + "\n\n[中文说明待复核：英文或关联字段已变化]", "KiB", true, "zh-CN/wrong-unit");
+                Require(!MatchesParameterDescription(s.Key, search) && !row.Cells[Command.Index].ToolTipText.Contains(s.Chinese),
+                        "旧指纹仍命中已审译文");
+            }
+        }
+    }
+
+    // The production legacy loader logs exceptions; surface them explicitly in this test host.
+    internal static class ProbeLoggerExtensions
+    {
+        internal static void Error(this Logger logger, Exception ex) { throw new InvalidOperationException("读取参数说明失败", ex); }
+    }
+}

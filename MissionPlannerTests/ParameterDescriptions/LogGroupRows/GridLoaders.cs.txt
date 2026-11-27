@@ -1,0 +1,154 @@
+// Exact method bodies from ConfigRawParams.cs at d82da902. See README.zh-CN.md.
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Windows.Forms;
+using MissionPlanner.Utilities;
+
+namespace MissionPlanner.GCSViews.ConfigurationView
+{
+    public partial class ConfigRawParams
+    {
+        private const int maximumSingleLineTooltipLength = 50;
+
+        private static string AddNewLinesForTooltip(string text)
+        {
+            if (text.Length < maximumSingleLineTooltipLength)
+                return text;
+            var lineLength = (int)Math.Sqrt(text.Length) * 2;
+            var sb = new StringBuilder();
+            var currentLinePosition = 0;
+            for (var textIndex = 0; textIndex < text.Length; textIndex++)
+            {
+                // If we have reached the target line length and the next
+                // character is whitespace then begin a new line.
+                if (currentLinePosition >= lineLength &&
+                    char.IsWhiteSpace(text[textIndex]))
+                {
+                    sb.Append(Environment.NewLine);
+                    currentLinePosition = 0;
+                }
+                // If we have just started a new line, skip all the whitespace.
+                if (currentLinePosition == 0)
+                    while (textIndex < text.Length && char.IsWhiteSpace(text[textIndex]))
+                        textIndex++;
+                // Append the next character.
+                if (textIndex < text.Length) sb.Append(text[textIndex]);
+                currentLinePosition++;
+            }
+            return sb.ToString();
+        }
+
+        private void LoadMetadataAndUpdateCells(
+            List<KeyValuePair<DataGridViewRow, string>> rowsToLoad, string firmware)
+        {
+            // Build the cell-update closures off the UI thread, then apply in one batch.
+            var updates = new List<Action>(rowsToLoad.Count);
+            foreach (var kvp in rowsToLoad)
+            {
+                var row = kvp.Key;
+                var name = kvp.Value;
+                try
+                {
+                    var desc = ParameterMetaDataRepository.GetParameterMetaData(name,
+                        ParameterMetaDataConstants.Description, firmware);
+                    if (string.IsNullOrEmpty(desc)) continue;
+                    var range = ParameterMetaDataRepository.GetParameterMetaData(name,
+                        ParameterMetaDataConstants.Range, firmware);
+                    var options = ParameterMetaDataRepository.GetParameterMetaData(name,
+                        ParameterMetaDataConstants.Values, firmware);
+                    var units = ParameterMetaDataRepository.GetParameterMetaData(name,
+                        ParameterMetaDataConstants.Units, firmware);
+
+                    var capturedRow = row;
+                    var capturedDesc = desc;
+                    var capturedRange = range;
+                    var capturedOptions = options;
+                    var capturedUnits = units;
+                    updates.Add(() =>
+                    {
+                        try
+                        {
+                            if (capturedRow.Index < 0) return;
+                            var tip = AddNewLinesForTooltip(capturedDesc);
+                            capturedRow.Cells[Command.Index].ToolTipText = tip;
+                            capturedRow.Cells[Value.Index].ToolTipText = tip;
+                            capturedRow.Cells[Units.Index].Value = capturedUnits;
+                            capturedRow.Cells[Options.Index].Value =
+                                (capturedRange + "\n" + capturedOptions.Replace(",", "\n")).Trim();
+                            if (capturedOptions.Length > 0)
+                                capturedRow.Cells[Options.Index].ToolTipText = capturedOptions.Replace(',', '\n');
+                            capturedRow.Cells[Desc.Index].Value = capturedDesc;
+                            capturedRow.Cells[Desc.Index].ToolTipText = tip;
+                        }
+                        catch { }
+                    });
+                }
+                catch (Exception ex)
+                {
+                    log.Error(ex);
+                }
+            }
+
+            if (updates.Count == 0) return;
+
+            try
+            {
+                if (Params.IsHandleCreated && !Params.IsDisposed)
+                {
+                    Params.BeginInvoke((Action)(() =>
+                    {
+                        if (UseEnhancedParameterDescriptions) return;
+                        foreach (var u in updates) u();
+                    }));
+                }
+            }
+            catch { }
+        }
+
+        private void LoadEnhancedMetadataAndUpdateCells(
+            List<KeyValuePair<DataGridViewRow, string>> rowsToLoad, string firmware, DescriptionSession session)
+        {
+            // Build the cell-update closures off the UI thread, then apply in one batch.
+            var updates = new List<Action>(rowsToLoad.Count);
+            foreach (var kvp in rowsToLoad)
+            {
+                var row = kvp.Key;
+                var name = kvp.Value;
+                try
+                {
+                    var text = ReadParameterDescription(name, firmware, session);
+                    var capturedRow = row;
+                    updates.Add(() =>
+                    {
+                        if (!IsCurrentDescriptionSession(session)
+                            || capturedRow.DataGridView != Params || capturedRow.Cells[Command.Index].Value?.ToString() != name) return;
+                        ApplyParameterDescriptionToRow(capturedRow, text);
+                    });
+                }
+                catch (Exception ex)
+                {
+                    log.Error(ex);
+                }
+            }
+
+            if (updates.Count == 0) return;
+
+            try
+            {
+                if (Params.IsHandleCreated && !Params.IsDisposed)
+                {
+                    Params.BeginInvoke((Action)(() =>
+                    {
+                        if (IsDisposed || Params.IsDisposed || !IsCurrentDescriptionSession(session)) return;
+                        foreach (var u in updates) u();
+#if !LIB
+                        Params.AutoResizeRows(DataGridViewAutoSizeRowsMode.DisplayedCellsExceptHeaders);
+#endif
+                    }));
+                }
+            }
+            catch { }
+        }
+    }
+}
