@@ -535,6 +535,31 @@ namespace MissionPlannerTests.Controls
         }
 
         [TestMethod]
+        public void QuickViewQnhDescribesTheEstimateWithoutChangingItsKeyOrInferringUnits()
+        {
+            const string key = "QNH";
+            const string chinese = "估算海平面气压";
+            var property = typeof(CurrentState).GetProperty(key);
+            Assert.AreEqual(typeof(float), property.PropertyType);
+            Assert.IsFalse(property.CanWrite);
+
+            var previous = CultureInfo.CurrentUICulture;
+            try
+            {
+                foreach (var culture in new[] { "zh-CN", "zh-Hans", "en-US" })
+                {
+                    CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo(culture);
+                    var label = TelemetryFieldPresentation.FieldLabel(key);
+                    Assert.AreEqual(culture == "zh-CN" ? key + " (" + chinese + ")" : key, label);
+                    Assert.IsTrue(TelemetryFieldPresentation.Matches(key, label));
+                    Assert.AreEqual(culture == "zh-CN", TelemetryFieldPresentation.Matches(chinese, label));
+                    Assert.AreEqual("QNH_future", TelemetryFieldPresentation.FieldLabel("QNH_future"));
+                }
+            }
+            finally { CultureInfo.CurrentUICulture = previous; }
+        }
+
+        [TestMethod]
         public void LabelsRetainKeysAndBilingualSearch()
         {
             var label = TelemetryFieldPresentation.Combine("airspeed", "空速");

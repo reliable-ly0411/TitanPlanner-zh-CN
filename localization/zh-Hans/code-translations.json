@@ -2355,5 +2355,6 @@
   "Target altitude hundreds component (fractional)": "目标高度百位分量（含小数）",
   "Reported autopilot processing load (%)": "飞控上报的处理负载（%）",
   "Geomagnetic K-index": "地磁活动 K 指数",
+  "Estimated sea-level pressure": "估算海平面气压",
   "Estimated IMU time to wall clock ratio": "IMU 时间相对于实际时间的估算倍率"
 }
