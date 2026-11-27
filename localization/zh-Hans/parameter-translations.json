@@ -5086,6 +5086,206 @@
       "recordSha256": "94a586cb428507b33a2d53fd6f4edb87923e692e08b4f0959181eb9363b844e3",
       "english": "Set this such that the free space is larger than your largest typical flight log",
       "chinese": "预留的可用空间应大于通常最大的单份飞行日志。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD_FONT",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "bf98f24f17d5f0672b7b3d14c7f8e5863fb7ff640748a1f4863a377d94df1706",
+      "recordSha256": "8d56d95ed24e6131609e040657764107ad3f0e9a1629b64b17a903f31f96032c",
+      "english": "This sets which OSD font to use. It is an integer from 0 to the number of fonts available",
+      "chinese": "选择 OSD 使用的字体。字体编号为从 0 开始的整数，可选范围取决于可用字体的数量。官方参数表标注此项需重启。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD1_FONT",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1e3c96aa50ecc569b2dac6738f4331e5a1946ad06db8515669a42838d3d13ff0",
+      "recordSha256": "0feb206104bf2bb9e6d7a8739b9529e328abe348f58790ee05b7782980478efc",
+      "english": "Sets the font index for this screen (MSP DisplayPort only)",
+      "chinese": "设置 OSD 第 1 屏的字体编号，仅适用于 MSP DisplayPort。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD2_FONT",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1e3c96aa50ecc569b2dac6738f4331e5a1946ad06db8515669a42838d3d13ff0",
+      "recordSha256": "8865ccfed9051a53ee78ab6656e521925d0284ffc850897e9328861436076779",
+      "english": "Sets the font index for this screen (MSP DisplayPort only)",
+      "chinese": "设置 OSD 第 2 屏的字体编号，仅适用于 MSP DisplayPort。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD3_FONT",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1e3c96aa50ecc569b2dac6738f4331e5a1946ad06db8515669a42838d3d13ff0",
+      "recordSha256": "b62637aaa847f8a77bef678f3de4004b0cde237b663225a49c092fa1399bd6fb",
+      "english": "Sets the font index for this screen (MSP DisplayPort only)",
+      "chinese": "设置 OSD 第 3 屏的字体编号，仅适用于 MSP DisplayPort。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD4_FONT",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1e3c96aa50ecc569b2dac6738f4331e5a1946ad06db8515669a42838d3d13ff0",
+      "recordSha256": "62d9546df633efbec1eba0abb94e4d622057f509d3984a2582d87aeaa97e1938",
+      "english": "Sets the font index for this screen (MSP DisplayPort only)",
+      "chinese": "设置 OSD 第 4 屏的字体编号，仅适用于 MSP DisplayPort。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD_FONT",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "bf98f24f17d5f0672b7b3d14c7f8e5863fb7ff640748a1f4863a377d94df1706",
+      "recordSha256": "8d56d95ed24e6131609e040657764107ad3f0e9a1629b64b17a903f31f96032c",
+      "english": "This sets which OSD font to use. It is an integer from 0 to the number of fonts available",
+      "chinese": "选择 OSD 使用的字体。字体编号为从 0 开始的整数，可选范围取决于可用字体的数量。官方参数表标注此项需重启。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD1_FONT",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1e3c96aa50ecc569b2dac6738f4331e5a1946ad06db8515669a42838d3d13ff0",
+      "recordSha256": "0feb206104bf2bb9e6d7a8739b9529e328abe348f58790ee05b7782980478efc",
+      "english": "Sets the font index for this screen (MSP DisplayPort only)",
+      "chinese": "设置 OSD 第 1 屏的字体编号，仅适用于 MSP DisplayPort。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD2_FONT",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1e3c96aa50ecc569b2dac6738f4331e5a1946ad06db8515669a42838d3d13ff0",
+      "recordSha256": "8865ccfed9051a53ee78ab6656e521925d0284ffc850897e9328861436076779",
+      "english": "Sets the font index for this screen (MSP DisplayPort only)",
+      "chinese": "设置 OSD 第 2 屏的字体编号，仅适用于 MSP DisplayPort。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD3_FONT",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1e3c96aa50ecc569b2dac6738f4331e5a1946ad06db8515669a42838d3d13ff0",
+      "recordSha256": "b62637aaa847f8a77bef678f3de4004b0cde237b663225a49c092fa1399bd6fb",
+      "english": "Sets the font index for this screen (MSP DisplayPort only)",
+      "chinese": "设置 OSD 第 3 屏的字体编号，仅适用于 MSP DisplayPort。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD4_FONT",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1e3c96aa50ecc569b2dac6738f4331e5a1946ad06db8515669a42838d3d13ff0",
+      "recordSha256": "62d9546df633efbec1eba0abb94e4d622057f509d3984a2582d87aeaa97e1938",
+      "english": "Sets the font index for this screen (MSP DisplayPort only)",
+      "chinese": "设置 OSD 第 4 屏的字体编号，仅适用于 MSP DisplayPort。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD_FONT",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "bf98f24f17d5f0672b7b3d14c7f8e5863fb7ff640748a1f4863a377d94df1706",
+      "recordSha256": "8d56d95ed24e6131609e040657764107ad3f0e9a1629b64b17a903f31f96032c",
+      "english": "This sets which OSD font to use. It is an integer from 0 to the number of fonts available",
+      "chinese": "选择 OSD 使用的字体。字体编号为从 0 开始的整数，可选范围取决于可用字体的数量。官方参数表标注此项需重启。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD1_FONT",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "1e3c96aa50ecc569b2dac6738f4331e5a1946ad06db8515669a42838d3d13ff0",
+      "recordSha256": "0feb206104bf2bb9e6d7a8739b9529e328abe348f58790ee05b7782980478efc",
+      "english": "Sets the font index for this screen (MSP DisplayPort only)",
+      "chinese": "设置 OSD 第 1 屏的字体编号，仅适用于 MSP DisplayPort。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD2_FONT",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "1e3c96aa50ecc569b2dac6738f4331e5a1946ad06db8515669a42838d3d13ff0",
+      "recordSha256": "8865ccfed9051a53ee78ab6656e521925d0284ffc850897e9328861436076779",
+      "english": "Sets the font index for this screen (MSP DisplayPort only)",
+      "chinese": "设置 OSD 第 2 屏的字体编号，仅适用于 MSP DisplayPort。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD3_FONT",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "1e3c96aa50ecc569b2dac6738f4331e5a1946ad06db8515669a42838d3d13ff0",
+      "recordSha256": "b62637aaa847f8a77bef678f3de4004b0cde237b663225a49c092fa1399bd6fb",
+      "english": "Sets the font index for this screen (MSP DisplayPort only)",
+      "chinese": "设置 OSD 第 3 屏的字体编号，仅适用于 MSP DisplayPort。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD4_FONT",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "1e3c96aa50ecc569b2dac6738f4331e5a1946ad06db8515669a42838d3d13ff0",
+      "recordSha256": "62d9546df633efbec1eba0abb94e4d622057f509d3984a2582d87aeaa97e1938",
+      "english": "Sets the font index for this screen (MSP DisplayPort only)",
+      "chinese": "设置 OSD 第 4 屏的字体编号，仅适用于 MSP DisplayPort。"
     }
   ]
 }

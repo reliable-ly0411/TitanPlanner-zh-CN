@@ -40,7 +40,17 @@ internal static class Program
         var bundle = Resource("official"); var catalog = new ParameterDescriptionCatalog(Resource("zh-CN"));
         var bundled = new ParameterDescriptionStore("unused", bundle);
         var releases = XDocument.Parse(Encoding.UTF8.GetString(bundle)).Root.Elements("release").ToArray();
-        Check(releases.Length == 7, "seven pinned release subsets");
+        var expectedCounts = new Dictionary<string, int>
+        {
+            ["Copter-4.5.7"] = 84,
+            ["Copter-4.6.3"] = 86,
+            ["Copter-4.7.1"] = 92,
+            ["Plane-4.5.7"] = 95,
+            ["Plane-4.6.3"] = 97,
+            ["Plane-4.7.1"] = 105,
+            ["Sub-4.7.1"] = 51
+        };
+        Check(releases.Length == expectedCounts.Count, "seven pinned release subsets");
         foreach (var release in releases)
         {
             var family = (string)release.Attribute("family"); var version = (string)release.Attribute("version");
@@ -48,7 +58,7 @@ internal static class Program
             Check(context != null, "stable release identity");
             var snapshot = bundled.Bundled(context);
             Check(snapshot != null && snapshot.Partial && snapshot.MatchesReportedBuild, "offline bundle matches the reported release/build");
-            Check(snapshot.Count == (family == "Sub" ? 46 : family == "Copter" ? (version == "4.7.1" ? 87 : version == "4.5.7" ? 79 : 81) : (version == "4.7.1" ? 100 : version == "4.5.7" ? 90 : 92)), "reviewed exact-version record count");
+            Check(snapshot.Count == expectedCounts[family + "-" + version], "reviewed exact-version record count");
             foreach (var p in release.Descendants("param"))
             {
                 var name = ((string)p.Attribute("name")).Split(':').Last(); var english = (string)p.Attribute("documentation");
@@ -130,6 +140,11 @@ internal static class Program
         Check(bundled.Bundled(Context("Sub", "4.7.2")) == null, "another Sub release cannot inherit the bundled statistics");
         bool subPending;
         var boot = offlineSub.Find("STAT_BOOTCNT");
+        var screenFont = offlineSub.Find("OSD1_FONT");
+        Check(catalog.Present(offlineSub, screenFont.Name, true).SearchText.Contains("字体"), "screen font searchable in Chinese");
+        Check(catalog.Chinese(Context("Sub", "4.7.2"), screenFont.Name, "Description", null,
+            screenFont.English, out subPending, screenFont.Fingerprint) == null && !subPending,
+            "identical screen font text and fields cannot authorize another release");
         Check(catalog.Chinese(Context("Sub", "4.7.2"), boot.Name, "Description", null, boot.English, out subPending, boot.Fingerprint) == null && !subPending,
             "Sub statistics translations require the declared release even when both fingerprints agree");
         var planeStats = bundled.Bundled(Context("Plane", "4.7.1", "dbe792162d06cab66c3475fd5556bf7a120f119e"));
