@@ -224,11 +224,37 @@ internal static class Program
             "identical English cannot authorize the other release's record");
     }
 
+    private static void CheckMspCellVoltage(ParameterDescriptionStore store, ParameterDescriptionCatalog catalog)
+    {
+        var context = Context("Copter", "4.6.3", "92b0cd788ec29406f26c6f9c31d5ceedbd1cc538");
+        var snapshot = store.Bundled(context);
+        Check(snapshot.MatchesReportedBuild, "exact fixed release");
+        var expected = new[] {
+            new { Key = "OSD2_CELLVOLT_EN", Raw = "Displays average cell voltage (MSP OSD only)", Options = "0: Disabled\n1: Enabled", Zh = "显示第 2 屏的平均单体电压" },
+            new { Key = "OSD2_CELLVOLT_X", Raw = "Horizontal position on screen", Options = "0 59", Zh = "水平位置" },
+            new { Key = "OSD2_CELLVOLT_Y", Raw = "Vertical position on screen", Options = "0 21", Zh = "垂直位置" }
+        };
+        foreach (var row in expected)
+        {
+            var result = catalog.Present(snapshot, row.Key, true);
+            Check(result.Description.StartsWith(row.Raw, StringComparison.Ordinal) &&
+                  result.SearchText.Contains(row.Zh) && result.Description.Contains("仅适用于 MSP OSD"),
+                  "expanded description/search: " + row.Key);
+            Check(result.Options == row.Options && result.Units == "", "raw options and units remain: " + row.Key);
+        }
+    }
+
     private static async Task MainAsync(string[] args)
     {
         var bundle = Resource("official"); var catalog = new ParameterDescriptionCatalog(Resource("zh-CN"));
         var bundled = new ParameterDescriptionStore("unused", bundle);
         var releases = XDocument.Parse(Encoding.UTF8.GetString(bundle)).Root.Elements("release").ToArray();
+        if (args.Length == 1 && args[0] == "--osd-msp-cell-voltage")
+        {
+            CheckMspCellVoltage(bundled, catalog);
+            Console.WriteLine("MSP cell voltage: " + assertions + " assertions passed.");
+            return;
+        }
         if (args.Length == 1 && args[0] == "--osd-display-format")
         {
             CheckOsdDisplayFormat(releases, bundled, catalog);
@@ -249,13 +275,13 @@ internal static class Program
         }
         var expectedCounts = new Dictionary<string, int>
         {
-            ["Copter-4.5.7"] = 131,
-            ["Copter-4.6.3"] = 143,
-            ["Copter-4.7.1"] = 149,
-            ["Plane-4.5.7"] = 142,
-            ["Plane-4.6.3"] = 154,
-            ["Plane-4.7.1"] = 162,
-            ["Sub-4.7.1"] = 111
+            ["Copter-4.5.7"] = 155,
+            ["Copter-4.6.3"] = 167,
+            ["Copter-4.7.1"] = 173,
+            ["Plane-4.5.7"] = 166,
+            ["Plane-4.6.3"] = 178,
+            ["Plane-4.7.1"] = 186,
+            ["Sub-4.7.1"] = 135
         };
         Check(releases.Length == expectedCounts.Count, "seven pinned release subsets");
         foreach (var release in releases)
