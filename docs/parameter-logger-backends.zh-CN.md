@@ -28,7 +28,7 @@
 | Sub | [4.7.1](https://autotest.ardupilot.org/Parameters/versioned/Sub/stable-4.7.1/apm.pdef.xml) | 5,369 | 52 | 5,317 | 2/13 | 8/8 |
 | 合计 | 七份固定文件 | 35,317 | 617 | 34,700 | 26/91 | 56/56 |
 
-本批录入 56 条说明后，`LOG` 组已译 82/91 条。还缺各版的 `LOG_FILE_BUFSIZE`，以及 Sub 4.7.1 的 `LOG_DISARMED`、`LOG_REPLAY`，共 9 条。按原键的 `LOG_` 前缀计算，每版还包括机型参数组中的 `LOG_BITMASK`，这样七版共有 98 条，余 16 条。本批的分母限于表中七份 ArduPilot 文件。[固定源码提交、标签和完整 XML 摘要](../localization/parameters/sources.json)
+这八个键在 #294 合入时将 `LOG` 组的覆盖提高到 82/91 条。随后补齐七版的 `LOG_FILE_BUFSIZE` 和 Sub 4.7.1 的 `LOG_DISARMED`、`LOG_REPLAY`，组内达到 91/91 条。按 `LOG_` 前缀计为 91/98，各版机型组的 `LOG_BITMASK` 仍待翻译。分母限于表中七份 ArduPilot 文件。[后三个原键的分版记录](parameter-logger-remaining.zh-CN.md) · [固定源码提交、标签和完整 XML 摘要](../localization/parameters/sources.json)
 
 PX4 v1.16.0 的固定参数参考列有 `SDLOG_MODE` 和 `SDLOG_PROFILE`。逐个检索这八个 ArduPilot 原键，命中 0/8 个。PX4 各构建的完整参数分母尚未核实。[PX4 v1.16.0 参数参考](https://github.com/PX4/PX4-Autopilot/blob/6ea3539157ca358c70a515878b77077af7d4611d/docs/en/advanced_config/parameter_reference.md)
 

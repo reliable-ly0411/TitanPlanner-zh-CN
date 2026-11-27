@@ -21,6 +21,7 @@ LOGGER_BACKEND_HELP_KEYS = {
 DISPLAY_AND_LOG_HELP_KEYS = (
     SIDEBAR_GEOMETRY_KEYS | IMU_DIAGNOSTIC_HELP_KEYS | OSD_MESSAGE_TIME_HELP_KEYS
     | LOG_STORAGE_HELP_KEYS | OSD_FONT_KEYS | ONBOARD_DISPLAY_HELP_KEYS | LOGGER_BACKEND_HELP_KEYS
+    | {'LOG_FILE_BUFSIZE'}
 )
 catalog_module = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(catalog_module)
@@ -50,10 +51,10 @@ class ParameterCatalogTests(unittest.TestCase):
     def test_scope_counts_and_held_versions(self):
         notes = self.catalog['translations']
         descriptions = {(n['family'], v, n['parameter']) for n in notes if n['field'] == 'Description' for v in n['versions']}
-        self.assertEqual(673, len(descriptions))
-        self.assertEqual(308, len({(f, p) for f, v, p in descriptions}))
+        self.assertEqual(682, len(descriptions))
+        self.assertEqual(313, len({(f, p) for f, v, p in descriptions}))
         self.assertFalse(any(v == '4.7.2' for f, v, p in descriptions))
-        excluded_copter = {'RTL_CONE_SLOPE', 'LAND_SPEED', 'LAND_SPD_MS', 'LOG_FILE_BUFSIZE', 'FS_GCS_ENABLE'}
+        excluded_copter = {'RTL_CONE_SLOPE', 'LAND_SPEED', 'LAND_SPD_MS', 'FS_GCS_ENABLE'}
         excluded_plane = {'TECS_CLMB_MAX', 'TECS_SINK_MIN', 'ROLL_LIMIT_DEG'}
         self.assertFalse(any(p in (excluded_copter if f == 'Copter' else excluded_plane) for f, v, p in descriptions))
 
@@ -122,8 +123,9 @@ class ParameterCatalogTests(unittest.TestCase):
 
     def test_sub_narrow_expansion_adds_only_unique_read_only_records(self):
         scope = self.bundle.find("release[@family='Sub'][@version='4.7.1']")
+        help_keys = DISPLAY_AND_LOG_HELP_KEYS | {'LOG_DISARMED', 'LOG_REPLAY'}
         records = {p.get('name'): p for p in scope.iter('param')
-                   if not p.get('name').startswith('STAT_') and p.get('name') not in DISPLAY_AND_LOG_HELP_KEYS}
+                   if not p.get('name').startswith('STAT_') and p.get('name') not in help_keys}
         self.assertEqual(34, len(records))
         self.assertEqual({'GPS1_CAN_NODEID','GPS2_CAN_NODEID'}, {key for key in records if key.startswith('GPS')})
         self.assertTrue({'MIS_TOTAL','VTX_FREQ'} <= records.keys())
@@ -233,6 +235,50 @@ class ParameterCatalogTests(unittest.TestCase):
                     self.assertEqual(('Hz', '0 1000', '0.1'), tuple(
                         rows[key].findtext(f"field[@name='{name}']") for name in ('Units', 'Range', 'Increment')))
                     self.assertIn('沿用' if key == 'LOG_DARM_RATEMAX' else '关闭此项限速', chinese[key])
+
+    def test_file_log_buffer_keeps_versioned_units_and_limits(self):
+        expected = {
+            '4.5.7': (None, None, None, '本版说明列出的上限为 64 千字节'),
+            '4.6.3': ('kB', 'kilobytes', '4 200', '以 kB 计'),
+            '4.7.1': ('KiB', 'kibibytes', '4 200', '以 KiB 计'),
+        }
+        signatures = {}
+        for release in self.bundle:
+            family, version = release.get('family'), release.get('version')
+            with self.subTest(family=family, version=version):
+                row = release.find("paramfile/libraries/parameters[@name='LOG']/param[@name='LOG_FILE_BUFSIZE']")
+                note, = [n for n in self.catalog['translations'] if n['family'] == family
+                         and n['parameter'] == 'LOG_FILE_BUFSIZE' and version in n['versions']]
+                fields = tuple(row.findtext(f"field[@name='{key}']") for key in ('Units', 'UnitText', 'Range'))
+                self.assertEqual(expected[version][:3], fields)
+                self.assertIn(expected[version][3], note['chinese'])
+                if version == '4.5.7':
+                    self.assertIn('PixHawk 至少需要 4 千字节', note['chinese'])
+                self.assertEqual(('Description', row.get('documentation'), catalog_module.record_fingerprint(row)),
+                                 (note['field'], note['english'], note['recordSha256']))
+                signatures[family, version] = note['englishSha256'], note['recordSha256']
+        for family in ('Copter', 'Plane'):
+            older, newer = signatures[family, '4.6.3'], signatures[family, '4.7.1']
+            self.assertEqual(older[0], newer[0])
+            self.assertNotEqual(older[1], newer[1])
+
+    def test_sub_log_descriptions_keep_options_and_replay_conditions(self):
+        group = self.bundle.find("release[@family='Sub'][@version='4.7.1']/paramfile/libraries/parameters[@name='LOG']")
+        basic = [('0', 'Disabled'), ('1', 'Enabled')]
+        expected = {
+            'LOG_DISARMED': (basic + [('2', 'Disabled on USB connection'), ('3', 'Discard log on reboot if never armed')],
+                             ('检测到 USB 连接时除外', '始终未解锁', '文件系统后端', '下次启动')),
+            'LOG_REPLAY': (basic, ('EKF2 和 EKF3', '飞行前数据', 'LOG_DISARMED 必须设为 1 或 2')),
+        }
+        for key, (options, conditions) in expected.items():
+            with self.subTest(key=key):
+                row = group.find(f"param[@name='{key}']")
+                note, = [n for n in self.catalog['translations'] if n['family'] == 'Sub' and n['parameter'] == key]
+                self.assertEqual((['4.7.1'], 'Description', row.get('documentation'), catalog_module.record_fingerprint(row)),
+                                 (note['versions'], note['field'], note['english'], note['recordSha256']))
+                self.assertEqual(options, [(v.get('code'), v.text) for v in row.findall('values/value')])
+                for condition in conditions:
+                    self.assertIn(condition, note['chinese'])
 
     def test_onboard_display_help_preserves_four_choices_and_documented_default(self):
         for release in self.bundle:

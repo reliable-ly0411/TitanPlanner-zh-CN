@@ -42,13 +42,13 @@ internal static class Program
         var releases = XDocument.Parse(Encoding.UTF8.GetString(bundle)).Root.Elements("release").ToArray();
         var expectedCounts = new Dictionary<string, int>
         {
-            ["Copter-4.5.7"] = 93,
-            ["Copter-4.6.3"] = 95,
-            ["Copter-4.7.1"] = 101,
-            ["Plane-4.5.7"] = 104,
-            ["Plane-4.6.3"] = 106,
-            ["Plane-4.7.1"] = 114,
-            ["Sub-4.7.1"] = 60
+            ["Copter-4.5.7"] = 94,
+            ["Copter-4.6.3"] = 96,
+            ["Copter-4.7.1"] = 102,
+            ["Plane-4.5.7"] = 105,
+            ["Plane-4.6.3"] = 107,
+            ["Plane-4.7.1"] = 115,
+            ["Sub-4.7.1"] = 63
         };
         Check(releases.Length == expectedCounts.Count, "seven pinned release subsets");
         foreach (var release in releases)
