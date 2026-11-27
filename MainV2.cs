@@ -4167,6 +4167,13 @@ namespace MissionPlanner
             _usbAutoConnect?.SetEnabled(enabled);
         }
 
+        internal static bool IsFirmwareInstallationPageType(Type pageType)
+        {
+            return pageType == typeof(ConfigFirmwareDisabled) ||
+                   pageType == typeof(ConfigFirmwareManifest) ||
+                   pageType == typeof(ConfigFirmware);
+        }
+
         private bool IsOnInstallFirmwareScreen()
         {
             try
@@ -4177,8 +4184,8 @@ namespace MissionPlanner
                 if (MyView?.current?.Control is GCSViews.InitialSetup initialSetup)
                 {
                     var page = initialSetup.backstageView?.SelectedPage;
-                    if (page != null && page.Text.IndexOf("Install Firmware", StringComparison.OrdinalIgnoreCase) >= 0)
-                        return true;
+                    // PageType is the registration identity; reading Page would instantiate lazy firmware controls.
+                    return IsFirmwareInstallationPageType(page?.PageType);
                 }
             }
             catch (ObjectDisposedException)
