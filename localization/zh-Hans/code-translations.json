@@ -2448,5 +2448,6 @@
   "Estimated IMU time to wall clock ratio": "IMU 时间相对于实际时间的估算倍率",
   "“{0}” has no local file. Choose one; “{1}” remains active.": "“{0}”尚未导入。请选本地文件；实际仍用“{1}”。",
   "Chip full, logging stopped": "日志存储芯片已满，已停止记录日志",
-  "EKF2_MAG_TYPE invalid, resetting to default": "EKF2_MAG_TYPE 无效，正在恢复默认值"
+  "EKF2_MAG_TYPE invalid, resetting to default": "EKF2_MAG_TYPE 无效，正在恢复默认值",
+  "GPS 2: detected u-blox": "检测到 GPS 2：u-blox"
 }

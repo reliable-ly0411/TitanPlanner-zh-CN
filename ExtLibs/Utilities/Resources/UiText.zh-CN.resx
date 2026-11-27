@@ -4471,6 +4471,10 @@ Ctrl+O 从文件加载</value>
     <value>GPI1_1R/COUT 将 GPIO 1.1 设为遥控 (PPM) 输出</value>
     <comment>"GPI1_1R/COUT Sets GPIO 1.1 as R/C(PPM) output"</comment>
   </data>
+  <data name="8264bf809b441943ea748bbb29d126277559b7689826f3734e03e653c38e26f6" xml:space="preserve">
+    <value>检测到 GPS 2：u-blox</value>
+    <comment>"GPS 2: detected u-blox"</comment>
+  </data>
   <data name="4fa0c6beb5bcd1d80d2a4c53432fdc0137f211aa536787d6010788db10dde409" xml:space="preserve">
     <value>GPS 航向 (°)</value>
     <comment>"GPS Heading (°)"</comment>

@@ -25,6 +25,7 @@ namespace MissionPlanner
             internal byte Severity;
         }
         private const string Plane444CrashDumpSaved = "Saved crash_dump.bin";
+        private const string PlaneGps2UbloxDetection = "GPS 2: detected u-blox";
         private const string PlaneLogFull = "Chip full, logging stopped";
         private const string Px4MagTypeInvalid = "EKF2_MAG_TYPE invalid, resetting to default";
         private static readonly UTF8Encoding StrictUtf8 = new UTF8Encoding(false, true);
@@ -103,6 +104,9 @@ namespace MissionPlanner
                     severity == 2 && raw == Px4MagTypeInvalid);
         }
 
+        private static bool IsPlaneGps2Detection(int version, string raw, byte severity) =>
+            version == 1 && severity == 6 && raw == PlaneGps2UbloxDetection;
+
         internal void Mark(List<(DateTime time, string message, byte severity)> list, MAVLink.MAVLinkMessage packet,
             MAVLink.mavlink_statustext_t text, (DateTime time, string message, byte severity) row)
         {
@@ -112,13 +116,14 @@ namespace MissionPlanner
                 (packet.header == 254 && packet.payloadlength != 51))
                 return;
             bool diagnostic = IsPinnedDiagnostic(s, row.message, row.severity);
+            bool gps2Detection = IsPlaneGps2Detection(s.Version, row.message, row.severity);
             // PX4 assigns an ID even to a single, NUL-terminated first chunk.
             if (text.id != 0 && !(diagnostic && s.Version == 6 && packet.header == 253)) return;
             var length = Math.Min(50, packet.payloadlength - 1);
             var start = packet.headerlength + 1;
             var end = Array.IndexOf(packet.buffer, (byte)0, start, length);
             if (end < 0 && !(packet.header == 253 && length < 50)) return;
-            if (diagnostic && end >= 0)
+            if ((diagnostic || gps2Detection) && end >= 0)
             {
                 for (int i = end + 1; i < start + length; i++)
                     if (packet.buffer[i] != 0) return;
@@ -136,7 +141,7 @@ namespace MissionPlanner
                   (s.Version == 1 && row.message == "GPS 1: detected u-blox") ||
                   (s.Version == 7 && row.severity == 5 && row.message == Plane444CrashDumpSaved) ||
                   IsPlaneReleaseBanner(s.Version, row.message, row.severity);
-            if (!known && !diagnostic) return;
+            if (!known && !diagnostic && !gps2Detection) return;
             if (s.Rows.TryGetValue(row.message, out var existing))
             {
                 existing.Time = DateTime.MinValue; // unexpectedly reused token
@@ -181,6 +186,11 @@ namespace MissionPlanner
                     return string.Equals(translated, row.message, StringComparison.Ordinal) ? null : translated;
                 }
                 if (IsPlaneReleaseBanner(s.Version, row.message, row.severity))
+                {
+                    var translated = UiText.Translate(row.message);
+                    return string.Equals(translated, row.message, StringComparison.Ordinal) ? null : translated;
+                }
+                if (IsPlaneGps2Detection(s.Version, row.message, row.severity))
                 {
                     var translated = UiText.Translate(row.message);
                     return string.Equals(translated, row.message, StringComparison.Ordinal) ? null : translated;
