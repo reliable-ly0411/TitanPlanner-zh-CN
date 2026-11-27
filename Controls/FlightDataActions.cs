@@ -213,6 +213,16 @@ namespace MissionPlanner.Controls
 
             if (translation == null)
                 AuxiliaryOptionLabels.TryGetValue((id, raw), out translation);
+
+            // Option 158 uses this exact label only for Copter and Plane in RC_Channel.cpp at 7250f9d4.
+            if (translation == null && id == 158 && raw == "Optflow Calibration" &&
+                (firmware == "ArduCopter2" || firmware == "ArduPlane"))
+            {
+                var caption = UiText.Translate(raw);
+                if (!string.Equals(caption, raw, StringComparison.Ordinal))
+                    translation = caption;
+            }
+
             return translation == null ? raw : raw + " · " + translation;
         }
 

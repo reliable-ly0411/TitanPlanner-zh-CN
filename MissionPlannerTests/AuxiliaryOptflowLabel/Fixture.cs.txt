@@ -1,0 +1,119 @@
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Windows.Forms;
+using System.Xml;
+
+partial class Fixture
+{
+    private const string Raw = "Optflow Calibration";
+    private const int Key = 158;
+    private const string Bilingual = Raw + " · 光流校准";
+    private static int assertions;
+
+    private static void Check(bool condition, string failure)
+    {
+        assertions++;
+        if (!condition) throw new Exception(failure);
+    }
+
+    private static bool Verified(string firmware) => firmware == "ArduCopter2" || firmware == "ArduPlane";
+    private static void CheckCatalog()
+    {
+        foreach (string firmware in new[] { "ArduCopter2", "ArduPlane", "ArduRover", "ArduSub", "PX4",
+            "ArduTracker", "Blimp", "Ateryx", "Plugin", "", null })
+        foreach (bool enhanced in new[] { false, true })
+        {
+            var expected = enhanced && Verified(firmware) ? Bilingual : Raw;
+            Check(FormatAuxiliaryOption(firmware, Key, Raw, enhanced) == expected, "Incorrect exact triple: " + firmware);
+            Check(FormatAuxiliaryOption(firmware, Key - 1, Raw, enhanced) == Raw, "Previous ID should stay raw");
+            Check(FormatAuxiliaryOption(firmware, Key + 1, Raw, enhanced) == Raw, "Next ID should stay raw");
+            const string alias = "Optical Flow Calibration";
+            Check(FormatAuxiliaryOption(firmware, Key, alias, enhanced) == alias, "Unreviewed alias should stay raw");
+            const string caseChanged = "optflow calibration";
+            Check(FormatAuxiliaryOption(firmware, Key, caseChanged, enhanced) == caseChanged, "Unreviewed casing should stay raw");
+            Check(FormatAuxiliaryOption(firmware, Key, null, enhanced) == null, "Null value changed");
+        }
+        Check(FormatAuxiliaryOption("ArduCopter2", 78, "RunCam Control", true) == "RunCam Control · RunCam 控制", "RunCam regressed");
+        Check(FormatAuxiliaryOption("ArduRover", 300, "Scripting1", true) == "Scripting1 · 脚本功能 1", "Scripting regressed");
+        Check(FormatAuxiliaryOption("ArduPlane", 0, "Do Nothing", true) == "Do Nothing · 无操作", "No-op display regressed");
+    }
+
+    private static List<KeyValuePair<int, string>> StoredRows(XmlDocument backup, string firmware)
+    {
+        var value = backup.DocumentElement.SelectSingleNode(firmware + "/RC6_OPTION/Values")?.InnerText ?? "";
+        return value.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+            .Select(pair => pair.Split(':'))
+            .Select(parts => new KeyValuePair<int, string>(int.Parse(parts[0].Trim(), CultureInfo.InvariantCulture),
+                (parts.Length > 1 ? parts[1] : parts[0]).Trim())).ToList();
+    }
+
+    private void CheckDropdown(XmlDocument backup, string culture, int width)
+    {
+        CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo(culture);
+        bool enhanced = culture == "zh-CN";
+        using (var window = new Form { ClientSize = new Size(430, 150) })
+        using (var combo = new ComboBox { Width = width, DropDownWidth = width, DropDownStyle = ComboBoxStyle.DropDownList,
+            DisplayMember = "Value", ValueMember = "Key", Font = new Font(SystemFonts.DefaultFont.FontFamily, 12) })
+        {
+            window.Controls.Add(combo);
+            ConfigureAuxiliaryDisplay(combo);
+            window.Show();
+            foreach (var firmware in new[] { "ArduCopter2", "ArduRover", "ArduPlane", "ArduSub", "ArduTracker", "PX4", "ArduCopter2" })
+            {
+                _auxFunctionsFirmware = firmware;
+                // PX4 takes its own repository, not the AP backup. At this candidate no PX4 RC6_OPTION exists.
+                var rows = firmware == "PX4" ? new List<KeyValuePair<int, string>>() : StoredRows(backup, firmware);
+                combo.DataSource = rows.ToList();
+                Application.DoEvents();
+                Check(combo.DrawMode == (enhanced ? DrawMode.OwnerDrawFixed : DrawMode.Normal), "Language owner draw changed");
+                Check(combo.Items.Cast<KeyValuePair<int, string>>().SequenceEqual(rows), "Rebind changed raw options");
+                var index = rows.FindIndex(pair => pair.Key == Key);
+                var hasBackup = Verified(firmware) || firmware == "ArduSub" || firmware == "ArduTracker";
+                Check((index >= 0) == hasBackup, "Unexpected repository fixture coverage");
+                if (!hasBackup) continue;
+
+                Check(rows[index].Value == Raw, "Actual exact backup spelling changed");
+                combo.SelectedValue = Key;
+                Func<int, string> visible = i => combo.DrawMode == DrawMode.OwnerDrawFixed
+                    ? DisplayAuxiliaryOption(combo, i) : combo.GetItemText(combo.Items[i]);
+                var caption = enhanced && Verified(firmware) ? Bilingual : Raw;
+                Check(visible(index) == caption, "Wrong displayed caption for " + firmware + "/" + culture);
+                combo.Focus();
+                combo.DroppedDown = true;
+                Application.DoEvents();
+                Check(combo.DroppedDown, "Real dropdown did not open");
+                if (enhanced)
+                {
+                    Check(combo.DropDownWidth >= TextRenderer.MeasureText(caption, combo.Font).Width, "Target not accommodated");
+                    Check(combo.DropDownWidth <= Screen.FromControl(combo).WorkingArea.Width, "Dropdown exceeds work area");
+                }
+                combo.DroppedDown = false;
+                Check((int)combo.SelectedValue == Key && combo.Text == Raw, "Selected raw value changed");
+            }
+        }
+    }
+
+    [STAThread] private static int Main(string[] args)
+    {
+        try
+        {
+            CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo("zh-CN");
+            CheckCatalog();
+            CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo("en-US");
+            Check(FormatAuxiliaryOption("ArduPlane", Key, Raw, true) == Raw,
+                "Missing translation keeps one original caption rather than repeating it");
+            var backup = new XmlDocument { XmlResolver = null };
+            backup.Load(args[0]);
+            var fixture = new Fixture();
+            foreach (var culture in new[] { "zh-CN", "zh-Hans", "en-US" })
+            foreach (var width in new[] { 120, 220 }) fixture.CheckDropdown(backup, culture, width);
+            Console.WriteLine("Auxiliary optical-flow caption / dropdown: " + assertions + " assertions passed.");
+            return 0;
+        }
+        catch (Exception error) { Console.Error.WriteLine(error); return 1; }
+    }
+}
