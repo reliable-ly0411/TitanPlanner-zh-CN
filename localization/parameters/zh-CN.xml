@@ -4072,4 +4072,388 @@
     <english>Vertical position on screen</english>
     <chinese>在屏幕上的纵向位置。</chinese>
   </translation>
+  <translation family="Copter" parameter="OSD1_ALTITUDE_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="6ef600ac3846b04c7d140d1d8869fa2b7107d94bc9d92d99ae0a5d921a72de22">
+    <english>Horizontal position on screen</english>
+    <chinese>在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD1_ALTITUDE_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="c427ff9d27953618697d35f8e85863cd14aa6e420d8d6780615558864cc0ac26">
+    <english>Vertical position on screen</english>
+    <chinese>在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD1_DIST_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="4f175083ef3fcdb5482eda766d54be5d42ebc1bd341112d915a5a628bfb416b1">
+    <english>Horizontal position on screen</english>
+    <chinese>在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD1_DIST_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="05d9a566747346401b65fc6d496f17424c390c781a490e8729d9c7aa7546a617">
+    <english>Vertical position on screen</english>
+    <chinese>在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD1_SIDEBARS_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="8fe3184a8e10a700e50a76bd4f037992e24a86dcb85ee38ba4a65e5a413884e4">
+    <english>Horizontal position on screen</english>
+    <chinese>在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD1_SIDEBARS_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="90423334369b02e00fc3c847c6b82015976a972d3a34e9437a89998e8a3a34e2">
+    <english>Vertical position on screen</english>
+    <chinese>在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD1_STATS_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="eb8c15550e2c10f3252784ea3df93115378068a66ba83f4f53a597aa10fca175">
+    <english>Horizontal position on screen</english>
+    <chinese>在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD1_STATS_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="e6690cbe03d3b9523800f484351bd70a942e63696ab68a98d81559fe598f19b3">
+    <english>Vertical position on screen</english>
+    <chinese>在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD2_ALTITUDE_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="d5d169b3b28ee1635bbe239fcadb548eaf79a7e972545f5a528e9648e8a167ba">
+    <english>Horizontal position on screen</english>
+    <chinese>在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD2_ALTITUDE_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="cf2464ea8a4ce7ecceba07ebd962ad10b20928102b4271c1dbea2307cfdeea7d">
+    <english>Vertical position on screen</english>
+    <chinese>在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD2_DIST_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="d1d05cd1b5064793de9fdd190810a5bee7a9f3cbe8595334411d2d2046945aa6">
+    <english>Horizontal position on screen</english>
+    <chinese>在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD2_DIST_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="45ef2ab052fcf4d43ddf7089f0b1e569d7d1f584c1afd9d03eb0e2848d77c242">
+    <english>Vertical position on screen</english>
+    <chinese>在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD2_SIDEBARS_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="8bfc46206ed60b2458b49d3ebed35bd96632042dabe3a5d9028ffd1b1a317737">
+    <english>Horizontal position on screen</english>
+    <chinese>在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD2_SIDEBARS_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="2f53acfc7b4738c7bcf1eaa20e4e541a41fcd81fdcecc8cb24c6e8fd8f1f17ff">
+    <english>Vertical position on screen</english>
+    <chinese>在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD2_STATS_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="1fe338ed7d8703bf5fe12192077d0a2be647f3f5ced4db15587d7201f7a7296d">
+    <english>Horizontal position on screen</english>
+    <chinese>在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD2_STATS_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="671609a7c1b2232a12c2766c0d16abee69c2df6d10374181cd1f04507249154a">
+    <english>Vertical position on screen</english>
+    <chinese>在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD3_ALTITUDE_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="92630828ddb0dadcb428a7ed2861ed72c854342b04c16eb4632398df50f8d4ba">
+    <english>Horizontal position on screen</english>
+    <chinese>在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD3_ALTITUDE_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="84ea97133798446ec505aa838d95dc4c658026c2883c7b11fdc7e1161af3130c">
+    <english>Vertical position on screen</english>
+    <chinese>在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD3_DIST_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="f103f664f0f8fc15590f5704587d70ce80eabc2ef7d8970b991a226444c35180">
+    <english>Horizontal position on screen</english>
+    <chinese>在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD3_DIST_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="918e5d31c56d678655917fec0e199e22f949f2d8efc8931e3494d5a3e012650d">
+    <english>Vertical position on screen</english>
+    <chinese>在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD3_SIDEBARS_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="857c688c14411744d381a7f924c9c74027bdcd0106b1c60e0b8f61aa098c5cd2">
+    <english>Horizontal position on screen</english>
+    <chinese>在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD3_SIDEBARS_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="271e068efbbb5ef9464cbddd03f2dd54374bfb09f473ee4586fee3386234e7ed">
+    <english>Vertical position on screen</english>
+    <chinese>在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD3_STATS_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="dd7b9eeecd62738b96d31aeb53d39261e4b40121222f32494e05ee7916c96d94">
+    <english>Horizontal position on screen</english>
+    <chinese>在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD3_STATS_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="aff1fb1683f2bb29e0ea2bb142083a8b530435575db2a014f9ba3ca5d71c379b">
+    <english>Vertical position on screen</english>
+    <chinese>在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD4_ALTITUDE_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="48e5e2161e73d892a1b4bd123ee010fee8709bde3b190596aeeb6b519cb7c314">
+    <english>Horizontal position on screen</english>
+    <chinese>在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD4_ALTITUDE_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="9f6e80cbc468c7169f6b2e1a4445550f53c67d51351329f01ed304297dc44ce9">
+    <english>Vertical position on screen</english>
+    <chinese>在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD4_DIST_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="554eddf9d5b62646d33735dbb69bb2a9ff15d1a9e7c9d7c7fdb60a0b0c3628fe">
+    <english>Horizontal position on screen</english>
+    <chinese>在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD4_DIST_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="e86c41f3a48ec60d1a06a069ed778234e59c74c397e0a8d9336a799e7671c558">
+    <english>Vertical position on screen</english>
+    <chinese>在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD4_SIDEBARS_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="20c6aa8975c5c835d5aaa52cc407e226a1036cbf1e5faf2627c8c530507f4152">
+    <english>Horizontal position on screen</english>
+    <chinese>在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD4_SIDEBARS_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="7747a1bde7b7c117b57db72418e827cd77173a2fb6e48c5ff761a6d062eeb8b2">
+    <english>Vertical position on screen</english>
+    <chinese>在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD4_STATS_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="771faab3ef0b4cb118d87bd8558d053935f2156ac68ff557313c54aba9f1b8f3">
+    <english>Horizontal position on screen</english>
+    <chinese>在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD4_STATS_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="7487f7f793c93198b2ef6963a0549b465f5c4089148c18df67316dead7d8396d">
+    <english>Vertical position on screen</english>
+    <chinese>在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD1_ALTITUDE_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="6ef600ac3846b04c7d140d1d8869fa2b7107d94bc9d92d99ae0a5d921a72de22">
+    <english>Horizontal position on screen</english>
+    <chinese>在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD1_ALTITUDE_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="c427ff9d27953618697d35f8e85863cd14aa6e420d8d6780615558864cc0ac26">
+    <english>Vertical position on screen</english>
+    <chinese>在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD1_DIST_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="4f175083ef3fcdb5482eda766d54be5d42ebc1bd341112d915a5a628bfb416b1">
+    <english>Horizontal position on screen</english>
+    <chinese>在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD1_DIST_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="05d9a566747346401b65fc6d496f17424c390c781a490e8729d9c7aa7546a617">
+    <english>Vertical position on screen</english>
+    <chinese>在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD1_SIDEBARS_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="8fe3184a8e10a700e50a76bd4f037992e24a86dcb85ee38ba4a65e5a413884e4">
+    <english>Horizontal position on screen</english>
+    <chinese>在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD1_SIDEBARS_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="90423334369b02e00fc3c847c6b82015976a972d3a34e9437a89998e8a3a34e2">
+    <english>Vertical position on screen</english>
+    <chinese>在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD1_STATS_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="eb8c15550e2c10f3252784ea3df93115378068a66ba83f4f53a597aa10fca175">
+    <english>Horizontal position on screen</english>
+    <chinese>在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD1_STATS_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="e6690cbe03d3b9523800f484351bd70a942e63696ab68a98d81559fe598f19b3">
+    <english>Vertical position on screen</english>
+    <chinese>在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD2_ALTITUDE_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="d5d169b3b28ee1635bbe239fcadb548eaf79a7e972545f5a528e9648e8a167ba">
+    <english>Horizontal position on screen</english>
+    <chinese>在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD2_ALTITUDE_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="cf2464ea8a4ce7ecceba07ebd962ad10b20928102b4271c1dbea2307cfdeea7d">
+    <english>Vertical position on screen</english>
+    <chinese>在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD2_DIST_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="d1d05cd1b5064793de9fdd190810a5bee7a9f3cbe8595334411d2d2046945aa6">
+    <english>Horizontal position on screen</english>
+    <chinese>在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD2_DIST_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="45ef2ab052fcf4d43ddf7089f0b1e569d7d1f584c1afd9d03eb0e2848d77c242">
+    <english>Vertical position on screen</english>
+    <chinese>在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD2_SIDEBARS_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="8bfc46206ed60b2458b49d3ebed35bd96632042dabe3a5d9028ffd1b1a317737">
+    <english>Horizontal position on screen</english>
+    <chinese>在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD2_SIDEBARS_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="2f53acfc7b4738c7bcf1eaa20e4e541a41fcd81fdcecc8cb24c6e8fd8f1f17ff">
+    <english>Vertical position on screen</english>
+    <chinese>在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD2_STATS_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="1fe338ed7d8703bf5fe12192077d0a2be647f3f5ced4db15587d7201f7a7296d">
+    <english>Horizontal position on screen</english>
+    <chinese>在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD2_STATS_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="671609a7c1b2232a12c2766c0d16abee69c2df6d10374181cd1f04507249154a">
+    <english>Vertical position on screen</english>
+    <chinese>在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD3_ALTITUDE_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="92630828ddb0dadcb428a7ed2861ed72c854342b04c16eb4632398df50f8d4ba">
+    <english>Horizontal position on screen</english>
+    <chinese>在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD3_ALTITUDE_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="84ea97133798446ec505aa838d95dc4c658026c2883c7b11fdc7e1161af3130c">
+    <english>Vertical position on screen</english>
+    <chinese>在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD3_DIST_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="f103f664f0f8fc15590f5704587d70ce80eabc2ef7d8970b991a226444c35180">
+    <english>Horizontal position on screen</english>
+    <chinese>在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD3_DIST_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="918e5d31c56d678655917fec0e199e22f949f2d8efc8931e3494d5a3e012650d">
+    <english>Vertical position on screen</english>
+    <chinese>在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD3_SIDEBARS_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="857c688c14411744d381a7f924c9c74027bdcd0106b1c60e0b8f61aa098c5cd2">
+    <english>Horizontal position on screen</english>
+    <chinese>在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD3_SIDEBARS_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="271e068efbbb5ef9464cbddd03f2dd54374bfb09f473ee4586fee3386234e7ed">
+    <english>Vertical position on screen</english>
+    <chinese>在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD3_STATS_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="dd7b9eeecd62738b96d31aeb53d39261e4b40121222f32494e05ee7916c96d94">
+    <english>Horizontal position on screen</english>
+    <chinese>在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD3_STATS_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="aff1fb1683f2bb29e0ea2bb142083a8b530435575db2a014f9ba3ca5d71c379b">
+    <english>Vertical position on screen</english>
+    <chinese>在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD4_ALTITUDE_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="48e5e2161e73d892a1b4bd123ee010fee8709bde3b190596aeeb6b519cb7c314">
+    <english>Horizontal position on screen</english>
+    <chinese>在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD4_ALTITUDE_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="9f6e80cbc468c7169f6b2e1a4445550f53c67d51351329f01ed304297dc44ce9">
+    <english>Vertical position on screen</english>
+    <chinese>在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD4_DIST_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="554eddf9d5b62646d33735dbb69bb2a9ff15d1a9e7c9d7c7fdb60a0b0c3628fe">
+    <english>Horizontal position on screen</english>
+    <chinese>在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD4_DIST_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="e86c41f3a48ec60d1a06a069ed778234e59c74c397e0a8d9336a799e7671c558">
+    <english>Vertical position on screen</english>
+    <chinese>在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD4_SIDEBARS_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="20c6aa8975c5c835d5aaa52cc407e226a1036cbf1e5faf2627c8c530507f4152">
+    <english>Horizontal position on screen</english>
+    <chinese>在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD4_SIDEBARS_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="7747a1bde7b7c117b57db72418e827cd77173a2fb6e48c5ff761a6d062eeb8b2">
+    <english>Vertical position on screen</english>
+    <chinese>在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD4_STATS_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="771faab3ef0b4cb118d87bd8558d053935f2156ac68ff557313c54aba9f1b8f3">
+    <english>Horizontal position on screen</english>
+    <chinese>在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD4_STATS_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="7487f7f793c93198b2ef6963a0549b465f5c4089148c18df67316dead7d8396d">
+    <english>Vertical position on screen</english>
+    <chinese>在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD1_ALTITUDE_X" field="Description" versions="4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="6ef600ac3846b04c7d140d1d8869fa2b7107d94bc9d92d99ae0a5d921a72de22">
+    <english>Horizontal position on screen</english>
+    <chinese>在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD1_ALTITUDE_Y" field="Description" versions="4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="c427ff9d27953618697d35f8e85863cd14aa6e420d8d6780615558864cc0ac26">
+    <english>Vertical position on screen</english>
+    <chinese>在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD1_DIST_X" field="Description" versions="4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="4f175083ef3fcdb5482eda766d54be5d42ebc1bd341112d915a5a628bfb416b1">
+    <english>Horizontal position on screen</english>
+    <chinese>在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD1_DIST_Y" field="Description" versions="4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="05d9a566747346401b65fc6d496f17424c390c781a490e8729d9c7aa7546a617">
+    <english>Vertical position on screen</english>
+    <chinese>在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD1_SIDEBARS_X" field="Description" versions="4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="8fe3184a8e10a700e50a76bd4f037992e24a86dcb85ee38ba4a65e5a413884e4">
+    <english>Horizontal position on screen</english>
+    <chinese>在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD1_SIDEBARS_Y" field="Description" versions="4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="90423334369b02e00fc3c847c6b82015976a972d3a34e9437a89998e8a3a34e2">
+    <english>Vertical position on screen</english>
+    <chinese>在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD1_STATS_X" field="Description" versions="4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="eb8c15550e2c10f3252784ea3df93115378068a66ba83f4f53a597aa10fca175">
+    <english>Horizontal position on screen</english>
+    <chinese>在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD1_STATS_Y" field="Description" versions="4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="e6690cbe03d3b9523800f484351bd70a942e63696ab68a98d81559fe598f19b3">
+    <english>Vertical position on screen</english>
+    <chinese>在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD2_ALTITUDE_X" field="Description" versions="4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="d5d169b3b28ee1635bbe239fcadb548eaf79a7e972545f5a528e9648e8a167ba">
+    <english>Horizontal position on screen</english>
+    <chinese>在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD2_ALTITUDE_Y" field="Description" versions="4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="cf2464ea8a4ce7ecceba07ebd962ad10b20928102b4271c1dbea2307cfdeea7d">
+    <english>Vertical position on screen</english>
+    <chinese>在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD2_DIST_X" field="Description" versions="4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="d1d05cd1b5064793de9fdd190810a5bee7a9f3cbe8595334411d2d2046945aa6">
+    <english>Horizontal position on screen</english>
+    <chinese>在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD2_DIST_Y" field="Description" versions="4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="45ef2ab052fcf4d43ddf7089f0b1e569d7d1f584c1afd9d03eb0e2848d77c242">
+    <english>Vertical position on screen</english>
+    <chinese>在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD2_SIDEBARS_X" field="Description" versions="4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="8bfc46206ed60b2458b49d3ebed35bd96632042dabe3a5d9028ffd1b1a317737">
+    <english>Horizontal position on screen</english>
+    <chinese>在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD2_SIDEBARS_Y" field="Description" versions="4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="2f53acfc7b4738c7bcf1eaa20e4e541a41fcd81fdcecc8cb24c6e8fd8f1f17ff">
+    <english>Vertical position on screen</english>
+    <chinese>在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD2_STATS_X" field="Description" versions="4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="1fe338ed7d8703bf5fe12192077d0a2be647f3f5ced4db15587d7201f7a7296d">
+    <english>Horizontal position on screen</english>
+    <chinese>在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD2_STATS_Y" field="Description" versions="4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="671609a7c1b2232a12c2766c0d16abee69c2df6d10374181cd1f04507249154a">
+    <english>Vertical position on screen</english>
+    <chinese>在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD3_ALTITUDE_X" field="Description" versions="4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="92630828ddb0dadcb428a7ed2861ed72c854342b04c16eb4632398df50f8d4ba">
+    <english>Horizontal position on screen</english>
+    <chinese>在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD3_ALTITUDE_Y" field="Description" versions="4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="84ea97133798446ec505aa838d95dc4c658026c2883c7b11fdc7e1161af3130c">
+    <english>Vertical position on screen</english>
+    <chinese>在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD3_DIST_X" field="Description" versions="4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="f103f664f0f8fc15590f5704587d70ce80eabc2ef7d8970b991a226444c35180">
+    <english>Horizontal position on screen</english>
+    <chinese>在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD3_DIST_Y" field="Description" versions="4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="918e5d31c56d678655917fec0e199e22f949f2d8efc8931e3494d5a3e012650d">
+    <english>Vertical position on screen</english>
+    <chinese>在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD3_SIDEBARS_X" field="Description" versions="4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="857c688c14411744d381a7f924c9c74027bdcd0106b1c60e0b8f61aa098c5cd2">
+    <english>Horizontal position on screen</english>
+    <chinese>在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD3_SIDEBARS_Y" field="Description" versions="4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="271e068efbbb5ef9464cbddd03f2dd54374bfb09f473ee4586fee3386234e7ed">
+    <english>Vertical position on screen</english>
+    <chinese>在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD3_STATS_X" field="Description" versions="4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="dd7b9eeecd62738b96d31aeb53d39261e4b40121222f32494e05ee7916c96d94">
+    <english>Horizontal position on screen</english>
+    <chinese>在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD3_STATS_Y" field="Description" versions="4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="aff1fb1683f2bb29e0ea2bb142083a8b530435575db2a014f9ba3ca5d71c379b">
+    <english>Vertical position on screen</english>
+    <chinese>在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD4_ALTITUDE_X" field="Description" versions="4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="48e5e2161e73d892a1b4bd123ee010fee8709bde3b190596aeeb6b519cb7c314">
+    <english>Horizontal position on screen</english>
+    <chinese>在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD4_ALTITUDE_Y" field="Description" versions="4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="9f6e80cbc468c7169f6b2e1a4445550f53c67d51351329f01ed304297dc44ce9">
+    <english>Vertical position on screen</english>
+    <chinese>在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD4_DIST_X" field="Description" versions="4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="554eddf9d5b62646d33735dbb69bb2a9ff15d1a9e7c9d7c7fdb60a0b0c3628fe">
+    <english>Horizontal position on screen</english>
+    <chinese>在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD4_DIST_Y" field="Description" versions="4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="e86c41f3a48ec60d1a06a069ed778234e59c74c397e0a8d9336a799e7671c558">
+    <english>Vertical position on screen</english>
+    <chinese>在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD4_SIDEBARS_X" field="Description" versions="4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="20c6aa8975c5c835d5aaa52cc407e226a1036cbf1e5faf2627c8c530507f4152">
+    <english>Horizontal position on screen</english>
+    <chinese>在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD4_SIDEBARS_Y" field="Description" versions="4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="7747a1bde7b7c117b57db72418e827cd77173a2fb6e48c5ff761a6d062eeb8b2">
+    <english>Vertical position on screen</english>
+    <chinese>在屏幕上的纵向位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD4_STATS_X" field="Description" versions="4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="771faab3ef0b4cb118d87bd8558d053935f2156ac68ff557313c54aba9f1b8f3">
+    <english>Horizontal position on screen</english>
+    <chinese>在屏幕上的横向位置。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD4_STATS_Y" field="Description" versions="4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="7487f7f793c93198b2ef6963a0549b465f5c4089148c18df67316dead7d8396d">
+    <english>Vertical position on screen</english>
+    <chinese>在屏幕上的纵向位置。</chinese>
+  </translation>
 </parameterTranslations>
