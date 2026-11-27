@@ -48,7 +48,7 @@ internal static class Program
             Check(context != null, "stable release identity");
             var snapshot = bundled.Bundled(context);
             Check(snapshot != null && snapshot.Partial && snapshot.MatchesReportedBuild, "offline bundle matches the reported release/build");
-            Check(snapshot.Count == (family == "Copter" ? 37 : version == "4.7.1" ? 53 : 51), "reviewed exact-version record count");
+            Check(snapshot.Count == (family == "Copter" ? 37 : version == "4.7.1" ? 53 : version == "4.6.3" ? 52 : 51), "reviewed exact-version record count");
             foreach (var p in release.Descendants("param"))
             {
                 var name = ((string)p.Attribute("name")).Split(':').Last(); var english = (string)p.Attribute("documentation");
@@ -122,6 +122,13 @@ internal static class Program
         Check(ParameterDescriptionContext.TryCreate("ArduSub", "ArduSub V4.5.1", null).Family == "Sub", "Sub metadata family");
         Check(ParameterDescriptionContext.TryCreate("ArduTracker", "AntennaTracker V4.5.1", null).Family == "Tracker", "Tracker metadata family");
         var copter = Context("Copter", "4.6.3"); var plane = Context("Plane", "4.6.3");
+        const string baroId = "BARO1_DEVID";
+        var baro = catalog.Present(bundled.Bundled(plane), baroId, true);
+        Check(baro.Description.Contains("气压计传感器的设备编号") && baro.Units == "" && baro.Options == "",
+            "verified Plane 4.6.3 barometer ID adds only a description");
+        Check(bundled.Bundled(copter).Find(baroId) == null &&
+              bundled.Bundled(Context("Plane", "4.7.1")).Find(baroId) == null,
+            "same parameter key is not inferred on another family or version");
         Check(bundled.Bundled(copter).Find("RTL_ALT").Range == "30 300000", "4.6 Copter range remains original centimeters");
         Check(bundled.Bundled(Context("Copter", "4.7.1")).Find("RTL_ALT_M").Range == "0.30 3000", "4.7 renamed parameter retains meters");
         Check(bundled.Bundled(Context("Copter", "4.7.1")).Find("RTL_ALT") == null, "no fabricated cross-version alias");

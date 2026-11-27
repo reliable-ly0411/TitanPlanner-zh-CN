@@ -2098,6 +2098,11 @@
             <field name="Increment">0.2</field>
           </param>
         </parameters>
+        <parameters name="BARO">
+          <param humanName="Baro ID" name="BARO1_DEVID" documentation="Barometer sensor ID, taking into account its type, bus and instance" user="Advanced">
+            <field name="ReadOnly">True</field>
+          </param>
+        </parameters>
       </libraries>
     </paramfile>
   </release>

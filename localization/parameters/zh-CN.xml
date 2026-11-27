@@ -1032,4 +1032,8 @@
     <english>Mixing of pitch and throttle correction for height and airspeed errors. Pitch controls altitude and throttle controls airspeed if set to 0. Pitch controls airspeed and throttle controls altitude if set to 2 (good for gliders). Blended if set to 1.</english>
     <chinese>设置俯仰与油门对高度误差和空速误差的分工权重。0：俯仰控制高度、油门控制空速。2：俯仰控制空速、油门控制高度，适合滑翔机。1：两者混合。</chinese>
   </translation>
+  <translation family="Plane" parameter="BARO1_DEVID" field="Description" versions="4.6.3" englishSha256="ac0c83c6f8e60a7308f0583d344d4f1307894f4eb09eeba3dd841d44ff279192" recordSha256="780e5d7ba504c9ffc440d4664348141fcf51c63725b472ed7ead2032e24d52dd">
+    <english>Barometer sensor ID, taking into account its type, bus and instance</english>
+    <chinese>气压计传感器的设备编号，由类型、总线和实例共同确定。</chinese>
+  </translation>
 </parameterTranslations>

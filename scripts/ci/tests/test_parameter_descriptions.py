@@ -19,15 +19,15 @@ class ParameterCatalogTests(unittest.TestCase):
     def test_committed_resource_is_current_and_scoped(self):
         self.assertTrue(catalog_module.generated_matches((ROOT / 'localization/parameters/zh-CN.xml').read_bytes(), catalog_module.resource(self.catalog, self.bundle)))
         for release in self.bundle:
-            expected = 37 if release.get('family') == 'Copter' else 53 if release.get('version') == '4.7.1' else 51
+            expected = 37 if release.get('family') == 'Copter' else {'4.7.1': 53, '4.6.3': 52}.get(release.get('version'), 51)
             self.assertEqual(expected, len(list(release.iter('param'))))
             self.assertEqual(release.get('family') + '-' + release.get('version'), release.find('paramfile/firmware').get('git_tag'))
 
     def test_scope_counts_and_held_versions(self):
         notes = self.catalog['translations']
         descriptions = {(n['family'], v, n['parameter']) for n in notes if n['field'] == 'Description' for v in n['versions']}
-        self.assertEqual(266, len(descriptions))
-        self.assertEqual(119, len({(f, p) for f, v, p in descriptions}))
+        self.assertEqual(267, len(descriptions))
+        self.assertEqual(120, len({(f, p) for f, v, p in descriptions}))
         self.assertFalse(any(v == '4.7.2' for f, v, p in descriptions))
         excluded_copter = {'RTL_CONE_SLOPE', 'LAND_SPEED', 'LAND_SPD_MS', 'LOG_FILE_BUFSIZE', 'FS_GCS_ENABLE'}
         excluded_plane = {'TECS_CLMB_MAX', 'TECS_SINK_MIN', 'ROLL_LIMIT_DEG'}
