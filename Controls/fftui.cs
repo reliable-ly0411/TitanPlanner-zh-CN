@@ -18,6 +18,78 @@ namespace MissionPlanner.Controls
             InitializeComponent();
         }
 
+        private static bool TryGetMonoPcm16Data(Stream stream, out long dataStart, out long dataEnd)
+        {
+            dataStart = dataEnd = 0;
+            long original = stream.Position;
+            try
+            {
+                if (stream.Length - original < 12)
+                    return false;
+
+                using (var reader = new BinaryReader(stream, System.Text.Encoding.ASCII, true))
+                {
+                    const uint Riff = 0x46464952, Wave = 0x45564157, Format = 0x20746D66, Data = 0x61746164;
+                    if (reader.ReadUInt32() != Riff)
+                        return false;
+                    long containerEnd = original + 8L + reader.ReadUInt32();
+                    if (containerEnd < original + 12 || containerEnd > stream.Length || reader.ReadUInt32() != Wave)
+                        return false;
+
+                    bool formatFound = false, dataFound = false;
+                    long first = 0, last = 0;
+                    while (stream.Position < containerEnd)
+                    {
+                        if (containerEnd - stream.Position < 8)
+                            return false;
+                        uint kind = reader.ReadUInt32();
+                        long length = reader.ReadUInt32();
+                        long payload = stream.Position;
+                        long paddedLength = length + (length & 1);
+                        if (paddedLength > containerEnd - payload)
+                            return false;
+
+                        if (kind == Format)
+                        {
+                            if (formatFound || length < 16 || reader.ReadUInt16() != 1 || reader.ReadUInt16() != 1)
+                                return false; // Preserve the historical path for anything other than PCM mono.
+                            uint sampleRate = reader.ReadUInt32(), byteRate = reader.ReadUInt32();
+                            if (sampleRate == 0 || byteRate != 2L * sampleRate ||
+                                reader.ReadUInt16() != 2 || reader.ReadUInt16() != 16)
+                                return false;
+                            if (length != 16 && (length < 18 || reader.ReadUInt16() > length - 18))
+                                return false;
+                            formatFound = true;
+                        }
+                        else if (kind == Data)
+                        {
+                            if (dataFound || (length & 1) != 0)
+                                return false;
+                            first = payload;
+                            last = payload + length;
+                            dataFound = true;
+                        }
+
+                        stream.Position = payload + paddedLength;
+                    }
+
+                    if (!formatFound || !dataFound)
+                        return false;
+                    dataStart = first;
+                    dataEnd = last;
+                    return true;
+                }
+            }
+            catch (EndOfStreamException)
+            {
+                return false;
+            }
+            finally
+            {
+                stream.Position = original;
+            }
+        }
+
         private void BUT_runwav_Click(object sender, EventArgs e)
         {
             using (OpenFileDialog ofd = new OpenFileDialog())
@@ -34,6 +106,12 @@ namespace MissionPlanner.Controls
                 Utilities.FFT2 fft = new FFT2();
                 using (var st = File.OpenRead(ofd.FileName))
                 {
+                    bool monoPcm = TryGetMonoPcm16Data(st, out long dataStart, out long dataEnd);
+                    if (monoPcm)
+                        st.Position = dataStart;
+                    else
+                        dataEnd = st.Length; // Keep the existing raw path for unrecognized input.
+
                     int bins = (int)NUM_bins.Value;
 
                     List<double[]> avg = new List<double[]>
@@ -48,10 +126,12 @@ namespace MissionPlanner.Controls
                     int a = 0;
                     int samples = 0;
 
-                    while (st.Position < st.Length)
+                    while (st.Position < dataEnd)
                     {
                         byte[] temp = new byte[2];
                         var read = st.Read(temp, 0, temp.Length);
+                        if (monoPcm && read != temp.Length)
+                            break;
 
                         var val = (double)BitConverter.ToInt16(temp, 0);
 
@@ -114,7 +194,10 @@ namespace MissionPlanner.Controls
                             zedGraphControl1.Refresh();
 
                             // 50% overlap
-                            st.Seek(-(1 << bins) / 2, SeekOrigin.Current);
+                            int rewind = (1 << bins) / 2;
+                            if (monoPcm)
+                                rewind -= rewind & 1; // A PCM16 frame is two bytes.
+                            st.Seek(-rewind, SeekOrigin.Current);
                             a = 0;
                             buffer = new double[buffer.Length];
                         }
