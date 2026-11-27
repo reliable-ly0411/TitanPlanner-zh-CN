@@ -1,0 +1,226 @@
+using System;
+using System.Drawing;
+using System.Linq;
+using System.Windows.Forms;
+using GMap.NET;
+using GMap.NET.MapProviders;
+using GMap.NET.WindowsForms;
+using GMap.NET.WindowsForms.Markers;
+using MissionPlanner.Controls.Scene3D;
+using OpenTK;
+using OpenTK.Graphics.ES20;
+using Plan29PreviewProbe;
+
+internal static class PairedPlanPreviewProbe
+{
+    static int passed;
+    static readonly PointLatLng[] Shape = { new PointLatLng(10.119, 2.098), new PointLatLng(10.122, 2.102) };
+
+    [STAThread]
+    static void Main()
+    {
+        GMaps.Instance.Mode = AccessMode.CacheOnly;
+        using (var host = new Form { ClientSize = new Size(960, 360) })
+        using (var plan = Map(0))
+        using (var flight = Map(320))
+        using (var gl = new GLControl { Location = new Point(640, 0), Size = new Size(320, 320) })
+        using (var pair = new PairedPlanPreview(plan, plan, flight, gl))
+        using (var lines = new LineRenderer())
+        {
+            host.Controls.AddRange(new Control[] { plan, flight, gl });
+            host.Show();
+            foreach (var map in new[] { plan, flight }) { map.Position = new PointLatLng(10.12, 2.10); map.Zoom = 15; }
+            Application.DoEvents();
+            gl.MakeCurrent();
+            Console.WriteLine("Software GL renderer: " + GL.GetString(StringName.Renderer));
+            var frame = new WorldFrame(); frame.Update(10.12, 2.1);
+            var unrelatedFrame = new WorldFrame(); unrelatedFrame.Update(10.12, 2.1);
+            var canonical = new GMapOverlay("device-stub");
+            canonical.Routes.Add(new GMapRoute(Shape, "canonical"));
+            canonical.Markers.Add(new GMarkerGoogle(new PointLatLng(10.121, 2.1001), GMarkerGoogleType.green));
+            flight.Overlays.Add(canonical); canonical.ForceUpdate();
+            var originalBounds = flight.GetRectOfAllMarkers(null);
+            var start = ReadPixels(pair, flight, frame, lines);
+            Check("without a commit only simulated device GL, no local geometry in either view",
+                start.map == 0 && start.local == 0 && start.device > 10 && pair.Caption3D(frame) == null);
+
+            var rev = pair.BeginRevision(plan, PlanKind.Mission);
+            var planLayer = PublishPlannerLayer(plan, Shape);
+            var original = Snapshot();
+            Check("matching source geometry records under the exact PLAN owner", pair.RecordPlanProjection(plan, rev, original, original, planLayer));
+            Check("foreign owner cannot stage same revision", pair.TryStage(flight, rev, original, frame, null, out _) == PairedPlanPreview.Result.Retired);
+            Check("valid 2D without datum never publishes a half-preview", pair.TryStage(plan, rev, original, frame, null, out _) ==
+                PairedPlanPreview.Result.Missing3D && pair.Caption3D(frame) == null && ReadPixels(pair, flight, frame, lines).map == 0);
+
+            var proof = Evidence(original);
+            Check("complete candidate prepares both before changing either screen", pair.TryStage(plan, rev, original, frame, proof, out var first) ==
+                PairedPlanPreview.Result.Staged && pair.Caption3D(frame) == null && ReadPixels(pair, flight, frame, lines).map == 0);
+            Check("one commit publishes both paths for the same owner and frame", pair.TryCommit(plan, rev, first, original, frame));
+            var visible = ReadPixels(pair, flight, frame, lines);
+            Check("actual GMap and OpenGL pixels both appear and canonical GL remains exactly unchanged",
+                visible.map > 40 && visible.local > 10 && visible.device == start.device && pair.Caption3D(frame) == LocalPlan3DLineAdapter.SourceCaption);
+            Check("local 2D does not participate in any map overlay/marker/bounds API",
+                flight.Overlays.Count == 1 && ReferenceEquals(flight.Overlays.Single(), canonical) &&
+                originalBounds.Equals(flight.GetRectOfAllMarkers(null)));
+
+            var changedShape = new[] { Shape[0], new PointLatLng(10.123, 2.1028) };
+            var replacement = Snapshot(21, shape: changedShape);
+            plan.Overlays.Remove(planLayer); planLayer.Dispose();
+            planLayer = PublishPlannerLayer(plan, changedShape);
+            PairedPlanPreview.Stage replace = null;
+            Check("new matching projection can stage a replacement without removing old paired view",
+                pair.RecordPlanProjection(plan, rev, replacement, replacement, planLayer) &&
+                pair.TryStage(plan, rev, replacement, frame, Evidence(replacement), out replace) == PairedPlanPreview.Result.Staged &&
+                ReadPixels(pair, flight, frame, lines).Equals(visible));
+            Check("replace commit accepted only after both staged", pair.TryCommit(plan, rev, replace, replacement, frame));
+            var changed = ReadPixels(pair, flight, frame, lines);
+            Check("actual repaint replaces both local routes and leaves simulated device route unchanged",
+                changed.map > 40 && changed.local > 10 && changed.map != visible.map &&
+                changed.local != visible.local && changed.device == visible.device);
+            var retired = rev;
+            rev = pair.BeginRevision(plan, PlanKind.Fence);
+            Check("scope change cancels staged work and clears both views", rev == null &&
+                ReadPixels(pair, flight, frame, lines).Equals(start) &&
+                !pair.TryCommit(plan, retired, first, original, frame));
+
+            rev = pair.BeginRevision(plan, PlanKind.Mission);
+            plan.Overlays.Remove(planLayer); planLayer.Dispose();
+            planLayer = PublishPlannerLayer(plan, Shape);
+            pair.RecordPlanProjection(plan, rev, original, original, planLayer);
+            pair.TryStage(plan, rev, original, frame, proof, out var oldStage);
+            pair.TryStage(plan, rev, original, frame, proof, out var newStage);
+            Check("newer stage supersedes older callback even in the same revision",
+                !pair.TryCommit(plan, rev, oldStage, original, frame) && pair.TryCommit(plan, rev, newStage, original, frame));
+            Check("old revision callback cannot clear newer complete pair",
+                !pair.TryCommit(plan, retired, first, original, frame) && ReadPixels(pair, flight, frame, lines).Equals(visible));
+            Check("same coordinates with different immutable object at commit fail closed for both",
+                pair.TryStage(plan, rev, original, frame, proof, out var wrong) == PairedPlanPreview.Result.Staged &&
+                !pair.TryCommit(plan, rev, wrong, Snapshot(), frame) &&
+                ReadPixels(pair, flight, frame, lines).Equals(start));
+            Check("an unrelated renderer cannot steal a compatible scene stamp",
+                pair.TryStage(plan, rev, original, frame, proof, out var mismatch) == PairedPlanPreview.Result.Staged &&
+                !pair.TryCommit(plan, rev, mismatch, original, unrelatedFrame) &&
+                ReadPixels(pair, flight, frame, lines).Equals(start));
+
+            pair.TryStage(plan, rev, original, frame, proof, out var beforeRebase);
+            pair.TryCommit(plan, rev, beforeRebase, original, frame);
+            pair.TryStage(plan, rev, original, frame, proof, out beforeRebase);
+            frame.Update(10.25, 2.1);
+            Check("published worldframe rebase instantly fails closed on next paint of both planes",
+                ReadPixels(pair, flight, frame, lines).Equals(start));
+            Check("worldframe rebase between stage and commit rejects both",
+                !pair.TryCommit(plan, rev, beforeRebase, original, frame));
+            frame = new WorldFrame(); frame.Update(10.12, 2.1);
+            pair.TryStage(plan, rev, original, frame, proof, out var initial);
+            pair.TryCommit(plan, rev, initial, original, frame);
+            Check("active missing evidence invalidates both, never leaves old route under the wrong context",
+                pair.TryStage(plan, rev, original, frame, Evidence(Snapshot()), out _) == PairedPlanPreview.Result.Missing3D &&
+                ReadPixels(pair, flight, frame, lines).Equals(start));
+            pair.TryStage(plan, rev, original, frame, proof, out initial);
+            pair.TryCommit(plan, rev, initial, original, frame);
+            Check("missing/invalid fresh snapshot cannot reuse old 2D projection or 3D",
+                pair.TryStage(plan, rev, null, frame, proof, out _) == PairedPlanPreview.Result.MissingProjection &&
+                ReadPixels(pair, flight, frame, lines).Equals(start));
+            pair.TryStage(plan, rev, original, frame, proof, out initial);
+            pair.TryCommit(plan, rev, initial, original, frame);
+            pair.TryStage(plan, rev, original, frame, proof, out var staleProjection);
+            pair.RecordPlanProjection(plan, rev, original, original, planLayer);
+            Check("new projection event retires previously staged pair before any second commit",
+                !pair.TryCommit(plan, rev, staleProjection, original, frame) &&
+                ReadPixels(pair, flight, frame, lines).Equals(visible));
+            Check("rejected current projection retires old geometry for both",
+                !pair.RecordPlanProjection(plan, rev, original, Snapshot(21), planLayer) &&
+                pair.TryStage(plan, rev, original, frame, proof, out _) == PairedPlanPreview.Result.MissingProjection &&
+                ReadPixels(pair, flight, frame, lines).Equals(start));
+            pair.RecordPlanProjection(plan, rev, original, original, planLayer);
+            pair.TryStage(plan, rev, original, frame, proof, out initial);
+            pair.TryCommit(plan, rev, initial, original, frame);
+            Check("Home-only clears both without drawing stale route",
+                pair.TryStage(plan, rev, Snapshot(empty: true), frame, null, out _) == PairedPlanPreview.Result.Cleared &&
+                ReadPixels(pair, flight, frame, lines).Equals(start));
+            pair.TryStage(plan, rev, original, frame, proof, out initial);
+            pair.TryCommit(plan, rev, initial, original, frame);
+            pair.Invalidate(plan);
+            Check("disconnect clears pair, retires callback, preserves canonical device products",
+                !pair.TryCommit(plan, rev, initial, original, frame) && ReadPixels(pair, flight, frame, lines).Equals(start) &&
+                ReferenceEquals(flight.Overlays.Single(), canonical) &&
+                originalBounds.Equals(flight.GetRectOfAllMarkers(null)));
+        }
+        Console.WriteLine(passed + " checks passed");
+    }
+
+    static ReadOnlyPlanSnapshot Snapshot(double first = 20, bool empty = false, PointLatLng[] shape = null)
+    {
+        var rows = empty ? new PlanRow[0] : (shape ?? Shape).Select((p,i) =>
+        {
+            var values = new[] {0.0, 0, 0, 0, p.Lat, p.Lng, first + i * 5};
+            return new PlanRow(i + 1, "WAYPOINT", 16, 3, values, values);
+        }).ToArray();
+        return new ReadOnlyPlanSnapshot(new PlanHome(3, 10.12, 2.10, 120), rows, "en-US");
+    }
+
+    static LocalPlanElevationEvidence Evidence(ReadOnlyPlanSnapshot p) =>
+        new LocalPlanElevationEvidence(p, new PlanElevationReceipt(PlanElevationSource.VerifiedPlanHome,
+            PlanElevationDatum.SceneCompatibleAmsl, "synthetic evidence fixture", 10.12, 2.10, 120), null);
+
+    static GMapOverlay PublishPlannerLayer(GMapControl map, PointLatLng[] points)
+    {
+        var layer = new GMapOverlay("WPOverlay");
+        layer.Routes.Add(new GMapRoute(points, "already projected synthetic fixture"));
+        map.Overlays.Add(layer);
+        layer.ForceUpdate();
+        return layer;
+    }
+
+    static GMapControl Map(int x) => new GMapControl
+        { Location = new Point(x, 0), Size = new Size(310, 320), MapProvider = GMapProviders.EmptyProvider,
+            RoutesEnabled = true, MinZoom = 1, MaxZoom = 20 };
+
+    static (int map, int local, int device) ReadPixels(PairedPlanPreview pair, GMapControl flight, WorldFrame frame, LineRenderer renderer)
+    {
+        int map = 0, local = 0, device = 0;
+        using (var frame2D = new Bitmap(flight.Width, flight.Height))
+        {
+            flight.DrawToBitmap(frame2D, new Rectangle(0, 0, frame2D.Width, frame2D.Height));
+            // Exclude caption and ensure actual polyline pixels.
+            for (int y = 50; y < frame2D.Height; y++)
+            for (int x = 0; x < frame2D.Width; x++)
+            {
+                var c = frame2D.GetPixel(x, y);
+                if (c.B > c.R + 25 && c.R > c.G + 25) map++;
+            }
+        }
+        var projection = Matrix4.CreateOrthographicOffCenter(-450, 450, -380, 460, -250, 250);
+        var view = Matrix4.Identity;
+        GL.Viewport(0, 0, 320, 320);
+        GL.ClearColor(0, 0, 0, 1); GL.Clear(ClearBufferMask.ColorBufferBit);
+        var fixedRoute = new VertexList();
+        fixedRoute.AddColored(-380, 380, 10, 1, 1, 0, 1);
+        fixedRoute.AddColored(370, 380, 10, 1, 1, 0, 1);
+        renderer.Draw(fixedRoute, PrimitiveType.Lines, 2f, ref projection, ref view);
+        pair.Draw3D(renderer, frame, ref projection, ref view);
+        var rgba = new byte[320 * 320 * 4];
+        GL.ReadPixels(0, 0, 320, 320, PixelFormat.Rgba, PixelType.UnsignedByte, rgba);
+        for (int i = 0; i < rgba.Length; i += 4)
+        {
+            if (rgba[i + 2] > 170 && rgba[i] > 100 && rgba[i] < 170 && rgba[i + 1] < 90) local++;
+            if (rgba[i] > 220 && rgba[i + 1] > 220 && rgba[i + 2] < 25) device++;
+        }
+        return (map, local, device);
+    }
+
+    static void Check(string text, bool okay)
+    {
+        if (!okay) throw new Exception("Failed: " + text);
+        passed++; Console.WriteLine("PASS " + text);
+    }
+}
+
+namespace MissionPlanner.Controls.Scene3D
+{
+    internal static class GMapImagerySource
+    {
+        internal static byte[] ToBgra(Image image, out int width, out int height) =>
+            throw new InvalidOperationException("Imagery is unavailable in this offline fixture.");
+    }
+}

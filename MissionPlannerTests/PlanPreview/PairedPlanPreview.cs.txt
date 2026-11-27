@@ -1,0 +1,207 @@
+using System;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Linq;
+using System.Threading;
+using System.Windows.Forms;
+using GMap.NET;
+using GMap.NET.WindowsForms;
+using MissionPlanner.Controls.Scene3D;
+using OpenTK;
+
+namespace Plan29PreviewProbe
+{
+    // Local-only compositor proof. The 2D pass has no markers in the map's operational overlay collection.
+    public sealed class PairedPlanPreview : IDisposable
+    {
+        public enum Result { Staged, Cleared, Retired, MissingProjection, Missing3D }
+        public sealed class Revision
+        {
+            internal readonly LocalPlanPreviewSession.Ticket Plan;
+            internal Revision(LocalPlanPreviewSession.Ticket plan) { Plan = plan; }
+        }
+        public sealed class Stage { internal Stage() { } }
+        private sealed class Pair
+        {
+            internal readonly Stage Key = new Stage();
+            internal readonly Revision Revision;
+            internal readonly ReadOnlyPlanSnapshot Source;
+            internal readonly WorldFrame Frame;
+            internal readonly PointLatLng[][] Geometry;
+            internal readonly LocalPlan3DLineAdapter Layer;
+
+            internal Pair(Revision revision, ReadOnlyPlanSnapshot source, WorldFrame frame,
+                PointLatLng[][] geometry, LocalPlan3DLineAdapter layer)
+            { Revision = revision; Source = source; Frame = frame; Geometry = geometry; Layer = layer; }
+        }
+
+        private const string LocalCaption = "Local plan · read-only";
+        private readonly object editor;
+        private readonly GMapControl flight;
+        private readonly Control sceneView;
+        private readonly LocalPlanPreviewSession source;
+        private readonly int ownerThread = Thread.CurrentThread.ManagedThreadId;
+        private readonly Pen stroke = new Pen(Color.MediumPurple, 3) { DashStyle = DashStyle.Dash };
+        private Revision current;
+        private Pair pending;
+        private Pair published;
+        private bool disposed;
+
+        public PairedPlanPreview(object editor, GMapControl plan, GMapControl flight, Control sceneView)
+        {
+            this.editor = editor ?? throw new ArgumentNullException(nameof(editor));
+            this.flight = flight ?? throw new ArgumentNullException(nameof(flight));
+            this.sceneView = sceneView ?? throw new ArgumentNullException(nameof(sceneView));
+            if (ReferenceEquals(sceneView, flight) || ReferenceEquals(sceneView, plan))
+                throw new ArgumentException("Scene view must be independent from both 2D maps.");
+            source = new LocalPlanPreviewSession(plan, flight);
+            flight.Paint += PaintLocal2D;
+        }
+
+        public Revision BeginRevision(object owner, PlanKind kind)
+        {
+            CheckThread();
+            if (!ReferenceEquals(owner, editor)) return null;
+            current = null;
+            ClearPair();
+            var plan = source.EnterRevision(kind);
+            if (plan != null) current = new Revision(plan);
+            return current;
+        }
+
+        public void Invalidate(object owner)
+        {
+            CheckThread();
+            if (!ReferenceEquals(owner, editor)) return;
+            current = null;
+            ClearPair();
+            source.Invalidate();
+        }
+
+        public bool RecordPlanProjection(object owner, Revision revision, ReadOnlyPlanSnapshot before,
+            ReadOnlyPlanSnapshot after, GMapOverlay planLayer)
+        {
+            CheckThread();
+            if (!IsCurrent(owner, revision)) return false;
+            pending = null; // A newly observed projection supersedes earlier staged work.
+            if (source.NoteProjection(revision.Plan, before, after, planLayer)) return true;
+            source.ForgetProjection(revision.Plan);
+            ClearPair();
+            return false;
+        }
+
+        public Result TryStage(object owner, Revision revision, ReadOnlyPlanSnapshot candidate, WorldFrame scene,
+            LocalPlanElevationEvidence evidence, out Stage stage)
+        {
+            CheckThread();
+            stage = null;
+            if (!IsCurrent(owner, revision)) return Result.Retired;
+            pending = null;
+            if (candidate != null && candidate.Rows.Count == 0)
+            { ClearPair(); return Result.Cleared; }
+            if (!source.TryCopyProjection(revision.Plan, candidate, out var geometry) || geometry.Length == 0)
+            { ClearPair(); return Result.MissingProjection; }
+
+            var layer = new LocalPlan3DLineAdapter();
+            if (layer.Prepare(candidate, scene, evidence) != Local3DResult.Ready)
+            { ClearPair(); return Result.Missing3D; }
+
+            // No draw or UI updates are needed to stage the pair. The last complete pair stays visible.
+            pending = new Pair(revision, candidate, scene, geometry, layer);
+            stage = pending.Key;
+            return Result.Staged;
+        }
+
+        public bool TryCommit(object owner, Revision revision, Stage key, ReadOnlyPlanSnapshot active, WorldFrame scene)
+        {
+            CheckThread();
+            if (!IsCurrent(owner, revision) || pending == null || !ReferenceEquals(key, pending.Key))
+                return false;
+            var candidate = pending;
+            if (!ReferenceEquals(active, candidate.Source) || !ReferenceEquals(scene, candidate.Frame) ||
+                candidate.Layer.Caption(active, scene) == null)
+            { ClearPair(); return false; }
+
+            // Both paints use this pointer. No map collection events and no writes between the two layers.
+            pending = null;
+            published = candidate;
+            InvalidateViews();
+            return true;
+        }
+
+        public string Caption3D(WorldFrame scene)
+        {
+            CheckThread();
+            var pair = Visible;
+            return pair != null && ReferenceEquals(pair.Frame, scene) ? pair.Layer.Caption(pair.Source, scene) : null;
+        }
+
+        public bool Draw3D(LineRenderer lines, WorldFrame scene, ref Matrix4 projection, ref Matrix4 view)
+        {
+            CheckThread();
+            var pair = Visible;
+            return pair != null && ReferenceEquals(pair.Frame, scene) &&
+                pair.Layer.Draw(lines, pair.Source, scene, ref projection, ref view);
+        }
+
+        private Pair Visible
+        {
+            get
+            {
+                var pair = published;
+                return pair != null && ReferenceEquals(pair.Revision, current) &&
+                    pair.Layer.Caption(pair.Source, pair.Frame) != null ? pair : null;
+            }
+        }
+
+        private void PaintLocal2D(object sender, PaintEventArgs args)
+        {
+            CheckThread();
+            var pair = Visible;
+            if (pair == null) return;
+            var graphics = args.Graphics;
+            var state = graphics.Save();
+            try
+            {
+                graphics.SetClip(flight.ClientRectangle, CombineMode.Intersect);
+                graphics.SmoothingMode = SmoothingMode.AntiAlias;
+                foreach (var segment in pair.Geometry)
+                {
+                    var pixels = segment.Select(p => flight.FromLatLngToLocal(p)).Select(p => new PointF(p.X, p.Y)).ToArray();
+                    if (pixels.Length > 1) graphics.DrawLines(stroke, pixels);
+                    var first = pixels[0];
+                    graphics.FillEllipse(Brushes.MediumPurple, first.X - 3, first.Y - 3, 6, 6);
+                }
+                TextRenderer.DrawText(graphics, LocalCaption, flight.Font,
+                    new Point(8, 8), Color.Purple, Color.White);
+            }
+            finally { graphics.Restore(state); }
+        }
+
+        private void ClearPair() { pending = null; published = null; InvalidateViews(); }
+        private void InvalidateViews()
+        {
+            if (!flight.IsDisposed && !flight.Disposing) flight.Invalidate();
+            if (!sceneView.IsDisposed && !sceneView.Disposing) sceneView.Invalidate();
+        }
+        private bool IsCurrent(object owner, Revision revision) =>
+            ReferenceEquals(owner, editor) && revision != null && ReferenceEquals(revision, current);
+        private void CheckThread()
+        {
+            if (Thread.CurrentThread.ManagedThreadId != ownerThread)
+                throw new InvalidOperationException("Paired preview belongs to the UI/render owner.");
+            if (disposed) throw new ObjectDisposedException(nameof(PairedPlanPreview));
+        }
+
+        public void Dispose()
+        {
+            if (disposed) return;
+            CheckThread();
+            flight.Paint -= PaintLocal2D;
+            Invalidate(editor);
+            source.Dispose();
+            stroke.Dispose();
+            disposed = true;
+        }
+    }
+}

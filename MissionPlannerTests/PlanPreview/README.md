@@ -107,3 +107,18 @@ PlanHomeDatumSessionProbe.cs.txt 与 PlanHomeDatumSession.cs.txt、ReadOnlyPlanS
 在 Map3D.EnsureRenderers 附近给本地批次一个独立、受当前 Map3D 实例拥有的适配器。RenderScene 第二遍复用同一视矩阵和 WorldFrame，在正式 MissionOverlay.DrawPlanLine 后、设备 NavigationTarget 及其指示器之前走独立分支，只吃经过同一 PLAN 所有者、世代及数据源守卫的只读批次。另用既有屏幕覆盖层形式输出常驻“本地规划 · 只读”说明；不要借设备的 marker、目标或动作列表，不把标签由缓存存在与否反向推断。WorldFrame 原点变动时从同一当前证据重投影。Suspend/Deactivate 期间不画且清除旧渲染批次和标签；重新显示时只接受仍当前的同一个 PLAN 上下文。DisposeRenderers 里先撤自己的批次，不接管共享 LineRenderer 或现有 GL 状态的所有权；销毁或切换会话同时撤 2D 及 3D。异步转发只能携带当前票据，晚到时丢弃。
 
 应先在真实离线 PLAN↔FLY 验证源身份及选择确认，不假定新按钮或导入规则已批准。Ctrl+M 必须安排 2D+3D 一起切换；无合法高度数据就明确提示 3D 不能绘制，绝不能读 live wps、Home、当前目标来补。原型未将任何结果或记录写回用户规划、设备、参数或实际运行环境。
+
+## 第七阶段：同源、同世代的 2D+3D 成对提交
+
+**接线选择已收敛：2D 使用纯绘制通道，不将本地路线或标记放进 FLY 的 Overlays。** 原生 GMap 的 GetRectOfAllMarkers 会将可见、不可点击的标记也纳入边界；只把 IsHitTestVisible 设为 false 不足以保证原有自动缩放、边框和其他查询语义不变。正式候选宜在 FLY 的 myGMAP 已有正常绘制之后消费独立绘制回调。基线 GMapControl.OnPaint 的 GDI 与 Skia 分支均完成底图后调用 base.OnPaint；FromLatLngToLocal 负责从坐标换到控件像素。原型使用这条 Paint 路径和独立紫色虚线，标明只读来源，不改变任何地图集合、设备航点显示或操作入口。后续仍应在真实离线视图核对旋转/分数级缩放、样式和高 DPI。
+
+- 封闭的成对接口需要同一 PLAN 视图拥有者、世代票据、冻结快照及 3D 场景实例。确认普通 PLAN 的已有 2D 投影后只复制显示点列；3D 则独立预备有效、可证明高度的线条批次。2D 和 3D 都准备完成前，候选不碰绘制、地图集合和现有有效成对画面。
+- 成功提交时只更换一个成对可见状态，随后安排两个控件重绘。两条绘制路径从同一状态读取；这不是两个窗口系统帧物理同步的承诺。任何一边不能通过当前合法性检查都不将另一边单独发布。优化在 UI/渲染同一拥有者内运行，3D 如未来移到异线程须再设计只读交接。
+- 有效的新候选在准备阶段不先清旧画面；当前世代的输入或有效高度失效、被拒的新投影、无计划、切换/断开时，整对失效。较新的投影或暂存取代较早的暂存票据；晚到、异主或已退休的票据被拒绝，不能复活旧路线、清除新发布画面或改变任何设备图层。WorldFrame 重定位后，清除两边可见状态直至两边都以当前输入重新准备。若生产场景控件销毁/替换，应先撤销当前计划世代，不能用另一个坐标基准接管。
+- 第六阶段的显式 Home 声明只记录“哪份本地计划的操作者明确认领了哪个数、单位、基准及来源”；不代表文件、实测或基准已独立核验。本阶段夹具使用合成的已核验高度凭据；正式层不得自行升级操作者声明为外部验证，或拿运行中的设备 Home/地形猜测数值。缺可信高度时两层一起不显示，并由入口告知原因。无生产 Ctrl+M、缓存、指示器、飞控参数、更改真实行为或发布。
+
+### 复验范围
+
+PairedPlanPreviewProbe.cs.txt（独立入口）另带 PairedPlanPreview、LocalPlanPreviewSession、ReadOnlyPlanOverlay、LocalPlan3DLineAdapter、LocalPlan3DProjection、LocalPlanElevationEvidence、ReadOnlyPlanSnapshot，及第五阶段的实际 GMap.NET、OpenTK、WorldFrame 与 LineRenderer/着色器依赖。一律复制去掉 .txt 后单独编译。空地图源、软件 GL 和合成路线，不加载真实地形、运行正式程序或连接设备。
+
+Acer 隔离实际 GMap Paint + Mesa llvmpipe OpenGL 测 24 项；像素证明成对初次发布、替换、过期回调、失败清理、只读 2D 不在边界 API、已发布的场景重定位同时取消两边绘制、以及模拟设备的黄色像素完全不变。此前单独的 2D 会话 19 项也重新验证。尚需上线前的真实离线 PLAN→FLY 事件与景观验证、运行时高度来源／垂直基准和发布准入，以及整合后 UI 错误提示；不得将夹具当作产品已完成。

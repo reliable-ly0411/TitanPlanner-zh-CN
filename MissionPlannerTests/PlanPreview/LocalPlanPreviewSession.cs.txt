@@ -99,6 +99,25 @@ namespace Plan29PreviewProbe
             return true;
         }
 
+        internal void ForgetProjection(Ticket ticket)
+        {
+            CheckOwner();
+            if (!Current(ticket)) return;
+            projectedPlan = null;
+            projectedGeometry = null;
+        }
+
+        // Detached, copy-only access for the paired paint adapter. Does not touch the destination map.
+        internal bool TryCopyProjection(Ticket ticket, ReadOnlyPlanSnapshot fresh, out PointLatLng[][] geometry)
+        {
+            CheckOwner();
+            geometry = null;
+            if (!Current(ticket) || fresh == null || projectedPlan == null || !SamePlan(projectedPlan, fresh))
+                return false;
+            geometry = projectedGeometry.Select(segment => (PointLatLng[])segment.Clone()).ToArray();
+            return true;
+        }
+
         private bool Current(Ticket ticket) => ticket != null && ReferenceEquals(active, ticket);
 
         private static bool SamePlan(ReadOnlyPlanSnapshot a, ReadOnlyPlanSnapshot b) =>
