@@ -1197,6 +1197,10 @@
     <value>自动着陆</value>
     <comment>"Autoland"</comment>
   </data>
+  <data name="a1a2eeea61c506fdd7bb57599c764e4e6fc1bed92441aa252539413fb78a48f3" xml:space="preserve">
+    <value>自动（系统默认）</value>
+    <comment>"Automatic (system default)"</comment>
+  </data>
   <data name="f99d77250d1e272cd5234c81611e4795970b161ed5f95ea4e17a0d0b61d6d21f" xml:space="preserve">
     <value>自动配置选项</value>
     <comment>"Automatic Config Options"</comment>
@@ -7708,6 +7712,10 @@ Ctrl+O 从文件加载</value>
     <value>未检测到游戏杆</value>
     <comment>"No Joystick"</comment>
   </data>
+  <data name="d6a6006b03fe68be4580ce1211fb4011ecbc7ad8a854949f7c1f7b7eff03eca6" xml:space="preserve">
+    <value>未找到可用的微软中文音色，请检查 Windows 中文语音包。</value>
+    <comment>"No Microsoft Chinese voice is available. Check the Windows speech language pack."</comment>
+  </data>
   <data name="ba2b217b917cb79ab2e8c2db941e1ee1bedaf7545928d650e67c34be3b309099" xml:space="preserve">
     <value>未检测到遥控接收机</value>
     <comment>"No RC Receiver"</comment>
@@ -8902,6 +8910,10 @@ VLAN 标记</value>
   <data name="21b4ad0dde3b14ffe2ac9bca5a1d4bec50f046ba25b2c5f9baafac58ce2f2b2d" xml:space="preserve">
     <value>无法预览：未安装地图源</value>
     <comment>"Preview unavailable: map source not installed"</comment>
+  </data>
+  <data name="959f75ecb532205f28a1426e6012d9294ccc9b753886be299475007940b78724" xml:space="preserve">
+    <value>试听</value>
+    <comment>"Preview voice"</comment>
   </data>
   <data name="efe10c80ec8a9f38624cbb47103010a8cf32488a503e4b4bfe4f92307a9cefa7" xml:space="preserve">
     <value>主用</value>
@@ -11108,6 +11120,10 @@ Acc：当前测定位置的精度
     <value>远端电台显示的范围和选项可能不准确。为确保准确，请让本地与远端电台使用相同版本的固件</value>
     <comment>"The ranges and options shown for the remote modem may not be accurate.  To ensure accurate, use the same firmware version in both the local and remote modems"</comment>
   </data>
+  <data name="79325913c452758ec7be92c73a2a0caf151f3a93f0605fd0a60b16a0694bc700" xml:space="preserve">
+    <value>上次选择的音色已不可用，播报将使用系统默认音色。</value>
+    <comment>"The saved voice is unavailable. Speech will use the system default."</comment>
+  </data>
   <data name="ed3dcdfee61086aa098ddb36c7414738d99def6da6a592494e07c07ec5add242" xml:space="preserve">
     <value>瓦片缓存位置：</value>
     <comment>"The tile cache is at "</comment>
@@ -11192,6 +11208,10 @@ Acc：当前测定位置的精度
   <data name="266a18f4e32df195c4d3b4d1fcac417f49e4438bb4bd5ac3c7afaaa6f3f5ebb1" xml:space="preserve">
     <value>这是测试版，请检查输出文件</value>
     <comment>"This is beta, please confirm the output file"</comment>
+  </data>
+  <data name="1884913c187ffaeaec57f58e7a6cb795522e7dcd4004c0a5e241048ac3dc8f23" xml:space="preserve">
+    <value>这是地面站语音试听。</value>
+    <comment>"This is the ground station voice preview."</comment>
   </data>
   <data name="35bb782b222e909bb83baa0a9e7b95b950bde918027d2f215289ba60c9f567e4" xml:space="preserve">
     <value>这是最后一个支持 Windows XP 的版本，请升级操作系统</value>
@@ -11947,6 +11967,10 @@ Acc：当前测定位置的精度
     <value>查看 360 度激光雷达数据</value>
     <comment>"View the data from a 360 lidar"</comment>
   </data>
+  <data name="f25be60938ef5cb76d21e4b726b99dd357697649b96dc7a89afe5b66c04730f4" xml:space="preserve">
+    <value>暂时无法试听，请在播报空闲时重试。</value>
+    <comment>"Voice preview is unavailable. Try again when speech is idle."</comment>
+  </data>
   <data name="4d7cfa73270cdf1c8e2ec86ad496bd2411ba1e8a30027e632a366462a70a2fd5" xml:space="preserve">
     <value>电压引脚：</value>
     <comment>"Volt Pin:"</comment>
@@ -12087,6 +12111,10 @@ http://www.magnetic-declination.com/</value>
   <data name="915142ae5637fa9c6aa02da8e3b176a1aa95ccbe67f4074eaf52b05771b715a2" xml:space="preserve">
     <value>窗口图标 · 即时生效</value>
     <comment>"Window icon · applies now"</comment>
+  </data>
+  <data name="dd7589c5e69d3d1998fc25baeed58b78bf1710be29820e01c74c69183d8efc46" xml:space="preserve">
+    <value>Windows 播报音色</value>
+    <comment>"Windows speech voice"</comment>
   </data>
   <data name="3404644e01177ee996b69247aa3967e7a3f66702c5ff0f7270591e8d9622183b" xml:space="preserve">
     <value>清除</value>

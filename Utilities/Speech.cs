@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 
 namespace MissionPlanner.Utilities
 {
-    public class Speech : IDisposable, ISpeech, ISpeechSubmission
+    public partial class Speech : IDisposable, ISpeech, ISpeechSubmission
     {
         private static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
@@ -33,14 +33,18 @@ namespace MissionPlanner.Utilities
                 {
                     try
                     {
-                        if (_speechwindows != null)
-                            return _speechwindows.State == SynthesizerState.Ready;
+#if !LIB
+                        lock (windowsSpeechLock)
+                            return _speechwindows != null && (_speechwindows.State == SynthesizerState.Ready ||
+                                (previewPrompt != null && pendingSpeech.Count == 0));
+#else
+                        return _speechwindows != null && _speechwindows.State == SynthesizerState.Ready;
+#endif
                     }
                     catch
                     {
                         return false;
                     }
-                    return false;
                 }
             }
         }
@@ -114,19 +118,25 @@ namespace MissionPlanner.Utilities
             }
             else
             {
-                try
+#if !LIB
+                if (EnhancedSpeechLanguage || HasVoicePreview())
                 {
-                    if (_speechwindows != null)
-                    {
-                        PromptBuilder pb = new PromptBuilder(CultureInfo.CurrentUICulture);
-                        pb.AppendText(text);
-                        _speechwindows.SpeakAsync(pb);
-                        submitted = true;
-                    }
+                    submitted = QueueWindowsSpeech(text, false);
                 }
-                catch (COMException)
+                else
+#endif
                 {
-
+                    try
+                    {
+                        if (_speechwindows != null)
+                        {
+                            var builder = new PromptBuilder(CultureInfo.CurrentUICulture);
+                            builder.AppendText(text);
+                            _speechwindows.SpeakAsync(builder);
+                            submitted = true;
+                        }
+                    }
+                    catch (COMException) { }
                 }
             }
 
@@ -156,8 +166,16 @@ namespace MissionPlanner.Utilities
             {
                 try
                 {
+#if !LIB
+                    lock (windowsSpeechLock)
+                    {
+                        _speechwindows?.SpeakAsyncCancelAll();
+                        previewPrompt = null;
+                    }
+#else
                     if (_speechwindows != null)
                         _speechwindows.SpeakAsyncCancelAll();
+#endif
                 }
                 catch (System.PlatformNotSupportedException)
                 {
