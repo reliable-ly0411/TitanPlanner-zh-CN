@@ -58,6 +58,59 @@ namespace MissionPlannerTests.Utilities
             return file;
         }
 
+        private static object CallAppearanceStore(AppearanceAssetStore store, string name, params object[] args)
+        {
+            var method = typeof(AppearanceAssetStore).GetMethod(name,
+                System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
+            Assert.IsNotNull(method);
+            return method.Invoke(store, args);
+        }
+
+        [TestMethod]
+        public void DropdownDefaultsKeepPreviousCustomChoicesAcrossRestart()
+        {
+            InDirectory((root, store) =>
+            {
+                var directory = Path.Combine(root, "appearance");
+                Assert.AreEqual("default", CallAppearanceStore(store, "CurrentPreset", AppearanceAsset.WindowIcon));
+                Assert.AreEqual("default", CallAppearanceStore(store, "CurrentPreset", AppearanceAsset.StartupImage));
+                Assert.IsFalse(Directory.Exists(directory));
+                store.Import(AppearanceAsset.WindowIcon, IconFile(root));
+                store.Import(AppearanceAsset.StartupImage, ImageFile(root, ".png", Color.MediumPurple));
+
+                // A prior-format manifest has custom asset IDs but no explicit custom preset.
+                Assert.AreEqual("custom", CallAppearanceStore(store, "CurrentPreset", AppearanceAsset.WindowIcon));
+                Assert.AreEqual("custom", CallAppearanceStore(store, "CurrentPreset", AppearanceAsset.StartupImage));
+                store.RestoreDefault(AppearanceAsset.WindowIcon);
+                Assert.AreEqual("custom", CallAppearanceStore(store, "CurrentPreset", AppearanceAsset.StartupImage));
+                store.RestoreDefault(AppearanceAsset.StartupImage);
+
+                var xml = new System.Xml.XmlDocument();
+                xml.Load(Path.Combine(directory, "settings.xml"));
+                Assert.AreEqual("", xml.DocumentElement.GetAttribute("icon"));
+                Assert.AreEqual("", xml.DocumentElement.GetAttribute("image"));
+                store = new AppearanceAssetStore(directory);
+                Assert.AreEqual("default", CallAppearanceStore(store, "CurrentPreset", AppearanceAsset.WindowIcon));
+                Assert.AreEqual("default", CallAppearanceStore(store, "CurrentPreset", AppearanceAsset.StartupImage));
+                Assert.IsNull(store.LoadIcon(out var iconWarning));
+                Assert.IsNull(store.LoadStartupImage(out var imageWarning));
+                Assert.IsNull(iconWarning);
+                Assert.IsNull(imageWarning);
+
+                Assert.AreEqual(true, CallAppearanceStore(store, "CanSelectSavedIcon"));
+                Assert.AreEqual(true, CallAppearanceStore(store, "CanSelectSavedStartupImage"));
+                CallAppearanceStore(store, "SelectSavedIcon");
+                CallAppearanceStore(store, "SelectSavedStartupImage");
+                using (var icon = store.LoadIcon(out iconWarning)) Assert.IsNotNull(icon);
+                using (var image = store.LoadStartupImage(out imageWarning))
+                    Assert.AreEqual(Color.MediumPurple.ToArgb(), image.GetPixel(40, 20).ToArgb());
+                Assert.AreEqual("custom", CallAppearanceStore(store, "CurrentPreset", AppearanceAsset.WindowIcon));
+                Assert.AreEqual("custom", CallAppearanceStore(store, "CurrentPreset", AppearanceAsset.StartupImage));
+                Assert.AreEqual(1, Directory.GetFiles(directory, "*.ico").Length);
+                Assert.AreEqual(1, Directory.GetFiles(directory, "*.png").Length);
+            });
+        }
+
         [TestMethod]
         public void DefaultsDoNotCreateFiles()
         {
