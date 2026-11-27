@@ -348,6 +348,7 @@
   "Only available for missions": "仅适用于任务",
   "Open DEM Dir": "打开 DEM 目录",
   "Output avi will be saved to the log folder": "输出的 AVI 将保存在日志目录中",
+  "PWM: ": "当前 PWM：",
   "Packaged default icon": "包内默认图标",
   "Parameters committed to non-volatile memory": "参数已提交到非易失性存储器",
   "Parameters successfully saved.": "参数保存成功。",
