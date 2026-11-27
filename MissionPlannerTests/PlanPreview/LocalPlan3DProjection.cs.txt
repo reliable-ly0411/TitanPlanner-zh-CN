@@ -1,0 +1,73 @@
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using MissionPlanner.Controls.Scene3D;
+
+namespace Plan29PreviewProbe
+{
+    // Offline feasibility: only explicit absolute-AMSL plain geographic waypoints are supported.
+    public enum Local3DResult { Ready, Empty, FrameUnavailable, UnsupportedCommand, UnsupportedDatum, UnresolvedPosition }
+
+    public sealed class Local3DVertex
+    {
+        internal Local3DVertex(int sequence, double east, double north, double amsl)
+        { Sequence = sequence; EastMetres = east; NorthMetres = north; MetresAmsl = amsl; }
+        public int Sequence { get; }
+        public double EastMetres { get; }
+        public double NorthMetres { get; }
+        public double MetresAmsl { get; }
+    }
+
+    public sealed class LocalPlan3DProjection
+    {
+        private readonly WorldFrame frame;
+        private readonly int version;
+        internal LocalPlan3DProjection(WorldFrame frame, int version, Local3DVertex[] vertices)
+        {
+            this.frame = frame; this.version = version;
+            Vertices = Array.AsReadOnly((Local3DVertex[])vertices.Clone());
+        }
+        public ReadOnlyCollection<Local3DVertex> Vertices { get; }
+        public bool IsCurrent(WorldFrame current) =>
+            ReferenceEquals(frame, current) && current.Version == version;
+    }
+
+    public static class LocalPlan3DProjectionBuilder
+    {
+        // Accepts a detached local snapshot (post unit normalization), never a device mission or renderer cache.
+        // The output is a geometric preview, not a predicted or executable course.
+        public static Local3DResult TryBuild(ReadOnlyPlanSnapshot source, WorldFrame frame,
+            out LocalPlan3DProjection projection)
+        {
+            projection = null;
+            if (source == null) throw new ArgumentNullException(nameof(source));
+            if (source.Rows.Count == 0) return Local3DResult.Empty;
+            if (frame == null || !frame.IsValid) return Local3DResult.FrameUnavailable;
+
+            int version = frame.Version;
+            var vertices = new List<Local3DVertex>(source.Rows.Count);
+            foreach (var row in source.Rows)
+            {
+                // Keep the feasibility subset conservative. Do not draw across any unsupported command.
+                if (row.CommandKey != "WAYPOINT" || row.CommandId != 16)
+                    return Local3DResult.UnsupportedCommand;
+                // GLOBAL and historical GLOBAL_INT; planner-captured Lat/Lon are both already degrees.
+                // Relative requires verified same-source Home AMSL; terrain needs an independent valid sampler.
+                if (row.Frame != 0 && row.Frame != 5)
+                    return Local3DResult.UnsupportedDatum;
+                double lat = row.Values[4], lng = row.Values[5], amsl = row.Values[6];
+                if (!ReadOnlyPlanReader.IsFinite(lat) || !ReadOnlyPlanReader.IsFinite(lng) ||
+                    !ReadOnlyPlanReader.IsFinite(amsl) || lat < -80 || lat > 84 || Math.Abs(lng) > 180 ||
+                    (lat == 0 && lng == 0) || UtmProjection.ZoneFor(lat, lng) != frame.Zone)
+                    return Local3DResult.UnresolvedPosition;
+                frame.ToLocal(lat, lng, out double east, out double north);
+                if (!ReadOnlyPlanReader.IsFinite(east) || !ReadOnlyPlanReader.IsFinite(north))
+                    return Local3DResult.UnresolvedPosition;
+                vertices.Add(new Local3DVertex(row.Sequence, east, north, amsl));
+            }
+            if (version != frame.Version) return Local3DResult.FrameUnavailable;
+            projection = new LocalPlan3DProjection(frame, version, vertices.ToArray());
+            return Local3DResult.Ready;
+        }
+    }
+}
