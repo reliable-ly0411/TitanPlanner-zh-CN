@@ -8229,6 +8229,10 @@ Mission Planner 需要收到 2 个有效心跳包后才会连接。</value>
     <value>PWM 低值</value>
     <comment>"PWM L"</comment>
   </data>
+  <data name="d7436ac03528b8098d69c2232a41b050d6e5285bcd651fec3db603425d84b805" xml:space="preserve">
+    <value>当前 PWM：</value>
+    <comment>"PWM: "</comment>
+  </data>
   <data name="a34a4a853e2d5dacb1d63f30db796b6599e864b52b213804f5246ae9fa6283a8" xml:space="preserve">
     <value>包内默认图标</value>
     <comment>"Packaged default icon"</comment>

@@ -432,7 +432,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                         break;
                 }
 
-                LBL_flightmodepwm.Text = "PWM: " + pwm;
+                LBL_flightmodepwm.Text = UiText.Translate("PWM: ") + pwm;
             }
 
             Control[] fmodelist = { CMB_fmode1, CMB_fmode2, CMB_fmode3, CMB_fmode4, CMB_fmode5, CMB_fmode6 };
