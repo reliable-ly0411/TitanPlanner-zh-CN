@@ -1,0 +1,85 @@
+using System;
+using System.Drawing;
+using System.Globalization;
+using System.Resources;
+using System.Threading;
+using System.Windows.Forms;
+using System.Xml;
+
+partial class DroneCanLogProbe : Form
+{
+    readonly DataGridView DGDebug = new DataGridView();
+    readonly DataGridViewTextBoxColumn Node = new DataGridViewTextBoxColumn();
+    readonly DataGridViewTextBoxColumn Level = new DataGridViewTextBoxColumn();
+    readonly DataGridViewTextBoxColumn Source = new DataGridViewTextBoxColumn();
+    readonly DataGridViewTextBoxColumn UAVText = new DataGridViewTextBoxColumn();
+    static int checks;
+
+    static void Check(bool pass, string problem)
+    {
+        ++checks;
+        if (!pass)
+            throw new InvalidOperationException(CultureInfo.CurrentUICulture.Name + ": " + problem);
+    }
+
+    [STAThread]
+    static void Main()
+    {
+        Application.EnableVisualStyles();
+        foreach (var language in new[] { "en-US", "zh-Hans", "zh-CN" })
+        {
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(language);
+            foreach (var fontSize in new[] { 9f, 13.5f, 18f })
+            {
+                using (var window = new DroneCanLogProbe())
+                using (var font = new Font("Droid Sans Fallback", fontSize))
+                {
+                    window.Font = font;
+                    window.ClientSize = new Size(800, 650);
+                    window.Controls.Add(window.DGDebug);
+                    window.DGDebug.ColumnHeadersDefaultCellStyle.Font = font;
+                    window.ConfigureGrid();
+                    window.Show();
+                    window.DGDebug.Rows.Add(42, 3, "sim", "offline sample");
+                    foreach (var width in new[] { 658, 788, 1038, 658 })
+                    {
+                        window.DGDebug.Width = width;
+                        Application.DoEvents();
+
+                        var column = window.Level;
+                        bool enhanced = language == "zh-CN";
+                        Check(column.HeaderText == (enhanced ? "日志级别" : "Level"), "caption " + column.HeaderText);
+                        Check(column.Name == "Level" && column.ReadOnly && column.Index == 1, "column identity");
+                        Check(column.AutoSizeMode == DataGridViewAutoSizeColumnMode.NotSet &&
+                            column.Resizable != DataGridViewTriState.False, "manual column resize policy");
+                        Check((int)window.DGDebug[1, 0].Value == 3 && window.Node.Width == 40 &&
+                            window.Source.Width == 50 && window.UAVText.Width > 200, "row or neighbor columns");
+                        if (enhanced)
+                        {
+                            var rectangle = window.DGDebug.GetCellDisplayRectangle(1, -1, false);
+                            int ink = TextRenderer.MeasureText(column.HeaderText, window.DGDebug.ColumnHeadersDefaultCellStyle.Font).Width;
+                            Check(rectangle.Width >= ink && rectangle.Right < width, "caption clipped: " + rectangle.Width + " < " + ink);
+                            Check(column.Width >= 40 && column.Width >= column.GetPreferredWidth(
+                                DataGridViewAutoSizeColumnMode.ColumnHeader, true), "initial width omitted header allowance");
+                        }
+                        else
+                            Check(column.Width == 40, "stock width changed");
+                    }
+                }
+            }
+        }
+        Console.WriteLine("PASS " + checks + " checks (actual log grid designer, three UI cultures, three font sizes)");
+    }
+}
+
+internal static class ResourcesCompiler
+{
+    private static void Main(string[] args)
+    {
+        var xml = new XmlDocument();
+        xml.Load(args[0]);
+        using (var output = new ResourceWriter(args[1]))
+            foreach (XmlElement node in xml.SelectNodes("/root/data"))
+                output.AddResource(node.GetAttribute("name"), node["value"].InnerText);
+    }
+}
