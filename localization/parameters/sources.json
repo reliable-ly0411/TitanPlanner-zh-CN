@@ -39,7 +39,8 @@
       "sourceSha256": "4abf0156f5c68d61fe0efef5f24daefc31754ee1ddf6cd8e70b01aff300bfa83",
       "gitTag": "Plane-4.5.7",
       "gitSha": "0358a9c210bc6c965006f5d6029239b7033616df",
-      "parameters": 51
+      "parameters": 84,
+      "legacySourceStamp": "Generated from git tag Plane-4.5.7 on 2025-05-26 19:19:51"
     },
     {
       "family": "Plane",
@@ -48,7 +49,7 @@
       "sourceSha256": "154e7bd4c38a75cc09e7109a4b7cfaa7f7a6fbf03125cfe6a849032f3b8389aa",
       "gitTag": "Plane-4.6.3",
       "gitSha": "3fc7011a7d3dc047cbb17d8bd98ee94577d144c6",
-      "parameters": 52
+      "parameters": 84
     },
     {
       "family": "Plane",
@@ -57,7 +58,7 @@
       "sourceSha256": "924fdf56b972719bde381082adb29fd415731aa8cd899ec111eb4a5eda5192d6",
       "gitTag": "Plane-4.7.1",
       "gitSha": "dbe792162d06cab66c3475fd5556bf7a120f119e",
-      "parameters": 53
+      "parameters": 92
     },
     {
       "family": "Sub",

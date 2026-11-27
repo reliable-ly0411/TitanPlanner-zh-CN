@@ -48,7 +48,7 @@ internal static class Program
             Check(context != null, "stable release identity");
             var snapshot = bundled.Bundled(context);
             Check(snapshot != null && snapshot.Partial && snapshot.MatchesReportedBuild, "offline bundle matches the reported release/build");
-            Check(snapshot.Count == (family == "Sub" ? 4 : family == "Copter" ? (version == "4.7.1" ? 79 : 73) : version == "4.7.1" ? 53 : version == "4.6.3" ? 52 : 51), "reviewed exact-version record count");
+            Check(snapshot.Count == (family == "Sub" ? 4 : family == "Copter" ? (version == "4.7.1" ? 79 : 73) : (version == "4.7.1" ? 92 : 84)), "reviewed exact-version record count");
             foreach (var p in release.Descendants("param"))
             {
                 var name = ((string)p.Attribute("name")).Split(':').Last(); var english = (string)p.Attribute("documentation");
@@ -132,16 +132,23 @@ internal static class Program
         var boot = offlineSub.Find("STAT_BOOTCNT");
         Check(catalog.Chinese(Context("Sub", "4.7.2"), boot.Name, "Description", null, boot.English, out subPending, boot.Fingerprint) == null && !subPending,
             "Sub statistics translations require the declared release even when both fingerprints agree");
-        Check(catalog.Chinese(Context("Plane", "4.7.1"), boot.Name, "Description", null, boot.English, out subPending, boot.Fingerprint) == null && !subPending,
-            "Sub statistics translations cannot leak to Plane");
+        var planeStats = bundled.Bundled(Context("Plane", "4.7.1", "dbe792162d06cab66c3475fd5556bf7a120f119e"));
+        var planeBoot = planeStats.Find("STAT_BOOTCNT");
+        Check(planeStats.SourceSha256 == "924fdf56b972719bde381082adb29fd415731aa8cd899ec111eb4a5eda5192d6"
+              && planeStats.SourceSha256 != offlineSub.SourceSha256 && planeBoot.English == boot.English
+              && planeBoot.Fingerprint == boot.Fingerprint && catalog.Present(planeStats, planeBoot.Name, true).SearchText.Contains("启动次数"),
+            "Plane and Sub independently acquired matching official boot fields and their own translations");
+        var unregistered = ParameterDescriptionContext.TryCreate("ArduRover", "Rover V4.7.2", new Version("4.7.2.255"));
+        Check(unregistered != null && catalog.Chinese(unregistered, boot.Name, "Description", null, boot.English, out subPending, boot.Fingerprint) == null && !subPending,
+            "A matching field cannot create a translation in an unregistered family and release");
 
         var copter = Context("Copter", "4.6.3"); var plane = Context("Plane", "4.6.3");
         const string baroId = "BARO1_DEVID";
         var baro = catalog.Present(bundled.Bundled(plane), baroId, true);
         Check(baro.Description.Contains("气压计传感器的设备编号") && baro.Units == "" && baro.Options == "",
             "verified Plane 4.6.3 barometer ID adds only a description");
-        Check(bundled.Bundled(copter).Find(baroId) == null &&
-              bundled.Bundled(Context("Plane", "4.7.1")).Find(baroId) == null,
+        Check(bundled.Bundled(plane).Find("ARSPD3_DEVID") == null &&
+              bundled.Bundled(Context("Plane", "4.7.2")) == null,
             "same parameter key is not inferred on another family or version");
         Check(bundled.Bundled(copter).Find("RTL_ALT").Range == "30 300000", "4.6 Copter range remains original centimeters");
         Check(bundled.Bundled(Context("Copter", "4.7.1")).Find("RTL_ALT_M").Range == "0.30 3000", "4.7 renamed parameter retains meters");
