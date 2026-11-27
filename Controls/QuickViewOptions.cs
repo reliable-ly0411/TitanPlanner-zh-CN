@@ -104,7 +104,17 @@ namespace MissionPlanner.Controls
             CMB_Source.ValueMember = "Item1";
             CMB_Source.DisplayMember = "Item2";
             CMB_Source.DataSource = all_fields;
-            CMB_Source.SelectedValue = variable_name;
+            if (variable_name?.StartsWith("customfield:", StringComparison.Ordinal) == true)
+            {
+                // A just-edited widget keeps a display-name token in Tag, while its number binding has the raw key.
+                // Never resolve by name; more than one registered custom field can have the same caption.
+                var raw = _qv.DataBindings["number"]?.BindingMemberInfo.BindingField;
+                variable_name = BoundCustomFieldKey(raw);
+            }
+            if (variable_name == null)
+                CMB_Source.SelectedIndex = -1;
+            else
+                CMB_Source.SelectedValue = variable_name;
             _displaySourceKey = (CMB_Source.SelectedItem as Tuple<string, string>)?.Item1;
             if (CMB_Source.DrawMode == DrawMode.OwnerDrawFixed)
                 SizeSourceDropDown(CMB_Source, EventArgs.Empty);
@@ -176,6 +186,14 @@ namespace MissionPlanner.Controls
             _initializing = false;
         }
 
+
+        private string BoundCustomFieldKey(string raw)
+        {
+            if (raw == null || !raw.StartsWith("customfield", StringComparison.Ordinal))
+                return null;
+
+            return all_fields.Count(field => string.Equals(field.Item1, raw, StringComparison.Ordinal)) == 1 ? raw : null;
+        }
 
         private static string PressureFieldDescription(string key)
         {
