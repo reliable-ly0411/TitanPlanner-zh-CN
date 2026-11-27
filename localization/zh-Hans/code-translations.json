@@ -154,6 +154,8 @@
   "Error": "错误",
   "Error: getting param list ": "获取参数列表失败： ",
   "Error: getting param list": "获取参数列表失败",
+  "Fence type list has no matching option": "下拉无对应项",
+  "Fence type list has no options": "下拉无选项",
   "FFT Setup": "FFT 设置",
   "FPV Mode (camera at aircraft)": "第一人称视角（相机位于飞行器处）",
   "Fail": "失败",
