@@ -115,6 +115,12 @@ namespace MissionPlanner.Utilities
                 var bins = 10;
                 int N = 1 << bins;
 
+                if (data.Length < N)
+                {
+                    freqtout = Array.Empty<double>();
+                    return null;
+                }
+
                 var fft = new FFT2();
 
                 var freqt = fft.FreqTable(N, (int)sample_rate);
