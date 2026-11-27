@@ -122,6 +122,20 @@ namespace MissionPlanner.Controls
             ApplyTheme();
         }
 
+        internal event KeyEventHandler EditorKeyDown
+        {
+            add { _textBox.KeyDown += value; }
+            remove { _textBox.KeyDown -= value; }
+        }
+
+        internal bool FocusEditor()
+        {
+            _textBox.Visible = true;
+            if (_textBox.Focus()) return true;
+            UpdatePlaceholderVisibility();
+            return false;
+        }
+
         private void UpdatePlaceholderVisibility()
         {
             bool hasText = !string.IsNullOrEmpty(_textBox.Text);

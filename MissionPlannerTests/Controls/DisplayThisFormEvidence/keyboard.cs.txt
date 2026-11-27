@@ -1,0 +1,130 @@
+using System;
+using System.Diagnostics;
+using System.Drawing;
+using System.Collections;
+using System.Globalization;
+using System.Linq;
+using System.Reflection;
+using System.Threading;
+using System.Windows.Forms;
+using MissionPlanner.Controls;
+using MissionPlanner.Utilities;
+
+class ChooserProbe
+{
+    const BindingFlags Private = BindingFlags.Instance | BindingFlags.NonPublic;
+    static string events;
+    static int checks;
+    static readonly Type T = typeof(DisplayThisForm);
+    static object Field(DisplayThisForm form,string key) => T.GetField(key,Private).GetValue(form);
+    static void X(string args)
+    {
+        using(var p = Process.Start("xdotool",args)) { p.WaitForExit(); if(p.ExitCode != 0) throw new Exception(args); }
+        for(int i=0;i<6;i++) { Application.DoEvents(); Thread.Sleep(10); }
+    }
+    static void Want(bool ok,string message)
+    { if(!ok) throw new Exception(message); checks++; Console.WriteLine("PASS " + message); }
+    static string Raw(DisplayThisForm f)
+    { var v=Field(f,"_keyboardItem"); return v?.GetType().GetProperty("Name").GetValue(v,null) as string; }
+    static Rectangle Rect(object row,string field) => (Rectangle)row.GetType().GetField(field).GetValue(row);
+    static void Click(Control c,Point p,int button=1)
+    {
+        var sp=c.PointToScreen(p);
+        X("mousemove "+sp.X+" "+sp.Y+" click "+button);
+    }
+    [STAThread] static void Main()
+    {
+        Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo("zh-CN");
+        foreach(var width in new[]{420,880})
+        {
+            var dark=width==420;
+            ThemeManager.BGColor=dark?Color.FromArgb(28,28,28):Color.White;
+            ThemeManager.TextColor=dark?Color.WhiteSmoke:Color.FromArgb(28,28,28);
+            using (var form = new DisplayThisForm(_ => false,(o,e)=> {
+                var cb=(CheckBox)o; events += cb.Name+":"+cb.Checked+":"+cb.Tag+";";
+            }, (o,e)=>{events += "right;";}))
+            {
+                events="";
+                form.Show();
+                form.MinimumSize=Size.Empty;
+                form.ClientSize=new Size(width,dark?156:280);
+                Application.DoEvents();
+                var panel = (Panel)Field(form,"_contentPanel");
+                var wrapper = (PlaceholderTextBox)Field(form,"_searchBox");
+                var search=(TextBox)wrapper.Controls[0];
+                X("windowfocus --sync " + form.Handle.ToInt64());
+                Click(search,new Point(4,4));
+                X("type --delay 40 alt");
+                Want(search.Text=="alt" && search.Focused,"typing is left with existing search");
+                var list=(IList)Field(form,"_layoutRows");
+                Want(list.Count==2,"one filtered row and heading");
+                var row=list[1];
+                var rect=Rect(row,"Bounds");
+                X("mousemove 5 5");
+                using(var withoutFocus=Capture(panel))
+                {
+                    X("key Tab");
+                    Want(panel.Focused && Raw(form)=="alt","Tab lands on the filtered field");
+                    using(var withFocus=Capture(panel))
+                    {
+                        var p=panel.AutoScrollPosition;
+                        var y=rect.Top+p.Y;
+                        var x=rect.Left+p.X;
+                        int changed=Enumerable.Range(x, Math.Min(rect.Width,panel.ClientSize.Width-x))
+                            .Count(i=>withFocus.GetPixel(i,y).ToArgb()!=withoutFocus.GetPixel(i,y).ToArgb());
+                        Want(changed>4,"visible focus outline in "+(dark?"dark":"light")+" theme");
+                    }
+                }
+                X("key Return");
+                Want(events=="","Enter retained its original behavior");
+                X("key space");
+                Want(events=="alt:True:custom;","Space toggles exact original key and tag once");
+                X("key ISO_Left_Tab");
+                Want(search.Focused,"Shift-Tab exits to search; no keyboard trap");
+                X("key space");
+                Want(events=="alt:True:custom;","Space in search never toggles chooser");
+                X("key ctrl+a BackSpace");
+                Want(search.Text=="","search remains editable");
+                X("key Tab Home");
+                var originalBounds=((IList)Field(form,"_layoutRows")).Cast<object>().Select(x=>Rect(x,"Bounds")).ToArray();
+                var first=Raw(form);
+                X("key Down");
+                var second=Raw(form);
+                X("key Up");
+                Want(first!=second && Raw(form)==first,"Up and Down follow current visible order");
+                X("key End");
+                var last=Raw(form);
+                Want(last!=first && last!=second,"End reaches final displayed field");
+                var rows=(IList)Field(form,"_layoutRows");
+                Want(originalBounds.SequenceEqual(rows.Cast<object>().Select(x=>Rect(x,"Bounds"))),"keyboard focus and scroll do not change row geometry");
+                var lastBounds=Rect(rows[rows.Count-1],"CheckBounds");
+                lastBounds.Offset(panel.AutoScrollPosition);
+                Want(panel.ClientRectangle.Contains(lastBounds) && (!dark || panel.AutoScrollPosition.Y < 0),"final checkbox inside viewport, narrow pane scrolls");
+                X("key Home Tab");
+                Want(search.Focused,"forward Tab exits to search; no keyboard trap");
+                X("type --delay 40 alt");
+                X("key Tab space");
+                Want(events=="alt:True:custom;alt:False:custom;","filter reentry selects sole field and preserves checked state");
+                rows=(IList)Field(form,"_layoutRows");
+                var bounds=Rect(rows[1],"CheckBounds");
+                Click(panel,new Point(bounds.Left+bounds.Width/2,bounds.Top+bounds.Height/2),3);
+                Want(events.EndsWith("right;alt:True:custom;"),"right mouse handler still runs before original toggle callback");
+                Click(panel,new Point(bounds.Left+bounds.Width/2,bounds.Top+bounds.Height/2));
+                Want(events.EndsWith("right;alt:True:custom;alt:False:custom;"),"left mouse still toggles exactly once");
+                X("key ISO_Left_Tab");
+                if(!search.Focused) Click(search,new Point(4,4));
+                X("key ctrl+a");
+                X("type --delay 30 unmatchedfixture");
+                var prior=events;
+                X("key Tab Down space");
+                Want(events==prior && Raw(form)==null,"empty results don't invoke callbacks");
+            }
+        }
+        Console.WriteLine(checks+" checks passed");
+    }
+    static Bitmap Capture(Control c) {
+        var bmp=new Bitmap(c.Width,c.Height);
+        c.DrawToBitmap(bmp,new Rectangle(0,0,bmp.Width,bmp.Height));
+        return bmp;
+    }
+}
