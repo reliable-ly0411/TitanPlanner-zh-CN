@@ -22,6 +22,7 @@ namespace MissionPlanner
             internal DateTime Time;
             internal byte Severity;
         }
+        private const string PlaneGps2UbloxDetection = "GPS 2: detected u-blox";
         private static readonly UTF8Encoding StrictUtf8 = new UTF8Encoding(false, true);
 
         private static bool IsPx4(int version) => version == 2 || version == 5 || version == 6 || version == 9;
@@ -97,7 +98,8 @@ namespace MissionPlanner
                 ? row.message == Px4BatteryText(s.Version) && row.severity == 2
                 : (row.message == "EKF3 IMU0 origin set" && (s.Version == 1 || row.severity == 6)) ||
                   (s.Version == 1 && row.message == "GPS 1: detected u-blox");
-            if (!known) return;
+            // ArduPlane 4.7.3 AP_GPS INFO: accept the verified second receiver only.
+            if (!known && !(s.Version == 1 && row.severity == 6 && row.message == PlaneGps2UbloxDetection)) return;
             if (s.Rows.TryGetValue(row.message, out var existing))
             {
                 existing.Time = DateTime.MinValue; // unexpectedly reused token
@@ -132,6 +134,7 @@ namespace MissionPlanner
                 if (IsPx4(s.Version))
                     return row.message == Px4BatteryText(s.Version) ? (s.Version == 9 ? "1 号电池已断开" : "未检测到 1 号电池") : null;
                 if (row.message == "GPS 1: detected u-blox") return "检测到 GPS 1：u-blox";
+                if (row.message == PlaneGps2UbloxDetection) return "检测到 GPS 2：u-blox";
                 if (row.message == "EKF3 IMU0 origin set") return "EKF3 IMU0 原点已设置";
                 return null;
             }
