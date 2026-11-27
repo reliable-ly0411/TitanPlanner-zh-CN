@@ -1,0 +1,128 @@
+using System;
+using System.Linq;
+using System.Threading;
+using GMap.NET;
+using GMap.NET.WindowsForms;
+
+namespace Plan29PreviewProbe
+{
+    // Offline-only candidate: owns only the local destination overlay.
+    public sealed class LocalPlanPreviewSession : IDisposable
+    {
+        public sealed class Ticket { internal Ticket() { } }
+
+        private readonly GMapControl plannerMap;
+        private readonly ReadOnlyPlanOverlay localLayer;
+        private readonly int ownerThread;
+        private Ticket active;
+        private GMapOverlay[] overlaysAtRevisionStart;
+        private ReadOnlyPlanSnapshot projectedPlan;
+        private PointLatLng[][] projectedGeometry;
+        private bool disposed;
+
+        public LocalPlanPreviewSession(GMapControl plannerMap, GMapControl flightMap)
+        {
+            this.plannerMap = plannerMap ?? throw new ArgumentNullException(nameof(plannerMap));
+            if (ReferenceEquals(plannerMap, flightMap))
+                throw new ArgumentException("Source and destination maps must be separate.");
+            localLayer = new ReadOnlyPlanOverlay(flightMap);
+            ownerThread = Thread.CurrentThread.ManagedThreadId;
+        }
+
+        // Called on edit/context change, also for a new owner, selected source, replay, or reconnect.
+        public Ticket EnterRevision(PlanKind kind)
+        {
+            CheckOwner();
+            Invalidate();
+            if (kind == PlanKind.Mission)
+            {
+                // Existing overlays may belong to an earlier planner state even when the new rows look identical.
+                overlaysAtRevisionStart = plannerMap.Overlays.Where(x => x.Id == "WPOverlay").ToArray();
+                active = new Ticket();
+            }
+            return active;
+        }
+
+        // Also called on disconnect or when either view is being replaced.
+        public void Invalidate()
+        {
+            CheckOwner();
+            active = null;
+            overlaysAtRevisionStart = null;
+            projectedPlan = null;
+            projectedGeometry = null;
+            localLayer.Clear();
+        }
+
+        // Receives the source already used by a completed PLAN renderer; does not ask it to redraw.
+        // A valid old ticket/overlay collection from another view can never become a new projection.
+        public bool NoteProjection(Ticket ticket, ReadOnlyPlanSnapshot before, ReadOnlyPlanSnapshot after, GMapOverlay rendered)
+        {
+            CheckOwner();
+            if (!Current(ticket) || before == null || after == null || !SamePlan(before, after) ||
+                rendered == null || rendered.Id != "WPOverlay" ||
+                overlaysAtRevisionStart.Any(x => ReferenceEquals(x, rendered)))
+                return false;
+            var candidates = plannerMap.Overlays.Where(x => x.Id == "WPOverlay").ToArray();
+            if (candidates.Length != 1 || !ReferenceEquals(candidates[0], rendered))
+                return false;
+
+            var segments = rendered.Routes.Select(route => route.Points.ToArray())
+                .Where(segment => segment.Length > 0).ToArray();
+            // Home-only clears; do not carry program geometry from an older or mismatched render.
+            if (after.Rows.Count == 0) segments = Array.Empty<PointLatLng[]>();
+            else if (segments.Length == 0 || segments.SelectMany(x => x).Any(point =>
+                !ReadOnlyPlanReader.IsFinite(point.Lat) || !ReadOnlyPlanReader.IsFinite(point.Lng) ||
+                Math.Abs(point.Lat) > 90 || Math.Abs(point.Lng) > 180))
+                return false; // no proven/resolved point/line projection
+            projectedPlan = after;
+            projectedGeometry = segments;
+            return true;
+        }
+
+        public bool Show(Ticket ticket, ReadOnlyPlanSnapshot fresh, string localCaption)
+        {
+            CheckOwner();
+            if (!Current(ticket) || fresh == null) return false;
+            if (fresh.Rows.Count == 0)
+            {
+                localLayer.Clear();
+                return true;
+            }
+            // Fresh read avoids trusting a generation alone if an edit somehow missed invalidation.
+            if (projectedPlan == null || !SamePlan(projectedPlan, fresh))
+            {
+                localLayer.Clear();
+                return false;
+            }
+            localLayer.Replace(projectedGeometry, localCaption);
+            return true;
+        }
+
+        private bool Current(Ticket ticket) => ticket != null && ReferenceEquals(active, ticket);
+
+        private static bool SamePlan(ReadOnlyPlanSnapshot a, ReadOnlyPlanSnapshot b) =>
+            a.DisplayCulture == b.DisplayCulture && a.Home.Frame == b.Home.Frame &&
+            a.Home.Latitude == b.Home.Latitude && a.Home.Longitude == b.Home.Longitude &&
+            a.Home.AltitudeMetres == b.Home.AltitudeMetres &&
+            a.Rows.Count == b.Rows.Count && a.Rows.Zip(b.Rows, (x, y) =>
+                x.Sequence == y.Sequence && x.CommandKey == y.CommandKey && x.CommandId == y.CommandId &&
+                x.Frame == y.Frame && x.DisplayValues.SequenceEqual(y.DisplayValues) &&
+                x.Values.SequenceEqual(y.Values)).All(equal => equal);
+
+        private void CheckOwner()
+        {
+            if (Thread.CurrentThread.ManagedThreadId != ownerThread)
+                throw new InvalidOperationException("Only the owning UI thread can update preview lifetime.");
+            if (disposed) throw new ObjectDisposedException(nameof(LocalPlanPreviewSession));
+        }
+
+        public void Dispose()
+        {
+            if (disposed) return;
+            Invalidate();
+            localLayer.Dispose();
+            disposed = true;
+        }
+    }
+}
