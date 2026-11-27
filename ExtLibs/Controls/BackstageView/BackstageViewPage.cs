@@ -21,6 +21,9 @@ namespace MissionPlanner.Controls.BackstageView
 
         public bool Advanced { get; set; }
 
+        /// <summary>Keep a visible selected leaf open on a repeated navigation click.</summary>
+        public bool IgnoreClickWhenActive { get; set; }
+
         [Bindable(true)]
         public bool Show { get; set; }
 
