@@ -277,6 +277,9 @@ namespace MissionPlanner.Controls
             {
                 if (combo.Disposing || combo.IsDisposed) return;
                 var label = DisplayAuxiliaryOption(combo, combo.SelectedIndex);
+                // Owner drawing does not expose its caption as the native ComboBox value.
+                if (combo.AccessibleDescription != label)
+                    combo.AccessibleDescription = label;
                 if (tip.GetToolTip(combo) == label) return;
                 tip.Hide(combo);
                 tip.SetToolTip(combo, label);
@@ -311,6 +314,9 @@ namespace MissionPlanner.Controls
         /// Rows that each run an aux function (any RCx_OPTION) on the vehicle at a switch position, as an RC switch
         /// assigned to it would. The function a row runs is kept in the settings (AuxN_desc).
         /// </summary>
+        internal static string AuxiliaryFunctionAccessibleName(string groupCaption, int rowIndex)
+            => groupCaption + " " + (rowIndex + 1).ToString(System.Globalization.CultureInfo.CurrentUICulture);
+
         private void CreateAuxRows()
         {
             tableAux.SuspendLayout();
@@ -319,6 +325,7 @@ namespace MissionPlanner.Controls
                 // sized and styled from the Control box, which the designer scaled
                 var function = new ComboBox
                 {
+                    AccessibleName = AuxiliaryFunctionAccessibleName(grpAux.Text, row),
                     Anchor = cmbAction.Anchor,
                     DropDownStyle = ComboBoxStyle.DropDownList,
                     DropDownWidth = 250,
