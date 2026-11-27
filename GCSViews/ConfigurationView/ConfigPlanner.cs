@@ -1555,10 +1555,17 @@ namespace MissionPlanner.GCSViews.ConfigurationView
         {
         }
 
+        private static readonly string[] BasicHudColorCaptionKeys =
+        {
+            nameof(KnownColor.Black), nameof(KnownColor.White), nameof(KnownColor.Red), nameof(KnownColor.Blue),
+            nameof(KnownColor.Green), nameof(KnownColor.Yellow), nameof(KnownColor.Orange), nameof(KnownColor.Brown)
+        };
+
         internal static void SizeHudColorDropDown(ComboBox combo)
         {
             var width = new[] { nameof(KnownColor.ActiveBorder), nameof(KnownColor.AliceBlue),
                     nameof(KnownColor.GradientInactiveCaption) }
+                .Concat(BasicHudColorCaptionKeys)
                 .Select(key => TextRenderer.MeasureText(FormatHudColorCaption(key), combo.Font).Width)
                 .Max();
             combo.DropDownWidth = Math.Max(combo.Width, width + 35 + SystemInformation.VerticalScrollBarWidth);
@@ -1574,7 +1581,8 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                 case nameof(KnownColor.ActiveBorder): return UiText.Translate("HUD color: ActiveBorder");
                 case nameof(KnownColor.AliceBlue): return UiText.Translate("HUD color: AliceBlue");
                 case nameof(KnownColor.GradientInactiveCaption): return UiText.Translate("HUD color: GradientInactiveCaption");
-                default: return key;
+                default: return BasicHudColorCaptionKeys.Contains(key, StringComparer.Ordinal)
+                    ? UiText.Translate("HUD color: " + key) : key;
             }
         }
 
@@ -1587,7 +1595,8 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             {
                 case nameof(KnownColor.AliceBlue): return UiText.Translate("HUD color compact: AliceBlue");
                 case nameof(KnownColor.GradientInactiveCaption): return UiText.Translate("HUD color compact: GradientInactiveCaption");
-                default: return null;
+                default: return BasicHudColorCaptionKeys.Contains(key, StringComparer.Ordinal)
+                    ? UiText.Translate("HUD color compact: " + key) : null;
             }
         }
 
