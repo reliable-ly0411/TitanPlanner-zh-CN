@@ -12,6 +12,7 @@ using System.Xml;
 namespace MissionPlanner.Utilities
 {
     public enum AppearanceAsset { WindowIcon, StartupImage }
+    internal enum ImportedVendorIcon { MissionPlanner, TitanPlanner }
 
     /// <summary>
     /// A separate, per-user preference file. Never writes to the installation, source image or config.xml.
@@ -34,6 +35,7 @@ namespace MissionPlanner.Utilities
             public string Icon = "";
             public string Image = "";
             public string StartupPreset = "", IconPreset = "", MfeIcon = "", MfeImage = "";
+            public string MissionPlannerIcon = "", TitanPlannerIcon = "";
         }
 
         public Icon LoadIcon(out string warning)
@@ -78,8 +80,9 @@ namespace MissionPlanner.Utilities
         private byte[] LoadSelectedAsset(AppearanceAsset kind, Selection selection, ref string warning)
         {
             var name = kind == AppearanceAsset.WindowIcon
-                ? (selection.IconPreset == "mfe" ? selection.MfeIcon : selection.Icon)
-                : (selection.StartupPreset == "mfe" ? selection.MfeImage : selection.Image);
+                ? StoredIconName(selection, selection.IconPreset)
+                : (selection.StartupPreset == "mfe" ? selection.MfeImage :
+                    selection.StartupPreset == "default" ? "" : selection.Image);
             if (name.Length == 0) return null;
             try
             {
@@ -98,10 +101,10 @@ namespace MissionPlanner.Utilities
 
         public void Import(AppearanceAsset kind, string source)
         {
-                        ImportLocal(kind, source, false);
+            ImportLocal(kind, source, "");
         }
 
-        internal void ImportMfe(AppearanceAsset kind, string source) { ImportLocal(kind, source, true); }
+        internal void ImportMfe(AppearanceAsset kind, string source) { ImportLocal(kind, source, "mfe"); }
 
         internal bool CanSelectMfe(AppearanceAsset kind)
         {
@@ -114,16 +117,61 @@ namespace MissionPlanner.Utilities
         internal bool CanSelectSavedIcon() { return ReadSelection(out _).Icon.Length != 0; }
         internal void SelectSavedIcon() { Save(AppearanceAsset.WindowIcon, null, "", reusePreset: true); }
 
-        private void ImportLocal(AppearanceAsset kind, string source, bool mfe)
+        internal void ImportVendorIcon(ImportedVendorIcon vendor, string source)
+        {
+            ImportLocal(AppearanceAsset.WindowIcon, source, VendorIconId(vendor));
+        }
+
+        internal bool CanSelectVendorIcon(ImportedVendorIcon vendor)
+        {
+            return StoredIconName(ReadSelection(out _), VendorIconId(vendor)).Length != 0;
+        }
+
+        internal void SelectVendorIcon(ImportedVendorIcon vendor)
+        {
+            Save(AppearanceAsset.WindowIcon, null, "", VendorIconId(vendor), reusePreset: true);
+        }
+
+        private static string VendorIconId(ImportedVendorIcon vendor)
+        {
+            switch (vendor)
+            {
+                case ImportedVendorIcon.MissionPlanner: return "mission-planner";
+                case ImportedVendorIcon.TitanPlanner: return "titan-planner";
+                default: throw new ArgumentOutOfRangeException(nameof(vendor));
+            }
+        }
+
+        private static string StoredIconName(Selection selection, string preset)
+        {
+            switch (preset)
+            {
+                case "default": return "";
+                case "mfe": return selection.MfeIcon;
+                case "mission-planner": return selection.MissionPlannerIcon;
+                case "titan-planner": return selection.TitanPlannerIcon;
+                default: return selection.Icon;
+            }
+        }
+
+        private void ImportLocal(AppearanceAsset kind, string source, string preset)
         {
             var extension = Path.GetExtension(source).ToLowerInvariant();
             if (extension == ".jpeg") extension = ".jpg";
             var bytes = ReadBounded(source, Limit(kind));
             Validate(kind, extension, bytes); // Validate before creating or changing any preference.
-            Save(kind, bytes, extension, mfe ? "mfe" : "");
+            Save(kind, bytes, extension, preset);
         }
 
-        public void RestoreDefault(AppearanceAsset kind) { Save(kind, null, ""); }
+        public void RestoreDefault(AppearanceAsset kind) { Save(kind, null, "", "default"); }
+
+        internal string CurrentPreset(AppearanceAsset kind)
+        {
+            var selection = ReadSelection(out _);
+            var preset = kind == AppearanceAsset.WindowIcon ? selection.IconPreset : selection.StartupPreset;
+            var custom = kind == AppearanceAsset.WindowIcon ? selection.Icon : selection.Image;
+            return preset.Length != 0 ? preset : custom.Length != 0 ? "custom" : "default";
+        }
 
         internal void SelectMissionPlannerStartup()
         {
@@ -142,7 +190,7 @@ namespace MissionPlanner.Utilities
             return selection.Image.Length != 0;
         }
 
-        private void Save(AppearanceAsset kind, byte[] bytes, string extension, string startupPreset = "",
+        private void Save(AppearanceAsset kind, byte[] bytes, string extension, string preset = "",
             bool reuseSavedImage = false, bool reusePreset = false)
         {
             Directory.CreateDirectory(directory);
@@ -163,10 +211,10 @@ namespace MissionPlanner.Utilities
                         asset.Flush(true);
                     }
                 }
-                if (kind == AppearanceAsset.WindowIcon) selection.IconPreset = startupPreset;
-                else selection.StartupPreset = startupPreset;
+                if (kind == AppearanceAsset.WindowIcon) selection.IconPreset = preset;
+                else selection.StartupPreset = preset;
 
-                if (startupPreset == "mfe" && !reusePreset)
+                if (preset == "mfe" && !reusePreset)
                 {
                     if (kind == AppearanceAsset.WindowIcon) selection.MfeIcon = name;
                     else selection.MfeImage = name;
@@ -176,17 +224,22 @@ namespace MissionPlanner.Utilities
                     if (LoadSelectedAsset(kind, selection, ref ignored) == null)
                         throw new InvalidDataException();
                 }
-                else if (kind == AppearanceAsset.WindowIcon) selection.Icon = name;
+                else if (kind == AppearanceAsset.WindowIcon)
+                {
+                    if (preset == "mission-planner") selection.MissionPlannerIcon = name;
+                    else if (preset == "titan-planner") selection.TitanPlannerIcon = name;
+                    else if (preset.Length == 0) selection.Icon = name;
+                }
                 else
                 {
-                    selection.StartupPreset = startupPreset;
+                    selection.StartupPreset = preset;
                     // Choosing the built-in never discards the saved imported selection or its bytes.
                     if (reuseSavedImage)
                     {
                         if (LoadSelectedAsset(AppearanceAsset.StartupImage, selection, ref ignored) == null)
                             throw new InvalidDataException("No saved startup image is available.");
                     }
-                    else if (startupPreset.Length == 0) selection.Image = name;
+                    else if (preset.Length == 0) selection.Image = name;
                 }
 
                 var manifest = Path.Combine(directory, "settings.xml");
@@ -200,9 +253,16 @@ namespace MissionPlanner.Utilities
                         {
                             writer.WriteStartElement("appearance");
                             writer.WriteAttributeString("version", "1");
-                            writer.WriteAttributeString("icon", selection.Icon);
-                            writer.WriteAttributeString("image", selection.Image);
-                            if (selection.IconPreset == "mfe") writer.WriteAttributeString("iconPreset", "mfe");
+                            // Older versions ignore the optional saved attributes and still see the default.
+                            writer.WriteAttributeString("icon", selection.IconPreset == "default" ? "" : selection.Icon);
+                            writer.WriteAttributeString("image", selection.StartupPreset == "default" ? "" : selection.Image);
+                            if (selection.IconPreset == "default" && selection.Icon.Length != 0)
+                                writer.WriteAttributeString("savedIcon", selection.Icon);
+                            if (selection.StartupPreset == "default" && selection.Image.Length != 0)
+                                writer.WriteAttributeString("savedImage", selection.Image);
+                            if (selection.IconPreset.Length != 0) writer.WriteAttributeString("iconPreset", selection.IconPreset);
+                            if (selection.MissionPlannerIcon.Length != 0) writer.WriteAttributeString("missionPlannerIcon", selection.MissionPlannerIcon);
+                            if (selection.TitanPlannerIcon.Length != 0) writer.WriteAttributeString("titanPlannerIcon", selection.TitanPlannerIcon);
                             if (selection.MfeIcon.Length != 0) writer.WriteAttributeString("mfeIcon", selection.MfeIcon);
                             if (selection.MfeImage.Length != 0) writer.WriteAttributeString("mfeImage", selection.MfeImage);
                             if (selection.StartupPreset.Length != 0)
@@ -244,9 +304,18 @@ namespace MissionPlanner.Utilities
                 if (!ValidName(icon, @"ico") || !ValidName(image, @"png|jpg|bmp"))
                     throw new InvalidDataException();
                 var startupPreset = root.GetAttribute("startupPreset");
-                return new Selection { Icon = icon, Image = image,
-                    StartupPreset = startupPreset == "mission-planner" || startupPreset == "mfe" ? startupPreset : "",
-                    IconPreset = root.GetAttribute("iconPreset") == "mfe" ? "mfe" : "",
+                var iconPreset = root.GetAttribute("iconPreset");
+                var savedIcon = root.GetAttribute("savedIcon");
+                var savedImage = root.GetAttribute("savedImage");
+                return new Selection {
+                    Icon = iconPreset == "default" && ValidName(savedIcon, "ico") ? savedIcon : icon,
+                    Image = startupPreset == "default" && ValidName(savedImage, @"png|jpg|bmp") ? savedImage : image,
+                    StartupPreset = startupPreset == "mission-planner" || startupPreset == "mfe" ||
+                        startupPreset == "default" ? startupPreset : "",
+                    IconPreset = iconPreset == "mfe" || iconPreset == "mission-planner" ||
+                        iconPreset == "titan-planner" || iconPreset == "default" ? iconPreset : "",
+                    MissionPlannerIcon = ReadOptionalIcon(root, "missionPlannerIcon"),
+                    TitanPlannerIcon = ReadOptionalIcon(root, "titanPlannerIcon"),
                     MfeIcon = ValidName(root.GetAttribute("mfeIcon"), @"ico") ? root.GetAttribute("mfeIcon") : "",
                     MfeImage = ValidName(root.GetAttribute("mfeImage"), @"png|jpg|bmp") ? root.GetAttribute("mfeImage") : "" };
             }
@@ -255,6 +324,12 @@ namespace MissionPlanner.Utilities
                 warning = "Appearance preferences unavailable; using defaults.";
                 return new Selection();
             }
+        }
+
+        private static string ReadOptionalIcon(XmlElement root, string attribute)
+        {
+            var name = root.GetAttribute(attribute);
+            return ValidName(name, "ico") ? name : "";
         }
 
         private static bool ValidName(string name, string extensions)

@@ -11,9 +11,20 @@ namespace MissionPlanner.GCSViews.ConfigurationView
     /// <summary>Desktop appearance controls; imports and resets remain independent of vehicle settings.</summary>
     public sealed class ConfigAppearance : MyUserControl
     {
-        private readonly PictureBox iconPreview = new PictureBox { SizeMode = PictureBoxSizeMode.CenterImage, Height = 64, Dock = DockStyle.Fill };
-        private readonly PictureBox startupPreview = new PictureBox { SizeMode = PictureBoxSizeMode.Zoom, Height = 200, Dock = DockStyle.Fill, BackColor = Color.Black };
-        private Button savedStartup, savedIcon, mfeIcon, mfeStartup;
+        private readonly PictureBox iconPreview = new PictureBox { SizeMode = PictureBoxSizeMode.Zoom, Height = 40, Dock = DockStyle.Fill };
+        private readonly PictureBox startupPreview = new PictureBox { SizeMode = PictureBoxSizeMode.Zoom, Height = 48, Dock = DockStyle.Fill, BackColor = Color.Black };
+        private ComboBox iconChoices, startupChoices;
+        private readonly ToolTip details = new ToolTip();
+        private bool synchronizingPresets;
+
+        private sealed class Preset
+        {
+            public readonly string Id;
+            private readonly string caption;
+
+            public Preset(string id, string caption) { Id = id; this.caption = caption; }
+            public override string ToString() => caption;
+        }
         private readonly Label status = new Label { AutoSize = true, Dock = DockStyle.Fill };
 
         public ConfigAppearance() : this(embedded: false)
@@ -39,49 +50,28 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             };
             layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
             if (!embedded)
-                AddText(layout, "Window icon and startup image");
-            AddText(layout, "ICO: up to 4 MiB, 1-256 pixels per frame (up to 64 frames). Window icons apply now and on restart.");
-            layout.Controls.Add(iconPreview);
-            layout.Controls.Add(Buttons("Choose ICO...", "Restore default icon", AppearanceAsset.WindowIcon));
-            AddText(layout, "PNG, JPEG or BMP: up to 16 MiB, 4096 pixels per side. The full image is fitted without cropping. Applies on next startup.");
-            layout.Controls.Add(startupPreview);
-            layout.Controls.Add(Buttons("Choose startup image...", "Restore default startup image", AppearanceAsset.StartupImage));
-            bool enhancedChinese = string.Equals(System.Globalization.CultureInfo.CurrentUICulture.Name,
-                "zh-CN", StringComparison.Ordinal);
-            AddText(layout, enhancedChinese ? "\u594b\u6597\u8005\u9884\u8bbe\uff1a\u53ea\u4f7f\u7528\u624b\u52a8\u5bfc\u5165\u7684\u672c\u5730\u7d20\u6750\u3002" :
-                "MakeFlyEasy presets use only files you import locally.");
-            var mfeIconRow = new FlowLayoutPanel { AutoSize = true, Dock = DockStyle.Fill };
-            mfeIcon = PresetButton(mfeIconRow, enhancedChinese ? "\u9009\u62e9\u594b\u6597\u8005\u7a97\u53e3\u56fe\u6807" : "Use MakeFlyEasy window icon",
-                () => DesktopAppearance.SelectMfe(AppearanceAsset.WindowIcon));
-            PresetButton(mfeIconRow, enhancedChinese ? "\u5bfc\u5165\u594b\u6597\u8005 ICO..." : "Import MakeFlyEasy ICO...",
-                () => ImportMfe(AppearanceAsset.WindowIcon), wrapSave: false);
-            savedIcon = PresetButton(mfeIconRow, enhancedChinese ? "\u6362\u56de\u81ea\u5b9a\u4e49\u7a97\u53e3\u56fe\u6807" : "Use saved custom window icon",
-                DesktopAppearance.SelectSavedIcon);
-            layout.Controls.Add(mfeIconRow);
-            var mfeStartupRow = new FlowLayoutPanel { AutoSize = true, Dock = DockStyle.Fill };
-            mfeStartup = PresetButton(mfeStartupRow, enhancedChinese ? "\u9009\u62e9\u594b\u6597\u8005\u542f\u52a8\u56fe" : "Use MakeFlyEasy startup artwork",
-                () => DesktopAppearance.SelectMfe(AppearanceAsset.StartupImage));
-            PresetButton(mfeStartupRow, enhancedChinese ? "\u5bfc\u5165\u594b\u6597\u8005\u542f\u52a8\u56fe..." : "Import MakeFlyEasy startup artwork...",
-                () => ImportMfe(AppearanceAsset.StartupImage), wrapSave: false);
-            layout.Controls.Add(mfeStartupRow);
-            var missionStartup = new Button
-            {
-                AutoSize = true, Anchor = AnchorStyles.Left,
-                Text = enhancedChinese ? "选用 Mission Planner 原启动图" : "Use Mission Planner startup artwork"
-            };
-            missionStartup.Click += (sender, args) => Change(DesktopAppearance.SelectMissionPlannerStartup);
-            layout.Controls.Add(missionStartup);
-            savedStartup = new Button
-            {
-                AutoSize = true, Anchor = AnchorStyles.Left,
-                Text = enhancedChinese ? "改回已保存的自定义启动图" : "Use saved custom startup artwork"
-            };
-            savedStartup.Click += (sender, args) => Change(DesktopAppearance.Store.SelectSavedStartupImage);
-            layout.Controls.Add(savedStartup);
-            AddText(layout, enhancedChinese ? "默认启动图即为 TitanPlanner 原图。" : "The default startup artwork is the original TitanPlanner image.");
-            AddText(layout, "These preferences apply to this user's profiles. Imported copies are saved separately; original files, logs and flight settings are preserved.");
-            AddText(layout, "EXE, installer and Explorer icons require a rebuild. Existing or pinned shortcuts keep their own icons; change or recreate them separately. Windows may retain a cached taskbar icon.");
-            AddText(layout, "Use images you have permission to use. Restoring defaults preserves imported copies and preference backups.");
+                AddText(layout, UiText.Translate("Window icon and startup image"));
+            var iconTitle = AddText(layout, UiText.Translate("Window icon · applies now"));
+            layout.Controls.Add(PresetRow(AppearanceAsset.WindowIcon, out iconChoices));
+            var startupTitle = AddText(layout, UiText.Translate("Startup image · applies on next start"));
+            layout.Controls.Add(PresetRow(AppearanceAsset.StartupImage, out startupChoices));
+
+            var previews = new TableLayoutPanel { Dock = DockStyle.Top, AutoSize = true, ColumnCount = 2 };
+            previews.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25));
+            previews.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 75));
+            iconPreview.Name = "WindowIconPreview";
+            iconPreview.AccessibleName = UiText.Translate("Active window icon preview");
+            iconPreview.MaximumSize = new Size(40, 40);
+            startupPreview.Name = "StartupImagePreview";
+            startupPreview.AccessibleName = UiText.Translate("Next startup image preview");
+            previews.Controls.Add(iconPreview, 0, 0);
+            previews.Controls.Add(startupPreview, 1, 0);
+            layout.Controls.Add(previews);
+            details.SetToolTip(iconTitle, UiText.Translate("ICO: up to 4 MiB, 1-256 pixels per frame (up to 64 frames). Window icons apply now and on restart.") +
+                "\n" + UiText.Translate("EXE, installer and Explorer icons require a rebuild. Existing or pinned shortcuts keep their own icons; change or recreate them separately. Windows may retain a cached taskbar icon."));
+            details.SetToolTip(startupTitle, UiText.Translate("PNG, JPEG or BMP: up to 16 MiB, 4096 pixels per side. The full image is fitted without cropping. Applies on next startup."));
+            details.SetToolTip(status, UiText.Translate("Choosing a file beside a built-in image or default imports it as custom. Vendor icons are not bundled or downloaded.") +
+                "\n" + UiText.Translate("Use images you have permission to use. Restoring defaults preserves imported copies and preference backups."));
             layout.Controls.Add(status);
             Controls.Add(layout);
             layout.SizeChanged += (sender, args) => WrapLabels(layout);
@@ -90,13 +80,15 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             catch (Exception) { status.Text = UiText.Translate("Appearance preview unavailable."); }
         }
 
-        private static void AddText(TableLayoutPanel layout, string text)
+        private static Label AddText(TableLayoutPanel layout, string text)
         {
-            layout.Controls.Add(new Label
+            var label = new Label
             {
                 Text = UiText.Translate(text), AutoSize = true, Dock = DockStyle.Fill,
-                Margin = new Padding(3, 6, 3, 6)
-            });
+                Margin = new Padding(3, 2, 3, 2)
+            };
+            layout.Controls.Add(label);
+            return label;
         }
 
         private static void WrapLabels(TableLayoutPanel layout)
@@ -105,47 +97,197 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                 if (control is Label) control.MaximumSize = new Size(Math.Max(1, layout.ClientSize.Width - layout.Padding.Horizontal - 6), 0);
         }
 
-        private Control Buttons(string chooseText, string resetText, AppearanceAsset kind)
+        private Control PresetRow(AppearanceAsset kind, out ComboBox combo)
         {
-            var flow = new FlowLayoutPanel { AutoSize = true, Dock = DockStyle.Fill, WrapContents = true };
-            var choose = new Button { Text = UiText.Translate(chooseText), AutoSize = true };
-            var reset = new Button { Text = UiText.Translate(resetText), AutoSize = true };
-            choose.Click += (sender, args) =>
+            var icon = kind == AppearanceAsset.WindowIcon;
+            var pickerName = icon ? UiText.Translate("Window icon") : UiText.Translate("Startup image");
+            var fileName = icon ? UiText.Translate("Choose local icon…") : UiText.Translate("Choose local startup image…");
+            var row = new TableLayoutPanel
             {
-                using (var dialog = new OpenFileDialog
-                {
-                    Filter = kind == AppearanceAsset.WindowIcon ? "ICO (*.ico)|*.ico" : "PNG / JPEG / BMP|*.png;*.jpg;*.jpeg;*.bmp",
-                    CheckFileExists = true, Multiselect = false, RestoreDirectory = true,
-                    Title = UiText.Translate(chooseText)
-                })
-                {
-                    if (dialog.ShowDialog(this) == DialogResult.OK)
-                        Change(() => DesktopAppearance.Import(kind, dialog.FileName));
-                }
+                AutoSize = true, AutoSizeMode = AutoSizeMode.GrowAndShrink, Dock = DockStyle.Fill,
+                Margin = Padding.Empty, ColumnCount = 2
             };
-            reset.Click += (sender, args) => Change(() => DesktopAppearance.RestoreDefault(kind));
-            flow.Controls.Add(choose);
-            flow.Controls.Add(reset);
-            return flow;
+            row.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
+            row.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
+            var menu = new ComboBox
+            {
+                Name = icon ? "WindowIconPreset" : "StartupImagePreset",
+                AccessibleName = pickerName, DropDownStyle = ComboBoxStyle.DropDownList,
+                DropDownWidth = 260, Anchor = AnchorStyles.Left | AnchorStyles.Right
+            };
+            menu.Items.Add(new Preset("default", icon ? UiText.Translate("Packaged default icon") : UiText.Translate("TitanPlanner artwork (default)")));
+            menu.Items.Add(new Preset("mission-planner", icon ? UiText.Translate("Mission Planner (local)") : UiText.Translate("Mission Planner artwork")));
+            if (icon)
+                menu.Items.Add(new Preset("titan-planner", UiText.Translate("TitanPlanner (local)")));
+            menu.Items.Add(new Preset("mfe", UiText.Translate("MakeFlyEasy")));
+            menu.Items.Add(new Preset("custom", UiText.Translate("Custom")));
+            menu.SelectedIndex = 0;
+            UpdatePresetCaption(menu);
+            menu.DropDown += (sender, args) => SizePresetPopup(menu);
+            // Closed-list arrow keys can change the index without raising SelectionChangeCommitted
+            // (in particular on Mono). Do not apply intermediate choices in an open list.
+            menu.SelectedIndexChanged += (sender, args) =>
+            {
+                UpdatePresetCaption(menu);
+                if (!menu.DroppedDown) SelectPreset(kind, menu.SelectedItem as Preset);
+            };
+            menu.SelectionChangeCommitted += (sender, args) => SelectPreset(kind, menu.SelectedItem as Preset);
+            // Mono closes an expanded list before raising KeyDown for Return/Escape,
+            // and may not emit SelectionChangeCommitted for Return. Wait for the key.
+            if (Type.GetType("Mono.Runtime") != null)
+            {
+                Preset openedChoice = null;
+                bool escape = false;
+                bool closing = false;
+                menu.DropDown += (sender, args) =>
+                {
+                    openedChoice = menu.SelectedItem as Preset;
+                    escape = false;
+                    closing = false;
+                };
+                menu.KeyDown += (sender, args) =>
+                {
+                    if ((menu.DroppedDown || closing) && args.KeyCode == Keys.Escape)
+                        escape = true;
+                };
+                menu.DropDownClosed += (sender, args) =>
+                {
+                    closing = true;
+                    menu.BeginInvoke((Action)(() =>
+                    {
+                        closing = false;
+                        if (menu.IsDisposed || openedChoice == null) return;
+                        if (escape) SetChoice(kind, openedChoice.Id);
+                        else if (menu.SelectedItem != openedChoice)
+                            SelectPreset(kind, menu.SelectedItem as Preset);
+                    }));
+                };
+            }
+            var choose = new Button
+            {
+                Name = icon ? "ChooseLocalWindowIcon" : "ChooseLocalStartupImage",
+                Text = fileName, AutoSize = true, Anchor = AnchorStyles.Left
+            };
+            choose.Click += (sender, args) => ChooseLocalAsset(kind, (Preset)menu.SelectedItem, fileName);
+            row.Controls.Add(menu, 0, 0);
+            row.Controls.Add(choose, 1, 0);
+            combo = menu;
+            return row;
         }
 
-        private Button PresetButton(FlowLayoutPanel row, string text, Action action, bool wrapSave = true)
+        private void UpdatePresetCaption(ComboBox menu)
         {
-            var button = new Button { AutoSize = true, Text = text };
-            button.Click += (sender, args) => { if (wrapSave) Change(action); else action(); };
-            row.Controls.Add(button);
-            return button;
+            string caption = menu.GetItemText(menu.SelectedItem);
+            details.SetToolTip(menu, caption);
+            menu.AccessibleDescription = caption;
         }
 
-        private void ImportMfe(AppearanceAsset kind)
+        private static void SizePresetPopup(ComboBox menu)
         {
+            using (var graphics = menu.CreateGraphics())
+            {
+                int widest = 0;
+                foreach (var item in menu.Items)
+                    widest = Math.Max(widest, TextRenderer.MeasureText(graphics, menu.GetItemText(item), menu.Font,
+                        Size.Empty, TextFormatFlags.SingleLine | TextFormatFlags.NoPrefix).Width);
+                int chrome = SystemInformation.VerticalScrollBarWidth + (int)Math.Ceiling(8 * graphics.DpiX / 96);
+                int desired = Math.Max(Math.Max(260, menu.Width), widest + chrome);
+                menu.DropDownWidth = Math.Max(1, Math.Min(desired, Screen.FromControl(menu).WorkingArea.Width));
+            }
+        }
+
+        private void SelectPreset(AppearanceAsset kind, Preset preset)
+        {
+            if (synchronizingPresets || preset == null) return;
+            var icon = kind == AppearanceAsset.WindowIcon;
+            var store = DesktopAppearance.Store;
+            var active = store.CurrentPreset(kind);
+            if (active == preset.Id) return;
+            Action select;
+            bool available;
+            switch (preset.Id)
+            {
+                case "default":
+                    select = () => DesktopAppearance.RestoreDefault(kind);
+                    available = true;
+                    break;
+                case "mission-planner":
+                    select = icon ? (Action)(() => DesktopAppearance.SelectVendorIcon(ImportedVendorIcon.MissionPlanner))
+                        : DesktopAppearance.SelectMissionPlannerStartup;
+                    available = !icon || store.CanSelectVendorIcon(ImportedVendorIcon.MissionPlanner);
+                    break;
+                case "titan-planner":
+                    select = () => DesktopAppearance.SelectVendorIcon(ImportedVendorIcon.TitanPlanner);
+                    available = store.CanSelectVendorIcon(ImportedVendorIcon.TitanPlanner);
+                    break;
+                case "mfe":
+                    select = () => DesktopAppearance.SelectMfe(kind);
+                    available = store.CanSelectMfe(kind);
+                    break;
+                default:
+                    select = icon ? (Action)DesktopAppearance.SelectSavedIcon : store.SelectSavedStartupImage;
+                    available = icon ? store.CanSelectSavedIcon() : store.CanSelectSavedStartupImage();
+                    break;
+            }
+            if (!available)
+            {
+                status.Text = string.Format(UiText.Translate("“{0}” has no local file. Choose one; “{1}” remains active."), preset,
+                    CaptionFor(kind, active));
+                return;
+            }
+            Change(select);
+        }
+
+        private void ChooseLocalAsset(AppearanceAsset kind, Preset preset, string title)
+        {
+            var icon = kind == AppearanceAsset.WindowIcon;
             using (var dialog = new OpenFileDialog
             {
-                Filter = kind == AppearanceAsset.WindowIcon ? "ICO (*.ico)|*.ico" : "PNG / JPEG / BMP|*.png;*.jpg;*.jpeg;*.bmp",
-                CheckFileExists = true, Multiselect = false, RestoreDirectory = true
+                Filter = icon ? "ICO (*.ico)|*.ico" : "PNG / JPEG / BMP|*.png;*.jpg;*.jpeg;*.bmp",
+                CheckFileExists = true, Multiselect = false, RestoreDirectory = true, Title = title
             })
-                if (dialog.ShowDialog(this) == DialogResult.OK)
-                    Change(() => DesktopAppearance.ImportMfe(kind, dialog.FileName));
+            {
+                if (dialog.ShowDialog(this) != DialogResult.OK)
+                {
+                    SetChoice(kind, DesktopAppearance.Store.CurrentPreset(kind));
+                    status.Text = UiText.Translate("Cancelled; the current appearance is unchanged.");
+                    return;
+                }
+                Change(() =>
+                {
+                    if (icon && preset.Id == "mission-planner")
+                        DesktopAppearance.ImportVendorIcon(ImportedVendorIcon.MissionPlanner, dialog.FileName);
+                    else if (icon && preset.Id == "titan-planner")
+                        DesktopAppearance.ImportVendorIcon(ImportedVendorIcon.TitanPlanner, dialog.FileName);
+                    else if (preset.Id == "mfe")
+                        DesktopAppearance.ImportMfe(kind, dialog.FileName);
+                    else
+                        DesktopAppearance.Import(kind, dialog.FileName);
+                });
+            }
+        }
+
+        private string CaptionFor(AppearanceAsset kind, string id)
+        {
+            var menu = kind == AppearanceAsset.WindowIcon ? iconChoices : startupChoices;
+            if (menu != null)
+                foreach (Preset preset in menu.Items)
+                    if (preset.Id == id) return preset.ToString();
+            return id;
+        }
+
+        private void SetChoice(AppearanceAsset kind, string id)
+        {
+            var menu = kind == AppearanceAsset.WindowIcon ? iconChoices : startupChoices;
+            if (menu == null) return;
+            foreach (Preset preset in menu.Items)
+                if (preset.Id == id)
+                {
+                    synchronizingPresets = true;
+                    try { menu.SelectedItem = preset; }
+                    finally { synchronizingPresets = false; }
+                    return;
+                }
         }
 
         private void Change(Action save)
@@ -156,10 +298,14 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             }
             catch (Exception ex)
             {
+                SetChoice(AppearanceAsset.WindowIcon, DesktopAppearance.Store.CurrentPreset(AppearanceAsset.WindowIcon));
+                SetChoice(AppearanceAsset.StartupImage, DesktopAppearance.Store.CurrentPreset(AppearanceAsset.StartupImage));
                 status.Text = UiText.Translate("Unable to save appearance. Previous selection is unchanged.");
                 // Paths and decoder exception text can contain personal information. Show only known validation messages.
                 if (ex is InvalidDataException)
-                    status.Text += " " + UiText.Translate(ex.Message);
+                    status.Text += " " + (ex.Message == new InvalidDataException().Message
+                        ? UiText.Translate("Saved artwork is unavailable. Reimport the local file.")
+                        : UiText.Translate(ex.Message));
                 return;
             }
             string warning;
@@ -171,32 +317,38 @@ namespace MissionPlanner.GCSViews.ConfigurationView
 
         private string RefreshPreviews()
         {
-            var icon = ThemeManager.FormIcon;
-            var previous = iconPreview.Image;
-            iconPreview.Image = icon == null ? null : icon.ToBitmap();
-            previous?.Dispose();
-            string warning;
-            var image = DesktopAppearance.CreateStartupPreview(out warning);
-            previous = startupPreview.Image;
-            startupPreview.Image = image;
-            previous?.Dispose();
-            if (savedStartup != null)
-                savedStartup.Enabled = DesktopAppearance.Store.CanSelectSavedStartupImage();
-            if (mfeIcon != null)
-                mfeIcon.Enabled = DesktopAppearance.Store.CanSelectMfe(AppearanceAsset.WindowIcon);
-            if (mfeStartup != null)
-                mfeStartup.Enabled = DesktopAppearance.Store.CanSelectMfe(AppearanceAsset.StartupImage);
-            if (savedIcon != null)
-                savedIcon.Enabled = DesktopAppearance.Store.CanSelectSavedIcon();
-            warning = DesktopAppearance.IconWarning ?? warning;
-            status.Text = UiText.Translate(warning ?? "Default or saved appearance is shown above.");
+            // Synchronize selectors even when a thumbnail cannot be decoded or rendered.
+            SetChoice(AppearanceAsset.WindowIcon, DesktopAppearance.Store.CurrentPreset(AppearanceAsset.WindowIcon));
+            SetChoice(AppearanceAsset.StartupImage, DesktopAppearance.Store.CurrentPreset(AppearanceAsset.StartupImage));
+            string warning = null;
+            string previewWarning = null;
+            try
+            {
+                var icon = ThemeManager.FormIcon;
+                ReplacePreview(iconPreview, icon == null ? null : icon.ToBitmap());
+            }
+            catch (Exception) { previewWarning = "Appearance preview unavailable."; }
+            try { ReplacePreview(startupPreview, DesktopAppearance.CreateStartupPreview(out warning)); }
+            catch (Exception) { previewWarning = "Appearance preview unavailable."; }
+            warning = DesktopAppearance.IconWarning ?? warning ?? previewWarning;
+            status.Text = warning == null
+                ? UiText.Translate("To supply a missing preset, select it, then choose a local file.")
+                : UiText.Translate(warning);
             return warning;
+        }
+
+        private static void ReplacePreview(PictureBox preview, Image image)
+        {
+            var previous = preview.Image;
+            preview.Image = image;
+            previous?.Dispose();
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
+                details.Dispose();
                 iconPreview.Image?.Dispose();
                 startupPreview.Image?.Dispose();
             }

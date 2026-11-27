@@ -68,8 +68,7 @@ class SettingsUiProbe {
     Check(language.GetItemText(language.Items.Cast<CultureInfo>().Single(c=>c.Name=="zh-CN"))=="中文(简体)2","new label mismatch");
     Check(language.GetItemText(language.Items.Cast<CultureInfo>().Single(c=>c.Name=="zh-Hans"))=="中文(简体)","original label mismatch");
     languageSetting.SetValue(settings,culture,new object[]{"language"});setup.Invoke(view,null);
-    // The desktop appearance and shortcut groups each span all settings columns.
-    // Keep both out of the column-count assertion and verify their separate contract.
+    // Desktop appearance now fits one ordinary settings column. Only shortcuts span all columns.
     FieldInfo fullWidthField=layout.GetType().GetField("FullWidth",BindingFlags.Public|BindingFlags.Static);
     Check(fullWidthField!=null,"full-width layout marker missing");
     object fullWidthTag=fullWidthField.GetValue(null);
@@ -81,8 +80,13 @@ class SettingsUiProbe {
     var shortcutGroups=layout.Controls.Cast<Control>().Where(c=>c.Visible&&c.Text==expectedShortcutsTitle).ToList();
     var appearanceGroups=layout.Controls.Cast<Control>().Where(c=>c.Visible&&c.Name=="desktopAppearanceGroup").ToList();
     Check(shortcutGroups.Count==1&&Object.ReferenceEquals(shortcutGroups[0].Tag,fullWidthTag),"keyboard shortcuts full-width group missing/duplicated");
-    Check(appearanceGroups.Count==1&&Object.ReferenceEquals(appearanceGroups[0].Tag,fullWidthTag),"desktop appearance full-width group missing/duplicated");
-    Check(fullWidthGroups.Count==2,"unexpected full-width settings groups");
+    Check(appearanceGroups.Count==1&&columnGroups.Contains(appearanceGroups[0]),"desktop appearance should be a single ordinary settings group");
+    Check(fullWidthGroups.Count==1,"unexpected full-width settings groups");
+    Control appearance=appearanceGroups[0];
+    foreach(string[] pair in new[]{new[]{"WindowIconPreset","ChooseLocalWindowIcon"},new[]{"StartupImagePreset","ChooseLocalStartupImage"}}) {
+     Control preset=Find(appearance,pair[0]);Control picker=Find(appearance,pair[1]);
+     Check(preset is ComboBox && picker is Button && preset.Parent==picker.Parent,"appearance selector and local picker must share a row: "+pair[0]);
+    }
     // Returning to a narrow viewport catches stale widths and scroll ranges.
     foreach(int width in new[]{640,1024,1600,640}) {
      form.ClientSize=new Size(width,1000);form.PerformLayout();view.PerformLayout();Application.DoEvents();
@@ -92,7 +96,8 @@ class SettingsUiProbe {
       Check(group.Right+group.Margin.Right<=layout.ClientSize.Width-layout.Padding.Right+1,"group clips horizontally at "+width+": "+group.Text);
      }
      if(width==1600) Check(columnGroups.Select(c=>c.Left).Distinct().Count()==3,"wide screen should have three columns");
-     Check(shortcutGroups[0].Top>=appearanceGroups[0].Bottom+appearanceGroups[0].Margin.Bottom,"full-width settings groups overlap or are out of order at "+width);
+     Check(columnGroups.Any(c=>c!=appearance && c.Width+c.Margin.Horizontal==appearance.Width+appearance.Margin.Horizontal),
+        "desktop appearance must match an ordinary column width at "+width);
      foreach(Control wide in fullWidthGroups) {
       Check(wide.Top>=columnGroups.Max(c=>c.Bottom+c.Margin.Bottom),"full-width group overlaps ordinary settings at "+width);
       Check(wide.Left>=layout.Padding.Left&&wide.Left<=columnGroups.Min(c=>c.Left),"full-width group left edge is outside the columns at "+width);

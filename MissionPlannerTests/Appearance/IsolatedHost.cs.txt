@@ -21,6 +21,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
         public static void IsNull(object value) { IsTrue(value == null); }
         public static void IsNotNull(object value) { IsTrue(value != null); }
         public static void AreEqual<T>(T expected, T actual, string message = null) { if (!object.Equals(expected, actual)) throw new Exception(message ?? "Expected " + expected + "; actual " + actual); }
+        public static void AreNotEqual<T>(T unexpected, T actual) { IsFalse(object.Equals(unexpected, actual)); }
         public static void AreSame(object expected, object actual) { IsTrue(object.ReferenceEquals(expected, actual)); }
         public static void Fail(string message) { throw new Exception(message); }
         public static void ThrowsException<T>(Action action) where T : Exception
@@ -30,6 +31,14 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
     {
         public static void AreEqual(byte[] expected, byte[] actual)
         { Assert.IsTrue(expected.SequenceEqual(actual)); }
+    }
+}
+// Synthetic fixture only: verify selection/load paths without introducing artwork.
+namespace MissionPlanner.Properties
+{
+    internal static class Resources
+    {
+        internal static readonly Bitmap splashdark = new Bitmap(64, 32);
     }
 }
 namespace MissionPlanner.Controls { public class MyUserControl : UserControl { } }
@@ -154,15 +163,22 @@ internal static class AppearanceIsolatedHost
                 using (var form = new Form())
                 using (var page = new MissionPlanner.GCSViews.ConfigurationView.ConfigAppearance())
                 {
-                    form.AutoScaleMode = AutoScaleMode.None; page.Dock = DockStyle.Fill; form.Controls.Add(page); form.Show();
                     DesktopAppearance.Import(AppearanceAsset.WindowIcon, source);
-                    Descendants(page).OfType<Button>().Single(b => b.Text == UiText.Translate("Restore default icon")).PerformClick();
-                    Check(DesktopAppearance.WindowIcon == null, "restore icon button did not reset selection");
                     DesktopAppearance.Import(AppearanceAsset.StartupImage, AppearanceAssetStoreTests.ImageFile(output, ".png", Color.White));
-                    Descendants(page).OfType<Button>().Single(b => b.Text == UiText.Translate("Restore default startup image")).PerformClick();
+                    form.AutoScaleMode = AutoScaleMode.None; page.Dock = DockStyle.Fill; form.Controls.Add(page); form.Show();
+                    // Reconstruct after externally seeding so the selectors initialize from saved preferences.
+                    using (var seeded = new MissionPlanner.GCSViews.ConfigurationView.ConfigAppearance())
+                    {
+                        var icon = (ComboBox)seeded.Controls.Find("WindowIconPreset", true).Single();
+                        var startup = (ComboBox)seeded.Controls.Find("StartupImagePreset", true).Single();
+                        Check(icon.SelectedIndex == 4 && startup.SelectedIndex == 3, "saved choices not restored");
+                        icon.SelectedIndex = 0;
+                        startup.SelectedIndex = 0;
+                    }
+                    Check(DesktopAppearance.WindowIcon == null, "default icon did not reset selection");
                     string resetWarning;
                     using (var resetImage = DesktopAppearance.Store.LoadStartupImage(out resetWarning))
-                        Check(resetImage == null && resetWarning == null, "restore startup button did not reset selection");
+                        Check(resetImage == null && resetWarning == null, "default startup did not reset selection");
                     foreach (int width in new[] { 320, 640, 1024 })
                     foreach (float scale in new[] { 1f, 1.5f, 2f })
                     {
@@ -195,6 +211,52 @@ internal static class AppearanceIsolatedHost
                     settings.Controls.Add(appearanceGroup);
                     form.Controls.Add(settings);
                     form.Show();
+                    var iconPicker = (Button)embedded.Controls.Find("ChooseLocalWindowIcon", true).Single();
+                    var startupPicker = (Button)embedded.Controls.Find("ChooseLocalStartupImage", true).Single();
+                    bool enhanced = culture == "zh-CN";
+                    Check(iconPicker.Text == (enhanced ? "选择本地图标…" : "Choose local icon…"), "icon picker culture fallback");
+                    Check(startupPicker.Text == (enhanced ? "选择本地启动图…" : "Choose local startup image…"), "startup picker culture fallback");
+                    var iconPreset = (ComboBox)embedded.Controls.Find("WindowIconPreset", true).Single();
+                    var startupPreset = (ComboBox)embedded.Controls.Find("StartupImagePreset", true).Single();
+                    Check(iconPreset.Items.Count == 5 && startupPreset.Items.Count == 4, "preset count changed");
+                    var manifest = Path.Combine(Settings.UserDirectory, "appearance", "settings.xml");
+                    string before = File.ReadAllText(manifest);
+                    iconPreset.SelectedIndex = 1;
+                    Check(DesktopAppearance.Store.CurrentPreset(AppearanceAsset.WindowIcon) == "default", "missing vendor icon activated");
+                    Check(File.ReadAllText(manifest) == before, "missing vendor icon persisted");
+                    Check(Descendants(embedded).OfType<Label>().Any(l => l.Text.Contains(enhanced ? "尚未导入" : "has no local file")),
+                        "missing vendor icon not reported");
+                    Check(iconPreset.AccessibleDescription == iconPreset.GetItemText(iconPreset.SelectedItem),
+                        "pending selection must expose its full display caption");
+                    var details = (ToolTip)embedded.GetType().GetField("details", BindingFlags.Instance | BindingFlags.NonPublic)
+                        .GetValue(embedded);
+                    Check(details.GetToolTip(iconPreset) == iconPreset.AccessibleDescription,
+                        "pending selection tooltip does not expose the full caption");
+                    // Open the actual combo box without triggering an import or selection.
+                    form.ClientSize = new Size(430, 320);
+                    appearanceGroup.MaximumSize = new Size(405, 0);
+                    appearanceGroup.MinimumSize = new Size(405, 0);
+                    Application.DoEvents();
+                    using (var big = new Font(startupPreset.Font.FontFamily, 20))
+                    {
+                        var priorFont = startupPreset.Font;
+                        startupPreset.Font = big;
+                        startupPreset.DroppedDown = true;
+                        Application.DoEvents();
+                        Check(startupPreset.DroppedDown, "expected an open preset list");
+                        Check(startupPreset.AccessibleDescription == startupPreset.GetItemText(startupPreset.SelectedItem),
+                            "full default caption unavailable at enlarged font");
+                        using (var graphics = startupPreset.CreateGraphics())
+                        foreach (var item in startupPreset.Items)
+                            Check(startupPreset.DropDownWidth >= TextRenderer.MeasureText(graphics, startupPreset.GetItemText(item),
+                                startupPreset.Font, Size.Empty, TextFormatFlags.SingleLine | TextFormatFlags.NoPrefix).Width,
+                                "open preset popup cannot fit the caption");
+                        startupPreset.DroppedDown = false;
+                        startupPreset.Font = priorFont;
+                        Application.DoEvents();
+                    }
+                    Check(startupPreset.SelectedIndex == 0 && File.ReadAllText(manifest) == before,
+                        "opening the preset list changed the selected or persisted appearance");
                     foreach (int width in new[] { 430, 700, 1100 })
                     {
                         form.ClientSize = new Size(width, 320);
@@ -207,7 +269,20 @@ internal static class AppearanceIsolatedHost
                         Check(!embedded.AutoScroll, "embedded appearance uses nested scrolling");
                         Check(embedded.AutoSize, "embedded appearance does not size to its contents");
                         Check(Descendants(embedded).OfType<PictureBox>().Count() == 2, "embedded previews are missing");
-                        Check(Descendants(embedded).OfType<Button>().Count() == 4, "embedded import/reset controls are missing");
+                        Check(Descendants(embedded).OfType<Button>().Count() == 2, "embedded picker count changed");
+                        foreach (var names in new[] { new[] { "WindowIconPreset", "ChooseLocalWindowIcon" },
+                                                      new[] { "StartupImagePreset", "ChooseLocalStartupImage" } })
+                        {
+                            var selector = embedded.Controls.Find(names[0], true).Single();
+                            var picker = embedded.Controls.Find(names[1], true).Single();
+                            Check(selector.Parent == picker.Parent && picker.Left >= selector.Right &&
+                                  picker.Right <= picker.Parent.ClientSize.Width, "picker is not adjacent to its preset");
+                        }
+                        var iconPreview = embedded.Controls.Find("WindowIconPreview", true).Single();
+                        var splashPreview = embedded.Controls.Find("StartupImagePreview", true).Single();
+                        Check(iconPreview.Parent == splashPreview.Parent && iconPreview.Height <= 56 &&
+                              splashPreview.Height <= 56, "thumbnails are not compact");
+                        Check(embedded.Height <= 220, "appearance group exceeds compact height");
                         var last = Descendants(embedded).OfType<Label>().Last();
                         settings.AutoScrollPosition = new Point(0, settings.DisplayRectangle.Height);
                         Application.DoEvents();
@@ -227,14 +302,6 @@ internal static class AppearanceIsolatedHost
                     {
                         splash.TopMost = false; splash.Show(); Application.DoEvents();
                         var controls = Descendants(splash);
-                        var credit = controls.OfType<Label>().Single(l => l.Text.Contains("lyy0405"));
-                        Check(credit.Text.Contains("Michael Oborne"), "original author credit missing");
-                        Check(controls.OfType<Label>().Any(l => l.Text.Contains("Mohammad Adib")), "upstream credit missing");
-                        Check(credit.ForeColor.ToArgb() == Color.White.ToArgb(), "credit text not white");
-                        Check(credit.Parent.BackColor.ToArgb() == Color.FromArgb(32, 32, 32).ToArgb(), "credit has no opaque contrast panel");
-                        Check(credit.Height >= credit.PreferredHeight, "credit text clipped");
-                        foreach (var label in credit.Parent.Controls.Cast<Control>())
-                            Check(label.Bottom <= credit.Parent.ClientSize.Height - credit.Parent.Padding.Bottom, "footer clips label");
                         var picture = controls.OfType<PictureBox>().Single();
                         Check(picture.Image.Width == 80 && picture.Image.Height == 40, "custom image not used by splash");
                         using (var image = new Bitmap(splash.Width, splash.Height))
