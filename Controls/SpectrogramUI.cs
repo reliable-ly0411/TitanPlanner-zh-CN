@@ -89,6 +89,14 @@ namespace MissionPlanner.Controls
             using (var img3 = Spectrogram.GenerateImage(file, out freqt, out allfftdata, cmb_sensor.Text, field[2],
                 min: (int) num_min.Value, max: (int) num_max.Value))
             {
+                if (img1 == null || img2 == null || img3 == null)
+                {
+                    // An empty selection must not display the previous sensor's image.
+                    for (int i = 0; i < 3; i++)
+                        zedGraphControl1.MasterPane[i].GraphObjList.Clear();
+                    zedGraphControl1.Invalidate();
+                    return;
+                }
 
                 var mintime = allfftdata.Min(a => a.timeus)  / 1000000.0;
                 var maxtime = allfftdata.Max(a => a.timeus)  / 1000000.0;
