@@ -7,6 +7,7 @@ import xml.etree.ElementTree as ET
 
 ROOT = Path(__file__).resolve().parents[3]
 spec = importlib.util.spec_from_file_location('parameter_catalog', ROOT / 'scripts/localization/build_parameter_catalog.py')
+SIDEBAR_GEOMETRY_KEYS = {'OSD_SB_H_OFS', 'OSD_SB_V_EXT'}
 catalog_module = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(catalog_module)
 
@@ -50,7 +51,7 @@ class ParameterCatalogTests(unittest.TestCase):
         pairs = (('GPS_CAN_NODEID1', 'GPS_CAN_NODEID2'), ('GPS1_CAN_NODEID', 'GPS2_CAN_NODEID'))
         for release in self.bundle.findall("release[@family='Copter']"):
             v = release.get('version')
-            records = {r.get('name').split(':')[-1]: r for r in release.iter('param') if not r.get('name').startswith('OSD_SB_')}
+            records = {r.get('name').split(':')[-1]: r for r in release.iter('param') if r.get('name') not in SIDEBAR_GEOMETRY_KEYS}
             self.assertEqual(legacy_counts[v] + reviewed_counts[v], len(records))
             readonly = {k: r for k, r in records.items() if r.findtext("field[@name='ReadOnly']") == 'True'}
             self.assertEqual(reviewed_counts[v], len(readonly))
@@ -106,7 +107,7 @@ class ParameterCatalogTests(unittest.TestCase):
 
     def test_sub_narrow_expansion_adds_only_unique_read_only_records(self):
         scope = self.bundle.find("release[@family='Sub'][@version='4.7.1']")
-        records = {p.get('name'): p for p in scope.iter('param') if not p.get('name').startswith(('STAT_', 'OSD_SB_'))}
+        records = {p.get('name'): p for p in scope.iter('param') if not p.get('name').startswith('STAT_') and p.get('name') not in SIDEBAR_GEOMETRY_KEYS}
         self.assertEqual(34, len(records))
         self.assertEqual({'GPS1_CAN_NODEID','GPS2_CAN_NODEID'}, {key for key in records if key.startswith('GPS')})
         self.assertTrue({'MIS_TOTAL','VTX_FREQ'} <= records.keys())
