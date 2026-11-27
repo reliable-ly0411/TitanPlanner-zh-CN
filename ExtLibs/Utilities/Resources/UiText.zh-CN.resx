@@ -9901,6 +9901,10 @@ gps_point：跟踪单个地面点</value>
     <value>选择飞行器 STL 文件</value>
     <comment>"Select Plane STL File"</comment>
   </data>
+  <data name="1ee91310439568daa4d03da36ad808a73ba55d07d421f1158fff26798be77d9c" xml:space="preserve">
+    <value>请从左侧选择页面。</value>
+    <comment>"Select a page from the list on the left."</comment>
+  </data>
   <data name="202a97e1a5b8ebe7b9c17903341ff203061dfd6f5d3d6531d6a06216982d782c" xml:space="preserve">
     <value>选择区域以查看预览</value>
     <comment>"Select an area to preview it"</comment>
