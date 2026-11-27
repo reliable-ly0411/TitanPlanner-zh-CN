@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
@@ -74,9 +75,27 @@ namespace MissionPlannerTests.Controls
                         type.GetMethod("SetFltModes").Invoke(popup, new object[] { new List<string> { longMode } });
                         type.GetMethod("SetModes").Invoke(popup, new object[] { rawModes });
 
-                        string[] titles = panel.Controls.OfType<Label>().Select(l => l.Text).ToArray();
-                        CollectionAssert.AreEqual(new[] { UiText.Translate("Configured modes"), UiText.Translate("Flight modes") }, titles);
-                        Assert.AreEqual(UiText.Translate("Pin All"), panel.Controls.OfType<CheckBox>().Single().Text);
+                        var titles = panel.Controls.OfType<Label>().ToArray();
+                        var pinAll = panel.Controls.OfType<CheckBox>().Single();
+                        var enhanced = language == "zh-CN";
+                        CollectionAssert.AreEqual(enhanced
+                            ? new[] { "Configured modes · 已配置模式", "Flight modes · 飞行模式" }
+                            : new[] { "Configured modes", "Flight modes" }, titles.Select(l => l.Text).ToArray());
+                        Assert.AreEqual(enhanced ? "Pin All · 全部固定" : "Pin All", pinAll.Text);
+                        foreach (var control in titles.Cast<Control>().Concat(new[] { pinAll }))
+                        {
+                            foreach (float scale in new[] { 1f, 1.25f, 1.5f, 2f })
+                            {
+                                using (var font = new Font(control.Font.FontFamily, control.Font.Size * scale, control.Font.Style))
+                                {
+                                    var text = TextRenderer.MeasureText(control.Text, font);
+                                    int inset = control.Padding.Horizontal + (control is CheckBox ? 22 : 0);
+                                    Assert.IsTrue(text.Width <= (control.Width - inset) * scale &&
+                                        text.Height <= control.Height * scale,
+                                        language + ": " + control.Text + " at " + scale);
+                                }
+                            }
+                        }
                         var rows = panel.Controls.OfType<Panel>().Where(p => p.Controls.Count != 0).ToArray();
                         var labels = rows.Select(r => r.Controls.OfType<Label>().First()).ToArray();
                         CollectionAssert.AreEqual(new[] { longMode, "Acro", "Settings" }, labels.Select(l => (string)l.Tag).ToArray());
@@ -101,6 +120,17 @@ namespace MissionPlannerTests.Controls
                         click.Invoke(rows[1].Controls.OfType<Label>().Single(l => l.Text == "☆"), new object[] { EventArgs.Empty });
                         CollectionAssert.AreEqual(new[] { "select:" + longMode, "pin:" + longMode, "favorite:Acro" }, actual.ToArray());
                         CollectionAssert.AreEqual(new[] { 25, 1, 65000 }, rawModes.Select(x => x.Key).ToArray());
+                        var pinAllEvents = new List<bool>();
+                        EventHandler<bool> pinEverything = (sender, value) => pinAllEvents.Add(value);
+                        type.GetEvent("PinAllToggled").AddEventHandler(popup, pinEverything);
+                        _ = popup.Handle; // required for the real checkbox's deferred BeginInvoke
+                        type.GetMethod("SetPinAll").Invoke(popup, new object[] { true });
+                        Application.DoEvents();
+                        Assert.IsTrue(pinAll.Checked);
+                        Assert.AreEqual(0, pinAllEvents.Count, "Rebuild must not signal a user toggle");
+                        pinAll.Checked = false;
+                        Application.DoEvents();
+                        CollectionAssert.AreEqual(new[] { false }, pinAllEvents.ToArray());
                     }
                 }
                 catch (Exception ex) { error = ex; }
