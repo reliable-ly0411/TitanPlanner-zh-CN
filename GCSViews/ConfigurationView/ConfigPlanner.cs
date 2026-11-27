@@ -418,6 +418,8 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             group.Text = ShortcutHelpText("Keyboard Shortcuts", enhancedChinese, " / ");
             group.Tag = GroupColumnsPanel.FullWidth;
             var table = CreateTableLayout(2);
+            // Let the parent grow to the table's preferred height, not the previous filled height.
+            table.Dock = DockStyle.Top;
             var descriptions = new List<Label>();
             var keysLabels = new List<Label>();
 
