@@ -1158,7 +1158,8 @@ namespace MissionPlanner
 
 #if !LIB
             MenuArduPilot.Click -= MenuArduPilot_Click;
-            var brandLinks = BrandLogoLinks.Configure(MainMenu, MenuArduPilot, OpenBrandUrl, toolStripConnectionControl, MenuConnect);
+            var brandLinks = BrandLogoLinks.ConfigureUserBrand(MainMenu, MenuArduPilot, OpenBrandUrl,
+                () => Settings.Instance[TopBarBrand.SettingsKey], Settings.GetUserDataDirectory, toolStripConnectionControl, MenuConnect);
             brandLinks.MouseLeave += (sender, args) =>
             {
                 if (autoHideToolStripMenuItem.Checked) MainMenu_MouseLeave(sender, args);
