@@ -619,6 +619,17 @@
             <field name="Range">0 63</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="OSD Options" name="OSD_OPTIONS" documentation="This sets options that change the display" user="Standard">
+            <field name="Bitmask">0:UseDecimalPack, 1:InvertedWindArrow, 2:InvertedAHRoll, 3:Convert feet to miles at 5280ft instead of 10000ft, 4:DisableCrosshair, 5:TranslateArrows, 6:AviationStyleAH, 7:Prefix LQ with RF Mode</field>
+          </param>
+          <param humanName="Display Units" name="OSD_UNITS" documentation="Sets the units to use in displaying items" user="Standard">
+            <values>
+              <value code="0">Metric</value>
+              <value code="1">Imperial</value>
+              <value code="2">SI</value>
+              <value code="3">Aviation</value>
+            </values>
+          </param>
         </parameters>
         <parameters name="OSD1_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD1_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -1279,6 +1290,27 @@
           <param humanName="OSD horizontal offset" name="OSD_H_OFFSET" documentation="Sets horizontal offset of the osd inside image" user="Standard">
             <field name="Range">0 63</field>
             <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="OSD Options" name="OSD_OPTIONS" documentation="This sets options that change the display" user="Standard">
+            <bitmask>
+              <bit code="0">UseDecimalPack</bit>
+              <bit code="1">InvertedWindArrow</bit>
+              <bit code="2">InvertedAHRoll</bit>
+              <bit code="3">Convert feet to miles at 5280ft instead of 10000ft</bit>
+              <bit code="4">DisableCrosshair</bit>
+              <bit code="5">TranslateArrows</bit>
+              <bit code="6">AviationStyleAH</bit>
+              <bit code="7">Prefix LQ with RF Mode</bit>
+            </bitmask>
+            <field name="Bitmask">0:UseDecimalPack, 1:InvertedWindArrow, 2:InvertedAHRoll, 3:Convert feet to miles at 5280ft instead of 10000ft, 4:DisableCrosshair, 5:TranslateArrows, 6:AviationStyleAH, 7:Prefix LQ with RF Mode</field>
+          </param>
+          <param humanName="Display Units" name="OSD_UNITS" documentation="Sets the units to use in displaying items" user="Standard">
+            <values>
+              <value code="0">Metric</value>
+              <value code="1">Imperial</value>
+              <value code="2">SI</value>
+              <value code="3">Aviation</value>
+            </values>
           </param>
         </parameters>
         <parameters name="OSD1_">
@@ -1989,6 +2021,27 @@
           <param humanName="OSD horizontal offset" name="OSD_H_OFFSET" documentation="Sets horizontal offset of the osd inside image" user="Standard">
             <field name="Range">0 63</field>
             <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="OSD Options" name="OSD_OPTIONS" documentation="This sets options that change the display" user="Standard">
+            <bitmask>
+              <bit code="0">UseDecimalPack</bit>
+              <bit code="1">InvertedWindArrow</bit>
+              <bit code="2">InvertedAHRoll</bit>
+              <bit code="3">Convert feet to miles at 5280ft instead of 10000ft</bit>
+              <bit code="4">DisableCrosshair</bit>
+              <bit code="5">TranslateArrows</bit>
+              <bit code="6">AviationStyleAH</bit>
+              <bit code="7">Prefix LQ with RF Mode</bit>
+            </bitmask>
+            <field name="Bitmask">0:UseDecimalPack, 1:InvertedWindArrow, 2:InvertedAHRoll, 3:Convert feet to miles at 5280ft instead of 10000ft, 4:DisableCrosshair, 5:TranslateArrows, 6:AviationStyleAH, 7:Prefix LQ with RF Mode</field>
+          </param>
+          <param humanName="Display Units" name="OSD_UNITS" documentation="Sets the units to use in displaying items" user="Standard">
+            <values>
+              <value code="0">Metric</value>
+              <value code="1">Imperial</value>
+              <value code="2">SI</value>
+              <value code="3">Aviation</value>
+            </values>
           </param>
         </parameters>
         <parameters name="OSD1_">
@@ -2720,6 +2773,17 @@
             <field name="Range">0 63</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="OSD Options" name="OSD_OPTIONS" documentation="This sets options that change the display" user="Standard">
+            <field name="Bitmask">0:UseDecimalPack, 1:InvertedWindArrow, 2:InvertedAHRoll, 3:Convert feet to miles at 5280ft instead of 10000ft, 4:DisableCrosshair, 5:TranslateArrows, 6:AviationStyleAH, 7:Prefix LQ with RF Mode</field>
+          </param>
+          <param humanName="Display Units" name="OSD_UNITS" documentation="Sets the units to use in displaying items" user="Standard">
+            <values>
+              <value code="0">Metric</value>
+              <value code="1">Imperial</value>
+              <value code="2">SI</value>
+              <value code="3">Aviation</value>
+            </values>
+          </param>
         </parameters>
         <parameters name="OSD1_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD1_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -3437,6 +3501,27 @@
           <param humanName="OSD horizontal offset" name="OSD_H_OFFSET" documentation="Sets horizontal offset of the osd inside image" user="Standard">
             <field name="Range">0 63</field>
             <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="OSD Options" name="OSD_OPTIONS" documentation="This sets options that change the display" user="Standard">
+            <bitmask>
+              <bit code="0">UseDecimalPack</bit>
+              <bit code="1">InvertedWindArrow</bit>
+              <bit code="2">InvertedAHRoll</bit>
+              <bit code="3">Convert feet to miles at 5280ft instead of 10000ft</bit>
+              <bit code="4">DisableCrosshair</bit>
+              <bit code="5">TranslateArrows</bit>
+              <bit code="6">AviationStyleAH</bit>
+              <bit code="7">Prefix LQ with RF Mode</bit>
+            </bitmask>
+            <field name="Bitmask">0:UseDecimalPack, 1:InvertedWindArrow, 2:InvertedAHRoll, 3:Convert feet to miles at 5280ft instead of 10000ft, 4:DisableCrosshair, 5:TranslateArrows, 6:AviationStyleAH, 7:Prefix LQ with RF Mode</field>
+          </param>
+          <param humanName="Display Units" name="OSD_UNITS" documentation="Sets the units to use in displaying items" user="Standard">
+            <values>
+              <value code="0">Metric</value>
+              <value code="1">Imperial</value>
+              <value code="2">SI</value>
+              <value code="3">Aviation</value>
+            </values>
           </param>
         </parameters>
         <parameters name="OSD1_">
@@ -4214,6 +4299,27 @@
             <field name="Range">0 63</field>
             <field name="RebootRequired">True</field>
           </param>
+          <param humanName="OSD Options" name="OSD_OPTIONS" documentation="This sets options that change the display" user="Standard">
+            <bitmask>
+              <bit code="0">UseDecimalPack</bit>
+              <bit code="1">InvertedWindArrow</bit>
+              <bit code="2">InvertedAHRoll</bit>
+              <bit code="3">Convert feet to miles at 5280ft instead of 10000ft</bit>
+              <bit code="4">DisableCrosshair</bit>
+              <bit code="5">TranslateArrows</bit>
+              <bit code="6">AviationStyleAH</bit>
+              <bit code="7">Prefix LQ with RF Mode</bit>
+            </bitmask>
+            <field name="Bitmask">0:UseDecimalPack, 1:InvertedWindArrow, 2:InvertedAHRoll, 3:Convert feet to miles at 5280ft instead of 10000ft, 4:DisableCrosshair, 5:TranslateArrows, 6:AviationStyleAH, 7:Prefix LQ with RF Mode</field>
+          </param>
+          <param humanName="Display Units" name="OSD_UNITS" documentation="Sets the units to use in displaying items" user="Standard">
+            <values>
+              <value code="0">Metric</value>
+              <value code="1">Imperial</value>
+              <value code="2">SI</value>
+              <value code="3">Aviation</value>
+            </values>
+          </param>
         </parameters>
         <parameters name="OSD1_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD1_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -4454,6 +4560,27 @@
           <param humanName="OSD horizontal offset" name="OSD_H_OFFSET" documentation="Sets horizontal offset of the osd inside image" user="Standard">
             <field name="Range">0 63</field>
             <field name="RebootRequired">True</field>
+          </param>
+          <param humanName="OSD Options" name="OSD_OPTIONS" documentation="This sets options that change the display" user="Standard">
+            <bitmask>
+              <bit code="0">UseDecimalPack</bit>
+              <bit code="1">InvertedWindArrow</bit>
+              <bit code="2">InvertedAHRoll</bit>
+              <bit code="3">Convert feet to miles at 5280ft instead of 10000ft</bit>
+              <bit code="4">DisableCrosshair</bit>
+              <bit code="5">TranslateArrows</bit>
+              <bit code="6">AviationStyleAH</bit>
+              <bit code="7">Prefix LQ with RF Mode</bit>
+            </bitmask>
+            <field name="Bitmask">0:UseDecimalPack, 1:InvertedWindArrow, 2:InvertedAHRoll, 3:Convert feet to miles at 5280ft instead of 10000ft, 4:DisableCrosshair, 5:TranslateArrows, 6:AviationStyleAH, 7:Prefix LQ with RF Mode</field>
+          </param>
+          <param humanName="Display Units" name="OSD_UNITS" documentation="Sets the units to use in displaying items" user="Standard">
+            <values>
+              <value code="0">Metric</value>
+              <value code="1">Imperial</value>
+              <value code="2">SI</value>
+              <value code="3">Aviation</value>
+            </values>
           </param>
         </parameters>
         <parameters name="OSD1_">

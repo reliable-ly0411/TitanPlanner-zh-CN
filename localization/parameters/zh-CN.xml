@@ -1864,4 +1864,36 @@
     <english>Sets horizontal offset of the osd inside image</english>
     <chinese>设置 OSD 叠加内容在视频画面中的水平偏移。</chinese>
   </translation>
+  <translation family="Copter" parameter="OSD_OPTIONS" field="Description" versions="4.5.7" englishSha256="c9e98941cb9f160c1ca638c528c482a563509d7316839c670e676e6de5a7ec43" recordSha256="5cb8e55ecc7d0714db266538cc01b3e6531862a6a516d7c7e4e87b513ee38849">
+    <english>This sets options that change the display</english>
+    <chinese>按位组合 OSD 显示选项。例如，位 1 用于反转风向箭头的显示方向。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD_UNITS" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="7a24664f3890586df8cb9e709847a4df21165e39ff3bd07c0a08c739af0be467" recordSha256="998d77d0bc87d54119261aee4d58b8177ba7c5d506d5aa414dff01e8198e3708">
+    <english>Sets the units to use in displaying items</english>
+    <chinese>选择 OSD 显示项目所用的单位制。0 为公制，1 为英制，2 为国际单位制（SI），3 为航空单位制。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD_OPTIONS" field="Description" versions="4.6.3,4.7.1" englishSha256="c9e98941cb9f160c1ca638c528c482a563509d7316839c670e676e6de5a7ec43" recordSha256="48e4dd0416fa33e71c155cfa3f2ecef918586795fe3d20b12071258e5a8b0b84">
+    <english>This sets options that change the display</english>
+    <chinese>按位组合 OSD 显示选项。例如，位 1 用于反转风向箭头的显示方向。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD_OPTIONS" field="Description" versions="4.5.7" englishSha256="c9e98941cb9f160c1ca638c528c482a563509d7316839c670e676e6de5a7ec43" recordSha256="5cb8e55ecc7d0714db266538cc01b3e6531862a6a516d7c7e4e87b513ee38849">
+    <english>This sets options that change the display</english>
+    <chinese>按位组合 OSD 显示选项。例如，位 1 用于反转风向箭头的显示方向。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD_UNITS" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="7a24664f3890586df8cb9e709847a4df21165e39ff3bd07c0a08c739af0be467" recordSha256="998d77d0bc87d54119261aee4d58b8177ba7c5d506d5aa414dff01e8198e3708">
+    <english>Sets the units to use in displaying items</english>
+    <chinese>选择 OSD 显示项目所用的单位制。0 为公制，1 为英制，2 为国际单位制（SI），3 为航空单位制。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD_OPTIONS" field="Description" versions="4.6.3,4.7.1" englishSha256="c9e98941cb9f160c1ca638c528c482a563509d7316839c670e676e6de5a7ec43" recordSha256="48e4dd0416fa33e71c155cfa3f2ecef918586795fe3d20b12071258e5a8b0b84">
+    <english>This sets options that change the display</english>
+    <chinese>按位组合 OSD 显示选项。例如，位 1 用于反转风向箭头的显示方向。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD_OPTIONS" field="Description" versions="4.7.1" englishSha256="c9e98941cb9f160c1ca638c528c482a563509d7316839c670e676e6de5a7ec43" recordSha256="48e4dd0416fa33e71c155cfa3f2ecef918586795fe3d20b12071258e5a8b0b84">
+    <english>This sets options that change the display</english>
+    <chinese>按位组合 OSD 显示选项。例如，位 1 用于反转风向箭头的显示方向。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD_UNITS" field="Description" versions="4.7.1" englishSha256="7a24664f3890586df8cb9e709847a4df21165e39ff3bd07c0a08c739af0be467" recordSha256="998d77d0bc87d54119261aee4d58b8177ba7c5d506d5aa414dff01e8198e3708">
+    <english>Sets the units to use in displaying items</english>
+    <chinese>选择 OSD 显示项目所用的单位制。0 为公制，1 为英制，2 为国际单位制（SI），3 为航空单位制。</chinese>
+  </translation>
 </parameterTranslations>

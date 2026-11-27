@@ -30,6 +30,80 @@ internal static class Program
         var text = (family == "Copter" ? "ArduCopter" : Firmware(family)) + " V" + version + (sha == null ? "" : " (" + sha.Substring(0, 8) + ")");
         return ParameterDescriptionContext.TryCreate(Firmware(family), text, new Version(version + ".255"));
     }
+    private static void CheckOsdDisplayFormat(XElement[] releases, ParameterDescriptionStore store, ParameterDescriptionCatalog catalog)
+    {
+        const string legacyOptionsFingerprint = "5cb8e55ecc7d0714db266538cc01b3e6531862a6a516d7c7e4e87b513ee38849";
+        const string optionsFingerprint = "48e4dd0416fa33e71c155cfa3f2ecef918586795fe3d20b12071258e5a8b0b84";
+        const string unitsFingerprint = "998d77d0bc87d54119261aee4d58b8177ba7c5d506d5aa414dff01e8198e3708";
+        const string bilingualHeading = "\n\n中文说明：\n";
+        var optionBits = string.Join("\n", new[]
+        {
+            "bit 0: UseDecimalPack",
+            "bit 1: InvertedWindArrow",
+            "bit 2: InvertedAHRoll",
+            "bit 3: Convert feet to miles at 5280ft instead of 10000ft",
+            "bit 4: DisableCrosshair",
+            "bit 5: TranslateArrows",
+            "bit 6: AviationStyleAH",
+            "bit 7: Prefix LQ with RF Mode"
+        });
+        const string unitValues = "0: Metric\n1: Imperial\n2: SI\n3: Aviation";
+        var rows = new[]
+        {
+            new { Key = "OSD_OPTIONS", English = "This sets options that change the display",
+                Chinese = "按位组合 OSD 显示选项。例如，位 1 用于反转风向箭头的显示方向。",
+                Search = "反转风向箭头", Labels = optionBits, Bits = 8, Values = 0, Fingerprint = optionsFingerprint },
+            new { Key = "OSD_UNITS", English = "Sets the units to use in displaying items",
+                Chinese = "选择 OSD 显示项目所用的单位制。0 为公制，1 为英制，2 为国际单位制（SI），3 为航空单位制。",
+                Search = "航空单位制", Labels = unitValues, Bits = 0, Values = 4, Fingerprint = unitsFingerprint }
+        };
+
+        var copter = releases.Single(r => (string)r.Attribute("family") == "Copter" && (string)r.Attribute("version") == "4.6.3");
+        var context = Context("Copter", "4.6.3", (string)copter.Attribute("gitSha"));
+        var snapshot = store.Bundled(context);
+        Check(snapshot != null && snapshot.MatchesReportedBuild && snapshot.SourceSha256 == (string)copter.Attribute("sourceSha256"),
+            "Copter 4.6.3 pinned display metadata");
+        foreach (var row in rows)
+        {
+            string location = "Copter 4.6.3 " + row.Key;
+            var record = snapshot.Find(row.Key);
+            Check(record != null && record.Name == row.Key && record.English == row.English
+                && record.Fingerprint == row.Fingerprint, location + " exact English and record fingerprint");
+            Check(record.Units == "" && record.Range == "" && record.Bits.Count == row.Bits
+                && record.Values.Count == row.Values, location + " original field types without units or range");
+            var bilingual = catalog.Present(snapshot, row.Key, true);
+            var english = catalog.Present(snapshot, row.Key, false);
+            Check(bilingual.Description == row.English + bilingualHeading + row.Chinese
+                && bilingual.SearchText.Contains(row.Search), location + " bilingual description and Chinese search");
+            Check(english.Description == row.English && !english.SearchText.Contains(row.Search),
+                location + " English without enhanced search");
+            Check(bilingual.Units == "" && english.Units == "" && bilingual.Options == row.Labels
+                && english.Options == row.Labels, location + " unchanged official codes, labels and order");
+        }
+        var unknown = Context("Copter", "4.7.2");
+        bool pending;
+        Check(store.Bundled(unknown) == null && catalog.Chinese(unknown, rows[0].Key, "Description", null,
+            rows[0].English, out pending, optionsFingerprint) == null && !pending, "unregistered 4.7.2 keeps its fallback");
+
+        var donor = releases.Single(r => (string)r.Attribute("family") == "Copter" && (string)r.Attribute("version") == "4.5.7");
+        var altered = new XElement(copter.Element("paramfile"));
+        var original = altered.Descendants("param").Single(p => (string)p.Attribute("name") == "OSD_OPTIONS");
+        var legacy = donor.Descendants("param").Single(p => (string)p.Attribute("name") == "OSD_OPTIONS");
+        original.ReplaceWith(new XElement(legacy));
+        var changed = ParameterDescriptionSnapshot.Parse(Bytes(altered.ToString()), Context("Copter", "4.6.3", (string)copter.Attribute("gitSha")));
+        var changedOptions = changed.Find("OSD_OPTIONS");
+        Check(changed.MatchesReportedBuild && changedOptions.English == rows[0].English
+            && changedOptions.Fingerprint == legacyOptionsFingerprint, "Copter 4.6.3 with the original 4.5.7 options record");
+        var fallback = catalog.Present(changed, "OSD_OPTIONS", true);
+        Check(fallback.Description == rows[0].English + "\n\n[中文说明待复核：英文或关联字段已变化]"
+            && fallback.Units == "" && fallback.Options == optionBits
+            && !fallback.SearchText.Contains(rows[0].Search), "different options fingerprint removes Chinese while preserving English and ordered bits");
+        var unchanged = catalog.Present(changed, "OSD_UNITS", true);
+        Check(unchanged.Description == rows[1].English + bilingualHeading + rows[1].Chinese
+            && unchanged.SearchText.Contains(rows[1].Search) && unchanged.Options == unitValues,
+            "unchanged OSD units still match");
+    }
+
     private static void Rejects(Action action, string message)
     {
         try { action(); } catch (Exception e) when (e is InvalidDataException || e is System.Xml.XmlException) { Check(true, message); return; }
@@ -86,6 +160,12 @@ internal static class Program
         var bundle = Resource("official"); var catalog = new ParameterDescriptionCatalog(Resource("zh-CN"));
         var bundled = new ParameterDescriptionStore("unused", bundle);
         var releases = XDocument.Parse(Encoding.UTF8.GetString(bundle)).Root.Elements("release").ToArray();
+        if (args.Length == 1 && args[0] == "--osd-display-format")
+        {
+            CheckOsdDisplayFormat(releases, bundled, catalog);
+            Console.WriteLine("OSD display format: " + assertions + " assertions passed.");
+            return;
+        }
         CheckOsdOverlayOffsets(releases, bundled, catalog);
         if (args.Length == 1 && args[0] == "--osd-overlay-offsets")
         {
@@ -94,13 +174,13 @@ internal static class Program
         }
         var expectedCounts = new Dictionary<string, int>
         {
-            ["Copter-4.5.7"] = 96,
-            ["Copter-4.6.3"] = 98,
-            ["Copter-4.7.1"] = 104,
-            ["Plane-4.5.7"] = 107,
-            ["Plane-4.6.3"] = 109,
-            ["Plane-4.7.1"] = 117,
-            ["Sub-4.7.1"] = 65
+            ["Copter-4.5.7"] = 98,
+            ["Copter-4.6.3"] = 100,
+            ["Copter-4.7.1"] = 106,
+            ["Plane-4.5.7"] = 109,
+            ["Plane-4.6.3"] = 111,
+            ["Plane-4.7.1"] = 119,
+            ["Sub-4.7.1"] = 67
         };
         Check(releases.Length == expectedCounts.Count, "seven pinned release subsets");
         foreach (var release in releases)
