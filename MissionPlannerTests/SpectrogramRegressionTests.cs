@@ -46,6 +46,26 @@ namespace MissionPlannerTests
             }
         }
 
+        [DataTestMethod]
+        [DataRow(2048, "GYR1", "GyrX")]
+        [DataRow(1023, "ACC1", "AccX")]
+        public void MissingOrShortSelectedSensorDoesNotGenerateImage(int samples, string sensor, string axis)
+        {
+            var text = new StringBuilder("FMT, 150, 23, ACC1, Qfff, TimeUS, AccX, AccY, AccZ\n");
+            for (int i = 0; i < samples; i++)
+                text.AppendFormat(CultureInfo.InvariantCulture, "ACC1, {0}, 1, 0, 0\n", 1000000L + i * 1000L);
+
+            using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(text.ToString())))
+            using (var log = new DFLogBuffer(stream))
+            using (var image = Spectrogram.GenerateImage(log, out var frequencies, out var data, sensor, axis))
+            {
+                Assert.AreEqual(samples, log.GetEnumeratorType("ACC1").Count());
+                Assert.IsNull(image);
+                Assert.AreEqual(0, frequencies.Length);
+                Assert.AreEqual(0, data.Count);
+            }
+        }
+
         [TestMethod]
         public void SensorLogRendersFrequencyBinsAndTransparentUnusedColumns()
         {

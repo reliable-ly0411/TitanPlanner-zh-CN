@@ -183,6 +183,13 @@ namespace MissionPlanner.Utilities
                             AbsoluteExpirationRelativeToNow = System.TimeSpan.FromMinutes(10)
                         });
                 }
+                // The selected sensor may be missing, or may have no complete FFT block.
+                if (acc1data.Length < N)
+                {
+                    freqtout = Array.Empty<double>();
+                    return null;
+                }
+
                 log.Debug(type);
                 if (cb.dflog.FindMessageOffset(acc1data[0].msgtype, "TimeUS") == -1)
                     timeus = "SampleUS";
