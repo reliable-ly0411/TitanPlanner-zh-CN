@@ -39,6 +39,7 @@ namespace MissionPlanner.Controls
         private bool _mouseInside;
         private DisplayItem _hoveredItem;
         private DisplayItem _keyboardItem;
+        private DisplayItem _spacePressedItem;
         private string _hoveredHeader;
 
         public DisplayThisForm(Func<string, bool> isChecked, EventHandler checkChangedHandler,
@@ -70,9 +71,15 @@ namespace MissionPlanner.Controls
             _contentPanel.Dock = DockStyle.Fill;
             _contentPanel.TabIndex = 1;
             _contentPanel.GotFocus += (sender, e) => FocusKeyboardRow();
-            _contentPanel.LostFocus += (sender, e) => _contentPanel.Invalidate();
+            _contentPanel.LostFocus += (sender, e) =>
+            {
+                _spacePressedItem = null;
+                _contentPanel.Invalidate();
+            };
             _contentPanel.KeyDown += ChooserTabKeyDown;
             _contentPanel.KeyDown += ContentPanel_KeyDown;
+            _contentPanel.KeyPress += (sender, e) => { if (e.KeyChar == ' ') e.Handled = true; };
+            _contentPanel.KeyUp += ContentPanel_KeyUp;
             _contentPanel.AutoScroll = true;
             _contentPanel.Paint += ContentPanel_Paint;
             _contentPanel.MouseClick += ContentPanel_MouseClick;
@@ -186,11 +193,11 @@ namespace MissionPlanner.Controls
             {
                 _viewportLayoutQueued = false;
                 if (!_resourcesDisposed && !_contentPanel.IsDisposed)
-                    UpdateScrollSize();
+                    UpdateScrollSize(revealKeyboardRow: true);
             }));
         }
 
-        private void UpdateScrollSize()
+        private void UpdateScrollSize(bool revealKeyboardRow = false)
         {
             if (_contentPanel == null || _filteredItems == null || _updatingLayout || _resourcesDisposed)
                 return;
@@ -292,6 +299,8 @@ namespace MissionPlanner.Controls
                 }
             }
             finally { _updatingLayout = false; }
+            if (revealKeyboardRow && _contentPanel.Focused)
+                FocusKeyboardRow();
             _contentPanel.Invalidate();
             if (_mouseInside)
                 UpdateHover(RowAtPoint(_contentPanel.PointToClient(Cursor.Position)));
@@ -416,18 +425,39 @@ namespace MissionPlanner.Controls
         {
             if (!_contentPanel.Focused || e.Modifiers != Keys.None || _filteredItems.Count == 0) return;
             int index = Math.Max(0, _filteredItems.IndexOf(_keyboardItem));
+            if (e.KeyCode == Keys.Space)
+            {
+                // Activate on release so repeat key-downs do not flip the same item.
+                // SuppressKeyPress also suppresses KeyUp; consume the character separately.
+                _spacePressedItem = _spacePressedItem ?? _filteredItems[index];
+                e.Handled = true;
+                return;
+            }
             switch (e.KeyCode)
             {
                 case Keys.Up: index = Math.Max(0, index - 1); break;
                 case Keys.Down: index = Math.Min(_filteredItems.Count - 1, index + 1); break;
                 case Keys.Home: index = 0; break;
                 case Keys.End: index = _filteredItems.Count - 1; break;
-                case Keys.Space: ToggleItem(_filteredItems[index]); break;
                 default: return; // Preserve Tab traversal and the form's existing Enter behavior.
             }
             _keyboardItem = _filteredItems[index];
             FocusKeyboardRow();
             e.Handled = e.SuppressKeyPress = true;
+        }
+
+        private void ContentPanel_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode != Keys.Space) return;
+            var pressed = _spacePressedItem;
+            _spacePressedItem = null;
+            if (pressed == null) return;
+            e.Handled = true;
+            if (_contentPanel.Focused && pressed == _keyboardItem && _filteredItems.Contains(pressed))
+            {
+                ToggleItem(pressed);
+                FocusKeyboardRow();
+            }
         }
 
         private void FocusKeyboardRow()
@@ -549,14 +579,14 @@ namespace MissionPlanner.Controls
             _headerFont?.Dispose();
             _normalFont = null;
             _headerFont = null;
-            UpdateScrollSize();
+            UpdateScrollSize(revealKeyboardRow: true);
         }
 
 #if !LIB
         protected override void OnDpiChangedAfterParent(EventArgs e)
         {
             base.OnDpiChangedAfterParent(e);
-            UpdateScrollSize();
+            UpdateScrollSize(revealKeyboardRow: true);
         }
 #endif
 

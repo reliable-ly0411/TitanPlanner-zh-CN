@@ -20,7 +20,12 @@ class ChooserProbe
     static void X(string args)
     {
         using(var p = Process.Start("xdotool",args)) { p.WaitForExit(); if(p.ExitCode != 0) throw new Exception(args); }
-        for(int i=0;i<6;i++) { Application.DoEvents(); Thread.Sleep(10); }
+        Pump(60);
+    }
+    static void Pump(int milliseconds)
+    {
+        var elapsed=Stopwatch.StartNew();
+        do { Application.DoEvents(); Thread.Sleep(10); } while(elapsed.ElapsedMilliseconds<milliseconds);
     }
     static void Want(bool ok,string message)
     { if(!ok) throw new Exception(message); checks++; Console.WriteLine("PASS " + message); }
@@ -100,6 +105,22 @@ class ChooserProbe
                 var lastBounds=Rect(rows[rows.Count-1],"CheckBounds");
                 lastBounds.Offset(panel.AutoScrollPosition);
                 Want(panel.ClientRectangle.Contains(lastBounds) && (!dark || panel.AutoScrollPosition.Y < 0),"final checkbox inside viewport, narrow pane scrolls");
+                form.ClientSize = new Size(dark?880:420, 156);
+                Pump(120);
+                rows=(IList)Field(form,"_layoutRows");
+                var resized=Rect(rows[rows.Count-1],"CheckBounds");
+                resized.Offset(panel.AutoScrollPosition);
+                Want(Raw(form)==last && panel.Focused && panel.ClientRectangle.Contains(resized),
+                    "active final checkbox remains visible after " + (dark?"widening":"narrowing"));
+                if (!dark)
+                {
+                    var beforeWheel=panel.AutoScrollPosition.Y;
+                    var mouse=panel.PointToScreen(new Point(40,40));
+                    X("mousemove "+mouse.X+" "+mouse.Y+" click --repeat 2 4");
+                    Pump(240);
+                    Want(Raw(form)==last && panel.AutoScrollPosition.Y>beforeWheel,
+                        "manual scroll can pan away without moving the active field");
+                }
                 X("key Home Tab");
                 Want(search.Focused,"forward Tab exits to search; no keyboard trap");
                 X("type --delay 40 alt");
@@ -118,6 +139,27 @@ class ChooserProbe
                 var prior=events;
                 X("key Tab Down space");
                 Want(events==prior && Raw(form)==null,"empty results don't invoke callbacks");
+
+                X("key Tab ctrl+a");
+                X("type --delay 30 alt");
+                X("key Tab");
+                var held=events;
+                X("keydown space");
+                Pump(1000); // Actual X11 auto-repeat, while the form continues processing input.
+                Want(panel.Focused && events==held,"held Space does not toggle before release");
+                X("keyup space");
+                Want(events==held+"alt:True:custom;","one physical Space press toggles once despite autorepeat");
+                X("key space");
+                Want(events==held+"alt:True:custom;alt:False:custom;","second distinct Space press toggles once");
+
+                var interrupted=events;
+                X("keydown space");
+                Click(search,new Point(4,4));
+                Want(search.Focused,"focus can leave during a Space press");
+                X("keyup space");
+                Want(events==interrupted,"losing focus cancels the pending toggle");
+                X("key Tab space");
+                Want(events==interrupted+"alt:True:custom;","new Space press works after focus reset");
             }
         }
         Console.WriteLine(checks+" checks passed");
