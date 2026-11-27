@@ -1291,21 +1291,26 @@ namespace MissionPlanner.GCSViews.ConfigurationView
         }
 
         Control optionsControl;
+        private static void ClearParameterOptionsControl(Control host, ref Control optionsControl)
+        {
+            if (optionsControl != null)
+            {
+                try
+                {
+                    host.Controls.Remove(optionsControl);
+                    optionsControl.Dispose();
+                } catch { }
+                optionsControl = null;
+            }
+        }
+
         // Create and place the relevant control in the options column when a row is entered
         private void Params_RowEnter(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0)
                 return;
 
-            if (optionsControl != null)
-            {
-                try
-                {
-                    Params.Controls.Remove(optionsControl);
-                    optionsControl.Dispose();
-                } catch { }
-                optionsControl = null;
-            }
+            ClearParameterOptionsControl(Params, ref optionsControl);
 
             string param_name = Params[Command.Index, e.RowIndex].Value.ToString();
             string vehicle = MainV2.comPort.MAV.cs.firmware.ToString();
