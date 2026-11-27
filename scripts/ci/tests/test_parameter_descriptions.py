@@ -9,6 +9,7 @@ ROOT = Path(__file__).resolve().parents[3]
 spec = importlib.util.spec_from_file_location('parameter_catalog', ROOT / 'scripts/localization/build_parameter_catalog.py')
 OSD_MESSAGE_TIME_HELP_KEYS = {'OSD_MSG_TIME'}
 LOG_STORAGE_HELP_KEYS = {'LOG_MAX_FILES', 'LOG_FILE_MB_FREE'}
+ONBOARD_DISPLAY_HELP_KEYS = {'NTF_DISPLAY_TYPE'}
 SIDEBAR_GEOMETRY_KEYS = {'OSD_SB_H_OFS', 'OSD_SB_V_EXT'}
 IMU_DIAGNOSTIC_HELP_KEYS = {'INS_LOG_BAT_CNT', 'INS_LOG_BAT_LGIN', 'INS_LOG_BAT_LGCT'}
 catalog_module = importlib.util.module_from_spec(spec)
@@ -39,8 +40,8 @@ class ParameterCatalogTests(unittest.TestCase):
     def test_scope_counts_and_held_versions(self):
         notes = self.catalog['translations']
         descriptions = {(n['family'], v, n['parameter']) for n in notes if n['field'] == 'Description' for v in n['versions']}
-        self.assertEqual(575, len(descriptions))
-        self.assertEqual(266, len({(f, p) for f, v, p in descriptions}))
+        self.assertEqual(582, len(descriptions))
+        self.assertEqual(269, len({(f, p) for f, v, p in descriptions}))
         self.assertFalse(any(v == '4.7.2' for f, v, p in descriptions))
         excluded_copter = {'RTL_CONE_SLOPE', 'LAND_SPEED', 'LAND_SPD_MS', 'LOG_FILE_BUFSIZE', 'FS_GCS_ENABLE'}
         excluded_plane = {'TECS_CLMB_MAX', 'TECS_SINK_MIN', 'ROLL_LIMIT_DEG'}
@@ -54,7 +55,7 @@ class ParameterCatalogTests(unittest.TestCase):
         pairs = (('GPS_CAN_NODEID1', 'GPS_CAN_NODEID2'), ('GPS1_CAN_NODEID', 'GPS2_CAN_NODEID'))
         for release in self.bundle.findall("release[@family='Copter']"):
             v = release.get('version')
-            records = {r.get('name').split(':')[-1]: r for r in release.iter('param') if r.get('name') not in (SIDEBAR_GEOMETRY_KEYS | IMU_DIAGNOSTIC_HELP_KEYS | OSD_MESSAGE_TIME_HELP_KEYS | LOG_STORAGE_HELP_KEYS)}
+            records = {r.get('name').split(':')[-1]: r for r in release.iter('param') if r.get('name') not in (SIDEBAR_GEOMETRY_KEYS | IMU_DIAGNOSTIC_HELP_KEYS | OSD_MESSAGE_TIME_HELP_KEYS | LOG_STORAGE_HELP_KEYS | ONBOARD_DISPLAY_HELP_KEYS)}
             self.assertEqual(legacy_counts[v] + reviewed_counts[v], len(records))
             readonly = {k: r for k, r in records.items() if r.findtext("field[@name='ReadOnly']") == 'True'}
             self.assertEqual(reviewed_counts[v], len(readonly))
@@ -110,7 +111,7 @@ class ParameterCatalogTests(unittest.TestCase):
 
     def test_sub_narrow_expansion_adds_only_unique_read_only_records(self):
         scope = self.bundle.find("release[@family='Sub'][@version='4.7.1']")
-        records = {p.get('name'): p for p in scope.iter('param') if not p.get('name').startswith('STAT_') and p.get('name') not in (SIDEBAR_GEOMETRY_KEYS | IMU_DIAGNOSTIC_HELP_KEYS | OSD_MESSAGE_TIME_HELP_KEYS | LOG_STORAGE_HELP_KEYS)}
+        records = {p.get('name'): p for p in scope.iter('param') if not p.get('name').startswith('STAT_') and p.get('name') not in (SIDEBAR_GEOMETRY_KEYS | IMU_DIAGNOSTIC_HELP_KEYS | OSD_MESSAGE_TIME_HELP_KEYS | LOG_STORAGE_HELP_KEYS | ONBOARD_DISPLAY_HELP_KEYS)}
         self.assertEqual(34, len(records))
         self.assertEqual({'GPS1_CAN_NODEID','GPS2_CAN_NODEID'}, {key for key in records if key.startswith('GPS')})
         self.assertTrue({'MIS_TOTAL','VTX_FREQ'} <= records.keys())
@@ -193,6 +194,23 @@ class ParameterCatalogTests(unittest.TestCase):
                 self.assertEqual(('Description',r.get('documentation'),catalog_module.record_fingerprint(r)),
                                  (entries[0]['field'],entries[0]['english'],entries[0]['recordSha256']))
         self.assertEqual(2, len(seen))
+
+    def test_onboard_display_help_preserves_four_choices_and_documented_default(self):
+        for release in self.bundle:
+            family, version = release.get('family'), release.get('version')
+            rows = [r for r in release.iter('param') if r.get('name') in ONBOARD_DISPLAY_HELP_KEYS]
+            self.assertEqual(1, len(rows))
+            row = rows[0]
+            self.assertEqual([('0','Disable'),('1','ssd1306'),('2','sh1106'),('10','SITL')],
+                             [(value.get('code'), value.text) for value in row.findall('values/value')])
+            notes = [n for n in self.catalog['translations'] if n['family'] == family
+                     and version in n['versions'] and n['parameter'] in ONBOARD_DISPLAY_HELP_KEYS]
+            self.assertEqual(1, len(notes))
+            english = row.get('documentation')
+            self.assertIn('Disabled by default.', english)
+            self.assertEqual(('Description', english, catalog_module.record_fingerprint(row)),
+                             (notes[0]['field'], notes[0]['english'], notes[0]['recordSha256']))
+            self.assertEqual('选择板载 I²C 显示屏的类型。默认禁用。', notes[0]['chinese'])
 
     def test_source_changes_cannot_automatically_reapprove_notes(self):
         for change in ('English', 'Range', 'Unit'):
