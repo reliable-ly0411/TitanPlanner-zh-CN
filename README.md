@@ -56,3 +56,7 @@ True 120 DPI Windows list, 628×255, exact production QuickView options projecte
 ## #188 checkbox and #190 layout outcome
 
 Actual Windows 120 DPI, only isolated controls. #188 shows the checked background-list option from package `706cd0c` in a 933×558 host. Other controls intentionally have no activated device/user settings. #190 shows the final shortcut row after a 933→1230→933 resize using source `4129782f`; system text colour is set for the isolated image. The still image does not prove speed, real application activation, or persisted settings.
+
+## #184 tile failure and #186 HUD translation
+
+Windows offscreen GDI rendering using the same exact packaged commit `7dab547c` for both languages. The 256×256 tile uses an intentionally missing synthetic tile without network requests; there is no real map. The 466×354 HUD uses a synthetic waypoint (7, 123 m) and wind (3.5 m/s). en-US versus enhanced zh-CN is a **language** comparison, not a comparison of different software builds. No hardware or OpenGL capture.
