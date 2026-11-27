@@ -907,6 +907,30 @@
           <param humanName="POWER_Y" name="OSD1_POWER_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="ESCAMPS_X" name="OSD1_ESCAMPS_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCAMPS_Y" name="OSD1_ESCAMPS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCRPM_X" name="OSD1_ESCRPM_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCRPM_Y" name="OSD1_ESCRPM_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCTEMP_X" name="OSD1_ESCTEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCTEMP_Y" name="OSD1_ESCTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RPM_X" name="OSD1_RPM_X" documentation="Horizontal position on screen">
+            <field name="Range">0 29</field>
+          </param>
+          <param humanName="RPM_Y" name="OSD1_RPM_Y" documentation="Vertical position on screen">
+            <field name="Range">0 15</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -1139,6 +1163,30 @@
           </param>
           <param humanName="POWER_Y" name="OSD2_POWER_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCAMPS_X" name="OSD2_ESCAMPS_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCAMPS_Y" name="OSD2_ESCAMPS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCRPM_X" name="OSD2_ESCRPM_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCRPM_Y" name="OSD2_ESCRPM_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCTEMP_X" name="OSD2_ESCTEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCTEMP_Y" name="OSD2_ESCTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RPM_X" name="OSD2_RPM_X" documentation="Horizontal position on screen">
+            <field name="Range">0 29</field>
+          </param>
+          <param humanName="RPM_Y" name="OSD2_RPM_Y" documentation="Vertical position on screen">
+            <field name="Range">0 15</field>
           </param>
         </parameters>
         <parameters name="OSD3_">
@@ -1373,6 +1421,30 @@
           <param humanName="POWER_Y" name="OSD3_POWER_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="ESCAMPS_X" name="OSD3_ESCAMPS_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCAMPS_Y" name="OSD3_ESCAMPS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCRPM_X" name="OSD3_ESCRPM_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCRPM_Y" name="OSD3_ESCRPM_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCTEMP_X" name="OSD3_ESCTEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCTEMP_Y" name="OSD3_ESCTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RPM_X" name="OSD3_RPM_X" documentation="Horizontal position on screen">
+            <field name="Range">0 29</field>
+          </param>
+          <param humanName="RPM_Y" name="OSD3_RPM_Y" documentation="Vertical position on screen">
+            <field name="Range">0 15</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -1605,6 +1677,30 @@
           </param>
           <param humanName="POWER_Y" name="OSD4_POWER_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCAMPS_X" name="OSD4_ESCAMPS_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCAMPS_Y" name="OSD4_ESCAMPS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCRPM_X" name="OSD4_ESCRPM_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCRPM_Y" name="OSD4_ESCRPM_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCTEMP_X" name="OSD4_ESCTEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCTEMP_Y" name="OSD4_ESCTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RPM_X" name="OSD4_RPM_X" documentation="Horizontal position on screen">
+            <field name="Range">0 29</field>
+          </param>
+          <param humanName="RPM_Y" name="OSD4_RPM_Y" documentation="Vertical position on screen">
+            <field name="Range">0 15</field>
           </param>
         </parameters>
         <parameters name="NTF_">
@@ -2603,6 +2699,30 @@
           <param humanName="POWER_Y" name="OSD1_POWER_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="ESCAMPS_X" name="OSD1_ESCAMPS_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCAMPS_Y" name="OSD1_ESCAMPS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCRPM_X" name="OSD1_ESCRPM_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCRPM_Y" name="OSD1_ESCRPM_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCTEMP_X" name="OSD1_ESCTEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCTEMP_Y" name="OSD1_ESCTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RPM_X" name="OSD1_RPM_X" documentation="Horizontal position on screen">
+            <field name="Range">0 29</field>
+          </param>
+          <param humanName="RPM_Y" name="OSD1_RPM_Y" documentation="Vertical position on screen">
+            <field name="Range">0 15</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -2835,6 +2955,30 @@
           </param>
           <param humanName="POWER_Y" name="OSD2_POWER_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCAMPS_X" name="OSD2_ESCAMPS_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCAMPS_Y" name="OSD2_ESCAMPS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCRPM_X" name="OSD2_ESCRPM_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCRPM_Y" name="OSD2_ESCRPM_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCTEMP_X" name="OSD2_ESCTEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCTEMP_Y" name="OSD2_ESCTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RPM_X" name="OSD2_RPM_X" documentation="Horizontal position on screen">
+            <field name="Range">0 29</field>
+          </param>
+          <param humanName="RPM_Y" name="OSD2_RPM_Y" documentation="Vertical position on screen">
+            <field name="Range">0 15</field>
           </param>
         </parameters>
         <parameters name="OSD3_">
@@ -3069,6 +3213,30 @@
           <param humanName="POWER_Y" name="OSD3_POWER_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="ESCAMPS_X" name="OSD3_ESCAMPS_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCAMPS_Y" name="OSD3_ESCAMPS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCRPM_X" name="OSD3_ESCRPM_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCRPM_Y" name="OSD3_ESCRPM_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCTEMP_X" name="OSD3_ESCTEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCTEMP_Y" name="OSD3_ESCTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RPM_X" name="OSD3_RPM_X" documentation="Horizontal position on screen">
+            <field name="Range">0 29</field>
+          </param>
+          <param humanName="RPM_Y" name="OSD3_RPM_Y" documentation="Vertical position on screen">
+            <field name="Range">0 15</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -3301,6 +3469,30 @@
           </param>
           <param humanName="POWER_Y" name="OSD4_POWER_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCAMPS_X" name="OSD4_ESCAMPS_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCAMPS_Y" name="OSD4_ESCAMPS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCRPM_X" name="OSD4_ESCRPM_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCRPM_Y" name="OSD4_ESCRPM_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCTEMP_X" name="OSD4_ESCTEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCTEMP_Y" name="OSD4_ESCTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RPM_X" name="OSD4_RPM_X" documentation="Horizontal position on screen">
+            <field name="Range">0 29</field>
+          </param>
+          <param humanName="RPM_Y" name="OSD4_RPM_Y" documentation="Vertical position on screen">
+            <field name="Range">0 15</field>
           </param>
         </parameters>
         <parameters name="INS_LOG_">
@@ -4389,6 +4581,30 @@
           <param humanName="POWER_Y" name="OSD1_POWER_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="ESCAMPS_X" name="OSD1_ESCAMPS_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCAMPS_Y" name="OSD1_ESCAMPS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCRPM_X" name="OSD1_ESCRPM_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCRPM_Y" name="OSD1_ESCRPM_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCTEMP_X" name="OSD1_ESCTEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCTEMP_Y" name="OSD1_ESCTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RPM_X" name="OSD1_RPM_X" documentation="Horizontal position on screen">
+            <field name="Range">0 29</field>
+          </param>
+          <param humanName="RPM_Y" name="OSD1_RPM_Y" documentation="Vertical position on screen">
+            <field name="Range">0 15</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -4621,6 +4837,30 @@
           </param>
           <param humanName="POWER_Y" name="OSD2_POWER_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCAMPS_X" name="OSD2_ESCAMPS_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCAMPS_Y" name="OSD2_ESCAMPS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCRPM_X" name="OSD2_ESCRPM_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCRPM_Y" name="OSD2_ESCRPM_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCTEMP_X" name="OSD2_ESCTEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCTEMP_Y" name="OSD2_ESCTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RPM_X" name="OSD2_RPM_X" documentation="Horizontal position on screen">
+            <field name="Range">0 29</field>
+          </param>
+          <param humanName="RPM_Y" name="OSD2_RPM_Y" documentation="Vertical position on screen">
+            <field name="Range">0 15</field>
           </param>
         </parameters>
         <parameters name="OSD3_">
@@ -4855,6 +5095,30 @@
           <param humanName="POWER_Y" name="OSD3_POWER_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="ESCAMPS_X" name="OSD3_ESCAMPS_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCAMPS_Y" name="OSD3_ESCAMPS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCRPM_X" name="OSD3_ESCRPM_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCRPM_Y" name="OSD3_ESCRPM_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCTEMP_X" name="OSD3_ESCTEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCTEMP_Y" name="OSD3_ESCTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RPM_X" name="OSD3_RPM_X" documentation="Horizontal position on screen">
+            <field name="Range">0 29</field>
+          </param>
+          <param humanName="RPM_Y" name="OSD3_RPM_Y" documentation="Vertical position on screen">
+            <field name="Range">0 15</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -5087,6 +5351,30 @@
           </param>
           <param humanName="POWER_Y" name="OSD4_POWER_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCAMPS_X" name="OSD4_ESCAMPS_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCAMPS_Y" name="OSD4_ESCAMPS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCRPM_X" name="OSD4_ESCRPM_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCRPM_Y" name="OSD4_ESCRPM_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCTEMP_X" name="OSD4_ESCTEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCTEMP_Y" name="OSD4_ESCTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RPM_X" name="OSD4_RPM_X" documentation="Horizontal position on screen">
+            <field name="Range">0 29</field>
+          </param>
+          <param humanName="RPM_Y" name="OSD4_RPM_Y" documentation="Vertical position on screen">
+            <field name="Range">0 15</field>
           </param>
         </parameters>
         <parameters name="INS_LOG_">
@@ -6163,6 +6451,30 @@
           <param humanName="POWER_Y" name="OSD1_POWER_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="ESCAMPS_X" name="OSD1_ESCAMPS_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCAMPS_Y" name="OSD1_ESCAMPS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCRPM_X" name="OSD1_ESCRPM_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCRPM_Y" name="OSD1_ESCRPM_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCTEMP_X" name="OSD1_ESCTEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCTEMP_Y" name="OSD1_ESCTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RPM_X" name="OSD1_RPM_X" documentation="Horizontal position on screen">
+            <field name="Range">0 29</field>
+          </param>
+          <param humanName="RPM_Y" name="OSD1_RPM_Y" documentation="Vertical position on screen">
+            <field name="Range">0 15</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -6395,6 +6707,30 @@
           </param>
           <param humanName="POWER_Y" name="OSD2_POWER_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCAMPS_X" name="OSD2_ESCAMPS_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCAMPS_Y" name="OSD2_ESCAMPS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCRPM_X" name="OSD2_ESCRPM_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCRPM_Y" name="OSD2_ESCRPM_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCTEMP_X" name="OSD2_ESCTEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCTEMP_Y" name="OSD2_ESCTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RPM_X" name="OSD2_RPM_X" documentation="Horizontal position on screen">
+            <field name="Range">0 29</field>
+          </param>
+          <param humanName="RPM_Y" name="OSD2_RPM_Y" documentation="Vertical position on screen">
+            <field name="Range">0 15</field>
           </param>
         </parameters>
         <parameters name="OSD3_">
@@ -6629,6 +6965,30 @@
           <param humanName="POWER_Y" name="OSD3_POWER_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="ESCAMPS_X" name="OSD3_ESCAMPS_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCAMPS_Y" name="OSD3_ESCAMPS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCRPM_X" name="OSD3_ESCRPM_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCRPM_Y" name="OSD3_ESCRPM_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCTEMP_X" name="OSD3_ESCTEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCTEMP_Y" name="OSD3_ESCTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RPM_X" name="OSD3_RPM_X" documentation="Horizontal position on screen">
+            <field name="Range">0 29</field>
+          </param>
+          <param humanName="RPM_Y" name="OSD3_RPM_Y" documentation="Vertical position on screen">
+            <field name="Range">0 15</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -6861,6 +7221,30 @@
           </param>
           <param humanName="POWER_Y" name="OSD4_POWER_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCAMPS_X" name="OSD4_ESCAMPS_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCAMPS_Y" name="OSD4_ESCAMPS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCRPM_X" name="OSD4_ESCRPM_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCRPM_Y" name="OSD4_ESCRPM_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCTEMP_X" name="OSD4_ESCTEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCTEMP_Y" name="OSD4_ESCTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RPM_X" name="OSD4_RPM_X" documentation="Horizontal position on screen">
+            <field name="Range">0 29</field>
+          </param>
+          <param humanName="RPM_Y" name="OSD4_RPM_Y" documentation="Vertical position on screen">
+            <field name="Range">0 15</field>
           </param>
         </parameters>
         <parameters name="NTF_">
@@ -7914,6 +8298,30 @@
           <param humanName="POWER_Y" name="OSD1_POWER_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="ESCAMPS_X" name="OSD1_ESCAMPS_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCAMPS_Y" name="OSD1_ESCAMPS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCRPM_X" name="OSD1_ESCRPM_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCRPM_Y" name="OSD1_ESCRPM_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCTEMP_X" name="OSD1_ESCTEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCTEMP_Y" name="OSD1_ESCTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RPM_X" name="OSD1_RPM_X" documentation="Horizontal position on screen">
+            <field name="Range">0 29</field>
+          </param>
+          <param humanName="RPM_Y" name="OSD1_RPM_Y" documentation="Vertical position on screen">
+            <field name="Range">0 15</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -8146,6 +8554,30 @@
           </param>
           <param humanName="POWER_Y" name="OSD2_POWER_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCAMPS_X" name="OSD2_ESCAMPS_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCAMPS_Y" name="OSD2_ESCAMPS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCRPM_X" name="OSD2_ESCRPM_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCRPM_Y" name="OSD2_ESCRPM_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCTEMP_X" name="OSD2_ESCTEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCTEMP_Y" name="OSD2_ESCTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RPM_X" name="OSD2_RPM_X" documentation="Horizontal position on screen">
+            <field name="Range">0 29</field>
+          </param>
+          <param humanName="RPM_Y" name="OSD2_RPM_Y" documentation="Vertical position on screen">
+            <field name="Range">0 15</field>
           </param>
         </parameters>
         <parameters name="OSD3_">
@@ -8380,6 +8812,30 @@
           <param humanName="POWER_Y" name="OSD3_POWER_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="ESCAMPS_X" name="OSD3_ESCAMPS_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCAMPS_Y" name="OSD3_ESCAMPS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCRPM_X" name="OSD3_ESCRPM_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCRPM_Y" name="OSD3_ESCRPM_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCTEMP_X" name="OSD3_ESCTEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCTEMP_Y" name="OSD3_ESCTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RPM_X" name="OSD3_RPM_X" documentation="Horizontal position on screen">
+            <field name="Range">0 29</field>
+          </param>
+          <param humanName="RPM_Y" name="OSD3_RPM_Y" documentation="Vertical position on screen">
+            <field name="Range">0 15</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -8612,6 +9068,30 @@
           </param>
           <param humanName="POWER_Y" name="OSD4_POWER_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCAMPS_X" name="OSD4_ESCAMPS_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCAMPS_Y" name="OSD4_ESCAMPS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCRPM_X" name="OSD4_ESCRPM_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCRPM_Y" name="OSD4_ESCRPM_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCTEMP_X" name="OSD4_ESCTEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCTEMP_Y" name="OSD4_ESCTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RPM_X" name="OSD4_RPM_X" documentation="Horizontal position on screen">
+            <field name="Range">0 29</field>
+          </param>
+          <param humanName="RPM_Y" name="OSD4_RPM_Y" documentation="Vertical position on screen">
+            <field name="Range">0 15</field>
           </param>
         </parameters>
         <parameters name="INS_LOG_">
@@ -9764,6 +10244,30 @@
           <param humanName="POWER_Y" name="OSD1_POWER_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="ESCAMPS_X" name="OSD1_ESCAMPS_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCAMPS_Y" name="OSD1_ESCAMPS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCRPM_X" name="OSD1_ESCRPM_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCRPM_Y" name="OSD1_ESCRPM_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCTEMP_X" name="OSD1_ESCTEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCTEMP_Y" name="OSD1_ESCTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RPM_X" name="OSD1_RPM_X" documentation="Horizontal position on screen">
+            <field name="Range">0 29</field>
+          </param>
+          <param humanName="RPM_Y" name="OSD1_RPM_Y" documentation="Vertical position on screen">
+            <field name="Range">0 15</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -9996,6 +10500,30 @@
           </param>
           <param humanName="POWER_Y" name="OSD2_POWER_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCAMPS_X" name="OSD2_ESCAMPS_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCAMPS_Y" name="OSD2_ESCAMPS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCRPM_X" name="OSD2_ESCRPM_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCRPM_Y" name="OSD2_ESCRPM_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCTEMP_X" name="OSD2_ESCTEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCTEMP_Y" name="OSD2_ESCTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RPM_X" name="OSD2_RPM_X" documentation="Horizontal position on screen">
+            <field name="Range">0 29</field>
+          </param>
+          <param humanName="RPM_Y" name="OSD2_RPM_Y" documentation="Vertical position on screen">
+            <field name="Range">0 15</field>
           </param>
         </parameters>
         <parameters name="OSD3_">
@@ -10230,6 +10758,30 @@
           <param humanName="POWER_Y" name="OSD3_POWER_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="ESCAMPS_X" name="OSD3_ESCAMPS_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCAMPS_Y" name="OSD3_ESCAMPS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCRPM_X" name="OSD3_ESCRPM_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCRPM_Y" name="OSD3_ESCRPM_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCTEMP_X" name="OSD3_ESCTEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCTEMP_Y" name="OSD3_ESCTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RPM_X" name="OSD3_RPM_X" documentation="Horizontal position on screen">
+            <field name="Range">0 29</field>
+          </param>
+          <param humanName="RPM_Y" name="OSD3_RPM_Y" documentation="Vertical position on screen">
+            <field name="Range">0 15</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -10462,6 +11014,30 @@
           </param>
           <param humanName="POWER_Y" name="OSD4_POWER_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCAMPS_X" name="OSD4_ESCAMPS_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCAMPS_Y" name="OSD4_ESCAMPS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCRPM_X" name="OSD4_ESCRPM_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCRPM_Y" name="OSD4_ESCRPM_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCTEMP_X" name="OSD4_ESCTEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCTEMP_Y" name="OSD4_ESCTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RPM_X" name="OSD4_RPM_X" documentation="Horizontal position on screen">
+            <field name="Range">0 29</field>
+          </param>
+          <param humanName="RPM_Y" name="OSD4_RPM_Y" documentation="Vertical position on screen">
+            <field name="Range">0 15</field>
           </param>
         </parameters>
         <parameters name="INS_LOG_">
@@ -11086,6 +11662,30 @@
           <param humanName="POWER_Y" name="OSD1_POWER_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="ESCAMPS_X" name="OSD1_ESCAMPS_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCAMPS_Y" name="OSD1_ESCAMPS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCRPM_X" name="OSD1_ESCRPM_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCRPM_Y" name="OSD1_ESCRPM_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCTEMP_X" name="OSD1_ESCTEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCTEMP_Y" name="OSD1_ESCTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RPM_X" name="OSD1_RPM_X" documentation="Horizontal position on screen">
+            <field name="Range">0 29</field>
+          </param>
+          <param humanName="RPM_Y" name="OSD1_RPM_Y" documentation="Vertical position on screen">
+            <field name="Range">0 15</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -11318,6 +11918,30 @@
           </param>
           <param humanName="POWER_Y" name="OSD2_POWER_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCAMPS_X" name="OSD2_ESCAMPS_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCAMPS_Y" name="OSD2_ESCAMPS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCRPM_X" name="OSD2_ESCRPM_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCRPM_Y" name="OSD2_ESCRPM_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCTEMP_X" name="OSD2_ESCTEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCTEMP_Y" name="OSD2_ESCTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RPM_X" name="OSD2_RPM_X" documentation="Horizontal position on screen">
+            <field name="Range">0 29</field>
+          </param>
+          <param humanName="RPM_Y" name="OSD2_RPM_Y" documentation="Vertical position on screen">
+            <field name="Range">0 15</field>
           </param>
         </parameters>
         <parameters name="OSD3_">
@@ -11552,6 +12176,30 @@
           <param humanName="POWER_Y" name="OSD3_POWER_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="ESCAMPS_X" name="OSD3_ESCAMPS_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCAMPS_Y" name="OSD3_ESCAMPS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCRPM_X" name="OSD3_ESCRPM_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCRPM_Y" name="OSD3_ESCRPM_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCTEMP_X" name="OSD3_ESCTEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCTEMP_Y" name="OSD3_ESCTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RPM_X" name="OSD3_RPM_X" documentation="Horizontal position on screen">
+            <field name="Range">0 29</field>
+          </param>
+          <param humanName="RPM_Y" name="OSD3_RPM_Y" documentation="Vertical position on screen">
+            <field name="Range">0 15</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -11784,6 +12432,30 @@
           </param>
           <param humanName="POWER_Y" name="OSD4_POWER_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCAMPS_X" name="OSD4_ESCAMPS_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCAMPS_Y" name="OSD4_ESCAMPS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCRPM_X" name="OSD4_ESCRPM_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCRPM_Y" name="OSD4_ESCRPM_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ESCTEMP_X" name="OSD4_ESCTEMP_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ESCTEMP_Y" name="OSD4_ESCTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="RPM_X" name="OSD4_RPM_X" documentation="Horizontal position on screen">
+            <field name="Range">0 29</field>
+          </param>
+          <param humanName="RPM_Y" name="OSD4_RPM_Y" documentation="Vertical position on screen">
+            <field name="Range">0 15</field>
           </param>
         </parameters>
         <parameters name="INS_LOG_">
