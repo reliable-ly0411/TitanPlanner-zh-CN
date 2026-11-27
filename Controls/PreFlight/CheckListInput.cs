@@ -213,6 +213,7 @@ namespace MissionPlanner.Controls.PreFlight
             {
                 case "Black": return token + " · 黑色";
                 case "Blue": return token + " · 蓝色";
+                case "Brown": return token + " · 棕色";
                 case "Cyan": return token + " · 青色";
                 case "Gray": return token + " · 灰色";
                 case "Green": return token + " · 绿色";
