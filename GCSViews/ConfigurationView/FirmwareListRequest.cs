@@ -26,10 +26,23 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             toggle.CheckedChanged += (sender, args) =>
                 Settings.Instance[LoadInBackgroundKey] = toggle.Checked.ToString();
             var help = new ToolTip();
-            help.SetToolTip(toggle, UiText.Translate(
-                "Reuse the firmware list when returning to the tab and keep the legacy page non-modal. Turning this off restores refresh-on-entry for the standard page and the waiting dialog for the legacy page."));
+            help.SetToolTip(toggle, BackgroundToggleHelp());
             toggle.Disposed += (sender, args) => help.Dispose();
             return toggle;
+        }
+
+        private static string BackgroundToggleHelp()
+        {
+            var description = UiText.Translate(
+                "Reuse the firmware list when returning to the tab and keep the legacy page non-modal. Turning this off restores refresh-on-entry for the standard page and the waiting dialog for the legacy page.");
+            // A single unbroken line can be wider than the working area. Keep both sentences
+            // and use the punctuation in the translated or fallback string to find their break.
+            int sentenceEnd = description.IndexOf('。');
+            if (sentenceEnd < 0)
+                sentenceEnd = description.IndexOf(". ", StringComparison.Ordinal);
+            return sentenceEnd >= 0 && sentenceEnd + 1 < description.Length
+                ? description.Substring(0, sentenceEnd + 1) + Environment.NewLine + description.Substring(sentenceEnd + 1).TrimStart()
+                : description;
         }
 
         internal static string FailureText(Exception error) => UiText.Translate(error is OperationCanceledException

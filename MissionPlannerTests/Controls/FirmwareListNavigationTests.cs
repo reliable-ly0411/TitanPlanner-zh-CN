@@ -243,6 +243,30 @@ namespace MissionPlannerTests.Controls
             });
         }
 
+        [DataTestMethod]
+        [DataRow("en-US")]
+        [DataRow("zh-Hans")]
+        [DataRow("zh-CN")]
+        public void BackgroundToggleHelpKeepsBothSentencesWithinSeparateLines(string language)
+        {
+            var previous = Thread.CurrentThread.CurrentUICulture;
+            try
+            {
+                Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.GetCultureInfo(language);
+                var helper = typeof(ConfigFirmware).Assembly.GetType(
+                    "MissionPlanner.GCSViews.ConfigurationView.FirmwareListSettings", true);
+                var help = helper.GetMethod("BackgroundToggleHelp", BindingFlags.Static | BindingFlags.NonPublic);
+                var text = (string)help.Invoke(null, null);
+                var expected = language == "zh-CN"
+                    ? new[] { "返回安装固件标签页时复用已加载的列表，旧版页面不弹出等待窗口。",
+                              "关闭后，标准页面每次进入都会刷新，旧版页面恢复等待窗口。" }
+                    : new[] { "Reuse the firmware list when returning to the tab and keep the legacy page non-modal.",
+                              "Turning this off restores refresh-on-entry for the standard page and the waiting dialog for the legacy page." };
+                CollectionAssert.AreEqual(expected, text.Split(new[] { Environment.NewLine }, StringSplitOptions.None));
+            }
+            finally { Thread.CurrentThread.CurrentUICulture = previous; }
+        }
+
         private static List<APFirmware.FirmwareInfo> RoverManifest() => new List<APFirmware.FirmwareInfo>
         {
             new APFirmware.FirmwareInfo
