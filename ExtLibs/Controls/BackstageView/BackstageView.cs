@@ -292,6 +292,8 @@ namespace MissionPlanner.Controls.BackstageView
                                     Top = ButtonTopPos,
                                     // Top = _items.TakeWhile(i => i != page).Sum(i => i.Spacing),
                                     Width = this.pnlMenu.Width,
+                                    FitToViewport = page.FitMenuButtonToViewport ||
+                                                    page.Parent?.FitMenuButtonToViewport == true,
                                     Height = ButtonHeight + heightextra,
                                     ContentPageColor = this.BackColor,
                                     PencilBorderColor = _buttonsAreaPencilColor,

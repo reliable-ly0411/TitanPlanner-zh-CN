@@ -18,6 +18,7 @@ namespace MissionPlanner.Controls.BackstageView
         internal Color HighlightColor1 = SystemColors.Highlight;
         internal Color HighlightColor2 = SystemColors.MenuHighlight;
         private bool _isMouseOver;
+        internal bool FitToViewport { get; set; }
 
         public bool HasChildren
         {
@@ -87,6 +88,29 @@ namespace MissionPlanner.Controls.BackstageView
             base.OnResize(e);
         }
 
+        private void DrawCaption(Graphics graphics, FontFamily family, Color color, int paintWidth)
+        {
+            using (var font = new Font(family, 10 * (100 / graphics.DpiX), FontStyle.Bold))
+            using (var brush = new SolidBrush(color))
+            {
+                if (paintWidth == Width)
+                {
+                    graphics.DrawString(Text, font, brush, 5, 6);
+                    return;
+                }
+
+                int available = paintWidth - 5 - (HasChildren ? 22 : IsSelected ? 9 : 1);
+                if (available <= 0 || Height <= 6)
+                    return;
+
+                using (var format = new StringFormat(StringFormatFlags.NoWrap))
+                {
+                    format.Trimming = StringTrimming.EllipsisCharacter;
+                    graphics.DrawString(Text, font, brush, new RectangleF(5, 6, available, Height - 6), format);
+                }
+            }
+        }
+
         protected override void OnPaint(PaintEventArgs pevent)
         {
             if (this.Parent != null)
@@ -95,19 +119,26 @@ namespace MissionPlanner.Controls.BackstageView
             }
 
            Graphics g = pevent.Graphics;
+           // A vertical scrollbar occupies non-client width. Keep the row and
+           // its handlers intact, but paint inside the visible viewport.
+           int paintWidth = FitToViewport && Parent != null
+               ? Math.Max(0, Math.Min(Width, Parent.ClientSize.Width - Left))
+               : Width;
+           if (paintWidth == 0 || Height == 0)
+               return;
 
             // Now the little 'arrow' thingy if we are selected and the selected bg grad
            if (_isSelected)
            {
                //var rect1 = new Rectangle(0, 0, Width / 1, Height);
-               var rect2 = new Rectangle(0, 0, Width, Height);
+               var rect2 = new Rectangle(0, 0, paintWidth, Height);
 
               // g.FillRectangle(new LinearGradientBrush(rect1, HighlightColor1, HighlightColor2, LinearGradientMode.Horizontal), rect1);
                g.FillRectangle(new LinearGradientBrush(rect2, HighlightColor2, HighlightColor1, LinearGradientMode.Horizontal), rect2);
 
                var butPen = new Pen(HighlightColor1);
-               g.DrawLine(butPen, 0, 0, Width, 0);
-               g.DrawLine(butPen, 0, Height - 1, Width, Height - 1);
+               g.DrawLine(butPen, 0, 0, paintWidth, 0);
+               g.DrawLine(butPen, 0, Height - 1, paintWidth, Height - 1);
 
                var arrowBrush = new SolidBrush(this.ContentPageColor);
 
@@ -116,16 +147,16 @@ namespace MissionPlanner.Controls.BackstageView
 
                var arrowPoints = new[]
                                      {
-                                         new Point(Width, midheight + arSize),
-                                         new Point(Width - arSize, midheight),
-                                         new Point(Width, midheight - arSize)
+                                         new Point(paintWidth, midheight + arSize),
+                                         new Point(paintWidth - arSize, midheight),
+                                         new Point(paintWidth, midheight - arSize)
                                      };
 
-               g.DrawString(Text, new Font(FontFamily.GenericSansSerif, 10 * (100 / g.DpiX), FontStyle.Bold), new SolidBrush(SelectedTextColor), 5, 6);
+               DrawCaption(g, FontFamily.GenericSansSerif, SelectedTextColor, paintWidth);
 
                var pencilBrush = new Pen(this.PencilBorderColor);
 
-               g.DrawLine(pencilBrush, Width - 1, 0, Width - 1, Height - 1);
+               g.DrawLine(pencilBrush, paintWidth - 1, 0, paintWidth - 1, Height - 1);
                g.FillPolygon(arrowBrush, arrowPoints); 
 
                g.DrawPolygon(pencilBrush, arrowPoints);
@@ -141,11 +172,11 @@ namespace MissionPlanner.Controls.BackstageView
                    g.FillRectangle(brush, this.ClientRectangle);
 
                    var butPen = new Pen(PencilBorderColor);
-                   g.DrawLine(butPen, 0, 0, Width, 0);
-                   g.DrawLine(butPen, 0, Height - 1, Width, Height - 1);
+                   g.DrawLine(butPen, 0, 0, paintWidth, 0);
+                   g.DrawLine(butPen, 0, Height - 1, paintWidth, Height - 1);
                }
 
-                g.DrawString(Text, new Font(this.Font.FontFamily,10 * (100/g.DpiX), FontStyle.Bold), new SolidBrush(this.UnSelectedTextColor), 5, 6);
+                DrawCaption(g, Font.FontFamily, UnSelectedTextColor, paintWidth);
            }
 
            if (_hasChildren)
@@ -161,18 +192,18 @@ namespace MissionPlanner.Controls.BackstageView
                {
                    arrowPoints = new[]
                    {
-                       new Point(Width - rightMargin - arrowSize, midHeight - arrowSize / 2),
-                       new Point(Width - rightMargin + arrowSize, midHeight - arrowSize / 2),
-                       new Point(Width - rightMargin, midHeight + arrowSize / 2)
+                       new Point(paintWidth - rightMargin - arrowSize, midHeight - arrowSize / 2),
+                       new Point(paintWidth - rightMargin + arrowSize, midHeight - arrowSize / 2),
+                       new Point(paintWidth - rightMargin, midHeight + arrowSize / 2)
                    };
                }
                else
                {
                    arrowPoints = new[]
                    {
-                       new Point(Width - rightMargin - arrowSize / 2, midHeight - arrowSize),
-                       new Point(Width - rightMargin + arrowSize / 2, midHeight),
-                       new Point(Width - rightMargin - arrowSize / 2, midHeight + arrowSize)
+                       new Point(paintWidth - rightMargin - arrowSize / 2, midHeight - arrowSize),
+                       new Point(paintWidth - rightMargin + arrowSize / 2, midHeight),
+                       new Point(paintWidth - rightMargin - arrowSize / 2, midHeight + arrowSize)
                    };
                }
 

@@ -251,6 +251,8 @@ namespace MissionPlanner.GCSViews
                 AddBackstageViewPage(typeof(ConfigHWIDs), UiText.Translate("HW ID"), isConnected && gotAllParams, mand);
 
             var opt = AddBackstageViewPage(typeof(ConfigOptional), rm.GetString("backstageViewPageopt.Text"));
+            if (opt != null)
+                opt.FitMenuButtonToViewport = true;
             if (MainV2.DisplayConfiguration.displayRTKInject)
             {
                 var rtcmStr = rm.GetString("backstageViewPageSerialInjectGPS.Text");
