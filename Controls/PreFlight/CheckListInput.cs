@@ -153,6 +153,10 @@ namespace MissionPlanner.Controls.PreFlight
                 case "txbuffer":
                 case "rxerrors":
                 case "fixedp":
+                // Reuse reviewed display text for the original reported system values.
+                case "load":
+                case "freemem":
+                case "i2cerrors":
                     string caption = TelemetryFieldPresentation.FieldLabel(key);
                     if (!caption.StartsWith(key + " (", StringComparison.Ordinal))
                         return key;

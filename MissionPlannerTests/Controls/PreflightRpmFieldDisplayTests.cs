@@ -18,6 +18,9 @@ namespace MissionPlannerTests.Controls
             public uint vibeclip0 { get; set; } = 2;
             public uint vibeclip1 { get; set; } = 41;
             public uint vibeclip2 { get; set; } = 238;
+            public float load { get; set; } = 42.5f;
+            public float freemem { get; set; } = 65536;
+            public ushort i2cerrors { get; set; } = 7;
             public int FutureField { get; set; } = 12;
         }
 
@@ -39,6 +42,17 @@ namespace MissionPlannerTests.Controls
                 Tuple.Create("vibeclip0", "第 1 个加速度计削波次数", 2d),
                 Tuple.Create("vibeclip1", "第 2 个加速度计削波次数", 41d),
                 Tuple.Create("vibeclip2", "第 3 个加速度计削波次数", 238d),
+            });
+        }
+
+        [TestMethod]
+        public void ReportedSystemFieldsUseReviewedCaptionsWithoutChangingKeysOrReadback()
+        {
+            CheckFields(new[]
+            {
+                Tuple.Create("load", "飞控上报的处理负载（%）", 42.5d),
+                Tuple.Create("freemem", "上报的可用内存（字节）", 65536d),
+                Tuple.Create("i2cerrors", "上报的 I²C 错误次数", 7d),
             });
         }
 
