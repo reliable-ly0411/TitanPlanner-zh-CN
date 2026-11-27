@@ -255,6 +255,11 @@ namespace MissionPlanner.Controls
 
             AutoScroll = true;
             Controls.Add(_boxes);
+#if !LIB
+            // Only these inert backgrounds participate; neither the status/start strip nor any input is a touch surface.
+            SidebarTouchScroll.Attach(this, this, _boxes, grpSource, tableSource, grpDisplay,
+                tableDisplay, grpRecording, tableRecording);
+#endif
             Name = "FlightPlannerVideoOptions";
             Size = new Size(760, 330);
             Resize += (sender, e) => LayoutBoxes();

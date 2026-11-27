@@ -1,0 +1,99 @@
+using System;
+using System.Drawing;
+using System.Windows.Forms;
+using MissionPlanner.Controls;
+
+internal static class TouchScrollChecks
+{
+    private static int assertions;
+    private static void Check(bool condition, string failure)
+    {
+        assertions++;
+        if (!condition) throw new Exception(failure);
+    }
+
+    private static void PanChecks()
+    {
+        var pan = new SidebarTouchScroll.VerticalPan();
+        Check(pan.Update(Point.Empty) == 0, "Update before a contact must do nothing");
+        foreach (int threshold in new[] { 4, 6, 8, 12 })
+        {
+            pan.Begin(new Point(400, 360), threshold);
+            Check(pan.Update(new Point(400, 360)) == 0, "Tap changed scroll");
+            Check(pan.Update(new Point(400, 360 - threshold + 1)) == 0, "Small motion scrolled");
+            Check(pan.Update(new Point(401, 310)) == 50, "Upward swipe must scroll down");
+            Check(pan.Update(new Point(416, 325)) == -15, "Reversing must apply the next delta immediately");
+            pan.Cancel();
+            Check(pan.Update(new Point(400, 200)) == 0, "Capture-loss/tab-switch cancellation was ignored");
+            pan.Begin(new Point(-410, -360), threshold);
+            Check(pan.Update(new Point(-510, -359)) == 0, "Horizontal motion scrolled");
+            Check(pan.Update(new Point(-510, -460)) == 0, "Rejected horizontal motion later scrolled");
+            pan.Begin(new Point(-410, -360), threshold);
+            Check(pan.Update(new Point(-409, -310)) == -50, "New downwards swipe from negative monitor coordinates failed");
+        }
+    }
+
+    private static void ViewportChecks()
+    {
+        var source = new Panel { Size = new Size(470, 610) };
+        using (var window = new Form { Width = 330, Height = 240 })
+        using (var viewport = new UserControl { Dock = DockStyle.Fill, AutoScroll = true })
+        using (var action = new Button { Location = new Point(6, 6), Size = new Size(80, 26) })
+        using (var disabled = new Button { Location = new Point(6, 50), Size = new Size(80, 26), Enabled = false })
+        using (var dropdown = new ComboBox { Location = new Point(6, 90), Width = 80 })
+        using (var input = new TextBox { Location = new Point(6, 125), Width = 80 })
+        {
+            source.Controls.AddRange(new Control[] { action, disabled, dropdown, input });
+            viewport.Controls.Add(source);
+            window.Controls.Add(viewport);
+            window.Show();
+            Application.DoEvents();
+            Check(SidebarTouchScroll.CanScroll(viewport), "Video-shaped viewport should overflow");
+            foreach (var control in new Control[] { action, disabled, dropdown, input })
+                Check(!SidebarTouchScroll.IsEmptyClientPoint(source, new Point(control.Left + 2, control.Top + 2)),
+                    "An input/control was treated as an inert surface");
+            Check(SidebarTouchScroll.IsEmptyClientPoint(source, new Point(140, 34)), "Empty visible backgrounds should be usable");
+            Check(!SidebarTouchScroll.IsEmptyClientPoint(source, new Point(-1, 34)), "Nonclient point accepted");
+
+            int max = viewport.VerticalScroll.Maximum - viewport.VerticalScroll.LargeChange + 1;
+            viewport.AutoScrollPosition = new Point(35, 0);
+            SidebarTouchScroll.ScrollViewport(viewport, 80);
+            Check(viewport.AutoScrollPosition == new Point(-35, -80), "Vertical touch motion disturbed horizontal offset");
+            SidebarTouchScroll.ScrollViewport(viewport, 2000);
+            Check(viewport.AutoScrollPosition.Y == -max, "Overscroll did not clamp to bottom");
+            SidebarTouchScroll.ScrollViewport(viewport, -20);
+            Check(viewport.AutoScrollPosition.Y == -max + 20, "Reversing at bottom did not move immediately");
+            SidebarTouchScroll.ScrollViewport(viewport, -2000);
+            Check(viewport.AutoScrollPosition.Y == 0, "Overscroll did not clamp to top");
+
+            viewport.Visible = false;
+            Check(!SidebarTouchScroll.CanScroll(viewport), "Hidden tab accepted scroll");
+            SidebarTouchScroll.ScrollViewport(viewport, 50);
+            Check(viewport.AutoScrollPosition.Y == 0, "Hidden viewport moved");
+            viewport.Visible = true;
+            window.ClientSize = new Size(540, 680);
+            Application.DoEvents();
+            Check(!SidebarTouchScroll.CanScroll(viewport), "All content fits but touch would be consumed");
+            SidebarTouchScroll.ScrollViewport(viewport, 100);
+            Check(viewport.AutoScrollPosition.Y == 0, "Non-overflowing tab moved");
+            Check(action.Focus(), "Adjacent control could not still receive keyboard focus");
+        }
+    }
+
+    [STAThread]
+    private static int Main()
+    {
+        try
+        {
+            PanChecks();
+            ViewportChecks();
+            Console.WriteLine("Sidebar touch-scroll state / viewport: " + assertions + " assertions passed.");
+            return 0;
+        }
+        catch (Exception error)
+        {
+            Console.Error.WriteLine(error);
+            return 1;
+        }
+    }
+}
