@@ -1044,6 +1044,22 @@
     <value>应用比例系数和偏移以转换单位。</value>
     <comment>"Apply scale and offset to convert units."</comment>
   </data>
+  <data name="8c00e96a8a1af5d4a8543b1d0988a6dc7455ee0c5962d50df0c02a1286b3572f" xml:space="preserve">
+    <value>ArduPlane 固件版本 4.4.4（16b78382）</value>
+    <comment>"ArduPlane V4.4.4 (16b78382)"</comment>
+  </data>
+  <data name="46d212fab56c7c90b4fe384eb06a29b8a6436877581632e51a4be83b805f7f3f" xml:space="preserve">
+    <value>ArduPlane 固件版本 4.5.7（0358a9c2）</value>
+    <comment>"ArduPlane V4.5.7 (0358a9c2)"</comment>
+  </data>
+  <data name="51646ef630e593d1fc2f7b0cf18eed408d7dfaaf150a73d59a88b827b48dde33" xml:space="preserve">
+    <value>ArduPlane 固件版本 4.6.3（3fc7011a）</value>
+    <comment>"ArduPlane V4.6.3 (3fc7011a)"</comment>
+  </data>
+  <data name="654cab4a76421425a49686e552fe020e8b120efc71cbb80cde9822d33387d2a2" xml:space="preserve">
+    <value>ArduPlane 固件版本 4.7.3（d9c5097c）</value>
+    <comment>"ArduPlane V4.7.3 (d9c5097c)"</comment>
+  </data>
   <data name="1d3c0cb8c4bf5fc710d43492b0c36435e925b40b76a1f124906e2aaddb8ca9fe" xml:space="preserve">
     <value>是否确定？</value>
     <comment>"Are you Sure?"</comment>
@@ -9768,6 +9784,10 @@ gps_point：跟踪单个地面点</value>
   <data name="e6dc45de5eb3d38f361bbad955df18acf94d3734acfe0c1861cc3d49d8168b6d" xml:space="preserve">
     <value>保存的素材不可用，请重新导入本地文件。</value>
     <comment>"Saved artwork is unavailable. Reimport the local file."</comment>
+  </data>
+  <data name="813db7017098bde84e70cdf2518fa870428c098e8e6a64b06ebac2e75d7a6d7d" xml:space="preserve">
+    <value>已保存 crash_dump.bin</value>
+    <comment>"Saved crash_dump.bin"</comment>
   </data>
   <data name="2158dd3a8b115ce24ad117b6a78e57ce2c969b5c477d7e399b4f4e2e506dc3d9" xml:space="preserve">
     <value>设置已保存到 </value>
