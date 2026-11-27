@@ -1,4 +1,10 @@
 {
+  "GCSViews/ConfigurationView/ConfigHWOptFlow.resx": {
+    "label4.Text": "FX 修正（‰）",
+    "label5.Text": "FY 修正（‰）",
+    "label15.Text": "固定离地高度",
+    "label16.Text": "米"
+  },
   "Controls/Vibration.resx": {
     "label3.Text": "X",
     "label8.Text": "加速度计削波"
