@@ -254,10 +254,17 @@ namespace MissionPlanner.Controls
 
         private void TabButton_MouseUp(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Right && _contextMenu != null)
-            {
-                _contextMenu.Show(_toolStrip, e.Location);
-            }
+            if (e.Button != MouseButtons.Right || _contextMenu == null || !(sender is ToolStripButton button))
+                return;
+
+            var parent = button.GetCurrentParent();
+            if (parent == null)
+                return;
+
+            // MouseUp is item-local; keep the same menu source even for an overflow item.
+            var location = e.Location;
+            location.Offset(button.Bounds.Location);
+            _contextMenu.Show(_toolStrip, _toolStrip.PointToClient(parent.PointToScreen(location)));
         }
 
         public void SelectTab(ToolStripButton button)
