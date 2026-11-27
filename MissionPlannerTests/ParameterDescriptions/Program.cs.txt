@@ -23,11 +23,11 @@ internal static class Program
     }
     private static string Firmware(string family)
     {
-        return new Dictionary<string, string> { { "Copter", "ArduCopter2" }, { "Plane", "ArduPlane" } }[family];
+        return new Dictionary<string, string> { { "Copter", "ArduCopter2" }, { "Plane", "ArduPlane" }, { "Rover", "ArduRover" } }[family];
     }
     private static ParameterDescriptionContext Context(string family, string version, string sha = null)
     {
-        var text = (family == "Copter" ? "ArduCopter" : "ArduPlane") + " V" + version + (sha == null ? "" : " (" + sha.Substring(0, 8) + ")");
+        var text = (family == "Rover" ? "Rover" : "Ardu" + family) + " V" + version + (sha == null ? "" : " (" + sha.Substring(0, 8) + ")");
         return ParameterDescriptionContext.TryCreate(Firmware(family), text, new Version(version + ".255"));
     }
     private static void Rejects(Action action, string message)
@@ -40,7 +40,7 @@ internal static class Program
         var bundle = Resource("official"); var catalog = new ParameterDescriptionCatalog(Resource("zh-CN"));
         var bundled = new ParameterDescriptionStore("unused", bundle);
         var releases = XDocument.Parse(Encoding.UTF8.GetString(bundle)).Root.Elements("release").ToArray();
-        Check(releases.Length == 6, "six pinned release subsets");
+        Check(releases.Length == 7, "seven pinned release subsets");
         foreach (var release in releases)
         {
             var family = (string)release.Attribute("family"); var version = (string)release.Attribute("version");
@@ -48,7 +48,7 @@ internal static class Program
             Check(context != null, "stable release identity");
             var snapshot = bundled.Bundled(context);
             Check(snapshot != null && snapshot.Partial && snapshot.MatchesReportedBuild, "offline bundle matches the reported release/build");
-            Check(snapshot.Count == (family == "Copter" ? 37 : version == "4.7.1" ? 53 : 51), "reviewed exact-version record count");
+            Check(snapshot.Count == (family == "Rover" ? 4 : family == "Copter" ? 37 : version == "4.7.1" ? 53 : 51), "reviewed exact-version record count");
             foreach (var p in release.Descendants("param"))
             {
                 var name = ((string)p.Attribute("name")).Split(':').Last(); var english = (string)p.Attribute("documentation");
@@ -121,6 +121,14 @@ internal static class Program
         Check(ParameterDescriptionContext.TryCreate("ArduRover", "Rover V4.6.3", null).Family == "Rover", "Rover metadata family");
         Check(ParameterDescriptionContext.TryCreate("ArduSub", "ArduSub V4.5.1", null).Family == "Sub", "Sub metadata family");
         Check(ParameterDescriptionContext.TryCreate("ArduTracker", "AntennaTracker V4.5.1", null).Family == "Tracker", "Tracker metadata family");
+        var rover = Context("Rover", "4.6.3");
+        var roverSnapshot = bundled.Bundled(rover);
+        Check(catalog.Present(roverSnapshot, "WP_RADIUS", true).SearchText.Contains("航点到达"), "Rover Chinese is searchable before a row renders");
+        Check(!catalog.Present(roverSnapshot, "WP_RADIUS", false).SearchText.Contains("航点到达"), "Rover Chinese does not leak to other languages");
+        Check(roverSnapshot.Find("WP_SPEED").Units == "m/s" && roverSnapshot.Find("WP_RADIUS").Units == "m", "Rover official waypoint units stay unchanged");
+        Check(bundled.Bundled(Context("Rover", "4.6.2")) == null && bundled.Bundled(Context("Rover", "4.7.1")) == null, "Rover translations do not cross versions");
+        Check(ParameterDescriptionContext.TryCreate("ArduRover", "Rover V4.6.3-rc1", null) == null, "Rover pre-release stays untranslated");
+        Check(catalog.Present(bundled.Bundled(Context("Rover", "4.6.3", "deadbeef12345678")), "WP_RADIUS", true) == null, "Rover custom build remains untranslated");
         var copter = Context("Copter", "4.6.3"); var plane = Context("Plane", "4.6.3");
         Check(bundled.Bundled(copter).Find("RTL_ALT").Range == "30 300000", "4.6 Copter range remains original centimeters");
         Check(bundled.Bundled(Context("Copter", "4.7.1")).Find("RTL_ALT_M").Range == "0.30 3000", "4.7 renamed parameter retains meters");

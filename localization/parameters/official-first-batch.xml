@@ -2582,4 +2582,41 @@
       </libraries>
     </paramfile>
   </release>
+  <release family="Rover" version="4.6.3" sourceUrl="https://autotest.ardupilot.org/Parameters/versioned/Rover/stable-4.6.3/apm.pdef.xml" sourceSha256="0c009e0a35c0ab8f3455f1bb323c29f6a59152dc54cb5e0edcc95afd48127de5" gitSha="3fc7011a7d3dc047cbb17d8bd98ee94577d144c6">
+    <paramfile>
+      <firmware git_tag="Rover-4.6.3" git_sha="3fc7011a7d3dc047cbb17d8bd98ee94577d144c6" />
+      <vehicles>
+        <parameters name="Rover">
+          <param humanName="Target cruise speed in auto modes" name="Rover:CRUISE_SPEED" documentation="The target speed in auto missions." user="Standard">
+            <field name="Units">m/s</field>
+            <field name="UnitText">meters per second</field>
+            <field name="Range">0 100</field>
+            <field name="Increment">0.1</field>
+          </param>
+          <param humanName="Turn radius of vehicle" name="Rover:TURN_RADIUS" documentation="Turn radius of vehicle in meters while at low speeds.  Lower values produce tighter turns in steering mode" user="Standard">
+            <field name="Units">m</field>
+            <field name="UnitText">meters</field>
+            <field name="Range">0 10</field>
+            <field name="Increment">0.1</field>
+          </param>
+        </parameters>
+      </vehicles>
+      <libraries>
+        <parameters name="WP_">
+          <param humanName="Waypoint speed default" name="WP_SPEED" documentation="Waypoint speed default" user="Standard">
+            <field name="Units">m/s</field>
+            <field name="UnitText">meters per second</field>
+            <field name="Range">0 100</field>
+            <field name="Increment">0.1</field>
+          </param>
+          <param humanName="Waypoint radius" name="WP_RADIUS" documentation="The distance in meters from a waypoint when we consider the waypoint has been reached. This determines when the vehicle will turn toward the next waypoint." user="Standard">
+            <field name="Units">m</field>
+            <field name="UnitText">meters</field>
+            <field name="Range">0 100</field>
+            <field name="Increment">0.1</field>
+          </param>
+        </parameters>
+      </libraries>
+    </paramfile>
+  </release>
 </parameterDescriptionBundle>

@@ -30,7 +30,7 @@ The settings include a separate window icon and startup image page with previews
 
 ## Bilingual parameter descriptions
 
-Enhanced Chinese adds source-matched Chinese explanations after official English for 119 vehicle/parameter pairs across six pinned Copter and Plane/QuadPlane releases. Untranslated choices retain their original codes and labels. The parameter table searches both languages and supports full-text expansion. Missing or changed translations retain English and identify pending review; parameter values and write behavior stay unchanged.
+Enhanced Chinese adds source-matched Chinese explanations after official English for 123 vehicle/parameter pairs across seven pinned Copter, Plane/QuadPlane, and Rover releases. Untranslated choices retain their original codes and labels. The parameter table searches both languages and supports full-text expansion. Missing or changed translations retain English and identify pending review; parameter values and write behavior stay unchanged.
 
 ## TitanPlanner-zh-CN upstream synchronization (2026-10-19)
 

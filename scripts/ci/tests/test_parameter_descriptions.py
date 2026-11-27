@@ -18,20 +18,40 @@ class ParameterCatalogTests(unittest.TestCase):
 
     def test_committed_resource_is_current_and_scoped(self):
         self.assertTrue(catalog_module.generated_matches((ROOT / 'localization/parameters/zh-CN.xml').read_bytes(), catalog_module.resource(self.catalog, self.bundle)))
+        expected = {('Copter', '4.5.7'): 37, ('Copter', '4.6.3'): 37, ('Copter', '4.7.1'): 37,
+                    ('Plane', '4.5.7'): 51, ('Plane', '4.6.3'): 51, ('Plane', '4.7.1'): 53,
+                    ('Rover', '4.6.3'): 4}
+        actual = {}
         for release in self.bundle:
-            expected = 37 if release.get('family') == 'Copter' else 53 if release.get('version') == '4.7.1' else 51
-            self.assertEqual(expected, len(list(release.iter('param'))))
-            self.assertEqual(release.get('family') + '-' + release.get('version'), release.find('paramfile/firmware').get('git_tag'))
+            scope = (release.get('family'), release.get('version'))
+            self.assertNotIn(scope, actual)
+            actual[scope] = len(list(release.iter('param')))
+            self.assertEqual('-'.join(scope), release.find('paramfile/firmware').get('git_tag'))
+        self.assertEqual(expected, actual)
 
     def test_scope_counts_and_held_versions(self):
         notes = self.catalog['translations']
         descriptions = {(n['family'], v, n['parameter']) for n in notes if n['field'] == 'Description' for v in n['versions']}
-        self.assertEqual(266, len(descriptions))
-        self.assertEqual(119, len({(f, p) for f, v, p in descriptions}))
+        self.assertEqual(270, len(descriptions))
+        self.assertEqual(123, len({(f, p) for f, v, p in descriptions}))
         self.assertFalse(any(v == '4.7.2' for f, v, p in descriptions))
         excluded_copter = {'RTL_CONE_SLOPE', 'LAND_SPEED', 'LAND_SPD_MS', 'LOG_FILE_BUFSIZE', 'FS_GCS_ENABLE'}
         excluded_plane = {'TECS_CLMB_MAX', 'TECS_SINK_MIN', 'ROLL_LIMIT_DEG'}
-        self.assertFalse(any(p in (excluded_copter if f == 'Copter' else excluded_plane) for f, v, p in descriptions))
+        self.assertFalse(any(p in (excluded_copter if f == 'Copter' else excluded_plane if f == 'Plane' else set()) for f, v, p in descriptions))
+
+    def test_rover_descriptions_are_limited_to_one_pinned_release(self):
+        rover = [n for n in self.catalog['translations'] if n['family'] == 'Rover']
+        self.assertEqual({'CRUISE_SPEED', 'TURN_RADIUS', 'WP_SPEED', 'WP_RADIUS'}, {n['parameter'] for n in rover})
+        self.assertEqual(4, len(rover))
+        self.assertTrue(all(n['versions'] == ['4.6.3'] and n['field'] == 'Description' and 'code' not in n for n in rover))
+        snapshots = [release for release in self.bundle if release.get('family') == 'Rover']
+        self.assertEqual(1, len(snapshots))
+        sources = json.loads((ROOT / 'localization/parameters/sources.json').read_text(encoding='utf-8'))
+        [source] = [r for r in sources['releases'] if r['family'] == 'Rover']
+        for field in ('version', 'sourceUrl', 'sourceSha256', 'gitSha'):
+            self.assertEqual(snapshots[0].get(field), source[field])
+        self.assertEqual(source['gitSha'], snapshots[0].find('paramfile/firmware').get('git_sha'))
+        self.assertEqual(4, source['parameters'])
 
     def test_source_changes_cannot_automatically_reapprove_notes(self):
         for change in ('English', 'Range', 'Unit'):
