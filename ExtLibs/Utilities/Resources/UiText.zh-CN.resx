@@ -9449,6 +9449,10 @@ gps_point：跟踪单个地面点</value>
     <value>横滚转升降舵</value>
     <comment>"Roll to Elev"</comment>
   </data>
+  <data name="268df9eb7e9515ddafdfd1c0f879dba231e906851f12ab4761bf30969e743042" xml:space="preserve">
+    <value>横滚／俯仰灵敏度：</value>
+    <comment>"Roll/Pitch Sensitivity:"</comment>
+  </data>
   <data name="c1cecc4434f24a762101245dc33adb88fd4279335c8caae65412d792f051f98b" xml:space="preserve">
     <value>将地图旋转到航向</value>
     <comment>"Rotate map to heading"</comment>
