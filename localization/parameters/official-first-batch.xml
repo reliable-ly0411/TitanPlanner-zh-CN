@@ -769,6 +769,12 @@
           <param humanName="BTEMP_Y" name="OSD1_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="BATT_BAR_X" name="OSD1_BATTBAR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BATT_BAR_Y" name="OSD1_BATTBAR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -856,6 +862,12 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="BTEMP_Y" name="OSD2_BTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BATT_BAR_X" name="OSD2_BATTBAR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BATT_BAR_Y" name="OSD2_BATTBAR_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -947,6 +959,12 @@
           <param humanName="BTEMP_Y" name="OSD3_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="BATT_BAR_X" name="OSD3_BATTBAR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BATT_BAR_Y" name="OSD3_BATTBAR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -1034,6 +1052,12 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="BTEMP_Y" name="OSD4_BTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BATT_BAR_X" name="OSD4_BATTBAR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BATT_BAR_Y" name="OSD4_BATTBAR_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -2032,6 +2056,12 @@
           <param humanName="BTEMP_Y" name="OSD1_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="BATT_BAR_X" name="OSD1_BATTBAR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BATT_BAR_Y" name="OSD1_BATTBAR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -2119,6 +2149,12 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="BTEMP_Y" name="OSD2_BTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BATT_BAR_X" name="OSD2_BATTBAR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BATT_BAR_Y" name="OSD2_BATTBAR_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -2210,6 +2246,12 @@
           <param humanName="BTEMP_Y" name="OSD3_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="BATT_BAR_X" name="OSD3_BATTBAR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BATT_BAR_Y" name="OSD3_BATTBAR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -2297,6 +2339,12 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="BTEMP_Y" name="OSD4_BTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BATT_BAR_X" name="OSD4_BATTBAR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BATT_BAR_Y" name="OSD4_BATTBAR_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -3386,6 +3434,12 @@
           <param humanName="BTEMP_Y" name="OSD1_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="BATT_BAR_X" name="OSD1_BATTBAR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BATT_BAR_Y" name="OSD1_BATTBAR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -3473,6 +3527,12 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="BTEMP_Y" name="OSD2_BTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BATT_BAR_X" name="OSD2_BATTBAR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BATT_BAR_Y" name="OSD2_BATTBAR_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -3564,6 +3624,12 @@
           <param humanName="BTEMP_Y" name="OSD3_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="BATT_BAR_X" name="OSD3_BATTBAR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BATT_BAR_Y" name="OSD3_BATTBAR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -3651,6 +3717,12 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="BTEMP_Y" name="OSD4_BTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BATT_BAR_X" name="OSD4_BATTBAR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BATT_BAR_Y" name="OSD4_BATTBAR_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -5058,6 +5130,12 @@
           <param humanName="BTEMP_Y" name="OSD1_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="BATT_BAR_X" name="OSD1_BATTBAR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BATT_BAR_Y" name="OSD1_BATTBAR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -5145,6 +5223,12 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="BTEMP_Y" name="OSD2_BTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BATT_BAR_X" name="OSD2_BATTBAR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BATT_BAR_Y" name="OSD2_BATTBAR_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -5236,6 +5320,12 @@
           <param humanName="BTEMP_Y" name="OSD3_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="BATT_BAR_X" name="OSD3_BATTBAR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BATT_BAR_Y" name="OSD3_BATTBAR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -5323,6 +5413,12 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="BTEMP_Y" name="OSD4_BTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BATT_BAR_X" name="OSD4_BATTBAR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BATT_BAR_Y" name="OSD4_BATTBAR_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -6354,6 +6450,12 @@
           <param humanName="BTEMP_Y" name="OSD1_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="BATT_BAR_X" name="OSD1_BATTBAR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BATT_BAR_Y" name="OSD1_BATTBAR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -6441,6 +6543,12 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="BTEMP_Y" name="OSD2_BTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BATT_BAR_X" name="OSD2_BATTBAR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BATT_BAR_Y" name="OSD2_BATTBAR_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -6532,6 +6640,12 @@
           <param humanName="BTEMP_Y" name="OSD3_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="BATT_BAR_X" name="OSD3_BATTBAR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BATT_BAR_Y" name="OSD3_BATTBAR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -6619,6 +6733,12 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="BTEMP_Y" name="OSD4_BTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BATT_BAR_X" name="OSD4_BATTBAR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BATT_BAR_Y" name="OSD4_BATTBAR_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -7750,6 +7870,12 @@
           <param humanName="BTEMP_Y" name="OSD1_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="BATT_BAR_X" name="OSD1_BATTBAR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BATT_BAR_Y" name="OSD1_BATTBAR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -7837,6 +7963,12 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="BTEMP_Y" name="OSD2_BTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BATT_BAR_X" name="OSD2_BATTBAR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BATT_BAR_Y" name="OSD2_BATTBAR_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -7928,6 +8060,12 @@
           <param humanName="BTEMP_Y" name="OSD3_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="BATT_BAR_X" name="OSD3_BATTBAR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BATT_BAR_Y" name="OSD3_BATTBAR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -8015,6 +8153,12 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="BTEMP_Y" name="OSD4_BTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BATT_BAR_X" name="OSD4_BATTBAR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BATT_BAR_Y" name="OSD4_BATTBAR_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -8968,6 +9112,12 @@
           <param humanName="BTEMP_Y" name="OSD1_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="BATT_BAR_X" name="OSD1_BATTBAR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BATT_BAR_Y" name="OSD1_BATTBAR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -9055,6 +9205,12 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="BTEMP_Y" name="OSD2_BTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BATT_BAR_X" name="OSD2_BATTBAR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BATT_BAR_Y" name="OSD2_BATTBAR_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -9146,6 +9302,12 @@
           <param humanName="BTEMP_Y" name="OSD3_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="BATT_BAR_X" name="OSD3_BATTBAR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BATT_BAR_Y" name="OSD3_BATTBAR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -9233,6 +9395,12 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="BTEMP_Y" name="OSD4_BTEMP_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="BATT_BAR_X" name="OSD4_BATTBAR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="BATT_BAR_Y" name="OSD4_BATTBAR_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>

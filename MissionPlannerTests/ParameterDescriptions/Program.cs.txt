@@ -370,13 +370,13 @@ internal static class Program
         }
         var expectedCounts = new Dictionary<string, int>
         {
-            ["Copter-4.5.7"] = 222,
-            ["Copter-4.6.3"] = 233,
-            ["Copter-4.7.1"] = 289,
-            ["Plane-4.5.7"] = 231,
-            ["Plane-4.6.3"] = 243,
-            ["Plane-4.7.1"] = 301,
-            ["Sub-4.7.1"] = 251
+            ["Copter-4.5.7"] = 230,
+            ["Copter-4.6.3"] = 241,
+            ["Copter-4.7.1"] = 297,
+            ["Plane-4.5.7"] = 239,
+            ["Plane-4.6.3"] = 251,
+            ["Plane-4.7.1"] = 309,
+            ["Sub-4.7.1"] = 259
         };
         Check(releases.Length == expectedCounts.Count, "seven pinned release subsets");
         foreach (var release in releases)

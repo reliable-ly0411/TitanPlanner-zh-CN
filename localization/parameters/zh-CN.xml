@@ -4304,4 +4304,100 @@
     <english>MAVLink Stream rate of RAW_IMU, SCALED_IMU2, SCALED_IMU3, SCALED_PRESSURE, SCALED_PRESSURE2, SCALED_PRESSURE3 and AIRSPEED</english>
     <chinese>RAW_IMU、SCALED_IMU2、SCALED_IMU3、SCALED_PRESSURE、SCALED_PRESSURE2、SCALED_PRESSURE3 和 AIRSPEED 消息的 MAVLink 发送频率。</chinese>
   </translation>
+  <translation family="Copter" parameter="OSD1_BATTBAR_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="ef3b3f4ddf0d6e5760879e72a7e49aa3b9ec04843fff4006bda31e0515055d50">
+    <english>Horizontal position on screen</english>
+    <chinese>电池用量条显示项在屏幕上的水平位置（仅适用于 MSP OSD）。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD1_BATTBAR_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="ba0c5b3aa48bc896c0755fb33f51476d9dbe95b4badbe1bb53656fd72a3ef480">
+    <english>Vertical position on screen</english>
+    <chinese>电池用量条显示项在屏幕上的垂直位置（仅适用于 MSP OSD）。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD2_BATTBAR_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="0f6c58e22822135496ecb09612225138f73bb1d8f42f2420a5f9c400beda8f15">
+    <english>Horizontal position on screen</english>
+    <chinese>电池用量条显示项在屏幕上的水平位置（仅适用于 MSP OSD）。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD2_BATTBAR_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="c48891e35c1135b5d25cf28ebfd5ec465548227574bf5c579012bbba9bac8a07">
+    <english>Vertical position on screen</english>
+    <chinese>电池用量条显示项在屏幕上的垂直位置（仅适用于 MSP OSD）。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD3_BATTBAR_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="00f9d35abdcaeaa10b28ec782a49b626b2443dd5011e62e38bb7bc02a904420a">
+    <english>Horizontal position on screen</english>
+    <chinese>电池用量条显示项在屏幕上的水平位置（仅适用于 MSP OSD）。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD3_BATTBAR_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="3ad2bbc4073f9aec50264b3329916692cd1b4fccab4998c7575a7f60d3ff7838">
+    <english>Vertical position on screen</english>
+    <chinese>电池用量条显示项在屏幕上的垂直位置（仅适用于 MSP OSD）。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD4_BATTBAR_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="21f5d8a1cd720235af9a1265113f4efb98bd14b7d85d4d95e4a6d58c17a88e77">
+    <english>Horizontal position on screen</english>
+    <chinese>电池用量条显示项在屏幕上的水平位置（仅适用于 MSP OSD）。</chinese>
+  </translation>
+  <translation family="Copter" parameter="OSD4_BATTBAR_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="fbbb773f72dec78255a3db1f0760a65310a6b88f4931c71628ecf108cc7a42e1">
+    <english>Vertical position on screen</english>
+    <chinese>电池用量条显示项在屏幕上的垂直位置（仅适用于 MSP OSD）。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD1_BATTBAR_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="ef3b3f4ddf0d6e5760879e72a7e49aa3b9ec04843fff4006bda31e0515055d50">
+    <english>Horizontal position on screen</english>
+    <chinese>电池用量条显示项在屏幕上的水平位置（仅适用于 MSP OSD）。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD1_BATTBAR_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="ba0c5b3aa48bc896c0755fb33f51476d9dbe95b4badbe1bb53656fd72a3ef480">
+    <english>Vertical position on screen</english>
+    <chinese>电池用量条显示项在屏幕上的垂直位置（仅适用于 MSP OSD）。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD2_BATTBAR_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="0f6c58e22822135496ecb09612225138f73bb1d8f42f2420a5f9c400beda8f15">
+    <english>Horizontal position on screen</english>
+    <chinese>电池用量条显示项在屏幕上的水平位置（仅适用于 MSP OSD）。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD2_BATTBAR_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="c48891e35c1135b5d25cf28ebfd5ec465548227574bf5c579012bbba9bac8a07">
+    <english>Vertical position on screen</english>
+    <chinese>电池用量条显示项在屏幕上的垂直位置（仅适用于 MSP OSD）。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD3_BATTBAR_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="00f9d35abdcaeaa10b28ec782a49b626b2443dd5011e62e38bb7bc02a904420a">
+    <english>Horizontal position on screen</english>
+    <chinese>电池用量条显示项在屏幕上的水平位置（仅适用于 MSP OSD）。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD3_BATTBAR_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="3ad2bbc4073f9aec50264b3329916692cd1b4fccab4998c7575a7f60d3ff7838">
+    <english>Vertical position on screen</english>
+    <chinese>电池用量条显示项在屏幕上的垂直位置（仅适用于 MSP OSD）。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD4_BATTBAR_X" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="21f5d8a1cd720235af9a1265113f4efb98bd14b7d85d4d95e4a6d58c17a88e77">
+    <english>Horizontal position on screen</english>
+    <chinese>电池用量条显示项在屏幕上的水平位置（仅适用于 MSP OSD）。</chinese>
+  </translation>
+  <translation family="Plane" parameter="OSD4_BATTBAR_Y" field="Description" versions="4.5.7,4.6.3,4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="fbbb773f72dec78255a3db1f0760a65310a6b88f4931c71628ecf108cc7a42e1">
+    <english>Vertical position on screen</english>
+    <chinese>电池用量条显示项在屏幕上的垂直位置（仅适用于 MSP OSD）。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD1_BATTBAR_X" field="Description" versions="4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="ef3b3f4ddf0d6e5760879e72a7e49aa3b9ec04843fff4006bda31e0515055d50">
+    <english>Horizontal position on screen</english>
+    <chinese>电池用量条显示项在屏幕上的水平位置（仅适用于 MSP OSD）。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD1_BATTBAR_Y" field="Description" versions="4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="ba0c5b3aa48bc896c0755fb33f51476d9dbe95b4badbe1bb53656fd72a3ef480">
+    <english>Vertical position on screen</english>
+    <chinese>电池用量条显示项在屏幕上的垂直位置（仅适用于 MSP OSD）。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD2_BATTBAR_X" field="Description" versions="4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="0f6c58e22822135496ecb09612225138f73bb1d8f42f2420a5f9c400beda8f15">
+    <english>Horizontal position on screen</english>
+    <chinese>电池用量条显示项在屏幕上的水平位置（仅适用于 MSP OSD）。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD2_BATTBAR_Y" field="Description" versions="4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="c48891e35c1135b5d25cf28ebfd5ec465548227574bf5c579012bbba9bac8a07">
+    <english>Vertical position on screen</english>
+    <chinese>电池用量条显示项在屏幕上的垂直位置（仅适用于 MSP OSD）。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD3_BATTBAR_X" field="Description" versions="4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="00f9d35abdcaeaa10b28ec782a49b626b2443dd5011e62e38bb7bc02a904420a">
+    <english>Horizontal position on screen</english>
+    <chinese>电池用量条显示项在屏幕上的水平位置（仅适用于 MSP OSD）。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD3_BATTBAR_Y" field="Description" versions="4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="3ad2bbc4073f9aec50264b3329916692cd1b4fccab4998c7575a7f60d3ff7838">
+    <english>Vertical position on screen</english>
+    <chinese>电池用量条显示项在屏幕上的垂直位置（仅适用于 MSP OSD）。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD4_BATTBAR_X" field="Description" versions="4.7.1" englishSha256="1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56" recordSha256="21f5d8a1cd720235af9a1265113f4efb98bd14b7d85d4d95e4a6d58c17a88e77">
+    <english>Horizontal position on screen</english>
+    <chinese>电池用量条显示项在屏幕上的水平位置（仅适用于 MSP OSD）。</chinese>
+  </translation>
+  <translation family="Sub" parameter="OSD4_BATTBAR_Y" field="Description" versions="4.7.1" englishSha256="d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7" recordSha256="fbbb773f72dec78255a3db1f0760a65310a6b88f4931c71628ecf108cc7a42e1">
+    <english>Vertical position on screen</english>
+    <chinese>电池用量条显示项在屏幕上的垂直位置（仅适用于 MSP OSD）。</chinese>
+  </translation>
 </parameterTranslations>
