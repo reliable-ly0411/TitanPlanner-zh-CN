@@ -1,4 +1,7 @@
 {
+  "GCSViews/ConfigurationView/ConfigBatteryMonitoring.resx": {
+    "groupBox4.Text": "监测与系数"
+  },
   "GCSViews/InitialSetup.resx": {
     "backstageViewPageAntTrack.Text": "跟踪器参数"
   },

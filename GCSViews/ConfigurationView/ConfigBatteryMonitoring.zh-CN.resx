@@ -132,9 +132,7 @@
   <data name="label29.Text" xml:space="preserve">
     <value>电池容量</value>
   </data>
-  <data name="groupBox4.Text" xml:space="preserve">
-    <value>校准</value>
-  </data>
+  <data name="groupBox4.Text" xml:space="preserve"><value>监测与系数</value></data>
   <data name="label4.Text" xml:space="preserve">
     <value>5. 计算电流</value>
   </data>
