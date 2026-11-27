@@ -166,11 +166,31 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             var choose = new Button
             {
                 Name = icon ? "ChooseLocalWindowIcon" : "ChooseLocalStartupImage",
-                Text = fileName, AutoSize = true, Anchor = AnchorStyles.Left
+                Text = fileName, AccessibleName = fileName, AutoSize = true,
+                AutoSizeMode = AutoSizeMode.GrowAndShrink, Anchor = AnchorStyles.Left
             };
             choose.Click += (sender, args) => ChooseLocalAsset(kind, (Preset)menu.SelectedItem, fileName);
             row.Controls.Add(menu, 0, 0);
             row.Controls.Add(choose, 1, 0);
+            Action fitCaption = () =>
+            {
+                if (Disposing || IsDisposed || row.ClientSize.Width <= 0 || choose.IsDisposed)
+                    return;
+                int available = row.ClientSize.Width - row.Padding.Horizontal -
+                    menu.Margin.Horizontal - choose.Margin.Horizontal;
+                int selectorSpace = Math.Max(96, menu.Font.Height * 4);
+                int fullButton = TextRenderer.MeasureText(fileName, choose.Font).Width + choose.Padding.Horizontal + 12;
+                bool compact = available - fullButton < selectorSpace;
+                string caption = compact ? UiText.Translate("Browse") + "…" : fileName;
+                if (choose.Text != caption)
+                {
+                    choose.Text = caption;
+                    details.SetToolTip(choose, compact ? fileName : null);
+                }
+            };
+            row.SizeChanged += (sender, args) => fitCaption();
+            choose.FontChanged += (sender, args) => fitCaption();
+            fitCaption();
             combo = menu;
             return row;
         }
