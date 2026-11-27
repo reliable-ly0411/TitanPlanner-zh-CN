@@ -835,6 +835,30 @@
           <param humanName="STATS_Y" name="OSD1_STATS_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="HORIZON_X" name="OSD1_HORIZON_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HORIZON_Y" name="OSD1_HORIZON_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="PITCH_X" name="OSD1_PITCH_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="PITCH_Y" name="OSD1_PITCH_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ROLL_X" name="OSD1_ROLL_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ROLL_Y" name="OSD1_ROLL_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="TER_HGT_X" name="OSD1_TER_HGT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="TER_HGT_Y" name="OSD1_TER_HGT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -994,6 +1018,30 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="STATS_Y" name="OSD2_STATS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HORIZON_X" name="OSD2_HORIZON_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HORIZON_Y" name="OSD2_HORIZON_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="PITCH_X" name="OSD2_PITCH_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="PITCH_Y" name="OSD2_PITCH_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ROLL_X" name="OSD2_ROLL_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ROLL_Y" name="OSD2_ROLL_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="TER_HGT_X" name="OSD2_TER_HGT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="TER_HGT_Y" name="OSD2_TER_HGT_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -1157,6 +1205,30 @@
           <param humanName="STATS_Y" name="OSD3_STATS_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="HORIZON_X" name="OSD3_HORIZON_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HORIZON_Y" name="OSD3_HORIZON_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="PITCH_X" name="OSD3_PITCH_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="PITCH_Y" name="OSD3_PITCH_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ROLL_X" name="OSD3_ROLL_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ROLL_Y" name="OSD3_ROLL_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="TER_HGT_X" name="OSD3_TER_HGT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="TER_HGT_Y" name="OSD3_TER_HGT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -1316,6 +1388,30 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="STATS_Y" name="OSD4_STATS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HORIZON_X" name="OSD4_HORIZON_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HORIZON_Y" name="OSD4_HORIZON_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="PITCH_X" name="OSD4_PITCH_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="PITCH_Y" name="OSD4_PITCH_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ROLL_X" name="OSD4_ROLL_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ROLL_Y" name="OSD4_ROLL_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="TER_HGT_X" name="OSD4_TER_HGT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="TER_HGT_Y" name="OSD4_TER_HGT_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -2243,6 +2339,30 @@
           <param humanName="STATS_Y" name="OSD1_STATS_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="HORIZON_X" name="OSD1_HORIZON_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HORIZON_Y" name="OSD1_HORIZON_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="PITCH_X" name="OSD1_PITCH_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="PITCH_Y" name="OSD1_PITCH_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ROLL_X" name="OSD1_ROLL_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ROLL_Y" name="OSD1_ROLL_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="TER_HGT_X" name="OSD1_TER_HGT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="TER_HGT_Y" name="OSD1_TER_HGT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -2402,6 +2522,30 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="STATS_Y" name="OSD2_STATS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HORIZON_X" name="OSD2_HORIZON_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HORIZON_Y" name="OSD2_HORIZON_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="PITCH_X" name="OSD2_PITCH_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="PITCH_Y" name="OSD2_PITCH_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ROLL_X" name="OSD2_ROLL_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ROLL_Y" name="OSD2_ROLL_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="TER_HGT_X" name="OSD2_TER_HGT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="TER_HGT_Y" name="OSD2_TER_HGT_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -2565,6 +2709,30 @@
           <param humanName="STATS_Y" name="OSD3_STATS_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="HORIZON_X" name="OSD3_HORIZON_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HORIZON_Y" name="OSD3_HORIZON_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="PITCH_X" name="OSD3_PITCH_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="PITCH_Y" name="OSD3_PITCH_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ROLL_X" name="OSD3_ROLL_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ROLL_Y" name="OSD3_ROLL_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="TER_HGT_X" name="OSD3_TER_HGT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="TER_HGT_Y" name="OSD3_TER_HGT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -2724,6 +2892,30 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="STATS_Y" name="OSD4_STATS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HORIZON_X" name="OSD4_HORIZON_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HORIZON_Y" name="OSD4_HORIZON_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="PITCH_X" name="OSD4_PITCH_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="PITCH_Y" name="OSD4_PITCH_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ROLL_X" name="OSD4_ROLL_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ROLL_Y" name="OSD4_ROLL_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="TER_HGT_X" name="OSD4_TER_HGT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="TER_HGT_Y" name="OSD4_TER_HGT_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -3741,6 +3933,30 @@
           <param humanName="STATS_Y" name="OSD1_STATS_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="HORIZON_X" name="OSD1_HORIZON_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HORIZON_Y" name="OSD1_HORIZON_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="PITCH_X" name="OSD1_PITCH_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="PITCH_Y" name="OSD1_PITCH_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ROLL_X" name="OSD1_ROLL_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ROLL_Y" name="OSD1_ROLL_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="TER_HGT_X" name="OSD1_TER_HGT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="TER_HGT_Y" name="OSD1_TER_HGT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -3900,6 +4116,30 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="STATS_Y" name="OSD2_STATS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HORIZON_X" name="OSD2_HORIZON_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HORIZON_Y" name="OSD2_HORIZON_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="PITCH_X" name="OSD2_PITCH_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="PITCH_Y" name="OSD2_PITCH_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ROLL_X" name="OSD2_ROLL_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ROLL_Y" name="OSD2_ROLL_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="TER_HGT_X" name="OSD2_TER_HGT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="TER_HGT_Y" name="OSD2_TER_HGT_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -4063,6 +4303,30 @@
           <param humanName="STATS_Y" name="OSD3_STATS_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="HORIZON_X" name="OSD3_HORIZON_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HORIZON_Y" name="OSD3_HORIZON_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="PITCH_X" name="OSD3_PITCH_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="PITCH_Y" name="OSD3_PITCH_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ROLL_X" name="OSD3_ROLL_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ROLL_Y" name="OSD3_ROLL_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="TER_HGT_X" name="OSD3_TER_HGT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="TER_HGT_Y" name="OSD3_TER_HGT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -4222,6 +4486,30 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="STATS_Y" name="OSD4_STATS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HORIZON_X" name="OSD4_HORIZON_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HORIZON_Y" name="OSD4_HORIZON_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="PITCH_X" name="OSD4_PITCH_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="PITCH_Y" name="OSD4_PITCH_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ROLL_X" name="OSD4_ROLL_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ROLL_Y" name="OSD4_ROLL_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="TER_HGT_X" name="OSD4_TER_HGT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="TER_HGT_Y" name="OSD4_TER_HGT_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -5227,6 +5515,30 @@
           <param humanName="STATS_Y" name="OSD1_STATS_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="HORIZON_X" name="OSD1_HORIZON_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HORIZON_Y" name="OSD1_HORIZON_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="PITCH_X" name="OSD1_PITCH_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="PITCH_Y" name="OSD1_PITCH_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ROLL_X" name="OSD1_ROLL_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ROLL_Y" name="OSD1_ROLL_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="TER_HGT_X" name="OSD1_TER_HGT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="TER_HGT_Y" name="OSD1_TER_HGT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -5386,6 +5698,30 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="STATS_Y" name="OSD2_STATS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HORIZON_X" name="OSD2_HORIZON_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HORIZON_Y" name="OSD2_HORIZON_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="PITCH_X" name="OSD2_PITCH_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="PITCH_Y" name="OSD2_PITCH_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ROLL_X" name="OSD2_ROLL_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ROLL_Y" name="OSD2_ROLL_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="TER_HGT_X" name="OSD2_TER_HGT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="TER_HGT_Y" name="OSD2_TER_HGT_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -5549,6 +5885,30 @@
           <param humanName="STATS_Y" name="OSD3_STATS_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="HORIZON_X" name="OSD3_HORIZON_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HORIZON_Y" name="OSD3_HORIZON_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="PITCH_X" name="OSD3_PITCH_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="PITCH_Y" name="OSD3_PITCH_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ROLL_X" name="OSD3_ROLL_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ROLL_Y" name="OSD3_ROLL_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="TER_HGT_X" name="OSD3_TER_HGT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="TER_HGT_Y" name="OSD3_TER_HGT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -5708,6 +6068,30 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="STATS_Y" name="OSD4_STATS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HORIZON_X" name="OSD4_HORIZON_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HORIZON_Y" name="OSD4_HORIZON_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="PITCH_X" name="OSD4_PITCH_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="PITCH_Y" name="OSD4_PITCH_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ROLL_X" name="OSD4_ROLL_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ROLL_Y" name="OSD4_ROLL_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="TER_HGT_X" name="OSD4_TER_HGT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="TER_HGT_Y" name="OSD4_TER_HGT_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -6690,6 +7074,30 @@
           <param humanName="STATS_Y" name="OSD1_STATS_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="HORIZON_X" name="OSD1_HORIZON_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HORIZON_Y" name="OSD1_HORIZON_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="PITCH_X" name="OSD1_PITCH_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="PITCH_Y" name="OSD1_PITCH_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ROLL_X" name="OSD1_ROLL_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ROLL_Y" name="OSD1_ROLL_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="TER_HGT_X" name="OSD1_TER_HGT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="TER_HGT_Y" name="OSD1_TER_HGT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -6849,6 +7257,30 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="STATS_Y" name="OSD2_STATS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HORIZON_X" name="OSD2_HORIZON_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HORIZON_Y" name="OSD2_HORIZON_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="PITCH_X" name="OSD2_PITCH_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="PITCH_Y" name="OSD2_PITCH_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ROLL_X" name="OSD2_ROLL_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ROLL_Y" name="OSD2_ROLL_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="TER_HGT_X" name="OSD2_TER_HGT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="TER_HGT_Y" name="OSD2_TER_HGT_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -7012,6 +7444,30 @@
           <param humanName="STATS_Y" name="OSD3_STATS_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="HORIZON_X" name="OSD3_HORIZON_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HORIZON_Y" name="OSD3_HORIZON_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="PITCH_X" name="OSD3_PITCH_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="PITCH_Y" name="OSD3_PITCH_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ROLL_X" name="OSD3_ROLL_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ROLL_Y" name="OSD3_ROLL_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="TER_HGT_X" name="OSD3_TER_HGT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="TER_HGT_Y" name="OSD3_TER_HGT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -7171,6 +7627,30 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="STATS_Y" name="OSD4_STATS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HORIZON_X" name="OSD4_HORIZON_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HORIZON_Y" name="OSD4_HORIZON_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="PITCH_X" name="OSD4_PITCH_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="PITCH_Y" name="OSD4_PITCH_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ROLL_X" name="OSD4_ROLL_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ROLL_Y" name="OSD4_ROLL_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="TER_HGT_X" name="OSD4_TER_HGT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="TER_HGT_Y" name="OSD4_TER_HGT_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -8252,6 +8732,30 @@
           <param humanName="STATS_Y" name="OSD1_STATS_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="HORIZON_X" name="OSD1_HORIZON_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HORIZON_Y" name="OSD1_HORIZON_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="PITCH_X" name="OSD1_PITCH_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="PITCH_Y" name="OSD1_PITCH_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ROLL_X" name="OSD1_ROLL_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ROLL_Y" name="OSD1_ROLL_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="TER_HGT_X" name="OSD1_TER_HGT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="TER_HGT_Y" name="OSD1_TER_HGT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -8411,6 +8915,30 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="STATS_Y" name="OSD2_STATS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HORIZON_X" name="OSD2_HORIZON_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HORIZON_Y" name="OSD2_HORIZON_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="PITCH_X" name="OSD2_PITCH_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="PITCH_Y" name="OSD2_PITCH_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ROLL_X" name="OSD2_ROLL_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ROLL_Y" name="OSD2_ROLL_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="TER_HGT_X" name="OSD2_TER_HGT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="TER_HGT_Y" name="OSD2_TER_HGT_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -8574,6 +9102,30 @@
           <param humanName="STATS_Y" name="OSD3_STATS_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="HORIZON_X" name="OSD3_HORIZON_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HORIZON_Y" name="OSD3_HORIZON_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="PITCH_X" name="OSD3_PITCH_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="PITCH_Y" name="OSD3_PITCH_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ROLL_X" name="OSD3_ROLL_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ROLL_Y" name="OSD3_ROLL_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="TER_HGT_X" name="OSD3_TER_HGT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="TER_HGT_Y" name="OSD3_TER_HGT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -8733,6 +9285,30 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="STATS_Y" name="OSD4_STATS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HORIZON_X" name="OSD4_HORIZON_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HORIZON_Y" name="OSD4_HORIZON_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="PITCH_X" name="OSD4_PITCH_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="PITCH_Y" name="OSD4_PITCH_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ROLL_X" name="OSD4_ROLL_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ROLL_Y" name="OSD4_ROLL_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="TER_HGT_X" name="OSD4_TER_HGT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="TER_HGT_Y" name="OSD4_TER_HGT_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -9286,6 +9862,30 @@
           <param humanName="STATS_Y" name="OSD1_STATS_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="HORIZON_X" name="OSD1_HORIZON_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HORIZON_Y" name="OSD1_HORIZON_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="PITCH_X" name="OSD1_PITCH_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="PITCH_Y" name="OSD1_PITCH_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ROLL_X" name="OSD1_ROLL_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ROLL_Y" name="OSD1_ROLL_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="TER_HGT_X" name="OSD1_TER_HGT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="TER_HGT_Y" name="OSD1_TER_HGT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -9445,6 +10045,30 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="STATS_Y" name="OSD2_STATS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HORIZON_X" name="OSD2_HORIZON_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HORIZON_Y" name="OSD2_HORIZON_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="PITCH_X" name="OSD2_PITCH_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="PITCH_Y" name="OSD2_PITCH_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ROLL_X" name="OSD2_ROLL_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ROLL_Y" name="OSD2_ROLL_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="TER_HGT_X" name="OSD2_TER_HGT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="TER_HGT_Y" name="OSD2_TER_HGT_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -9608,6 +10232,30 @@
           <param humanName="STATS_Y" name="OSD3_STATS_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="HORIZON_X" name="OSD3_HORIZON_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HORIZON_Y" name="OSD3_HORIZON_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="PITCH_X" name="OSD3_PITCH_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="PITCH_Y" name="OSD3_PITCH_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ROLL_X" name="OSD3_ROLL_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ROLL_Y" name="OSD3_ROLL_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="TER_HGT_X" name="OSD3_TER_HGT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="TER_HGT_Y" name="OSD3_TER_HGT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -9767,6 +10415,30 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="STATS_Y" name="OSD4_STATS_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HORIZON_X" name="OSD4_HORIZON_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HORIZON_Y" name="OSD4_HORIZON_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="PITCH_X" name="OSD4_PITCH_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="PITCH_Y" name="OSD4_PITCH_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ROLL_X" name="OSD4_ROLL_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ROLL_Y" name="OSD4_ROLL_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="TER_HGT_X" name="OSD4_TER_HGT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="TER_HGT_Y" name="OSD4_TER_HGT_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
