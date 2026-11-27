@@ -84,6 +84,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             // INS_LOG_BAT_MASK
             // 
             this.INS_LOG_BAT_MASK.Enabled = false;
+            this.INS_LOG_BAT_MASK.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             this.INS_LOG_BAT_MASK.Location = new System.Drawing.Point(6, 138);
             this.INS_LOG_BAT_MASK.Name = "INS_LOG_BAT_MASK";
             this.INS_LOG_BAT_MASK.ParamName = null;
@@ -97,6 +98,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             this.INS_LOG_BAT_CNT.DisplayScale = 1F;
             this.INS_LOG_BAT_CNT.Increment = 1F;
             this.INS_LOG_BAT_CNT.LabelText = "Label";
+            this.INS_LOG_BAT_CNT.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             this.INS_LOG_BAT_CNT.Location = new System.Drawing.Point(6, 19);
             this.INS_LOG_BAT_CNT.MaxRange = 10F;
             this.INS_LOG_BAT_CNT.MinRange = 0F;
@@ -107,6 +109,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             // 
             // but_fft
             // 
+            this.but_fft.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             this.but_fft.Location = new System.Drawing.Point(629, 13);
             this.but_fft.Name = "but_fft";
             this.but_fft.Size = new System.Drawing.Size(75, 23);
@@ -118,6 +121,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             // LOG_BITMASK
             // 
             this.LOG_BITMASK.Enabled = false;
+            this.LOG_BITMASK.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             this.LOG_BITMASK.Location = new System.Drawing.Point(6, 19);
             this.LOG_BITMASK.Name = "LOG_BITMASK";
             this.LOG_BITMASK.ParamName = null;
@@ -129,6 +133,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             // 
             this.groupBox1.Controls.Add(this.INS_LOG_BAT_CNT);
             this.groupBox1.Controls.Add(this.INS_LOG_BAT_MASK);
+            this.groupBox1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             this.groupBox1.Location = new System.Drawing.Point(7, 3);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(616, 264);
@@ -139,6 +144,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.LOG_BITMASK);
+            this.groupBox2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             this.groupBox2.Location = new System.Drawing.Point(7, 273);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(616, 179);
