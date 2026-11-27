@@ -197,6 +197,14 @@ namespace MissionPlanner.Controls
                     translation = "转向率与速度控制";
             }
 
+            // ArduPilot RC_Channel.cpp at 7250f9d4 names option 30 per firmware.
+            else if (id == 30)
+            {
+                if (firmware == "ArduCopter2" && raw == "Lost Copter Sound") translation = "多旋翼寻机提示音";
+                else if (firmware == "ArduRover" && raw == "Lost Rover Sound") translation = "车船寻回提示音";
+                else if (firmware == "ArduPlane" && raw == "Lost Plane Sound") translation = "固定翼寻机提示音";
+            }
+
             if (translation == null &&
                 (firmware == "ArduCopter2" || firmware == "ArduRover" || firmware == "ArduPlane"))
                 AuxiliaryCameraOptionLabels.TryGetValue((id, raw), out translation);
