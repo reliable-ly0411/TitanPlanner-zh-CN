@@ -29,7 +29,13 @@ namespace MissionPlanner.GCSViews.ConfigurationView
         private bool listReady;
         private string detectedport;
 
-        public ConfigFirmware() : this(url => new Firmware().getFWList(url))
+        private static readonly Func<string, List<Firmware.software>> LegacyListLoader =
+            url => new Firmware().getFWList(url);
+        // Exact origin string, including ordered mirrors; "" is the legacy loader's fixed default route.
+        private static readonly FirmwareListInFlight<string, List<Firmware.software>> LegacyInFlight =
+            new FirmwareListInFlight<string, List<Firmware.software>>(LegacyListLoader, StringComparer.Ordinal);
+
+        public ConfigFirmware() : this(LegacyListLoader)
         {
         }
 
@@ -164,7 +170,9 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                 item.Key.Text = item.Value;
             }
             lbl_status.Text = Strings.GettingFWList;
-            listRequest.Start(firmwareurl, fetchList, FirmwareListSettings.LoadInBackground, list =>
+            bool background = FirmwareListSettings.LoadInBackground;
+            var shared = background && ReferenceEquals(fetchList, LegacyListLoader) ? LegacyInFlight : null;
+            listRequest.Start(firmwareurl, fetchList, background, list =>
             {
                 if (list == null || list.Count == 0)
                     throw new InvalidDataException("No firmware in the list.");
@@ -182,8 +190,13 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             {
                 log.Error(error);
                 lbl_status.Text = FirmwareListSettings.FailureText(error);
-            });
+            }, sharedInFlight: shared, detachSharedResult: CopyLegacyListForView);
         }
+
+        // The legacy UI can later edit URL fields in a selected entry. Detach once
+        // per view request before caching, so a second owner cannot see those edits.
+        private static List<Firmware.software> CopyLegacyListForView(List<Firmware.software> list) =>
+            list?.Select(item => item?.CopyForLegacyListView()).ToList();
 
         private List<Firmware.software> ConvertToOld(List<APFirmware.FirmwareInfo> official)
         {

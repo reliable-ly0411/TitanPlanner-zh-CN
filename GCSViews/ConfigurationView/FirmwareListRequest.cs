@@ -72,6 +72,53 @@ namespace MissionPlanner.GCSViews.ConfigurationView
         }
     }
 
+    /// <summary>Shares only unfinished fetches for one explicitly registered loader.</summary>
+    internal sealed class FirmwareListInFlight<TKey, TResult>
+    {
+        private readonly object gate = new object();
+        private readonly Func<TKey, TResult> loader;
+        private readonly Dictionary<TKey, Task<TResult>> pending;
+
+        internal FirmwareListInFlight(Func<TKey, TResult> loader, IEqualityComparer<TKey> keys)
+        {
+            this.loader = loader ?? throw new ArgumentNullException(nameof(loader));
+            pending = new Dictionary<TKey, Task<TResult>>(keys);
+        }
+
+        internal Task<TResult> Join(TKey key, Func<TKey, TResult> fetch)
+        {
+            if (!ReferenceEquals(loader, fetch))
+                throw new ArgumentException("Only the registered firmware-list loader may share work.", nameof(fetch));
+
+            TaskCompletionSource<TResult> completion;
+            lock (gate)
+            {
+                if (pending.TryGetValue(key, out var current) && !current.IsCompleted)
+                    return current;
+
+                completion = new TaskCompletionSource<TResult>(TaskCreationOptions.RunContinuationsAsynchronously);
+                pending[key] = completion.Task;
+            }
+
+            // Neither the fetch nor a caller's completion runs while holding the map lock.
+            Task.Run(() =>
+            {
+                try { completion.SetResult(loader(key)); }
+                catch (OperationCanceledException) { completion.SetCanceled(); }
+                catch (Exception error) { completion.SetException(error); }
+                finally
+                {
+                    lock (gate)
+                    {
+                        if (pending.TryGetValue(key, out var current) && ReferenceEquals(current, completion.Task))
+                            pending.Remove(key);
+                    }
+                }
+            });
+            return completion.Task;
+        }
+    }
+
     /// <summary>UI-thread-owned request state. Fetches never touch the page or any control.</summary>
     internal sealed class FirmwareListRequest<TKey, TResult>
     {
@@ -93,7 +140,8 @@ namespace MissionPlanner.GCSViews.ConfigurationView
         }
 
         public void Start(TKey requestedKey, Func<TKey, TResult> fetch, bool background,
-            Action<TResult> apply, Action<Exception> failed, bool reuseCompleted = true)
+            Action<TResult> apply, Action<Exception> failed, bool reuseCompleted = true,
+            FirmwareListInFlight<TKey, TResult> sharedInFlight = null, Func<TResult, TResult> detachSharedResult = null)
         {
             int token = ++generation;
             foreach (var request in requests.Where(item => item.Value.IsCompleted &&
@@ -112,7 +160,10 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                         try { await previous.ConfigureAwait(false); }
                         catch (Exception) { /* observed by the prior UI request */ }
                     }
-                    return fetch(requestedKey);
+                    if (!background || sharedInFlight == null)
+                        return fetch(requestedKey);
+                    var result = await sharedInFlight.Join(requestedKey, fetch).ConfigureAwait(false);
+                    return detachSharedResult == null ? result : detachSharedResult(result);
                 });
                 requests[requestedKey] = tail = task;
             }

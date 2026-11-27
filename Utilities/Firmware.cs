@@ -88,6 +88,9 @@ namespace MissionPlanner.Utilities
             public string desc = "";
             public int k_format_version;
 
+            // All list-entry fields are values or immutable strings.
+            internal software CopyForLegacyListView() => (software)MemberwiseClone();
+
             public override string ToString()
             {
                 return this.ToJSON();
