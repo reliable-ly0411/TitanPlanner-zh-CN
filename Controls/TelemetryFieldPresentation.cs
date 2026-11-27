@@ -100,6 +100,8 @@ namespace MissionPlanner.Controls
                 case "timesincelastshot": return UiText.Translate("Interval between camera trigger records (s)");
                 case "linkqualitygcs": return UiText.Translate("Ground station packet reception quality (%)");
                 case "groundspeed2": return UiText.Translate("Secondary GPS ground speed (m/s)");
+                case "lowairspeed": return UiText.Translate("Ground station low airspeed flag");
+                case "lowgroundspeed": return UiText.Translate("Ground station low ground speed flag");
                 case "vlen": return UiText.Translate("Three-dimensional velocity magnitude (m/s)");
                 case "HomeAlt": return UiText.Translate("Home location altitude");
                 case "targetalt": return UiText.Translate("Navigation target altitude");

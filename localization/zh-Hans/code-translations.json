@@ -2349,6 +2349,8 @@
   "Ground station pre-arm flag (connected and checks healthy or disabled)": "地面站解锁前状态标志（已连接，且检查正常或未启用）",
   "Ground station packet reception quality (%)": "地面站数据包接收质量（%）",
   "Secondary GPS ground speed (m/s)": "第二路 GPS 地速（m/s）",
+  "Ground station low airspeed flag": "低空速标志",
+  "Ground station low ground speed flag": "低地速标志",
   "Three-dimensional velocity magnitude (m/s)": "三维速度大小（m/s）",
   "Home location altitude": "返航点高度",
   "Navigation target altitude": "导航目标高度",

@@ -30,6 +30,28 @@ namespace MissionPlannerTests.Controls
         }
 
         [TestMethod]
+        public void QuickViewLowSpeedFlagsRemainBooleansWithoutUnitsOrThresholds()
+        {
+            var previous = CultureInfo.CurrentUICulture;
+            try
+            {
+                foreach (var culture in new[] { "zh-CN", "zh-Hans", "en-US" })
+                {
+                    CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo(culture);
+                    foreach (var field in new[] { Tuple.Create("lowairspeed", "低空速标志"), Tuple.Create("lowgroundspeed", "低地速标志") })
+                    {
+                        Assert.AreEqual(typeof(bool), typeof(CurrentState).GetProperty(field.Item1).PropertyType);
+                        string label = TelemetryFieldPresentation.FieldLabel(field.Item1);
+                        Assert.AreEqual(culture == "zh-CN" ? field.Item1 + " (" + field.Item2 + ")" : field.Item1, label);
+                        Assert.IsTrue(TelemetryFieldPresentation.Matches(field.Item1, label));
+                    }
+                    Assert.AreEqual("lowairspeed_future", TelemetryFieldPresentation.FieldLabel("lowairspeed_future"));
+                }
+            }
+            finally { CultureInfo.CurrentUICulture = previous; }
+        }
+
+        [TestMethod]
         public void AbstractUnitLabelsDoNotInferUnitsAcrossMessagePaths()
         {
             var previousCulture = CultureInfo.CurrentUICulture;
