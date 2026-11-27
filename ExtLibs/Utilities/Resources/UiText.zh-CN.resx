@@ -4915,9 +4915,41 @@ Ctrl+O 从文件加载</value>
     <value>爱丽丝蓝</value>
     <comment>"HUD color compact: AliceBlue"</comment>
   </data>
+  <data name="157a145770605823fd67f8b03b47c8073bdf2fd7fec1601da1da064b42a981d7" xml:space="preserve">
+    <value>黑色</value>
+    <comment>"HUD color compact: Black"</comment>
+  </data>
+  <data name="adc89e6fc831c64d46e193452e0c4a7801ccfbb5b041ab308541e92bae2f0880" xml:space="preserve">
+    <value>蓝色</value>
+    <comment>"HUD color compact: Blue"</comment>
+  </data>
+  <data name="0660597c3f90bb5ef7b0def8223df1792aea6a1312441b75f0616a5809a726ea" xml:space="preserve">
+    <value>棕色</value>
+    <comment>"HUD color compact: Brown"</comment>
+  </data>
   <data name="5a9cd3bdbd496d7a697853295328809f7f889568b461723fc4967fe130528959" xml:space="preserve">
     <value>失焦渐变</value>
     <comment>"HUD color compact: GradientInactiveCaption"</comment>
+  </data>
+  <data name="7fd834f04a87342732c487135f10b6f080c173a0ee5bda6d89185a27f0ba4b29" xml:space="preserve">
+    <value>绿色</value>
+    <comment>"HUD color compact: Green"</comment>
+  </data>
+  <data name="ed7c929982fa6c17f7cb2319aeb857b3f674776f8fac4ce65941dd673b4641f5" xml:space="preserve">
+    <value>橙色</value>
+    <comment>"HUD color compact: Orange"</comment>
+  </data>
+  <data name="20bbc1b9c551075ec248309ed8fc387666e35a4a98cca4b83e28191ecf9a907e" xml:space="preserve">
+    <value>红色</value>
+    <comment>"HUD color compact: Red"</comment>
+  </data>
+  <data name="0f8f6caaeec4b14cd9e115940ee598bc5d0ea8defd5ae7f51611fd848da9ba59" xml:space="preserve">
+    <value>白色</value>
+    <comment>"HUD color compact: White"</comment>
+  </data>
+  <data name="c83d6960e54bbd037908133e3c8c390458287d6da17da4ae6f5d1b737e3ba8e0" xml:space="preserve">
+    <value>黄色</value>
+    <comment>"HUD color compact: Yellow"</comment>
   </data>
   <data name="efa5016086ee3aef29ef4b456382b6b349a3bec5de6f3c239dc07650d5c2f8d6" xml:space="preserve">
     <value>活动窗口边框（ActiveBorder）</value>
@@ -4927,9 +4959,41 @@ Ctrl+O 从文件加载</value>
     <value>爱丽丝蓝（AliceBlue）</value>
     <comment>"HUD color: AliceBlue"</comment>
   </data>
+  <data name="53b1e32efc9f889b49f5553aeffd573b45938aa2ffa343038b7aa60c46cf61b5" xml:space="preserve">
+    <value>黑色（Black）</value>
+    <comment>"HUD color: Black"</comment>
+  </data>
+  <data name="de3490c5b4d7fbe335ee27832fea9f99fa4eeab79fbb96e4c1147ed9c4da887b" xml:space="preserve">
+    <value>蓝色（Blue）</value>
+    <comment>"HUD color: Blue"</comment>
+  </data>
+  <data name="93248724e9a734f2a0577caf21722580fde245954e6dcb0c7087f026324b0c7d" xml:space="preserve">
+    <value>棕色（Brown）</value>
+    <comment>"HUD color: Brown"</comment>
+  </data>
   <data name="c167f475666fcae6d9ff5f0691c3a57cb2ecd4df4364a5b7fc339bfe9147758a" xml:space="preserve">
     <value>非活动标题栏渐变（GradientInactiveCaption）</value>
     <comment>"HUD color: GradientInactiveCaption"</comment>
+  </data>
+  <data name="4ed92cf54e1a2f016aad773e689ba086111d8cb74348c22dda30a0b0e3dd3168" xml:space="preserve">
+    <value>绿色（Green）</value>
+    <comment>"HUD color: Green"</comment>
+  </data>
+  <data name="d0b95b72dc906dde73719e9b758c6dd2ab4d03fee62aa27a2edf697e126b83c5" xml:space="preserve">
+    <value>橙色（Orange）</value>
+    <comment>"HUD color: Orange"</comment>
+  </data>
+  <data name="65b6e6ae8ea790271119d97585f0bf29452e107d1abd947f5966345b29c8cb05" xml:space="preserve">
+    <value>红色（Red）</value>
+    <comment>"HUD color: Red"</comment>
+  </data>
+  <data name="83f2ab491e67296f97257bd43de82f615db223d430a750e1d3c813ec6bd24616" xml:space="preserve">
+    <value>白色（White）</value>
+    <comment>"HUD color: White"</comment>
+  </data>
+  <data name="ad904d2003d8485a43579ec8cbc260a77ad834b070e12f66c0e40db0ef64086d" xml:space="preserve">
+    <value>黄色（Yellow）</value>
+    <comment>"HUD color: Yellow"</comment>
   </data>
   <data name="b78c87853562c9b3190e421567f209d284f857a06d81fbce490e3950c2775a28" xml:space="preserve">
     <value>叠加 HUD</value>
