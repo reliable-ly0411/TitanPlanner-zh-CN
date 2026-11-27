@@ -21,6 +21,9 @@ namespace MissionPlanner.Controls.BackstageView
 
         public bool Advanced { get; set; }
 
+        // Opt in for this menu row and its immediate children only.
+        public bool FitMenuButtonToViewport { get; set; }
+
         /// <summary>Keep a visible selected leaf open on a repeated navigation click.</summary>
         public bool IgnoreClickWhenActive { get; set; }
 

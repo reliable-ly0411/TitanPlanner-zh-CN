@@ -40,6 +40,18 @@ namespace MissionPlanner.Controls.BackstageView
             pevent.Graphics.DrawLine(new Pen(PencilBorderColor), Width-1,0,Width-1,Height);
         }
 
+        protected override void OnClientSizeChanged(System.EventArgs e)
+        {
+            base.OnClientSizeChanged(e);
+            // A non-client scrollbar can change the viewport without resizing
+            // its rows. Repaint opt-in rows, without asking the panel to lay out.
+            foreach (Control row in Controls)
+            {
+                if (row is BackstageViewButton button && button.FitToViewport)
+                    button.Invalidate();
+            }
+        }
+
         protected override void OnResize(System.EventArgs eventargs)
         {
             base.OnResize(eventargs);
