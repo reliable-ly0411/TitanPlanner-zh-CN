@@ -720,6 +720,10 @@
     <value>活动连接</value>
     <comment>"Active Connections"</comment>
   </data>
+  <data name="9edb62f0ef45ee3dea46913cb733fcb414c644fd9537737708b1de6237e35b93" xml:space="preserve">
+    <value>当前窗口图标预览</value>
+    <comment>"Active window icon preview"</comment>
+  </data>
   <data name="9fd728c66c9a256b121472dabf32a34317aed01d8427d70ec830289cf23a7cc8" xml:space="preserve">
     <value>添加</value>
     <comment>"Add"</comment>
@@ -1879,6 +1883,10 @@
     <value>已取消</value>
     <comment>"Cancelled"</comment>
   </data>
+  <data name="62ec76670d266410b721245b859484a877c333e416914810b350012731b86c69" xml:space="preserve">
+    <value>已取消，当前外观保持不变。</value>
+    <comment>"Cancelled; the current appearance is unchanged."</comment>
+  </data>
   <data name="7b26131098bb18b289ece1bb10b18d1c97a1c79c4cf0feb3fed272febd54bd84" xml:space="preserve">
     <value>正在取消…</value>
     <comment>"Cancelling..."</comment>
@@ -1987,6 +1995,14 @@
     <value>选择接收机输出 RTCM 消息的时间间隔。数值越小，数据速率越高。</value>
     <comment>"Choose how often RTCM messages are output by the receiver. Lower values result in a higher data rate."</comment>
   </data>
+  <data name="142fdfca3becd8b7324c15cf6aa3d54f5185444e9ad55bc7016c0c2bf2dc25de" xml:space="preserve">
+    <value>选择本地图标…</value>
+    <comment>"Choose local icon…"</comment>
+  </data>
+  <data name="6bc836f138b6dfa44c4ad78f6a22b4b1fdc106f0e7fce6d531d170bde66d293b" xml:space="preserve">
+    <value>选择本地启动图…</value>
+    <comment>"Choose local startup image…"</comment>
+  </data>
   <data name="213b51a057c4b14b66846141fd0a4c8985e24f24278dca0abbba79a30ee1c19b" xml:space="preserve">
     <value>选择启动图片…</value>
     <comment>"Choose startup image..."</comment>
@@ -1998,6 +2014,10 @@
   <data name="607f2a50b911f297b4b2f038bcb3967ee29e7f42c1700dad4e40935598b91346" xml:space="preserve">
     <value>选择接收机为哪些卫星星座输出改正数据。星座越多，数据速率越高。</value>
     <comment>"Choose what constellations the receiver outputs corrections for. More constellations result in a higher data rate."</comment>
+  </data>
+  <data name="96f14849ae582001a03c21cccf80a3f334d013fb070b9df8a7afbdae02aaf804" xml:space="preserve">
+    <value>选中默认项或内置启动图时，文件按钮会导入为自定义素材。厂商图标不会随包附带或自动下载。</value>
+    <comment>"Choosing a file beside a built-in image or default imports it as custom. Vendor icons are not bundled or downloaded."</comment>
   </data>
   <data name="b93d3bcecff5d7493a58a41ea44f7196a46295f6512ebc06940510676a666384" xml:space="preserve">
     <value>绕圈</value>
@@ -6000,6 +6020,10 @@ Ctrl+O 从文件加载</value>
     <value>使用 AM32 配置器前，请确保已断开 Mission Planner 连接。</value>
     <comment>"Make sure to disconnect from Mission Planner before using AM32 configurator."</comment>
   </data>
+  <data name="d20182377729f6f628d1403c84e5b4585599a35e63eaa222ccd6f9974d52ecc0" xml:space="preserve">
+    <value>奋斗者</value>
+    <comment>"MakeFlyEasy"</comment>
+  </data>
   <data name="af2c00d599b1a9e255f90754fbba54da752acc654853f3c329313f7535e05502" xml:space="preserve">
     <value>管理命令列表</value>
     <comment>"Manage Command List"</comment>
@@ -6284,6 +6308,10 @@ Ctrl+O 从文件加载</value>
     <value>任务</value>
     <comment>"Mission"</comment>
   </data>
+  <data name="770a5a613e8014bbf79043bf7d031f1b922029600422f9cc8eaab01c15ea1083" xml:space="preserve">
+    <value>Mission Planner（本地）</value>
+    <comment>"Mission Planner (local)"</comment>
+  </data>
   <data name="919c925bc04ac4fe2f5ae321697b8b23186d87b72a4aadf14c600886543f5002" xml:space="preserve">
     <value>Mission Planner - 作者 Michael Oborne</value>
     <comment>"Mission Planner - By Michael Oborne"</comment>
@@ -6291,6 +6319,10 @@ Ctrl+O 从文件加载</value>
   <data name="29c11974eb590ed4499026b8aa27c9571143269e38f6028482270100e433d60c" xml:space="preserve">
     <value>Mission Planner 罗盘校准</value>
     <comment>"Mission Planner Mag Calibration"</comment>
+  </data>
+  <data name="19b83944c0803f5e83cbf8ca8bdddc6343a5106efc5643bacf4e66b82ec5bdd4" xml:space="preserve">
+    <value>Mission Planner 原启动图</value>
+    <comment>"Mission Planner artwork"</comment>
   </data>
   <data name="b53cb62e55bf4ed7dd0e59ff33482214406ea99c3f5186538eb4a301c233ad23" xml:space="preserve">
     <value>Mission Planner 现在使用改进的任务叠加层，支持航线和标记样式。
@@ -7584,6 +7616,10 @@ Ctrl+O 从文件加载</value>
     <value>罗盘 3 的新偏移为 </value>
     <comment>"New offsets for compass #3 are "</comment>
   </data>
+  <data name="59d316c40a97a128b7d7d316472926d333dfff6d4241e6aa72b081b5ec13219a" xml:space="preserve">
+    <value>下次启动图预览</value>
+    <comment>"Next startup image preview"</comment>
+  </data>
   <data name="bbcfb5295ebd208a8ebc1ca0af8baebb015d68889a2a4b3bccb2e6858c1bff2d" xml:space="preserve">
     <value>易读格式</value>
     <comment>"Nice Formatting"</comment>
@@ -8176,6 +8212,10 @@ Mission Planner 需要收到 2 个有效心跳包后才会连接。</value>
   <data name="2e6da69f0f259defe940788f433f92cfcce7f08b09bb0e17ebe589f657d2f466" xml:space="preserve">
     <value>PWM 低值</value>
     <comment>"PWM L"</comment>
+  </data>
+  <data name="a34a4a853e2d5dacb1d63f30db796b6599e864b52b213804f5246ae9fa6283a8" xml:space="preserve">
+    <value>包内默认图标</value>
+    <comment>"Packaged default icon"</comment>
   </data>
   <data name="fd92d952db92eff57586865ef7b6ae62897642d1abedbe203d56e2d4ced964ed" xml:space="preserve">
     <value>平摇</value>
@@ -9709,6 +9749,10 @@ gps_point：跟踪单个地面点</value>
     <value>已保存 </value>
     <comment>"Saved "</comment>
   </data>
+  <data name="e6dc45de5eb3d38f361bbad955df18acf94d3734acfe0c1861cc3d49d8168b6d" xml:space="preserve">
+    <value>保存的素材不可用，请重新导入本地文件。</value>
+    <comment>"Saved artwork is unavailable. Reimport the local file."</comment>
+  </data>
   <data name="2158dd3a8b115ce24ad117b6a78e57ce2c969b5c477d7e399b4f4e2e506dc3d9" xml:space="preserve">
     <value>设置已保存到 </value>
     <comment>"Saved settings to "</comment>
@@ -10528,6 +10572,14 @@ gps_point：跟踪单个地面点</value>
     <value>正在启动更新程序</value>
     <comment>"Starting Updater"</comment>
   </data>
+  <data name="48de4126d94c7cb586337dec63db010b352cebf0219dee71622f35305b95b302" xml:space="preserve">
+    <value>启动图</value>
+    <comment>"Startup image"</comment>
+  </data>
+  <data name="6e907af7cb8516da19349509670cf12c606750a722b743e4aad8db0472ac0ef4" xml:space="preserve">
+    <value>启动图 · 下次启动生效</value>
+    <comment>"Startup image · applies on next start"</comment>
+  </data>
   <data name="cf164b92ca528c1d2f353368c466a34b78e1888d9ecd02b7df10344a5c40d44c" xml:space="preserve">
     <value>静态陷波滤波器</value>
     <comment>"Static Notch Filter"</comment>
@@ -11197,9 +11249,21 @@ Acc：当前测定位置的精度
     <value>超时：未收到状态消息。</value>
     <comment>"Timeout: Status message not received."</comment>
   </data>
+  <data name="8421b205fc7fff9161cd64cbb5e3e2ca53412f798179105dffba6f8c34087077" xml:space="preserve">
+    <value>TitanPlanner（本地）</value>
+    <comment>"TitanPlanner (local)"</comment>
+  </data>
+  <data name="5e2a875e33dd4734cf2717fab980eaed89e1b502347ec8642af8069ccef84a7d" xml:space="preserve">
+    <value>TitanPlanner 原启动图（默认）</value>
+    <comment>"TitanPlanner artwork (default)"</comment>
+  </data>
   <data name="1b4d19a2dcbb7476bc0cac5ba3ea109c7a5de86960723dcb4a8f303e8ab423cc" xml:space="preserve">
     <value>TLog 转 KML/图表</value>
     <comment>"Tlog &gt; KML/Graph"</comment>
+  </data>
+  <data name="6ffbbd7b1b05f3b138a3f8b2f0c5fd7da04a44128ba76ffea3938ad871268c36" xml:space="preserve">
+    <value>预设缺素材时，先选该项，再导入本地文件。</value>
+    <comment>"To supply a missing preset, select it, then choose a local file."</comment>
   </data>
   <data name="0019f5e64c48ad57aeeeb7b9435e674ed91e32235e596f504308adc1a5bfef33" xml:space="preserve">
     <value>使用此功能前，请启用到 CubeID 所连接端口的串口透传。
@@ -11943,9 +12007,17 @@ http://www.magnetic-declination.com/</value>
     <value>风速 (speed)</value>
     <comment>"Wind Velocity (speed)"</comment>
   </data>
+  <data name="5347455f90ddb58e3b15723e9de08b41d6e63bc44c3da1bd214351fa3ade8bb3" xml:space="preserve">
+    <value>窗口图标</value>
+    <comment>"Window icon"</comment>
+  </data>
   <data name="680e0d1fb096f045c3d144856ebc424c295799760bb59b6923de9dc13ffaddf1" xml:space="preserve">
     <value>窗口图标与启动画面</value>
     <comment>"Window icon and startup image"</comment>
+  </data>
+  <data name="915142ae5637fa9c6aa02da8e3b176a1aa95ccbe67f4074eaf52b05771b715a2" xml:space="preserve">
+    <value>窗口图标 · 即时生效</value>
+    <comment>"Window icon · applies now"</comment>
   </data>
   <data name="3404644e01177ee996b69247aa3967e7a3f66702c5ff0f7270591e8d9622183b" xml:space="preserve">
     <value>清除</value>
@@ -12917,5 +12989,9 @@ http://www.magnetic-declination.com/</value>
   <data name="5097e8a37403b611dfbe72f08153e1b5de9786d8ae7060d6db47cde5973dbd6d" xml:space="preserve">
     <value>{name} 为 {value}</value>
     <comment>"{name} is {value}"</comment>
+  </data>
+  <data name="2e7372be3472841879580d4eca29a127e31585b265aaf038e00f252ae897057a" xml:space="preserve">
+    <value>“{0}”尚未导入。请选本地文件；实际仍用“{1}”。</value>
+    <comment>"“{0}” has no local file. Choose one; “{1}” remains active."</comment>
   </data>
 </root>

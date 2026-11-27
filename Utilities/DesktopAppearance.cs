@@ -55,6 +55,18 @@ namespace MissionPlanner.Utilities
             if (kind == AppearanceAsset.WindowIcon) RefreshWindowIcons();
         }
 
+        internal static void ImportVendorIcon(ImportedVendorIcon vendor, string source)
+        {
+            Store.ImportVendorIcon(vendor, source);
+            RefreshWindowIcons();
+        }
+
+        internal static void SelectVendorIcon(ImportedVendorIcon vendor)
+        {
+            Store.SelectVendorIcon(vendor);
+            RefreshWindowIcons();
+        }
+
         internal static void SelectSavedIcon()
         {
             Store.SelectSavedIcon();

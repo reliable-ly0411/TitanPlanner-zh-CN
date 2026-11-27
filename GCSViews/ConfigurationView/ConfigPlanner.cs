@@ -319,7 +319,6 @@ namespace MissionPlanner.GCSViews.ConfigurationView
         {
             var group = CreateGroupBox("Window icon and startup image");
             group.Name = "desktopAppearanceGroup";
-            group.Tag = GroupColumnsPanel.FullWidth;
             group.Controls.Add(new ConfigAppearance(embedded: true));
             return group;
         }
