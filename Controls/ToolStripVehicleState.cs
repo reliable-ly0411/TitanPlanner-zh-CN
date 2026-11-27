@@ -1469,6 +1469,8 @@ namespace MissionPlanner.Controls
                     return ModeMenuPresentation.Circle;
                 case ArduPilot.Firmwares.ArduRover:
                     return ModeMenuPresentation.Rover;
+                case ArduPilot.Firmwares.ArduTracker:
+                    return ModeMenuPresentation.Tracker;
                 case ArduPilot.Firmwares.PX4:
                     switch (vehicleType)
                     {

@@ -79,6 +79,14 @@ internal static class ModeDisplayChecks
                     Check(menu == (enhanced ? raw + " · " + UiText.Translate(raw) : raw), culture + ": " + raw);
                     Check(!enhanced || menu != raw, "known mode must have bilingual menu text");
                 }
+                Check(FlightModeDisplay.EnglishThenChinese("Auto", ModeMenuPresentation.Tracker)
+                    == (enhanced ? "Auto · 自动跟踪" : "Auto"), "Tracker-specific presentation");
+                Check(FlightModeDisplay.EnglishThenChinese("Auto", ModeMenuPresentation.Hover)
+                    == (enhanced ? "Auto · 自动" : "Auto"), "Tracker caption must not leak to Copter");
+                Check(FlightModeDisplay.EnglishThenChinese("Unknown Tracker Mode", ModeMenuPresentation.Tracker)
+                    == "Unknown Tracker Mode", "Tracker custom mode stays raw");
+                Check(FlightModeDisplay.FromMode("Auto").Primary == (enhanced ? "自动" : "Auto"),
+                    "Tracker popup caption must not affect the HUD/current-mode display");
                 Check(FlightModeDisplay.EnglishThenChinese("Settings") == "Settings", "unrelated catalog entry");
                 Check(FlightModeDisplay.EnglishThenChinese("Unknown_Plugin_Mode") == "Unknown_Plugin_Mode", "custom mode");
                 Check(FlightModeDisplay.EnglishThenChinese("") == "", "empty menu text");
