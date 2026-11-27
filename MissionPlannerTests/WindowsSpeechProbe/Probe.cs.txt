@@ -40,7 +40,7 @@ internal static class Probe
     {
         Require(Environment.OSVersion.Platform == PlatformID.Win32NT && Environment.Is64BitProcess &&
             Type.GetType("Mono.Runtime") == null, "此入口需要 64 位 Windows .NET Framework。");
-        var bin = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);
+        var bin = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory.TrimEnd(Path.DirectorySeparatorChar));
         var staging = bin.Parent;
         string temp = Path.GetFullPath(Path.GetTempPath()).TrimEnd(Path.DirectorySeparatorChar);
         const string prefix = "TitanPlanner-SpeechProbe-";
@@ -158,13 +158,7 @@ internal static class Probe
             trace.RequireSuccess();
             output.CheckWave();
 
-            string words = string.Concat(trace.Words.ToString().Where(char.IsLetterOrDigit));
-            string expected = string.Concat(expectedText.Where(char.IsLetterOrDigit));
-            bool ssml = trace.CheckPromptText(expectedText);
-            if (!ssml && words != expected)
-                Unverified("此后端未提供可核对的完整 SSML 或词边界正文。");
-            else
-                Console.WriteLine("正文  已用{0}核对真实提示", ssml ? "提交的 SSML" : "语音进度事件");
+            CheckSpokenText(trace, expectedText);
             if (trace.Voices.Count != 1 || string.IsNullOrEmpty(trace.Voices.FirstOrDefault()))
             {
                 Unverified("本条提示没有唯一可观察的 VoiceChange 身份。");
@@ -183,6 +177,17 @@ internal static class Probe
         }
     }
 
+    private static void CheckSpokenText(NativeOutput.Trace trace, string expectedText)
+    {
+        string words = string.Concat(trace.Words.ToString().Where(char.IsLetterOrDigit));
+        string expected = string.Concat(expectedText.Where(char.IsLetterOrDigit));
+        bool ssml = trace.CheckPromptText(expectedText);
+        if (!ssml && words != expected)
+            Unverified("此后端未提供可核对的完整 SSML 或词边界正文。");
+        else
+            Console.WriteLine("正文  已用{0}核对真实提示", ssml ? "提交的 SSML" : "语音进度事件");
+    }
+
     private static void CheckPriority()
     {
         bool ordinaryObserved = false, interruptionObserved = false;
@@ -195,8 +200,11 @@ internal static class Probe
                 var ordinary = output.FirstStarted();
                 bool active = !ordinary.IsCompleted;
                 bool accepted = output.Speech.TryPreviewChineseVoice();
-                if (active && accepted && !ordinary.IsCompleted) throw new InvalidOperationException("普通播报未完成时试听已获准。");
-                ordinaryObserved = active && !accepted;
+                if (active && !ordinary.IsCompleted)
+                {
+                    Require(!accepted, "普通播报未完成时试听已获准。");
+                    ordinaryObserved = true;
+                }
                 foreach (var t in output.Finished(accepted ? 2 : 1)) t.RequireSuccess();
                 output.CheckWave();
             }
@@ -221,6 +229,7 @@ internal static class Probe
                 var previewEnd = finished.Single(t => ReferenceEquals(t.Prompt, preview));
                 var alertEnd = finished.Single(t => !ReferenceEquals(t.Prompt, preview));
                 alertEnd.RequireSuccess();
+                CheckSpokenText(alertEnd, AlertText);
                 if (previewEnd.Cancelled)
                 {
                     Require(previewEnd.Error == null || previewEnd.Error is OperationCanceledException,

@@ -19,7 +19,7 @@ $LASTEXITCODE
 | `choose`、`reload` | 动态枚举可用的微软中文音色，优先选与自动模式不同的一种。在新临时目录调用产品 `Settings.Save()`，再启动另一个进程读回。实际 `VoiceChange` 身份须与保存的音色一致。 |
 | `missing` | 在内存中设置一个本机不存在的名称，以相同固定句比较实际音色与 `auto` 的结果。 |
 | `neutral` | 在独立进程中移除增强简中卫星，保留中性和普通简中资源，验证产品试听回退为原英文并能合成。实际提示正文用 SSML 或原生语音进度核对。 |
-| `priority` | 在真实普通播报进行时点试听应被拒绝。在真实试听已开始时，按接收器原有顺序检查 `IsReady`、提交固定告警。只有同一试听提示被取消且随后告警成功完成才计为观察到了打断。 |
+| `priority` | 请求试听前后须观察到同一普通播报仍在进行，且试听已被拒绝。在真实试听已开始时，按接收器原有顺序检查 `IsReady`、提交固定告警。核对告警提示的实际正文；只有同一试听提示被取消、随后告警正常完成，才记录为观察到打断。此组的两条提示共用内存 WAV，音频数据仅能归于该组。 |
 
 短句写入内存可能很快。竞态每种最多尝试三次，自然播完只记待验。缺可用中文音色、只有一种音色、没有可辨认的实际语音身份，分别按影响项记录。虚构的旧音色名称只覆盖找不到所选音色的回退；确实没有中文包或实际卸载需要对应的 Windows 环境。
 
@@ -32,6 +32,6 @@ dotnet build .\MissionPlannerTests\WindowsSpeechProbe\WindowsSpeechProbe.csproj 
 .\MissionPlannerTests\WindowsSpeechProbe\run.ps1 -BinaryDirectory .\MissionPlannerTests\WindowsSpeechProbe\bin\Release\net472
 ```
 
-`System.Speech` 由 Windows .NET Framework 提供。薄件只用反射取得产品实例里的合成器以重定向和观察，不设置全局音色，也不替换合成器。地面站总开关在该控制台宿主中设为开，飞控、设置窗体及完整应用均未启动。该验证覆盖临时 XML 的跨进程往返。完整应用关闭落盘、真实设置控件、听感和扬声器输出仍需对应入口验收。
+本件使用 Windows .NET Framework 自带的 `System.Speech`。产品整包随附程序集的兼容性仍待单独验收。薄件只用反射取得产品实例里的合成器以重定向和观察，不设置全局音色，也不替换合成器。地面站总开关在该控制台宿主中设为开，飞控、设置窗体及完整应用均未启动。该验证覆盖临时 XML 的跨进程往返。完整应用关闭落盘、真实设置控件、听感和扬声器输出仍需对应入口验收。
 
 [微软的已安装音色接口](https://learn.microsoft.com/dotnet/api/system.speech.synthesis.speechsynthesizer.getinstalledvoices) · [内存 WAV 输出](https://learn.microsoft.com/dotnet/api/system.speech.synthesis.speechsynthesizer.setoutputtowavestream) · [语音身份事件](https://learn.microsoft.com/dotnet/api/system.speech.synthesis.speechsynthesizer.voicechange)
