@@ -305,7 +305,9 @@ namespace MissionPlanner.GCSViews
                 }
 
 
-                if (backstageView.SelectedPage == null && start != null)
+                if (backstageView.SelectedPage == null && start == null)
+                    backstageView.ShowSelectionPrompt(UiText.Translate("Select a page from the list on the left."));
+                else if (backstageView.SelectedPage == null)
                     this.BeginInvoke((Action) delegate
                     {
                         try

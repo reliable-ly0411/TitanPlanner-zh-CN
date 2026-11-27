@@ -29,6 +29,7 @@ namespace MissionPlanner.Controls.BackstageView
 
         private readonly BackstageViewCollection _items = new BackstageViewCollection();
         private BackstageViewPage _activePage;
+        private Label selectionPrompt;
 
         private const int ButtonHeight = 30;
 
@@ -487,6 +488,29 @@ namespace MissionPlanner.Controls.BackstageView
             this.ActivatePage(associatedPage);
         }
 
+        /// <summary>Show an inert hint when the host has pages but intentionally did not select one.</summary>
+        public void ShowSelectionPrompt(string text)
+        {
+            if (_activePage != null || selectionPrompt != null || string.IsNullOrWhiteSpace(text))
+                return;
+
+            DrawMenu(null, true);
+            if (pnlMenu.Controls.Count == 0)
+                return;
+
+            selectionPrompt = new Label
+            {
+                Dock = DockStyle.Fill,
+                Padding = new Padding(8),
+                Text = text,
+                TextAlign = System.Drawing.ContentAlignment.MiddleCenter,
+                UseMnemonic = false,
+                TabStop = false
+            };
+            pnlPages.Controls.Add(selectionPrompt);
+            selectionPrompt.BringToFront();
+        }
+
         public void ActivatePage(BackstageViewPage associatedPage)
         {
             if (associatedPage == null)
@@ -575,6 +599,8 @@ namespace MissionPlanner.Controls.BackstageView
                 (end - start).TotalMilliseconds);
 
             _activePage = associatedPage;
+            selectionPrompt?.Dispose();
+            selectionPrompt = null;
         }
 
         protected override void OnPaint(PaintEventArgs e)
