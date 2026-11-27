@@ -1839,6 +1839,10 @@
     <value>相机高度：</value>
     <comment>"Camera Height:"</comment>
   </data>
+  <data name="c6a0fc356377c93d46ea45a8e710b1550ce1a948cf0eb915f319af52f96b54d8" xml:space="preserve">
+    <value>相机镜头</value>
+    <comment>"Camera Lens"</comment>
+  </data>
   <data name="aeddde856f66918d986e7e522c452ee5faa77f3a759555d37cd8cd6e21506984" xml:space="preserve">
     <value>相机名称</value>
     <comment>"Camera Name"</comment>
