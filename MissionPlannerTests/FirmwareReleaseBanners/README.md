@@ -1,0 +1,14 @@
+# Four fixed ArduPlane release banners (display-only #41)
+
+For these releases only, an exact INFO 6 banner that arrived from the already recognised main fixed-wing component after the existing version proof gets an enhanced Simplified Chinese suffix. Name, version, commit and original bytes remain visible. No template or build hash extrapolation, legacy translation change, severity/queue/voice/HUD or copied/logged/raw value change. An earlier banner received before the version proof remains raw and is not retroactively matched.
+
+| Release | Canonical source and exact sender | Firmware image (official CubeOrange sample) |
+|---|---|---|
+| 4.4.4 | [tag commit](https://github.com/ArduPilot/ardupilot/tree/16b783822905668b160b0eb1ef5599ce0d3a0231), [INFO send](https://github.com/ArduPilot/ardupilot/blob/16b783822905668b160b0eb1ef5599ce0d3a0231/libraries/GCS_MAVLink/GCS_Common.cpp#L4104-L4109) | [APJ](https://firmware.ardupilot.org/Plane/stable-4.4.4/CubeOrange/arduplane.apj) |
+| 4.5.7 | [tag commit](https://github.com/ArduPilot/ardupilot/tree/0358a9c210bc6c965006f5d6029239b7033616df), [INFO send](https://github.com/ArduPilot/ardupilot/blob/0358a9c210bc6c965006f5d6029239b7033616df/libraries/GCS_MAVLink/GCS_Common.cpp#L4329-L4334) | [APJ](https://firmware.ardupilot.org/Plane/stable-4.5.7/CubeOrange/arduplane.apj) |
+| 4.6.3 | [tag commit](https://github.com/ArduPilot/ardupilot/tree/3fc7011a7d3dc047cbb17d8bd98ee94577d144c6), [INFO send](https://github.com/ArduPilot/ardupilot/blob/3fc7011a7d3dc047cbb17d8bd98ee94577d144c6/libraries/GCS_MAVLink/GCS_Common.cpp#L4573-L4578) | [APJ](https://firmware.ardupilot.org/Plane/stable-4.6.3/CubeOrange/arduplane.apj) |
+| 4.7.3 | [tag commit](https://github.com/ArduPilot/ardupilot/tree/d9c5097c3d8333435712ffed86bca8ce00c4bb46), [INFO send](https://github.com/ArduPilot/ardupilot/blob/d9c5097c3d8333435712ffed86bca8ce00c4bb46/libraries/GCS_MAVLink/GCS_Common.cpp#L4781-L4786) | [APJ](https://firmware.ardupilot.org/Plane/stable-4.7.3/CubeOrange/arduplane.apj) |
+
+The fixed source uses the normal firmware name only when there is no board override, and concatenates Git revision only for a Git-versioned build. The matching strings were each actually checked in the corresponding official standalone image, not guessed from the source title. Use the separately acquired files named fw-4.x.y.apj and run python verify-apj.py LOCAL-DIR to compare observed SHA-256, embedded revision and unique NUL-terminated literal. No code or image is executed, installed or bundled. A changed artifact requires review; no version is learned from its banner.
+
+Preserves existing sender, generation, version, full UTF-8, unfragmented and per-row proof gates. Conflicting heartbeat family, vendor names or version strings, non-INFO severity, unknown sources or locales, and absent enhanced resource preserve the previous text. This is not general release identity attestation or coverage of all boards/messages.
