@@ -74,6 +74,23 @@ namespace MissionPlanner
 
         private static string Px4BatteryText(int version) => version == 9 ? "Battery 1 disconnected\t" : "Battery 1 missing\t";
 
+        private static string Ekf3TiltAlignmentSuffix(int version, string message, byte severity)
+        {
+            // ArduPilot d9c5097c, AP_NavEKF3_Control.cpp, checkAttitudeAlignmentStatus():
+            // INFO, unsigned IMU index. Review only the exact spellings for indices 0-2.
+            if (version != 1 || severity != (byte)MAVLink.MAV_SEVERITY.INFO || message == null)
+                return null;
+            const string prefix = "EKF3 IMU";
+            const string suffix = " tilt alignment complete";
+            if (message.Length != prefix.Length + 1 + suffix.Length ||
+                !message.StartsWith(prefix, StringComparison.Ordinal) ||
+                !message.EndsWith(suffix, StringComparison.Ordinal))
+                return null;
+
+            char index = message[prefix.Length];
+            return index >= '0' && index <= '2' ? "EKF3 IMU" + index + " 倾斜对准完成" : null;
+        }
+
         internal void Mark(List<(DateTime time, string message, byte severity)> list, MAVLink.MAVLinkMessage packet,
             MAVLink.mavlink_statustext_t text, (DateTime time, string message, byte severity) row)
         {
@@ -96,7 +113,8 @@ namespace MissionPlanner
             bool known = IsPx4(s.Version)
                 ? row.message == Px4BatteryText(s.Version) && row.severity == 2
                 : (row.message == "EKF3 IMU0 origin set" && (s.Version == 1 || row.severity == 6)) ||
-                  (s.Version == 1 && row.message == "GPS 1: detected u-blox");
+                  (s.Version == 1 && row.message == "GPS 1: detected u-blox") ||
+                  Ekf3TiltAlignmentSuffix(s.Version, row.message, row.severity) != null;
             if (!known) return;
             if (s.Rows.TryGetValue(row.message, out var existing))
             {
@@ -133,7 +151,7 @@ namespace MissionPlanner
                     return row.message == Px4BatteryText(s.Version) ? (s.Version == 9 ? "1 号电池已断开" : "未检测到 1 号电池") : null;
                 if (row.message == "GPS 1: detected u-blox") return "检测到 GPS 1：u-blox";
                 if (row.message == "EKF3 IMU0 origin set") return "EKF3 IMU0 原点已设置";
-                return null;
+                return Ekf3TiltAlignmentSuffix(s.Version, row.message, row.severity);
             }
         }
     }
