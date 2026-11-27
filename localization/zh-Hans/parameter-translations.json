@@ -13960,6 +13960,166 @@
       "recordSha256": "fbbb773f72dec78255a3db1f0760a65310a6b88f4931c71628ecf108cc7a42e1",
       "english": "Vertical position on screen",
       "chinese": "电池用量条显示项在屏幕上的垂直位置（仅适用于 MSP OSD）。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD1_BATTBAR_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d912724a61e9a2373d5f8e1679bc9671b7d37ca01a9a42456de8b4e004db9ee1",
+      "recordSha256": "f612d9b58164e66c9fbbc4aa26174fd7b1dedc3b814cc042434d37a4fbdda90f",
+      "english": "Displays battery usage bar (MSP OSD only)",
+      "chinese": "显示第 1 屏的电池用量条（仅适用于 MSP OSD）。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD2_BATTBAR_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d912724a61e9a2373d5f8e1679bc9671b7d37ca01a9a42456de8b4e004db9ee1",
+      "recordSha256": "1c2e9ef3e15dd4ca8927158af29f656ad8b8c3784d693a508f546cd10953e4cd",
+      "english": "Displays battery usage bar (MSP OSD only)",
+      "chinese": "显示第 2 屏的电池用量条（仅适用于 MSP OSD）。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD3_BATTBAR_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d912724a61e9a2373d5f8e1679bc9671b7d37ca01a9a42456de8b4e004db9ee1",
+      "recordSha256": "143533a4e7d9caf39f5d47ec209b04dcbee522b8e4562ba58fccca8b91708fff",
+      "english": "Displays battery usage bar (MSP OSD only)",
+      "chinese": "显示第 3 屏的电池用量条（仅适用于 MSP OSD）。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD4_BATTBAR_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d912724a61e9a2373d5f8e1679bc9671b7d37ca01a9a42456de8b4e004db9ee1",
+      "recordSha256": "75ee8b5115a2446853808707a869578f28563f9689a4973fcfc67c28b3b21c67",
+      "english": "Displays battery usage bar (MSP OSD only)",
+      "chinese": "显示第 4 屏的电池用量条（仅适用于 MSP OSD）。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD1_BATTBAR_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d912724a61e9a2373d5f8e1679bc9671b7d37ca01a9a42456de8b4e004db9ee1",
+      "recordSha256": "f612d9b58164e66c9fbbc4aa26174fd7b1dedc3b814cc042434d37a4fbdda90f",
+      "english": "Displays battery usage bar (MSP OSD only)",
+      "chinese": "显示第 1 屏的电池用量条（仅适用于 MSP OSD）。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD2_BATTBAR_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d912724a61e9a2373d5f8e1679bc9671b7d37ca01a9a42456de8b4e004db9ee1",
+      "recordSha256": "1c2e9ef3e15dd4ca8927158af29f656ad8b8c3784d693a508f546cd10953e4cd",
+      "english": "Displays battery usage bar (MSP OSD only)",
+      "chinese": "显示第 2 屏的电池用量条（仅适用于 MSP OSD）。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD3_BATTBAR_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d912724a61e9a2373d5f8e1679bc9671b7d37ca01a9a42456de8b4e004db9ee1",
+      "recordSha256": "143533a4e7d9caf39f5d47ec209b04dcbee522b8e4562ba58fccca8b91708fff",
+      "english": "Displays battery usage bar (MSP OSD only)",
+      "chinese": "显示第 3 屏的电池用量条（仅适用于 MSP OSD）。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD4_BATTBAR_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d912724a61e9a2373d5f8e1679bc9671b7d37ca01a9a42456de8b4e004db9ee1",
+      "recordSha256": "75ee8b5115a2446853808707a869578f28563f9689a4973fcfc67c28b3b21c67",
+      "english": "Displays battery usage bar (MSP OSD only)",
+      "chinese": "显示第 4 屏的电池用量条（仅适用于 MSP OSD）。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD1_BATTBAR_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "d912724a61e9a2373d5f8e1679bc9671b7d37ca01a9a42456de8b4e004db9ee1",
+      "recordSha256": "f612d9b58164e66c9fbbc4aa26174fd7b1dedc3b814cc042434d37a4fbdda90f",
+      "english": "Displays battery usage bar (MSP OSD only)",
+      "chinese": "显示第 1 屏的电池用量条（仅适用于 MSP OSD）。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD2_BATTBAR_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "d912724a61e9a2373d5f8e1679bc9671b7d37ca01a9a42456de8b4e004db9ee1",
+      "recordSha256": "1c2e9ef3e15dd4ca8927158af29f656ad8b8c3784d693a508f546cd10953e4cd",
+      "english": "Displays battery usage bar (MSP OSD only)",
+      "chinese": "显示第 2 屏的电池用量条（仅适用于 MSP OSD）。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD3_BATTBAR_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "d912724a61e9a2373d5f8e1679bc9671b7d37ca01a9a42456de8b4e004db9ee1",
+      "recordSha256": "143533a4e7d9caf39f5d47ec209b04dcbee522b8e4562ba58fccca8b91708fff",
+      "english": "Displays battery usage bar (MSP OSD only)",
+      "chinese": "显示第 3 屏的电池用量条（仅适用于 MSP OSD）。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD4_BATTBAR_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "d912724a61e9a2373d5f8e1679bc9671b7d37ca01a9a42456de8b4e004db9ee1",
+      "recordSha256": "75ee8b5115a2446853808707a869578f28563f9689a4973fcfc67c28b3b21c67",
+      "english": "Displays battery usage bar (MSP OSD only)",
+      "chinese": "显示第 4 屏的电池用量条（仅适用于 MSP OSD）。"
     }
   ]
 }

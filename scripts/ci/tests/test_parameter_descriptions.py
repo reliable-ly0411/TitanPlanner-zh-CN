@@ -30,10 +30,11 @@ LOCAL_DIAGNOSTIC_LOG_HELP_KEYS = {'INS_RAW_LOG_OPT','EK3_LOG_LEVEL','TEMP_LOG','
 VFR_HUD_RATE_HELP_KEYS = {f"SR{i}_EXTRA2" for i in range(7)} | {f"MAV{i}_EXTRA2" for i in range(1, 33)}
 RAW_SENSOR_RATE_HELP_KEYS = {f"SR{i}_RAW_SENS" for i in range(7)} | {f"MAV{i}_RAW_SENS" for i in range(1, 33)}
 OSD_BATTERY_BAR_POSITION_KEYS = {f'OSD{screen}_BATTBAR_{axis}' for screen in range(1, 5) for axis in ('X', 'Y')}
+OSD_BATTERY_BAR_ENABLE_KEYS = {f'OSD{screen}_BATTBAR_EN' for screen in range(1, 5)}
 DISPLAY_AND_LOG_HELP_KEYS = (
     SIDEBAR_GEOMETRY_KEYS | IMU_DIAGNOSTIC_HELP_KEYS | OSD_MESSAGE_TIME_HELP_KEYS
     | LOCAL_DIAGNOSTIC_LOG_HELP_KEYS | SITL_ENVIRONMENT_HELP_KEYS | LOG_STORAGE_HELP_KEYS | OSD_FONT_KEYS | ONBOARD_DISPLAY_HELP_KEYS | LOGGER_BACKEND_HELP_KEYS
-    | OSD_DISPLAY_HELP_KEYS | OSD_BATTERY_BAR_POSITION_KEYS | RAW_SENSOR_RATE_HELP_KEYS | VFR_HUD_RATE_HELP_KEYS
+    | OSD_DISPLAY_HELP_KEYS | OSD_BATTERY_BAR_ENABLE_KEYS | OSD_BATTERY_BAR_POSITION_KEYS | RAW_SENSOR_RATE_HELP_KEYS | VFR_HUD_RATE_HELP_KEYS
     | {'LOG_BITMASK', 'LOG_FILE_BUFSIZE', 'OSD_H_OFFSET', 'OSD_V_OFFSET', 'SCHED_DEBUG'}
 )
 catalog_module = importlib.util.module_from_spec(spec)
@@ -64,8 +65,8 @@ class ParameterCatalogTests(unittest.TestCase):
     def test_scope_counts_and_held_versions(self):
         notes = self.catalog['translations']
         descriptions = {(n['family'], v, n['parameter']) for n in notes if n['field'] == 'Description' for v in n['versions']}
-        self.assertEqual(1826, len(descriptions))
-        self.assertEqual(927, len({(f, p) for f, v, p in descriptions}))
+        self.assertEqual(1854, len(descriptions))
+        self.assertEqual(939, len({(f, p) for f, v, p in descriptions}))
         self.assertFalse(any(v == '4.7.2' for f, v, p in descriptions))
         excluded_copter = {'RTL_CONE_SLOPE', 'LAND_SPEED', 'LAND_SPD_MS', 'FS_GCS_ENABLE'}
         excluded_plane = {'TECS_CLMB_MAX', 'TECS_SINK_MIN', 'ROLL_LIMIT_DEG'}
@@ -381,6 +382,19 @@ class ParameterCatalogTests(unittest.TestCase):
                 self.assertEqual('0 59' if k.endswith('_X') else '0 21', r.findtext("field[@name='Range']"))
                 self.assertFalse(r.findall('values'))
                 self.assertIsNone(r.find("field[@name='Units']"))
+
+    def test_osd_battery_usage_bar_enable_fails_closed_if_source_options_change(self):
+        for release in self.bundle:
+            records = {r.get('name'): r for r in release.iter('param') if r.get('name') in OSD_BATTERY_BAR_ENABLE_KEYS}
+            self.assertEqual(OSD_BATTERY_BAR_ENABLE_KEYS, records.keys())
+            for r in records.values():
+                self.assertEqual('Displays battery usage bar (MSP OSD only)', r.get('documentation'))
+                self.assertEqual([('0', 'Disabled'), ('1', 'Enabled')],
+                                 [(a.get('code'), a.text) for a in r.findall('values/value')])
+        changed = copy.deepcopy(self.bundle)
+        changed.find(".//param[@name='OSD1_BATTBAR_EN']/values/value[@code='1']").text = 'Changed'
+        with self.assertRaisesRegex(ValueError, 'requires manual review'):
+            catalog_module.resource(self.catalog, changed)
 
     def test_source_changes_cannot_automatically_reapprove_notes(self):
         for change in ('English', 'Range', 'Unit'):

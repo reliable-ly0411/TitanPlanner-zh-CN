@@ -775,6 +775,12 @@
           <param humanName="BATT_BAR_Y" name="OSD1_BATTBAR_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="BATT_BAR_EN" name="OSD1_BATTBAR_EN" documentation="Displays battery usage bar (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -869,6 +875,12 @@
           </param>
           <param humanName="BATT_BAR_Y" name="OSD2_BATTBAR_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
+          </param>
+          <param humanName="BATT_BAR_EN" name="OSD2_BATTBAR_EN" documentation="Displays battery usage bar (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
           </param>
         </parameters>
         <parameters name="OSD3_">
@@ -965,6 +977,12 @@
           <param humanName="BATT_BAR_Y" name="OSD3_BATTBAR_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="BATT_BAR_EN" name="OSD3_BATTBAR_EN" documentation="Displays battery usage bar (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -1059,6 +1077,12 @@
           </param>
           <param humanName="BATT_BAR_Y" name="OSD4_BATTBAR_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
+          </param>
+          <param humanName="BATT_BAR_EN" name="OSD4_BATTBAR_EN" documentation="Displays battery usage bar (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
           </param>
         </parameters>
         <parameters name="NTF_">
@@ -2062,6 +2086,12 @@
           <param humanName="BATT_BAR_Y" name="OSD1_BATTBAR_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="BATT_BAR_EN" name="OSD1_BATTBAR_EN" documentation="Displays battery usage bar (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -2156,6 +2186,12 @@
           </param>
           <param humanName="BATT_BAR_Y" name="OSD2_BATTBAR_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
+          </param>
+          <param humanName="BATT_BAR_EN" name="OSD2_BATTBAR_EN" documentation="Displays battery usage bar (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
           </param>
         </parameters>
         <parameters name="OSD3_">
@@ -2252,6 +2288,12 @@
           <param humanName="BATT_BAR_Y" name="OSD3_BATTBAR_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="BATT_BAR_EN" name="OSD3_BATTBAR_EN" documentation="Displays battery usage bar (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -2346,6 +2388,12 @@
           </param>
           <param humanName="BATT_BAR_Y" name="OSD4_BATTBAR_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
+          </param>
+          <param humanName="BATT_BAR_EN" name="OSD4_BATTBAR_EN" documentation="Displays battery usage bar (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
           </param>
         </parameters>
         <parameters name="INS_LOG_">
@@ -3440,6 +3488,12 @@
           <param humanName="BATT_BAR_Y" name="OSD1_BATTBAR_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="BATT_BAR_EN" name="OSD1_BATTBAR_EN" documentation="Displays battery usage bar (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -3534,6 +3588,12 @@
           </param>
           <param humanName="BATT_BAR_Y" name="OSD2_BATTBAR_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
+          </param>
+          <param humanName="BATT_BAR_EN" name="OSD2_BATTBAR_EN" documentation="Displays battery usage bar (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
           </param>
         </parameters>
         <parameters name="OSD3_">
@@ -3630,6 +3690,12 @@
           <param humanName="BATT_BAR_Y" name="OSD3_BATTBAR_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="BATT_BAR_EN" name="OSD3_BATTBAR_EN" documentation="Displays battery usage bar (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -3724,6 +3790,12 @@
           </param>
           <param humanName="BATT_BAR_Y" name="OSD4_BATTBAR_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
+          </param>
+          <param humanName="BATT_BAR_EN" name="OSD4_BATTBAR_EN" documentation="Displays battery usage bar (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
           </param>
         </parameters>
         <parameters name="INS_LOG_">
@@ -5136,6 +5208,12 @@
           <param humanName="BATT_BAR_Y" name="OSD1_BATTBAR_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="BATT_BAR_EN" name="OSD1_BATTBAR_EN" documentation="Displays battery usage bar (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -5230,6 +5308,12 @@
           </param>
           <param humanName="BATT_BAR_Y" name="OSD2_BATTBAR_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
+          </param>
+          <param humanName="BATT_BAR_EN" name="OSD2_BATTBAR_EN" documentation="Displays battery usage bar (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
           </param>
         </parameters>
         <parameters name="OSD3_">
@@ -5326,6 +5410,12 @@
           <param humanName="BATT_BAR_Y" name="OSD3_BATTBAR_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="BATT_BAR_EN" name="OSD3_BATTBAR_EN" documentation="Displays battery usage bar (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -5420,6 +5510,12 @@
           </param>
           <param humanName="BATT_BAR_Y" name="OSD4_BATTBAR_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
+          </param>
+          <param humanName="BATT_BAR_EN" name="OSD4_BATTBAR_EN" documentation="Displays battery usage bar (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
           </param>
         </parameters>
         <parameters name="NTF_">
@@ -6456,6 +6552,12 @@
           <param humanName="BATT_BAR_Y" name="OSD1_BATTBAR_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="BATT_BAR_EN" name="OSD1_BATTBAR_EN" documentation="Displays battery usage bar (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -6550,6 +6652,12 @@
           </param>
           <param humanName="BATT_BAR_Y" name="OSD2_BATTBAR_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
+          </param>
+          <param humanName="BATT_BAR_EN" name="OSD2_BATTBAR_EN" documentation="Displays battery usage bar (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
           </param>
         </parameters>
         <parameters name="OSD3_">
@@ -6646,6 +6754,12 @@
           <param humanName="BATT_BAR_Y" name="OSD3_BATTBAR_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="BATT_BAR_EN" name="OSD3_BATTBAR_EN" documentation="Displays battery usage bar (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -6740,6 +6854,12 @@
           </param>
           <param humanName="BATT_BAR_Y" name="OSD4_BATTBAR_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
+          </param>
+          <param humanName="BATT_BAR_EN" name="OSD4_BATTBAR_EN" documentation="Displays battery usage bar (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
           </param>
         </parameters>
         <parameters name="INS_LOG_">
@@ -7876,6 +7996,12 @@
           <param humanName="BATT_BAR_Y" name="OSD1_BATTBAR_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="BATT_BAR_EN" name="OSD1_BATTBAR_EN" documentation="Displays battery usage bar (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -7970,6 +8096,12 @@
           </param>
           <param humanName="BATT_BAR_Y" name="OSD2_BATTBAR_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
+          </param>
+          <param humanName="BATT_BAR_EN" name="OSD2_BATTBAR_EN" documentation="Displays battery usage bar (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
           </param>
         </parameters>
         <parameters name="OSD3_">
@@ -8066,6 +8198,12 @@
           <param humanName="BATT_BAR_Y" name="OSD3_BATTBAR_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="BATT_BAR_EN" name="OSD3_BATTBAR_EN" documentation="Displays battery usage bar (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -8160,6 +8298,12 @@
           </param>
           <param humanName="BATT_BAR_Y" name="OSD4_BATTBAR_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
+          </param>
+          <param humanName="BATT_BAR_EN" name="OSD4_BATTBAR_EN" documentation="Displays battery usage bar (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
           </param>
         </parameters>
         <parameters name="INS_LOG_">
@@ -9118,6 +9262,12 @@
           <param humanName="BATT_BAR_Y" name="OSD1_BATTBAR_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="BATT_BAR_EN" name="OSD1_BATTBAR_EN" documentation="Displays battery usage bar (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -9212,6 +9362,12 @@
           </param>
           <param humanName="BATT_BAR_Y" name="OSD2_BATTBAR_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
+          </param>
+          <param humanName="BATT_BAR_EN" name="OSD2_BATTBAR_EN" documentation="Displays battery usage bar (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
           </param>
         </parameters>
         <parameters name="OSD3_">
@@ -9308,6 +9464,12 @@
           <param humanName="BATT_BAR_Y" name="OSD3_BATTBAR_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="BATT_BAR_EN" name="OSD3_BATTBAR_EN" documentation="Displays battery usage bar (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -9402,6 +9564,12 @@
           </param>
           <param humanName="BATT_BAR_Y" name="OSD4_BATTBAR_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
+          </param>
+          <param humanName="BATT_BAR_EN" name="OSD4_BATTBAR_EN" documentation="Displays battery usage bar (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
           </param>
         </parameters>
         <parameters name="INS_LOG_">
