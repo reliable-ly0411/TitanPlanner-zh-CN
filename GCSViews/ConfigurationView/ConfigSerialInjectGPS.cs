@@ -1589,16 +1589,17 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             if (chk_septentriobeidou.Checked)
                 signals |= Utilities.Septentrio.RTCMSignals.Beidou;
 
-            switch (cmb_septentriortcmamount.Text)
+            // Use the same Lite, Basic, Full order as the designer and saved setting, not translated captions.
+            switch (cmb_septentriortcmamount.SelectedIndex)
             {
-                case "Lite":
+                case 0:
                     level = Utilities.Septentrio.RTCMLevel.Lite;
                     break;
-                case "Basic":
+                case 1:
                 default:
                     level = Utilities.Septentrio.RTCMLevel.Basic;
                     break;
-                case "Full":
+                case 2:
                     level = Utilities.Septentrio.RTCMLevel.Full;
                     break;
             }
