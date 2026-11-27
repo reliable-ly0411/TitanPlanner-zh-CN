@@ -1,4 +1,8 @@
 {
+  "GCSViews/ConfigurationView/ConfigHWOSD.resx": {
+    "BUT_osdrates.Text": "改速率",
+    "label7.Text": "会改写飞控的遥测速率。\n仅在 OSD 不更新时使用。"
+  },
   "GCSViews/ConfigurationView/ConfigBatteryMonitoring.resx": {
     "groupBox4.Text": "监测与系数"
   },
