@@ -1259,6 +1259,7 @@
   "What Voltage do you want to warn at?": "电压降到多少时警告？",
   "What altitude do you want to warn at? (relative to home)": "高度降到多少时警告？（相对于起飞点）",
   "What do you want it to say?": "要播报什么内容？",
+  "Template variables: {wpn} waypoint, {alt} altitude, {gsp} ground speed. Keep the braces and variable names unchanged.": "模板变量：{wpn} 航点，{alt} 高度，{gsp} 地速。请保留花括号和变量名。",
   "What do you want it to show?": "要显示什么内容？",
   "What is the name": "名称是什么？",
   "What percentage do you want to warn at?": "百分比降到多少时警告？",
