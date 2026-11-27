@@ -21,6 +21,7 @@ namespace MissionPlanner.Controls
         public QuickViewOptions(QuickView qv)
         {
             InitializeComponent();
+            CMB_Source.SelectionChangeCommitted += CMB_Source_SelectionChangeCommitted;
             _qv = qv;
             this.Icon = qv.FindForm()?.Icon;
         }
@@ -496,23 +497,32 @@ namespace MissionPlanner.Controls
             CMB_Source.SelectionStart = cursor_pos;
         }
 
+        private Tuple<string, string> ConfirmedDisplaySource()
+        {
+            return _displaySourceKey == null ? null :
+                all_fields.FirstOrDefault(field => string.Equals(field.Item1, _displaySourceKey, StringComparison.Ordinal));
+        }
+
+        private void CMB_Source_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            if (!(CMB_Source.SelectedItem is Tuple<string, string> field) ||
+                string.Equals(_displaySourceKey, field.Item1, StringComparison.Ordinal))
+                return;
+
+            // Only a confirmed, different field resets the display defaults. Binding a search result never does.
+            TXT_customlabel.Text = MainV2.comPort.MAV.cs.GetNameandUnit(field.Item1);
+            TXT_scale.Text = "1.0";
+            TXT_offset.Text = "0.0";
+            _displaySourceKey = field.Item1;
+        }
+
         private void CMB_Source_DropDownClosed(object sender, EventArgs e)
         {
-            if (CMB_Source.SelectedItem is Tuple<string, string> field)
-            {
-                if (!string.Equals(_displaySourceKey, field.Item1, StringComparison.Ordinal))
-                {
-                    // Reset display settings only when a different source is chosen.
-                    TXT_customlabel.Text = MainV2.comPort.MAV.cs.GetNameandUnit((string)CMB_Source.SelectedValue);
-                    TXT_scale.Text = "1.0";
-                    TXT_offset.Text = "0.0";
-                    _displaySourceKey = field.Item1;
-                }
-
-                // Restore the full list
-                CMB_Source.DataSource = all_fields;
-                CMB_Source.SelectedItem = field;
-            }
+            // Closing the list also happens on cancellation. Restore the confirmed selection, not the filtered index.
+            var field = ConfirmedDisplaySource();
+            CMB_Source.DataSource = all_fields;
+            CMB_Source.SelectedItem = field;
+            CMB_Source.Text = field == null ? string.Empty : CMB_Source.GetItemText(field);
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)
@@ -584,7 +594,7 @@ namespace MissionPlanner.Controls
                     _qv.colorGreenValue = 100;
 
                 // Update the data source if changed
-                if (CMB_Source.SelectedItem is Tuple<string, string> selectedField)
+                if (ConfirmedDisplaySource() is Tuple<string, string> selectedField)
                 {
                     string desc = selectedField.Item1;
 
