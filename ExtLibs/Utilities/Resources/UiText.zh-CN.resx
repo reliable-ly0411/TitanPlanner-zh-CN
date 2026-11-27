@@ -2343,6 +2343,10 @@ Ctrl+O 从文件加载</value>
 原因：{1}</value>
     <comment>"Could not find location: '{0}'\nReason: {1}"</comment>
   </data>
+  <data name="008a8a3cd685d299bfbeccf6d412b2a6fc066f27edb80089e6dfb5e2244f6a6d" xml:space="preserve">
+    <value>无法加载固件列表。重新打开此标签页可重试。</value>
+    <comment>"Could not load firmware list. Reopen this tab to retry."</comment>
+  </data>
   <data name="cc88d78c1fd1e73d12ed8dc09c590c7cca7334e6072c9675b560ab8ddd328958" xml:space="preserve">
     <value>无法打开文件夹。
 </value>
@@ -4078,6 +4082,10 @@ Ctrl+O 从文件加载</value>
     <value>固件超出 1280 的容量，请升级硬件！</value>
     <comment>"Firmware is to big for a 1280, Please upgrade your hardware!!"</comment>
   </data>
+  <data name="5476c42ae7b0c03f8ba48c2b2a81f45cf8f6bef3ad2120ed3aced22dfea755c4" xml:space="preserve">
+    <value>已取消加载固件列表。重新打开此标签页可重试。</value>
+    <comment>"Firmware list load cancelled. Reopen this tab to retry."</comment>
+  </data>
   <data name="a32b5370875c2a32ee39206235b95cb6b2f31776fa566cba00cc94d44c90be7c" xml:space="preserve">
     <value>首条航线距坡脚高度 </value>
     <comment>"First Pass Height Above Toe "</comment>
@@ -5643,6 +5651,10 @@ Ctrl+O 从文件加载</value>
   <data name="8c8017a0c70c1961dbf6e8205119a6247e8cb4a57631b9bfee9779d773bb90b0" xml:space="preserve">
     <value>加载数据</value>
     <comment>"Load data"</comment>
+  </data>
+  <data name="cb359b79da878b85c7e55204b84a9b44414810cbb41588c23a87cc19abee6b7e" xml:space="preserve">
+    <value>在后台加载固件列表</value>
+    <comment>"Load firmware lists in background"</comment>
   </data>
   <data name="cc9d6d2d73ff79bc270abb0f422dc1a64f924df84396d5aeb76f366e0e3a5d08" xml:space="preserve">
     <value>从文件加载…</value>
@@ -9416,6 +9428,10 @@ gps_point：跟踪单个地面点</value>
   <data name="45c2c63822210d81216380918ea6f7cc899933fa9391d3706942c1f63fabe3ec" xml:space="preserve">
     <value>返航</value>
     <comment>"Return_To_Launch"</comment>
+  </data>
+  <data name="58330ece04f1bcf80aadf096d471b0c166e481e33df9df755965d5db5679e2ba" xml:space="preserve">
+    <value>返回安装固件标签页时复用已加载的列表，旧版页面不弹出等待窗口。关闭后，标准页面每次进入都会刷新，旧版页面恢复等待窗口。</value>
+    <comment>"Reuse the firmware list when returning to the tab and keep the legacy page non-modal. Turning this off restores refresh-on-entry for the standard page and the waiting dialog for the legacy page."</comment>
   </data>
   <data name="1fc5fdcf12723108e9786faf5fbf11a3c843eab3b1c86c49ebf0b76f2a71c8d5" xml:space="preserve">
     <value>反向</value>

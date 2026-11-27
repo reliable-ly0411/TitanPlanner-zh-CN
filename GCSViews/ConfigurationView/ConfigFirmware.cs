@@ -19,27 +19,39 @@ namespace MissionPlanner.GCSViews.ConfigurationView
     public partial class ConfigFirmware : MyUserControl, IActivate, IDeactivate
     {
         private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-        private static List<Firmware.software> softwares = new List<Firmware.software>();
+        private List<Firmware.software> softwares = new List<Firmware.software>();
         private readonly Firmware fw = new Firmware();
         private string custom_fw_dir = Settings.Instance["FirmwareFileDirectory"] ?? "";
         private string firmwareurl = "";
-        private bool firstrun = true;
-        private IProgressReporterDialogue pdr;
+        private readonly FirmwareListRequest<string, List<Firmware.software>> listRequest;
+        private readonly Dictionary<Control, string> listControls;
+        private readonly Func<string, List<Firmware.software>> fetchList;
+        private bool listReady;
         private string detectedport;
 
-        public ConfigFirmware()
+        public ConfigFirmware() : this(url => new Firmware().getFWList(url))
+        {
+        }
+
+        internal ConfigFirmware(Func<string, List<Firmware.software>> fetchList)
         {
             InitializeComponent();
+            this.fetchList = fetchList;
+            listRequest = new FirmwareListRequest<string, List<Firmware.software>>(this);
+            listControls = new Control[] { pictureAntennaTracker, pictureBoxAPM, pictureBoxHeli, pictureBoxSub,
+                pictureBoxRover, pictureBoxOctaQuad, pictureBoxOcta, pictureBoxY6, pictureBoxTri, pictureBoxHexa,
+                pictureBoxQuad }.ToDictionary(control => control, control => control.Text);
         }
 
         public void Activate()
         {
-            if (firstrun)
+            var main = MainV2.instance;
+            if (main != null)
             {
-                UpdateFWList();
-                firstrun = false;
-                MainV2.instance.DeviceChanged += Instance_DeviceChanged;
+                main.DeviceChanged -= Instance_DeviceChanged;
+                main.DeviceChanged += Instance_DeviceChanged;
             }
+            UpdateFWList();
 
             if (Program.WindowsStoreApp)
             {
@@ -126,7 +138,6 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             CustomMessageBox.Show(Strings.TrunkWarning, Strings.Trunk);
             firmwareurl = "https://github.com/ArduPilot/binary/raw/master/dev/firmwarelatest.xml;https://firmware.ardupilot.org/Tools/MissionPlanner/dev/firmwarelatest.xml";
 
-            softwares.Clear();
             UpdateFWList();
             CMB_history.Visible = false;
             return false;
@@ -135,46 +146,43 @@ namespace MissionPlanner.GCSViews.ConfigurationView
         [KeyboardShortcut(Keys.Control | Keys.P, "Install the PX4 firmware")]
         private bool ShortcutPx4Firmware()
         {
-            findfirmware(softwares.First(a => { return a.name.ToLower().Contains("px4"); }));
+            if (!listReady)
+                return false;
+            var px4 = softwares.FirstOrDefault(a => a.name?.IndexOf("px4", StringComparison.OrdinalIgnoreCase) >= 0);
+            if (px4 != null)
+                findfirmware(px4);
             return false;
         }
 
         private void UpdateFWList()
         {
-            pdr = new ProgressReporterDialogue();
-
-            pdr.DoWork -= pdr_DoWork;
-
-            pdr.doWorkArgs.ForceExit = true;
-
-            pdr.doWorkArgs.CancelRequestChanged += (sender, args) => { pdr.doWorkArgs.CancelAcknowledged = true; };
-
-            pdr.DoWork += pdr_DoWork;
-
-            ThemeManager.ApplyThemeTo(pdr);
-
-            pdr.RunBackgroundOperationAsync();
-
-            pdr.Dispose();
-        }
-
-        private void pdr_DoWork(IProgressReporterDialogue sender)
-        {
-            var fw = new Firmware();
-            fw.Progress -= fw_Progress1;
-            fw.Progress += fw_ProgressPDR;
-            softwares = fw.getFWList(firmwareurl);
-
-            foreach (var soft in softwares)
+            listReady = false;
+            foreach (var item in listControls)
             {
-                if (sender.doWorkArgs.CancelRequested)
-                {
-                    sender.doWorkArgs.CancelAcknowledged = true;
-                    return;
-                }
-
-                updateDisplayNameInvoke(soft);
+                item.Key.Enabled = false;
+                item.Key.Tag = null;
+                item.Key.Text = item.Value;
             }
+            lbl_status.Text = Strings.GettingFWList;
+            listRequest.Start(firmwareurl, fetchList, FirmwareListSettings.LoadInBackground, list =>
+            {
+                if (list == null || list.Count == 0)
+                    throw new InvalidDataException("No firmware in the list.");
+                foreach (var firmware in list.Where(item => item != null))
+                {
+                    try { updateDisplayName(firmware); }
+                    catch (Exception error) { log.Error(error); }
+                }
+                softwares = list.Where(item => item != null).ToList();
+                listReady = true;
+                foreach (var control in listControls.Keys)
+                    control.Enabled = control.Tag is Firmware.software;
+                lbl_status.Text = Strings.ReceivedList;
+            }, error =>
+            {
+                log.Error(error);
+                lbl_status.Text = FirmwareListSettings.FailureText(error);
+            });
         }
 
         private List<Firmware.software> ConvertToOld(List<APFirmware.FirmwareInfo> official)
@@ -226,16 +234,6 @@ namespace MissionPlanner.GCSViews.ConfigurationView
         }
 
         /// <summary>
-        ///     for updating fw list
-        /// </summary>
-        /// <param name="progress"></param>
-        /// <param name="status"></param>
-        private void fw_ProgressPDR(int progress, string status)
-        {
-            pdr.UpdateProgressAndStatus(progress, status);
-        }
-
-        /// <summary>
         ///     for when updating fw to hardware
         /// </summary>
         /// <param name="progress"></param>
@@ -266,18 +264,6 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             });
         }
 
-        private void updateDisplayNameInvoke(Firmware.software temp)
-        {
-            try
-            {
-                Invoke((MethodInvoker)delegate { updateDisplayName(temp); });
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex);
-            }
-        }
-
         private void updateDisplayName(Firmware.software temp)
         {
             if (temp.url2560.ToLower().Contains("AR2".ToLower()) ||
@@ -298,7 +284,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                      temp.desc.ToLower().Contains("arducopter quad")
                 )
             {
-                pictureBoxQuad.Text = temp.name += UiText.Translate(" Quad");
+                pictureBoxQuad.Text = temp.name + UiText.Translate(" Quad");
                 pictureBoxQuad.Tag = temp;
             }
             else if (temp.url2560.ToLower().Contains("ac2-tri".ToLower()) ||
@@ -306,7 +292,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                      temp.name.ToLower().Contains("arducopter tri") ||
                      temp.desc.ToLower().Contains("arducopter tri"))
             {
-                pictureBoxTri.Text = temp.name += UiText.Translate(" Tri");
+                pictureBoxTri.Text = temp.name + UiText.Translate(" Tri");
                 pictureBoxTri.Tag = temp;
             }
             else if (temp.url2560.ToLower().Contains("ac2-hexa".ToLower()) ||
@@ -314,7 +300,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                      temp.name.ToLower().Contains("arducopter hexa") ||
                      temp.desc.ToLower().Contains("arducopter hexa"))
             {
-                pictureBoxHexa.Text = temp.name += UiText.Translate(" Hexa");
+                pictureBoxHexa.Text = temp.name + UiText.Translate(" Hexa");
                 pictureBoxHexa.Tag = temp;
             }
             else if (temp.url2560.ToLower().Contains("ac2-y6".ToLower()) ||
@@ -322,7 +308,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                      temp.name.ToLower().Contains("arducopter y6") ||
                      temp.desc.ToLower().Contains("arducopter y6"))
             {
-                pictureBoxY6.Text = temp.name += " Y6";
+                pictureBoxY6.Text = temp.name + " Y6";
                 pictureBoxY6.Tag = temp;
             }
             else if (temp.url2560.ToLower().Contains("ac2-heli-".ToLower()) ||
@@ -331,7 +317,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                      temp.desc.ToLower().Contains("arducopter heli") ||
                      temp.urlfmuv2.ToLower().Contains("-heli"))
             {
-                pictureBoxHeli.Text = temp.name += UiText.Translate(" heli");
+                pictureBoxHeli.Text = temp.name + UiText.Translate(" heli");
                 pictureBoxHeli.Tag = temp;
             }
             else if (temp.url2560.ToLower().Contains("ac2-octaquad-".ToLower()) ||
@@ -339,7 +325,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                      temp.name.ToLower().Contains("arducopter octa quad") ||
                      temp.desc.ToLower().Contains("arducopter octa quad"))
             {
-                pictureBoxOctaQuad.Text = temp.name += UiText.Translate(" Octa Quad");
+                pictureBoxOctaQuad.Text = temp.name + UiText.Translate(" Octa Quad");
                 pictureBoxOctaQuad.Tag = temp;
             }
             else if (temp.url2560.ToLower().Contains("ac2-octa-".ToLower()) ||
@@ -347,7 +333,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                      temp.name.ToLower().Contains("arducopter octa") ||
                      temp.desc.ToLower().Contains("arducopter octa"))
             {
-                pictureBoxOcta.Text = temp.name += UiText.Translate(" Octa");
+                pictureBoxOcta.Text = temp.name + UiText.Translate(" Octa");
                 pictureBoxOcta.Tag = temp;
             }
             else if (temp.url2560_2.ToLower().Contains("antennatracker") ||
@@ -414,7 +400,6 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                 catch
                 {
                 }
-                fw.Progress -= fw_ProgressPDR;
                 fw.Progress += fw_Progress1;
 
                 var history = (CMB_history.SelectedValue == null) ? "" : CMB_history.SelectedValue.ToString();
@@ -476,13 +461,8 @@ namespace MissionPlanner.GCSViews.ConfigurationView
 
         private void pictureBoxFW_Click(object sender, EventArgs e)
         {
-            if (((Control)sender).Tag.GetType() != typeof(Firmware.software))
-            {
-                CustomMessageBox.Show(Strings.ErrorFirmwareFile, Strings.ERROR);
-                return;
-            }
-
-            findfirmware((Firmware.software)((Control)sender).Tag);
+            if (listReady && (sender as Control)?.Tag is Firmware.software firmware)
+                findfirmware(firmware);
         }
 
         private void up_LogEvent(string message, int level = 0)
@@ -506,8 +486,9 @@ namespace MissionPlanner.GCSViews.ConfigurationView
 
         private void CMB_history_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (CMB_history.SelectedValue == null)
+                return;
             firmwareurl = Firmware.getUrl(CMB_history.SelectedValue.ToString(), "");
-            softwares.Clear();
             UpdateFWList();
         }
 
@@ -542,7 +523,6 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                     custom_fw_dir = Path.GetDirectoryName(fd.FileName);
                     Settings.Instance["FirmwareFileDirectory"] = custom_fw_dir;
 
-                    fw.Progress -= fw_ProgressPDR;
                     fw.Progress += fw_Progress1;
 
                     var boardtype = BoardDetect.boards.none;
@@ -609,7 +589,6 @@ namespace MissionPlanner.GCSViews.ConfigurationView
         {
             CustomMessageBox.Show(Strings.BetaWarning, Strings.Beta);
             firmwareurl = "https://github.com/ArduPilot/binary/raw/master/dev/firmware2.xml;https://firmware.ardupilot.org/Tools/MissionPlanner/dev/firmware2.xml";
-            softwares.Clear();
             UpdateFWList();
             CMB_history.Visible = false;
         }
@@ -675,7 +654,11 @@ namespace MissionPlanner.GCSViews.ConfigurationView
 
         public void Deactivate()
         {
-            MainV2.instance.DeviceChanged -= Instance_DeviceChanged;
+            listRequest.Invalidate();
+            listReady = false;
+            var main = MainV2.instance;
+            if (main != null)
+                main.DeviceChanged -= Instance_DeviceChanged;
 
             // try reboot device on screen close.
             if (!String.IsNullOrEmpty(detectedport))
