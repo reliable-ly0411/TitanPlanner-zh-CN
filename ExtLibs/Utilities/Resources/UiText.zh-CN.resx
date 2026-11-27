@@ -6132,6 +6132,18 @@ Ctrl+O 从文件加载</value>
     <value>经度2 (dd)</value>
     <comment>"Longitude2 (dd)"</comment>
   </data>
+  <data name="bfa2323545522a5fec856a9bb61dc4008ab71e6bed5ab466f5d01eb92cab50e2" xml:space="preserve">
+    <value>多旋翼寻机提示音</value>
+    <comment>"Lost Copter Sound"</comment>
+  </data>
+  <data name="7b593d74da96d0c78654c2580b1fabb57015e58a40d572a309e2108a457906ec" xml:space="preserve">
+    <value>固定翼寻机提示音</value>
+    <comment>"Lost Plane Sound"</comment>
+  </data>
+  <data name="bcb2c89f80e8f1d49d2c20fea2e31b52533e55e31aa86e139a21b8f64ddd274a" xml:space="preserve">
+    <value>车船寻回提示音</value>
+    <comment>"Lost Rover Sound"</comment>
+  </data>
   <data name="f793de205ead5ac302c4a1627829dea41f176b1068b993a32373fc869918374b" xml:space="preserve">
     <value>低</value>
     <comment>"Low"</comment>
