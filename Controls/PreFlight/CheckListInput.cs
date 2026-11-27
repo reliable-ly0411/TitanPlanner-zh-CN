@@ -142,6 +142,10 @@ namespace MissionPlanner.Controls.PreFlight
                 case "hygrohumi1":
                 case "hygrotemp2":
                 case "hygrohumi2":
+                // RADIO / RADIO_STATUS map these counters directly in CurrentState.
+                case "txbuffer":
+                case "rxerrors":
+                case "fixedp":
                     string caption = TelemetryFieldPresentation.FieldLabel(key);
                     if (!caption.StartsWith(key + " (", StringComparison.Ordinal))
                         return key;
