@@ -47,6 +47,7 @@ namespace MissionPlanner.Controls.PreFlight
             InitializeComponent();
             ConfigureColorHeadings();
             ReserveFieldHeadingSpace();
+            FollowHorizontalScrolling();
 
             if (DesignMode)
             {
@@ -76,6 +77,28 @@ namespace MissionPlanner.Controls.PreFlight
                 heading.SizeChanged += (sender, args) => reserve();
             Shown += (sender, args) => reserve();
             reserve();
+        }
+
+        private void FollowHorizontalScrolling()
+        {
+            if (!string.Equals(CultureInfo.CurrentUICulture.Name, "zh-CN", StringComparison.Ordinal))
+                return;
+
+            var headings = new[] { label1, label2, label3, label5, label6, label7 };
+            var lefts = headings.Select(heading => heading.Left).ToArray();
+            Action<int> align = offset =>
+            {
+                for (int i = 0; i < headings.Length; i++)
+                    if (headings[i].Left != lefts[i] - offset)
+                        headings[i].Left = lefts[i] - offset;
+            };
+            panel1.Scroll += (sender, args) =>
+            {
+                if (args.ScrollOrientation == ScrollOrientation.HorizontalScroll)
+                    align(args.NewValue);
+            };
+            panel1.Layout += (sender, args) => align(-panel1.AutoScrollPosition.X);
+            Shown += (sender, args) => align(-panel1.AutoScrollPosition.X);
         }
 
         private void ConfigureColorHeadings()
