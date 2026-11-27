@@ -4915,6 +4915,10 @@ Ctrl+O 从文件加载</value>
     <value>爱丽丝蓝</value>
     <comment>"HUD color compact: AliceBlue"</comment>
   </data>
+  <data name="eee373eca8de0db3c99c654a6d1ef69083ded5481984c4c3bbe80a095ee41007" xml:space="preserve">
+    <value>米色</value>
+    <comment>"HUD color compact: Beige"</comment>
+  </data>
   <data name="157a145770605823fd67f8b03b47c8073bdf2fd7fec1601da1da064b42a981d7" xml:space="preserve">
     <value>黑色</value>
     <comment>"HUD color compact: Black"</comment>
@@ -4927,6 +4931,10 @@ Ctrl+O 从文件加载</value>
     <value>棕色</value>
     <comment>"HUD color compact: Brown"</comment>
   </data>
+  <data name="7572e13a92ce1e09b7b51f085d0038baa693fcfd5910fda11f69a94c35628922" xml:space="preserve">
+    <value>玉米丝色</value>
+    <comment>"HUD color compact: Cornsilk"</comment>
+  </data>
   <data name="5a9cd3bdbd496d7a697853295328809f7f889568b461723fc4967fe130528959" xml:space="preserve">
     <value>失焦渐变</value>
     <comment>"HUD color compact: GradientInactiveCaption"</comment>
@@ -4935,6 +4943,14 @@ Ctrl+O 从文件加载</value>
     <value>绿色</value>
     <comment>"HUD color compact: Green"</comment>
   </data>
+  <data name="742967622baff210ca45334c2a9c6150ec6670e79560a966ce890de4f4a0dbc1" xml:space="preserve">
+    <value>象牙白</value>
+    <comment>"HUD color compact: Ivory"</comment>
+  </data>
+  <data name="824285034106f379262e7fdd3b76348876f5ff55637bd63093df489eb99ebeaa" xml:space="preserve">
+    <value>亚麻色</value>
+    <comment>"HUD color compact: Linen"</comment>
+  </data>
   <data name="ed7c929982fa6c17f7cb2319aeb857b3f674776f8fac4ce65941dd673b4641f5" xml:space="preserve">
     <value>橙色</value>
     <comment>"HUD color compact: Orange"</comment>
@@ -4942,6 +4958,14 @@ Ctrl+O 从文件加载</value>
   <data name="20bbc1b9c551075ec248309ed8fc387666e35a4a98cca4b83e28191ecf9a907e" xml:space="preserve">
     <value>红色</value>
     <comment>"HUD color compact: Red"</comment>
+  </data>
+  <data name="e25b0d2f306020c969193ac7d3f3ad298d58cf9a1546bee674a3358b9f8e9bfa" xml:space="preserve">
+    <value>雪白色</value>
+    <comment>"HUD color compact: Snow"</comment>
+  </data>
+  <data name="dd16cccfd42f3da0c82d7bf3f259b195acc93cb5d5d114b5aa2ac29e04cb4302" xml:space="preserve">
+    <value>小麦色</value>
+    <comment>"HUD color compact: Wheat"</comment>
   </data>
   <data name="0f8f6caaeec4b14cd9e115940ee598bc5d0ea8defd5ae7f51611fd848da9ba59" xml:space="preserve">
     <value>白色</value>
@@ -4959,6 +4983,10 @@ Ctrl+O 从文件加载</value>
     <value>爱丽丝蓝（AliceBlue）</value>
     <comment>"HUD color: AliceBlue"</comment>
   </data>
+  <data name="1637f3cae563423cdd87f20a2e463a67bed6c762c43e4cc3a0511e8846d9aeb7" xml:space="preserve">
+    <value>米色（Beige）</value>
+    <comment>"HUD color: Beige"</comment>
+  </data>
   <data name="53b1e32efc9f889b49f5553aeffd573b45938aa2ffa343038b7aa60c46cf61b5" xml:space="preserve">
     <value>黑色（Black）</value>
     <comment>"HUD color: Black"</comment>
@@ -4971,6 +4999,10 @@ Ctrl+O 从文件加载</value>
     <value>棕色（Brown）</value>
     <comment>"HUD color: Brown"</comment>
   </data>
+  <data name="081a17ce4cd963b332a12a86f74a7f6a3696a177bfbc8a97874cfb873a3dca5e" xml:space="preserve">
+    <value>玉米丝色（Cornsilk）</value>
+    <comment>"HUD color: Cornsilk"</comment>
+  </data>
   <data name="c167f475666fcae6d9ff5f0691c3a57cb2ecd4df4364a5b7fc339bfe9147758a" xml:space="preserve">
     <value>非活动标题栏渐变（GradientInactiveCaption）</value>
     <comment>"HUD color: GradientInactiveCaption"</comment>
@@ -4979,6 +5011,14 @@ Ctrl+O 从文件加载</value>
     <value>绿色（Green）</value>
     <comment>"HUD color: Green"</comment>
   </data>
+  <data name="5b35461680588f59f1f63b2975c80bf5bb0bc66aebab5991ee21bcc1ea60a871" xml:space="preserve">
+    <value>象牙白（Ivory）</value>
+    <comment>"HUD color: Ivory"</comment>
+  </data>
+  <data name="1c091c391c4f0c332d4df2b80f1a5be1e6339c36b4e9e1f54896be3918473a1a" xml:space="preserve">
+    <value>亚麻色（Linen）</value>
+    <comment>"HUD color: Linen"</comment>
+  </data>
   <data name="d0b95b72dc906dde73719e9b758c6dd2ab4d03fee62aa27a2edf697e126b83c5" xml:space="preserve">
     <value>橙色（Orange）</value>
     <comment>"HUD color: Orange"</comment>
@@ -4986,6 +5026,14 @@ Ctrl+O 从文件加载</value>
   <data name="65b6e6ae8ea790271119d97585f0bf29452e107d1abd947f5966345b29c8cb05" xml:space="preserve">
     <value>红色（Red）</value>
     <comment>"HUD color: Red"</comment>
+  </data>
+  <data name="7233bcdc83244b798d1a5234822097f8b6d2beb2bdc2a61f6f4d743c8a00033b" xml:space="preserve">
+    <value>雪白色（Snow）</value>
+    <comment>"HUD color: Snow"</comment>
+  </data>
+  <data name="cdc7ec380ce75a1ed9ed1be69d36af1daa1d0ef38aba48283ff05ea68b2a509d" xml:space="preserve">
+    <value>小麦色（Wheat）</value>
+    <comment>"HUD color: Wheat"</comment>
   </data>
   <data name="83f2ab491e67296f97257bd43de82f615db223d430a750e1d3c813ec6bd24616" xml:space="preserve">
     <value>白色（White）</value>

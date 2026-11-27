@@ -1555,17 +1555,19 @@ namespace MissionPlanner.GCSViews.ConfigurationView
         {
         }
 
-        private static readonly string[] BasicHudColorCaptionKeys =
+        private static readonly string[] AdditionalHudColorCaptionKeys =
         {
             nameof(KnownColor.Black), nameof(KnownColor.White), nameof(KnownColor.Red), nameof(KnownColor.Blue),
-            nameof(KnownColor.Green), nameof(KnownColor.Yellow), nameof(KnownColor.Orange), nameof(KnownColor.Brown)
+            nameof(KnownColor.Green), nameof(KnownColor.Yellow), nameof(KnownColor.Orange), nameof(KnownColor.Brown),
+            nameof(KnownColor.Snow), nameof(KnownColor.Ivory), nameof(KnownColor.Beige), nameof(KnownColor.Linen),
+            nameof(KnownColor.Wheat), nameof(KnownColor.Cornsilk)
         };
 
         internal static void SizeHudColorDropDown(ComboBox combo)
         {
             var width = new[] { nameof(KnownColor.ActiveBorder), nameof(KnownColor.AliceBlue),
                     nameof(KnownColor.GradientInactiveCaption) }
-                .Concat(BasicHudColorCaptionKeys)
+                .Concat(AdditionalHudColorCaptionKeys)
                 .Select(key => TextRenderer.MeasureText(FormatHudColorCaption(key), combo.Font).Width)
                 .Max();
             combo.DropDownWidth = Math.Max(combo.Width, width + 35 + SystemInformation.VerticalScrollBarWidth);
@@ -1581,7 +1583,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                 case nameof(KnownColor.ActiveBorder): return UiText.Translate("HUD color: ActiveBorder");
                 case nameof(KnownColor.AliceBlue): return UiText.Translate("HUD color: AliceBlue");
                 case nameof(KnownColor.GradientInactiveCaption): return UiText.Translate("HUD color: GradientInactiveCaption");
-                default: return BasicHudColorCaptionKeys.Contains(key, StringComparer.Ordinal)
+                default: return AdditionalHudColorCaptionKeys.Contains(key, StringComparer.Ordinal)
                     ? UiText.Translate("HUD color: " + key) : key;
             }
         }
@@ -1595,7 +1597,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             {
                 case nameof(KnownColor.AliceBlue): return UiText.Translate("HUD color compact: AliceBlue");
                 case nameof(KnownColor.GradientInactiveCaption): return UiText.Translate("HUD color compact: GradientInactiveCaption");
-                default: return BasicHudColorCaptionKeys.Contains(key, StringComparer.Ordinal)
+                default: return AdditionalHudColorCaptionKeys.Contains(key, StringComparer.Ordinal)
                     ? UiText.Translate("HUD color compact: " + key) : null;
             }
         }
