@@ -72,6 +72,9 @@ namespace MissionPlanner
         private static bool BinaryPrefix(byte[] hash, byte b3, byte b4, byte b5, byte b6, byte b7)
             => hash[3] == b3 && hash[4] == b4 && hash[5] == b5 && hash[6] == b6 && hash[7] == b7;
 
+        // ArduPlane 4.6.3 (3fc7011a), AP_NavEKF3_Control.cpp sends INFO with the active IMU index.
+        private const string Plane463Imu1OriginText = "EKF3 IMU1 origin set";
+
         private static string Px4BatteryText(int version) => version == 9 ? "Battery 1 disconnected\t" : "Battery 1 missing\t";
 
         internal void Mark(List<(DateTime time, string message, byte severity)> list, MAVLink.MAVLinkMessage packet,
@@ -96,7 +99,9 @@ namespace MissionPlanner
             bool known = IsPx4(s.Version)
                 ? row.message == Px4BatteryText(s.Version) && row.severity == 2
                 : (row.message == "EKF3 IMU0 origin set" && (s.Version == 1 || row.severity == 6)) ||
-                  (s.Version == 1 && row.message == "GPS 1: detected u-blox");
+                  (s.Version == 1 && row.message == "GPS 1: detected u-blox") ||
+                  (s.Version == 4 && row.severity == (byte)MAVLink.MAV_SEVERITY.INFO &&
+                   row.message == Plane463Imu1OriginText);
             if (!known) return;
             if (s.Rows.TryGetValue(row.message, out var existing))
             {
@@ -133,6 +138,7 @@ namespace MissionPlanner
                     return row.message == Px4BatteryText(s.Version) ? (s.Version == 9 ? "1 号电池已断开" : "未检测到 1 号电池") : null;
                 if (row.message == "GPS 1: detected u-blox") return "检测到 GPS 1：u-blox";
                 if (row.message == "EKF3 IMU0 origin set") return "EKF3 IMU0 原点已设置";
+                if (s.Version == 4 && row.message == Plane463Imu1OriginText) return "EKF3 IMU1 原点已设置";
                 return null;
             }
         }
