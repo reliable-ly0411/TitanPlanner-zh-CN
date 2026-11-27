@@ -27,10 +27,11 @@ OSD_DISPLAY_HELP_KEYS = {
       for item in ('WIND', 'FLTMODE', 'MESSAGE', 'CLK', 'FLTIME', 'TEMP', 'BTEMP') for field in ('EN', 'X', 'Y')),
 }
 LOCAL_DIAGNOSTIC_LOG_HELP_KEYS = {'INS_RAW_LOG_OPT','EK3_LOG_LEVEL','TEMP_LOG','PRX_LOG_RAW'}
+VFR_HUD_RATE_HELP_KEYS = {f"SR{i}_EXTRA2" for i in range(7)} | {f"MAV{i}_EXTRA2" for i in range(1, 33)}
 DISPLAY_AND_LOG_HELP_KEYS = (
     SIDEBAR_GEOMETRY_KEYS | IMU_DIAGNOSTIC_HELP_KEYS | OSD_MESSAGE_TIME_HELP_KEYS
     | LOCAL_DIAGNOSTIC_LOG_HELP_KEYS | SITL_ENVIRONMENT_HELP_KEYS | LOG_STORAGE_HELP_KEYS | OSD_FONT_KEYS | ONBOARD_DISPLAY_HELP_KEYS | LOGGER_BACKEND_HELP_KEYS
-    | OSD_DISPLAY_HELP_KEYS
+    | OSD_DISPLAY_HELP_KEYS | VFR_HUD_RATE_HELP_KEYS
     | {'LOG_BITMASK', 'LOG_FILE_BUFSIZE', 'OSD_H_OFFSET', 'OSD_V_OFFSET', 'SCHED_DEBUG'}
 )
 catalog_module = importlib.util.module_from_spec(spec)
@@ -61,8 +62,8 @@ class ParameterCatalogTests(unittest.TestCase):
     def test_scope_counts_and_held_versions(self):
         notes = self.catalog['translations']
         descriptions = {(n['family'], v, n['parameter']) for n in notes if n['field'] == 'Description' for v in n['versions']}
-        self.assertEqual(1521, len(descriptions))
-        self.assertEqual(682, len({(f, p) for f, v, p in descriptions}))
+        self.assertEqual(1646, len(descriptions))
+        self.assertEqual(793, len({(f, p) for f, v, p in descriptions}))
         self.assertFalse(any(v == '4.7.2' for f, v, p in descriptions))
         excluded_copter = {'RTL_CONE_SLOPE', 'LAND_SPEED', 'LAND_SPD_MS', 'FS_GCS_ENABLE'}
         excluded_plane = {'TECS_CLMB_MAX', 'TECS_SINK_MIN', 'ROLL_LIMIT_DEG'}
@@ -72,7 +73,7 @@ class ParameterCatalogTests(unittest.TestCase):
         # Snapshot of the original accepted coverage per version. This assertion
         # guards the narrowly reviewed expansion, not actual vehicle inventory.
         legacy_counts = {'4.5.7': 37, '4.6.3': 37, '4.7.1': 37}
-        reviewed_counts = {'4.5.7': 36, '4.6.3': 36, '4.7.1': 42}
+        reviewed_counts = {'4.5.7': 37, '4.6.3': 36, '4.7.1': 42}
         pairs = (('GPS_CAN_NODEID1', 'GPS_CAN_NODEID2'), ('GPS1_CAN_NODEID', 'GPS2_CAN_NODEID'))
         for release in self.bundle.findall("release[@family='Copter']"):
             v = release.get('version')

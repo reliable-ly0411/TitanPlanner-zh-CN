@@ -3364,4 +3364,448 @@
     <english>Enables temperature sensor logging</english>
     <chinese>控制温度传感器数据的日志记录。0 表示不记录，1 表示记录所有实例，2 表示只记录传感器来源设为 None 的实例。</chinese>
   </translation>
+  <translation family="Copter" parameter="FORMAT_VERSION" field="Description" versions="4.5.7" englishSha256="85aa9664e99741e9fe5dbc374be0dbe4a842902028eb00b588f51379e64637eb" recordSha256="7b818c7d469587fe365eba657f88acf6901f29633de81c163b8fc2b55db80a9e">
+    <english>This value is incremented when changes are made to the eeprom format</english>
+    <chinese>EEPROM 格式发生变化时，此版本号递增。</chinese>
+  </translation>
+  <translation family="Copter" parameter="MAV10_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="5f4ef33916957fa86d5f76809a33b8a2f7f92c2604c463231b1283a7bc4d21fb">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Copter" parameter="MAV11_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="b0cb6c9d1c0029587f560be74cb923e86ce796be256ee31e405a2d9684df4256">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Copter" parameter="MAV12_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="c9a795a96625ecfb11fcfe3c1792624e5c01d93b90ca3d346dc4b734eec0f0f3">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Copter" parameter="MAV13_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="4e2f11e5113b71da570f13f91390414b9d2f140bead3196713fac8b4835046c9">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Copter" parameter="MAV14_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="396d6ab293ca9a46472ceb97cc9714779cdbc6137c01cceb8d18282068d5b73f">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Copter" parameter="MAV15_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="5d232c981c59e67fac22dcb8746fd91d26c277d06832c1c9247f458f73fe0bf7">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Copter" parameter="MAV16_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="b94ff4105639eab35c5e38fe7b4a6002f1f08c3bd5a06b411e11f4e981aa5443">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Copter" parameter="MAV17_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="4a8f1e87184cae4651a05c9372c49ac5a040af80b3c8b307fb75513aa53a0c6c">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Copter" parameter="MAV18_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="61007b0ee654e128e5c112bd55d742b5a22b50bee629b348be966390e07c4bf3">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Copter" parameter="MAV19_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="bdae5259fc18300618b57f40e2e6da8954218fc76a67404ed6349f035b1d2c00">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Copter" parameter="MAV1_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="ea9328847c346ded6f1f511f9ab9d596083764be08c5f1dd8315258b4ff28128">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Copter" parameter="MAV20_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="be8e18576f51ab106284c070bb9e1e176434e726f7c7218f4954b2826c479ede">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Copter" parameter="MAV21_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="62bf7c326f05c6e1e37df9415e3c13dd3dac7a42727403dabbc03d54fbfe9222">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Copter" parameter="MAV22_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="292f10030d71c62a710f00fe7f72542d6a53091809f18319352733624b462325">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Copter" parameter="MAV23_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="ee07d3c8f528965001630e99b8d429072a1afb83eb523530f9395c265d747fbb">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Copter" parameter="MAV24_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="62e1dafdf3dc6b2cbe04e1a28ecf1b3468870f66a6275ff2797e85ea679f4b5b">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Copter" parameter="MAV25_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="6f7a4312728bad673cbb88d754f46894e72cdcb4f0715dd17ce5121dc384f060">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Copter" parameter="MAV26_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="a7876ce14fa02b8d51a16c0b4a1675ffec3519c549d0cd0298fbac2f796173b0">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Copter" parameter="MAV27_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="f37d567015ce95e41853f096a2cfcd8a260b4661990665768af7e370225ad1d6">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Copter" parameter="MAV28_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="29698619897dc8c729ff80b0ca650f9a2dd46d02837f57da9543d054963115cb">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Copter" parameter="MAV29_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="90d53177cbf611192630a3af2bf663d34ff67361d076c009703daf3330c97d79">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Copter" parameter="MAV2_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="6a4215be7abb50e74f799d980d8af3a88488d0414f5aadec2727c31962cd0bbe">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Copter" parameter="MAV30_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="1b610570d1910259f3157d0fb6a996842bff8239519c011ac981d5a68fdfc8b1">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Copter" parameter="MAV31_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="c84ddfb02b66515a1636e15fe7058fc54bdd57fc7eded696ba91f46e0612be7b">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Copter" parameter="MAV32_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="d3e8dd928545e3eff19b27ff3b7d3c55f0284d8804960509e62d026883fac6a3">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Copter" parameter="MAV3_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="2a67c882b968f2e4e587dd0297ec18a683fa55a64b046ec81f9203b21acb5056">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Copter" parameter="MAV4_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="4e1ff196399079c1626193ea40e3786283dc561a362dadb3eb647c22805ebb8f">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Copter" parameter="MAV5_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="4d6d39ce4718abee985ce54e18c161a61f910cf23952dc5af1fa4e888b7ffb74">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Copter" parameter="MAV6_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="f2f4439b0b988e5dcfb0660e5196bc309dd081d02674d52b3825321606554519">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Copter" parameter="MAV7_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="7b7070335b860e22dd4c3f62222c604bbd503d40c85c04ebf928c795f8566fd9">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Copter" parameter="MAV8_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="c23fa444863809f4c569d95a8becf066e5d347f3d62cf26fce06e229319b1de1">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Copter" parameter="MAV9_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="1998e31f5a4f48bdb1452746842f6d0f4ce0315c5d62f3abc694e5b13dec3658">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Copter" parameter="SR0_EXTRA2" field="Description" versions="4.5.7,4.6.3" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="467930faea0bfe15236ceed4ee6908c87d3419a823fe2450dfddc979697b0059">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Copter" parameter="SR1_EXTRA2" field="Description" versions="4.5.7,4.6.3" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="8cbb31e2a26abed4fa1f21dd653e6fff3c5b1262d92ec2338c1472363a0612c5">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Copter" parameter="SR2_EXTRA2" field="Description" versions="4.5.7,4.6.3" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="ee8c211a1979821445cb0e77811993dc0441a227a52ab4bf1f04e275820f45fd">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Copter" parameter="SR3_EXTRA2" field="Description" versions="4.5.7,4.6.3" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="0e2025b40ca044a1869cc35104bb6d2019b1f2da61c5afa14dcee900a095a020">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Copter" parameter="SR4_EXTRA2" field="Description" versions="4.5.7,4.6.3" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="e35440be6869bdb801c7ac07c5b216bcc659ce2ccfc6b0629acd9498a8444981">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Copter" parameter="SR5_EXTRA2" field="Description" versions="4.5.7,4.6.3" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="1d6f13375a686cc0a8116d77fd92d3cbdc79825a7f002c4daf39fba76473b192">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Copter" parameter="SR6_EXTRA2" field="Description" versions="4.5.7,4.6.3" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="09e955c216bf66ce4cd5c27da4a81124ca13b9123660a75e9b3a1bbf51441e52">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Plane" parameter="MAV10_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="5f4ef33916957fa86d5f76809a33b8a2f7f92c2604c463231b1283a7bc4d21fb">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Plane" parameter="MAV11_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="b0cb6c9d1c0029587f560be74cb923e86ce796be256ee31e405a2d9684df4256">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Plane" parameter="MAV12_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="c9a795a96625ecfb11fcfe3c1792624e5c01d93b90ca3d346dc4b734eec0f0f3">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Plane" parameter="MAV13_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="4e2f11e5113b71da570f13f91390414b9d2f140bead3196713fac8b4835046c9">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Plane" parameter="MAV14_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="396d6ab293ca9a46472ceb97cc9714779cdbc6137c01cceb8d18282068d5b73f">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Plane" parameter="MAV15_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="5d232c981c59e67fac22dcb8746fd91d26c277d06832c1c9247f458f73fe0bf7">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Plane" parameter="MAV16_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="b94ff4105639eab35c5e38fe7b4a6002f1f08c3bd5a06b411e11f4e981aa5443">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Plane" parameter="MAV17_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="4a8f1e87184cae4651a05c9372c49ac5a040af80b3c8b307fb75513aa53a0c6c">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Plane" parameter="MAV18_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="61007b0ee654e128e5c112bd55d742b5a22b50bee629b348be966390e07c4bf3">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Plane" parameter="MAV19_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="bdae5259fc18300618b57f40e2e6da8954218fc76a67404ed6349f035b1d2c00">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Plane" parameter="MAV1_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="ea9328847c346ded6f1f511f9ab9d596083764be08c5f1dd8315258b4ff28128">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Plane" parameter="MAV20_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="be8e18576f51ab106284c070bb9e1e176434e726f7c7218f4954b2826c479ede">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Plane" parameter="MAV21_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="62bf7c326f05c6e1e37df9415e3c13dd3dac7a42727403dabbc03d54fbfe9222">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Plane" parameter="MAV22_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="292f10030d71c62a710f00fe7f72542d6a53091809f18319352733624b462325">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Plane" parameter="MAV23_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="ee07d3c8f528965001630e99b8d429072a1afb83eb523530f9395c265d747fbb">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Plane" parameter="MAV24_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="62e1dafdf3dc6b2cbe04e1a28ecf1b3468870f66a6275ff2797e85ea679f4b5b">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Plane" parameter="MAV25_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="6f7a4312728bad673cbb88d754f46894e72cdcb4f0715dd17ce5121dc384f060">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Plane" parameter="MAV26_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="a7876ce14fa02b8d51a16c0b4a1675ffec3519c549d0cd0298fbac2f796173b0">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Plane" parameter="MAV27_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="f37d567015ce95e41853f096a2cfcd8a260b4661990665768af7e370225ad1d6">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Plane" parameter="MAV28_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="29698619897dc8c729ff80b0ca650f9a2dd46d02837f57da9543d054963115cb">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Plane" parameter="MAV29_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="90d53177cbf611192630a3af2bf663d34ff67361d076c009703daf3330c97d79">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Plane" parameter="MAV2_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="6a4215be7abb50e74f799d980d8af3a88488d0414f5aadec2727c31962cd0bbe">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Plane" parameter="MAV30_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="1b610570d1910259f3157d0fb6a996842bff8239519c011ac981d5a68fdfc8b1">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Plane" parameter="MAV31_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="c84ddfb02b66515a1636e15fe7058fc54bdd57fc7eded696ba91f46e0612be7b">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Plane" parameter="MAV32_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="d3e8dd928545e3eff19b27ff3b7d3c55f0284d8804960509e62d026883fac6a3">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Plane" parameter="MAV3_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="2a67c882b968f2e4e587dd0297ec18a683fa55a64b046ec81f9203b21acb5056">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Plane" parameter="MAV4_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="4e1ff196399079c1626193ea40e3786283dc561a362dadb3eb647c22805ebb8f">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Plane" parameter="MAV5_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="4d6d39ce4718abee985ce54e18c161a61f910cf23952dc5af1fa4e888b7ffb74">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Plane" parameter="MAV6_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="f2f4439b0b988e5dcfb0660e5196bc309dd081d02674d52b3825321606554519">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Plane" parameter="MAV7_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="7b7070335b860e22dd4c3f62222c604bbd503d40c85c04ebf928c795f8566fd9">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Plane" parameter="MAV8_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="c23fa444863809f4c569d95a8becf066e5d347f3d62cf26fce06e229319b1de1">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Plane" parameter="MAV9_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="1998e31f5a4f48bdb1452746842f6d0f4ce0315c5d62f3abc694e5b13dec3658">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Plane" parameter="SR0_EXTRA2" field="Description" versions="4.5.7,4.6.3" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="3a2ffea150be0df6847b47760ce72ae3e6461891fa59b0b284f506cef608108b">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Plane" parameter="SR1_EXTRA2" field="Description" versions="4.5.7,4.6.3" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="87ea346eae1b2879fa574638f256516598328b3a03cbd017dfcca749a251a3c9">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Plane" parameter="SR2_EXTRA2" field="Description" versions="4.5.7,4.6.3" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="8ee8753fc88a070178d5c98476f2c0296914c7af9b5c4e39ee8d0b5712b1b40a">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Plane" parameter="SR3_EXTRA2" field="Description" versions="4.5.7,4.6.3" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="cc9e3e946704ba0350f03debe41f825e6cef617e84a13dd36921d8bb00f7ba9f">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Plane" parameter="SR4_EXTRA2" field="Description" versions="4.5.7,4.6.3" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="83f8550c3e86f50d149a573548cc584a54dddf33892190013ebcf99b2ef19ad7">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Plane" parameter="SR5_EXTRA2" field="Description" versions="4.5.7,4.6.3" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="24678ac7230404aed64edcf4f8e1be184c1ab4fd295a093dcc77e6258dba2d80">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Plane" parameter="SR6_EXTRA2" field="Description" versions="4.5.7,4.6.3" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="17681d2540c1098c4536ae85e8e5f7395f6aa313b984e930429ea11293778c25">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Sub" parameter="MAV10_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="5f4ef33916957fa86d5f76809a33b8a2f7f92c2604c463231b1283a7bc4d21fb">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Sub" parameter="MAV11_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="b0cb6c9d1c0029587f560be74cb923e86ce796be256ee31e405a2d9684df4256">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Sub" parameter="MAV12_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="c9a795a96625ecfb11fcfe3c1792624e5c01d93b90ca3d346dc4b734eec0f0f3">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Sub" parameter="MAV13_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="4e2f11e5113b71da570f13f91390414b9d2f140bead3196713fac8b4835046c9">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Sub" parameter="MAV14_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="396d6ab293ca9a46472ceb97cc9714779cdbc6137c01cceb8d18282068d5b73f">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Sub" parameter="MAV15_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="5d232c981c59e67fac22dcb8746fd91d26c277d06832c1c9247f458f73fe0bf7">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Sub" parameter="MAV16_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="b94ff4105639eab35c5e38fe7b4a6002f1f08c3bd5a06b411e11f4e981aa5443">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Sub" parameter="MAV17_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="4a8f1e87184cae4651a05c9372c49ac5a040af80b3c8b307fb75513aa53a0c6c">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Sub" parameter="MAV18_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="61007b0ee654e128e5c112bd55d742b5a22b50bee629b348be966390e07c4bf3">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Sub" parameter="MAV19_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="bdae5259fc18300618b57f40e2e6da8954218fc76a67404ed6349f035b1d2c00">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Sub" parameter="MAV1_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="ea9328847c346ded6f1f511f9ab9d596083764be08c5f1dd8315258b4ff28128">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Sub" parameter="MAV20_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="be8e18576f51ab106284c070bb9e1e176434e726f7c7218f4954b2826c479ede">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Sub" parameter="MAV21_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="62bf7c326f05c6e1e37df9415e3c13dd3dac7a42727403dabbc03d54fbfe9222">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Sub" parameter="MAV22_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="292f10030d71c62a710f00fe7f72542d6a53091809f18319352733624b462325">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Sub" parameter="MAV23_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="ee07d3c8f528965001630e99b8d429072a1afb83eb523530f9395c265d747fbb">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Sub" parameter="MAV24_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="62e1dafdf3dc6b2cbe04e1a28ecf1b3468870f66a6275ff2797e85ea679f4b5b">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Sub" parameter="MAV25_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="6f7a4312728bad673cbb88d754f46894e72cdcb4f0715dd17ce5121dc384f060">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Sub" parameter="MAV26_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="a7876ce14fa02b8d51a16c0b4a1675ffec3519c549d0cd0298fbac2f796173b0">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Sub" parameter="MAV27_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="f37d567015ce95e41853f096a2cfcd8a260b4661990665768af7e370225ad1d6">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Sub" parameter="MAV28_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="29698619897dc8c729ff80b0ca650f9a2dd46d02837f57da9543d054963115cb">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Sub" parameter="MAV29_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="90d53177cbf611192630a3af2bf663d34ff67361d076c009703daf3330c97d79">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Sub" parameter="MAV2_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="6a4215be7abb50e74f799d980d8af3a88488d0414f5aadec2727c31962cd0bbe">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Sub" parameter="MAV30_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="1b610570d1910259f3157d0fb6a996842bff8239519c011ac981d5a68fdfc8b1">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Sub" parameter="MAV31_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="c84ddfb02b66515a1636e15fe7058fc54bdd57fc7eded696ba91f46e0612be7b">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Sub" parameter="MAV32_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="d3e8dd928545e3eff19b27ff3b7d3c55f0284d8804960509e62d026883fac6a3">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Sub" parameter="MAV3_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="2a67c882b968f2e4e587dd0297ec18a683fa55a64b046ec81f9203b21acb5056">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Sub" parameter="MAV4_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="4e1ff196399079c1626193ea40e3786283dc561a362dadb3eb647c22805ebb8f">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Sub" parameter="MAV5_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="4d6d39ce4718abee985ce54e18c161a61f910cf23952dc5af1fa4e888b7ffb74">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Sub" parameter="MAV6_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="f2f4439b0b988e5dcfb0660e5196bc309dd081d02674d52b3825321606554519">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Sub" parameter="MAV7_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="7b7070335b860e22dd4c3f62222c604bbd503d40c85c04ebf928c795f8566fd9">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Sub" parameter="MAV8_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="c23fa444863809f4c569d95a8becf066e5d347f3d62cf26fce06e229319b1de1">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
+  <translation family="Sub" parameter="MAV9_EXTRA2" field="Description" versions="4.7.1" englishSha256="5a66d29d626ab3576c9068292a0e2dee91adefd4bd7b724e60c8e6c2d363fe84" recordSha256="1998e31f5a4f48bdb1452746842f6d0f4ce0315c5d62f3abc694e5b13dec3658">
+    <english>MAVLink Stream rate of VFR_HUD</english>
+    <chinese>VFR_HUD 消息的 MAVLink 发送频率。</chinese>
+  </translation>
 </parameterTranslations>

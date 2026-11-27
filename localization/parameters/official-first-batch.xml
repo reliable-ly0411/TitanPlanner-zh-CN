@@ -266,6 +266,9 @@
           <param humanName="Log bitmask" name="ArduCopter:LOG_BITMASK" documentation="Bitmap of what on-board log types to enable. This value is made up of the sum of each of the log types you want to be saved. It is usually best just to enable all basiclog types by setting this to 65535." user="Standard">
             <field name="Bitmask">0:Fast Attitude,1:Medium Attitude,2:GPS,3:System Performance,4:Control Tuning,5:Navigation Tuning,6:RC input,7:IMU,8:Mission Commands,9:Battery Monitor,10:RC output,11:Optical Flow,12:PID,13:Compass,15:Camera,17:Motors,18:Fast IMU,19:Raw IMU,20:Video Stabilization,21:Fast harmonic notch logging</field>
           </param>
+          <param humanName="Eeprom format version number" name="ArduCopter:FORMAT_VERSION" documentation="This value is incremented when changes are made to the eeprom format" user="Advanced">
+            <field name="ReadOnly">True</field>
+          </param>
         </parameters>
       </vehicles>
       <libraries>
@@ -1100,6 +1103,69 @@
               <value code="0">Disabled</value>
               <value code="1">Enabled</value>
             </values>
+          </param>
+        </parameters>
+        <parameters name="SR0_">
+          <param humanName="Extra data type 2 stream rate" name="SR0_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="SR1_">
+          <param humanName="Extra data type 2 stream rate" name="SR1_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="SR2_">
+          <param humanName="Extra data type 2 stream rate" name="SR2_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="SR3_">
+          <param humanName="Extra data type 2 stream rate" name="SR3_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="SR4_">
+          <param humanName="Extra data type 2 stream rate" name="SR4_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="SR5_">
+          <param humanName="Extra data type 2 stream rate" name="SR5_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="SR6_">
+          <param humanName="Extra data type 2 stream rate" name="SR6_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
           </param>
         </parameters>
       </libraries>
@@ -2307,6 +2373,69 @@
               <value code="1">Log all instances</value>
               <value code="2">Log only instances with sensor source set to None</value>
             </values>
+          </param>
+        </parameters>
+        <parameters name="SR0_">
+          <param humanName="Extra data type 2 stream rate" name="SR0_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="SR1_">
+          <param humanName="Extra data type 2 stream rate" name="SR1_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="SR2_">
+          <param humanName="Extra data type 2 stream rate" name="SR2_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="SR3_">
+          <param humanName="Extra data type 2 stream rate" name="SR3_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="SR4_">
+          <param humanName="Extra data type 2 stream rate" name="SR4_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="SR5_">
+          <param humanName="Extra data type 2 stream rate" name="SR5_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="SR6_">
+          <param humanName="Extra data type 2 stream rate" name="SR6_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Units">Hz</field>
+            <field name="UnitText">hertz</field>
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
           </param>
         </parameters>
       </libraries>
@@ -3551,6 +3680,230 @@
             </values>
           </param>
         </parameters>
+        <parameters name="MAV10">
+          <param humanName="Extra data type 2 stream rate" name="MAV10_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV11">
+          <param humanName="Extra data type 2 stream rate" name="MAV11_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV12">
+          <param humanName="Extra data type 2 stream rate" name="MAV12_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV13">
+          <param humanName="Extra data type 2 stream rate" name="MAV13_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV14">
+          <param humanName="Extra data type 2 stream rate" name="MAV14_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV15">
+          <param humanName="Extra data type 2 stream rate" name="MAV15_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV16">
+          <param humanName="Extra data type 2 stream rate" name="MAV16_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV17">
+          <param humanName="Extra data type 2 stream rate" name="MAV17_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV18">
+          <param humanName="Extra data type 2 stream rate" name="MAV18_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV19">
+          <param humanName="Extra data type 2 stream rate" name="MAV19_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV1">
+          <param humanName="Extra data type 2 stream rate" name="MAV1_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV20">
+          <param humanName="Extra data type 2 stream rate" name="MAV20_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV21">
+          <param humanName="Extra data type 2 stream rate" name="MAV21_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV22">
+          <param humanName="Extra data type 2 stream rate" name="MAV22_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV23">
+          <param humanName="Extra data type 2 stream rate" name="MAV23_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV24">
+          <param humanName="Extra data type 2 stream rate" name="MAV24_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV25">
+          <param humanName="Extra data type 2 stream rate" name="MAV25_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV26">
+          <param humanName="Extra data type 2 stream rate" name="MAV26_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV27">
+          <param humanName="Extra data type 2 stream rate" name="MAV27_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV28">
+          <param humanName="Extra data type 2 stream rate" name="MAV28_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV29">
+          <param humanName="Extra data type 2 stream rate" name="MAV29_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV2">
+          <param humanName="Extra data type 2 stream rate" name="MAV2_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV30">
+          <param humanName="Extra data type 2 stream rate" name="MAV30_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV31">
+          <param humanName="Extra data type 2 stream rate" name="MAV31_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV32">
+          <param humanName="Extra data type 2 stream rate" name="MAV32_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV3">
+          <param humanName="Extra data type 2 stream rate" name="MAV3_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV4">
+          <param humanName="Extra data type 2 stream rate" name="MAV4_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV5">
+          <param humanName="Extra data type 2 stream rate" name="MAV5_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV6">
+          <param humanName="Extra data type 2 stream rate" name="MAV6_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV7">
+          <param humanName="Extra data type 2 stream rate" name="MAV7_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV8">
+          <param humanName="Extra data type 2 stream rate" name="MAV8_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV9">
+          <param humanName="Extra data type 2 stream rate" name="MAV9_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
       </libraries>
     </paramfile>
   </release>
@@ -4709,6 +5062,55 @@
               <value code="0">Disabled</value>
               <value code="1">Enabled</value>
             </values>
+          </param>
+        </parameters>
+        <parameters name="SR0_">
+          <param humanName="Extra data type 2 stream rate" name="SR0_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="SR1_">
+          <param humanName="Extra data type 2 stream rate" name="SR1_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="SR2_">
+          <param humanName="Extra data type 2 stream rate" name="SR2_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="SR3_">
+          <param humanName="Extra data type 2 stream rate" name="SR3_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="SR4_">
+          <param humanName="Extra data type 2 stream rate" name="SR4_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="SR5_">
+          <param humanName="Extra data type 2 stream rate" name="SR5_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="SR6_">
+          <param humanName="Extra data type 2 stream rate" name="SR6_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
           </param>
         </parameters>
       </libraries>
@@ -5963,6 +6365,55 @@
               <value code="1">Log all instances</value>
               <value code="2">Log only instances with sensor source set to None</value>
             </values>
+          </param>
+        </parameters>
+        <parameters name="SR0_">
+          <param humanName="Extra data type 2 stream rate" name="SR0_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="SR1_">
+          <param humanName="Extra data type 2 stream rate" name="SR1_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="SR2_">
+          <param humanName="Extra data type 2 stream rate" name="SR2_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="SR3_">
+          <param humanName="Extra data type 2 stream rate" name="SR3_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="SR4_">
+          <param humanName="Extra data type 2 stream rate" name="SR4_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="SR5_">
+          <param humanName="Extra data type 2 stream rate" name="SR5_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="SR6_">
+          <param humanName="Extra data type 2 stream rate" name="SR6_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
           </param>
         </parameters>
       </libraries>
@@ -7263,6 +7714,230 @@
             </values>
           </param>
         </parameters>
+        <parameters name="MAV10">
+          <param humanName="Extra data type 2 stream rate" name="MAV10_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV11">
+          <param humanName="Extra data type 2 stream rate" name="MAV11_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV12">
+          <param humanName="Extra data type 2 stream rate" name="MAV12_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV13">
+          <param humanName="Extra data type 2 stream rate" name="MAV13_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV14">
+          <param humanName="Extra data type 2 stream rate" name="MAV14_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV15">
+          <param humanName="Extra data type 2 stream rate" name="MAV15_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV16">
+          <param humanName="Extra data type 2 stream rate" name="MAV16_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV17">
+          <param humanName="Extra data type 2 stream rate" name="MAV17_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV18">
+          <param humanName="Extra data type 2 stream rate" name="MAV18_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV19">
+          <param humanName="Extra data type 2 stream rate" name="MAV19_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV1">
+          <param humanName="Extra data type 2 stream rate" name="MAV1_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV20">
+          <param humanName="Extra data type 2 stream rate" name="MAV20_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV21">
+          <param humanName="Extra data type 2 stream rate" name="MAV21_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV22">
+          <param humanName="Extra data type 2 stream rate" name="MAV22_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV23">
+          <param humanName="Extra data type 2 stream rate" name="MAV23_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV24">
+          <param humanName="Extra data type 2 stream rate" name="MAV24_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV25">
+          <param humanName="Extra data type 2 stream rate" name="MAV25_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV26">
+          <param humanName="Extra data type 2 stream rate" name="MAV26_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV27">
+          <param humanName="Extra data type 2 stream rate" name="MAV27_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV28">
+          <param humanName="Extra data type 2 stream rate" name="MAV28_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV29">
+          <param humanName="Extra data type 2 stream rate" name="MAV29_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV2">
+          <param humanName="Extra data type 2 stream rate" name="MAV2_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV30">
+          <param humanName="Extra data type 2 stream rate" name="MAV30_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV31">
+          <param humanName="Extra data type 2 stream rate" name="MAV31_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV32">
+          <param humanName="Extra data type 2 stream rate" name="MAV32_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV3">
+          <param humanName="Extra data type 2 stream rate" name="MAV3_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV4">
+          <param humanName="Extra data type 2 stream rate" name="MAV4_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV5">
+          <param humanName="Extra data type 2 stream rate" name="MAV5_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV6">
+          <param humanName="Extra data type 2 stream rate" name="MAV6_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV7">
+          <param humanName="Extra data type 2 stream rate" name="MAV7_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV8">
+          <param humanName="Extra data type 2 stream rate" name="MAV8_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV9">
+          <param humanName="Extra data type 2 stream rate" name="MAV9_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
       </libraries>
     </paramfile>
   </release>
@@ -8116,6 +8791,230 @@
               <value code="1">Log all instances</value>
               <value code="2">Log only instances with sensor source set to None</value>
             </values>
+          </param>
+        </parameters>
+        <parameters name="MAV10">
+          <param humanName="Extra data type 2 stream rate" name="MAV10_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV11">
+          <param humanName="Extra data type 2 stream rate" name="MAV11_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV12">
+          <param humanName="Extra data type 2 stream rate" name="MAV12_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV13">
+          <param humanName="Extra data type 2 stream rate" name="MAV13_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV14">
+          <param humanName="Extra data type 2 stream rate" name="MAV14_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV15">
+          <param humanName="Extra data type 2 stream rate" name="MAV15_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV16">
+          <param humanName="Extra data type 2 stream rate" name="MAV16_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV17">
+          <param humanName="Extra data type 2 stream rate" name="MAV17_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV18">
+          <param humanName="Extra data type 2 stream rate" name="MAV18_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV19">
+          <param humanName="Extra data type 2 stream rate" name="MAV19_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV1">
+          <param humanName="Extra data type 2 stream rate" name="MAV1_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV20">
+          <param humanName="Extra data type 2 stream rate" name="MAV20_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV21">
+          <param humanName="Extra data type 2 stream rate" name="MAV21_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV22">
+          <param humanName="Extra data type 2 stream rate" name="MAV22_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV23">
+          <param humanName="Extra data type 2 stream rate" name="MAV23_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV24">
+          <param humanName="Extra data type 2 stream rate" name="MAV24_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV25">
+          <param humanName="Extra data type 2 stream rate" name="MAV25_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV26">
+          <param humanName="Extra data type 2 stream rate" name="MAV26_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV27">
+          <param humanName="Extra data type 2 stream rate" name="MAV27_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV28">
+          <param humanName="Extra data type 2 stream rate" name="MAV28_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV29">
+          <param humanName="Extra data type 2 stream rate" name="MAV29_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV2">
+          <param humanName="Extra data type 2 stream rate" name="MAV2_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV30">
+          <param humanName="Extra data type 2 stream rate" name="MAV30_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV31">
+          <param humanName="Extra data type 2 stream rate" name="MAV31_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV32">
+          <param humanName="Extra data type 2 stream rate" name="MAV32_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV3">
+          <param humanName="Extra data type 2 stream rate" name="MAV3_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV4">
+          <param humanName="Extra data type 2 stream rate" name="MAV4_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV5">
+          <param humanName="Extra data type 2 stream rate" name="MAV5_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV6">
+          <param humanName="Extra data type 2 stream rate" name="MAV6_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV7">
+          <param humanName="Extra data type 2 stream rate" name="MAV7_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV8">
+          <param humanName="Extra data type 2 stream rate" name="MAV8_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
+          </param>
+        </parameters>
+        <parameters name="MAV9">
+          <param humanName="Extra data type 2 stream rate" name="MAV9_EXTRA2" documentation="MAVLink Stream rate of VFR_HUD" user="Advanced">
+            <field name="Range">0 50</field>
+            <field name="Increment">1</field>
+            <field name="RebootRequired">True</field>
           </param>
         </parameters>
       </libraries>
