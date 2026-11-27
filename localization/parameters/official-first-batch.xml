@@ -551,6 +551,11 @@
             <field name="Increment">1</field>
           </param>
         </parameters>
+        <parameters name="OSD">
+          <param humanName="Message display duration in seconds" name="OSD_MSG_TIME" documentation="Sets message duration seconds" user="Standard">
+            <field name="Range">1 20</field>
+          </param>
+        </parameters>
       </libraries>
     </paramfile>
   </release>
@@ -1105,6 +1110,9 @@
           </param>
           <param humanName="Sidebar vertical extension" name="OSD_SB_V_EXT" documentation="Increase of vertical length of the sidebar itens by this amount of lines. Applied equally both above and below the default setting." user="Standard">
             <field name="Range">0 10</field>
+          </param>
+          <param humanName="Message display duration in seconds" name="OSD_MSG_TIME" documentation="Sets message duration seconds" user="Standard">
+            <field name="Range">1 20</field>
           </param>
         </parameters>
         <parameters name="INS_LOG_">
@@ -1710,6 +1718,9 @@
           </param>
           <param humanName="Sidebar vertical extension" name="OSD_SB_V_EXT" documentation="Increase of vertical length of the sidebar itens by this amount of lines. Applied equally both above and below the default setting." user="Standard">
             <field name="Range">0 10</field>
+          </param>
+          <param humanName="Message display duration in seconds" name="OSD_MSG_TIME" documentation="Sets message duration seconds" user="Standard">
+            <field name="Range">1 20</field>
           </param>
         </parameters>
         <parameters name="INS_LOG_">
@@ -2343,6 +2354,11 @@
             <field name="Increment">1</field>
           </param>
         </parameters>
+        <parameters name="OSD">
+          <param humanName="Message display duration in seconds" name="OSD_MSG_TIME" documentation="Sets message duration seconds" user="Standard">
+            <field name="Range">1 20</field>
+          </param>
+        </parameters>
       </libraries>
     </paramfile>
   </release>
@@ -2954,6 +2970,9 @@
           </param>
           <param humanName="Sidebar vertical extension" name="OSD_SB_V_EXT" documentation="Increase of vertical length of the sidebar itens by this amount of lines. Applied equally both above and below the default setting." user="Standard">
             <field name="Range">0 10</field>
+          </param>
+          <param humanName="Message display duration in seconds" name="OSD_MSG_TIME" documentation="Sets message duration seconds" user="Standard">
+            <field name="Range">1 20</field>
           </param>
         </parameters>
         <parameters name="INS_LOG_">
@@ -3626,6 +3645,9 @@
           <param humanName="Sidebar vertical extension" name="OSD_SB_V_EXT" documentation="Increase of vertical length of the sidebar itens by this amount of lines. Applied equally both above and below the default setting." user="Standard">
             <field name="Range">0 10</field>
           </param>
+          <param humanName="Message display duration in seconds" name="OSD_MSG_TIME" documentation="Sets message duration seconds" user="Standard">
+            <field name="Range">1 20</field>
+          </param>
         </parameters>
         <parameters name="INS_LOG_">
           <param humanName="sample count per batch" name="INS_LOG_BAT_CNT" documentation="Number of samples to take when logging streams of IMU sensor readings.  Will be rounded down to a multiple of 32. This option takes effect on the next reboot." user="Advanced">
@@ -3822,6 +3844,9 @@
           </param>
           <param humanName="Sidebar vertical extension" name="OSD_SB_V_EXT" documentation="Increase of vertical length of the sidebar itens by this amount of lines. Applied equally both above and below the default setting." user="Standard">
             <field name="Range">0 10</field>
+          </param>
+          <param humanName="Message display duration in seconds" name="OSD_MSG_TIME" documentation="Sets message duration seconds" user="Standard">
+            <field name="Range">1 20</field>
           </param>
         </parameters>
         <parameters name="INS_LOG_">

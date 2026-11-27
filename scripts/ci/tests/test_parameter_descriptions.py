@@ -7,6 +7,7 @@ import xml.etree.ElementTree as ET
 
 ROOT = Path(__file__).resolve().parents[3]
 spec = importlib.util.spec_from_file_location('parameter_catalog', ROOT / 'scripts/localization/build_parameter_catalog.py')
+OSD_MESSAGE_TIME_HELP_KEYS = {'OSD_MSG_TIME'}
 SIDEBAR_GEOMETRY_KEYS = {'OSD_SB_H_OFS', 'OSD_SB_V_EXT'}
 IMU_DIAGNOSTIC_HELP_KEYS = {'INS_LOG_BAT_CNT', 'INS_LOG_BAT_LGIN', 'INS_LOG_BAT_LGCT'}
 catalog_module = importlib.util.module_from_spec(spec)
@@ -37,8 +38,8 @@ class ParameterCatalogTests(unittest.TestCase):
     def test_scope_counts_and_held_versions(self):
         notes = self.catalog['translations']
         descriptions = {(n['family'], v, n['parameter']) for n in notes if n['field'] == 'Description' for v in n['versions']}
-        self.assertEqual(554, len(descriptions))
-        self.assertEqual(257, len({(f, p) for f, v, p in descriptions}))
+        self.assertEqual(561, len(descriptions))
+        self.assertEqual(260, len({(f, p) for f, v, p in descriptions}))
         self.assertFalse(any(v == '4.7.2' for f, v, p in descriptions))
         excluded_copter = {'RTL_CONE_SLOPE', 'LAND_SPEED', 'LAND_SPD_MS', 'LOG_FILE_BUFSIZE', 'FS_GCS_ENABLE'}
         excluded_plane = {'TECS_CLMB_MAX', 'TECS_SINK_MIN', 'ROLL_LIMIT_DEG'}
@@ -52,7 +53,7 @@ class ParameterCatalogTests(unittest.TestCase):
         pairs = (('GPS_CAN_NODEID1', 'GPS_CAN_NODEID2'), ('GPS1_CAN_NODEID', 'GPS2_CAN_NODEID'))
         for release in self.bundle.findall("release[@family='Copter']"):
             v = release.get('version')
-            records = {r.get('name').split(':')[-1]: r for r in release.iter('param') if r.get('name') not in (SIDEBAR_GEOMETRY_KEYS | IMU_DIAGNOSTIC_HELP_KEYS)}
+            records = {r.get('name').split(':')[-1]: r for r in release.iter('param') if r.get('name') not in (SIDEBAR_GEOMETRY_KEYS | IMU_DIAGNOSTIC_HELP_KEYS | OSD_MESSAGE_TIME_HELP_KEYS)}
             self.assertEqual(legacy_counts[v] + reviewed_counts[v], len(records))
             readonly = {k: r for k, r in records.items() if r.findtext("field[@name='ReadOnly']") == 'True'}
             self.assertEqual(reviewed_counts[v], len(readonly))
@@ -108,7 +109,7 @@ class ParameterCatalogTests(unittest.TestCase):
 
     def test_sub_narrow_expansion_adds_only_unique_read_only_records(self):
         scope = self.bundle.find("release[@family='Sub'][@version='4.7.1']")
-        records = {p.get('name'): p for p in scope.iter('param') if not p.get('name').startswith('STAT_') and p.get('name') not in (SIDEBAR_GEOMETRY_KEYS | IMU_DIAGNOSTIC_HELP_KEYS)}
+        records = {p.get('name'): p for p in scope.iter('param') if not p.get('name').startswith('STAT_') and p.get('name') not in (SIDEBAR_GEOMETRY_KEYS | IMU_DIAGNOSTIC_HELP_KEYS | OSD_MESSAGE_TIME_HELP_KEYS)}
         self.assertEqual(34, len(records))
         self.assertEqual({'GPS1_CAN_NODEID','GPS2_CAN_NODEID'}, {key for key in records if key.startswith('GPS')})
         self.assertTrue({'MIS_TOTAL','VTX_FREQ'} <= records.keys())
@@ -154,6 +155,24 @@ class ParameterCatalogTests(unittest.TestCase):
                 self.assertIsNone(r.find("field[@name='ReadOnly']"))
                 if key.endswith('LGCT'):
                     self.assertIn('INS_LOG_BAT_LGIN', hints[0]['chinese'])
+
+    def test_osd_message_time_help_preserves_range_and_source_metadata(self):
+        for release in self.bundle:
+            family, version = release.get('family'), release.get('version')
+            rows = [r for r in release.iter('param') if r.get('name') in OSD_MESSAGE_TIME_HELP_KEYS]
+            self.assertEqual(1, len(rows))
+            row = rows[0]
+            self.assertEqual('1 20', row.findtext("field[@name='Range']"))
+            self.assertIsNone(row.findtext("field[@name='Units']"))
+            self.assertEqual([], row.findall('values/value'))
+            notes = [n for n in self.catalog['translations'] if n['family'] == family
+                     and version in n['versions'] and n['parameter'] in OSD_MESSAGE_TIME_HELP_KEYS]
+            self.assertEqual(1, len(notes))
+            english = row.get('documentation')
+            self.assertEqual('Sets message duration seconds', english)
+            self.assertEqual(('Description', english, catalog_module.record_fingerprint(row)),
+                             (notes[0]['field'], notes[0]['english'], notes[0]['recordSha256']))
+            self.assertEqual('设置 OSD 消息在屏幕上的显示时长，单位为秒。', notes[0]['chinese'])
 
     def test_source_changes_cannot_automatically_reapprove_notes(self):
         for change in ('English', 'Range', 'Unit'):
