@@ -1,6 +1,6 @@
 {
   "GCSViews/ConfigurationView/ConfigHWOSD.resx": {
-    "BUT_osdrates.Text": "改遥测速率",
+    "BUT_osdrates.Text": "改速率",
     "label7.Text": "会改写飞控的遥测速率。\n仅在 OSD 不更新时使用。"
   },
   "Controls/Vibration.resx": {
