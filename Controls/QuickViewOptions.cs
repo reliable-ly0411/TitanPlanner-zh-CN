@@ -15,6 +15,7 @@ namespace MissionPlanner.Controls
     public partial class QuickViewOptions : Form
     {
         private QuickView _qv;
+        private string _displaySourceKey;
         private bool _initializing = true;  // Flag to suppress event handlers during form setup
 
         public QuickViewOptions(QuickView qv)
@@ -103,6 +104,7 @@ namespace MissionPlanner.Controls
             CMB_Source.DisplayMember = "Item2";
             CMB_Source.DataSource = all_fields;
             CMB_Source.SelectedValue = variable_name;
+            _displaySourceKey = (CMB_Source.SelectedItem as Tuple<string, string>)?.Item1;
             if (CMB_Source.DrawMode == DrawMode.OwnerDrawFixed)
                 SizeSourceDropDown(CMB_Source, EventArgs.Empty);
 
@@ -492,16 +494,16 @@ namespace MissionPlanner.Controls
 
         private void CMB_Source_DropDownClosed(object sender, EventArgs e)
         {
-            if(CMB_Source.SelectedItem != null)
+            if (CMB_Source.SelectedItem is Tuple<string, string> field)
             {
-                Tuple<string, string> field = CMB_Source.SelectedItem as Tuple<string, string>;
-
-                // Update label to match selected source
-                TXT_customlabel.Text = MainV2.comPort.MAV.cs.GetNameandUnit((string)CMB_Source.SelectedValue);
-
-                // Reset scale and offset if we select a new variable
-                TXT_scale.Text = "1.0";
-                TXT_offset.Text = "0.0";
+                if (!string.Equals(_displaySourceKey, field.Item1, StringComparison.Ordinal))
+                {
+                    // Reset display settings only when a different source is chosen.
+                    TXT_customlabel.Text = MainV2.comPort.MAV.cs.GetNameandUnit((string)CMB_Source.SelectedValue);
+                    TXT_scale.Text = "1.0";
+                    TXT_offset.Text = "0.0";
+                    _displaySourceKey = field.Item1;
+                }
 
                 // Restore the full list
                 CMB_Source.DataSource = all_fields;
