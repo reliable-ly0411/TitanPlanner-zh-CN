@@ -21496,6 +21496,1926 @@
       "recordSha256": "8e8dda27796715a92c17f2066c1b0f3d61a1b67278e89b439ec3fc03340f9777",
       "english": "Vertical position on screen",
       "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD1_ASPEED_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "316262c811e9791d8ae7f833739f609b6a78a7f85b058cd535e0bf3f5764df31",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD1_ASPEED_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "baef5e0c1dca05e6d4449dbd46bf10f9dcda8f6038321a769813a95a183a9096",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD1_CLIMBEFF_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "85416189955727f2c01de75a4ce594a892f2456e27eed478261bb9a13d42b3b2",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD1_CLIMBEFF_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "6039ef7f3879942fdcfbce0b5f51403f6c6d9d1d901d7568ec072e35a1c4c880",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD1_HOMEDIR_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "3a1936f91e71ce01c11c0c3d6d77d32825c5b52fe6c36e1821c3655632362178",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD1_HOMEDIR_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "adca4cf8ea00a257661867ef8628ae9ed520013d305654c4b85b4cff75986c35",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD1_HOME_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "471b95660a8d1e73b27bdf8c75658a54a4461e1065f216defe995c297e001659",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD1_HOME_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "c925f5365109d8fa9b7604e42fee0d77919d2d397e58346d9922f4871d33ffb5",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD1_WAYPOINT_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "77a4cf1e5d2c987d071d6224ef32173444a5ebc5419f54283f14542b2fbb744b",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD1_WAYPOINT_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "2f7c7e7da15f8a16f83a1a66c426cb888fe4c14ca503ecf1e56bea68b507fd05",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD1_XTRACK_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "491a0ddf159d5e7e8ae575e50c8040f804041b516a5981a3e3d5e0e7a7951adb",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD1_XTRACK_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "4fd6247e4227c054407d0e63d6b459f5ddb172401c999853e673ca2483d940a8",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD2_ASPEED_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "982a03f1bcb229450f0f797e01cfe2beedaf22b72a3bdc993931afa2fc8fc546",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD2_ASPEED_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "0d72a5248b74865a9822b318dc2f91d0460174d1575aac3293c895a4ca41b475",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD2_CLIMBEFF_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "d1c9891f1bc49dafc9c93a412ef1da3e99d342dce656226dee1ee6d6f944c4f2",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD2_CLIMBEFF_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "ef8d1ff2b65e7867dd224173decdb605349b3399c356a1e3757e7ee0da2f0ec7",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD2_HOMEDIR_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "7285527d477eb7a2be4c9791c48ddf87b641559593b1ca2391fd638ce699ec50",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD2_HOMEDIR_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "a7d8f16675b1ca3fa9ed957e39a62d50a879d88d7d55db750bce529d8109c0a5",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD2_HOME_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "c22d83aed8aeed3b81e658c873b37a1b704bb133fa4b58960573ace54eed1975",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD2_HOME_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "4b9d689090ddf7c2a6000bd5d68f3e3f3204370bcba96d8777b93a858af86cb0",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD2_WAYPOINT_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "b4a55ff07cd93015cd78ee4d4bd75646e9e5aa170995bf31442a7e226e7bb15a",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD2_WAYPOINT_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "041ddb52bb491f522e38de02f59bd657f4d717a39d02a69b75e38cd9ed127549",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD2_XTRACK_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "7e0facdcf62b8d3882dafc378d8f81a5511ffb6b145315113f09c24ffdab85ee",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD2_XTRACK_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "a75ad59787d5168a4fc0bc96e8c6decbc20ed9592c693f50153523da5492cdd6",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD3_ASPEED_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "932c69e2f89749a8f0c9a27f681e24f93528ccf9e9dbcc2b7af0053bccac74ef",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD3_ASPEED_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "3f3fd0dd1c521a0ac6a93d295202e7ed508513dde6f0c3b7c8ccdb0732f68c56",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD3_CLIMBEFF_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "b71035c12648d3098d93257b12153144f429dcc449fe22f45ddc72effab4dbfd",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD3_CLIMBEFF_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "3ed0f508e962acc7b84bf2a90f95a2c5e13134945f0fd6cb32ad22b1e8168552",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD3_HOMEDIR_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "4b5d27d13f6eb404a64b9506dede35ca2ffba57973c35b68b8e25aef5d97c938",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD3_HOMEDIR_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "447867321162f5778dd214dbf03726b3cf5b41de27615ec3e0dfc8ab1db26266",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD3_HOME_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "5d682f52a15d55b2fccf9901155d4a0574060dda02c0f3bfd9d11b25ea686265",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD3_HOME_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "349f1db0014e15f2e9846c32790f469d8a8ba9503f0224bb35ff3255f1370baa",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD3_WAYPOINT_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "972cff75115a235ab65bdfb8c33dfc485cabe85f09c66358105d5d82739d0e38",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD3_WAYPOINT_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "16729a035313dc05d92f8d02db50968df25754e13088759bb662a9ac64c61be1",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD3_XTRACK_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "4eff4a4de625dd1fcef45b6dd22e266dc6a24a2be70fda2d3b8ad70a46bb4c33",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD3_XTRACK_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "3e2ea17fcc24e4955bc557ceba934a94e6dbf969bef1c8046c9116fc01852689",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD4_ASPEED_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "0f21be89f5579ab9ae6c3acb8be08a3af5297e42a2d14b5aeb17dbe2c6a9406b",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD4_ASPEED_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "b890d235b92341a4b51efc07494102295ed7bf8e287ccc04cfa108224886c3fc",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD4_CLIMBEFF_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "07997666b0b1e297ba4951c7cd3e577eb084a53061064079c7db1fd2f05db2e1",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD4_CLIMBEFF_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "a44c9f45bbebdfb160d7b781eef068703e38c37eab74011af0bb1511cc9216b6",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD4_HOMEDIR_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "eebf7a2adad839786c92b377a6363a65a2c3f4796057cfa8d128c9dd901caf56",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD4_HOMEDIR_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "63fb101c7761486f0f9987a0d073a109fc057eb627a692598b6e65b05e2919e3",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD4_HOME_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "82c17205d0597d0ccc1e0c489dbbf53bb8751a7e5611289e5263f1bbd7fa356d",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD4_HOME_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "66358e4af1fa9f3fe47fcb8c40d5f898bd5ef4b625d28ecb18f90945c737158a",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD4_WAYPOINT_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "118ca23385d409be7187c3e7c15ce9520ad0692a4cc6b1f6ee0b30f46f2c3171",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD4_WAYPOINT_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "4c3e4b8f401f0a1d44b315203f99c6976e41238649ec97bb1b69742c6ffc3cfd",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD4_XTRACK_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "168a44616600893b01886b466a354a692b18417c7f6547a6deeef745b09afac1",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD4_XTRACK_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "94be148ff5fe27e013f6c377a718d08e4adf354cfad3df7a994f1497385abc3d",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD1_ASPEED_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "316262c811e9791d8ae7f833739f609b6a78a7f85b058cd535e0bf3f5764df31",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD1_ASPEED_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "baef5e0c1dca05e6d4449dbd46bf10f9dcda8f6038321a769813a95a183a9096",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD1_CLIMBEFF_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "85416189955727f2c01de75a4ce594a892f2456e27eed478261bb9a13d42b3b2",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD1_CLIMBEFF_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "6039ef7f3879942fdcfbce0b5f51403f6c6d9d1d901d7568ec072e35a1c4c880",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD1_HOMEDIR_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "3a1936f91e71ce01c11c0c3d6d77d32825c5b52fe6c36e1821c3655632362178",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD1_HOMEDIR_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "adca4cf8ea00a257661867ef8628ae9ed520013d305654c4b85b4cff75986c35",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD1_HOME_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "471b95660a8d1e73b27bdf8c75658a54a4461e1065f216defe995c297e001659",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD1_HOME_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "c925f5365109d8fa9b7604e42fee0d77919d2d397e58346d9922f4871d33ffb5",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD1_WAYPOINT_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "77a4cf1e5d2c987d071d6224ef32173444a5ebc5419f54283f14542b2fbb744b",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD1_WAYPOINT_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "2f7c7e7da15f8a16f83a1a66c426cb888fe4c14ca503ecf1e56bea68b507fd05",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD1_XTRACK_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "491a0ddf159d5e7e8ae575e50c8040f804041b516a5981a3e3d5e0e7a7951adb",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD1_XTRACK_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "4fd6247e4227c054407d0e63d6b459f5ddb172401c999853e673ca2483d940a8",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD2_ASPEED_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "982a03f1bcb229450f0f797e01cfe2beedaf22b72a3bdc993931afa2fc8fc546",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD2_ASPEED_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "0d72a5248b74865a9822b318dc2f91d0460174d1575aac3293c895a4ca41b475",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD2_CLIMBEFF_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "d1c9891f1bc49dafc9c93a412ef1da3e99d342dce656226dee1ee6d6f944c4f2",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD2_CLIMBEFF_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "ef8d1ff2b65e7867dd224173decdb605349b3399c356a1e3757e7ee0da2f0ec7",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD2_HOMEDIR_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "7285527d477eb7a2be4c9791c48ddf87b641559593b1ca2391fd638ce699ec50",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD2_HOMEDIR_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "a7d8f16675b1ca3fa9ed957e39a62d50a879d88d7d55db750bce529d8109c0a5",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD2_HOME_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "c22d83aed8aeed3b81e658c873b37a1b704bb133fa4b58960573ace54eed1975",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD2_HOME_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "4b9d689090ddf7c2a6000bd5d68f3e3f3204370bcba96d8777b93a858af86cb0",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD2_WAYPOINT_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "b4a55ff07cd93015cd78ee4d4bd75646e9e5aa170995bf31442a7e226e7bb15a",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD2_WAYPOINT_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "041ddb52bb491f522e38de02f59bd657f4d717a39d02a69b75e38cd9ed127549",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD2_XTRACK_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "7e0facdcf62b8d3882dafc378d8f81a5511ffb6b145315113f09c24ffdab85ee",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD2_XTRACK_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "a75ad59787d5168a4fc0bc96e8c6decbc20ed9592c693f50153523da5492cdd6",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD3_ASPEED_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "932c69e2f89749a8f0c9a27f681e24f93528ccf9e9dbcc2b7af0053bccac74ef",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD3_ASPEED_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "3f3fd0dd1c521a0ac6a93d295202e7ed508513dde6f0c3b7c8ccdb0732f68c56",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD3_CLIMBEFF_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "b71035c12648d3098d93257b12153144f429dcc449fe22f45ddc72effab4dbfd",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD3_CLIMBEFF_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "3ed0f508e962acc7b84bf2a90f95a2c5e13134945f0fd6cb32ad22b1e8168552",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD3_HOMEDIR_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "4b5d27d13f6eb404a64b9506dede35ca2ffba57973c35b68b8e25aef5d97c938",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD3_HOMEDIR_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "447867321162f5778dd214dbf03726b3cf5b41de27615ec3e0dfc8ab1db26266",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD3_HOME_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "5d682f52a15d55b2fccf9901155d4a0574060dda02c0f3bfd9d11b25ea686265",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD3_HOME_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "349f1db0014e15f2e9846c32790f469d8a8ba9503f0224bb35ff3255f1370baa",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD3_WAYPOINT_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "972cff75115a235ab65bdfb8c33dfc485cabe85f09c66358105d5d82739d0e38",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD3_WAYPOINT_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "16729a035313dc05d92f8d02db50968df25754e13088759bb662a9ac64c61be1",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD3_XTRACK_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "4eff4a4de625dd1fcef45b6dd22e266dc6a24a2be70fda2d3b8ad70a46bb4c33",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD3_XTRACK_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "3e2ea17fcc24e4955bc557ceba934a94e6dbf969bef1c8046c9116fc01852689",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD4_ASPEED_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "0f21be89f5579ab9ae6c3acb8be08a3af5297e42a2d14b5aeb17dbe2c6a9406b",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD4_ASPEED_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "b890d235b92341a4b51efc07494102295ed7bf8e287ccc04cfa108224886c3fc",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD4_CLIMBEFF_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "07997666b0b1e297ba4951c7cd3e577eb084a53061064079c7db1fd2f05db2e1",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD4_CLIMBEFF_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "a44c9f45bbebdfb160d7b781eef068703e38c37eab74011af0bb1511cc9216b6",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD4_HOMEDIR_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "eebf7a2adad839786c92b377a6363a65a2c3f4796057cfa8d128c9dd901caf56",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD4_HOMEDIR_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "63fb101c7761486f0f9987a0d073a109fc057eb627a692598b6e65b05e2919e3",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD4_HOME_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "82c17205d0597d0ccc1e0c489dbbf53bb8751a7e5611289e5263f1bbd7fa356d",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD4_HOME_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "66358e4af1fa9f3fe47fcb8c40d5f898bd5ef4b625d28ecb18f90945c737158a",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD4_WAYPOINT_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "118ca23385d409be7187c3e7c15ce9520ad0692a4cc6b1f6ee0b30f46f2c3171",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD4_WAYPOINT_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "4c3e4b8f401f0a1d44b315203f99c6976e41238649ec97bb1b69742c6ffc3cfd",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD4_XTRACK_X",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "168a44616600893b01886b466a354a692b18417c7f6547a6deeef745b09afac1",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD4_XTRACK_Y",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "94be148ff5fe27e013f6c377a718d08e4adf354cfad3df7a994f1497385abc3d",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD1_ASPEED_X",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "316262c811e9791d8ae7f833739f609b6a78a7f85b058cd535e0bf3f5764df31",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD1_ASPEED_Y",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "baef5e0c1dca05e6d4449dbd46bf10f9dcda8f6038321a769813a95a183a9096",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD1_CLIMBEFF_X",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "85416189955727f2c01de75a4ce594a892f2456e27eed478261bb9a13d42b3b2",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD1_CLIMBEFF_Y",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "6039ef7f3879942fdcfbce0b5f51403f6c6d9d1d901d7568ec072e35a1c4c880",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD1_HOMEDIR_X",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "3a1936f91e71ce01c11c0c3d6d77d32825c5b52fe6c36e1821c3655632362178",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD1_HOMEDIR_Y",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "adca4cf8ea00a257661867ef8628ae9ed520013d305654c4b85b4cff75986c35",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD1_HOME_X",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "471b95660a8d1e73b27bdf8c75658a54a4461e1065f216defe995c297e001659",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD1_HOME_Y",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "c925f5365109d8fa9b7604e42fee0d77919d2d397e58346d9922f4871d33ffb5",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD1_WAYPOINT_X",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "77a4cf1e5d2c987d071d6224ef32173444a5ebc5419f54283f14542b2fbb744b",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD1_WAYPOINT_Y",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "2f7c7e7da15f8a16f83a1a66c426cb888fe4c14ca503ecf1e56bea68b507fd05",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD1_XTRACK_X",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "491a0ddf159d5e7e8ae575e50c8040f804041b516a5981a3e3d5e0e7a7951adb",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD1_XTRACK_Y",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "4fd6247e4227c054407d0e63d6b459f5ddb172401c999853e673ca2483d940a8",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD2_ASPEED_X",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "982a03f1bcb229450f0f797e01cfe2beedaf22b72a3bdc993931afa2fc8fc546",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD2_ASPEED_Y",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "0d72a5248b74865a9822b318dc2f91d0460174d1575aac3293c895a4ca41b475",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD2_CLIMBEFF_X",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "d1c9891f1bc49dafc9c93a412ef1da3e99d342dce656226dee1ee6d6f944c4f2",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD2_CLIMBEFF_Y",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "ef8d1ff2b65e7867dd224173decdb605349b3399c356a1e3757e7ee0da2f0ec7",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD2_HOMEDIR_X",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "7285527d477eb7a2be4c9791c48ddf87b641559593b1ca2391fd638ce699ec50",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD2_HOMEDIR_Y",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "a7d8f16675b1ca3fa9ed957e39a62d50a879d88d7d55db750bce529d8109c0a5",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD2_HOME_X",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "c22d83aed8aeed3b81e658c873b37a1b704bb133fa4b58960573ace54eed1975",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD2_HOME_Y",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "4b9d689090ddf7c2a6000bd5d68f3e3f3204370bcba96d8777b93a858af86cb0",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD2_WAYPOINT_X",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "b4a55ff07cd93015cd78ee4d4bd75646e9e5aa170995bf31442a7e226e7bb15a",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD2_WAYPOINT_Y",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "041ddb52bb491f522e38de02f59bd657f4d717a39d02a69b75e38cd9ed127549",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD2_XTRACK_X",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "7e0facdcf62b8d3882dafc378d8f81a5511ffb6b145315113f09c24ffdab85ee",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD2_XTRACK_Y",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "a75ad59787d5168a4fc0bc96e8c6decbc20ed9592c693f50153523da5492cdd6",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD3_ASPEED_X",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "932c69e2f89749a8f0c9a27f681e24f93528ccf9e9dbcc2b7af0053bccac74ef",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD3_ASPEED_Y",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "3f3fd0dd1c521a0ac6a93d295202e7ed508513dde6f0c3b7c8ccdb0732f68c56",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD3_CLIMBEFF_X",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "b71035c12648d3098d93257b12153144f429dcc449fe22f45ddc72effab4dbfd",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD3_CLIMBEFF_Y",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "3ed0f508e962acc7b84bf2a90f95a2c5e13134945f0fd6cb32ad22b1e8168552",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD3_HOMEDIR_X",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "4b5d27d13f6eb404a64b9506dede35ca2ffba57973c35b68b8e25aef5d97c938",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD3_HOMEDIR_Y",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "447867321162f5778dd214dbf03726b3cf5b41de27615ec3e0dfc8ab1db26266",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD3_HOME_X",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "5d682f52a15d55b2fccf9901155d4a0574060dda02c0f3bfd9d11b25ea686265",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD3_HOME_Y",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "349f1db0014e15f2e9846c32790f469d8a8ba9503f0224bb35ff3255f1370baa",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD3_WAYPOINT_X",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "972cff75115a235ab65bdfb8c33dfc485cabe85f09c66358105d5d82739d0e38",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD3_WAYPOINT_Y",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "16729a035313dc05d92f8d02db50968df25754e13088759bb662a9ac64c61be1",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD3_XTRACK_X",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "4eff4a4de625dd1fcef45b6dd22e266dc6a24a2be70fda2d3b8ad70a46bb4c33",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD3_XTRACK_Y",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "3e2ea17fcc24e4955bc557ceba934a94e6dbf969bef1c8046c9116fc01852689",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD4_ASPEED_X",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "0f21be89f5579ab9ae6c3acb8be08a3af5297e42a2d14b5aeb17dbe2c6a9406b",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD4_ASPEED_Y",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "b890d235b92341a4b51efc07494102295ed7bf8e287ccc04cfa108224886c3fc",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD4_CLIMBEFF_X",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "07997666b0b1e297ba4951c7cd3e577eb084a53061064079c7db1fd2f05db2e1",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD4_CLIMBEFF_Y",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "a44c9f45bbebdfb160d7b781eef068703e38c37eab74011af0bb1511cc9216b6",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD4_HOMEDIR_X",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "eebf7a2adad839786c92b377a6363a65a2c3f4796057cfa8d128c9dd901caf56",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD4_HOMEDIR_Y",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "63fb101c7761486f0f9987a0d073a109fc057eb627a692598b6e65b05e2919e3",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD4_HOME_X",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "82c17205d0597d0ccc1e0c489dbbf53bb8751a7e5611289e5263f1bbd7fa356d",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD4_HOME_Y",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "66358e4af1fa9f3fe47fcb8c40d5f898bd5ef4b625d28ecb18f90945c737158a",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD4_WAYPOINT_X",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "118ca23385d409be7187c3e7c15ce9520ad0692a4cc6b1f6ee0b30f46f2c3171",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD4_WAYPOINT_Y",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "4c3e4b8f401f0a1d44b315203f99c6976e41238649ec97bb1b69742c6ffc3cfd",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD4_XTRACK_X",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "1789d605e953a455a69b45a0323bf90ebd2805e40bbd658cbf78e6af5cfc8f56",
+      "recordSha256": "168a44616600893b01886b466a354a692b18417c7f6547a6deeef745b09afac1",
+      "english": "Horizontal position on screen",
+      "chinese": "在屏幕上的横向位置。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD4_XTRACK_Y",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "d87704e6115b4ec168c89764c7be989783d818c9c376f6e9e80b50f43a2e61c7",
+      "recordSha256": "94be148ff5fe27e013f6c377a718d08e4adf354cfad3df7a994f1497385abc3d",
+      "english": "Vertical position on screen",
+      "chinese": "在屏幕上的纵向位置。"
     }
   ]
 }

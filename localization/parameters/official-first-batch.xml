@@ -967,6 +967,42 @@
           <param humanName="RC_SNR_Y" name="OSD1_RC_SNR_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="ASPEED_X" name="OSD1_ASPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPEED_Y" name="OSD1_ASPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="CLIMBEFF_X" name="OSD1_CLIMBEFF_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="CLIMBEFF_Y" name="OSD1_CLIMBEFF_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HOMEDIR_X" name="OSD1_HOMEDIR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HOMEDIR_Y" name="OSD1_HOMEDIR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HOME_X" name="OSD1_HOME_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HOME_Y" name="OSD1_HOME_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="WAYPOINT_X" name="OSD1_WAYPOINT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="WAYPOINT_Y" name="OSD1_WAYPOINT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="XTRACK_X" name="OSD1_XTRACK_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="XTRACK_Y" name="OSD1_XTRACK_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -1258,6 +1294,42 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="RC_SNR_Y" name="OSD2_RC_SNR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ASPEED_X" name="OSD2_ASPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPEED_Y" name="OSD2_ASPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="CLIMBEFF_X" name="OSD2_CLIMBEFF_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="CLIMBEFF_Y" name="OSD2_CLIMBEFF_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HOMEDIR_X" name="OSD2_HOMEDIR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HOMEDIR_Y" name="OSD2_HOMEDIR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HOME_X" name="OSD2_HOME_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HOME_Y" name="OSD2_HOME_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="WAYPOINT_X" name="OSD2_WAYPOINT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="WAYPOINT_Y" name="OSD2_WAYPOINT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="XTRACK_X" name="OSD2_XTRACK_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="XTRACK_Y" name="OSD2_XTRACK_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -1553,6 +1625,42 @@
           <param humanName="RC_SNR_Y" name="OSD3_RC_SNR_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="ASPEED_X" name="OSD3_ASPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPEED_Y" name="OSD3_ASPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="CLIMBEFF_X" name="OSD3_CLIMBEFF_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="CLIMBEFF_Y" name="OSD3_CLIMBEFF_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HOMEDIR_X" name="OSD3_HOMEDIR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HOMEDIR_Y" name="OSD3_HOMEDIR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HOME_X" name="OSD3_HOME_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HOME_Y" name="OSD3_HOME_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="WAYPOINT_X" name="OSD3_WAYPOINT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="WAYPOINT_Y" name="OSD3_WAYPOINT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="XTRACK_X" name="OSD3_XTRACK_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="XTRACK_Y" name="OSD3_XTRACK_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -1844,6 +1952,42 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="RC_SNR_Y" name="OSD4_RC_SNR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ASPEED_X" name="OSD4_ASPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPEED_Y" name="OSD4_ASPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="CLIMBEFF_X" name="OSD4_CLIMBEFF_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="CLIMBEFF_Y" name="OSD4_CLIMBEFF_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HOMEDIR_X" name="OSD4_HOMEDIR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HOMEDIR_Y" name="OSD4_HOMEDIR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HOME_X" name="OSD4_HOME_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HOME_Y" name="OSD4_HOME_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="WAYPOINT_X" name="OSD4_WAYPOINT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="WAYPOINT_Y" name="OSD4_WAYPOINT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="XTRACK_X" name="OSD4_XTRACK_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="XTRACK_Y" name="OSD4_XTRACK_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -2903,6 +3047,42 @@
           <param humanName="RC_SNR_Y" name="OSD1_RC_SNR_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="ASPEED_X" name="OSD1_ASPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPEED_Y" name="OSD1_ASPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="CLIMBEFF_X" name="OSD1_CLIMBEFF_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="CLIMBEFF_Y" name="OSD1_CLIMBEFF_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HOMEDIR_X" name="OSD1_HOMEDIR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HOMEDIR_Y" name="OSD1_HOMEDIR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HOME_X" name="OSD1_HOME_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HOME_Y" name="OSD1_HOME_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="WAYPOINT_X" name="OSD1_WAYPOINT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="WAYPOINT_Y" name="OSD1_WAYPOINT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="XTRACK_X" name="OSD1_XTRACK_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="XTRACK_Y" name="OSD1_XTRACK_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -3194,6 +3374,42 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="RC_SNR_Y" name="OSD2_RC_SNR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ASPEED_X" name="OSD2_ASPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPEED_Y" name="OSD2_ASPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="CLIMBEFF_X" name="OSD2_CLIMBEFF_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="CLIMBEFF_Y" name="OSD2_CLIMBEFF_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HOMEDIR_X" name="OSD2_HOMEDIR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HOMEDIR_Y" name="OSD2_HOMEDIR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HOME_X" name="OSD2_HOME_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HOME_Y" name="OSD2_HOME_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="WAYPOINT_X" name="OSD2_WAYPOINT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="WAYPOINT_Y" name="OSD2_WAYPOINT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="XTRACK_X" name="OSD2_XTRACK_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="XTRACK_Y" name="OSD2_XTRACK_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -3489,6 +3705,42 @@
           <param humanName="RC_SNR_Y" name="OSD3_RC_SNR_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="ASPEED_X" name="OSD3_ASPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPEED_Y" name="OSD3_ASPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="CLIMBEFF_X" name="OSD3_CLIMBEFF_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="CLIMBEFF_Y" name="OSD3_CLIMBEFF_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HOMEDIR_X" name="OSD3_HOMEDIR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HOMEDIR_Y" name="OSD3_HOMEDIR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HOME_X" name="OSD3_HOME_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HOME_Y" name="OSD3_HOME_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="WAYPOINT_X" name="OSD3_WAYPOINT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="WAYPOINT_Y" name="OSD3_WAYPOINT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="XTRACK_X" name="OSD3_XTRACK_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="XTRACK_Y" name="OSD3_XTRACK_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -3780,6 +4032,42 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="RC_SNR_Y" name="OSD4_RC_SNR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ASPEED_X" name="OSD4_ASPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPEED_Y" name="OSD4_ASPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="CLIMBEFF_X" name="OSD4_CLIMBEFF_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="CLIMBEFF_Y" name="OSD4_CLIMBEFF_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HOMEDIR_X" name="OSD4_HOMEDIR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HOMEDIR_Y" name="OSD4_HOMEDIR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HOME_X" name="OSD4_HOME_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HOME_Y" name="OSD4_HOME_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="WAYPOINT_X" name="OSD4_WAYPOINT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="WAYPOINT_Y" name="OSD4_WAYPOINT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="XTRACK_X" name="OSD4_XTRACK_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="XTRACK_Y" name="OSD4_XTRACK_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -4929,6 +5217,42 @@
           <param humanName="RC_SNR_Y" name="OSD1_RC_SNR_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="ASPEED_X" name="OSD1_ASPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPEED_Y" name="OSD1_ASPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="CLIMBEFF_X" name="OSD1_CLIMBEFF_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="CLIMBEFF_Y" name="OSD1_CLIMBEFF_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HOMEDIR_X" name="OSD1_HOMEDIR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HOMEDIR_Y" name="OSD1_HOMEDIR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HOME_X" name="OSD1_HOME_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HOME_Y" name="OSD1_HOME_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="WAYPOINT_X" name="OSD1_WAYPOINT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="WAYPOINT_Y" name="OSD1_WAYPOINT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="XTRACK_X" name="OSD1_XTRACK_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="XTRACK_Y" name="OSD1_XTRACK_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -5220,6 +5544,42 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="RC_SNR_Y" name="OSD2_RC_SNR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ASPEED_X" name="OSD2_ASPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPEED_Y" name="OSD2_ASPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="CLIMBEFF_X" name="OSD2_CLIMBEFF_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="CLIMBEFF_Y" name="OSD2_CLIMBEFF_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HOMEDIR_X" name="OSD2_HOMEDIR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HOMEDIR_Y" name="OSD2_HOMEDIR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HOME_X" name="OSD2_HOME_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HOME_Y" name="OSD2_HOME_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="WAYPOINT_X" name="OSD2_WAYPOINT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="WAYPOINT_Y" name="OSD2_WAYPOINT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="XTRACK_X" name="OSD2_XTRACK_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="XTRACK_Y" name="OSD2_XTRACK_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -5515,6 +5875,42 @@
           <param humanName="RC_SNR_Y" name="OSD3_RC_SNR_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="ASPEED_X" name="OSD3_ASPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPEED_Y" name="OSD3_ASPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="CLIMBEFF_X" name="OSD3_CLIMBEFF_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="CLIMBEFF_Y" name="OSD3_CLIMBEFF_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HOMEDIR_X" name="OSD3_HOMEDIR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HOMEDIR_Y" name="OSD3_HOMEDIR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HOME_X" name="OSD3_HOME_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HOME_Y" name="OSD3_HOME_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="WAYPOINT_X" name="OSD3_WAYPOINT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="WAYPOINT_Y" name="OSD3_WAYPOINT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="XTRACK_X" name="OSD3_XTRACK_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="XTRACK_Y" name="OSD3_XTRACK_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -5806,6 +6202,42 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="RC_SNR_Y" name="OSD4_RC_SNR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ASPEED_X" name="OSD4_ASPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPEED_Y" name="OSD4_ASPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="CLIMBEFF_X" name="OSD4_CLIMBEFF_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="CLIMBEFF_Y" name="OSD4_CLIMBEFF_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HOMEDIR_X" name="OSD4_HOMEDIR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HOMEDIR_Y" name="OSD4_HOMEDIR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HOME_X" name="OSD4_HOME_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HOME_Y" name="OSD4_HOME_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="WAYPOINT_X" name="OSD4_WAYPOINT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="WAYPOINT_Y" name="OSD4_WAYPOINT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="XTRACK_X" name="OSD4_XTRACK_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="XTRACK_Y" name="OSD4_XTRACK_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -6943,6 +7375,42 @@
           <param humanName="RC_SNR_Y" name="OSD1_RC_SNR_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="ASPEED_X" name="OSD1_ASPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPEED_Y" name="OSD1_ASPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="CLIMBEFF_X" name="OSD1_CLIMBEFF_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="CLIMBEFF_Y" name="OSD1_CLIMBEFF_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HOMEDIR_X" name="OSD1_HOMEDIR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HOMEDIR_Y" name="OSD1_HOMEDIR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HOME_X" name="OSD1_HOME_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HOME_Y" name="OSD1_HOME_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="WAYPOINT_X" name="OSD1_WAYPOINT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="WAYPOINT_Y" name="OSD1_WAYPOINT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="XTRACK_X" name="OSD1_XTRACK_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="XTRACK_Y" name="OSD1_XTRACK_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -7234,6 +7702,42 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="RC_SNR_Y" name="OSD2_RC_SNR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ASPEED_X" name="OSD2_ASPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPEED_Y" name="OSD2_ASPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="CLIMBEFF_X" name="OSD2_CLIMBEFF_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="CLIMBEFF_Y" name="OSD2_CLIMBEFF_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HOMEDIR_X" name="OSD2_HOMEDIR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HOMEDIR_Y" name="OSD2_HOMEDIR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HOME_X" name="OSD2_HOME_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HOME_Y" name="OSD2_HOME_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="WAYPOINT_X" name="OSD2_WAYPOINT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="WAYPOINT_Y" name="OSD2_WAYPOINT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="XTRACK_X" name="OSD2_XTRACK_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="XTRACK_Y" name="OSD2_XTRACK_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -7529,6 +8033,42 @@
           <param humanName="RC_SNR_Y" name="OSD3_RC_SNR_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="ASPEED_X" name="OSD3_ASPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPEED_Y" name="OSD3_ASPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="CLIMBEFF_X" name="OSD3_CLIMBEFF_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="CLIMBEFF_Y" name="OSD3_CLIMBEFF_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HOMEDIR_X" name="OSD3_HOMEDIR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HOMEDIR_Y" name="OSD3_HOMEDIR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HOME_X" name="OSD3_HOME_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HOME_Y" name="OSD3_HOME_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="WAYPOINT_X" name="OSD3_WAYPOINT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="WAYPOINT_Y" name="OSD3_WAYPOINT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="XTRACK_X" name="OSD3_XTRACK_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="XTRACK_Y" name="OSD3_XTRACK_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -7820,6 +8360,42 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="RC_SNR_Y" name="OSD4_RC_SNR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ASPEED_X" name="OSD4_ASPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPEED_Y" name="OSD4_ASPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="CLIMBEFF_X" name="OSD4_CLIMBEFF_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="CLIMBEFF_Y" name="OSD4_CLIMBEFF_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HOMEDIR_X" name="OSD4_HOMEDIR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HOMEDIR_Y" name="OSD4_HOMEDIR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HOME_X" name="OSD4_HOME_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HOME_Y" name="OSD4_HOME_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="WAYPOINT_X" name="OSD4_WAYPOINT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="WAYPOINT_Y" name="OSD4_WAYPOINT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="XTRACK_X" name="OSD4_XTRACK_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="XTRACK_Y" name="OSD4_XTRACK_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -8934,6 +9510,42 @@
           <param humanName="RC_SNR_Y" name="OSD1_RC_SNR_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="ASPEED_X" name="OSD1_ASPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPEED_Y" name="OSD1_ASPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="CLIMBEFF_X" name="OSD1_CLIMBEFF_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="CLIMBEFF_Y" name="OSD1_CLIMBEFF_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HOMEDIR_X" name="OSD1_HOMEDIR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HOMEDIR_Y" name="OSD1_HOMEDIR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HOME_X" name="OSD1_HOME_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HOME_Y" name="OSD1_HOME_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="WAYPOINT_X" name="OSD1_WAYPOINT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="WAYPOINT_Y" name="OSD1_WAYPOINT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="XTRACK_X" name="OSD1_XTRACK_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="XTRACK_Y" name="OSD1_XTRACK_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -9225,6 +9837,42 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="RC_SNR_Y" name="OSD2_RC_SNR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ASPEED_X" name="OSD2_ASPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPEED_Y" name="OSD2_ASPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="CLIMBEFF_X" name="OSD2_CLIMBEFF_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="CLIMBEFF_Y" name="OSD2_CLIMBEFF_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HOMEDIR_X" name="OSD2_HOMEDIR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HOMEDIR_Y" name="OSD2_HOMEDIR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HOME_X" name="OSD2_HOME_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HOME_Y" name="OSD2_HOME_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="WAYPOINT_X" name="OSD2_WAYPOINT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="WAYPOINT_Y" name="OSD2_WAYPOINT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="XTRACK_X" name="OSD2_XTRACK_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="XTRACK_Y" name="OSD2_XTRACK_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -9520,6 +10168,42 @@
           <param humanName="RC_SNR_Y" name="OSD3_RC_SNR_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="ASPEED_X" name="OSD3_ASPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPEED_Y" name="OSD3_ASPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="CLIMBEFF_X" name="OSD3_CLIMBEFF_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="CLIMBEFF_Y" name="OSD3_CLIMBEFF_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HOMEDIR_X" name="OSD3_HOMEDIR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HOMEDIR_Y" name="OSD3_HOMEDIR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HOME_X" name="OSD3_HOME_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HOME_Y" name="OSD3_HOME_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="WAYPOINT_X" name="OSD3_WAYPOINT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="WAYPOINT_Y" name="OSD3_WAYPOINT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="XTRACK_X" name="OSD3_XTRACK_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="XTRACK_Y" name="OSD3_XTRACK_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -9811,6 +10495,42 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="RC_SNR_Y" name="OSD4_RC_SNR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ASPEED_X" name="OSD4_ASPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPEED_Y" name="OSD4_ASPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="CLIMBEFF_X" name="OSD4_CLIMBEFF_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="CLIMBEFF_Y" name="OSD4_CLIMBEFF_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HOMEDIR_X" name="OSD4_HOMEDIR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HOMEDIR_Y" name="OSD4_HOMEDIR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HOME_X" name="OSD4_HOME_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HOME_Y" name="OSD4_HOME_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="WAYPOINT_X" name="OSD4_WAYPOINT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="WAYPOINT_Y" name="OSD4_WAYPOINT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="XTRACK_X" name="OSD4_XTRACK_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="XTRACK_Y" name="OSD4_XTRACK_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -11024,6 +11744,42 @@
           <param humanName="RC_SNR_Y" name="OSD1_RC_SNR_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="ASPEED_X" name="OSD1_ASPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPEED_Y" name="OSD1_ASPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="CLIMBEFF_X" name="OSD1_CLIMBEFF_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="CLIMBEFF_Y" name="OSD1_CLIMBEFF_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HOMEDIR_X" name="OSD1_HOMEDIR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HOMEDIR_Y" name="OSD1_HOMEDIR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HOME_X" name="OSD1_HOME_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HOME_Y" name="OSD1_HOME_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="WAYPOINT_X" name="OSD1_WAYPOINT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="WAYPOINT_Y" name="OSD1_WAYPOINT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="XTRACK_X" name="OSD1_XTRACK_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="XTRACK_Y" name="OSD1_XTRACK_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -11315,6 +12071,42 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="RC_SNR_Y" name="OSD2_RC_SNR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ASPEED_X" name="OSD2_ASPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPEED_Y" name="OSD2_ASPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="CLIMBEFF_X" name="OSD2_CLIMBEFF_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="CLIMBEFF_Y" name="OSD2_CLIMBEFF_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HOMEDIR_X" name="OSD2_HOMEDIR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HOMEDIR_Y" name="OSD2_HOMEDIR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HOME_X" name="OSD2_HOME_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HOME_Y" name="OSD2_HOME_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="WAYPOINT_X" name="OSD2_WAYPOINT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="WAYPOINT_Y" name="OSD2_WAYPOINT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="XTRACK_X" name="OSD2_XTRACK_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="XTRACK_Y" name="OSD2_XTRACK_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -11610,6 +12402,42 @@
           <param humanName="RC_SNR_Y" name="OSD3_RC_SNR_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="ASPEED_X" name="OSD3_ASPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPEED_Y" name="OSD3_ASPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="CLIMBEFF_X" name="OSD3_CLIMBEFF_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="CLIMBEFF_Y" name="OSD3_CLIMBEFF_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HOMEDIR_X" name="OSD3_HOMEDIR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HOMEDIR_Y" name="OSD3_HOMEDIR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HOME_X" name="OSD3_HOME_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HOME_Y" name="OSD3_HOME_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="WAYPOINT_X" name="OSD3_WAYPOINT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="WAYPOINT_Y" name="OSD3_WAYPOINT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="XTRACK_X" name="OSD3_XTRACK_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="XTRACK_Y" name="OSD3_XTRACK_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -11901,6 +12729,42 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="RC_SNR_Y" name="OSD4_RC_SNR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ASPEED_X" name="OSD4_ASPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPEED_Y" name="OSD4_ASPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="CLIMBEFF_X" name="OSD4_CLIMBEFF_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="CLIMBEFF_Y" name="OSD4_CLIMBEFF_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HOMEDIR_X" name="OSD4_HOMEDIR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HOMEDIR_Y" name="OSD4_HOMEDIR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HOME_X" name="OSD4_HOME_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HOME_Y" name="OSD4_HOME_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="WAYPOINT_X" name="OSD4_WAYPOINT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="WAYPOINT_Y" name="OSD4_WAYPOINT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="XTRACK_X" name="OSD4_XTRACK_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="XTRACK_Y" name="OSD4_XTRACK_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -12586,6 +13450,42 @@
           <param humanName="RC_SNR_Y" name="OSD1_RC_SNR_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="ASPEED_X" name="OSD1_ASPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPEED_Y" name="OSD1_ASPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="CLIMBEFF_X" name="OSD1_CLIMBEFF_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="CLIMBEFF_Y" name="OSD1_CLIMBEFF_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HOMEDIR_X" name="OSD1_HOMEDIR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HOMEDIR_Y" name="OSD1_HOMEDIR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HOME_X" name="OSD1_HOME_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HOME_Y" name="OSD1_HOME_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="WAYPOINT_X" name="OSD1_WAYPOINT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="WAYPOINT_Y" name="OSD1_WAYPOINT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="XTRACK_X" name="OSD1_XTRACK_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="XTRACK_Y" name="OSD1_XTRACK_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -12877,6 +13777,42 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="RC_SNR_Y" name="OSD2_RC_SNR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ASPEED_X" name="OSD2_ASPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPEED_Y" name="OSD2_ASPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="CLIMBEFF_X" name="OSD2_CLIMBEFF_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="CLIMBEFF_Y" name="OSD2_CLIMBEFF_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HOMEDIR_X" name="OSD2_HOMEDIR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HOMEDIR_Y" name="OSD2_HOMEDIR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HOME_X" name="OSD2_HOME_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HOME_Y" name="OSD2_HOME_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="WAYPOINT_X" name="OSD2_WAYPOINT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="WAYPOINT_Y" name="OSD2_WAYPOINT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="XTRACK_X" name="OSD2_XTRACK_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="XTRACK_Y" name="OSD2_XTRACK_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
@@ -13172,6 +14108,42 @@
           <param humanName="RC_SNR_Y" name="OSD3_RC_SNR_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="ASPEED_X" name="OSD3_ASPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPEED_Y" name="OSD3_ASPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="CLIMBEFF_X" name="OSD3_CLIMBEFF_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="CLIMBEFF_Y" name="OSD3_CLIMBEFF_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HOMEDIR_X" name="OSD3_HOMEDIR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HOMEDIR_Y" name="OSD3_HOMEDIR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HOME_X" name="OSD3_HOME_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HOME_Y" name="OSD3_HOME_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="WAYPOINT_X" name="OSD3_WAYPOINT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="WAYPOINT_Y" name="OSD3_WAYPOINT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="XTRACK_X" name="OSD3_XTRACK_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="XTRACK_Y" name="OSD3_XTRACK_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -13463,6 +14435,42 @@
             <field name="Range">0 59</field>
           </param>
           <param humanName="RC_SNR_Y" name="OSD4_RC_SNR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="ASPEED_X" name="OSD4_ASPEED_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="ASPEED_Y" name="OSD4_ASPEED_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="CLIMBEFF_X" name="OSD4_CLIMBEFF_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="CLIMBEFF_Y" name="OSD4_CLIMBEFF_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HOMEDIR_X" name="OSD4_HOMEDIR_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HOMEDIR_Y" name="OSD4_HOMEDIR_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="HOME_X" name="OSD4_HOME_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="HOME_Y" name="OSD4_HOME_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="WAYPOINT_X" name="OSD4_WAYPOINT_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="WAYPOINT_Y" name="OSD4_WAYPOINT_Y" documentation="Vertical position on screen">
+            <field name="Range">0 21</field>
+          </param>
+          <param humanName="XTRACK_X" name="OSD4_XTRACK_X" documentation="Horizontal position on screen">
+            <field name="Range">0 59</field>
+          </param>
+          <param humanName="XTRACK_Y" name="OSD4_XTRACK_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
         </parameters>
