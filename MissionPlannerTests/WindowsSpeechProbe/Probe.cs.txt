@@ -190,7 +190,7 @@ internal static class Probe
 
     private static void CheckPriority()
     {
-        bool ordinaryObserved = false, interruptionObserved = false;
+        bool ordinaryObserved = false;
         for (int i = 0; i < 3 && !ordinaryObserved; i++)
         {
             using (var output = new NativeOutput())
@@ -211,37 +211,45 @@ internal static class Probe
         }
         if (!ordinaryObserved) Unverified("三次尝试均未观察到普通播报期间的试听拒绝。");
 
-        for (int i = 0; i < 3 && !interruptionObserved; i++)
+        using (var output = new NativeOutput())
         {
-            using (var output = new NativeOutput())
+            Require(output.Speech.TryPreviewChineseVoice(), "空闲时试听未入队。");
+            var preview = output.FirstStarted();
+            // 与正式告警入口相同，先检查就绪状态。每组只提交这一次告警。
+            if (!output.Speech.IsReady)
             {
-                Require(output.Speech.TryPreviewChineseVoice(), "空闲时试听未入队。");
-                var preview = output.FirstStarted();
-                if (preview.IsCompleted) { output.Finished(1).Single().RequireSuccess(); continue; }
-                // 与正式固件告警入口保持先检查 IsReady 再入队的顺序。
-                if (!output.Speech.IsReady)
-                {
-                    if (preview.IsCompleted) { output.Finished(1).Single().RequireSuccess(); continue; }
-                    throw new InvalidOperationException("试听占用了正式播报的就绪门槛。");
-                }
-                Require(output.Speech.TrySpeakAsync(AlertText), "试听中到达的正式播报未入队。");
-                var finished = output.Finished(2);
-                var previewEnd = finished.Single(t => ReferenceEquals(t.Prompt, preview));
-                var alertEnd = finished.Single(t => !ReferenceEquals(t.Prompt, preview));
-                alertEnd.RequireSuccess();
-                CheckSpokenText(alertEnd, AlertText);
-                if (previewEnd.Cancelled)
-                {
-                    Require(previewEnd.Error == null || previewEnd.Error is OperationCanceledException,
-                        "试听因后端错误结束，不能计为被告警打断。");
-                    Require(previewEnd.Completed < alertEnd.Completed, "取消试听和完成告警的事件次序异常。");
-                    interruptionObserved = true;
-                    Console.WriteLine("事件  试听已开始 → 同一试听被取消 → 告警正常完成");
-                }
-                else previewEnd.RequireSuccess();
-                output.CheckWave();
+                if (!preview.IsCompleted) throw new InvalidOperationException("试听占用了正式播报的就绪门槛。");
+                output.Finished(1).Single().RequireSuccess();
+                Unverified("试听已结束，检查时尚未就绪，未提交告警。");
+                return;
             }
+            bool previewWasActive = !preview.IsCompleted;
+            Require(output.Speech.TrySpeakAsync(AlertText), "正式播报未入队。");
+            var finished = output.Finished(2);
+            var previewEnd = finished.Single(t => ReferenceEquals(t.Prompt, preview));
+            var alertEnd = finished.Single(t => !ReferenceEquals(t.Prompt, preview));
+            Console.WriteLine("提示对应  试听 P{0}，正式告警 P{1}", previewEnd.Id, alertEnd.Id);
+            alertEnd.RequireSuccess();
+            CheckSpokenText(alertEnd, AlertText);
+            if (previewEnd.Cancelled)
+            {
+                Require(previewEnd.Error == null || previewEnd.Error is OperationCanceledException,
+                    "试听收到异步错误，不能计为被告警打断。");
+                Require(previewWasActive && previewEnd.CompletionOrder < alertEnd.CompletionOrder,
+                    "未观察到活动试听由本次告警打断所需的事件顺序。");
+                Console.WriteLine("事件  已开始的试听被取消，随后正式告警正常完成一次。");
+            }
+            else
+            {
+                previewEnd.RequireSuccess();
+                Unverified("试听自然结束，本次未观察到告警打断。");
+            }
+
+            // 此流只有试听和告警。开始回调可能滞后，只认告警开始后追加的完整 PCM 帧。
+            long signalFrames = output.CheckWave(alertEnd.WaveLengthAtStart ?? long.MaxValue);
+            if (signalFrames == 0) Unverified("未观察到可单独归于正式告警的非静音帧。");
+            else Console.WriteLine("正式告警 P{0}  从 WAV 字节偏移 {1} 起有 {2} 个非静音 PCM 帧。",
+                alertEnd.Id, alertEnd.WaveLengthAtStart, signalFrames);
         }
-        if (!interruptionObserved) Unverified("短试听自然结束，三次尝试未取得同一提示被告警取消的事件。");
     }
 }

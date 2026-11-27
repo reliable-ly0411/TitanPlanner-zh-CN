@@ -15,8 +15,9 @@ internal sealed class NativeOutput : IDisposable
     internal sealed class Trace
     {
         internal Prompt Prompt;
-        internal bool Started, Cancelled;
-        internal int Completed;
+        internal int Id, CompletionCount, CompletionOrder;
+        internal bool Cancelled;
+        internal long? WaveLengthAtStart;
         internal Exception Error;
         internal readonly HashSet<string> Voices = new HashSet<string>(StringComparer.Ordinal);
         internal readonly StringBuilder Words = new StringBuilder();
@@ -48,8 +49,9 @@ internal sealed class NativeOutput : IDisposable
     internal readonly SpeechSynthesizer Synth;
     private readonly MemoryStream wave = new MemoryStream();
     private readonly List<Trace> traces = new List<Trace>();
+    private readonly List<string> completionLog = new List<string>();
     private readonly object gate = new object();
-    private int completed;
+    private int completed, completedAtReady, expectedCount;
 
     internal NativeOutput()
     {
@@ -60,15 +62,31 @@ internal sealed class NativeOutput : IDisposable
             var field = typeof(Speech).GetField("_speechwindows", BindingFlags.Instance | BindingFlags.NonPublic);
             Synth = field?.GetValue(Speech) as SpeechSynthesizer ??
                 throw new InvalidOperationException("无法取得 Windows 播报后端。");
-            Synth.SetOutputToWaveStream(wave);
-            Synth.SpeakStarted += (s, e) => Record(e.Prompt, trace => trace.Started = true);
+            var sink = Stream.Synchronized(wave);
+            Synth.SetOutputToWaveStream(sink);
+            Synth.SpeakStarted += (s, e) => Record(e.Prompt, trace => trace.WaveLengthAtStart = sink.Length);
+            Synth.StateChanged += (s, e) =>
+            {
+                if (e.State != SynthesizerState.Ready) return;
+                lock (gate)
+                {
+                    completedAtReady = completed;
+                    Monitor.PulseAll(gate);
+                }
+            };
             Synth.VoiceChange += (s, e) => Record(e.Prompt, trace => trace.Voices.Add(e.Voice.Id));
             Synth.SpeakProgress += (s, e) => Record(e.Prompt, trace => trace.Words.Append(e.Text));
             Synth.SpeakCompleted += (s, e) => Record(e.Prompt, trace =>
             {
-                trace.Cancelled = e.Cancelled;
-                trace.Error = e.Error;
-                trace.Completed = ++completed;
+                int order = ++completed;
+                if (++trace.CompletionCount == 1)
+                {
+                    trace.CompletionOrder = order;
+                    trace.Cancelled = e.Cancelled;
+                    trace.Error = e.Error;
+                }
+                completionLog.Add(string.Format("完成事件  P{0}，顺序 {1}，本提示第 {2} 次，Cancelled={3}，Error={4}",
+                    trace.Id, order, trace.CompletionCount, e.Cancelled, e.Error?.GetType().Name ?? "无"));
             });
         }
         catch
@@ -86,7 +104,7 @@ internal sealed class NativeOutput : IDisposable
             var trace = traces.Find(item => ReferenceEquals(item.Prompt, prompt));
             if (trace == null)
             {
-                trace = new Trace { Prompt = prompt };
+                trace = new Trace { Id = traces.Count + 1, Prompt = prompt };
                 traces.Add(trace);
             }
             update(trace);
@@ -110,12 +128,23 @@ internal sealed class NativeOutput : IDisposable
         }
     }
 
-    internal Prompt FirstStarted() => WaitFor(() => traces.FirstOrDefault(t => t.Started)?.Prompt);
+    internal Prompt FirstStarted() => WaitFor(() => traces.FirstOrDefault(t => t.WaveLengthAtStart.HasValue)?.Prompt);
 
-    internal Trace[] Finished(int count) => WaitFor(() => completed >= count
-        ? traces.Where(t => t.Completed > 0).OrderBy(t => t.Completed).ToArray() : null);
+    private void CheckCompletionCounts(int count)
+    {
+        if (traces.Count > count || traces.Any(t => t.CompletionCount > 1))
+            throw new InvalidDataException("观察到额外提示或同一提示重复完成，请核对完成事件中的提示编号。");
+    }
 
-    internal long CheckWave()
+    internal Trace[] Finished(int count) => WaitFor(() =>
+    {
+        CheckCompletionCounts(count);
+        if (completedAtReady != count || traces.Count != count || traces.Any(t => t.CompletionCount != 1)) return null;
+        expectedCount = count;
+        return traces.OrderBy(t => t.CompletionOrder).ToArray();
+    });
+
+    internal long CheckWave(long firstByte = 0)
     {
         // 先从合成器解除流，让真实 WAV 头和数据长度落定。
         Synth.SetOutputToNull();
@@ -128,7 +157,7 @@ internal sealed class NativeOutput : IDisposable
             bool pcm = false, signal = false;
             ushort bits = 0, channels = 0, block = 0;
             uint rate = 0;
-            long frames = 0;
+            long frames = 0, signalFramesFromOffset = 0;
             while (reader.BaseStream.Position + 8 <= bytes.Length)
             {
                 string id = tag();
@@ -151,19 +180,36 @@ internal sealed class NativeOutput : IDisposable
                     if (!pcm || size % block != 0) throw new InvalidDataException("PCM 格式或数据块无效。");
                     frames += size / block;
                     while (reader.BaseStream.Position < end)
-                        if (reader.ReadByte() != (bits == 8 ? 128 : 0)) signal = true;
+                    {
+                        long frameStart = reader.BaseStream.Position;
+                        bool hasSignal = false;
+                        for (int i = 0; i < block; i++)
+                            if (reader.ReadByte() != (bits == 8 ? 128 : 0)) hasSignal = true;
+                        if (!hasSignal) continue;
+                        signal = true;
+                        if (frameStart >= firstByte) signalFramesFromOffset++;
+                    }
                 }
                 reader.BaseStream.Position = end + (size & 1);
             }
             if (!pcm || !signal) throw new InvalidDataException("未观察到符合约定格式的非静音 PCM 样本。");
-            Console.WriteLine("WAV  {0} Hz，{1} 位，{2} 声道，{3} 帧非空音频", rate, bits, channels, frames);
-            return frames;
+            Console.WriteLine("WAV  {0} Hz，{1} 位，{2} 声道，共 {3} 帧", rate, bits, channels, frames);
+            return signalFramesFromOffset;
         }
     }
 
     public void Dispose()
     {
         try { Speech.Dispose(); }
-        finally { wave.Dispose(); }
+        finally
+        {
+            wave.Dispose();
+            // 合成结束后才打印，避免控制台输出延迟产品的完成回调。
+            lock (gate)
+            {
+                foreach (var line in completionLog) Console.WriteLine(line);
+                if (expectedCount > 0) CheckCompletionCounts(expectedCount);
+            }
+        }
     }
 }
