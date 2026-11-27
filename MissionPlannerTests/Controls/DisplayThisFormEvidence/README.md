@@ -75,3 +75,22 @@ dotnet test MissionPlannerTests\MissionPlannerTests.csproj -c Release --filter "
 ```
 
 本分支预期 26 项（20 弹窗 + 6 字段呈现），仍应实测左/右键选择、搜索后返回、长字段/值、系统 DPI、主题以及 HUD/曲线两个入口。与后续 #19 状态分支合并时，保留独立的状态/弹窗布局用例，删除或协调旧混合测试，避免继续使用旧弹窗的全宽名称假设。
+
+### #42 键盘补充（独立于分栏及翻译）
+
+基线 `f47f7bbb8` 的真实弹窗可用键盘输入 `alt` 搜到唯一结果，但 Tab、方向键、空格及 Enter 都无法触发该行；相同坐标鼠标单击可回调原键 `alt`。隔离 Xvfb 96 和 120 DPI 都复现。
+
+本补丁仅让选择区接收焦点：Tab 与 Shift-Tab 可在搜索框和选择区之间切换，当前行显示主题感知焦点边框。选择区内，上下键及 Home/End 按筛选后的原顺序定位并滚动到可见区域，空格复用原勾选回调。Enter 不变；右键仍先调用原处理器再回调，左键行为、键、组、搜索、列布局和保存绑定均不改变。没有新增 UIA/screen reader 行语义。
+
+`keyboard.cs.txt` 通过原生 X 输入验证实际 WinForms 选择器，每个 DPI **36/36**（420×156 深色和 880×280 浅色），含滚动与行几何不变、搜索结果变化、焦点边框像素、左右键回调、两个方向 Tab 离开和空结果。仅主题/遥测最小替身，未触碰硬件。Linux 120 DPI 不能替代 Windows 原生 125% 验收。
+
+后续回归：`9e72d764` 在 X11 真实长按空格 1 秒会因自动重复反复勾选；选择最后一行后从宽窗缩窄，焦点保留但勾选框可落在视口外。现在空格松键只触发一次，失焦取消待处理按键，下次按键仍可用。尺寸、字体或 DPI 重排后，只在选择区拥有焦点时滚回活动行；手动滚动仍可离开该行，不改变活动项。原测试加长按、重复独立按键、失焦、宽窄重排和滚轮断言，共 **51/51**。这仍不是原生 Windows 验收。
+
+在专用的隔离 Xvfb 显示中复跑，**不要给个人正在使用的 DISPLAY 发送输入**：
+
+```sh
+DISPLAY=:221 DISPLAY_KEYBOARD_ISOLATED=yes \
+  DISPLAY_NET472_REFS=/path/to/net472 \
+  DISPLAY_ROSLYN_CSC=/path/to/roslyn/net472/csc.exe \
+  bash MissionPlannerTests/Controls/DisplayThisFormEvidence/run-keyboard.sh
+```

@@ -38,6 +38,8 @@ namespace MissionPlanner.Controls
         private bool _resourcesDisposed;
         private bool _mouseInside;
         private DisplayItem _hoveredItem;
+        private DisplayItem _keyboardItem;
+        private DisplayItem _spacePressedItem;
         private string _hoveredHeader;
 
         public DisplayThisForm(Func<string, bool> isChecked, EventHandler checkChangedHandler,
@@ -70,15 +72,28 @@ namespace MissionPlanner.Controls
         {
             _searchBox = new PlaceholderTextBox();
             _searchBox.Dock = DockStyle.Top;
+            _searchBox.TabIndex = 0;
             _searchBox.Font = new Font(this.Font.FontFamily, 10);
             _searchBox.PlaceholderText = UiText.Translate("Search");
             _searchBox.PlaceholderColor = Color.Gray;
             _searchBox.TextChanged += SearchBox_TextChanged;
+            _searchBox.EditorKeyDown += ChooserTabKeyDown;
             _searchBox.MinimumSize = new Size(0, 28);
             _searchBox.Height = 28;
 
             _contentPanel = new DoubleBufferedPanel();
             _contentPanel.Dock = DockStyle.Fill;
+            _contentPanel.TabIndex = 1;
+            _contentPanel.GotFocus += (sender, e) => FocusKeyboardRow();
+            _contentPanel.LostFocus += (sender, e) =>
+            {
+                _spacePressedItem = null;
+                _contentPanel.Invalidate();
+            };
+            _contentPanel.KeyDown += ChooserTabKeyDown;
+            _contentPanel.KeyDown += ContentPanel_KeyDown;
+            _contentPanel.KeyPress += (sender, e) => { if (e.KeyChar == ' ') e.Handled = true; };
+            _contentPanel.KeyUp += ContentPanel_KeyUp;
             _contentPanel.AutoScroll = true;
             _contentPanel.Paint += ContentPanel_Paint;
             _contentPanel.MouseClick += ContentPanel_MouseClick;
@@ -192,11 +207,11 @@ namespace MissionPlanner.Controls
             {
                 _viewportLayoutQueued = false;
                 if (!_resourcesDisposed && !_contentPanel.IsDisposed)
-                    UpdateScrollSize();
+                    UpdateScrollSize(revealKeyboardRow: true);
             }));
         }
 
-        private void UpdateScrollSize()
+        private void UpdateScrollSize(bool revealKeyboardRow = false)
         {
             if (_contentPanel == null || _filteredItems == null || _updatingLayout || _resourcesDisposed)
                 return;
@@ -302,6 +317,8 @@ namespace MissionPlanner.Controls
                 }
             }
             finally { _updatingLayout = false; }
+            if (revealKeyboardRow && _contentPanel.Focused)
+                FocusKeyboardRow();
             _contentPanel.Invalidate();
             if (_mouseInside)
                 UpdateHover(RowAtPoint(_contentPanel.PointToClient(Cursor.Position)));
@@ -382,6 +399,9 @@ namespace MissionPlanner.Controls
                     if (row.Description != null)
                         g.DrawString(row.Description, _normalFont, nameBrush, row.DescriptionBounds);
                     g.DrawString(row.Item.Value ?? "", _normalFont, valueBrush, row.ValueBounds, format);
+                    if (_contentPanel.Focused && row.Item == _keyboardItem)
+                        ControlPaint.DrawFocusRectangle(g, row.Bounds,
+                            _contentPanel.ForeColor, _contentPanel.BackColor);
                 }
             }
         }
@@ -389,16 +409,101 @@ namespace MissionPlanner.Controls
         private void ContentPanel_MouseClick(object sender, MouseEventArgs e)
         {
             var item = GetItemAtPoint(e.Location);
-            if (item == null) return;
+            if (item != null) ToggleItem(item, e);
+        }
+
+        private void ToggleItem(DisplayItem item, MouseEventArgs mouse = null)
+        {
             item.IsChecked = !item.IsChecked;
             var fakeCheckbox = new CheckBox { Name = item.Name, Text = item.DisplayName, Checked = item.IsChecked, Tag = "custom" };
-            if (e.Button == MouseButtons.Right && _mouseDownHandler != null)
-                _mouseDownHandler(fakeCheckbox, e);
-            _checkChangedHandler?.Invoke(fakeCheckbox, _includeSelectionClickInChange ? e : EventArgs.Empty);
+            if (mouse?.Button == MouseButtons.Right && _mouseDownHandler != null)
+                _mouseDownHandler(fakeCheckbox, mouse);
+            _checkChangedHandler?.Invoke(fakeCheckbox,
+                _includeSelectionClickInChange && mouse != null ? mouse : EventArgs.Empty);
             if (_honorCanceledHudSelection)
                 item.IsChecked = fakeCheckbox.Checked;
             fakeCheckbox.Dispose();
             _contentPanel.Invalidate();
+        }
+
+        private bool MoveChooserFocus(Keys keyData)
+        {
+            if (keyData != Keys.Tab && keyData != (Keys.Shift | Keys.Tab)) return false;
+            if (_contentPanel?.Focused == true) return _searchBox.FocusEditor();
+            return _searchBox?.ContainsFocus == true && _contentPanel.Focus();
+        }
+
+        protected override bool ProcessDialogKey(Keys keyData)
+            => MoveChooserFocus(keyData) || base.ProcessDialogKey(keyData);
+
+        private void ChooserTabKeyDown(object sender, KeyEventArgs e)
+        {
+            // Some WinForms runtimes deliver Tab as an input key from the inner editor.
+            if (MoveChooserFocus(e.KeyData)) e.Handled = e.SuppressKeyPress = true;
+        }
+
+        private void ContentPanel_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (!_contentPanel.Focused || e.Modifiers != Keys.None || _filteredItems.Count == 0) return;
+            int index = Math.Max(0, _filteredItems.IndexOf(_keyboardItem));
+            if (e.KeyCode == Keys.Space)
+            {
+                // Activate on release so repeat key-downs do not flip the same item.
+                // SuppressKeyPress also suppresses KeyUp; consume the character separately.
+                _spacePressedItem = _spacePressedItem ?? _filteredItems[index];
+                e.Handled = true;
+                return;
+            }
+            switch (e.KeyCode)
+            {
+                case Keys.Up: index = Math.Max(0, index - 1); break;
+                case Keys.Down: index = Math.Min(_filteredItems.Count - 1, index + 1); break;
+                case Keys.Home: index = 0; break;
+                case Keys.End: index = _filteredItems.Count - 1; break;
+                default: return; // Preserve Tab traversal and the form's existing Enter behavior.
+            }
+            _keyboardItem = _filteredItems[index];
+            FocusKeyboardRow();
+            e.Handled = e.SuppressKeyPress = true;
+        }
+
+        private void ContentPanel_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode != Keys.Space) return;
+            var pressed = _spacePressedItem;
+            _spacePressedItem = null;
+            if (pressed == null) return;
+            e.Handled = true;
+            if (_contentPanel.Focused && pressed == _keyboardItem && _filteredItems.Contains(pressed))
+            {
+                ToggleItem(pressed);
+                FocusKeyboardRow();
+            }
+        }
+
+        private void FocusKeyboardRow()
+        {
+            if (_resourcesDisposed || _filteredItems.Count == 0) return;
+            if (!_filteredItems.Contains(_keyboardItem))
+                _keyboardItem = _filteredItems[0];
+            var row = _layoutRows.FirstOrDefault(entry => !entry.IsHeader && entry.Item == _keyboardItem);
+            if (row == null) return;
+
+            var offset = _contentPanel.AutoScrollPosition;
+            var viewport = ViewportSize();
+            // Reveal at least the field/checkbox start even when a column is wider than the pane.
+            int right = row.Bounds.Width <= viewport.Width ? row.Bounds.Right : row.CheckBounds.Right;
+            int x = RevealKeyboardAxis(-offset.X, row.Bounds.Left, right, viewport.Width);
+            int y = RevealKeyboardAxis(-offset.Y, row.Bounds.Top, row.Bounds.Bottom, viewport.Height);
+            if (x != -offset.X || y != -offset.Y)
+                _contentPanel.AutoScrollPosition = new Point(x, y);
+            _contentPanel.Invalidate();
+        }
+
+        private static int RevealKeyboardAxis(int offset, int start, int end, int span)
+        {
+            if (start < offset || end - start > span) return start;
+            return Math.Max(offset, end - span);
         }
 
         private DisplayRow RowAtPoint(Point point)
@@ -485,6 +590,7 @@ namespace MissionPlanner.Controls
             ClearHover();
             UpdateScrollSize();
             _contentPanel.AutoScrollPosition = Point.Empty;
+            _keyboardItem = null;
         }
 
         protected override void OnFontChanged(EventArgs e)
@@ -494,14 +600,14 @@ namespace MissionPlanner.Controls
             _headerFont?.Dispose();
             _normalFont = null;
             _headerFont = null;
-            UpdateScrollSize();
+            UpdateScrollSize(revealKeyboardRow: true);
         }
 
 #if !LIB
         protected override void OnDpiChangedAfterParent(EventArgs e)
         {
             base.OnDpiChangedAfterParent(e);
-            UpdateScrollSize();
+            UpdateScrollSize(revealKeyboardRow: true);
         }
 #endif
 
@@ -559,10 +665,27 @@ namespace MissionPlanner.Controls
 
         private class DoubleBufferedPanel : Panel
         {
+            protected override bool IsInputKey(Keys keyData)
+            {
+                switch (keyData)
+                {
+                    case Keys.Up:
+                    case Keys.Down:
+                    case Keys.Home:
+                    case Keys.End:
+                    case Keys.Space:
+                        return true;
+                    default:
+                        return base.IsInputKey(keyData);
+                }
+            }
+
             public DoubleBufferedPanel()
             {
                 this.DoubleBuffered = true;
                 this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer, true);
+                this.SetStyle(ControlStyles.Selectable, true);
+                this.TabStop = true;
                 this.UpdateStyles();
             }
         }
