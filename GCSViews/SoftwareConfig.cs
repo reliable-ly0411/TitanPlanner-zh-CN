@@ -147,6 +147,14 @@ namespace MissionPlanner.GCSViews
             }
         }
 
+        private BackstageViewPage AddPlannerSettingsPage()
+        {
+            var page = AddBackstageViewPage(typeof(ConfigPlanner), PlannerSettingsTitle);
+            if (page != null)
+                page.IgnoreClickWhenActive = true;
+            return page;
+        }
+
         private void SoftwareConfig_Load(object sender, EventArgs e)
         {
             try
@@ -251,14 +259,14 @@ namespace MissionPlanner.GCSViews
 
                     if (MainV2.DisplayConfiguration.displayPlannerSettings)
                     {
-                        AddBackstageViewPage(typeof(ConfigPlanner), PlannerSettingsTitle);
+                        AddPlannerSettingsPage();
                     }
                 }
                 else
                 {
                     if (MainV2.DisplayConfiguration.displayPlannerSettings)
                     {
-                        start = AddBackstageViewPage(typeof(ConfigPlanner), PlannerSettingsTitle);
+                        start = AddPlannerSettingsPage();
                     }
                 }
 

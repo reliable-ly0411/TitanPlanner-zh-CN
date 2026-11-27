@@ -485,6 +485,11 @@ namespace MissionPlanner.Controls.BackstageView
         {
             var backstageViewButton = ((BackstageViewButton)sender);
             var associatedPage = backstageViewButton.Tag as BackstageViewPage;
+            if (associatedPage != null && associatedPage == _activePage && associatedPage.IgnoreClickWhenActive &&
+                associatedPage != popoutPage && associatedPage.isPageCreated && !associatedPage.Page.IsDisposed &&
+                associatedPage.Page.Visible && associatedPage.Page.Parent == pnlPages && !PageHasChildren(associatedPage))
+                return;
+
             this.ActivatePage(associatedPage);
         }
 
