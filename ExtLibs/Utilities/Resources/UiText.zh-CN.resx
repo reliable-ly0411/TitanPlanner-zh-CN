@@ -1995,6 +1995,10 @@
     <value>正在检查更新</value>
     <comment>"Checking for Updates"</comment>
   </data>
+  <data name="4c6d016caaaa84f4041720b22a496bc04c88d3b0428c6e6f0bba3e39e33057fb" xml:space="preserve">
+    <value>日志存储芯片已满，已停止记录日志</value>
+    <comment>"Chip full, logging stopped"</comment>
+  </data>
   <data name="a6c6baaa66b0b20ada587ee077306d12744d0ae4a5da65ce4daa61dd71b3617d" xml:space="preserve">
     <value>选择 ICO…</value>
     <comment>"Choose ICO..."</comment>
@@ -3100,6 +3104,10 @@ Ctrl+O 从文件加载</value>
   <data name="ecf07f46589a850f520f9e98f1bbfdbec5c61fe4ac3d970543916883998b056e" xml:space="preserve">
     <value>EKF 垂直位置方差指标</value>
     <comment>"EKF vertical position variance indicator"</comment>
+  </data>
+  <data name="4d24e54fd9b495351edf0d6cd75408d8eba1e71d1bf520da715c9e20de9f55f0" xml:space="preserve">
+    <value>EKF2_MAG_TYPE 无效，正在恢复默认值</value>
+    <comment>"EKF2_MAG_TYPE invalid, resetting to default"</comment>
   </data>
   <data name="d98ee0e5f9399db9381014c9f890f896d3fcb272c2a7a521d0a13aa23085a284" xml:space="preserve">
     <value>错误</value>

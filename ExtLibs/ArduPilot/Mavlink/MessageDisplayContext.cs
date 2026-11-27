@@ -16,6 +16,7 @@ namespace MissionPlanner
             internal int Heartbeat, Version;
             internal bool Conflict;
             internal bool UnconfirmedVoiceVendor;
+            internal bool SawOtherPx4Vehicle;
             internal readonly ConditionalWeakTable<string, Row> Rows = new ConditionalWeakTable<string, Row>();
         }
         private sealed class Row
@@ -24,6 +25,8 @@ namespace MissionPlanner
             internal byte Severity;
         }
         private const string Plane444CrashDumpSaved = "Saved crash_dump.bin";
+        private const string PlaneLogFull = "Chip full, logging stopped";
+        private const string Px4MagTypeInvalid = "EKF2_MAG_TYPE invalid, resetting to default";
         private static readonly UTF8Encoding StrictUtf8 = new UTF8Encoding(false, true);
 
         private static bool IsPx4(int version) => version == 2 || version == 5 || version == 6 || version == 9;
@@ -37,6 +40,8 @@ namespace MissionPlanner
                 if (packet.msgid == (uint)MAVLink.MAVLINK_MSG_ID.HEARTBEAT)
                 {
                     var hb = packet.ToStructure<MAVLink.mavlink_heartbeat_t>();
+                    if (hb.autopilot == (byte)MAVLink.MAV_AUTOPILOT.PX4 && hb.type != (byte)MAVLink.MAV_TYPE.QUADROTOR)
+                        s.SawOtherPx4Vehicle = true;
                     int family = hb.autopilot == 3 && hb.type == 1 ? 1 : hb.autopilot == 12 ? 2 : 0;
                     if (family == 0 || (s.Heartbeat != 0 && s.Heartbeat != family)) s.Conflict = true;
                     else s.Heartbeat = family;
@@ -91,18 +96,33 @@ namespace MissionPlanner
             }
         }
 
+        private static bool IsPinnedDiagnostic(State s, string raw, byte severity)
+        {
+            return (s.Version == 1 && severity == 4 && raw == PlaneLogFull) ||
+                   (s.Version == 6 && !s.SawOtherPx4Vehicle && !s.UnconfirmedVoiceVendor &&
+                    severity == 2 && raw == Px4MagTypeInvalid);
+        }
+
         internal void Mark(List<(DateTime time, string message, byte severity)> list, MAVLink.MAVLinkMessage packet,
             MAVLink.mavlink_statustext_t text, (DateTime time, string message, byte severity) row)
         {
             State s;
             if (!states.TryGetValue(list, out s) || s.Heartbeat == 0 || s.Heartbeat != FamilyForVersion(s.Version) || s.Conflict ||
-                text.id != 0 || text.chunk_seq != 0 || packet.payloadlength < 2 ||
+                text.chunk_seq != 0 || packet.payloadlength < 2 ||
                 (packet.header == 254 && packet.payloadlength != 51))
                 return;
+            bool diagnostic = IsPinnedDiagnostic(s, row.message, row.severity);
+            // PX4 assigns an ID even to a single, NUL-terminated first chunk.
+            if (text.id != 0 && !(diagnostic && s.Version == 6 && packet.header == 253)) return;
             var length = Math.Min(50, packet.payloadlength - 1);
             var start = packet.headerlength + 1;
             var end = Array.IndexOf(packet.buffer, (byte)0, start, length);
             if (end < 0 && !(packet.header == 253 && length < 50)) return;
+            if (diagnostic && end >= 0)
+            {
+                for (int i = end + 1; i < start + length; i++)
+                    if (packet.buffer[i] != 0) return;
+            }
             try
             {
                 if (StrictUtf8.GetString(packet.buffer, start, end < 0 ? length : end - start) != row.message) return;
@@ -116,7 +136,7 @@ namespace MissionPlanner
                   (s.Version == 1 && row.message == "GPS 1: detected u-blox") ||
                   (s.Version == 7 && row.severity == 5 && row.message == Plane444CrashDumpSaved) ||
                   IsPlaneReleaseBanner(s.Version, row.message, row.severity);
-            if (!known) return;
+            if (!known && !diagnostic) return;
             if (s.Rows.TryGetValue(row.message, out var existing))
             {
                 existing.Time = DateTime.MinValue; // unexpectedly reused token
@@ -148,6 +168,11 @@ namespace MissionPlanner
                     !s.Rows.TryGetValue(row.message, out proof) || proof.Time != row.time ||
                     proof.Severity != row.severity) return null;
 
+                if (IsPinnedDiagnostic(s, row.message, row.severity))
+                {
+                    var translated = UiText.Translate(row.message);
+                    return translated == row.message ? null : translated;
+                }
                 if (IsPx4(s.Version))
                     return row.message == Px4BatteryText(s.Version) ? (s.Version == 9 ? "1 号电池已断开" : "未检测到 1 号电池") : null;
                 if (s.Version == 7 && row.severity == 5 && row.message == Plane444CrashDumpSaved)
