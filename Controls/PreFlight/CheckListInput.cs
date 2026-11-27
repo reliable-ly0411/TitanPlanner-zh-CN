@@ -122,6 +122,7 @@ namespace MissionPlanner.Controls.PreFlight
             {
                 case "gpsstatus":
                 case "gpshdop":
+                case "gpsvdop":
                 case "satcount":
                 case "roll":
                 case "pitch":
@@ -142,6 +143,10 @@ namespace MissionPlanner.Controls.PreFlight
                 case "hygrohumi1":
                 case "hygrotemp2":
                 case "hygrohumi2":
+                // RADIO / RADIO_STATUS map these counters directly in CurrentState.
+                case "txbuffer":
+                case "rxerrors":
+                case "fixedp":
                     string caption = TelemetryFieldPresentation.FieldLabel(key);
                     if (!caption.StartsWith(key + " (", StringComparison.Ordinal))
                         return key;
@@ -200,11 +205,13 @@ namespace MissionPlanner.Controls.PreFlight
                 case "Cyan": return token + " · 青色";
                 case "Gray": return token + " · 灰色";
                 case "Green": return token + " · 绿色";
+                case "LightGray": return token + " · 浅灰色";
                 case "Lime": return token + " · 亮绿色";
                 case "Magenta": return token + " · 品红";
                 case "Orange": return token + " · 橙色";
                 case "Purple": return token + " · 紫色";
                 case "Red": return token + " · 红色";
+                case "Silver": return token + " · 银色";
                 case "Transparent": return token + " · 透明";
                 case "White": return token + " · 白色";
                 case "Yellow": return token + " · 黄色";
