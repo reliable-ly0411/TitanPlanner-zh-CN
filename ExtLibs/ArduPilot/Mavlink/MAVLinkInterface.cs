@@ -5552,7 +5552,20 @@ Mission Planner waits for 2 valid heartbeat packets before connecting
                                 displayGeneration.Suffix(messages, row) != null)
                                 verifiedHudSuffix = () => ReferenceEquals(messages, hudState.messages)
                                     ? MessagesDisplaySuffix(messages, row) : null;
-                            hudState.SetHudText(logdata, verifiedHudSuffix);
+                            FirmwareSpeechAlert alert = null;
+                            if (displayPrimary && Settings.Instance["language"] == "zh-CN" &&
+                                displayGeneration.VoiceSuffix(messages, row) != null)
+                            {
+                                alert = new FirmwareSpeechAlert(() =>
+                                {
+                                    if (Settings.Instance["language"] != "zh-CN" ||
+                                        !ReferenceEquals(messages, hudState.messages) ||
+                                        !ReferenceEquals(displayGeneration, Volatile.Read(ref messageDisplay))) return null;
+                                    var text = displayGeneration.VoiceSuffix(messages, row);
+                                    return ReferenceEquals(displayGeneration, Volatile.Read(ref messageDisplay)) ? text : null;
+                                });
+                            }
+                            hudState.SetFirmwareHudText(logdata, verifiedHudSuffix, alert);
                             MAVlist[sysid, compid].cs.messageHighSeverity = mavsev;
 
                             if (Speech != null &&
@@ -5562,15 +5575,10 @@ Mission Planner waits for 2 valid heartbeat packets before connecting
                             {
                                 if (speechenabled && !logdata.StartsWith("PreArm:")) // Suppress audible PreArm messages
                                 {
-                                    var spoken = logdata;
-                                    if (displayPrimary && Settings.Instance["language"] == "zh-CN" &&
-                                        ReferenceEquals(displayGeneration, Volatile.Read(ref messageDisplay)))
-                                    {
-                                        var suffix = displayGeneration.VoiceSuffix(messages, row);
-                                        if (suffix != null && ReferenceEquals(displayGeneration, Volatile.Read(ref messageDisplay)))
-                                            spoken = suffix;
-                                    }
-                                    Speech.SpeakAsync(spoken);
+                                    if (alert != null)
+                                        alert.Speak(Speech, logdata);
+                                    else
+                                        Speech.SpeakAsync(logdata);
                                 }
                             }
                         }
