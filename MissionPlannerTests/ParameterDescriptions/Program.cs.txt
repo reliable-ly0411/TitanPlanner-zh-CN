@@ -23,11 +23,11 @@ internal static class Program
     }
     private static string Firmware(string family)
     {
-        return new Dictionary<string, string> { { "Copter", "ArduCopter2" }, { "Plane", "ArduPlane" }, { "Sub", "ArduSub" }, { "Rover", "ArduRover" } }[family];
+        return new Dictionary<string, string> { { "Copter", "ArduCopter2" }, { "Plane", "ArduPlane" }, { "Sub", "ArduSub" }, { "Rover", "ArduRover" }, { "Tracker", "ArduTracker" } }[family];
     }
     private static ParameterDescriptionContext Context(string family, string version, string sha = null)
     {
-        var text = (family == "Copter" ? "ArduCopter" : Firmware(family)) + " V" + version + (sha == null ? "" : " (" + sha.Substring(0, 8) + ")");
+        var text = (family == "Copter" ? "ArduCopter" : family == "Tracker" ? "AntennaTracker" : Firmware(family)) + " V" + version + (sha == null ? "" : " (" + sha.Substring(0, 8) + ")");
         return ParameterDescriptionContext.TryCreate(Firmware(family), text, new Version(version + ".255"));
     }
     private static void CheckOsdTimeTemperature(XElement[] releases, ParameterDescriptionStore store, ParameterDescriptionCatalog catalog)
@@ -333,11 +333,64 @@ internal static class Program
             "identical English cannot authorize the other release's record");
     }
 
+    private static void CheckTrackerSlice(ParameterDescriptionStore store, ParameterDescriptionCatalog catalog,
+        byte[] officialSource = null)
+    {
+        const string release = "4.7.1";
+        const string build = "dbe792162d06cab66c3475fd5556bf7a120f119e";
+        const string digest = "143350e5806885fd34cd9c710cfbe6f9b758bee0260c5e081bfef6eab05e91fc";
+        var context = Context("Tracker", release, build);
+        var snapshot = store.Bundled(context);
+        Check(snapshot != null && snapshot.Partial && snapshot.MatchesReportedBuild && snapshot.Count == 2,
+            "only two reviewed Tracker statistics from the exact release");
+        Check(snapshot.SourceSha256 == digest && snapshot.SourceUri == context.SourceUri, "original pinned Tracker source");
+        Check(snapshot.Find("STAT_RESET") == null && snapshot.Find("STAT_FLTTIME") == null, "reset and unrelated fields remain outside this slice");
+        Check(store.Bundled(Context("Tracker", "4.7.2")) == null, "next Tracker release cannot inherit this subset");
+        var custom = store.Bundled(Context("Tracker", release, "deadbeef0123456789"));
+        Check(!custom.MatchesReportedBuild && catalog.Present(custom, "STAT_BOOTCNT", true) == null,
+            "a mismatching custom build cannot reuse the official translation");
+        ParameterDescriptionSnapshot full = null;
+        if (officialSource != null)
+        {
+            Check(ParameterDescriptionCatalog.Hash(officialSource) == digest, "full official Tracker PDEF bytes");
+            full = ParameterDescriptionSnapshot.Parse(officialSource, context);
+            Check(full.MatchesReportedBuild && full.GitSha == build, "Tracker tag embeds the exact release source build");
+        }
+
+        foreach (string name in new[] { "STAT_BOOTCNT", "STAT_RUNTIME" })
+        {
+            var record = snapshot.Find(name);
+            string english = name == "STAT_BOOTCNT" ? "Number of times board has been booted" : "Total time autopilot has run";
+            string units = name == "STAT_RUNTIME" ? "s" : "";
+            Check(record.Name == name && record.English == english && record.Units == units, "raw name, English, units: " + name);
+            if (full != null) Check(full.Find(name).Fingerprint == record.Fingerprint, "exact official record fields: " + name);
+            var display = catalog.Present(snapshot, name, true);
+            Check(display.Description.StartsWith(english, StringComparison.Ordinal) && display.Description.Contains("中文说明：") &&
+                display.SearchText.Contains(name == "STAT_BOOTCNT" ? "启动次数" : "累计运行时间") && display.Options == "" &&
+                display.Units == units, "only bilingual display/search added: " + name);
+            Check(catalog.Present(snapshot, name, false).Description == english, "stock descriptions unchanged: " + name);
+            bool pending;
+            Check(catalog.Chinese(Context("Tracker", "4.7.2"), name, "Description", null, english,
+                out pending, record.Fingerprint) == null && !pending, "same fingerprint cannot leak to another release");
+            Check(catalog.Chinese(Context("Plane", release, build), name, "Description", null, english,
+                out pending, record.Fingerprint) == null && !pending, "same fingerprint cannot leak to an unbundled family");
+            Check(catalog.Chinese(context, name, "Description", null, english,
+                out pending, "changed-fingerprint") == null && pending, "changed fingerprint requires review");
+        }
+    }
+
     private static async Task MainAsync(string[] args)
     {
         var bundle = Resource("official"); var catalog = new ParameterDescriptionCatalog(Resource("zh-CN"));
         var bundled = new ParameterDescriptionStore("unused", bundle);
         var releases = XDocument.Parse(Encoding.UTF8.GetString(bundle)).Root.Elements("release").ToArray();
+        if (args.Length == 2 && args[0] == "--tracker-only")
+        {
+            CheckTrackerSlice(bundled, catalog, File.ReadAllBytes(args[1]));
+            Console.WriteLine("Tracker parameter descriptions: " + assertions + " assertions passed.");
+            return;
+        }
+        CheckTrackerSlice(bundled, catalog);
         if (args.Length == 1 && args[0] == "--osd-time-temperature")
         {
             CheckOsdTimeTemperature(releases, bundled, catalog);
@@ -385,7 +438,8 @@ internal static class Program
             ["Plane-4.6.3"] = 226,
             ["Plane-4.7.1"] = 234,
             ["Sub-4.7.1"] = 183,
-            ["Rover-4.6.3"] = 4
+            ["Rover-4.6.3"] = 4,
+            ["Tracker-4.7.1"] = 2
         };
         Check(releases.Length == expectedCounts.Count, "pinned release subsets");
         foreach (var release in releases)

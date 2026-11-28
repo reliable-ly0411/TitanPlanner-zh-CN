@@ -79,6 +79,16 @@
       "gitSha": "3fc7011a7d3dc047cbb17d8bd98ee94577d144c6",
       "parameters": 4,
       "retrievedUtc": "2026-11-26"
+    },
+    {
+      "family": "Tracker",
+      "version": "4.7.1",
+      "sourceUrl": "https://autotest.ardupilot.org/Parameters/versioned/Tracker/stable-4.7.1/apm.pdef.xml",
+      "sourceSha256": "143350e5806885fd34cd9c710cfbe6f9b758bee0260c5e081bfef6eab05e91fc",
+      "gitTag": "Tracker-4.7.1",
+      "gitSha": "dbe792162d06cab66c3475fd5556bf7a120f119e",
+      "parameters": 2,
+      "retrievedUtc": "2026-11-27"
     }
   ]
 }
