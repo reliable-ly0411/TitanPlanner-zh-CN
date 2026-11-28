@@ -73,8 +73,30 @@ namespace MissionPlanner.GCSViews
             Init();
 #if !LIB
             InitializeLocalPlanPreview();
+            if (CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "en")
+            {
+                Commands.HandleCreated += (sender, args) => FitCompactEnglishHeaders();
+                Commands.DpiChangedAfterParent += (sender, args) => FitCompactEnglishHeaders();
+            }
 #endif
         }
+
+#if !LIB
+        private void FitCompactEnglishHeaders()
+        {
+            using (var graphics = Commands.CreateGraphics())
+            {
+                foreach (var column in new DataGridViewColumn[] { Delete, Grad, Angle, Dist, AZ })
+                {
+                    var style = column.HeaderCell.InheritedStyle;
+                    int textWidth = TextRenderer.MeasureText(graphics, column.HeaderText,
+                        style.Font ?? Commands.Font, Size.Empty,
+                        TextFormatFlags.SingleLine | TextFormatFlags.NoPrefix).Width;
+                    column.MinimumWidth = Math.Max(column.MinimumWidth, textWidth + style.Padding.Horizontal + 4);
+                }
+            }
+        }
+#endif
 
 
         private void but_mincommands_Click(object sender, System.EventArgs e)
