@@ -80,13 +80,17 @@ namespace MissionPlannerTests
                     "HTTP/1.1 200 OK\r\nContent-Length: 100\r\nConnection: close\r\n\r\npartial",
                     () => release.Wait(10000)))
                 {
-                    var bodyStarted = new TaskCompletionSource<bool>();
-                    var download = Download.getFilefromNetAsync(server.Url, path, cancel.Token,
-                        (progress, message) => bodyStarted.TrySetResult(true));
+                    var download = Download.getFilefromNetAsync(server.Url, path, cancel.Token);
                     try
                     {
-                        Assert.AreSame(bodyStarted.Task, await Task.WhenAny(bodyStarted.Task, Task.Delay(5000)),
-                            "No body progress before cancellation");
+                        var deadline = DateTime.UtcNow.AddSeconds(5);
+                        string pattern = Path.GetFileName(path) + ".*.new";
+                        while (Directory.GetFiles(Path.GetDirectoryName(path), pattern).Length == 0)
+                        {
+                            Assert.IsFalse(download.IsCompleted, "Download completed before the stalled body read");
+                            Assert.IsTrue(DateTime.UtcNow < deadline, "No temporary file for the stalled body");
+                            await Task.Delay(20);
+                        }
                         cancel.Cancel();
                         Assert.AreSame(download, await Task.WhenAny(download, Task.Delay(5000)),
                             "Cancellation did not interrupt the stalled body");
