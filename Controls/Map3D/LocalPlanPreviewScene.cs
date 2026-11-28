@@ -93,7 +93,8 @@ namespace MissionPlanner.Controls.Scene3D
     internal sealed class LocalPlanElevationSource
     {
         private const string Schema = "TitanPlanner.PlanPreview.EGM96.v1";
-        private const string SrtmProduct = "USGS:10.5066/F7PR7TFT";
+        private const string UsgsSrtmProduct = "USGS:10.5066/F7PR7TFT";
+        private const string EsaSnapSrtmProduct = "ESA-SNAP:SRTMGL1";
         private const int PostsPerDegree = 3600;
         private const int TileWidth = PostsPerDegree + 1;
         private const int TileBytes = TileWidth * TileWidth * 2;
@@ -171,7 +172,8 @@ namespace MissionPlanner.Controls.Scene3D
                             ((manifest.Home != null || manifest.Absolute.Length > 0) && string.IsNullOrWhiteSpace(manifest.PlanSource)) ||
                             (manifest.Home != null && !manifest.Home.IsValid) ||
                             manifest.Absolute.Any(height => height == null || !height.IsValid) ||
-                            (manifest.Tiles.Count > 0 && manifest.TerrainProduct != SrtmProduct) ||
+                            (manifest.Tiles.Count > 0 && manifest.TerrainProduct != UsgsSrtmProduct &&
+                                manifest.TerrainProduct != EsaSnapSrtmProduct) ||
                             manifest.Tiles.Any(tile => !TileName.IsMatch(tile.Key) || tile.Value == null || !Digest.IsMatch(tile.Value)))
                             throw new PlanPreviewDataException("The offline elevation manifest is invalid.");
 

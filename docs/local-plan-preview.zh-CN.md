@@ -23,4 +23,11 @@
 
 无需 Home 证明时，`home` 可填 `null`。没有绝对高度航点时，`absolute` 可填空数组。只用相对地形高度时，`planSource` 也可填 `null`。源清单可包含多个普通绝对航点的证据，短计划可以使用同一清单中仍匹配的部分。
 
-相对地形高度使用 [USGS EROS SRTM 1 Arc-Second Global](https://doi.org/10.5066/F7PR7TFT) 的本地 HGT。将经审核的原始 HGT 放在清单目录，`terrainProduct` 填 `USGS:10.5066/F7PR7TFT`，`tiles` 列出每块 HGT 的原始文件名和 SHA-256，例如 `"N10E002.hgt": "64位十六进制SHA-256"`。支持标准 3601 × 3601 栅格和南纬 50° 至北纬 50° 内的每度瓦片，单次预览最多读四块。只读取本地文件，不下载瓦片。清单摘要锁定用于预览的字节，数据来源应与供应方记录核对。
+相对地形高度使用 WGS84 经纬度、EGM96 正高米值的 1 角秒 HGT。清单的 `terrainProduct` 使用下列对应标识。
+
+| 数据产品 | 清单标识 |
+| --- | --- |
+| [USGS EROS SRTM 1 Arc-Second Global](https://doi.org/10.5066/F7PR7TFT) | `USGS:10.5066/F7PR7TFT` |
+| [ESA SNAP SRTM 1Sec HGT](https://step.esa.int/main/wp-content/help/versions/9.0.0/snap/org.esa.snap.snap.dem.ui/readers/ImportSRTM1sec.html) | `ESA-SNAP:SRTMGL1` |
+
+将来源已核对的原始 HGT 放在清单目录，`tiles` 列出每块 HGT 的文件名和 SHA-256，例如 `"N45E006.hgt": "64位十六进制SHA-256"`。从下载的 ZIP 中提取 HGT 时，对解压后的原始 HGT 计算摘要。支持标准 3601 × 3601 栅格，单次预览最多读四块图幅。瓦片的南边界须在南纬 50° 至北纬 50° 之间，含南纬 50°。程序读取清单目录中的本地文件。清单摘要锁定实际使用的字节，数据来源应与供应方记录核对。
