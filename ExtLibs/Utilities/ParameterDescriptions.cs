@@ -48,6 +48,12 @@ namespace MissionPlanner.Utilities
 
         public static ParameterDescriptionContext TryCreate(string firmware, string versionText, Version reportedVersion)
         {
+            return TryCreateWithBuild(firmware, versionText, reportedVersion, null);
+        }
+
+        public static ParameterDescriptionContext TryCreateWithBuild(string firmware, string versionText,
+            Version reportedVersion, byte[] flightCustomVersion)
+        {
             string family;
             if (firmware == null || !Families.TryGetValue(firmware, out family)) return null;
             var hasReportedVersion = reportedVersion != null && reportedVersion.Build >= 0
@@ -75,6 +81,18 @@ namespace MissionPlanner.Utilities
                 if (hasReportedVersion && (reportedVersion.Major != parsed.Major
                     || reportedVersion.Minor != parsed.Minor || reportedVersion.Build != parsed.Build)) return null;
                 gitSha = match.Groups[3].Value.ToLowerInvariant();
+            }
+            if (flightCustomVersion != null)
+            {
+                // ArduPilot sends the abbreviated source hash as ASCII in AUTOPILOT_VERSION.
+                var packetHash = Encoding.ASCII.GetString(flightCustomVersion).TrimEnd('\0').ToLowerInvariant();
+                if (packetHash.Length > 0)
+                {
+                    if (!Regex.IsMatch(packetHash, @"\A[0-9a-f]{7,8}\z")) return null;
+                    if (!gitSha.StartsWith(packetHash, StringComparison.Ordinal)
+                        && !packetHash.StartsWith(gitSha, StringComparison.Ordinal)) return null;
+                    if (packetHash.Length > gitSha.Length) gitSha = packetHash;
+                }
             }
             return new ParameterDescriptionContext { Family = family, Version = parsed.ToString(3), ReportedGitSha = gitSha };
         }
@@ -109,8 +127,7 @@ namespace MissionPlanner.Utilities
         public bool HasReleaseProvenance { get { return !string.IsNullOrEmpty(ReleaseTag) && !string.IsNullOrEmpty(GitSha); } }
         public bool Partial { get; private set; }
         public bool MatchesReportedBuild { get; private set; }
-        internal bool IsReconstructed { get; set; }
-        public bool MatchesFirmware { get { return IsReconstructed || MatchesReportedBuild; } }
+        public bool MatchesFirmware { get { return MatchesReportedBuild; } }
         public string Origin { get; internal set; }
         public int Count { get { return records.Count; } }
 
@@ -376,7 +393,7 @@ namespace MissionPlanner.Utilities
                     throw new InvalidDataException("Invalid reconstructed metadata identity.");
 
                 // Historical PDEF is scoped to the exact family and stable version selected by FindRelease.
-                // Its source commit documents the reconstruction, while firmware can omit its build hash.
+                // A reported build hash must also agree with the reconstruction commit.
                 if (context.Family == "Rover" && paramfile.Element("vehicles")?.Elements("parameters")
                     .Any(p => (string)p.Attribute("name") == "APMrover2") == true)
                     vehicleName = "APMrover2";
@@ -389,7 +406,6 @@ namespace MissionPlanner.Utilities
             var snapshot = ParameterDescriptionSnapshot.Parse(paramfile, Enumerable.Empty<XComment>(),
                 context, vehicleName, sourceKind == null, digest, gitSha);
             snapshot.SourceUri = sourceUri;
-            snapshot.IsReconstructed = sourceKind == "reconstructed";
             snapshot.Origin = sourceKind ?? "bundled";
             return snapshot;
         }

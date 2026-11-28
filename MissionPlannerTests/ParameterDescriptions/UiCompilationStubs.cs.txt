@@ -3,9 +3,18 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 namespace MissionPlanner {
  public static class MainV2 { public static Port comPort = new Port(); }
- public class Port { public Vehicle MAV = new Vehicle(); }
- public class Vehicle { public State cs = new State(); public string VersionString = ""; }
+ public class Port { public MAVState MAV = new MAVState(); }
+ public class MAVState {
+  public State cs = new State();
+  public string VersionString = "";
+  public MAVLink.MAVLinkMessage getPacketLast(uint id) { return null; }
+ }
  public class State { public string firmware = "ArduPlane"; public Version version = new Version(4,6,3,255); }
+}
+public partial class MAVLink {
+ public enum MAVLINK_MSG_ID { AUTOPILOT_VERSION }
+ public class MAVLinkMessage { public T ToStructure<T>() { return default(T); } }
+ public struct mavlink_autopilot_version_t { public uint flight_sw_version; public byte[] flight_custom_version; }
 }
 namespace MissionPlanner.Utilities {
  public static class Settings { public static string GetUserDataDirectory() { return "/tmp/unused"; } }

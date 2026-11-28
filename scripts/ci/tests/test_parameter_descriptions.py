@@ -2,6 +2,7 @@ import copy
 import importlib.util
 import json
 import re
+from collections import Counter
 from pathlib import Path
 import unittest
 import xml.etree.ElementTree as ET
@@ -150,9 +151,13 @@ class ParameterCatalogTests(unittest.TestCase):
     def test_scope_counts_and_held_versions(self):
         notes = self.catalog['translations']
         descriptions = {(n['family'], v, n['parameter']) for n in notes if n['field'] == 'Description' for v in n['versions']}
-        self.assertEqual(24657, len(descriptions))
+        self.assertEqual(26919, len(descriptions))
         self.assertEqual(6703, len({(f, p) for f, v, p in descriptions}))
-        self.assertFalse(any(v == '4.7.2' for f, v, p in descriptions))
+        descriptions_472 = Counter(f for f, v, p in descriptions if v == '4.7.2')
+        self.assertEqual({'Rover': 636, 'Sub': 1271, 'Tracker': 355}, descriptions_472)
+        for note in notes:
+            if '4.7.2' in note['versions']:
+                self.assertTrue(set(note['versions']) - {'4.7.2'})
         excluded_copter = {'RTL_CONE_SLOPE', 'LAND_SPEED', 'LAND_SPD_MS', 'FS_GCS_ENABLE'}
         excluded_plane = {'TECS_CLMB_MAX', 'TECS_SINK_MIN', 'ROLL_LIMIT_DEG'}
         self.assertFalse(any(p in (excluded_copter if f == 'Copter' else excluded_plane) for f, v, p in descriptions if v == '4.7.1'))

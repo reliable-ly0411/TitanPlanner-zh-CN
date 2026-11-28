@@ -143,13 +143,12 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                 return;
             }
             var vehicle = MainV2.comPort.MAV;
-            var culture = CultureInfo.CurrentUICulture.Name;
-            var identity = vehicle.cs.firmware + "|" + vehicle.VersionString + "|" + vehicle.cs.version + "|" + culture;
+            var identity = ReadDescriptionIdentity(vehicle, out var context);
             if (_descriptionSession != null && ReferenceEquals(_descriptionSession.Vehicle, vehicle) && _descriptionSession.Identity == identity) return;
             var session = new DescriptionSession
             {
                 Vehicle = vehicle, Identity = identity, Chinese = true,
-                Context = ParameterDescriptionContext.TryCreate(vehicle.cs.firmware.ToString(), vehicle.VersionString, vehicle.cs.version)
+                Context = context
             };
             try { session.Snapshot = DescriptionStore.Value.Bundled(session.Context); }
             catch (Exception ex) { log.Error("Bundled parameter descriptions", ex); }
@@ -199,8 +198,26 @@ namespace MissionPlanner.GCSViews.ConfigurationView
         private bool IsCurrentDescriptionSession(DescriptionSession session)
         {
             if (!UseEnhancedParameterDescriptions || session == null || !ReferenceEquals(_descriptionSession, session) || !ReferenceEquals(MainV2.comPort.MAV, session.Vehicle)) return false;
-            var vehicle = MainV2.comPort.MAV;
-            return session.Identity == vehicle.cs.firmware + "|" + vehicle.VersionString + "|" + vehicle.cs.version + "|" + CultureInfo.CurrentUICulture.Name;
+            return session.Identity == ReadDescriptionIdentity(MainV2.comPort.MAV, out _);
+        }
+
+        private static string ReadDescriptionIdentity(MAVState vehicle, out ParameterDescriptionContext context)
+        {
+            var firmware = vehicle.cs.firmware.ToString();
+            var banner = vehicle.VersionString;
+            var version = vehicle.cs.version;
+            byte[] build = null;
+            var packet = vehicle.getPacketLast((uint)MAVLink.MAVLINK_MSG_ID.AUTOPILOT_VERSION);
+            if (packet != null)
+            {
+                var reported = packet.ToStructure<MAVLink.mavlink_autopilot_version_t>();
+                var number = reported.flight_sw_version;
+                version = new Version((int)(number >> 24), (int)((number >> 16) & 255),
+                    (int)((number >> 8) & 255), (int)(number & 255));
+                build = reported.flight_custom_version;
+            }
+            context = ParameterDescriptionContext.TryCreateWithBuild(firmware, banner, version, build);
+            return firmware + "|" + banner + "|" + version + "|" + context?.Key + "|" + CultureInfo.CurrentUICulture.Name;
         }
 
         private ParameterDescriptionText ExactDescription(string name, DescriptionSession session)
