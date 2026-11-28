@@ -3,6 +3,7 @@ using MissionPlanner.ArduPilot;
 using MissionPlanner.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
@@ -53,6 +54,8 @@ namespace MissionPlanner.GCSViews.ConfigurationView
 
             const int minOutputWidth = 90, minTrimWidth = 160;
             var minimumColumns = new int[tableLayoutPanel1.ColumnCount];
+            var readoutWidths = new Dictionary<Font, int>();
+            var readoutsToWiden = new List<KeyValuePair<Control, int>>();
             var bars = tableLayoutPanel1.Controls.OfType<HorizontalProgressBar2>().ToArray();
             var sliders = tableLayoutPanel1.Controls.OfType<TrackBar>().ToArray();
             if (bars.Length == 0 || sliders.Length == 0)
@@ -63,10 +66,22 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                 if (control is HorizontalProgressBar2 || control is TrackBar)
                     continue;
                 int column = tableLayoutPanel1.GetColumn(control);
-                if (column >= 0)
-                    minimumColumns[column] = Math.Max(minimumColumns[column],
-                        (control.AutoSize ? control.GetPreferredSize(System.Drawing.Size.Empty).Width : control.Width) +
-                        control.Margin.Horizontal);
+                if (column < 0)
+                    continue;
+
+                int width = control.AutoSize ? control.GetPreferredSize(Size.Empty).Width : control.Width;
+                if (control is NumericUpDown && (column == 4 || column == 6 || column == 7))
+                {
+                    if (!readoutWidths.TryGetValue(control.Font, out int required))
+                    {
+                        required = MinimumReadoutWidth(control.Font);
+                        readoutWidths.Add(control.Font, required);
+                    }
+                    if (control.Width < required)
+                        readoutsToWiden.Add(new KeyValuePair<Control, int>(control, required));
+                    width = Math.Max(width, required);
+                }
+                minimumColumns[column] = Math.Max(minimumColumns[column], width + control.Margin.Horizontal);
             }
 
             int barMargin = bars[0].Margin.Horizontal;
@@ -82,13 +97,16 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             int budget = Math.Max(minTotal, Math.Min(available, maxTotal));
             int barWidth = minBar + (budget - minTotal) * (OutputBarWidth - minBar) / Math.Max(1, maxTotal - minTotal);
             int sliderWidth = budget - barWidth;
-            if (bars.All(bar => bar.Width == barWidth) && sliders.All(slider => slider.Width == sliderWidth))
+            if (readoutsToWiden.Count == 0 && bars.All(bar => bar.Width == barWidth) &&
+                sliders.All(slider => slider.Width == sliderWidth))
                 return;
 
             resizingOutputColumns = true;
             tableLayoutPanel1.SuspendLayout();
             try
             {
+                foreach (var readout in readoutsToWiden)
+                    readout.Key.Width = readout.Value;
                 foreach (var bar in bars)
                     bar.Width = barWidth;
                 foreach (var slider in sliders)
@@ -102,6 +120,17 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                 try { tableLayoutPanel1.ResumeLayout(true); }
                 finally { resizingOutputColumns = false; }
             }
+        }
+
+        private static int MinimumReadoutWidth(Font font)
+        {
+            int digits = ServoMax.ToString(CultureInfo.InvariantCulture).Length;
+            int textWidth = 0;
+            for (char digit = '0'; digit <= '9'; digit++)
+                textWidth = Math.Max(textWidth, TextRenderer.MeasureText(new string(digit, digits), font,
+                    Size.Empty, TextFormatFlags.SingleLine | TextFormatFlags.NoPrefix).Width);
+            // A NumericUpDown needs room for its spinner, border and side bearings as well as text.
+            return textWidth + SystemInformation.VerticalScrollBarWidth + 12;
         }
 
         // The incoming option list and its numeric keys stay bound unchanged.
@@ -139,9 +168,8 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             var label = new Label()
             {
                 Text = servono.ToString(),
-                AutoSize = false,
-                Height = controlHeight,
-                Width = 20,
+                AutoSize = true,
+                MinimumSize = new Size(20, controlHeight),
                 TextAlign = System.Drawing.ContentAlignment.MiddleCenter,
                 Anchor = AnchorStyles.None,
                 Margin = horizontalMargin
