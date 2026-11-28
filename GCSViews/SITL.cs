@@ -861,7 +861,11 @@ namespace MissionPlanner.GCSViews
             };
 
             using (var cancellation = new CancellationTokenSource())
-            using (var progress = new ProgressReporterDialogue { Text = UiText.Translate("Downloading") })
+            using (var progress = new ProgressReporterDialogue
+            {
+                StartPosition = FormStartPosition.CenterScreen,
+                Text = UiText.Translate("Downloading")
+            })
             {
                 bool downloaded = false;
                 progress.UpdateProgressAndStatus(-1, UiText.Translate("Downloading sitl software"));
@@ -881,6 +885,7 @@ namespace MissionPlanner.GCSViews
                         sender.doWorkArgs.CancelAcknowledged = cancellation.IsCancellationRequested;
                     }
                 };
+                ThemeManager.ApplyThemeTo(progress);
                 progress.RunBackgroundOperationAsync();
                 if (cancellation.IsCancellationRequested)
                     return null;
