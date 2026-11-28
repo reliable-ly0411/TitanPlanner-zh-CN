@@ -10616,6 +10616,646 @@
       "recordSha256": "39ca0d19036c1e425fd50866ce8987f92a83d94f425ba832094ed4e74e277e33",
       "english": "Vertical position on screen",
       "chinese": "设置 OSD 第 4 屏上第二个气压计温度的垂直位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD1_GPSLAT_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "99185adf6b5d692c539954b1004cd2435fe48f4af05caacbfbc8d15aad193182",
+      "recordSha256": "4c95ff280d8c7095e7ed7496e619cce4a1ab31160b367c8e62d3bb0a5815f97a",
+      "english": "Displays GPS latitude",
+      "chinese": "显示 GPS 纬度。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD1_GPSLONG_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "4da89270890f7beb7e5214bdf5251d473324cc6e7c8564a3af9166429c97a56a",
+      "recordSha256": "a37b77478c4cc7161c96b4b6a03e397d3ec73498430259a63c6207b41b6fd35a",
+      "english": "Displays GPS longitude",
+      "chinese": "显示 GPS 经度。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD1_HDOP_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "95ab9f0c02eca30004cfd6569021dec907bf6bf485ed2df8c21baab6b6b06939",
+      "recordSha256": "e8662dec2389b6d6711c6ef96927762e4e34f1dfd092b534a896278109694277",
+      "english": "Displays Horizontal Dilution Of Position",
+      "chinese": "显示水平精度因子（HDOP）。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD1_SATS_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "14c3cabfbbc796593e166b04c4ad9e1987cec42a17c847de42ed984ddf2d85f8",
+      "recordSha256": "c867db5d597b6ca08e204e77992ff12a0ed33e67ee94f707894992b6da2a4495",
+      "english": "Displays number of acquired satellites",
+      "chinese": "显示已搜到的卫星数量。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD2_GPSLAT_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "99185adf6b5d692c539954b1004cd2435fe48f4af05caacbfbc8d15aad193182",
+      "recordSha256": "c1a84b88998314e904a89f0dfc50f952f538f2fa842f3901ff0a321c0eba1915",
+      "english": "Displays GPS latitude",
+      "chinese": "显示 GPS 纬度。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD2_GPSLONG_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "4da89270890f7beb7e5214bdf5251d473324cc6e7c8564a3af9166429c97a56a",
+      "recordSha256": "219849ee4c0cb41489a9cde9e1e9f0318c51b4e8d6ea1d7946d0d884fd52190a",
+      "english": "Displays GPS longitude",
+      "chinese": "显示 GPS 经度。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD2_HDOP_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "95ab9f0c02eca30004cfd6569021dec907bf6bf485ed2df8c21baab6b6b06939",
+      "recordSha256": "ccd8b598455023bd447e631693f3972380347201a9b9a2cd2d832d145045fa80",
+      "english": "Displays Horizontal Dilution Of Position",
+      "chinese": "显示水平精度因子（HDOP）。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD2_SATS_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "14c3cabfbbc796593e166b04c4ad9e1987cec42a17c847de42ed984ddf2d85f8",
+      "recordSha256": "57bd0d32897b13e16d739e35e4ecdf691d382e3920fa343d3590fbd6a1784da9",
+      "english": "Displays number of acquired satellites",
+      "chinese": "显示已搜到的卫星数量。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD3_GPSLAT_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "99185adf6b5d692c539954b1004cd2435fe48f4af05caacbfbc8d15aad193182",
+      "recordSha256": "20308cb80fff0d4ddfb68015c28dc59c437465a1778b9148a9d9f40b2579a10f",
+      "english": "Displays GPS latitude",
+      "chinese": "显示 GPS 纬度。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD3_GPSLONG_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "4da89270890f7beb7e5214bdf5251d473324cc6e7c8564a3af9166429c97a56a",
+      "recordSha256": "77f3a57e1575dc58a86e7c13b66f61ad47f7ce1fdd1292bf69b57cb83e296bc4",
+      "english": "Displays GPS longitude",
+      "chinese": "显示 GPS 经度。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD3_HDOP_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "95ab9f0c02eca30004cfd6569021dec907bf6bf485ed2df8c21baab6b6b06939",
+      "recordSha256": "c181c674262bebc5a806c06b19ce9aa39230fa17b205eb6d9475b564a40403a5",
+      "english": "Displays Horizontal Dilution Of Position",
+      "chinese": "显示水平精度因子（HDOP）。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD3_SATS_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "14c3cabfbbc796593e166b04c4ad9e1987cec42a17c847de42ed984ddf2d85f8",
+      "recordSha256": "0ca316b70e1e12e11bc24ad1c78288593cd2e672cd2f3e21bc9bc2d7337680e9",
+      "english": "Displays number of acquired satellites",
+      "chinese": "显示已搜到的卫星数量。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD4_GPSLAT_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "99185adf6b5d692c539954b1004cd2435fe48f4af05caacbfbc8d15aad193182",
+      "recordSha256": "03e4505d72db3617a0ac060c5080f06e85ec994d6ee993c28b8f945a074c4065",
+      "english": "Displays GPS latitude",
+      "chinese": "显示 GPS 纬度。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD4_GPSLONG_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "4da89270890f7beb7e5214bdf5251d473324cc6e7c8564a3af9166429c97a56a",
+      "recordSha256": "4f70a7093e2936b0c1b155c4a338d6725488eb29d7b40a88c1632beda0bef335",
+      "english": "Displays GPS longitude",
+      "chinese": "显示 GPS 经度。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD4_HDOP_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "95ab9f0c02eca30004cfd6569021dec907bf6bf485ed2df8c21baab6b6b06939",
+      "recordSha256": "46001f34bd891a90a1bdbc7f8cda8bb9e3954a84342e9ae998a57ec3e2791173",
+      "english": "Displays Horizontal Dilution Of Position",
+      "chinese": "显示水平精度因子（HDOP）。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD4_SATS_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "14c3cabfbbc796593e166b04c4ad9e1987cec42a17c847de42ed984ddf2d85f8",
+      "recordSha256": "74f2a260c276263769efc6e4d20bb86af9942395e0b59ad920a7a7d2f0c99010",
+      "english": "Displays number of acquired satellites",
+      "chinese": "显示已搜到的卫星数量。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD1_GPSLAT_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "99185adf6b5d692c539954b1004cd2435fe48f4af05caacbfbc8d15aad193182",
+      "recordSha256": "4c95ff280d8c7095e7ed7496e619cce4a1ab31160b367c8e62d3bb0a5815f97a",
+      "english": "Displays GPS latitude",
+      "chinese": "显示 GPS 纬度。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD1_GPSLONG_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "4da89270890f7beb7e5214bdf5251d473324cc6e7c8564a3af9166429c97a56a",
+      "recordSha256": "a37b77478c4cc7161c96b4b6a03e397d3ec73498430259a63c6207b41b6fd35a",
+      "english": "Displays GPS longitude",
+      "chinese": "显示 GPS 经度。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD1_HDOP_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "95ab9f0c02eca30004cfd6569021dec907bf6bf485ed2df8c21baab6b6b06939",
+      "recordSha256": "e8662dec2389b6d6711c6ef96927762e4e34f1dfd092b534a896278109694277",
+      "english": "Displays Horizontal Dilution Of Position",
+      "chinese": "显示水平精度因子（HDOP）。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD1_SATS_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "14c3cabfbbc796593e166b04c4ad9e1987cec42a17c847de42ed984ddf2d85f8",
+      "recordSha256": "c867db5d597b6ca08e204e77992ff12a0ed33e67ee94f707894992b6da2a4495",
+      "english": "Displays number of acquired satellites",
+      "chinese": "显示已搜到的卫星数量。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD2_GPSLAT_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "99185adf6b5d692c539954b1004cd2435fe48f4af05caacbfbc8d15aad193182",
+      "recordSha256": "c1a84b88998314e904a89f0dfc50f952f538f2fa842f3901ff0a321c0eba1915",
+      "english": "Displays GPS latitude",
+      "chinese": "显示 GPS 纬度。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD2_GPSLONG_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "4da89270890f7beb7e5214bdf5251d473324cc6e7c8564a3af9166429c97a56a",
+      "recordSha256": "219849ee4c0cb41489a9cde9e1e9f0318c51b4e8d6ea1d7946d0d884fd52190a",
+      "english": "Displays GPS longitude",
+      "chinese": "显示 GPS 经度。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD2_HDOP_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "95ab9f0c02eca30004cfd6569021dec907bf6bf485ed2df8c21baab6b6b06939",
+      "recordSha256": "ccd8b598455023bd447e631693f3972380347201a9b9a2cd2d832d145045fa80",
+      "english": "Displays Horizontal Dilution Of Position",
+      "chinese": "显示水平精度因子（HDOP）。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD2_SATS_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "14c3cabfbbc796593e166b04c4ad9e1987cec42a17c847de42ed984ddf2d85f8",
+      "recordSha256": "57bd0d32897b13e16d739e35e4ecdf691d382e3920fa343d3590fbd6a1784da9",
+      "english": "Displays number of acquired satellites",
+      "chinese": "显示已搜到的卫星数量。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD3_GPSLAT_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "99185adf6b5d692c539954b1004cd2435fe48f4af05caacbfbc8d15aad193182",
+      "recordSha256": "20308cb80fff0d4ddfb68015c28dc59c437465a1778b9148a9d9f40b2579a10f",
+      "english": "Displays GPS latitude",
+      "chinese": "显示 GPS 纬度。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD3_GPSLONG_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "4da89270890f7beb7e5214bdf5251d473324cc6e7c8564a3af9166429c97a56a",
+      "recordSha256": "77f3a57e1575dc58a86e7c13b66f61ad47f7ce1fdd1292bf69b57cb83e296bc4",
+      "english": "Displays GPS longitude",
+      "chinese": "显示 GPS 经度。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD3_HDOP_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "95ab9f0c02eca30004cfd6569021dec907bf6bf485ed2df8c21baab6b6b06939",
+      "recordSha256": "c181c674262bebc5a806c06b19ce9aa39230fa17b205eb6d9475b564a40403a5",
+      "english": "Displays Horizontal Dilution Of Position",
+      "chinese": "显示水平精度因子（HDOP）。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD3_SATS_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "14c3cabfbbc796593e166b04c4ad9e1987cec42a17c847de42ed984ddf2d85f8",
+      "recordSha256": "0ca316b70e1e12e11bc24ad1c78288593cd2e672cd2f3e21bc9bc2d7337680e9",
+      "english": "Displays number of acquired satellites",
+      "chinese": "显示已搜到的卫星数量。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD4_GPSLAT_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "99185adf6b5d692c539954b1004cd2435fe48f4af05caacbfbc8d15aad193182",
+      "recordSha256": "03e4505d72db3617a0ac060c5080f06e85ec994d6ee993c28b8f945a074c4065",
+      "english": "Displays GPS latitude",
+      "chinese": "显示 GPS 纬度。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD4_GPSLONG_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "4da89270890f7beb7e5214bdf5251d473324cc6e7c8564a3af9166429c97a56a",
+      "recordSha256": "4f70a7093e2936b0c1b155c4a338d6725488eb29d7b40a88c1632beda0bef335",
+      "english": "Displays GPS longitude",
+      "chinese": "显示 GPS 经度。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD4_HDOP_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "95ab9f0c02eca30004cfd6569021dec907bf6bf485ed2df8c21baab6b6b06939",
+      "recordSha256": "46001f34bd891a90a1bdbc7f8cda8bb9e3954a84342e9ae998a57ec3e2791173",
+      "english": "Displays Horizontal Dilution Of Position",
+      "chinese": "显示水平精度因子（HDOP）。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD4_SATS_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "14c3cabfbbc796593e166b04c4ad9e1987cec42a17c847de42ed984ddf2d85f8",
+      "recordSha256": "74f2a260c276263769efc6e4d20bb86af9942395e0b59ad920a7a7d2f0c99010",
+      "english": "Displays number of acquired satellites",
+      "chinese": "显示已搜到的卫星数量。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD1_GPSLAT_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "99185adf6b5d692c539954b1004cd2435fe48f4af05caacbfbc8d15aad193182",
+      "recordSha256": "4c95ff280d8c7095e7ed7496e619cce4a1ab31160b367c8e62d3bb0a5815f97a",
+      "english": "Displays GPS latitude",
+      "chinese": "显示 GPS 纬度。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD1_GPSLONG_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "4da89270890f7beb7e5214bdf5251d473324cc6e7c8564a3af9166429c97a56a",
+      "recordSha256": "a37b77478c4cc7161c96b4b6a03e397d3ec73498430259a63c6207b41b6fd35a",
+      "english": "Displays GPS longitude",
+      "chinese": "显示 GPS 经度。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD1_HDOP_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "95ab9f0c02eca30004cfd6569021dec907bf6bf485ed2df8c21baab6b6b06939",
+      "recordSha256": "e8662dec2389b6d6711c6ef96927762e4e34f1dfd092b534a896278109694277",
+      "english": "Displays Horizontal Dilution Of Position",
+      "chinese": "显示水平精度因子（HDOP）。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD1_SATS_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "14c3cabfbbc796593e166b04c4ad9e1987cec42a17c847de42ed984ddf2d85f8",
+      "recordSha256": "c867db5d597b6ca08e204e77992ff12a0ed33e67ee94f707894992b6da2a4495",
+      "english": "Displays number of acquired satellites",
+      "chinese": "显示已搜到的卫星数量。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD2_GPSLAT_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "99185adf6b5d692c539954b1004cd2435fe48f4af05caacbfbc8d15aad193182",
+      "recordSha256": "c1a84b88998314e904a89f0dfc50f952f538f2fa842f3901ff0a321c0eba1915",
+      "english": "Displays GPS latitude",
+      "chinese": "显示 GPS 纬度。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD2_GPSLONG_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "4da89270890f7beb7e5214bdf5251d473324cc6e7c8564a3af9166429c97a56a",
+      "recordSha256": "219849ee4c0cb41489a9cde9e1e9f0318c51b4e8d6ea1d7946d0d884fd52190a",
+      "english": "Displays GPS longitude",
+      "chinese": "显示 GPS 经度。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD2_HDOP_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "95ab9f0c02eca30004cfd6569021dec907bf6bf485ed2df8c21baab6b6b06939",
+      "recordSha256": "ccd8b598455023bd447e631693f3972380347201a9b9a2cd2d832d145045fa80",
+      "english": "Displays Horizontal Dilution Of Position",
+      "chinese": "显示水平精度因子（HDOP）。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD2_SATS_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "14c3cabfbbc796593e166b04c4ad9e1987cec42a17c847de42ed984ddf2d85f8",
+      "recordSha256": "57bd0d32897b13e16d739e35e4ecdf691d382e3920fa343d3590fbd6a1784da9",
+      "english": "Displays number of acquired satellites",
+      "chinese": "显示已搜到的卫星数量。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD3_GPSLAT_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "99185adf6b5d692c539954b1004cd2435fe48f4af05caacbfbc8d15aad193182",
+      "recordSha256": "20308cb80fff0d4ddfb68015c28dc59c437465a1778b9148a9d9f40b2579a10f",
+      "english": "Displays GPS latitude",
+      "chinese": "显示 GPS 纬度。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD3_GPSLONG_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "4da89270890f7beb7e5214bdf5251d473324cc6e7c8564a3af9166429c97a56a",
+      "recordSha256": "77f3a57e1575dc58a86e7c13b66f61ad47f7ce1fdd1292bf69b57cb83e296bc4",
+      "english": "Displays GPS longitude",
+      "chinese": "显示 GPS 经度。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD3_HDOP_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "95ab9f0c02eca30004cfd6569021dec907bf6bf485ed2df8c21baab6b6b06939",
+      "recordSha256": "c181c674262bebc5a806c06b19ce9aa39230fa17b205eb6d9475b564a40403a5",
+      "english": "Displays Horizontal Dilution Of Position",
+      "chinese": "显示水平精度因子（HDOP）。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD3_SATS_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "14c3cabfbbc796593e166b04c4ad9e1987cec42a17c847de42ed984ddf2d85f8",
+      "recordSha256": "0ca316b70e1e12e11bc24ad1c78288593cd2e672cd2f3e21bc9bc2d7337680e9",
+      "english": "Displays number of acquired satellites",
+      "chinese": "显示已搜到的卫星数量。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD4_GPSLAT_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "99185adf6b5d692c539954b1004cd2435fe48f4af05caacbfbc8d15aad193182",
+      "recordSha256": "03e4505d72db3617a0ac060c5080f06e85ec994d6ee993c28b8f945a074c4065",
+      "english": "Displays GPS latitude",
+      "chinese": "显示 GPS 纬度。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD4_GPSLONG_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "4da89270890f7beb7e5214bdf5251d473324cc6e7c8564a3af9166429c97a56a",
+      "recordSha256": "4f70a7093e2936b0c1b155c4a338d6725488eb29d7b40a88c1632beda0bef335",
+      "english": "Displays GPS longitude",
+      "chinese": "显示 GPS 经度。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD4_HDOP_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "95ab9f0c02eca30004cfd6569021dec907bf6bf485ed2df8c21baab6b6b06939",
+      "recordSha256": "46001f34bd891a90a1bdbc7f8cda8bb9e3954a84342e9ae998a57ec3e2791173",
+      "english": "Displays Horizontal Dilution Of Position",
+      "chinese": "显示水平精度因子（HDOP）。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD4_SATS_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "14c3cabfbbc796593e166b04c4ad9e1987cec42a17c847de42ed984ddf2d85f8",
+      "recordSha256": "74f2a260c276263769efc6e4d20bb86af9942395e0b59ad920a7a7d2f0c99010",
+      "english": "Displays number of acquired satellites",
+      "chinese": "显示已搜到的卫星数量。"
     }
   ]
 }

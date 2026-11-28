@@ -26,10 +26,14 @@ OSD_DISPLAY_HELP_KEYS = {
     *(f'OSD{screen}_{item}_{field}' for screen in range(1, 5)
       for item in ('WIND', 'FLTMODE', 'MESSAGE', 'CLK', 'FLTIME', 'TEMP', 'BTEMP') for field in ('EN', 'X', 'Y')),
 }
+OSD_GPS_DISPLAY_HELP_KEYS = {
+    f'OSD{screen}_{item}_EN' for screen in range(1, 5)
+    for item in ('GPSLAT', 'GPSLONG', 'SATS', 'HDOP')
+}
 DISPLAY_AND_LOG_HELP_KEYS = (
     SIDEBAR_GEOMETRY_KEYS | IMU_DIAGNOSTIC_HELP_KEYS | OSD_MESSAGE_TIME_HELP_KEYS
     | SITL_ENVIRONMENT_HELP_KEYS | LOG_STORAGE_HELP_KEYS | OSD_FONT_KEYS | ONBOARD_DISPLAY_HELP_KEYS | LOGGER_BACKEND_HELP_KEYS
-    | OSD_DISPLAY_HELP_KEYS
+    | OSD_DISPLAY_HELP_KEYS | OSD_GPS_DISPLAY_HELP_KEYS
     | {'LOG_BITMASK', 'LOG_FILE_BUFSIZE', 'OSD_H_OFFSET', 'OSD_V_OFFSET', 'SCHED_DEBUG'}
 )
 catalog_module = importlib.util.module_from_spec(spec)
@@ -60,8 +64,8 @@ class ParameterCatalogTests(unittest.TestCase):
     def test_scope_counts_and_held_versions(self):
         notes = self.catalog['translations']
         descriptions = {(n['family'], v, n['parameter']) for n in notes if n['field'] == 'Description' for v in n['versions']}
-        self.assertEqual(1496, len(descriptions))
-        self.assertEqual(671, len({(f, p) for f, v, p in descriptions}))
+        self.assertEqual(1608, len(descriptions))
+        self.assertEqual(719, len({(f, p) for f, v, p in descriptions}))
         self.assertFalse(any(v == '4.7.2' for f, v, p in descriptions))
         excluded_copter = {'RTL_CONE_SLOPE', 'LAND_SPEED', 'LAND_SPD_MS', 'FS_GCS_ENABLE'}
         excluded_plane = {'TECS_CLMB_MAX', 'TECS_SINK_MIN', 'ROLL_LIMIT_DEG'}
@@ -91,6 +95,28 @@ class ParameterCatalogTests(unittest.TestCase):
                 self.assertEqual(('Description', catalog_module.record_fingerprint(record)),
                                  (notes[0]['field'], notes[0]['recordSha256']))
                 self.assertEqual(record.get('documentation'), notes[0]['english'])
+
+    def test_osd_gps_display_help_is_scoped_and_preserves_options(self):
+        expected = {'GPSLAT': '显示 GPS 纬度。', 'GPSLONG': '显示 GPS 经度。',
+                    'SATS': '显示已搜到的卫星数量。', 'HDOP': '显示水平精度因子（HDOP）。'}
+        for release in self.bundle:
+            family, version = release.get('family'), release.get('version')
+            with self.subTest(family=family, version=version):
+                records = {p.get('name').rsplit(':', 1)[-1]: p for p in release.iter('param')
+                           if p.get('name').rsplit(':', 1)[-1] in OSD_GPS_DISPLAY_HELP_KEYS}
+                rows = [n for n in self.catalog['translations'] if n['family'] == family
+                        and version in n['versions'] and n['parameter'] in OSD_GPS_DISPLAY_HELP_KEYS]
+                self.assertEqual(OSD_GPS_DISPLAY_HELP_KEYS, records.keys())
+                self.assertCountEqual(OSD_GPS_DISPLAY_HELP_KEYS, [n['parameter'] for n in rows])
+                for note in rows:
+                    key = note['parameter']
+                    record = records[key]
+                    self.assertEqual('Description', note['field'])
+                    self.assertEqual(record.get('documentation'), note['english'])
+                    self.assertEqual(catalog_module.record_fingerprint(record), note['recordSha256'])
+                    self.assertEqual(expected[key.split('_')[1]], note['chinese'])
+                    self.assertEqual([('0', 'Disabled'), ('1', 'Enabled')],
+                                     [(v.get('code'), v.text) for v in record.findall('./values/value')])
 
     def test_plane_read_only_additions_preserve_version_and_field_identity(self):
         expected = {'4.5.7': 33, '4.6.3': 33, '4.7.1': 39}  # includes the earlier 4.6.3 BARO1
