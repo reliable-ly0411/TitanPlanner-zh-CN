@@ -28,6 +28,7 @@ namespace MissionPlanner
     {
         private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private ICommsSerial _baseStream;
+        private readonly object messageGenerationLock = new object();
         private MessageDisplayContext messageDisplay = new MessageDisplayContext();
         private FirmwareSpeechSourceProof firmwareSpeechProof = new FirmwareSpeechSourceProof();
         private SpeechStatusTextAssembler speechStatusText = new SpeechStatusTextAssembler();
@@ -44,9 +45,12 @@ namespace MissionPlanner
 
         private void ResetMessageDisplay()
         {
-            Interlocked.Exchange(ref messageDisplay, new MessageDisplayContext());
-            firmwareSpeechProof = new FirmwareSpeechSourceProof();
-            speechStatusText = new SpeechStatusTextAssembler();
+            lock (messageGenerationLock)
+            {
+                firmwareSpeechProof = new FirmwareSpeechSourceProof();
+                speechStatusText = new SpeechStatusTextAssembler();
+                Volatile.Write(ref messageDisplay, new MessageDisplayContext());
+            }
         }
 
         public ICommsSerial BaseStream
@@ -4791,9 +4795,15 @@ Mission Planner waits for 2 valid heartbeat packets before connecting
                 Console.WriteLine(DateTime.Now.Millisecond + " SR0 " + BaseStream?.BytesToRead);
 
             await readlock.WaitAsync().ConfigureAwait(false);
-            var displayGeneration = Volatile.Read(ref messageDisplay);
-            var speechProofGeneration = firmwareSpeechProof;
-            var speechAssemblerGeneration = speechStatusText;
+            MessageDisplayContext displayGeneration;
+            FirmwareSpeechSourceProof speechProofGeneration;
+            SpeechStatusTextAssembler speechAssemblerGeneration;
+            lock (messageGenerationLock)
+            {
+                displayGeneration = messageDisplay;
+                speechProofGeneration = firmwareSpeechProof;
+                speechAssemblerGeneration = speechStatusText;
+            }
             
             try
             {
@@ -5619,12 +5629,10 @@ Mission Planner waits for 2 valid heartbeat packets before connecting
                         }
 
                         if (extraScriptSpeech && Speech != null && Speech.IsReady && Speech.speechEnable &&
-                            speechenabled && Settings.Instance["speechenable"] != null &&
-                            Settings.Instance.GetBoolean("speechenable"))
-                            new FirmwareSpeechAlert(() =>
-                                MissionPlanner.ArduPilot.Common.UseEnhancedSpeech &&
-                                ReferenceEquals(displayGeneration, Volatile.Read(ref messageDisplay))
-                                    ? scriptTranslation : null).Speak(Speech, completeSpeechText);
+                            speechenabled && Settings.Instance.GetBoolean("speechenable") &&
+                            MissionPlanner.ArduPilot.Common.UseEnhancedSpeech &&
+                            ReferenceEquals(displayGeneration, Volatile.Read(ref messageDisplay)))
+                            Speech.SpeakAsync(scriptTranslation);
                     }
 
                     if (Settings.Instance["autoParamCommit"] == null ||
