@@ -48,6 +48,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                 if (e.ListItem is string filename)
                     e.Value = FormatThemeCaption(filename);
             };
+            CMB_theme.DropDown += (sender, e) => OpenThemeDropDown(CMB_theme);
             CMB_mapCache.Format += (sender, e) =>
             {
                 if (e.ListItem is string key)
@@ -1570,21 +1571,9 @@ namespace MissionPlanner.GCSViews.ConfigurationView
         {
         }
 
-        private static readonly string[] AdditionalHudColorCaptionKeys =
-        {
-            nameof(KnownColor.Black), nameof(KnownColor.White), nameof(KnownColor.Red), nameof(KnownColor.Blue),
-            nameof(KnownColor.Green), nameof(KnownColor.Yellow), nameof(KnownColor.Orange), nameof(KnownColor.Brown),
-            nameof(KnownColor.Snow), nameof(KnownColor.Ivory), nameof(KnownColor.Beige), nameof(KnownColor.Linen),
-            nameof(KnownColor.Wheat), nameof(KnownColor.Cornsilk),
-            nameof(KnownColor.CornflowerBlue), nameof(KnownColor.LightBlue), nameof(KnownColor.RoyalBlue),
-            nameof(KnownColor.SkyBlue), nameof(KnownColor.SlateBlue), nameof(KnownColor.SteelBlue)
-        };
-
         internal static void SizeHudColorDropDown(ComboBox combo)
         {
-            var width = new[] { nameof(KnownColor.ActiveBorder), nameof(KnownColor.AliceBlue),
-                    nameof(KnownColor.GradientInactiveCaption) }
-                .Concat(AdditionalHudColorCaptionKeys)
+            var width = Enum.GetNames(typeof(KnownColor))
                 .Select(key => TextRenderer.MeasureText(FormatHudColorCaption(key), combo.Font).Width)
                 .Max();
             combo.DropDownWidth = Math.Max(combo.Width, width + 35 + SystemInformation.VerticalScrollBarWidth);
@@ -1595,14 +1584,9 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             if (CultureInfo.CurrentUICulture.Name != "zh-CN")
                 return key;
 
-            switch (key)
-            {
-                case nameof(KnownColor.ActiveBorder): return UiText.Translate("HUD color: ActiveBorder");
-                case nameof(KnownColor.AliceBlue): return UiText.Translate("HUD color: AliceBlue");
-                case nameof(KnownColor.GradientInactiveCaption): return UiText.Translate("HUD color: GradientInactiveCaption");
-                default: return AdditionalHudColorCaptionKeys.Contains(key, StringComparer.Ordinal)
-                    ? UiText.Translate("HUD color: " + key) : key;
-            }
+            var resource = "HUD color: " + key;
+            var caption = UiText.Translate(resource);
+            return caption == resource ? key : caption;
         }
 
         internal static string CompactHudColorCaption(string key)
@@ -1610,13 +1594,9 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             if (CultureInfo.CurrentUICulture.Name != "zh-CN")
                 return null;
 
-            switch (key)
-            {
-                case nameof(KnownColor.AliceBlue): return UiText.Translate("HUD color compact: AliceBlue");
-                case nameof(KnownColor.GradientInactiveCaption): return UiText.Translate("HUD color compact: GradientInactiveCaption");
-                default: return AdditionalHudColorCaptionKeys.Contains(key, StringComparer.Ordinal)
-                    ? UiText.Translate("HUD color compact: " + key) : null;
-            }
+            var resource = "HUD color compact: " + key;
+            var caption = UiText.Translate(resource);
+            return caption == resource ? null : caption;
         }
 
         private void CMB_osdcolor_DrawItem(object sender, DrawItemEventArgs e)
@@ -1719,6 +1699,83 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             {
                 Settings.Instance.LogDir = path;
             }
+        }
+
+        private static void OpenThemeDropDown(ComboBox combo)
+        {
+            SizeThemeDropDown(combo);
+            if (Environment.OSVersion.Platform != PlatformID.Win32NT || !combo.IsHandleCreated)
+                return;
+
+            // The native list gets its final rectangle after the DropDown event returns.
+            IntPtr handle = combo.Handle;
+            combo.BeginInvoke((Action)(() =>
+            {
+                if (combo.IsDisposed || !combo.IsHandleCreated || combo.Handle != handle || !combo.DroppedDown)
+                    return;
+
+                var info = new ThemeComboBoxInfo { Size = Marshal.SizeOf(typeof(ThemeComboBoxInfo)) };
+                if (!GetComboBoxInfo(handle, ref info) || info.List == IntPtr.Zero ||
+                    !GetWindowRect(info.List, out var list))
+                    return;
+
+                var area = Screen.FromControl(combo).WorkingArea;
+                int x = FitThemePopupLeft(list.Left, list.Right, area.Left, area.Right);
+                if (x != list.Left)
+                {
+                    const uint moveOnly = 0x0001 | 0x0004 | 0x0010; // NOSIZE | NOZORDER | NOACTIVATE
+                    SetWindowPos(info.List, IntPtr.Zero, x, list.Top, 0, 0, moveOnly);
+                }
+            }));
+        }
+
+        private static int FitThemePopupLeft(int left, int right, int areaLeft, int areaRight)
+        {
+            int width = right - left;
+            if (width <= 0 || width > areaRight - areaLeft)
+                return left;
+
+            return Math.Max(areaLeft, Math.Min(left, areaRight - width));
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        private struct ThemePopupRect
+        {
+            internal int Left, Top, Right, Bottom;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        private struct ThemeComboBoxInfo
+        {
+            internal int Size;
+            internal ThemePopupRect Item, Button;
+            internal int ButtonState;
+            internal IntPtr Combo, Edit, List;
+        }
+
+        [DllImport("user32.dll")]
+        private static extern bool GetComboBoxInfo(IntPtr combo, ref ThemeComboBoxInfo info);
+        [DllImport("user32.dll")]
+        private static extern bool GetWindowRect(IntPtr window, out ThemePopupRect rectangle);
+        [DllImport("user32.dll")]
+        private static extern bool SetWindowPos(IntPtr window, IntPtr insertAfter, int x, int y, int width, int height, uint flags);
+
+        private static void SizeThemeDropDown(ComboBox combo)
+        {
+            // Measure the same formatted text the native popup will display, on demand.
+            int widest = 0;
+            foreach (var item in combo.Items)
+            {
+                int width = TextRenderer.MeasureText(combo.GetItemText(item), combo.Font, Size.Empty,
+                    TextFormatFlags.SingleLine | TextFormatFlags.NoPrefix).Width;
+                widest = Math.Max(widest, width);
+            }
+
+            int workingWidth = Screen.FromControl(combo).WorkingArea.Width;
+            int desiredWidth = widest + SystemInformation.VerticalScrollBarWidth + 8;
+            int popupWidth = Math.Max(combo.Width, workingWidth > 0 ? Math.Min(desiredWidth, workingWidth) : desiredWidth);
+            if (combo.DropDownWidth != popupWidth)
+                combo.DropDownWidth = popupWidth;
         }
 
         private static string FormatThemeCaption(string filename)

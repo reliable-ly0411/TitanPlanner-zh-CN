@@ -30,13 +30,15 @@ Enhanced Chinese telemetry field labels distinguish the vehicle-reported communi
 
 Enhanced Chinese adds a Messages-only annotation for the EKF3 IMU1 origin notice on the matching ArduPlane 4.6.3 build, with the original message retained.
 
+Ground Station Settings shows bilingual OSD color names in enhanced Simplified Chinese. Narrow selection fields show the Chinese name, and the list shows both names.
+
 ## Desktop appearance preferences
 
 The settings provide separate dropdowns for window icons and startup images, each beside a single local-file picker and with its own preview, independent default resets, and persistent per-user imports. Window icons update during the session; startup images appear on the next launch. The startup footer identifies the modifier as lyy0405 and retains Michael Oborne and the TitanPlanner upstream credit. EXE, installer and existing shortcut icons retain their build-time identity. The Mission Planner, TitanPlanner, and MakeFlyEasy window icon presets keep independent local ICO imports without bundling vendor icons.
 
 ## Bilingual parameter descriptions
 
-Enhanced Chinese adds source-matched Chinese explanations after official English across pinned Copter, Plane/QuadPlane, Rover, Sub and Tracker releases. Untranslated choices retain their original codes and labels. The parameter table searches both languages and supports full-text expansion. Missing or changed translations retain English and identify pending review; parameter values and write behavior stay unchanged.
+Enhanced Chinese adds source-matched Chinese explanations after official English across pinned Copter, Plane/QuadPlane, Rover, Sub and Tracker releases. The four OSD screen groups have complete Chinese description coverage for Copter and Plane 4.7.3. Untranslated choices retain their original codes and labels. The parameter table searches both languages and supports full-text expansion. Missing or changed translations retain English and identify pending review; parameter values and write behavior stay unchanged.
 
 ## TitanPlanner-zh-CN upstream synchronization (2026-10-19)
 

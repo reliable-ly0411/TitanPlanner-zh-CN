@@ -11,7 +11,7 @@
       "sourceSha256": "61599e773eadeba781d69c124aff3acfbeea884b2a159d9ca6f7891f379513c9",
       "gitTag": "Copter-4.5.7",
       "gitSha": "2a3dc4b7bf2507120f7378a7b2fde73185e0c325",
-      "parameters": 203,
+      "parameters": 714,
       "legacySourceStamp": "Generated from git tag Copter-4.5.7 on 2025-05-26 19:05:40"
     },
     {
@@ -21,7 +21,7 @@
       "sourceSha256": "e6375727b7a05a0c820b7b5c3e28c755d52c1e6da6b4506682d1dd3b19552190",
       "gitTag": "Copter-4.6.3",
       "gitSha": "92b0cd788ec29406f26c6f9c31d5ceedbd1cc538",
-      "parameters": 215
+      "parameters": 725
     },
     {
       "family": "Copter",
@@ -30,7 +30,7 @@
       "sourceSha256": "9e5e674c6029bd9f680540c62119086c26991d3ba586c585f4e98484036c0518",
       "gitTag": "Copter-4.7.1",
       "gitSha": "dbe792162d06cab66c3475fd5556bf7a120f119e",
-      "parameters": 221
+      "parameters": 781
     },
     {
       "family": "Plane",
@@ -39,7 +39,7 @@
       "sourceSha256": "4abf0156f5c68d61fe0efef5f24daefc31754ee1ddf6cd8e70b01aff300bfa83",
       "gitTag": "Plane-4.5.7",
       "gitSha": "0358a9c210bc6c965006f5d6029239b7033616df",
-      "parameters": 214,
+      "parameters": 723,
       "legacySourceStamp": "Generated from git tag Plane-4.5.7 on 2025-05-26 19:19:51"
     },
     {
@@ -49,7 +49,7 @@
       "sourceSha256": "154e7bd4c38a75cc09e7109a4b7cfaa7f7a6fbf03125cfe6a849032f3b8389aa",
       "gitTag": "Plane-4.6.3",
       "gitSha": "3fc7011a7d3dc047cbb17d8bd98ee94577d144c6",
-      "parameters": 226
+      "parameters": 735
     },
     {
       "family": "Plane",
@@ -58,7 +58,7 @@
       "sourceSha256": "924fdf56b972719bde381082adb29fd415731aa8cd899ec111eb4a5eda5192d6",
       "gitTag": "Plane-4.7.1",
       "gitSha": "dbe792162d06cab66c3475fd5556bf7a120f119e",
-      "parameters": 234
+      "parameters": 793
     },
     {
       "family": "Sub",
@@ -67,7 +67,7 @@
       "sourceSha256": "c543ae155e6c48c98ca6f5fc803c7ce9b6161780fc79aa9e35e8c808891bb5ba",
       "gitTag": "Sub-4.7.1",
       "gitSha": "dbe792162d06cab66c3475fd5556bf7a120f119e",
-      "parameters": 183,
+      "parameters": 743,
       "retrievedUtc": "2026-11-27"
     },
     {
@@ -77,7 +77,7 @@
       "sourceSha256": "0c009e0a35c0ab8f3455f1bb323c29f6a59152dc54cb5e0edcc95afd48127de5",
       "gitTag": "Rover-4.6.3",
       "gitSha": "3fc7011a7d3dc047cbb17d8bd98ee94577d144c6",
-      "parameters": 4,
+      "parameters": 40,
       "retrievedUtc": "2026-11-26"
     },
     {
@@ -89,6 +89,24 @@
       "gitSha": "dbe792162d06cab66c3475fd5556bf7a120f119e",
       "parameters": 2,
       "retrievedUtc": "2026-11-27"
+    },
+    {
+      "family": "Copter",
+      "version": "4.7.3",
+      "sourceUrl": "https://firmware.ardupilot.org/Copter/stable-4.7.3/__METADATA__/apm.pdef.xml",
+      "sourceSha256": "4d6971176bce63c53a7ad40ceb71c9ac4998f801c4b7ed1f1e4a1f45853599fc",
+      "gitTag": "Copter-4.7.3",
+      "gitSha": "d9c5097c3d8333435712ffed86bca8ce00c4bb46",
+      "parameters": 1005
+    },
+    {
+      "family": "Plane",
+      "version": "4.7.3",
+      "sourceUrl": "https://firmware.ardupilot.org/Plane/stable-4.7.3/__METADATA__/apm.pdef.xml",
+      "sourceSha256": "d7304d0a6aa9f4d2fd8a57adfcc09b55743abb2fb9fb24e5decf8b1bbf3d4286",
+      "gitTag": "Plane-4.7.3",
+      "gitSha": "d9c5097c3d8333435712ffed86bca8ce00c4bb46",
+      "parameters": 1017
     }
   ]
 }

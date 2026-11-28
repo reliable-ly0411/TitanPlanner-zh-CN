@@ -370,8 +370,17 @@ namespace MissionPlanner.Controls
             if (_resourcesDisposed) return;
             EnsureFonts();
             var g = e.Graphics;
-            g.TranslateTransform(_contentPanel.AutoScrollPosition.X, _contentPanel.AutoScrollPosition.Y);
             g.Clear(_contentPanel.BackColor);
+            if (_filteredItems.Count == 0 && !string.IsNullOrWhiteSpace(_searchBox.Text))
+            {
+                // Leave matching, selection, and scrolling to the existing filter.
+                TextRenderer.DrawText(g, UiText.Translate("No matching fields"), _normalFont,
+                    _contentPanel.ClientRectangle, ChooseTextColor(Color.Gray),
+                    TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter |
+                    TextFormatFlags.EndEllipsis | TextFormatFlags.NoPrefix);
+                return;
+            }
+            g.TranslateTransform(_contentPanel.AutoScrollPosition.X, _contentPanel.AutoScrollPosition.Y);
             using (var headerBrush = new SolidBrush(ChooseTextColor(ThemeManager.BannerColor2)))
             using (var nameBrush = new SolidBrush(_contentPanel.ForeColor))
             using (var valueBrush = new SolidBrush(ChooseTextColor(Color.Gray)))

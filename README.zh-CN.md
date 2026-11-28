@@ -35,7 +35,7 @@
 
 新配置默认使用 Mission Planner 的绿色 `BurntKermit` 风格。已有主题设置和自定义主题保留；可在设置页的主题选项中选择 `BurntKermit`，切换为绿色风格。
 
-参数表首批增加 Copter、Plane/QuadPlane 对应正式版本的中文说明，保留官方英文，支持中文搜索及双击展开长文本。缺译或英文变化时保留英文并标示待复核；参数键、单位、范围、编号和写入行为不改。具体参数、版本、来源及未验范围见[首批说明](docs/parameter-descriptions.zh-CN.md)。
+参数表提供 Copter、Plane/QuadPlane、Rover、Sub 和 Tracker 对应正式版本的中文说明，保留官方英文，支持中文搜索及双击展开长文本。缺译或英文变化时保留英文并标示待复核；参数键、单位、范围、编号和写入行为不改。具体参数、版本、来源及未验范围见[首批说明](docs/parameter-descriptions.zh-CN.md)。
 
 ## 获取和更新
 
