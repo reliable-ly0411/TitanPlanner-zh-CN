@@ -29,7 +29,10 @@ namespace MissionPlannerTests.Utilities
                     VerifyAtScale(new Size(660, 400), 120, Color.FromArgb(79, 38, 64), true, new Size(3840, 480));
                     VerifyAtScale(new Size(660, 400), 144, Color.FromArgb(79, 38, 64), true, new Size(3840, 480));
                     VerifyAtScale(new Size(1320, 800), 192, Color.FromArgb(255, 219, 117), false, new Size(3840, 480));
-                    VerifyAtScale(new Size(660, 400), 120, Color.FromArgb(79, 38, 64), true, new Size(3840, 120), expectFit: false);
+                    VerifyAtScale(new Size(660, 400), 120, Color.FromArgb(79, 38, 64), true,
+                        new Size(3840, 120), expectInArtwork: false);
+                    VerifyAtScale(new Size(660, 400), 144, Color.FromArgb(255, 219, 117), false,
+                        new Size(4096, 1), expectInArtwork: false);
                 }
                 catch (Exception ex) { failure = ex; }
             });
@@ -45,7 +48,8 @@ namespace MissionPlannerTests.Utilities
             return ((string)pin.GetRawConstantValue()).Substring(0, 8);
         }
 
-        private static void VerifyAtScale(Size canvas, float dpi, Color artwork, bool chinese, Size? artworkSize = null, bool expectFit = true)
+        private static void VerifyAtScale(Size canvas, float dpi, Color artwork, bool chinese,
+            Size? artworkSize = null, bool expectInArtwork = true)
         {
             var draw = typeof(MissionPlanner.Splash).GetMethod("DrawCredits", BindingFlags.Static | BindingFlags.NonPublic);
             Assert.IsNotNull(draw);
@@ -70,24 +74,18 @@ namespace MissionPlannerTests.Utilities
                     object[] arguments = { graphics, picture, lines, null, 0f };
                     var area = (Rectangle)draw.Invoke(null, arguments);
                     var rows = (Rectangle[])arguments[3];
-                    if (!expectFit)
-                    {
-                        Assert.AreEqual(Rectangle.Empty, area);
-                        Assert.AreEqual(0, rows.Length);
-                        for (int y = 0; y < bitmap.Height; y++)
-                        for (int x = 0; x < bitmap.Width; x++)
-                            if (bitmap.GetPixel(x, y).ToArgb() != artwork.ToArgb())
-                                Assert.IsTrue(false, "Impossible fit must leave artwork untouched.");
-                        return;
-                    }
                     Assert.AreEqual(lines.Length, rows.Length);
-                    Assert.IsTrue(area.Width > 0 && area.Height > 0, "Credits did not fit the artwork.");
+                    Assert.IsTrue(area.Width > 0 && area.Height > 0 && picture.ClientRectangle.Contains(area),
+                        "Credits did not fit the splash canvas.");
                     foreach (var row in rows) Assert.IsTrue(area.Contains(row), "Credit text extends outside its fit rectangle.");
                     if (artworkSize.HasValue)
                     {
                         int bandHeight = (int)(source.Height * (canvas.Width / (float)source.Width));
                         var band = new Rectangle(0, (canvas.Height - bandHeight) / 2, canvas.Width, bandHeight);
-                        Assert.IsTrue(band.Contains(area), "Credit text extends into the letterbox.");
+                        if (expectInArtwork)
+                            Assert.IsTrue(band.Contains(area), "Credit text extends into the letterbox.");
+                        else
+                            Assert.IsTrue(area.Top >= band.Bottom, "Fallback credits should sit below the artwork.");
                         // Check all three lines, not merely some ink somewhere in the overlay.
                         foreach (var row in rows)
                         {
