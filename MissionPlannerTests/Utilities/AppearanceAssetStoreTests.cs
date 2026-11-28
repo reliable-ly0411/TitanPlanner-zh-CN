@@ -343,6 +343,64 @@ namespace MissionPlannerTests.Utilities
         }
 
         [TestMethod]
+        public void PngCompressedVendorIconKeepsPixelsAndOriginalFile()
+        {
+            InDirectory((root, store) =>
+            {
+                var sizes = new[] { 16, 24, 32, 48, 64, 128, 256 };
+                var frames = new byte[sizes.Length][];
+                for (int i = 0; i < sizes.Length; i++)
+                {
+                    int size = sizes[i];
+                    using (var bitmap = new Bitmap(size, size))
+                    using (var buffer = new MemoryStream())
+                    {
+                        using (var graphics = Graphics.FromImage(bitmap))
+                        {
+                            graphics.Clear(Color.Transparent);
+                            graphics.FillRectangle(Brushes.Blue, size / 4, size / 4, size / 2, size / 2);
+                        }
+                        bitmap.Save(buffer, ImageFormat.Png);
+                        frames[i] = buffer.ToArray();
+                    }
+                }
+
+                var file = Path.Combine(root, "vendor.ico");
+                using (var writer = new BinaryWriter(File.Create(file)))
+                {
+                    writer.Write((short)0); writer.Write((short)1); writer.Write((short)sizes.Length);
+                    int offset = 6 + 16 * sizes.Length;
+                    for (int i = 0; i < sizes.Length; i++)
+                    {
+                        writer.Write((byte)sizes[i]); writer.Write((byte)sizes[i]); writer.Write((short)0);
+                        writer.Write((short)1); writer.Write((short)32);
+                        writer.Write(frames[i].Length); writer.Write(offset);
+                        offset += frames[i].Length;
+                    }
+                    foreach (var frame in frames) writer.Write(frame);
+                }
+
+                var original = File.ReadAllBytes(file);
+                VendorIconCall(store, "ImportVendorIcon", "TitanPlanner", file);
+                File.Delete(file);
+                var directory = Path.Combine(root, "appearance");
+                var reloaded = new AppearanceAssetStore(directory);
+                Assert.AreEqual("titan-planner", CallAppearanceStore(reloaded, "CurrentPreset", AppearanceAsset.WindowIcon));
+                CollectionAssert.AreEqual(original, File.ReadAllBytes(Directory.GetFiles(directory, "*.ico").Single()));
+                using (var icon = reloaded.LoadIcon(out var warning))
+                {
+                    Assert.IsNull(warning);
+                    Assert.IsNotNull(icon);
+                    using (var preview = icon.ToBitmap())
+                    {
+                        Assert.AreEqual(Color.Blue.ToArgb(), preview.GetPixel(preview.Width / 2, preview.Height / 2).ToArgb());
+                        Assert.AreEqual(0, preview.GetPixel(0, 0).A);
+                    }
+                }
+            });
+        }
+
+        [TestMethod]
         public void Dib256PixelIcoIsSupported()
         {
             InDirectory((root, store) =>
