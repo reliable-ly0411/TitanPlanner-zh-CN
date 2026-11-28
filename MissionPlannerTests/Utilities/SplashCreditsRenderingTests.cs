@@ -42,26 +42,21 @@ namespace MissionPlannerTests.Utilities
             if (failure != null) ExceptionDispatchInfo.Capture(failure).Throw();
         }
 
-        private static string CreditPin(string field)
-        {
-            var pin = typeof(MissionPlanner.Splash).GetField(field, BindingFlags.Static | BindingFlags.NonPublic);
-            return ((string)pin.GetRawConstantValue()).Substring(0, 8);
-        }
-
         private static void VerifyAtScale(Size canvas, float dpi, Color artwork, bool chinese,
             Size? artworkSize = null, bool expectInArtwork = true)
         {
             var draw = typeof(MissionPlanner.Splash).GetMethod("DrawCredits", BindingFlags.Static | BindingFlags.NonPublic);
             Assert.IsNotNull(draw);
-            string mission = CreditPin("MissionPlannerSource");
-            string titan = CreditPin("TitanPlannerSource");
-            var lines = chinese
-                ? new[] { "Mission Planner 上游基线 " + mission + " · Michael Oborne",
-                          "TitanPlanner 上游基线 " + titan + " · Michael Oborne、Mohammad Adib",
-                          "修改者：lyy0405" }
-                : new[] { "Mission Planner upstream " + mission + " · Michael Oborne",
-                          "TitanPlanner upstream " + titan + " · Michael Oborne & Mohammad Adib",
-                          "Modified by: lyy0405" };
+            var creditLines = typeof(MissionPlanner.Splash).GetMethod("CreditLines", BindingFlags.Static | BindingFlags.NonPublic);
+            Assert.IsNotNull(creditLines);
+            const string buildVersion = "1.3.9827.14790";
+            var lines = (string[])creditLines.Invoke(null, new object[] { buildVersion, chinese });
+            Assert.AreEqual(3, lines.Length);
+            Assert.IsTrue(lines[0].StartsWith("Mission Planner") && lines[0].EndsWith(" · Michael Oborne"));
+            Assert.IsTrue(lines[1].StartsWith("TitanPlanner") && lines[1].EndsWith(" · Mohammad Adib"));
+            Assert.IsTrue(!lines[1].Contains("Michael Oborne"));
+            Assert.AreEqual(chinese ? "构建基线 1.3.9827.14790 · 修改者：lyy0405" :
+                "Build baseline 1.3.9827.14790 · Modified by: lyy0405", lines[2]);
             Size size = artworkSize ?? new Size(800, 380);
             using (var source = new Bitmap(size.Width, size.Height))
             using (var picture = new PictureBox { Size = canvas, Image = source })
@@ -114,7 +109,11 @@ namespace MissionPlannerTests.Utilities
                         else if (color.R > 200 && color.G > 200 && color.B > 200) light++;
                         else if (color.R < 34 && color.G < 34 && color.B < 34) dark++;
                     }
-                    Assert.IsTrue(pristine > area.Width * area.Height / 2, "Credits obscured the artwork behind the letters.");
+                    Assert.AreEqual(artwork.ToArgb(), bitmap.GetPixel(area.Left, area.Top).ToArgb(),
+                        "Credits painted a background behind the outline.");
+                    Assert.AreEqual(artwork.ToArgb(), bitmap.GetPixel(area.Right - 1, area.Bottom - 1).ToArgb(),
+                        "Credits painted a background behind the outline.");
+                    Assert.IsTrue(pristine > area.Width * area.Height / 3, "Credits obscured the artwork behind the letters.");
                     Assert.IsTrue(light > 12 && dark > 12, "Expected both light glyphs and a dark outline.");
                     Assert.AreEqual(0, outside, "Credits modified pixels outside the artwork overlay area.");
                 }

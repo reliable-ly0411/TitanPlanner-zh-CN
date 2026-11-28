@@ -24,7 +24,7 @@ namespace MissionPlanner
             label1.ForeColor = ThemeManager.BannerColor2;
             label1.Text = UiText.Translate("by Michael Oborne | Modified by lyy0405");
 #if !LIB
-            InitializeAppearance();
+            InitializeAppearance(strVersion);
 #endif
 
             Console.WriteLine(strVersion);
@@ -38,7 +38,7 @@ namespace MissionPlanner
         internal const string MissionPlannerSource = "82dd96dfb44bccc51a6e77fcc7c309553b794f39";
         internal const string TitanPlannerSource = "399939a98eaf9f31ee2ae1d003f918419838025b";
 
-        private void InitializeAppearance()
+        private void InitializeAppearance(string buildVersion)
         {
             string warning;
             var custom = DesktopAppearance.LoadSelectedStartupImage(out warning);
@@ -52,20 +52,25 @@ namespace MissionPlanner
             TXT_version.Hide();
 
             bool enhancedChinese = string.Equals(System.Globalization.CultureInfo.CurrentUICulture.Name, "zh-CN", StringComparison.Ordinal);
-            string mission = MissionPlannerSource.Substring(0, 8);
-            string titan = TitanPlannerSource.Substring(0, 8);
-            var lines = enhancedChinese
-                ? new[] { "Mission Planner 上游基线 " + mission + " · Michael Oborne",
-                          "TitanPlanner 上游基线 " + titan + " · Michael Oborne、Mohammad Adib",
-                          "修改者：lyy0405" }
-                : new[] { "Mission Planner upstream " + mission + " · Michael Oborne",
-                          "TitanPlanner upstream " + titan + " · Michael Oborne & Mohammad Adib",
-                          "Modified by: lyy0405" };
+            var lines = CreditLines(buildVersion, enhancedChinese);
             titanLogo.AccessibleDescription = string.Join(Environment.NewLine, lines);
             titanLogo.Paint += (sender, args) =>
             {
                 DrawCredits(args.Graphics, titanLogo, lines, out _, out _);
             };
+        }
+
+        private static string[] CreditLines(string buildVersion, bool enhancedChinese)
+        {
+            string mission = MissionPlannerSource.Substring(0, 8);
+            string titan = TitanPlannerSource.Substring(0, 8);
+            return enhancedChinese
+                ? new[] { "Mission Planner 上游基线 " + mission + " · Michael Oborne",
+                          "TitanPlanner 上游基线 " + titan + " · Mohammad Adib",
+                          "构建基线 " + buildVersion + " · 修改者：lyy0405" }
+                : new[] { "Mission Planner upstream " + mission + " · Michael Oborne",
+                          "TitanPlanner upstream " + titan + " · Mohammad Adib",
+                          "Build baseline " + buildVersion + " · Modified by: lyy0405" };
         }
 
         private static Rectangle Fit(Size image, Rectangle canvas)
