@@ -427,11 +427,78 @@ internal static class Program
         }
     }
 
+    private static async Task CheckReconstructed(XElement[] releases, ParameterDescriptionStore store,
+        ParameterDescriptionCatalog catalog, string sourceDirectory)
+    {
+        Check(releases.Length == 29, "each registered archive is independently scoped");
+        foreach (var release in releases)
+        {
+            var family = (string)release.Attribute("family");
+            var version = (string)release.Attribute("version");
+            var context = Context(family, version);
+            var snapshot = store.Bundled(context);
+            var groups = release.Element("paramfile").Elements().Elements("parameters");
+            var keys = groups.Elements("param").GroupBy(r => ((string)r.Attribute("name")).Split(':').Last()).ToArray();
+            Check(snapshot != null && !snapshot.Partial && snapshot.MatchesFirmware && snapshot.Count == keys.Length,
+                "full per-version archive is available without a build hash");
+            var differentBuild = store.Bundled(Context(family, version, "deadbeef0123456789"));
+            Check(differentBuild.MatchesFirmware && !differentBuild.MatchesReportedBuild,
+                "a different build hash still uses the version-scoped reconstruction");
+            foreach (var key in keys)
+            {
+                var expected = string.Join("\n\n", key.Select(r => (string)r.Attribute("documentation") ?? "").Distinct());
+                var record = snapshot.Find(key.Key);
+                var english = catalog.Present(snapshot, key.Key, false);
+                Check(record != null && english != null && english.Description == expected, "archived English preserved: " + key.Key);
+                Check(record.Fingerprint == differentBuild.Find(key.Key).Fingerprint, "build hash does not change recovered record");
+            }
+            if (sourceDirectory != null)
+            {
+                var raw = File.ReadAllBytes(Path.Combine(sourceDirectory, family + "-" + version + ".xml"));
+                Check(ParameterDescriptionCatalog.Hash(raw) == snapshot.SourceSha256, "reconstructed manifest digest");
+                var original = ParameterDescriptionSnapshot.ReadXml(raw).Root;
+                var group = (string)original.Element("vehicles").Element("parameters").Attribute("name");
+                var full = ParameterDescriptionSnapshot.Parse(original, Enumerable.Empty<XComment>(), context,
+                    group, false, snapshot.SourceSha256, snapshot.GitSha);
+                Check(full.Count == snapshot.Count, "all reconstructed source keys are packaged");
+                foreach (var key in keys)
+                    Check(full.Find(key.Key).Fingerprint == snapshot.Find(key.Key).Fingerprint,
+                        "reconstructed source fields are preserved: " + key.Key);
+            }
+        }
+        foreach (var plane in new[] { Context("Plane", "4.2.3"), Context("Plane", "4.2.3", "deadbeef0123456789") })
+        {
+            var snapshot = await store.LoadAsync(plane);
+            var note = catalog.Present(snapshot, "SCHED_DEBUG", true);
+            Check(snapshot.Origin == "reconstructed" && note.SearchText.Contains("调度器调试消息"),
+                "historical Plane Chinese search works with or without a reported build hash");
+            var untranslated = catalog.Present(snapshot, "FORMAT_VERSION", true);
+            Check(untranslated.Description.StartsWith(snapshot.Find("FORMAT_VERSION").English, StringComparison.Ordinal)
+                && !untranslated.Description.Contains("中文说明："), "untranslated words fall back to exact historical English");
+        }
+        Check(store.Bundled(Context("Plane", "4.2.2")) == null, "another patch cannot inherit 4.2.3");
+        foreach (var text in new[] { "ArduPlane V4.2.3-rc1", "ArduCopter V4.2.3", "ArduPlane V4.2.3-custom" })
+            Check(ParameterDescriptionContext.TryCreate("ArduPlane", text, null) == null, "different family or unstable identity");
+        Check(ParameterDescriptionContext.TryCreate("ArduPlane", "ArduPlane V4.2.3", new Version(4, 2, 2, 255)) == null,
+            "different MAVLink version signal rejects the archive");
+        Check(ParameterDescriptionContext.TryCreate("ArduPlane", null, new Version(4, 2, 3, 255)).Version == "4.2.3",
+            "an official MAVLink version can identify the archive without a startup banner");
+        Check(ParameterDescriptionContext.TryCreate("ArduPlane", null, new Version(4, 2, 3, 128)) == null,
+            "a prerelease protocol version requires English fallback");
+        Check(ParameterDescriptionContext.TryCreate("ArduTracker", "AntennaTracker V0.7.2", new Version(0, 7, 1, 255)) == null,
+            "disagreeing 0.x pre-stable versions also require English fallback");
+        var legacyRover = ParameterDescriptionContext.TryCreate("ArduRover", "APM:Rover V3.2.3", new Version());
+        Check(legacyRover != null && catalog.Present(store.Bundled(legacyRover), "SCHED_DEBUG", true)
+            .SearchText.Contains("调度器调试消息"), "the exact historical Rover banner can select its original vehicle group");
+
+    }
+
     private static async Task MainAsync(string[] args)
     {
         var bundle = Resource("official"); var catalog = new ParameterDescriptionCatalog(Resource("zh-CN"));
         var bundled = new ParameterDescriptionStore("unused", bundle);
-        var releases = XDocument.Parse(Encoding.UTF8.GetString(bundle)).Root.Elements("release").ToArray();
+        var allReleases = XDocument.Parse(Encoding.UTF8.GetString(bundle)).Root.Elements("release").ToArray();
+        var releases = allReleases.Where(r => r.Attribute("sourceKind") == null).ToArray();
         if (args.Length == 2 && args[0] == "--tracker-only")
         {
             CheckTrackerSlice(bundled, catalog, File.ReadAllBytes(args[1]));
@@ -485,37 +552,40 @@ internal static class Program
         Check(catalog.Present(bundled.Bundled(Context("Rover", "4.6.3", "deadbeef12345678")), "WP_RADIUS", true) == null, "Rover custom build remains untranslated");
         var expectedCounts = new Dictionary<string, int>
         {
-            ["Copter-4.5.7"] = 994,
-            ["Copter-4.6.3"] = 1005,
+            ["Copter-4.5.7"] = 1396,
+            ["Copter-4.6.3"] = 1475,
             ["Copter-4.7.1"] = 781,
-            ["Plane-4.5.7"] = 1004,
-            ["Plane-4.6.3"] = 1016,
+            ["Plane-4.5.7"] = 1482,
+            ["Plane-4.6.3"] = 1552,
             ["Plane-4.7.1"] = 793,
             ["Sub-4.7.1"] = 743,
-            ["Rover-4.6.3"] = 110,
+            ["Rover-4.6.3"] = 280,
             ["Tracker-4.7.1"] = 2,
-            ["Copter-4.7.3"] = 1293,
-            ["Plane-4.7.3"] = 1305,
-            ["Copter-4.4.4"] = 421,
-            ["Copter-4.3.8"] = 402,
-            ["Copter-4.2.4"] = 392,
-            ["Copter-4.1.6"] = 374,
-            ["Plane-4.4.4"] = 418,
-            ["Plane-4.3.8"] = 398,
-            ["Plane-4.1.7"] = 372,
-            ["Rover-4.7.3"] = 392,
-            ["Rover-4.5.7"] = 110,
-            ["Rover-4.4.0"] = 86,
-            ["Rover-4.2.3"] = 86,
-            ["Rover-4.1.5"] = 86,
-            ["Sub-4.7.3"] = 1031,
-            ["Sub-4.1.2"] = 86,
-            ["Sub-4.0.3"] = 49,
+            ["Copter-4.7.3"] = 1962,
+            ["Plane-4.7.3"] = 2089,
+            ["Copter-4.4.4"] = 798,
+            ["Copter-4.3.8"] = 749,
+            ["Copter-4.2.4"] = 657,
+            ["Copter-4.1.6"] = 616,
+            ["Plane-4.4.4"] = 845,
+            ["Plane-4.3.8"] = 790,
+            ["Plane-4.1.7"] = 661,
+            ["Rover-4.7.3"] = 632,
+            ["Rover-4.5.7"] = 280,
+            ["Rover-4.4.0"] = 236,
+            ["Rover-4.2.3"] = 236,
+            ["Rover-4.1.5"] = 216,
+            ["Sub-4.7.3"] = 1271,
+            ["Sub-4.1.2"] = 216,
+            ["Sub-4.0.3"] = 139,
             ["Tracker-4.7.3"] = 354,
             ["Tracker-4.6.3"] = 65,
             ["Tracker-4.5.7"] = 65
         };
         Check(releases.Length == expectedCounts.Count, "pinned release subsets");
+        await CheckReconstructed(allReleases.Where(r => (string)r.Attribute("sourceKind") == "reconstructed").ToArray(),
+            bundled, catalog, args.Length == 2 && args[0] == "--source-directory" ? args[1] : null);
+
         var osdTemperatureBatteryScopes = new HashSet<string>
         {
             "Copter-4.5.7", "Copter-4.6.3", "Copter-4.7.1", "Plane-4.5.7",

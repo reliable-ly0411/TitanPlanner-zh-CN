@@ -318,7 +318,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             if (!UseEnhancedParameterDescriptions) return original;
             var session = _descriptionSession;
             var record = session?.Snapshot?.Find(name);
-            if (session == null || !session.Chinese || record == null || record.Ambiguous || !session.Snapshot.MatchesReportedBuild) return original;
+            if (session == null || !session.Chinese || record == null || record.Ambiguous || !session.Snapshot.MatchesFirmware) return original;
             return original.Select(option =>
             {
                 var code = option.Key.ToString(CultureInfo.InvariantCulture);
