@@ -50,30 +50,41 @@ namespace MissionPlanner.Utilities
             if (string.IsNullOrEmpty(mode) || !KnownMenuModes.Contains(mode))
                 return mode;
 
+            var translated = TranslateKnownMode(mode, presentation);
+            return translated != mode ? mode + " · " + translated : mode;
+        }
+
+        public static string ForSpeech(string mode, ModeMenuPresentation presentation)
+        {
+            return !string.IsNullOrEmpty(mode) && KnownMenuModes.Contains(mode)
+                ? TranslateKnownMode(mode, presentation) : mode;
+        }
+
+        private static string TranslateKnownMode(string mode, ModeMenuPresentation presentation)
+        {
             if (System.Globalization.CultureInfo.CurrentUICulture.Name == "zh-CN")
             {
                 // AntennaTracker AUTO tracks a target, not a waypoint mission.
                 if (presentation == ModeMenuPresentation.Tracker
                     && string.Equals(mode, "Auto", StringComparison.Ordinal))
-                    return mode + " · 自动跟踪";
+                    return "自动跟踪";
 
                 if (presentation == ModeMenuPresentation.Rover
                     && string.Equals(mode, "Acro", StringComparison.Ordinal))
-                    return mode + " · 转向率与速度控制";
+                    return "转向率与速度控制";
 
                 if (string.Equals(mode, "Loiter", StringComparison.Ordinal))
                 {
                     switch (presentation)
                     {
-                        case ModeMenuPresentation.Hover: return mode + " · 定点悬停";
-                        case ModeMenuPresentation.Circle: return mode + " · 定点盘旋";
-                        case ModeMenuPresentation.Rover: return mode + " · 定点驻留";
+                        case ModeMenuPresentation.Hover: return "定点悬停";
+                        case ModeMenuPresentation.Circle: return "定点盘旋";
+                        case ModeMenuPresentation.Rover: return "定点驻留";
                     }
                 }
             }
 
-            var display = FromMode(mode);
-            return display.IsBilingual ? mode + " · " + display.Primary : mode;
+            return UiText.Translate(mode);
         }
 
         public static FlightModeDisplay FromMode(string mode)

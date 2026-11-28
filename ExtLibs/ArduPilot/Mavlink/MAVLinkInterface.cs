@@ -29,6 +29,8 @@ namespace MissionPlanner
         private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private ICommsSerial _baseStream;
         private MessageDisplayContext messageDisplay = new MessageDisplayContext();
+        private FirmwareSpeechSourceProof firmwareSpeechProof = new FirmwareSpeechSourceProof();
+        private SpeechStatusTextAssembler speechStatusText = new SpeechStatusTextAssembler();
 
         public string MessagesDisplaySuffix(List<(DateTime time, string message, byte severity)> source,
             (DateTime time, string message, byte severity) row)
@@ -40,8 +42,12 @@ namespace MissionPlanner
             return ReferenceEquals(generation, Volatile.Read(ref messageDisplay)) ? suffix : null;
         }
 
-        private void ResetMessageDisplay() =>
+        private void ResetMessageDisplay()
+        {
             Interlocked.Exchange(ref messageDisplay, new MessageDisplayContext());
+            firmwareSpeechProof = new FirmwareSpeechSourceProof();
+            speechStatusText = new SpeechStatusTextAssembler();
+        }
 
         public ICommsSerial BaseStream
         {
@@ -4786,6 +4792,8 @@ Mission Planner waits for 2 valid heartbeat packets before connecting
 
             await readlock.WaitAsync().ConfigureAwait(false);
             var displayGeneration = Volatile.Read(ref messageDisplay);
+            var speechProofGeneration = firmwareSpeechProof;
+            var speechAssemblerGeneration = speechStatusText;
             
             try
             {
@@ -5485,6 +5493,9 @@ Mission Planner waits for 2 valid heartbeat packets before connecting
 
                     bool displayPrimary = compid == 1 &&
                         ReferenceEquals(displayGeneration, Volatile.Read(ref messageDisplay));
+                    if (compid == 1 && (msgid == (uint)MAVLINK_MSG_ID.HEARTBEAT ||
+                                        msgid == (uint)MAVLINK_MSG_ID.AUTOPILOT_VERSION))
+                        speechProofGeneration.Observe(sysid, compid, message);
                     if (displayPrimary && (msgid == (uint)MAVLINK_MSG_ID.HEARTBEAT ||
                                            msgid == (uint)MAVLINK_MSG_ID.AUTOPILOT_VERSION))
                         displayGeneration.Observe(MAVlist[sysid, compid].cs.messages, message);
@@ -5499,6 +5510,10 @@ Mission Planner waits for 2 valid heartbeat packets before connecting
                         int ind = logdata.IndexOf('\0');
                         if (ind != -1)
                             logdata = logdata.Substring(0, ind);
+                        bool enhancedChineseSpeech = MissionPlanner.ArduPilot.Common.UseEnhancedSpeech;
+                        string completeSpeechText = logdata;
+                        bool completeSpeechMessage = !enhancedChineseSpeech ||
+                            speechAssemblerGeneration.TryAppend(sysid, compid, msg, out completeSpeechText);
                         log.Info(DateTime.Now + " " + sev + " " + logdata);
 
                         // The Messages tab copies these lists on the UI thread; it locks them the same way.
@@ -5537,12 +5552,43 @@ Mission Planner waits for 2 valid heartbeat packets before connecting
                             logdata.StartsWith("Arm:"))
                             printit = true;
 
+                        bool selectedSpeechSource = sysid == sysidcurrent &&
+                            (compid == compidcurrent || (compidcurrent != 1 && compid == 1));
+                        bool scriptSource = selectedSpeechSource && compid == 1;
+                        string scriptTranslation = enhancedChineseSpeech && completeSpeechMessage && scriptSource
+                            ? speechProofGeneration.TranslateScript(sysid, sev, completeSpeechText)
+                            : null;
+                        bool extraScriptSpeech = enhancedChineseSpeech && completeSpeechMessage && selectedSpeechSource &&
+                            !printit && scriptTranslation != null && !logdata.StartsWith("PreArm:") &&
+                            (!Settings.Instance.GetBoolean("speech_armed_only") || MAVlist[sysid, compid].cs.armed);
+
                         if (printit)
                         {
+                            FirmwareSpeechAlert speechAlert = null;
+                            if (enhancedChineseSpeech && selectedSpeechSource)
+                            {
+                                speechAlert = completeSpeechMessage
+                                    ? new FirmwareSpeechAlert(() =>
+                                    {
+                                        if (!MissionPlanner.ArduPilot.Common.UseEnhancedSpeech ||
+                                            !ReferenceEquals(displayGeneration, Volatile.Read(ref messageDisplay))) return null;
+                                        if (displayPrimary && completeSpeechText == logdata)
+                                        {
+                                            var displayTranslation = displayGeneration.VoiceSuffix(messages, row);
+                                            if (!string.IsNullOrEmpty(displayTranslation)) return displayTranslation;
+                                        }
+                                        return scriptSource
+                                            ? speechProofGeneration.TranslateScript(sysid, sev, completeSpeechText) ?? completeSpeechText
+                                            : completeSpeechText;
+                                    })
+                                    : new FirmwareSpeechAlert(null, suppress: true);
+                            }
+
                             // high severity msg publish to current selected mav
                             if (sysid == sysidcurrent && compid != compidcurrent)
                             {
-                                MAVlist[sysid, compidcurrent].cs.messageHigh = compid + " : " + logdata;
+                                MAVlist[sysid, compidcurrent].cs.SetFirmwareHudText(
+                                    compid + " : " + logdata, null, speechAlert);
                                 MAVlist[sysid, compidcurrent].cs.messageHighSeverity = mavsev;
                             }
 
@@ -5552,7 +5598,7 @@ Mission Planner waits for 2 valid heartbeat packets before connecting
                                 displayGeneration.Suffix(messages, row) != null)
                                 verifiedHudSuffix = () => ReferenceEquals(messages, hudState.messages)
                                     ? MessagesDisplaySuffix(messages, row) : null;
-                            hudState.SetHudText(logdata, verifiedHudSuffix);
+                            hudState.SetFirmwareHudText(logdata, verifiedHudSuffix, speechAlert);
                             MAVlist[sysid, compid].cs.messageHighSeverity = mavsev;
 
                             if (Speech != null &&
@@ -5562,18 +5608,23 @@ Mission Planner waits for 2 valid heartbeat packets before connecting
                             {
                                 if (speechenabled && !logdata.StartsWith("PreArm:")) // Suppress audible PreArm messages
                                 {
-                                    var spoken = logdata;
-                                    if (displayPrimary && Settings.Instance["language"] == "zh-CN" &&
-                                        ReferenceEquals(displayGeneration, Volatile.Read(ref messageDisplay)))
+                                    if (enhancedChineseSpeech)
                                     {
-                                        var suffix = displayGeneration.VoiceSuffix(messages, row);
-                                        if (suffix != null && ReferenceEquals(displayGeneration, Volatile.Read(ref messageDisplay)))
-                                            spoken = suffix;
+                                        if (selectedSpeechSource && speechAlert != null && completeSpeechMessage)
+                                            speechAlert.Speak(Speech, completeSpeechText);
                                     }
-                                    Speech.SpeakAsync(spoken);
+                                    else Speech.SpeakAsync(logdata);
                                 }
                             }
                         }
+
+                        if (extraScriptSpeech && Speech != null && Speech.IsReady && Speech.speechEnable &&
+                            speechenabled && Settings.Instance["speechenable"] != null &&
+                            Settings.Instance.GetBoolean("speechenable"))
+                            new FirmwareSpeechAlert(() =>
+                                MissionPlanner.ArduPilot.Common.UseEnhancedSpeech &&
+                                ReferenceEquals(displayGeneration, Volatile.Read(ref messageDisplay))
+                                    ? scriptTranslation : null).Speak(Speech, completeSpeechText);
                     }
 
                     if (Settings.Instance["autoParamCommit"] == null ||

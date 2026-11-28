@@ -1,0 +1,56 @@
+using System;
+
+namespace MissionPlanner
+{
+    // Exposes just the application's speech master switch to the production Speech class.
+    internal static class MainV2
+    {
+        internal static bool SpeechEnabled { get; set; } = true;
+
+        internal static bool speechEnabled() => SpeechEnabled;
+    }
+}
+
+namespace MissionPlanner.Utilities
+{
+    // Settings.GetDisplayView is outside this probe. Fail if it is called accidentally.
+    public sealed class DisplayView { }
+
+    internal static class DisplayViewExtensions
+    {
+        internal static bool TryParse(string value, out DisplayView result) =>
+            throw new NotSupportedException("Display views are outside the speech probe.");
+    }
+
+    internal static class SettingsDateTimeExtensions
+    {
+        // Settings.Load uses this to name a backup if reading the XML fails.
+        internal static int toUnixTime(this DateTime dateTime) =>
+            (int)dateTime.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
+    }
+}
+
+namespace log4net
+{
+    internal interface ILog
+    {
+        void Info(object message);
+        void Warn(object message, Exception exception);
+        void Error(object message);
+    }
+
+    internal static class LogManager
+    {
+        internal static ILog GetLogger(Type type) => new ProbeLogger();
+
+        private sealed class ProbeLogger : ILog
+        {
+            public void Info(object message) { }
+
+            public void Warn(object message, Exception exception) =>
+                Console.Error.WriteLine(message + ": " + exception);
+
+            public void Error(object message) => Console.Error.WriteLine(message);
+        }
+    }
+}
