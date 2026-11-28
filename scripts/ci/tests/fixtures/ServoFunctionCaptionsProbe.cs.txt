@@ -1,0 +1,94 @@
+// Compile with the source MavlinkComboBox, Firmwares and ServoFunctionCaptions only; no real device APIs.
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Globalization;
+using System.Linq;
+using System.Windows.Forms;
+using MissionPlanner.ArduPilot;
+using MissionPlanner.Controls;
+using MissionPlanner.GCSViews.ConfigurationView;
+
+public static class MAVLink
+{
+    public sealed class Entry { public double Value; }
+    public sealed class MAVLinkParamList : Dictionary<string, Entry> { }
+}
+namespace MissionPlanner
+{
+    static class MainV2 { internal static readonly BlockAllWrites comPort = new BlockAllWrites(); }
+    sealed class BlockAllWrites
+    {
+        public int sysidcurrent = 1, compidcurrent = 1;
+        public readonly Device MAV = new Device();
+        public static int WriteAttempts;
+        public bool setParam(int s, byte c, string key, float value) { WriteAttempts++; throw new Exception("no device"); }
+    }
+    sealed class Device { public readonly State cs = new State(); }
+    sealed class State { public Firmwares firmware = Firmwares.ArduCopter2; }
+}
+namespace MissionPlanner.Utilities
+{
+    static class ParamWriteQueue
+    {
+        internal static void Write(string key, float value, object unused, int delay)
+        { MissionPlanner.BlockAllWrites.WriteAttempts++; throw new Exception("no writes in probe"); }
+    }
+    static class ParameterMetaDataRepository
+    {
+        internal static List<KeyValuePair<int,string>> GetParameterOptionsInt(string a, string b) => throw new Exception("offline fixture");
+    }
+    static class UiText { public static string Translate(string input) => input; }
+    static class Strings { public const string ERROR = "error", ErrorSetValueFailed = "unexpected {0}"; }
+    public sealed class MAVLinkParamChanged : EventArgs { public MAVLinkParamChanged(string key, float value) { } }
+}
+namespace MissionPlanner.Controls
+{
+    static class CustomMessageBox { public static void Show(string text, string caption) => throw new Exception(text); }
+}
+internal static class ServoFunctionCaptionsProbe
+{
+    private static int passed;
+    private static KeyValuePair<int,string> Option(int key, string label) => new KeyValuePair<int,string>(key,label);
+    [STAThread]
+    public static void Main()
+    {
+        foreach (var culture in new [] { "zh-CN", "zh-Hans", "en-US" })
+        foreach (var firmware in new [] { Firmwares.ArduCopter2, Firmwares.ArduPlane, Firmwares.ArduRover, Firmwares.ArduSub, Firmwares.PX4 })
+        foreach (int channel in new [] { 1, 16, 32 })
+        {
+            CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo(culture);
+            bool bilingual = culture == "zh-CN" && (firmware == Firmwares.ArduCopter2 || firmware == Firmwares.ArduPlane || firmware == Firmwares.ArduRover);
+            var raw = new List<KeyValuePair<int,string>> { Option(138,"Alarm"), Option(0,"Disabled"),
+                Option(34,"Motor2"), Option(39,"Motor7/TailTiltServo"), Option(999,"Motor2"), Option(2,"Disabled"), Option(140,"Other") };
+            var name = "SERVO" + channel + "_FUNCTION";
+            var cache = new MAVLink.MAVLinkParamList { [name] = new MAVLink.Entry { Value = 34 } };
+            using (var host = new Form())
+            using (var combo = new MavlinkComboBox { Width = 160, WriteInBackground = true, BackgroundWriteDelay = 250 })
+            {
+                host.Controls.Add(combo); host.Show();
+                ServoFunctionCaptions.Attach(combo, raw, firmware);
+                combo.setup(raw, name, cache);
+                Application.DoEvents();
+                var scope = culture + "/" + firmware + "/" + channel;
+                Check(scope + " retains metadata list identity/order/original value", ReferenceEquals(combo.DataSource, raw) &&
+                    combo.Items.Cast<KeyValuePair<int,string>>().SequenceEqual(raw));
+                Check(scope + " retains cached selection/key/binding", combo.SelectedIndex == 2 && (int)combo.SelectedValue == 34 &&
+                    combo.ParamName == name && combo.DisplayMember == "Value" && combo.ValueMember == "Key" && cache[name].Value == 34);
+                Check(scope + " applies only reviewed option captions", combo.GetItemText(combo.Items[0]) == (bilingual ? "Alarm · 告警" : "Alarm") &&
+                    combo.GetItemText(combo.Items[1]) == (bilingual ? "Disabled · 未分配功能" : "Disabled") &&
+                    combo.GetItemText(combo.Items[2]) == (bilingual ? "Motor2 · 电机 2" : "Motor2"));
+                Check(scope + " unknown/mismatched raw labels remain untouched", combo.GetItemText(combo.Items[3]) == raw[3].Value &&
+                    combo.GetItemText(combo.Items[4]) == raw[4].Value && combo.GetItemText(combo.Items[5]) == raw[5].Value &&
+                    combo.GetItemText(combo.Items[6]) == raw[6].Value && combo.FormattingEnabled == bilingual);
+            }
+        }
+        Check("no parameter write calls", MissionPlanner.BlockAllWrites.WriteAttempts == 0);
+        Console.WriteLine(passed + " checks passed");
+    }
+    static void Check(string name, bool ok)
+    {
+        if (!ok) throw new Exception("FAIL " + name);
+        passed++;
+    }
+}
