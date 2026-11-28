@@ -763,6 +763,36 @@
           <param humanName="BTEMP_Y" name="OSD1_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="COMPASS_EN" name="OSD1_COMPASS_EN" documentation="Enables display of compass rose">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="HORIZON_EN" name="OSD1_HORIZON_EN" documentation="Displays artificial horizon">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="PITCH_EN" name="OSD1_PITCH_EN" documentation="Displays degrees of pitch from level">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ROLL_EN" name="OSD1_ROLL_EN" documentation="Displays degrees of roll from level">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="SIDEBARS_EN" name="OSD1_SIDEBARS_EN" documentation="Displays artificial horizon side bars">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -851,6 +881,36 @@
           </param>
           <param humanName="BTEMP_Y" name="OSD2_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
+          </param>
+          <param humanName="COMPASS_EN" name="OSD2_COMPASS_EN" documentation="Enables display of compass rose">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="HORIZON_EN" name="OSD2_HORIZON_EN" documentation="Displays artificial horizon">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="PITCH_EN" name="OSD2_PITCH_EN" documentation="Displays degrees of pitch from level">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ROLL_EN" name="OSD2_ROLL_EN" documentation="Displays degrees of roll from level">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="SIDEBARS_EN" name="OSD2_SIDEBARS_EN" documentation="Displays artificial horizon side bars">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
           </param>
         </parameters>
         <parameters name="OSD3_">
@@ -941,6 +1001,36 @@
           <param humanName="BTEMP_Y" name="OSD3_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="COMPASS_EN" name="OSD3_COMPASS_EN" documentation="Enables display of compass rose">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="HORIZON_EN" name="OSD3_HORIZON_EN" documentation="Displays artificial horizon">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="PITCH_EN" name="OSD3_PITCH_EN" documentation="Displays degrees of pitch from level">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ROLL_EN" name="OSD3_ROLL_EN" documentation="Displays degrees of roll from level">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="SIDEBARS_EN" name="OSD3_SIDEBARS_EN" documentation="Displays artificial horizon side bars">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -1029,6 +1119,36 @@
           </param>
           <param humanName="BTEMP_Y" name="OSD4_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
+          </param>
+          <param humanName="COMPASS_EN" name="OSD4_COMPASS_EN" documentation="Enables display of compass rose">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="HORIZON_EN" name="OSD4_HORIZON_EN" documentation="Displays artificial horizon">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="PITCH_EN" name="OSD4_PITCH_EN" documentation="Displays degrees of pitch from level">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ROLL_EN" name="OSD4_ROLL_EN" documentation="Displays degrees of roll from level">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="SIDEBARS_EN" name="OSD4_SIDEBARS_EN" documentation="Displays artificial horizon side bars">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
           </param>
         </parameters>
         <parameters name="NTF_">
@@ -1883,6 +2003,36 @@
           <param humanName="BTEMP_Y" name="OSD1_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="COMPASS_EN" name="OSD1_COMPASS_EN" documentation="Enables display of compass rose">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="HORIZON_EN" name="OSD1_HORIZON_EN" documentation="Displays artificial horizon">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="PITCH_EN" name="OSD1_PITCH_EN" documentation="Displays degrees of pitch from level">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ROLL_EN" name="OSD1_ROLL_EN" documentation="Displays degrees of roll from level">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="SIDEBARS_EN" name="OSD1_SIDEBARS_EN" documentation="Displays artificial horizon side bars">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -1971,6 +2121,36 @@
           </param>
           <param humanName="BTEMP_Y" name="OSD2_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
+          </param>
+          <param humanName="COMPASS_EN" name="OSD2_COMPASS_EN" documentation="Enables display of compass rose">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="HORIZON_EN" name="OSD2_HORIZON_EN" documentation="Displays artificial horizon">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="PITCH_EN" name="OSD2_PITCH_EN" documentation="Displays degrees of pitch from level">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ROLL_EN" name="OSD2_ROLL_EN" documentation="Displays degrees of roll from level">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="SIDEBARS_EN" name="OSD2_SIDEBARS_EN" documentation="Displays artificial horizon side bars">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
           </param>
         </parameters>
         <parameters name="OSD3_">
@@ -2061,6 +2241,36 @@
           <param humanName="BTEMP_Y" name="OSD3_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="COMPASS_EN" name="OSD3_COMPASS_EN" documentation="Enables display of compass rose">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="HORIZON_EN" name="OSD3_HORIZON_EN" documentation="Displays artificial horizon">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="PITCH_EN" name="OSD3_PITCH_EN" documentation="Displays degrees of pitch from level">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ROLL_EN" name="OSD3_ROLL_EN" documentation="Displays degrees of roll from level">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="SIDEBARS_EN" name="OSD3_SIDEBARS_EN" documentation="Displays artificial horizon side bars">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -2149,6 +2359,36 @@
           </param>
           <param humanName="BTEMP_Y" name="OSD4_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
+          </param>
+          <param humanName="COMPASS_EN" name="OSD4_COMPASS_EN" documentation="Enables display of compass rose">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="HORIZON_EN" name="OSD4_HORIZON_EN" documentation="Displays artificial horizon">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="PITCH_EN" name="OSD4_PITCH_EN" documentation="Displays degrees of pitch from level">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ROLL_EN" name="OSD4_ROLL_EN" documentation="Displays degrees of roll from level">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="SIDEBARS_EN" name="OSD4_SIDEBARS_EN" documentation="Displays artificial horizon side bars">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
           </param>
         </parameters>
         <parameters name="INS_LOG_">
@@ -3093,6 +3333,36 @@
           <param humanName="BTEMP_Y" name="OSD1_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="COMPASS_EN" name="OSD1_COMPASS_EN" documentation="Enables display of compass rose">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="HORIZON_EN" name="OSD1_HORIZON_EN" documentation="Displays artificial horizon">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="PITCH_EN" name="OSD1_PITCH_EN" documentation="Displays degrees of pitch from level">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ROLL_EN" name="OSD1_ROLL_EN" documentation="Displays degrees of roll from level">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="SIDEBARS_EN" name="OSD1_SIDEBARS_EN" documentation="Displays artificial horizon side bars">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -3181,6 +3451,36 @@
           </param>
           <param humanName="BTEMP_Y" name="OSD2_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
+          </param>
+          <param humanName="COMPASS_EN" name="OSD2_COMPASS_EN" documentation="Enables display of compass rose">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="HORIZON_EN" name="OSD2_HORIZON_EN" documentation="Displays artificial horizon">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="PITCH_EN" name="OSD2_PITCH_EN" documentation="Displays degrees of pitch from level">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ROLL_EN" name="OSD2_ROLL_EN" documentation="Displays degrees of roll from level">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="SIDEBARS_EN" name="OSD2_SIDEBARS_EN" documentation="Displays artificial horizon side bars">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
           </param>
         </parameters>
         <parameters name="OSD3_">
@@ -3271,6 +3571,36 @@
           <param humanName="BTEMP_Y" name="OSD3_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="COMPASS_EN" name="OSD3_COMPASS_EN" documentation="Enables display of compass rose">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="HORIZON_EN" name="OSD3_HORIZON_EN" documentation="Displays artificial horizon">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="PITCH_EN" name="OSD3_PITCH_EN" documentation="Displays degrees of pitch from level">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ROLL_EN" name="OSD3_ROLL_EN" documentation="Displays degrees of roll from level">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="SIDEBARS_EN" name="OSD3_SIDEBARS_EN" documentation="Displays artificial horizon side bars">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -3359,6 +3689,36 @@
           </param>
           <param humanName="BTEMP_Y" name="OSD4_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
+          </param>
+          <param humanName="COMPASS_EN" name="OSD4_COMPASS_EN" documentation="Enables display of compass rose">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="HORIZON_EN" name="OSD4_HORIZON_EN" documentation="Displays artificial horizon">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="PITCH_EN" name="OSD4_PITCH_EN" documentation="Displays degrees of pitch from level">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ROLL_EN" name="OSD4_ROLL_EN" documentation="Displays degrees of roll from level">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="SIDEBARS_EN" name="OSD4_SIDEBARS_EN" documentation="Displays artificial horizon side bars">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
           </param>
         </parameters>
         <parameters name="INS_LOG_">
@@ -4291,6 +4651,36 @@
           <param humanName="BTEMP_Y" name="OSD1_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="COMPASS_EN" name="OSD1_COMPASS_EN" documentation="Enables display of compass rose">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="HORIZON_EN" name="OSD1_HORIZON_EN" documentation="Displays artificial horizon">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="PITCH_EN" name="OSD1_PITCH_EN" documentation="Displays degrees of pitch from level">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ROLL_EN" name="OSD1_ROLL_EN" documentation="Displays degrees of roll from level">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="SIDEBARS_EN" name="OSD1_SIDEBARS_EN" documentation="Displays artificial horizon side bars">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -4379,6 +4769,36 @@
           </param>
           <param humanName="BTEMP_Y" name="OSD2_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
+          </param>
+          <param humanName="COMPASS_EN" name="OSD2_COMPASS_EN" documentation="Enables display of compass rose">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="HORIZON_EN" name="OSD2_HORIZON_EN" documentation="Displays artificial horizon">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="PITCH_EN" name="OSD2_PITCH_EN" documentation="Displays degrees of pitch from level">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ROLL_EN" name="OSD2_ROLL_EN" documentation="Displays degrees of roll from level">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="SIDEBARS_EN" name="OSD2_SIDEBARS_EN" documentation="Displays artificial horizon side bars">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
           </param>
         </parameters>
         <parameters name="OSD3_">
@@ -4469,6 +4889,36 @@
           <param humanName="BTEMP_Y" name="OSD3_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="COMPASS_EN" name="OSD3_COMPASS_EN" documentation="Enables display of compass rose">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="HORIZON_EN" name="OSD3_HORIZON_EN" documentation="Displays artificial horizon">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="PITCH_EN" name="OSD3_PITCH_EN" documentation="Displays degrees of pitch from level">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ROLL_EN" name="OSD3_ROLL_EN" documentation="Displays degrees of roll from level">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="SIDEBARS_EN" name="OSD3_SIDEBARS_EN" documentation="Displays artificial horizon side bars">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -4557,6 +5007,36 @@
           </param>
           <param humanName="BTEMP_Y" name="OSD4_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
+          </param>
+          <param humanName="COMPASS_EN" name="OSD4_COMPASS_EN" documentation="Enables display of compass rose">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="HORIZON_EN" name="OSD4_HORIZON_EN" documentation="Displays artificial horizon">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="PITCH_EN" name="OSD4_PITCH_EN" documentation="Displays degrees of pitch from level">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ROLL_EN" name="OSD4_ROLL_EN" documentation="Displays degrees of roll from level">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="SIDEBARS_EN" name="OSD4_SIDEBARS_EN" documentation="Displays artificial horizon side bars">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
           </param>
         </parameters>
         <parameters name="NTF_">
@@ -5466,6 +5946,36 @@
           <param humanName="BTEMP_Y" name="OSD1_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="COMPASS_EN" name="OSD1_COMPASS_EN" documentation="Enables display of compass rose">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="HORIZON_EN" name="OSD1_HORIZON_EN" documentation="Displays artificial horizon">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="PITCH_EN" name="OSD1_PITCH_EN" documentation="Displays degrees of pitch from level">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ROLL_EN" name="OSD1_ROLL_EN" documentation="Displays degrees of roll from level">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="SIDEBARS_EN" name="OSD1_SIDEBARS_EN" documentation="Displays artificial horizon side bars">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -5554,6 +6064,36 @@
           </param>
           <param humanName="BTEMP_Y" name="OSD2_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
+          </param>
+          <param humanName="COMPASS_EN" name="OSD2_COMPASS_EN" documentation="Enables display of compass rose">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="HORIZON_EN" name="OSD2_HORIZON_EN" documentation="Displays artificial horizon">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="PITCH_EN" name="OSD2_PITCH_EN" documentation="Displays degrees of pitch from level">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ROLL_EN" name="OSD2_ROLL_EN" documentation="Displays degrees of roll from level">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="SIDEBARS_EN" name="OSD2_SIDEBARS_EN" documentation="Displays artificial horizon side bars">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
           </param>
         </parameters>
         <parameters name="OSD3_">
@@ -5644,6 +6184,36 @@
           <param humanName="BTEMP_Y" name="OSD3_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="COMPASS_EN" name="OSD3_COMPASS_EN" documentation="Enables display of compass rose">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="HORIZON_EN" name="OSD3_HORIZON_EN" documentation="Displays artificial horizon">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="PITCH_EN" name="OSD3_PITCH_EN" documentation="Displays degrees of pitch from level">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ROLL_EN" name="OSD3_ROLL_EN" documentation="Displays degrees of roll from level">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="SIDEBARS_EN" name="OSD3_SIDEBARS_EN" documentation="Displays artificial horizon side bars">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -5732,6 +6302,36 @@
           </param>
           <param humanName="BTEMP_Y" name="OSD4_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
+          </param>
+          <param humanName="COMPASS_EN" name="OSD4_COMPASS_EN" documentation="Enables display of compass rose">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="HORIZON_EN" name="OSD4_HORIZON_EN" documentation="Displays artificial horizon">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="PITCH_EN" name="OSD4_PITCH_EN" documentation="Displays degrees of pitch from level">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ROLL_EN" name="OSD4_ROLL_EN" documentation="Displays degrees of roll from level">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="SIDEBARS_EN" name="OSD4_SIDEBARS_EN" documentation="Displays artificial horizon side bars">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
           </param>
         </parameters>
         <parameters name="INS_LOG_">
@@ -6740,6 +7340,36 @@
           <param humanName="BTEMP_Y" name="OSD1_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="COMPASS_EN" name="OSD1_COMPASS_EN" documentation="Enables display of compass rose">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="HORIZON_EN" name="OSD1_HORIZON_EN" documentation="Displays artificial horizon">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="PITCH_EN" name="OSD1_PITCH_EN" documentation="Displays degrees of pitch from level">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ROLL_EN" name="OSD1_ROLL_EN" documentation="Displays degrees of roll from level">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="SIDEBARS_EN" name="OSD1_SIDEBARS_EN" documentation="Displays artificial horizon side bars">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -6828,6 +7458,36 @@
           </param>
           <param humanName="BTEMP_Y" name="OSD2_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
+          </param>
+          <param humanName="COMPASS_EN" name="OSD2_COMPASS_EN" documentation="Enables display of compass rose">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="HORIZON_EN" name="OSD2_HORIZON_EN" documentation="Displays artificial horizon">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="PITCH_EN" name="OSD2_PITCH_EN" documentation="Displays degrees of pitch from level">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ROLL_EN" name="OSD2_ROLL_EN" documentation="Displays degrees of roll from level">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="SIDEBARS_EN" name="OSD2_SIDEBARS_EN" documentation="Displays artificial horizon side bars">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
           </param>
         </parameters>
         <parameters name="OSD3_">
@@ -6918,6 +7578,36 @@
           <param humanName="BTEMP_Y" name="OSD3_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="COMPASS_EN" name="OSD3_COMPASS_EN" documentation="Enables display of compass rose">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="HORIZON_EN" name="OSD3_HORIZON_EN" documentation="Displays artificial horizon">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="PITCH_EN" name="OSD3_PITCH_EN" documentation="Displays degrees of pitch from level">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ROLL_EN" name="OSD3_ROLL_EN" documentation="Displays degrees of roll from level">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="SIDEBARS_EN" name="OSD3_SIDEBARS_EN" documentation="Displays artificial horizon side bars">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -7006,6 +7696,36 @@
           </param>
           <param humanName="BTEMP_Y" name="OSD4_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
+          </param>
+          <param humanName="COMPASS_EN" name="OSD4_COMPASS_EN" documentation="Enables display of compass rose">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="HORIZON_EN" name="OSD4_HORIZON_EN" documentation="Displays artificial horizon">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="PITCH_EN" name="OSD4_PITCH_EN" documentation="Displays degrees of pitch from level">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ROLL_EN" name="OSD4_ROLL_EN" documentation="Displays degrees of roll from level">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="SIDEBARS_EN" name="OSD4_SIDEBARS_EN" documentation="Displays artificial horizon side bars">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
           </param>
         </parameters>
         <parameters name="INS_LOG_">
@@ -7486,6 +8206,36 @@
           <param humanName="BTEMP_Y" name="OSD1_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="COMPASS_EN" name="OSD1_COMPASS_EN" documentation="Enables display of compass rose">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="HORIZON_EN" name="OSD1_HORIZON_EN" documentation="Displays artificial horizon">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="PITCH_EN" name="OSD1_PITCH_EN" documentation="Displays degrees of pitch from level">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ROLL_EN" name="OSD1_ROLL_EN" documentation="Displays degrees of roll from level">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="SIDEBARS_EN" name="OSD1_SIDEBARS_EN" documentation="Displays artificial horizon side bars">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -7574,6 +8324,36 @@
           </param>
           <param humanName="BTEMP_Y" name="OSD2_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
+          </param>
+          <param humanName="COMPASS_EN" name="OSD2_COMPASS_EN" documentation="Enables display of compass rose">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="HORIZON_EN" name="OSD2_HORIZON_EN" documentation="Displays artificial horizon">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="PITCH_EN" name="OSD2_PITCH_EN" documentation="Displays degrees of pitch from level">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ROLL_EN" name="OSD2_ROLL_EN" documentation="Displays degrees of roll from level">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="SIDEBARS_EN" name="OSD2_SIDEBARS_EN" documentation="Displays artificial horizon side bars">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
           </param>
         </parameters>
         <parameters name="OSD3_">
@@ -7664,6 +8444,36 @@
           <param humanName="BTEMP_Y" name="OSD3_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="COMPASS_EN" name="OSD3_COMPASS_EN" documentation="Enables display of compass rose">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="HORIZON_EN" name="OSD3_HORIZON_EN" documentation="Displays artificial horizon">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="PITCH_EN" name="OSD3_PITCH_EN" documentation="Displays degrees of pitch from level">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ROLL_EN" name="OSD3_ROLL_EN" documentation="Displays degrees of roll from level">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="SIDEBARS_EN" name="OSD3_SIDEBARS_EN" documentation="Displays artificial horizon side bars">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -7752,6 +8562,36 @@
           </param>
           <param humanName="BTEMP_Y" name="OSD4_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
+          </param>
+          <param humanName="COMPASS_EN" name="OSD4_COMPASS_EN" documentation="Enables display of compass rose">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="HORIZON_EN" name="OSD4_HORIZON_EN" documentation="Displays artificial horizon">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="PITCH_EN" name="OSD4_PITCH_EN" documentation="Displays degrees of pitch from level">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="ROLL_EN" name="OSD4_ROLL_EN" documentation="Displays degrees of roll from level">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="SIDEBARS_EN" name="OSD4_SIDEBARS_EN" documentation="Displays artificial horizon side bars">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
           </param>
         </parameters>
         <parameters name="INS_LOG_">

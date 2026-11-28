@@ -10616,6 +10616,806 @@
       "recordSha256": "39ca0d19036c1e425fd50866ce8987f92a83d94f425ba832094ed4e74e277e33",
       "english": "Vertical position on screen",
       "chinese": "设置 OSD 第 4 屏上第二个气压计温度的垂直位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD1_COMPASS_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "9acc2dd9aed049331e0332713acbf9869eb355090912b709a3e996c8b3dde988",
+      "recordSha256": "8995fa7aea5ef7568a25027f516f45ece357091816c2f33b523744a8c3479720",
+      "english": "Enables display of compass rose",
+      "chinese": "显示罗盘方位刻度。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD1_HORIZON_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "43ffae004c5d84bbd30b886c1d5eee2d8caf7d39842a1c6695bced5c5d83390f",
+      "recordSha256": "4c985b1ed531b3d95458712d26e019356b89723e173d5e44c938370cc74bffd2",
+      "english": "Displays artificial horizon",
+      "chinese": "显示人工地平线。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD1_PITCH_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "530a93df74653cfb8f60cf3053bebd3df80b182f07327df2a1cc310e00ed99b6",
+      "recordSha256": "4015df99c3b10de13a7f6ff61a0658cec40751d9386b251f126d5b64c01ce7d8",
+      "english": "Displays degrees of pitch from level",
+      "chinese": "显示相对水平面的俯仰角，单位为度。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD1_ROLL_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "13e21299ee68cc9fe071f879e289b0edc23281f246c81c40917f067e84ecd3fd",
+      "recordSha256": "6d12c55c7cb9da4b5f32172b222163aacd36b3cab1a5be8e459f1044dce6c925",
+      "english": "Displays degrees of roll from level",
+      "chinese": "显示相对水平面偏转的横滚角，单位为度。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD1_SIDEBARS_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "b26cd52f5c3d6ee4cd069dc9fafa5f94b2f96e3fc83e8f9d036653e48e8f0437",
+      "recordSha256": "71e8530e5159f3ef007e5067d284c377c9643e49e4bb595837f433ed2f059ab7",
+      "english": "Displays artificial horizon side bars",
+      "chinese": "显示人工地平线的两侧边栏。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD2_COMPASS_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "9acc2dd9aed049331e0332713acbf9869eb355090912b709a3e996c8b3dde988",
+      "recordSha256": "0334c8dc0cdba76d748398d80ff22e100577db233ca53e2b62ca62d00b794024",
+      "english": "Enables display of compass rose",
+      "chinese": "显示罗盘方位刻度。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD2_HORIZON_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "43ffae004c5d84bbd30b886c1d5eee2d8caf7d39842a1c6695bced5c5d83390f",
+      "recordSha256": "035d5137aca51c1fbfab2d3cbce736321fd37ecff127c1c632bf8a29ba9a9482",
+      "english": "Displays artificial horizon",
+      "chinese": "显示人工地平线。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD2_PITCH_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "530a93df74653cfb8f60cf3053bebd3df80b182f07327df2a1cc310e00ed99b6",
+      "recordSha256": "0dea38377db353c13ad0d3d02c38494126ab9a43efe447cf32bb94bf8044cb2b",
+      "english": "Displays degrees of pitch from level",
+      "chinese": "显示相对水平面的俯仰角，单位为度。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD2_ROLL_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "13e21299ee68cc9fe071f879e289b0edc23281f246c81c40917f067e84ecd3fd",
+      "recordSha256": "9c24b9dab3982affd38beed19982d60f2605139ff08e96005a138bc8803f02ea",
+      "english": "Displays degrees of roll from level",
+      "chinese": "显示相对水平面偏转的横滚角，单位为度。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD2_SIDEBARS_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "b26cd52f5c3d6ee4cd069dc9fafa5f94b2f96e3fc83e8f9d036653e48e8f0437",
+      "recordSha256": "7a8e323e9b0d34ff699f8ddb84a98c613b7aceb63069593d950afee75c029132",
+      "english": "Displays artificial horizon side bars",
+      "chinese": "显示人工地平线的两侧边栏。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD3_COMPASS_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "9acc2dd9aed049331e0332713acbf9869eb355090912b709a3e996c8b3dde988",
+      "recordSha256": "2db2b68d4b46645d78fd15d87074c28715853ee426228b952e5378308508c088",
+      "english": "Enables display of compass rose",
+      "chinese": "显示罗盘方位刻度。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD3_HORIZON_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "43ffae004c5d84bbd30b886c1d5eee2d8caf7d39842a1c6695bced5c5d83390f",
+      "recordSha256": "a1cf4f6503b64e0910109419a0b082d053cb035da34a50dd512a72a3a7046117",
+      "english": "Displays artificial horizon",
+      "chinese": "显示人工地平线。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD3_PITCH_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "530a93df74653cfb8f60cf3053bebd3df80b182f07327df2a1cc310e00ed99b6",
+      "recordSha256": "9ae6deb79461997323ecaa8add7ab8d57cc4e0ea3d69e621118459cadcddac97",
+      "english": "Displays degrees of pitch from level",
+      "chinese": "显示相对水平面的俯仰角，单位为度。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD3_ROLL_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "13e21299ee68cc9fe071f879e289b0edc23281f246c81c40917f067e84ecd3fd",
+      "recordSha256": "3e0610d731da090b8550b0ab7bc3850adec9062d0f0bab66e7564cde81d16577",
+      "english": "Displays degrees of roll from level",
+      "chinese": "显示相对水平面偏转的横滚角，单位为度。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD3_SIDEBARS_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "b26cd52f5c3d6ee4cd069dc9fafa5f94b2f96e3fc83e8f9d036653e48e8f0437",
+      "recordSha256": "caadb532a1ac80b71655565510b5481ded5102b6f4846ff9cdb219236a1fd5a6",
+      "english": "Displays artificial horizon side bars",
+      "chinese": "显示人工地平线的两侧边栏。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD4_COMPASS_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "9acc2dd9aed049331e0332713acbf9869eb355090912b709a3e996c8b3dde988",
+      "recordSha256": "2bd43f5430385310b35456ccb53b919a966314d7db687bd5bc3fc1df7c29f253",
+      "english": "Enables display of compass rose",
+      "chinese": "显示罗盘方位刻度。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD4_HORIZON_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "43ffae004c5d84bbd30b886c1d5eee2d8caf7d39842a1c6695bced5c5d83390f",
+      "recordSha256": "6d5a56dbcb46a2bbd2e9a419169ca900a2cc20f5420cf7a07bfc0e464bfd3394",
+      "english": "Displays artificial horizon",
+      "chinese": "显示人工地平线。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD4_PITCH_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "530a93df74653cfb8f60cf3053bebd3df80b182f07327df2a1cc310e00ed99b6",
+      "recordSha256": "ea5c780f8924e567e406c99c85221ef92649ac7f9628108f162235c4c83bcc0f",
+      "english": "Displays degrees of pitch from level",
+      "chinese": "显示相对水平面的俯仰角，单位为度。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD4_ROLL_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "13e21299ee68cc9fe071f879e289b0edc23281f246c81c40917f067e84ecd3fd",
+      "recordSha256": "0a1cfbd0b30563155e4639f8854f108856eaf15eb247a5a174ce537ca973e70d",
+      "english": "Displays degrees of roll from level",
+      "chinese": "显示相对水平面偏转的横滚角，单位为度。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD4_SIDEBARS_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "b26cd52f5c3d6ee4cd069dc9fafa5f94b2f96e3fc83e8f9d036653e48e8f0437",
+      "recordSha256": "7da3aff63f32e843fedb6a8ea0267038d263f30b17729969d912daf31129b40c",
+      "english": "Displays artificial horizon side bars",
+      "chinese": "显示人工地平线的两侧边栏。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD1_COMPASS_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "9acc2dd9aed049331e0332713acbf9869eb355090912b709a3e996c8b3dde988",
+      "recordSha256": "8995fa7aea5ef7568a25027f516f45ece357091816c2f33b523744a8c3479720",
+      "english": "Enables display of compass rose",
+      "chinese": "显示罗盘方位刻度。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD1_HORIZON_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "43ffae004c5d84bbd30b886c1d5eee2d8caf7d39842a1c6695bced5c5d83390f",
+      "recordSha256": "4c985b1ed531b3d95458712d26e019356b89723e173d5e44c938370cc74bffd2",
+      "english": "Displays artificial horizon",
+      "chinese": "显示人工地平线。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD1_PITCH_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "530a93df74653cfb8f60cf3053bebd3df80b182f07327df2a1cc310e00ed99b6",
+      "recordSha256": "4015df99c3b10de13a7f6ff61a0658cec40751d9386b251f126d5b64c01ce7d8",
+      "english": "Displays degrees of pitch from level",
+      "chinese": "显示相对水平面的俯仰角，单位为度。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD1_ROLL_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "13e21299ee68cc9fe071f879e289b0edc23281f246c81c40917f067e84ecd3fd",
+      "recordSha256": "6d12c55c7cb9da4b5f32172b222163aacd36b3cab1a5be8e459f1044dce6c925",
+      "english": "Displays degrees of roll from level",
+      "chinese": "显示相对水平面偏转的横滚角，单位为度。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD1_SIDEBARS_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "b26cd52f5c3d6ee4cd069dc9fafa5f94b2f96e3fc83e8f9d036653e48e8f0437",
+      "recordSha256": "71e8530e5159f3ef007e5067d284c377c9643e49e4bb595837f433ed2f059ab7",
+      "english": "Displays artificial horizon side bars",
+      "chinese": "显示人工地平线的两侧边栏。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD2_COMPASS_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "9acc2dd9aed049331e0332713acbf9869eb355090912b709a3e996c8b3dde988",
+      "recordSha256": "0334c8dc0cdba76d748398d80ff22e100577db233ca53e2b62ca62d00b794024",
+      "english": "Enables display of compass rose",
+      "chinese": "显示罗盘方位刻度。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD2_HORIZON_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "43ffae004c5d84bbd30b886c1d5eee2d8caf7d39842a1c6695bced5c5d83390f",
+      "recordSha256": "035d5137aca51c1fbfab2d3cbce736321fd37ecff127c1c632bf8a29ba9a9482",
+      "english": "Displays artificial horizon",
+      "chinese": "显示人工地平线。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD2_PITCH_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "530a93df74653cfb8f60cf3053bebd3df80b182f07327df2a1cc310e00ed99b6",
+      "recordSha256": "0dea38377db353c13ad0d3d02c38494126ab9a43efe447cf32bb94bf8044cb2b",
+      "english": "Displays degrees of pitch from level",
+      "chinese": "显示相对水平面的俯仰角，单位为度。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD2_ROLL_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "13e21299ee68cc9fe071f879e289b0edc23281f246c81c40917f067e84ecd3fd",
+      "recordSha256": "9c24b9dab3982affd38beed19982d60f2605139ff08e96005a138bc8803f02ea",
+      "english": "Displays degrees of roll from level",
+      "chinese": "显示相对水平面偏转的横滚角，单位为度。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD2_SIDEBARS_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "b26cd52f5c3d6ee4cd069dc9fafa5f94b2f96e3fc83e8f9d036653e48e8f0437",
+      "recordSha256": "7a8e323e9b0d34ff699f8ddb84a98c613b7aceb63069593d950afee75c029132",
+      "english": "Displays artificial horizon side bars",
+      "chinese": "显示人工地平线的两侧边栏。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD3_COMPASS_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "9acc2dd9aed049331e0332713acbf9869eb355090912b709a3e996c8b3dde988",
+      "recordSha256": "2db2b68d4b46645d78fd15d87074c28715853ee426228b952e5378308508c088",
+      "english": "Enables display of compass rose",
+      "chinese": "显示罗盘方位刻度。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD3_HORIZON_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "43ffae004c5d84bbd30b886c1d5eee2d8caf7d39842a1c6695bced5c5d83390f",
+      "recordSha256": "a1cf4f6503b64e0910109419a0b082d053cb035da34a50dd512a72a3a7046117",
+      "english": "Displays artificial horizon",
+      "chinese": "显示人工地平线。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD3_PITCH_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "530a93df74653cfb8f60cf3053bebd3df80b182f07327df2a1cc310e00ed99b6",
+      "recordSha256": "9ae6deb79461997323ecaa8add7ab8d57cc4e0ea3d69e621118459cadcddac97",
+      "english": "Displays degrees of pitch from level",
+      "chinese": "显示相对水平面的俯仰角，单位为度。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD3_ROLL_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "13e21299ee68cc9fe071f879e289b0edc23281f246c81c40917f067e84ecd3fd",
+      "recordSha256": "3e0610d731da090b8550b0ab7bc3850adec9062d0f0bab66e7564cde81d16577",
+      "english": "Displays degrees of roll from level",
+      "chinese": "显示相对水平面偏转的横滚角，单位为度。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD3_SIDEBARS_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "b26cd52f5c3d6ee4cd069dc9fafa5f94b2f96e3fc83e8f9d036653e48e8f0437",
+      "recordSha256": "caadb532a1ac80b71655565510b5481ded5102b6f4846ff9cdb219236a1fd5a6",
+      "english": "Displays artificial horizon side bars",
+      "chinese": "显示人工地平线的两侧边栏。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD4_COMPASS_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "9acc2dd9aed049331e0332713acbf9869eb355090912b709a3e996c8b3dde988",
+      "recordSha256": "2bd43f5430385310b35456ccb53b919a966314d7db687bd5bc3fc1df7c29f253",
+      "english": "Enables display of compass rose",
+      "chinese": "显示罗盘方位刻度。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD4_HORIZON_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "43ffae004c5d84bbd30b886c1d5eee2d8caf7d39842a1c6695bced5c5d83390f",
+      "recordSha256": "6d5a56dbcb46a2bbd2e9a419169ca900a2cc20f5420cf7a07bfc0e464bfd3394",
+      "english": "Displays artificial horizon",
+      "chinese": "显示人工地平线。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD4_PITCH_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "530a93df74653cfb8f60cf3053bebd3df80b182f07327df2a1cc310e00ed99b6",
+      "recordSha256": "ea5c780f8924e567e406c99c85221ef92649ac7f9628108f162235c4c83bcc0f",
+      "english": "Displays degrees of pitch from level",
+      "chinese": "显示相对水平面的俯仰角，单位为度。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD4_ROLL_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "13e21299ee68cc9fe071f879e289b0edc23281f246c81c40917f067e84ecd3fd",
+      "recordSha256": "0a1cfbd0b30563155e4639f8854f108856eaf15eb247a5a174ce537ca973e70d",
+      "english": "Displays degrees of roll from level",
+      "chinese": "显示相对水平面偏转的横滚角，单位为度。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD4_SIDEBARS_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "b26cd52f5c3d6ee4cd069dc9fafa5f94b2f96e3fc83e8f9d036653e48e8f0437",
+      "recordSha256": "7da3aff63f32e843fedb6a8ea0267038d263f30b17729969d912daf31129b40c",
+      "english": "Displays artificial horizon side bars",
+      "chinese": "显示人工地平线的两侧边栏。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD1_COMPASS_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "9acc2dd9aed049331e0332713acbf9869eb355090912b709a3e996c8b3dde988",
+      "recordSha256": "8995fa7aea5ef7568a25027f516f45ece357091816c2f33b523744a8c3479720",
+      "english": "Enables display of compass rose",
+      "chinese": "显示罗盘方位刻度。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD1_HORIZON_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "43ffae004c5d84bbd30b886c1d5eee2d8caf7d39842a1c6695bced5c5d83390f",
+      "recordSha256": "4c985b1ed531b3d95458712d26e019356b89723e173d5e44c938370cc74bffd2",
+      "english": "Displays artificial horizon",
+      "chinese": "显示人工地平线。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD1_PITCH_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "530a93df74653cfb8f60cf3053bebd3df80b182f07327df2a1cc310e00ed99b6",
+      "recordSha256": "4015df99c3b10de13a7f6ff61a0658cec40751d9386b251f126d5b64c01ce7d8",
+      "english": "Displays degrees of pitch from level",
+      "chinese": "显示相对水平面的俯仰角，单位为度。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD1_ROLL_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "13e21299ee68cc9fe071f879e289b0edc23281f246c81c40917f067e84ecd3fd",
+      "recordSha256": "6d12c55c7cb9da4b5f32172b222163aacd36b3cab1a5be8e459f1044dce6c925",
+      "english": "Displays degrees of roll from level",
+      "chinese": "显示相对水平面偏转的横滚角，单位为度。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD1_SIDEBARS_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "b26cd52f5c3d6ee4cd069dc9fafa5f94b2f96e3fc83e8f9d036653e48e8f0437",
+      "recordSha256": "71e8530e5159f3ef007e5067d284c377c9643e49e4bb595837f433ed2f059ab7",
+      "english": "Displays artificial horizon side bars",
+      "chinese": "显示人工地平线的两侧边栏。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD2_COMPASS_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "9acc2dd9aed049331e0332713acbf9869eb355090912b709a3e996c8b3dde988",
+      "recordSha256": "0334c8dc0cdba76d748398d80ff22e100577db233ca53e2b62ca62d00b794024",
+      "english": "Enables display of compass rose",
+      "chinese": "显示罗盘方位刻度。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD2_HORIZON_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "43ffae004c5d84bbd30b886c1d5eee2d8caf7d39842a1c6695bced5c5d83390f",
+      "recordSha256": "035d5137aca51c1fbfab2d3cbce736321fd37ecff127c1c632bf8a29ba9a9482",
+      "english": "Displays artificial horizon",
+      "chinese": "显示人工地平线。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD2_PITCH_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "530a93df74653cfb8f60cf3053bebd3df80b182f07327df2a1cc310e00ed99b6",
+      "recordSha256": "0dea38377db353c13ad0d3d02c38494126ab9a43efe447cf32bb94bf8044cb2b",
+      "english": "Displays degrees of pitch from level",
+      "chinese": "显示相对水平面的俯仰角，单位为度。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD2_ROLL_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "13e21299ee68cc9fe071f879e289b0edc23281f246c81c40917f067e84ecd3fd",
+      "recordSha256": "9c24b9dab3982affd38beed19982d60f2605139ff08e96005a138bc8803f02ea",
+      "english": "Displays degrees of roll from level",
+      "chinese": "显示相对水平面偏转的横滚角，单位为度。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD2_SIDEBARS_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "b26cd52f5c3d6ee4cd069dc9fafa5f94b2f96e3fc83e8f9d036653e48e8f0437",
+      "recordSha256": "7a8e323e9b0d34ff699f8ddb84a98c613b7aceb63069593d950afee75c029132",
+      "english": "Displays artificial horizon side bars",
+      "chinese": "显示人工地平线的两侧边栏。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD3_COMPASS_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "9acc2dd9aed049331e0332713acbf9869eb355090912b709a3e996c8b3dde988",
+      "recordSha256": "2db2b68d4b46645d78fd15d87074c28715853ee426228b952e5378308508c088",
+      "english": "Enables display of compass rose",
+      "chinese": "显示罗盘方位刻度。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD3_HORIZON_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "43ffae004c5d84bbd30b886c1d5eee2d8caf7d39842a1c6695bced5c5d83390f",
+      "recordSha256": "a1cf4f6503b64e0910109419a0b082d053cb035da34a50dd512a72a3a7046117",
+      "english": "Displays artificial horizon",
+      "chinese": "显示人工地平线。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD3_PITCH_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "530a93df74653cfb8f60cf3053bebd3df80b182f07327df2a1cc310e00ed99b6",
+      "recordSha256": "9ae6deb79461997323ecaa8add7ab8d57cc4e0ea3d69e621118459cadcddac97",
+      "english": "Displays degrees of pitch from level",
+      "chinese": "显示相对水平面的俯仰角，单位为度。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD3_ROLL_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "13e21299ee68cc9fe071f879e289b0edc23281f246c81c40917f067e84ecd3fd",
+      "recordSha256": "3e0610d731da090b8550b0ab7bc3850adec9062d0f0bab66e7564cde81d16577",
+      "english": "Displays degrees of roll from level",
+      "chinese": "显示相对水平面偏转的横滚角，单位为度。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD3_SIDEBARS_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "b26cd52f5c3d6ee4cd069dc9fafa5f94b2f96e3fc83e8f9d036653e48e8f0437",
+      "recordSha256": "caadb532a1ac80b71655565510b5481ded5102b6f4846ff9cdb219236a1fd5a6",
+      "english": "Displays artificial horizon side bars",
+      "chinese": "显示人工地平线的两侧边栏。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD4_COMPASS_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "9acc2dd9aed049331e0332713acbf9869eb355090912b709a3e996c8b3dde988",
+      "recordSha256": "2bd43f5430385310b35456ccb53b919a966314d7db687bd5bc3fc1df7c29f253",
+      "english": "Enables display of compass rose",
+      "chinese": "显示罗盘方位刻度。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD4_HORIZON_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "43ffae004c5d84bbd30b886c1d5eee2d8caf7d39842a1c6695bced5c5d83390f",
+      "recordSha256": "6d5a56dbcb46a2bbd2e9a419169ca900a2cc20f5420cf7a07bfc0e464bfd3394",
+      "english": "Displays artificial horizon",
+      "chinese": "显示人工地平线。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD4_PITCH_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "530a93df74653cfb8f60cf3053bebd3df80b182f07327df2a1cc310e00ed99b6",
+      "recordSha256": "ea5c780f8924e567e406c99c85221ef92649ac7f9628108f162235c4c83bcc0f",
+      "english": "Displays degrees of pitch from level",
+      "chinese": "显示相对水平面的俯仰角，单位为度。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD4_ROLL_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "13e21299ee68cc9fe071f879e289b0edc23281f246c81c40917f067e84ecd3fd",
+      "recordSha256": "0a1cfbd0b30563155e4639f8854f108856eaf15eb247a5a174ce537ca973e70d",
+      "english": "Displays degrees of roll from level",
+      "chinese": "显示相对水平面偏转的横滚角，单位为度。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD4_SIDEBARS_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "b26cd52f5c3d6ee4cd069dc9fafa5f94b2f96e3fc83e8f9d036653e48e8f0437",
+      "recordSha256": "7da3aff63f32e843fedb6a8ea0267038d263f30b17729969d912daf31129b40c",
+      "english": "Displays artificial horizon side bars",
+      "chinese": "显示人工地平线的两侧边栏。"
     }
   ]
 }
