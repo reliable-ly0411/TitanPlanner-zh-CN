@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
@@ -108,6 +109,95 @@ namespace MissionPlannerTests.Utilities
                     fixture.SaveScreenshot("layout-" + scale + "-" + width + "-" + connected);
                 }
             });
+        }
+
+        [TestMethod]
+        public void UserBrandRefreshPreservesPlacementAndRoutesOnlyToFixedLinks()
+        {
+            InSta(() =>
+            {
+                var dir = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString("N"));
+                var assetDir = Path.Combine(dir, "toolbar-brand");
+                Directory.CreateDirectory(assetDir);
+                try
+                {
+                    SaveFixture(Path.Combine(assetDir, "titan-planner-light.png"), Color.Lime);
+                    SaveFixture(Path.Combine(assetDir, "titan-planner-dark.png"), Color.Fuchsia);
+                    SaveFixture(Path.Combine(assetDir, "localized-light.png"), Color.Lime);
+                    File.WriteAllText(Path.Combine(assetDir, "px4-light.png"), "invalid");
+                    var clicked = new List<string>();
+                    string id = null;
+                    using (var form = new Form { Size = new Size(700, 200) })
+                    using (var strip = new ToolStrip { Dock = DockStyle.Top })
+                    {
+                        var connect = new ToolStripButton("Connect") { Alignment = ToolStripItemAlignment.Right };
+                        var original = new ToolStripButton("Test") { Alignment = ToolStripItemAlignment.Right };
+                        strip.Items.Add(connect);
+                        strip.Items.Add(original);
+                        form.Controls.Add(strip);
+                        var host = BrandLogoLinks.ConfigureUserBrand(strip, original, clicked.Add, () => id, () => dir, connect);
+                        form.Show();
+                        strip.PerformLayout();
+                        Application.DoEvents();
+                        var bounds = host.Bounds;
+                        var left = (Button)host.Control.Controls["MenuArduPilotLink"];
+                        var right = (Button)host.Control.Controls["MenuLocalizedGitHub"];
+                        Assert.AreEqual(BrandLogoLinks.ArduPilotUrl, left.AccessibleDescription);
+                        id = "titan-planner";
+                        BrandLogoLinks.NotifyUserBrandChanged();
+                        Assert.AreEqual("Titan Dynamics", left.AccessibleName);
+                        Assert.AreEqual(bounds, host.Bounds);
+                        AssertPartition(host.Control);
+                        left.PerformClick();
+                        right.PerformClick();
+                        CollectionAssert.AreEqual(new[] { "https://titandynamics.aero", BrandLogoLinks.GitHubUrl }, clicked);
+                        VerifyTone(strip, host.Control, Color.White, Color.Lime);
+                        VerifyTone(strip, host.Control, Color.Black, Color.Fuchsia);
+                        id = "px4";
+                        BrandLogoLinks.NotifyUserBrandChanged();
+                        Assert.AreEqual(BrandLogoLinks.ArduPilotUrl, left.AccessibleDescription);
+                        id = "../../titan-planner";
+                        BrandLogoLinks.NotifyUserBrandChanged();
+                        Assert.AreEqual(BrandLogoLinks.ArduPilotUrl, left.AccessibleDescription);
+                        id = null;
+                        BrandLogoLinks.NotifyUserBrandChanged();
+                        Assert.AreEqual(BrandLogoLinks.ArduPilotUrl, left.AccessibleDescription);
+                        Assert.AreEqual(bounds, host.Bounds);
+                    }
+                    // Disposal must remove the application refresh listener.
+                    BrandLogoLinks.NotifyUserBrandChanged();
+                }
+                finally { Directory.Delete(dir, true); }
+            });
+        }
+
+        private static void SaveFixture(string path, Color color)
+        {
+            using (var bitmap = new Bitmap(20, 20))
+            using (var graphics = Graphics.FromImage(bitmap))
+            using (var fill = new SolidBrush(color))
+            {
+                graphics.Clear(Color.Transparent);
+                graphics.FillRectangle(fill, 3, 3, 14, 14);
+                bitmap.Save(path, System.Drawing.Imaging.ImageFormat.Png);
+            }
+        }
+
+        private static void VerifyTone(ToolStrip strip, Control logo, Color background, Color color)
+        {
+            using (var tile = new Bitmap(2, 2))
+            using (var bitmap = new Bitmap(logo.Width, logo.Height))
+            {
+                using (var graphics = Graphics.FromImage(tile)) graphics.Clear(background);
+                strip.BackgroundImageLayout = ImageLayout.Tile;
+                strip.BackgroundImage = tile;
+                try
+                {
+                    logo.DrawToBitmap(bitmap, logo.ClientRectangle);
+                    Assert.AreEqual(color.ToArgb(), bitmap.GetPixel(bitmap.Width / 2, bitmap.Height / 2).ToArgb());
+                }
+                finally { strip.BackgroundImage = null; }
+            }
         }
 
         private static void AssertPartition(Control links, bool hitTest = true)
