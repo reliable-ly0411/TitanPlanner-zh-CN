@@ -22,6 +22,14 @@ namespace MissionPlanner.Utilities
             out List<(double timeus, double[] value)> allfftdata, string type = "ACC1", string field = "AccX",
             string timeus = "TimeUS", int min = -80, int max = -20)
         {
+            return GenerateImage(cb, out freqtout, out allfftdata, out _, type, field, timeus, min, max);
+        }
+
+        public static SKBitmap GenerateImage(DFLogBuffer cb, out double[] freqtout,
+            out List<(double timeus, double[] value)> allfftdata, out double singleBatchWindowSeconds,
+            string type = "ACC1", string field = "AccX", string timeus = "TimeUS", int min = -80, int max = -20)
+        {
+            singleBatchWindowSeconds = 0;
             Console.WriteLine("GenerateImage " + type + " " + field);
             allfftdata = new List<(double timeus, double[] value)>();
 
@@ -31,17 +39,25 @@ namespace MissionPlanner.Utilities
                 int sensorno = (type.Contains("1") ? 0 : (type.Contains("2") ? 1 : 2));
                 int sensor = type.Contains("ACC") ? 0 : 1;
 
-                (double, (double, double)[]) cachedata;
+                // The cached series contains only the axis requested from each ISBD packet.
+                string axis = field.Substring(field.Length - 1).ToLowerInvariant();
+                var batchCacheKey = (cb.GetHashCode(), sensorno, sensor, axis);
+                (double, (double, double)[], double?) cachedata;
+                const int bins = 10;
+                int N = 1 << bins;
 
                 double sample_rate = -1;
+                double? firstWindowRate = null;
 
                 (double time, double d)[] data = new (double time, double d)[0];
-                if (!cache.TryGetValue(cb.GetHashCode() + sensorno + "" + sensor, out cachedata))
+                if (!cache.TryGetValue(batchCacheKey, out cachedata))
                 {
                     int Ns = -1;
                     int type1 = -1;
                     int instance = -1;
                     double multiplier = -1;
+                    int firstWindowSamples = 0;
+                    int headerSequence = 0, firstWindowHeader = 0;
 
                     data = cb.GetEnumeratorType(new string[] { "ISBH", "ISBD" })
                         .SelectMany(
@@ -49,6 +65,7 @@ namespace MissionPlanner.Utilities
                             {
                                 if (item.msgtype == "ISBH")
                                 {
+                                    headerSequence++;
                                     Ns = int.Parse(item.items[cb.dflog.FindMessageOffset(item.msgtype, "N")],
                                         CultureInfo.InvariantCulture);
                                     type1 = int.Parse(item.items[cb.dflog.FindMessageOffset(item.msgtype, "type")],
@@ -86,8 +103,22 @@ namespace MissionPlanner.Utilities
 
                                     double time = double.Parse(item.items[offsetTime], CultureInfo.InvariantCulture);
 
-                                    var ua = (BinaryLog.UnionArray)item.GetRaw(field.ToLower()
-                                        .Substring(field.Length - 1));
+                                    var ua = (BinaryLog.UnionArray)item.GetRaw(axis);
+
+                                    int samplesInPacket = ua.Shorts.Length;
+                                    if (firstWindowSamples < N && samplesInPacket > 0)
+                                    {
+                                        // Track only packets that contribute to the first FFT window.
+                                        // An incomplete trailing batch must not dictate the painted duration.
+                                        if (!firstWindowRate.HasValue)
+                                        {
+                                            firstWindowRate = sample_rate;
+                                            firstWindowHeader = headerSequence;
+                                        }
+                                        else if (firstWindowHeader != headerSequence || firstWindowRate.Value != sample_rate)
+                                            firstWindowRate = double.NaN;
+                                        firstWindowSamples += Math.Min(N - firstWindowSamples, samplesInPacket);
+                                    }
 
                                     return ua.Shorts.Select(ds =>
                                         {
@@ -99,7 +130,7 @@ namespace MissionPlanner.Utilities
 
                                 return new (double time, double d)[0];
                             }).ToArray();
-                    cache.Set(cb.GetHashCode() + sensorno + "" + sensor, (sample_rate, data),
+                    cache.Set(batchCacheKey, (sample_rate, data, firstWindowRate),
                         new MemoryCacheEntryOptions()
                         {
                             AbsoluteExpirationRelativeToNow = System.TimeSpan.FromMinutes(10)
@@ -108,12 +139,9 @@ namespace MissionPlanner.Utilities
                 else 
                 {
                     sample_rate = cachedata.Item1;
-                    data = cachedata.Item2;                
+                    data = cachedata.Item2;
+                    firstWindowRate = cachedata.Item3;
                 }
-
-
-                var bins = 10;
-                int N = 1 << bins;
 
                 if (data.Length < N)
                 {
@@ -166,6 +194,21 @@ namespace MissionPlanner.Utilities
 
                     count--;
                     done++;
+                }
+
+                if (allfftdata.Count == 1 && firstWindowRate.HasValue &&
+                    firstWindowRate.Value > 0 && !double.IsInfinity(firstWindowRate.Value))
+                {
+                    double duration = N / firstWindowRate.Value;
+                    if (!double.IsInfinity(duration))
+                        singleBatchWindowSeconds = duration;
+
+                    // Only the unique, verified FFT window may override the legacy grid.
+                    // A short trailing batch can change sample_rate without contributing any samples to it.
+                    double windowRate = firstWindowRate.Value;
+                    if (windowRate != sample_rate && windowRate >= 1 &&
+                        windowRate <= int.MaxValue / (freqt.Length - 1))
+                        freqt = fft.FreqTable(N, (int)windowRate);
                 }
 
                 freqtout = freqt;
