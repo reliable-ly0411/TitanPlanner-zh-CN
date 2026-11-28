@@ -106,13 +106,21 @@ namespace MissionPlanner
             }
         }
 
+        internal bool HasConsistentIdentity(uint sysid)
+        {
+            lock (gate)
+                return systems.TryGetValue(sysid, out var proof) && IsConsistent(proof);
+        }
+
+        private static bool IsConsistent(Proof proof) =>
+            proof.HasHeartbeat && proof.HasVersion && !proof.Conflict && proof.FlightHash != null;
+
         internal string TranslateScript(uint sysid, byte severity, string completeRawText)
         {
             if (string.IsNullOrEmpty(completeRawText)) return null;
             lock (gate)
             {
-                if (!systems.TryGetValue(sysid, out var proof) || proof.Conflict ||
-                    !proof.HasHeartbeat || !proof.HasVersion || proof.FlightHash == null) return null;
+                if (!systems.TryGetValue(sysid, out var proof) || !IsConsistent(proof)) return null;
                 return FirmwareScriptSpeech.Translate(proof.Autopilot, proof.Vehicle,
                     proof.FlightVersion, (byte[])proof.FlightHash.Clone(), severity, completeRawText);
             }
@@ -138,6 +146,7 @@ namespace MissionPlanner
         private sealed class Pending
         {
             internal byte Severity;
+            internal bool MixedSeverity;
             internal DateTime LastChunk;
             internal int Expected = -1;
             internal readonly SortedDictionary<byte, byte[]> Chunks = new SortedDictionary<byte, byte[]>();
@@ -150,19 +159,32 @@ namespace MissionPlanner
 
         internal string Add(uint sysid, byte compid, MAVLink.mavlink_statustext_t msg)
         {
-            return Add(sysid, compid, msg, DateTime.UtcNow);
+            return Add(sysid, compid, msg, out _);
+        }
+
+        internal string Add(uint sysid, byte compid, MAVLink.mavlink_statustext_t msg, out bool consistent)
+        {
+            return Add(sysid, compid, msg, DateTime.UtcNow, out consistent);
         }
 
         internal string Add(uint sysid, byte compid, MAVLink.mavlink_statustext_t msg, DateTime now)
         {
+            return Add(sysid, compid, msg, now, out _);
+        }
+
+        private string Add(uint sysid, byte compid, MAVLink.mavlink_statustext_t msg, DateTime now, out bool consistent)
+        {
             byte[] text = TrimAtNull(msg.text);
-            if (msg.id == 0) return Encoding.UTF8.GetString(text);
+            consistent = msg.id == 0;
+            if (consistent) return Encoding.UTF8.GetString(text);
 
             lock (pending)
             {
                 var key = (sysid, compid, msg.id);
                 if (!pending.TryGetValue(key, out var item))
                     pending[key] = item = new Pending();
+                if (item.Chunks.Count != 0 && item.Severity != msg.severity)
+                    item.MixedSeverity = true;
                 item.Severity = msg.severity;
                 item.LastChunk = now;
                 item.Chunks[msg.chunk_seq] = text;
@@ -174,6 +196,9 @@ namespace MissionPlanner
                 }
                 pending.Remove(key);
                 hasPending = pending.Count > 0;
+                // The original assembled text and severity still feed the upstream route.
+                consistent = !item.MixedSeverity && item.Chunks.Keys.First() == 0 &&
+                    item.Chunks.Keys.Last() == item.Expected - 1;
                 return Join(item);
             }
         }

@@ -5514,11 +5514,11 @@ Mission Planner waits for 2 valid heartbeat packets before connecting
                     if (msgid == (byte)MAVLINK_MSG_ID.STATUSTEXT) // status text
                     {
                         var msg = message.ToStructure<mavlink_statustext_t>();
-                        string completeText = speechAssemblerGeneration.Add(sysid, compid, msg);
+                        string completeText = speechAssemblerGeneration.Add(sysid, compid, msg, out bool consistent);
                         ProcessExpiredStatusText(displayGeneration, speechProofGeneration, speechAssemblerGeneration);
                         if (completeText != null)
                             ProcessStatusText(sysid, compid, msg.severity, completeText, displayGeneration,
-                                speechProofGeneration, message, msg, true);
+                                speechProofGeneration, message, msg, consistent);
                     }
                     else if (speechAssemblerGeneration.HasPending)
                         ProcessExpiredStatusText(displayGeneration, speechProofGeneration, speechAssemblerGeneration);
@@ -5564,7 +5564,7 @@ Mission Planner waits for 2 valid heartbeat packets before connecting
 
         private void ProcessStatusText(uint sysid, byte compid, byte severity, string logdata,
             MessageDisplayContext displayGeneration, FirmwareSpeechSourceProof speechProofGeneration,
-            MAVLinkMessage sourcePacket, mavlink_statustext_t sourceText, bool completeMessage)
+            MAVLinkMessage sourcePacket, mavlink_statustext_t sourceText, bool verifiedCompleteMessage)
         {
             if (!ReferenceEquals(displayGeneration, Volatile.Read(ref messageDisplay))) return;
             bool displayPrimary = compid == 1 &&
@@ -5607,9 +5607,17 @@ Mission Planner waits for 2 valid heartbeat packets before connecting
 
             if (!printit) return;
 
-            string scriptTranslation = null;
-            if (enhancedChineseSpeech && completeMessage && scriptSource)
-                scriptTranslation = speechProofGeneration.TranslateScript(sysid, sev, logdata);
+            var hudState = MAVlist[sysid, compid].cs;
+            Func<string> verifiedScript = null;
+            if (enhancedChineseSpeech && verifiedCompleteMessage && scriptSource)
+            {
+                string translation = speechProofGeneration.TranslateScript(sysid, sev, logdata);
+                if (translation != null)
+                    verifiedScript = () => sysid == sysidcurrent && ReferenceEquals(messages, hudState.messages) &&
+                        MissionPlanner.ArduPilot.Common.UseEnhancedSpeech &&
+                        ReferenceEquals(displayGeneration, Volatile.Read(ref messageDisplay)) &&
+                        speechProofGeneration.HasConsistentIdentity(sysid) ? translation : null;
+            }
 
             FirmwareSpeechAlert speechAlert = null;
             if (enhancedChineseSpeech && selectedSpeechSource)
@@ -5623,7 +5631,7 @@ Mission Planner waits for 2 valid heartbeat packets before connecting
                         var displayTranslation = displayGeneration.VoiceSuffix(messages, row);
                         if (!string.IsNullOrEmpty(displayTranslation)) return displayTranslation;
                     }
-                    return scriptTranslation ?? logdata;
+                    return verifiedScript?.Invoke();
                 });
             }
 
@@ -5633,13 +5641,8 @@ Mission Planner waits for 2 valid heartbeat packets before connecting
                 MAVlist[sysid, compidcurrent].cs.messageHighSeverity = mavsev;
             }
 
-            var hudState = MAVlist[sysid, compid].cs;
-            Func<string> verifiedHudSuffix = null;
-            if (scriptTranslation != null)
-                verifiedHudSuffix = () => MissionPlanner.ArduPilot.Common.UseEnhancedSpeech &&
-                    ReferenceEquals(displayGeneration, Volatile.Read(ref messageDisplay))
-                    ? scriptTranslation : null;
-            else if (displayPrimary && sourcePacket != null && sourceText.chunk_seq == 0 &&
+            Func<string> verifiedHudSuffix = verifiedScript;
+            if (verifiedHudSuffix == null && displayPrimary && sourcePacket != null && sourceText.chunk_seq == 0 &&
                 displayGeneration.Suffix(messages, row) != null)
                 verifiedHudSuffix = () => ReferenceEquals(messages, hudState.messages)
                     ? MessagesDisplaySuffix(messages, row) : null;

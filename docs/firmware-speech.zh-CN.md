@@ -14,7 +14,7 @@
 | PX4 1.15.4、1.16.2、1.17.0、1.18.0 | 匹配正式构建的电池 STATUSTEXT。1.17.0 四旋翼另有 EKF2 磁力计参数告警 | 报文来源证明与播报去重夹具 |
 | PX4 Events | 待接入事件元数据与译文。已有 STATUSTEXT 播报继续可用 | 传统消息回放 |
 
-ArduPilot 脚本规则固定到 4.7.3 的八字节构建标识，并核对同一链路中的主飞控心跳、版本、机型、原始严重度和完整文本。Lua 的 “Tuning: RLL_D done” 与原生的 “Quicktune: Roll D done” 各用对应规则。重组按 MAVLink 上游语义处理，完整消息进入原来的 HUD 和播报门槛，日志保留原始报文。默认告警门槛为 WARNING。INFO／NOTICE 继续遵从门槛和上游的 Tuning、PreArm、Arm 前缀规则。缺片超时、无法证明来源的通用或自由文本、未列入规则的版本按原文处理。
+ArduPilot 脚本规则固定到 4.7.3 的八字节构建标识，并核对同一链路中的主飞控心跳、版本、机型、原始严重度和完整文本。飞控上的 Lua 文件可独立替换，译文以与官方源码匹配的正文为依据。Lua 的 “Tuning: RLL_D done” 与原生的 “Quicktune: Roll D done” 各用对应规则。重组按 MAVLink 上游语义处理，完整消息进入原来的 HUD 和播报门槛，日志保留原始报文。默认告警门槛为 WARNING。INFO／NOTICE 继续遵从门槛和上游的 Tuning、PreArm、Arm 前缀规则。缺片超时、无法证明来源的通用或自由文本、未列入规则的版本按原文处理。
 
 官方来源均固定到 4.7.3 的同一提交。[VTOL QuickTune](https://github.com/ArduPilot/ardupilot/blob/d9c5097c3d8333435712ffed86bca8ce00c4bb46/libraries/AP_Scripting/applets/VTOL-quicktune.lua) · [Rover QuickTune](https://github.com/ArduPilot/ardupilot/blob/d9c5097c3d8333435712ffed86bca8ce00c4bb46/libraries/AP_Scripting/applets/rover-quicktune.lua) · [Plane 轨迹特技](https://github.com/ArduPilot/ardupilot/blob/d9c5097c3d8333435712ffed86bca8ce00c4bb46/libraries/AP_Scripting/applets/Aerobatics/FixedWing/plane_aerobatics.lua) · [Plane 速率特技](https://github.com/ArduPilot/ardupilot/blob/d9c5097c3d8333435712ffed86bca8ce00c4bb46/libraries/AP_Scripting/applets/Aerobatics/FixedWing/RateBased/sport_aerobatics.lua) · [原生 QuickTune](https://github.com/ArduPilot/ardupilot/blob/d9c5097c3d8333435712ffed86bca8ce00c4bb46/libraries/AP_Quicktune/AP_Quicktune.cpp)
 
