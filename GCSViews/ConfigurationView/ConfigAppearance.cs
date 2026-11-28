@@ -321,11 +321,12 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                 SetChoice(AppearanceAsset.WindowIcon, DesktopAppearance.Store.CurrentPreset(AppearanceAsset.WindowIcon));
                 SetChoice(AppearanceAsset.StartupImage, DesktopAppearance.Store.CurrentPreset(AppearanceAsset.StartupImage));
                 status.Text = UiText.Translate("Unable to save appearance. Previous selection is unchanged.");
-                // Paths and decoder exception text can contain personal information. Show only known validation messages.
-                if (ex is InvalidDataException)
-                    status.Text += " " + (ex.Message == new InvalidDataException().Message
-                        ? UiText.Translate("Saved artwork is unavailable. Reimport the local file.")
-                        : UiText.Translate(ex.Message));
+                if (ex is InvalidDataException validation)
+                {
+                    var messageKey = AppearanceValidationMessageKey(validation.Message);
+                    if (messageKey != null)
+                        status.Text += " " + UiText.Translate(messageKey);
+                }
                 return;
             }
             string warning;
@@ -333,6 +334,33 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             catch (Exception) { status.Text = UiText.Translate("Appearance saved; preview unavailable."); return; }
             status.Text = UiText.Translate("Appearance saved. Window icons apply now; startup image applies on next startup.") +
                 (warning == null ? "" : " " + UiText.Translate(warning));
+        }
+
+        private static string AppearanceValidationMessageKey(string message)
+        {
+            if (message == new InvalidDataException().Message)
+                return "Saved artwork is unavailable. Reimport the local file.";
+
+            // Only known local validation text is suitable for display. Decoder errors
+            // can contain file paths and implementation-specific details.
+            switch (message)
+            {
+                case "Built-in startup image unavailable; using default.":
+                case "Choose a PNG, JPEG or BMP image (up to 16 MiB and 4096 pixels per side).":
+                case "Choose a valid ICO file with frames from 1 to 256 pixels.":
+                case "Choose an ICO file (up to 4 MiB).":
+                case "Image file exceeds the size limit or is empty.":
+                case "Incomplete image file.":
+                case "Invalid ICO directory.":
+                case "Invalid ICO frame dimensions.":
+                case "Invalid ICO frame.":
+                case "No saved startup image is available.":
+                case "The image format does not match its file extension.":
+                case "This ICO frame is unsupported on Mono. Use a 32-bit DIB or PNG frame.":
+                    return message;
+                default:
+                    return null;
+            }
         }
 
         private string RefreshPreviews()
