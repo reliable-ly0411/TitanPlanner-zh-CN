@@ -109,10 +109,25 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             var text = new RichTextBox
             {
                 Dock = DockStyle.Fill, ReadOnly = true, WordWrap = true, Font = Params.Font,
-                Text = row.Cells[Command.Index].ToolTipText + "\n\n" + row.Cells[Units.Index].Value + "\n" + row.Cells[Options.Index].Value
+                Text = FormatParameterDetailsText(row.Cells[Command.Index].ToolTipText,
+                    Units.HeaderText, row.Cells[Units.Index].Value?.ToString(),
+                    Options.HeaderText, row.Cells[Options.Index].Value?.ToString())
             };
             details.Controls.Add(text);
             return details;
+        }
+
+        private static string FormatParameterDetailsText(string description,
+            string unitsHeader, string units, string optionsHeader, string options)
+        {
+            var sections = new List<string>();
+            if (!string.IsNullOrWhiteSpace(description))
+                sections.Add(description);
+            if (!string.IsNullOrWhiteSpace(units))
+                sections.Add(unitsHeader + "\n" + units);
+            if (!string.IsNullOrWhiteSpace(options))
+                sections.Add(optionsHeader + "\n" + options);
+            return string.Join("\n\n", sections);
         }
 #endif
 
