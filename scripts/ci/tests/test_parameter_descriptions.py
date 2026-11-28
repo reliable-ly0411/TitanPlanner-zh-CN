@@ -109,11 +109,25 @@ class ParameterCatalogTests(unittest.TestCase):
             self.assertEqual(source['gitSha'], firmware.get('git_sha'))
             self.assertEqual(source['gitTag'], firmware.get('git_tag'))
 
+    def test_stable_473_names_and_fingerprints_cover_all_four_osd_groups(self):
+        for family in ('Copter', 'Plane'):
+            scope = self.bundle.find(f"release[@family='{family}'][@version='4.7.3']")
+            groups = scope.find('paramfile/libraries')
+            notes = {n['parameter']: n for n in self.catalog['translations']
+                     if n['family'] == family and '4.7.3' in n['versions'] and n['field'] == 'Description'}
+            for screen in range(1, 5):
+                records = groups.findall(f"parameters[@name='OSD{screen}_']/param")
+                self.assertEqual(201, len(records))
+                for record in records:
+                    note = notes[record.get('name')]
+                    self.assertEqual(note['english'], record.get('documentation'))
+                    self.assertEqual(note['recordSha256'], catalog_module.record_fingerprint(record))
+
     def test_scope_counts_and_held_versions(self):
         notes = self.catalog['translations']
         descriptions = {(n['family'], v, n['parameter']) for n in notes if n['field'] == 'Description' for v in n['versions']}
-        self.assertEqual(4968, len(descriptions))
-        self.assertEqual(2277, len({(f, p) for f, v, p in descriptions}))
+        self.assertEqual(7278, len(descriptions))
+        self.assertEqual(2869, len({(f, p) for f, v, p in descriptions}))
         self.assertFalse(any(v == '4.7.2' for f, v, p in descriptions))
         excluded_copter = {'RTL_CONE_SLOPE', 'LAND_SPEED', 'LAND_SPD_MS', 'FS_GCS_ENABLE'}
         excluded_plane = {'TECS_CLMB_MAX', 'TECS_SINK_MIN', 'ROLL_LIMIT_DEG'}
@@ -121,8 +135,14 @@ class ParameterCatalogTests(unittest.TestCase):
 
     def test_rover_descriptions_are_limited_to_one_pinned_release(self):
         rover = [n for n in self.catalog['translations'] if n['family'] == 'Rover']
-        self.assertEqual({'CRUISE_SPEED', 'TURN_RADIUS', 'WP_SPEED', 'WP_RADIUS'}, {n['parameter'] for n in rover})
-        self.assertEqual(4, len(rover))
+        expected = {'CRUISE_SPEED', 'TURN_RADIUS', 'WP_SPEED', 'WP_RADIUS'}
+        expected.update(
+            f'OSD{screen}_{item}_{field}'
+            for screen in range(1, 5)
+            for item in ('ATEMP', 'BATUSED', 'BAT2USED')
+            for field in ('EN', 'X', 'Y')
+        )
+        self.assertCountEqual(expected, [n['parameter'] for n in rover])
         self.assertTrue(all(n['versions'] == ['4.6.3'] and n['field'] == 'Description' and 'code' not in n for n in rover))
         snapshots = [release for release in self.bundle if release.get('family') == 'Rover']
         self.assertEqual(1, len(snapshots))
@@ -131,7 +151,7 @@ class ParameterCatalogTests(unittest.TestCase):
         for field in ('version', 'sourceUrl', 'sourceSha256', 'gitSha'):
             self.assertEqual(snapshots[0].get(field), source[field])
         self.assertEqual(source['gitSha'], snapshots[0].find('paramfile/firmware').get('git_sha'))
-        self.assertEqual(4, source['parameters'])
+        self.assertEqual(len(expected), source['parameters'])
 
     def test_tracker_slice_is_pinned_and_contains_only_two_read_only_statistics(self):
         release = self.bundle.find("release[@family='Tracker']")
@@ -161,6 +181,8 @@ class ParameterCatalogTests(unittest.TestCase):
         pairs = (('GPS_CAN_NODEID1', 'GPS_CAN_NODEID2'), ('GPS1_CAN_NODEID', 'GPS2_CAN_NODEID'))
         for release in self.bundle.findall("release[@family='Copter']"):
             v = release.get('version')
+            if v not in legacy_counts:
+                continue
             records = {r.get('name').split(':')[-1]: r for r in release.iter('param')
                        if not is_display_or_log_help_key(r.get('name').rsplit(':', 1)[-1])}
             self.assertEqual(legacy_counts[v] + reviewed_counts[v], len(records))
@@ -182,6 +204,8 @@ class ParameterCatalogTests(unittest.TestCase):
         expected = {'4.5.7': 33, '4.6.3': 33, '4.7.1': 39}  # includes the earlier 4.6.3 BARO1
         for release in self.bundle.findall("release[@family='Plane']"):
             v = release.get('version')
+            if v not in expected:
+                continue
             selected = {r.get('name'): r for r in release.iter('param') if r.findtext("field[@name='ReadOnly']") == 'True'}
             self.assertEqual(expected[v], len(selected))
             self.assertIn('BARO1_DEVID', selected)
@@ -235,7 +259,8 @@ class ParameterCatalogTests(unittest.TestCase):
                              (notes[0]['versions'], notes[0]['field'], notes[0]['recordSha256']))
 
     def original_display_catalog_releases(self):
-        return [release for release in self.bundle if release.get("family") in ("Copter", "Plane", "Sub")]
+        return [release for release in self.bundle if release.get("family") in ("Copter", "Plane", "Sub")
+                and release.get("version") in ("4.5.7", "4.6.3", "4.7.1")]
 
     def test_osd_sidebar_geometry_positions_preserve_spacing_direction(self):
         selected = {'OSD_SB_H_OFS':('0 20','列','右侧'), 'OSD_SB_V_EXT':('0 10','行','等量')}

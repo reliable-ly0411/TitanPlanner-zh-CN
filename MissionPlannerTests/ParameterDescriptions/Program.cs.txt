@@ -372,8 +372,8 @@ internal static class Program
             bool pending;
             Check(catalog.Chinese(Context("Tracker", "4.7.2"), name, "Description", null, english,
                 out pending, record.Fingerprint) == null && !pending, "same fingerprint cannot leak to another release");
-            Check(catalog.Chinese(Context("Plane", release, build), name, "Description", null, english,
-                out pending, record.Fingerprint) == null && !pending, "same fingerprint cannot leak to an unbundled family");
+            Check(catalog.Chinese(Context("Rover", release, build), name, "Description", null, english,
+                out pending, record.Fingerprint) == null && !pending, "same fingerprint cannot leak to an unregistered vehicle release");
             Check(catalog.Chinese(context, name, "Description", null, english,
                 out pending, "changed-fingerprint") == null && pending, "changed fingerprint requires review");
         }
@@ -396,6 +396,34 @@ internal static class Program
                   result.SearchText.Contains(row.Zh) && result.Description.Contains("仅适用于 MSP OSD"),
                   "expanded description/search: " + row.Key);
             Check(result.Options == row.Options && result.Units == "", "raw options and units remain: " + row.Key);
+        }
+    }
+
+    private static void CheckOsdTemperatureAndBatterySearch(
+        ParameterDescriptionSnapshot snapshot, ParameterDescriptionCatalog catalog, bool expectChinese)
+    {
+        var items = new[]
+        {
+            new { Key = "ATEMP", Query = "主空速传感器温度" },
+            new { Key = "BATUSED", Query = "主电池累计耗电量" },
+            new { Key = "BAT2USED", Query = "第二路电池累计耗电量" }
+        };
+        foreach (var item in items)
+        {
+            var filter = new Regex(item.Query, RegexOptions.IgnoreCase | RegexOptions.Singleline);
+            for (var screen = 1; screen <= 4; screen++)
+            {
+                foreach (var field in new[] { "EN", "X", "Y" })
+                {
+                    var key = $"OSD{screen}_{item.Key}_{field}";
+                    var record = snapshot.Find(key);
+                    var text = catalog.Present(snapshot, key, true);
+                    Check(record != null && text != null
+                        && text.Description.StartsWith(record.English, StringComparison.Ordinal)
+                        && filter.IsMatch(text.SearchText) == expectChinese,
+                        $"{snapshot.Context.Family} {snapshot.Context.Version} {key} expected Chinese search match: {expectChinese}");
+                }
+            }
         }
     }
 
@@ -457,15 +485,17 @@ internal static class Program
         Check(catalog.Present(bundled.Bundled(Context("Rover", "4.6.3", "deadbeef12345678")), "WP_RADIUS", true) == null, "Rover custom build remains untranslated");
         var expectedCounts = new Dictionary<string, int>
         {
-            ["Copter-4.5.7"] = 678,
-            ["Copter-4.6.3"] = 689,
-            ["Copter-4.7.1"] = 745,
-            ["Plane-4.5.7"] = 687,
-            ["Plane-4.6.3"] = 699,
-            ["Plane-4.7.1"] = 757,
-            ["Sub-4.7.1"] = 707,
-            ["Rover-4.6.3"] = 4,
-            ["Tracker-4.7.1"] = 2
+            ["Copter-4.5.7"] = 714,
+            ["Copter-4.6.3"] = 725,
+            ["Copter-4.7.1"] = 781,
+            ["Plane-4.5.7"] = 723,
+            ["Plane-4.6.3"] = 735,
+            ["Plane-4.7.1"] = 793,
+            ["Sub-4.7.1"] = 743,
+            ["Rover-4.6.3"] = 40,
+            ["Tracker-4.7.1"] = 2,
+            ["Copter-4.7.3"] = 1005,
+            ["Plane-4.7.3"] = 1017
         };
         Check(releases.Length == expectedCounts.Count, "pinned release subsets");
         foreach (var release in releases)
@@ -476,6 +506,8 @@ internal static class Program
             var snapshot = bundled.Bundled(context);
             Check(snapshot != null && snapshot.Partial && snapshot.MatchesReportedBuild, "offline bundle matches the reported release/build");
             Check(snapshot.Count == expectedCounts[family + "-" + version], "reviewed exact-version record count");
+            if (family != "Tracker")
+                CheckOsdTemperatureAndBatterySearch(snapshot, catalog, true);
             foreach (var p in release.Descendants("param"))
             {
                 var name = ((string)p.Attribute("name")).Split(':').Last(); var english = (string)p.Attribute("documentation");
@@ -594,7 +626,17 @@ internal static class Program
         Check(bundled.Bundled(null) == null, "unknown context has no offline Chinese bundle");
         Check(bundled.Bundled(Context("Copter", "4.7.2")) == null && bundled.Bundled(Context("Plane", "4.7.2")) == null, "unverified 4.7.2 remains held");
         Check(bundled.Bundled(Context("Copter", "4.4.4")) == null, "unsupported version has no invented bundle");
-        Check(bundled.Bundled(Context("Copter", "4.7.3")) == null, "a reported 4.7.3 cannot silently use a 4.7.2/stable or 4.7.1 bundle");
+        foreach (var family in new[] { "Copter", "Plane" })
+        {
+            var stable = bundled.Bundled(Context(family, "4.7.3", "d9c5097c3d8333435712ffed86bca8ce00c4bb46"));
+            Check(stable.Context.Version == "4.7.3" && stable.MatchesReportedBuild && stable.SourceUri.AbsoluteUri.Contains("/stable-4.7.3/"),
+                "4.7.3 uses only the exact stable build for " + family);
+            var fallbackSource = new XElement(releases.Single(r => (string)r.Attribute("family") == family
+                && (string)r.Attribute("version") == "4.7.3").Element("paramfile"));
+            fallbackSource.Element("firmware").Remove();
+            var fallbackSnapshot = ParameterDescriptionSnapshot.Parse(Bytes(fallbackSource.ToString()), Context(family, "4.7.2"));
+            CheckOsdTemperatureAndBatterySearch(fallbackSnapshot, catalog, false);
+        }
         var data = releases.First(r => (string)r.Attribute("family") == "Copter" && (string)r.Attribute("version") == "4.6.3").Element("paramfile").ToString();
         Rejects(() => ParameterDescriptionSnapshot.Parse(Bytes(data), plane), "another vehicle cannot populate the cache");
         Rejects(() => ParameterDescriptionSnapshot.Parse(Bytes(data.Replace("Copter-4.6.3", "Copter-4.5.7")), copter), "another release rejected");
@@ -636,7 +678,7 @@ internal static class Program
             Check(await offline.LoadAsync(null) == null, "unknown firmware does not fetch");
             Check(await offline.LoadAsync(Context("Copter", "4.4.4")) == null, "unsupported cold offline version remains English");
             var reported473 = Context("Copter", "4.7.3");
-            var wrongStable = new ParameterDescriptionStore(temp, bundle, (uri, token) =>
+            var wrongStable = new ParameterDescriptionStore(temp, null, (uri, token) =>
             {
                 Check(uri.AbsoluteUri.Contains("/Copter/stable-4.7.3/"), "request uses the actual reported version, never the moving stable alias");
                 return Task.FromResult(Bytes(data.Replace("Copter-4.6.3", "Copter-4.7.2")));
@@ -669,7 +711,7 @@ internal static class Program
             var fromFallbackCache = await fallbackStore.LoadAsync(copter);
             Check(fallbackRequests == 2 && fromFallbackCache.SourceUri == copter.SourceUris[1], "cache preserves the resolved source URL");
             var withoutProvenance = XElement.Parse(data); withoutProvenance.Element("firmware").Remove();
-            var unproven = new ParameterDescriptionStore(Path.Combine(temp, "unproven-fallback"), bundle, (uri, token) =>
+            var unproven = new ParameterDescriptionStore(Path.Combine(temp, "unproven-fallback"), null, (uri, token) =>
                 uri == reported473.SourceUri ? Task.FromException<byte[]>(new HttpRequestException("404")) : Task.FromResult(Bytes(withoutProvenance.ToString())), () => now);
             Check(await unproven.LoadAsync(reported473) == null, "fallback URL alone cannot prove the firmware version");
             var exactRelease = releases.Single(r => (string)r.Attribute("family") == "Copter" && (string)r.Attribute("version") == "4.6.3");
