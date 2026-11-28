@@ -17,6 +17,8 @@
 - 统计包含功能、汉化和维护提交；MissionPlanner 对比还包含 TitanPlanner 自身改动。
 - 镜像按[同步流程](AUTOMATION.zh-CN.md)定时或手动更新，进度见 [Actions](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/actions)。
 
+在 PLAN 页按 Ctrl+M 可打开独立的二维和三维只读预览。离线高程设置见[本地计划预览](docs/local-plan-preview.zh-CN.md)。
+
 ## 选择界面语言
 
 - **中文(简体)**：原版 `zh-Hans`，69 个原版资源文件按基线哈希保留。

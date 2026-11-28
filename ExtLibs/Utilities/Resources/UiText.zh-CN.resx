@@ -440,6 +440,10 @@
     <value>二维定位</value>
     <comment>"2D Fix"</comment>
   </data>
+  <data name="bfd5c492199588c381bef074d1e7e4cb0aecaf5eca2b876bb261ab6bdfe1cff2" xml:space="preserve">
+    <value>二维 · 本地计划 · 只读</value>
+    <comment>"2D · Local plan · Read-only"</comment>
+  </data>
   <data name="e46fa8890b6e158be35d9ccc7f9a6920cbc13f50eb9df031ca4afda2c9d55fee" xml:space="preserve">
     <value>三维定位</value>
     <comment>"3D Fix"</comment>
@@ -451,6 +455,10 @@
   <data name="7b903494131306c8719fe4986aac853d43068326097f0bbf2a76b7f7e07bbc4b" xml:space="preserve">
     <value>3D 地图设置</value>
     <comment>"3D Map Settings"</comment>
+  </data>
+  <data name="2601dd410adbe8e793b4832419fb7739081b4e9dc5c3421df05d30ff3a4df9c4" xml:space="preserve">
+    <value>三维 · 本地计划 · 只读</value>
+    <comment>"3D · Local plan · Read-only"</comment>
   </data>
   <data name="9c9b6139915f9913f28b0f8623eb53a1d7b2615986b786a74d9248efac8f9ed0" xml:space="preserve">
     <value>3D 地图测试</value>
@@ -2027,6 +2035,22 @@
     <value>请选择 ICO 文件，最大 4 MiB。</value>
     <comment>"Choose an ICO file (up to 4 MiB)."</comment>
   </data>
+  <data name="643bbcac2f86207d1b92a09c3628df84d22bf7713151950c4acfeafad50a85b7" xml:space="preserve">
+    <value>请选择离线高程清单以预览计划。</value>
+    <comment>"Choose an offline elevation manifest to preview this plan."</comment>
+  </data>
+  <data name="81930d4b46313f8df6e15fb009376ad876bd7c4a95ff944d63bd5eb49fb567b5" xml:space="preserve">
+    <value>请选择本地固定磁盘上的高程文件。</value>
+    <comment>"Choose elevation files on a local fixed drive."</comment>
+  </data>
+  <data name="e44d300de07f25f63e868e56e0df032b43c5faa74b891ca4acbffb87c47b4493" xml:space="preserve">
+    <value>请选择未使用文件系统重定向的高程文件。</value>
+    <comment>"Choose elevation files without filesystem redirects."</comment>
+  </data>
+  <data name="333a24f9dcfbdcb74f4aebf5b07afcba959f529146dd0ef6a3790ffe91deb5a8" xml:space="preserve">
+    <value>选择高程来源</value>
+    <comment>"Choose elevation source"</comment>
+  </data>
   <data name="a5e459267230d67a7aea26f9c10c81bcab65dcf83a614927be795284db7dd5a3" xml:space="preserve">
     <value>选择接收机输出 RTCM 消息的时间间隔。数值越小，数据速率越高。</value>
     <comment>"Choose how often RTCM messages are output by the receiver. Lower values result in a higher data rate."</comment>
@@ -2407,6 +2431,10 @@ Ctrl+O 从文件加载</value>
     <value>无法打开文件夹。
 </value>
     <comment>"Could not open the folder.\n"</comment>
+  </data>
+  <data name="15eca028c847a48fe0b62eba18f18d0923e184f91a236f97e6b9b608980412c7" xml:space="preserve">
+    <value>无法读取离线高程文件。</value>
+    <comment>"Could not read the offline elevation files."</comment>
   </data>
   <data name="a8b79d89fd42606ff42464d886ed9d1cc987c915b953d5b131e67ccdac6f15ad" xml:space="preserve">
     <value>无法发送报告，通常是由于没有网络连接。</value>
@@ -4163,6 +4191,10 @@ Ctrl+O 从文件加载</value>
     <value>完成</value>
     <comment>"Finish"</comment>
   </data>
+  <data name="7fca0e2b2ea8447fbfcc8cacf58135ea4acf8990af230417f0abda92a60941cf" xml:space="preserve">
+    <value>请先完成当前的计划编辑。</value>
+    <comment>"Finish the current plan edit before opening a preview."</comment>
+  </data>
   <data name="c2a314c3b32b319cf5f868d620f96245f593dc7c401acd8b5a566fac88bb40f4" xml:space="preserve">
     <value>固件</value>
     <comment>"Firmware"</comment>
@@ -5664,6 +5696,10 @@ Ctrl+O 从文件加载</value>
     <value>插入位置无效</value>
     <comment>"Invalid insert position"</comment>
   </data>
+  <data name="b918875f270bef5e4f7381392e2de9b506fdddac76a717fa6dcb46468a1928b0" xml:space="preserve">
+    <value>本地预览的几何数据无效</value>
+    <comment>"Invalid local preview geometry"</comment>
+  </data>
   <data name="0f0fc21624e917fc979ab0ed97548dfe8ba2c9e2cbee759e76ffbff6dd2d690e" xml:space="preserve">
     <value>端口号无效。</value>
     <comment>"Invalid port number."</comment>
@@ -6024,6 +6060,14 @@ Ctrl+O 从文件加载</value>
   <data name="8c31e6e7223097e2e4847773c47a4efab6aaf79deeecc92a7759891c74976dde" xml:space="preserve">
     <value>本地</value>
     <comment>"Local"</comment>
+  </data>
+  <data name="db9e3ba518134c1618025373bc7d31edd8da9468f38ac9070e8cc52200d2b221" xml:space="preserve">
+    <value>本地计划 · 只读</value>
+    <comment>"Local plan · Read-only"</comment>
+  </data>
+  <data name="06d5f93a9f85e7468417ee6774d3df018bb9df1352edc88e349b2e904e6b6670" xml:space="preserve">
+    <value>本地预览不可用</value>
+    <comment>"Local preview unavailable"</comment>
   </data>
   <data name="15b61974b2707a7b3d4201385e0f01f4ff5eb1f17c5639d98788ee5add2025cd" xml:space="preserve">
     <value>位置</value>
@@ -7990,6 +8034,10 @@ Ctrl+O 从文件加载</value>
 </value>
     <comment>"No keeps the tiles: the map still uses them, they are just no longer listed here.\n"</comment>
   </data>
+  <data name="7f82b7047fb155c08148d5c5db948269019be6880b0d30cecbc9614f0640b8e3" xml:space="preserve">
+    <value>暂无本地计划预览</value>
+    <comment>"No local plan preview"</comment>
+  </data>
   <data name="52f35a16e9d2753736c1dbe611d9909b6ca2c3e7c9b7adc83c9d06e6be5fc0eb" xml:space="preserve">
     <value>本机未安装此名称的地图源，无法显示这些瓦片。</value>
     <comment>"No map source with this name exists on this computer, so these tiles cannot be shown."</comment>
@@ -8019,6 +8067,10 @@ Ctrl+O 从文件加载</value>
 
 联网时点击“下载…”，或导入 .mappack 文件。</value>
     <comment>"No offline map areas yet.\n\nClick Download… while online, or Import… a .mappack file."</comment>
+  </data>
+  <data name="9c5d195b635819faa919c07b654aff450737247d3ff3ac2a2c18248b663ec77b" xml:space="preserve">
+    <value>没有覆盖此航点的离线地形瓦片。</value>
+    <comment>"No offline terrain tile covers the waypoint."</comment>
   </data>
   <data name="25a6c7708e3f93e0a81ae5a4a018bfda799c3c9d0ce3a23c3c0fb48909525835" xml:space="preserve">
     <value>尚未定义多边形。是否加载文件？</value>
@@ -8224,6 +8276,10 @@ Ctrl+O 从文件加载</value>
   <data name="ccdfca6d0c039e3760c1ea5e4a902f2444db2183cfe4c980b1197e30b9d316e7" xml:space="preserve">
     <value>离线地图</value>
     <comment>"Offline Maps"</comment>
+  </data>
+  <data name="d2aec11c34ad40cbff565dd6992f50c04fa0f0bcb492e45b978f212ed14cb7f4" xml:space="preserve">
+    <value>离线高程清单</value>
+    <comment>"Offline elevation manifest"</comment>
   </data>
   <data name="b1a1e8e3cf7c522ed8606c3c3c3f35d3299eca78cb664fec00d9787da111f418" xml:space="preserve">
     <value>偏移</value>
@@ -9132,6 +9188,10 @@ VLAN 标记</value>
     <value>重启飞控</value>
     <comment>"Preflight_Reboot_Shutdown"</comment>
   </data>
+  <data name="5efc2c8ea9e88990384d0bce45fa41defdbe0a2ade8c7ced7f044a6351db138b" xml:space="preserve">
+    <value>正在准备本地预览</value>
+    <comment>"Preparing local preview"</comment>
+  </data>
   <data name="324b134f57c70c729ae3dc4d298bb451656717d70523e942c1ce667b8024ea07" xml:space="preserve">
     <value>预览</value>
     <comment>"Preview"</comment>
@@ -9139,6 +9199,10 @@ VLAN 标记</value>
   <data name="35a7936d7602aa4feb73a202f0b136418e151b768656b50ecc4bcfcb096f4337" xml:space="preserve">
     <value>预览颜色</value>
     <comment>"Preview Colors"</comment>
+  </data>
+  <data name="4eedb6de2edb34852a3da5ab5cfb4c028b6733a944fb085a59ecea75e96f68d3" xml:space="preserve">
+    <value>预览本地计划的二维与三维视图</value>
+    <comment>"Preview the local plan in 2D and 3D"</comment>
   </data>
   <data name="b99fa6c061504f0011fb2d5af1fb600b28ed177f02cf94286d5b542f2333d803" xml:space="preserve">
     <value>无法预览</value>
@@ -10198,6 +10262,10 @@ gps_point：跟踪单个地面点</value>
     <value>从右上角的下拉列表选择 ODID 设备，
 然后点击更新固件按钮。</value>
     <comment>"Select the ODID device from the dropdown in the top right corner\r\nthen click the Update Firmware button"</comment>
+  </data>
+  <data name="ba1120e01fcda8c1db0237e9fbda29c2669470f81e1e8ff84b20733845a6152f" xml:space="preserve">
+    <value>请切换到任务计划以打开本地预览。</value>
+    <comment>"Select the mission plan to open a local preview."</comment>
   </data>
   <data name="74baf772b19765bc52cdde8548ac7420be02557bc5d56b985a75ab34dd36d818" xml:space="preserve">
     <value>选择更新速率
@@ -11340,6 +11408,10 @@ Acc：当前测定位置的精度
     <value>图片实际格式与扩展名不符，或图片内容不完整。</value>
     <comment>"The image format does not match its file extension."</comment>
   </data>
+  <data name="edaa545697b77a5a32d36553c15ade2fff8de73dfbcb74625176801f94d9a562" xml:space="preserve">
+    <value>本地计划为空。</value>
+    <comment>"The local plan is empty."</comment>
+  </data>
   <data name="7fdc5e6fac23f11db0a0d1a8aa9d7a145ef4b2b1579f6b031cf7eb553f197e58" xml:space="preserve">
     <value>地图中尚无可下载区域。</value>
     <comment>"The map has no area to download yet."</comment>
@@ -11365,9 +11437,45 @@ Acc：当前测定位置的精度
     <value>SBUS 或 PPM 连续丢失多少个输出帧后进入失控保护。</value>
     <comment>"The number of output frames for SBUS or PPM missing before enters failsafe."</comment>
   </data>
+  <data name="756aeb26bf6f23e44c85119e24f69d5b123ad2ebf0e791b6be0c779559ea563f" xml:space="preserve">
+    <value>离线高程清单文件大小无效。</value>
+    <comment>"The offline elevation manifest has an invalid size."</comment>
+  </data>
+  <data name="0a56981e982250b97f86a1c61a261cbd3f2987c8c9ca120f7f74c1132b2f4ac8" xml:space="preserve">
+    <value>离线高程清单格式无效。</value>
+    <comment>"The offline elevation manifest is invalid."</comment>
+  </data>
+  <data name="12a6e42a3bb83e96147ad79ea877cc1832f2f2610976d8f9495878058b69efb9" xml:space="preserve">
+    <value>计划 Home 缺少匹配的 EGM96 高程依据。</value>
+    <comment>"The plan Home has no matching EGM96 altitude evidence."</comment>
+  </data>
+  <data name="c6710635582e9be6b1698086a0a752d7fb34e7965f768de353a4bc7b77c4d82b" xml:space="preserve">
+    <value>计划或会话已变更。按 Ctrl+M 刷新预览。</value>
+    <comment>"The plan changed. Press Ctrl+M to refresh."</comment>
+  </data>
+  <data name="4bd178f1b81222c3d470e2d0d48b776cde186de326c768f9c9d259a6c86217f2" xml:space="preserve">
+    <value>计划覆盖的地形瓦片超过单次预览上限。</value>
+    <comment>"The plan spans too many terrain tiles for preview."</comment>
+  </data>
+  <data name="ca12a1c274467a7a4536f8465b05d8bcd91525a3d372a0a76e26c46ba2054713" xml:space="preserve">
+    <value>计划 Home 的坐标或高度不完整或无效。</value>
+    <comment>"The planned Home is incomplete or invalid."</comment>
+  </data>
   <data name="a7288f79d184f2713930ca7a691ce21cdaa83f67cbe6d7b4d99a37664c4f2617" xml:space="preserve">
     <value>远端电台显示的范围和选项可能不准确。为确保准确，请让本地与远端电台使用相同版本的固件</value>
     <comment>"The ranges and options shown for the remote modem may not be accurate.  To ensure accurate, use the same firmware version in both the local and remote modems"</comment>
+  </data>
+  <data name="a1f64e6a13e5f178208822f39984c07737408ed067c5780b92bd6d36047976bc" xml:space="preserve">
+    <value>地形瓦片与清单的校验值不匹配。</value>
+    <comment>"The terrain tile does not match the manifest checksum."</comment>
+  </data>
+  <data name="9489230750e26527a1b1dc3c0953abddd2889041bc689e3ff96a6099f1d71f55" xml:space="preserve">
+    <value>地形瓦片的栅格尺寸暂不支持。</value>
+    <comment>"The terrain tile has an unsupported grid size."</comment>
+  </data>
+  <data name="0c48db7917821c359e291242213dc3a10d79b252b6012e20d6c2ccc547a18115" xml:space="preserve">
+    <value>地形瓦片在此航点没有有效高程。</value>
+    <comment>"The terrain tile has no elevation at the waypoint."</comment>
   </data>
   <data name="ed3dcdfee61086aa098ddb36c7414738d99def6da6a592494e07c07ec5add242" xml:space="preserve">
     <value>瓦片缓存位置：</value>
@@ -11376,6 +11484,38 @@ Acc：当前测定位置的精度
   <data name="0e92a3e17cda0196aa3e72f5b9701b0397925a5d019a1cdd0c74478770322b19" xml:space="preserve">
     <value>视频已停止：请检查视频源（详情见日志）</value>
     <comment>"The video stopped: check the source (the log has the details)"</comment>
+  </data>
+  <data name="83197c38310b133e6338cd1a3ddfb431b12b7d64730586a5dac2835f192e76c8" xml:space="preserve">
+    <value>航点高度超出预览范围。</value>
+    <comment>"The waypoint altitude is outside the preview range."</comment>
+  </data>
+  <data name="5e34b580cdedb48dfbe3331c4d77a063ac7d55b0e118b68eab47556e29c843da" xml:space="preserve">
+    <value>航点坐标系无效。</value>
+    <comment>"The waypoint has an invalid coordinate frame."</comment>
+  </data>
+  <data name="70a97a40b66c0a160fc42fc6a71cc8985ac561a7b3a9c7ee1cd5ed60fd94039d" xml:space="preserve">
+    <value>航点包含无效的数值字段。</value>
+    <comment>"The waypoint has an invalid numeric field."</comment>
+  </data>
+  <data name="f25f21363fb6db54bac29ea3b8c94728d21025e45d2be7b130b7c078bb54a4af" xml:space="preserve">
+    <value>航点经纬度无效。</value>
+    <comment>"The waypoint has invalid geographic coordinates."</comment>
+  </data>
+  <data name="3f71603c28205459d962bd251ba9c50ff40c5507a1c83774a4066ec822fa0acc" xml:space="preserve">
+    <value>航点缺少匹配的 EGM96 高程依据。</value>
+    <comment>"The waypoint has no matching EGM96 altitude evidence."</comment>
+  </data>
+  <data name="a6360e079b03c51bb2f7ce567008a4e3acd521d334a030b9c10b02fc4457dff4" xml:space="preserve">
+    <value>航点超出本次预览的坐标范围。</value>
+    <comment>"The waypoint is outside the preview coordinate range."</comment>
+  </data>
+  <data name="a6e3f68cea6c7416645f6b68d07e727916088f2f40b86aa979f8e5700075bd70" xml:space="preserve">
+    <value>航点超出支持的 SRTM 栅格范围。</value>
+    <comment>"The waypoint is outside the supported SRTM grid."</comment>
+  </data>
+  <data name="81bfc372709d9a63cf5f19856e22fcfff231855b0f474c2f412423f9047f0e1e" xml:space="preserve">
+    <value>航点使用的高度参考暂不支持。</value>
+    <comment>"The waypoint uses an unsupported altitude reference."</comment>
   </data>
   <data name="c137a5e77acb04169f5374753f1261accdf6faee32700c0f65eb1fe590993529" xml:space="preserve">
     <value>主题名称：</value>
@@ -11436,6 +11576,10 @@ Acc：当前测定位置的精度
   <data name="f8512c1baf5bd773f92681431130e5ec0e904488670c92a3aad2f64f57afd487" xml:space="preserve">
     <value>此电池监测器类型没有电压倍率参数（{0}），无法在此校准电压。DroneCAN 和其他数字监测器会发送其测量的电压，请在监测器本身进行校准。</value>
     <comment>"This battery monitor type has no voltage multiplier ({0}), so its voltage can't be calibrated here. DroneCAN and other digital monitors send the voltage they measure; calibrate the monitor itself."</comment>
+  </data>
+  <data name="318313b64919f8bc0930975f8396d0fef7407e2d2edf37d8eb6b271a5e0f1b90" xml:space="preserve">
+    <value>本地预览暂不支持此命令。</value>
+    <comment>"This command is unsupported by the local preview."</comment>
   </data>
   <data name="26e82b5198ee50dbd182aca7e0b02b93f7a3e8a299a9e616601a897ac61b189f" xml:space="preserve">
     <value>这取决于飞控固件版本。如支持，请保持启用，因为新版消息对数据损坏的处理更好。</value>
@@ -12287,6 +12431,10 @@ Acc：当前测定位置的精度
   <data name="90522e57bba35fb397ad26f5f48d38528dab49b0dca4fd5a4a207c8152c75145" xml:space="preserve">
     <value>警告：本机未安装以下地图源：</value>
     <comment>"Warning: this computer has no map source named "</comment>
+  </data>
+  <data name="e44e7c221a0bb513adc267030104e5d3265dec8f749aba9c6ab1ea5013da4b7e" xml:space="preserve">
+    <value>航点 {0} · {1}</value>
+    <comment>"Waypoint {0} · {1}"</comment>
   </data>
   <data name="cc56cb7acd18b313fca5b02edbf4888fac8e0725fc44e14cf5d456d742244795" xml:space="preserve">
     <value>网络请求失败： </value>
