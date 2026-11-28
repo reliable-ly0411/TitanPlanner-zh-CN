@@ -64,7 +64,9 @@ namespace MissionPlanner.GCSViews
         public FlightPlanner()
         {
             InitializeComponent();
-            if (string.Equals(CultureInfo.CurrentUICulture.Name, "zh-CN", StringComparison.Ordinal))
+            var language = CultureInfo.CurrentUICulture.Name;
+            if (string.Equals(language, "zh-CN", StringComparison.Ordinal) ||
+                string.Equals(language, "zh-Hans", StringComparison.Ordinal))
                 Commands.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             // Configure the column before its first data source. Items.Count caches a
             // CurrencyManager on the template; setting members again after that can

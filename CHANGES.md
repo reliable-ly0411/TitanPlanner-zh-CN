@@ -36,6 +36,10 @@ Enhanced Chinese adds a Messages-only annotation for the EKF3 IMU1 origin notice
 
 Ground Station Settings shows bilingual OSD color names in enhanced Simplified Chinese. Narrow selection fields show the Chinese name, and the list shows both names.
 
+## Planning table layout
+
+Waypoint table headers grow to fit wrapped labels in both Simplified Chinese interfaces.
+
 ## Desktop appearance preferences
 
 The settings provide separate dropdowns for window icons and startup images, each beside a single local-file picker and with its own preview, independent default resets, and persistent per-user imports. Window icons update during the session; startup images appear on the next launch. The startup footer identifies the modifier as lyy0405 and retains Michael Oborne and the TitanPlanner upstream credit. EXE, installer and existing shortcut icons retain their build-time identity. The Mission Planner, TitanPlanner, and MakeFlyEasy window icon presets keep independent local ICO imports without bundling vendor icons.
