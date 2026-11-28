@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MissionPlanner;
 using MissionPlanner.Utilities;
 
 namespace MissionPlannerTests.Utilities

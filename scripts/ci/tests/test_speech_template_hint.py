@@ -29,7 +29,10 @@ class CustomSpeechTemplateHintTests(unittest.TestCase):
         self.assertIn('InitializeComponent();\n            AddCustomSpeechTemplateHelp(CHK_speechcustom);', planner)
         common = (ROOT / 'ExtLibs/ArduPilot/Common.cs').read_text(encoding='utf-8-sig')
         self.assertIn('input.Replace("{wpn}", MAV.cs.wpno.ToString())', common)
-        self.assertIn('input.Replace("{wpn}", "Home")', common)
+        self.assertIn('input.Replace("{wpn}", localize ? UiText.Translate("Home") : "Home")', common)
+        self.assertIn('SpeechConversion(MAV, input, false)', common)
+        self.assertIn('SpeechConversion(mav, input, UseEnhancedSpeech)', common)
+        self.assertEqual("起飞点", tools["Home"])
         self.assertIn('input.Replace("{alt}", MAV.cs.alt.ToString("0"))', common)
         self.assertIn('input.Replace("{gsp}", MAV.cs.groundspeed.ToString("0"))', common)
 
