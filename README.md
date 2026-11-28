@@ -16,6 +16,8 @@ Enhanced Chinese includes an initial set of bilingual Copter and Plane/QuadPlane
 
 > **中文双版本：** 保留“中文(简体)”并提供增强“中文(简体)2”。本仓库使用独立 .NET SDK 构建 Windows 程序，普通同步只运行轻量检查，新上游正式发布才自动构建候选，发布另受不可变源码与工件门禁约束；参见 [中文使用说明](README.zh-CN.md) 与 [上游同步及发布流程](AUTOMATION.zh-CN.md)。下文保留上游项目介绍。
 
+增强简体中文支持飞行数据地图右键「修改图标说明」及其输入提示。
+
 ## 双上游差异
 
 `ahead` / `behind`：汉化分支相对上游镜像领先 / 落后的提交数。

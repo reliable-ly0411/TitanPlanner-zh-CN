@@ -36,6 +36,18 @@ namespace MissionPlanner.Controls
         //from http://www.csharp-examples.net/inputbox/
         public static DialogResult Show(string title, string promptText, ref string value, bool password = false, bool multiline = false)
         {
+            return Show(title, promptText, ref value, password, multiline, translateCaptions: false);
+        }
+
+        /// <summary>Translates the visible captions using the original text for input history.</summary>
+        public static DialogResult ShowLocalized(string title, string promptText, ref string value)
+        {
+            return Show(title, promptText, ref value, password: false, multiline: false, translateCaptions: true);
+        }
+
+        private static DialogResult Show(string title, string promptText, ref string value, bool password, bool multiline,
+            bool translateCaptions)
+        {
             DialogResult answer = DialogResult.Cancel;
 
             InputBox.value = value;
@@ -46,12 +58,12 @@ namespace MissionPlanner.Controls
             {
                 Application.OpenForms[0].Invoke((MethodInvoker)delegate
                 {
-                    answer = ShowUI(title, promptText, passin, password, multiline);
+                    answer = ShowUI(title, promptText, passin, password, multiline, translateCaptions);
                 });
             }
             else
             {
-                answer = ShowUI(title, promptText, passin, password, multiline);
+                answer = ShowUI(title, promptText, passin, password, multiline, translateCaptions);
             }
 
             value = InputBox.value;
@@ -59,7 +71,8 @@ namespace MissionPlanner.Controls
             return answer;
         }
 
-        static DialogResult ShowUI(string title, string promptText, string value, bool password = false, bool multiline = false)
+        static DialogResult ShowUI(string title, string promptText, string value, bool password, bool multiline,
+            bool translateCaptions)
         {
             Form form = new Form();
             Label label = new Label();
@@ -107,7 +120,7 @@ namespace MissionPlanner.Controls
             label.AutoSize = true;
             label.Location = new Point(9, y);
             label.Size = new Size(372, 13);
-            label.Text = promptText;
+            label.Text = translateCaptions ? UiText.Translate(promptText) : promptText;
             label.MaximumSize = new Size(372, 0);
 
             //
@@ -141,7 +154,7 @@ namespace MissionPlanner.Controls
             //
             form.TopMost = true;
             form.TopLevel = true;
-            form.Text = title;
+            form.Text = translateCaptions ? UiText.Translate(title) : title;
             form.ClientSize = new Size(396, 107);
             form.Controls.AddRange(new Control[] { label, textBox, buttonOk, buttonCancel });
             form.FormBorderStyle = FormBorderStyle.FixedSingle;
