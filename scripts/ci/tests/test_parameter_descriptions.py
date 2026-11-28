@@ -122,6 +122,47 @@ class ParameterCatalogTests(unittest.TestCase):
                 self.assertEqual(source['gitSha'], firmware.get('git_sha'))
                 self.assertEqual(source['gitTag'], firmware.get('git_tag'))
 
+    def test_description_reuse_requires_exact_scope_record_and_library_group(self):
+        bundle = ET.fromstring("""<parameterDescriptionBundle>
+          <release family="Copter" version="4.7.3">
+            <paramfile><libraries><parameters name="SERIAL">
+              <param name="SERIAL1_BAUD" documentation="Serial speed"><field name="Range">1 9</field></param>
+            </parameters></libraries></paramfile>
+          </release>
+          <release family="Plane" version="4.7.3">
+            <paramfile><libraries><parameters name="SERIAL">
+              <param name="SERIAL1_BAUD" documentation="Serial speed"><field name="Range">1 9</field></param>
+            </parameters></libraries></paramfile>
+          </release>
+        </parameterDescriptionBundle>""")
+        digest = catalog_module.record_fingerprint(bundle.find('.//param'))
+        original = dict(family='Copter', parameter='SERIAL1_BAUD', field='Description',
+                        versions=['4.7.3'], english='Serial speed', chinese='串口速率',
+                        englishSha256=catalog_module.sha('Serial speed'), recordSha256=digest)
+        reused = {'family': 'Plane', 'parameter': 'SERIAL1_BAUD', 'versions': ['4.7.3'], 'recordSha256': digest,
+                  'from': {'family': 'Copter', 'version': '4.7.3'}}
+        catalog = {'translations': [original], 'descriptionReuse': [reused]}
+        resource = ET.fromstring(catalog_module.resource(catalog, bundle))
+        candidate = resource.find("translation[@family='Plane']")
+        self.assertEqual(('4.7.3', digest, '串口速率'),
+                         (candidate.get('versions'), candidate.get('recordSha256'), candidate.findtext('chinese')))
+        target = bundle.find("release[@family='Plane']/paramfile/libraries/parameters")
+        target.set('name', 'ANOTHER_GROUP')
+        with self.assertRaisesRegex(ValueError, 'parameter group changed'):
+            catalog_module.resource(catalog, bundle)
+        target.set('name', 'SERIAL')
+        field = target.find('param/field')
+        field.text = '1 8'
+        with self.assertRaisesRegex(ValueError, 'source fields'):
+            catalog_module.resource(catalog, bundle)
+        field.text = '1 9'
+        reused['versions'] = ['4.7.2']
+        with self.assertRaisesRegex(ValueError, 'requires manual review'):
+            catalog_module.resource(catalog, bundle)
+        reused['versions'] = ['4.7.3', '4.7.3']
+        with self.assertRaisesRegex(ValueError, 'Duplicate translation scope'):
+            catalog_module.resource(catalog, bundle)
+
     def test_stable_473_names_and_fingerprints_cover_all_four_osd_groups(self):
         for family in ('Copter', 'Plane'):
             scope = self.bundle.find(f"release[@family='{family}'][@version='4.7.3']")
@@ -149,10 +190,10 @@ class ParameterCatalogTests(unittest.TestCase):
             self.assertIn('遥测选项', notes['MAV32_OPTIONS']['chinese'])
 
     def test_scope_counts_and_held_versions(self):
-        notes = self.catalog['translations']
+        notes = catalog_module.expanded_descriptions(self.catalog, catalog_module.index_bundle(self.bundle))
         descriptions = {(n['family'], v, n['parameter']) for n in notes if n['field'] == 'Description' for v in n['versions']}
-        self.assertEqual(26919, len(descriptions))
-        self.assertEqual(6703, len({(f, p) for f, v, p in descriptions}))
+        self.assertEqual(36004, len(descriptions))
+        self.assertEqual(9574, len({(f, p) for f, v, p in descriptions}))
         descriptions_472 = Counter(f for f, v, p in descriptions if v == '4.7.2')
         self.assertEqual({'Rover': 636, 'Sub': 1271, 'Tracker': 355}, descriptions_472)
         for note in notes:
@@ -180,7 +221,8 @@ class ParameterCatalogTests(unittest.TestCase):
         for field in ('version', 'sourceUrl', 'sourceSha256', 'gitSha'):
             self.assertEqual(snapshot.get(field), source[field])
         self.assertEqual(source['gitSha'], snapshot.find('paramfile/firmware').get('git_sha'))
-        self.assertEqual(len(rover), source['parameters'])
+        reused = sum(n['family'] == 'Rover' and '4.6.3' in n['versions'] for n in self.catalog['descriptionReuse'])
+        self.assertEqual(len(rover) + reused, source['parameters'])
 
     def test_tracker_slice_is_pinned_and_contains_only_two_read_only_statistics(self):
         release = self.bundle.find("release[@family='Tracker'][@version='4.7.1']")
@@ -212,8 +254,10 @@ class ParameterCatalogTests(unittest.TestCase):
             v = release.get('version')
             if v not in legacy_counts:
                 continue
+            authored = {n['parameter'] for n in self.catalog['translations'] if n['family'] == 'Copter' and v in n['versions']}
             records = {r.get('name').split(':')[-1]: r for r in release.iter('param')
-                       if not is_display_or_log_help_key(r.get('name').rsplit(':', 1)[-1])
+                       if r.get('name').rsplit(':', 1)[-1] in authored
+                       and not is_display_or_log_help_key(r.get('name').rsplit(':', 1)[-1])
                        and not re.match(r'(?:RC[\d_]|SERVO|SERIAL|BATT|FS_|ARMING_|OSD_|RNGFND|TEMP\d)', r.get('name').rsplit(':', 1)[-1])}
             self.assertEqual(legacy_counts[v] + reviewed_counts[v], len(records))
             readonly = {k: r for k, r in records.items() if r.findtext("field[@name='ReadOnly']") == 'True'}
@@ -236,7 +280,9 @@ class ParameterCatalogTests(unittest.TestCase):
             v = release.get('version')
             if v not in expected:
                 continue
-            selected = {r.get('name'): r for r in release.iter('param') if r.findtext("field[@name='ReadOnly']") == 'True'}
+            authored = {n['parameter'] for n in self.catalog['translations'] if n['family'] == 'Plane' and v in n['versions']}
+            selected = {r.get('name'): r for r in release.iter('param')
+                        if r.get('name') in authored and r.findtext("field[@name='ReadOnly']") == 'True'}
             self.assertEqual(expected[v], len(selected))
             self.assertIn('BARO1_DEVID', selected)
             self.assertEqual(v == '4.7.1', 'ARSPD3_DEVID' in selected)

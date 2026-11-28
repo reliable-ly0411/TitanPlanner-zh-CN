@@ -8,7 +8,7 @@ from pathlib import Path
 import re
 import xml.etree.ElementTree as ET
 
-from build_parameter_catalog import ROOT, record_fingerprint, sha
+from build_parameter_catalog import ROOT, expanded_descriptions, index_bundle, record_fingerprint, sha
 
 
 def audit(raw, family, version, source, notes, groups=()):
@@ -107,8 +107,10 @@ def main():
     entries = [record for record in records if (record['family'], record['version']) == (args.family, args.version)]
     if len(entries) != 1:
         parser.error('No unique pinned registry entry for that release')
-    notes = json.loads((ROOT / 'localization/zh-Hans/parameter-translations.json').read_text(encoding='utf-8'))['translations']
+    catalog = json.loads((ROOT / 'localization/zh-Hans/parameter-translations.json').read_text(encoding='utf-8'))
     try:
+        bundle = ET.parse(ROOT / 'localization/parameters/official-first-batch.xml').getroot()
+        notes = expanded_descriptions(catalog, index_bundle(bundle))
         print(json.dumps(audit(args.official_xml.read_bytes(), args.family, args.version, entries[0], notes, args.group), indent=2))
     except (OSError, ValueError, ET.ParseError) as exc:
         parser.error(str(exc))

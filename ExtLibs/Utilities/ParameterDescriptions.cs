@@ -127,7 +127,8 @@ namespace MissionPlanner.Utilities
         public bool HasReleaseProvenance { get { return !string.IsNullOrEmpty(ReleaseTag) && !string.IsNullOrEmpty(GitSha); } }
         public bool Partial { get; private set; }
         public bool MatchesReportedBuild { get; private set; }
-        public bool MatchesFirmware { get { return MatchesReportedBuild; } }
+        internal bool IsReconstructed { get; set; }
+        public bool MatchesFirmware { get { return IsReconstructed || MatchesReportedBuild; } }
         public string Origin { get; internal set; }
         public int Count { get { return records.Count; } }
 
@@ -137,9 +138,15 @@ namespace MissionPlanner.Utilities
             this.records = records;
         }
 
-        internal static XDocument ReadXml(byte[] bytes)
+        internal static XDocument ReadXml(byte[] bytes, bool embedded = false)
         {
-            var settings = new XmlReaderSettings { DtdProcessing = DtdProcessing.Prohibit, XmlResolver = null, MaxCharactersInDocument = 24 * 1024 * 1024 };
+            // The embedded registry holds many releases. Network data remains limited per document.
+            var settings = new XmlReaderSettings
+            {
+                DtdProcessing = DtdProcessing.Prohibit,
+                XmlResolver = null,
+                MaxCharactersInDocument = (embedded ? 64 : 24) * 1024 * 1024
+            };
             using (var stream = new MemoryStream(bytes))
             using (var reader = XmlReader.Create(stream, settings)) return XDocument.Load(reader);
         }
@@ -260,7 +267,7 @@ namespace MissionPlanner.Utilities
         private readonly Dictionary<string, XElement[]> translations;
         public ParameterDescriptionCatalog(byte[] xml)
         {
-            var doc = ParameterDescriptionSnapshot.ReadXml(xml);
+            var doc = ParameterDescriptionSnapshot.ReadXml(xml, embedded: true);
             if (doc.Root == null || doc.Root.Name != "parameterTranslations") throw new InvalidDataException("Invalid parameter translation catalog.");
             translations = doc.Root.Elements("translation").GroupBy(t => ScopeKey((string)t.Attribute("family"), (string)t.Attribute("parameter"),
                 (string)t.Attribute("field"), (string)t.Attribute("code")), StringComparer.Ordinal)
@@ -339,7 +346,7 @@ namespace MissionPlanner.Utilities
         public ParameterDescriptionStore(string directory, byte[] bundle, Func<Uri, CancellationToken, Task<byte[]>> fetch = null, Func<DateTime> utcNow = null)
         {
             this.directory = directory;
-            this.bundle = new Lazy<XElement>(() => bundle == null ? null : ParameterDescriptionSnapshot.ReadXml(bundle).Root);
+            this.bundle = new Lazy<XElement>(() => bundle == null ? null : ParameterDescriptionSnapshot.ReadXml(bundle, embedded: true).Root);
             this.fetch = fetch ?? Download;
             this.utcNow = utcNow ?? (() => DateTime.UtcNow);
         }
@@ -370,6 +377,16 @@ namespace MissionPlanner.Utilities
                 (string)r.Attribute("family") == context.Family && (string)r.Attribute("version") == context.Version);
         }
 
+        public ParameterDescriptionContext IdentifyFirmware(string firmware, string banner, Version version, byte[] reportedBuild)
+        {
+            var exact = ParameterDescriptionContext.TryCreateWithBuild(firmware, banner, version, reportedBuild);
+            if (exact != null || reportedBuild == null) return exact;
+
+            // Historical reconstructions use the consensus on the official version even if build information is unavailable.
+            var versionOnly = ParameterDescriptionContext.TryCreate(firmware, banner, version);
+            return (string)FindRelease(versionOnly)?.Attribute("sourceKind") == "reconstructed" ? versionOnly : null;
+        }
+
         public ParameterDescriptionSnapshot Bundled(ParameterDescriptionContext context)
         {
             return ReadBundled(context, FindRelease(context));
@@ -392,8 +409,7 @@ namespace MissionPlanner.Utilities
                     || !Regex.IsMatch(digest ?? "", "^[0-9a-f]{64}$") || paramfile.Element("firmware") != null)
                     throw new InvalidDataException("Invalid reconstructed metadata identity.");
 
-                // Historical PDEF is scoped to the exact family and stable version selected by FindRelease.
-                // A reported build hash must also agree with the reconstruction commit.
+                // The reconstruction commit identifies its source. The firmware itself is selected by its stable version.
                 if (context.Family == "Rover" && paramfile.Element("vehicles")?.Elements("parameters")
                     .Any(p => (string)p.Attribute("name") == "APMrover2") == true)
                     vehicleName = "APMrover2";
@@ -406,6 +422,7 @@ namespace MissionPlanner.Utilities
             var snapshot = ParameterDescriptionSnapshot.Parse(paramfile, Enumerable.Empty<XComment>(),
                 context, vehicleName, sourceKind == null, digest, gitSha);
             snapshot.SourceUri = sourceUri;
+            snapshot.IsReconstructed = sourceKind == "reconstructed";
             snapshot.Origin = sourceKind ?? "bundled";
             return snapshot;
         }

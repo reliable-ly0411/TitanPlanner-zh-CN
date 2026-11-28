@@ -216,7 +216,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                     (int)((number >> 8) & 255), (int)(number & 255));
                 build = reported.flight_custom_version;
             }
-            context = ParameterDescriptionContext.TryCreateWithBuild(firmware, banner, version, build);
+            context = DescriptionStore.Value.IdentifyFirmware(firmware, banner, version, build);
             return firmware + "|" + banner + "|" + version + "|" + context?.Key + "|" + CultureInfo.CurrentUICulture.Name;
         }
 

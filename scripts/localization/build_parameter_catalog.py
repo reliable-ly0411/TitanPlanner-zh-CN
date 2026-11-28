@@ -32,16 +32,77 @@ def record_fingerprint(param):
     return sha('\0'.join(parts))
 
 
+def records_by_key(paramfile):
+    """Keep the original section and group alongside each parameter record."""
+    records = defaultdict(list)
+    for section in paramfile:
+        if section.tag in ('vehicles', 'libraries'):
+            for group in section.findall('parameters'):
+                for record in group.findall('param'):
+                    key = record.get('name', '').rsplit(':', 1)[-1]
+                    records[key].append((section.tag, group.get('name'), record))
+    return records
+
+
+def index_bundle(bundle):
+    return {(release.get('family'), release.get('version')): records_by_key(release.find('paramfile'))
+            for release in bundle}
+
+
+def unique_record(releases, family, version, key):
+    records = releases.get((family, version), {}).get(key, ())
+    if len(records) != 1:
+        raise ValueError(f'Changed/ambiguous source record requires manual review: {family} {version} {key}')
+    return records[0]
+
+
+def expanded_descriptions(catalog, releases):
+    """Resolve explicit reuse from authored descriptions. Runtime entries stay version-scoped."""
+    direct = catalog['translations']
+    reuse = catalog.get('descriptionReuse', ())
+    if not reuse:
+        return direct
+
+    authored = {}
+    occupied = set()
+    for note in direct:
+        if note['field'] != 'Description':
+            continue
+        for version in note['versions']:
+            identity = (note['family'], version, note['parameter'])
+            if identity in authored:
+                raise ValueError(f'Duplicate translation scope: {identity}')
+            authored[identity] = note
+            occupied.add(identity)
+
+    expanded = list(direct)
+    for item in reuse:
+        family, key = item['family'], item['parameter']
+        donor_family, donor_version = item['from']['family'], item['from']['version']
+        donor = authored.get((donor_family, donor_version, key))
+        if donor is None or item['recordSha256'] != donor['recordSha256'] or not item['versions']:
+            raise ValueError(f'No matching authored description for reuse: {family} {key}')
+        source_section, source_group, _ = unique_record(releases, donor_family, donor_version, key)
+        for version in item['versions']:
+            identity = (family, version, key)
+            if identity in occupied:
+                raise ValueError(f'Duplicate translation scope: {identity}')
+            occupied.add(identity)
+            section, group, record = unique_record(releases, *identity)
+            if (not group or (section, group) != (source_section, source_group)
+                    or (family != donor_family and section != 'libraries')
+                    or record_fingerprint(record) != item['recordSha256']
+                    or record.get('documentation') != donor['english']):
+                raise ValueError(f'Reuse source fields or parameter group changed: {identity}')
+        expanded.append(dict(donor, family=family, versions=item['versions']))
+    return expanded
+
+
 def resource(catalog, bundle):
     result = ET.Element('parameterTranslations', schemaVersion='1', locale='zh-CN', license='GPL-3.0-or-later')
-    releases = {}
-    for release in bundle:
-        records = defaultdict(list)
-        for record in release.iter('param'):
-            records[record.get('name', '').rsplit(':', 1)[-1]].append(record)
-        releases[release.get('family'), release.get('version')] = records
+    releases = index_bundle(bundle)
     seen = set()
-    for note in catalog['translations']:
+    for note in expanded_descriptions(catalog, releases):
         if note['field'] not in ('Description', 'Value', 'Bitmask'):
             raise ValueError('Only display descriptions and labels may be translated')
         if not note['chinese'].strip() or note['englishSha256'] != sha(note['english']):
@@ -51,10 +112,9 @@ def resource(catalog, bundle):
             if key in seen:
                 raise ValueError('Duplicate translation scope: ' + repr(key))
             seen.add(key)
-            params = releases[note['family'], version].get(note['parameter'], ())
-            if len(params) != 1 or note['recordSha256'] != record_fingerprint(params[0]):
+            _, _, param = unique_record(releases, note['family'], version, note['parameter'])
+            if note['recordSha256'] != record_fingerprint(param):
                 raise ValueError('Changed/ambiguous source record requires manual review: ' + repr(key))
-            param = params[0]
             if note['field'] == 'Description':
                 english = param.get('documentation', '')
             else:
@@ -86,7 +146,9 @@ def main():
             raise SystemExit('Parameter translation resource needs regeneration')
     else:
         output.write_bytes(expected)
-    print(f'Parameter catalog: {len(catalog["translations"])} scoped entries; ' + ('check passed' if args.check else 'generated'))
+    print(f'Parameter catalog: {len(catalog["translations"])} authored entries, '
+          f'{len(catalog.get("descriptionReuse", ()))} reuse entries. '
+          + ('Check passed' if args.check else 'Generated'))
 
 
 if __name__ == '__main__':
