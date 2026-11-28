@@ -363,8 +363,17 @@ namespace MissionPlanner.Utilities
 
         public static event EventHandler<HttpRequestMessage> RequestModification;
 
-        public static async Task<bool> getFilefromNetAsync(string url, string saveto, Action<int, string> status = null)
+        public static Task<bool> getFilefromNetAsync(string url, string saveto, Action<int, string> status = null)
         {
+            return getFilefromNetAsync(url, saveto, CancellationToken.None, status);
+        }
+
+        public static async Task<bool> getFilefromNetAsync(string url, string saveto,
+            CancellationToken cancellationToken, Action<int, string> status = null)
+        {
+            string temporary = cancellationToken.CanBeCanceled
+                ? saveto + "." + Guid.NewGuid().ToString("N") + ".new"
+                : saveto + ".new";
             try
             {
                 log.Info("Get " + url);
@@ -373,7 +382,9 @@ namespace MissionPlanner.Utilities
 
                 RequestModification?.Invoke(url, request);
 
-                using (var response = await client.SendAsync(request, completionOption: HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false))
+                using (var response = await client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false))
+                // Closing the response interrupts a pending body read on .NET Framework.
+                using (cancellationToken.Register(response.Dispose))
                 {
                     lock (log)
                         log.Info(url + " " +(response).StatusCode.ToString());
@@ -403,7 +414,7 @@ namespace MissionPlanner.Utilities
 
                     int size = 0;
                     using (Stream resstream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
-                    using (FileStream fs = new FileStream(saveto + ".new", FileMode.Create))
+                    using (FileStream fs = new FileStream(temporary, FileMode.Create))
                     {
                         byte[] buf1 = new byte[1024];
 
@@ -413,7 +424,7 @@ namespace MissionPlanner.Utilities
 
                         while (resstream.CanRead)
                         {
-                            int len = await resstream.ReadAsync(buf1, 0, 1024).ConfigureAwait(false);
+                            int len = await resstream.ReadAsync(buf1, 0, buf1.Length, cancellationToken).ConfigureAwait(false);
                             if (len == 0)
                                 break;
                             fs.Write(buf1, 0, len);
@@ -440,6 +451,7 @@ namespace MissionPlanner.Utilities
                         fs.Close();
                     }
 
+                    cancellationToken.ThrowIfCancellationRequested();
                     log.Info("Got " + url + " " + size);
 
                     if (File.Exists(saveto))
@@ -447,19 +459,33 @@ namespace MissionPlanner.Utilities
                         // try prevent System.UnauthorizedAccessException: Access to the path
                         GC.Collect();
                         File.SetAttributes(saveto, FileAttributes.Normal);
-                        File.Delete(saveto);
+                        File.Replace(temporary, saveto, null);
                     }
-
-                    File.Move(saveto + ".new", saveto);
+                    else
+                    {
+                        File.Move(temporary, saveto);
+                    }
 
                     return true;
                 }
             }
             catch (Exception ex)
             {
-                lock (log)
-                    log.Info("getFilefromNetAsync(): " + ex.ToString());
+                if (!cancellationToken.IsCancellationRequested)
+                {
+                    lock (log)
+                        log.Info("getFilefromNetAsync(): " + ex);
+                }
                 return false;
+            }
+            finally
+            {
+                if (cancellationToken.CanBeCanceled)
+                {
+                    try { File.Delete(temporary); }
+                    catch (IOException) { }
+                    catch (UnauthorizedAccessException) { }
+                }
             }
         }
 
