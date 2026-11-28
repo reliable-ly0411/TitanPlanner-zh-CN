@@ -560,11 +560,11 @@ namespace MissionPlanner.GCSViews
             if (!TryGetLaunchHome(out var position, out var heading))
                 return;
 
-            var exepath = CheckandGetSITLImage("ArduPlane.elf");
-
             try
             {
-                StartSITL(await exepath, "plane",
+                var exepath = CheckandGetSITLImage("ArduPlane.elf");
+                if (exepath == null) return;
+                StartSITL(exepath, "plane",
                     BuildHomeLocation(position, heading, await HomeAltitudeAsync(position)), "",
                     (int) num_simspeed.Value);
             }
@@ -579,10 +579,11 @@ namespace MissionPlanner.GCSViews
             if (!TryGetLaunchHome(out var position, out var heading))
                 return;
 
-            var exepath = CheckandGetSITLImage("ArduRover.elf");
             try
             {
-                StartSITL(await exepath, "rover",
+                var exepath = CheckandGetSITLImage("ArduRover.elf");
+                if (exepath == null) return;
+                StartSITL(exepath, "rover",
                     BuildHomeLocation(position, heading, await HomeAltitudeAsync(position)), "",
                     (int) num_simspeed.Value);
             }
@@ -597,10 +598,11 @@ namespace MissionPlanner.GCSViews
             if (!TryGetLaunchHome(out var position, out var heading))
                 return;
 
-            var exepath = CheckandGetSITLImage("ArduCopter.elf");
             try
             {
-                StartSITL(await exepath, "+",
+                var exepath = CheckandGetSITLImage("ArduCopter.elf");
+                if (exepath == null) return;
+                StartSITL(exepath, "+",
                     BuildHomeLocation(position, heading, await HomeAltitudeAsync(position)), "",
                     (int) num_simspeed.Value, isCopter: true);
             }
@@ -615,10 +617,11 @@ namespace MissionPlanner.GCSViews
             if (!TryGetLaunchHome(out var position, out var heading))
                 return;
 
-            var exepath = CheckandGetSITLImage("ArduHeli.elf");
             try
             {
-                StartSITL(await exepath, "heli",
+                var exepath = CheckandGetSITLImage("ArduHeli.elf");
+                if (exepath == null) return;
+                StartSITL(exepath, "heli",
                     BuildHomeLocation(position, heading, await HomeAltitudeAsync(position)), "",
                     (int) num_simspeed.Value);
             }
@@ -684,7 +687,7 @@ namespace MissionPlanner.GCSViews
         /// </summary>
         /// <param name="filename"></param>
         /// <returns></returns>
-        private async Task<string> CheckandGetSITLImage(string filename)
+        private string CheckandGetSITLImage(string filename)
         {
             // Save the selected version for next time
             Settings.Instance["sitl_download_version"] = cmb_version.SelectedIndex.ToString();
@@ -835,42 +838,84 @@ namespace MissionPlanner.GCSViews
                     return null;
                 }
 
-                Uri fullurl = new Uri(url, filename);
-
-                var load = Common.LoadingBox(UiText.Translate("Downloading"), UiText.Translate("Downloading sitl software"));
-
-                var t1 = Download.getFilefromNetAsync(fullurl.ToString(),
-                    sitldirectory + Path.GetFileNameWithoutExtension(filename) + ".exe");
-
-                load.Refresh();
-
-                var files = new string[] {
-                    "cygatomic-1.dll",
-                    "cyggcc_s-1.dll",
-                    "cyggcc_s-seh-1.dll",
-                    "cyggomp-1.dll",
-                    "cygiconv-2.dll",
-                    "cygintl-8.dll",
-                    "cygquadmath-0.dll",
-                    "cygssp-0.dll",
-                    "cygstdc++-6.dll",
-                    "cygwin1.dll"
-                };
-
-                // dependancys
-
-                Parallel.ForEach(files, new ParallelOptions() { MaxDegreeOfParallelism = 2 }, (a, b) =>
-                {
-                    var depurl = new Uri(url, a);
-                    var t2 = Download.getFilefromNet(depurl.ToString(), sitldirectory + depurl.Segments[depurl.Segments.Length - 1]);
-                });
-
-                await t1;
-
-                load.Close();
+                return DownloadWindowsSITLImage(url, filename);
             }
 
             return sitldirectory + Path.GetFileNameWithoutExtension(filename) + ".exe";
+        }
+
+        private string DownloadWindowsSITLImage(Uri baseUri, string filename)
+        {
+            var image = sitldirectory + Path.GetFileNameWithoutExtension(filename) + ".exe";
+            var files = new string[] {
+                "cygatomic-1.dll",
+                "cyggcc_s-1.dll",
+                "cyggcc_s-seh-1.dll",
+                "cyggomp-1.dll",
+                "cygiconv-2.dll",
+                "cygintl-8.dll",
+                "cygquadmath-0.dll",
+                "cygssp-0.dll",
+                "cygstdc++-6.dll",
+                "cygwin1.dll"
+            };
+
+            using (var cancellation = new CancellationTokenSource())
+            using (var progress = new ProgressReporterDialogue
+            {
+                StartPosition = FormStartPosition.CenterScreen,
+                Text = UiText.Translate("Downloading")
+            })
+            {
+                bool downloaded = false;
+                progress.UpdateProgressAndStatus(-1, UiText.Translate("Downloading sitl software"));
+                progress.doWorkArgs.CancelRequestChanged += (sender, args) => cancellation.Cancel();
+                progress.DoWork += sender =>
+                {
+                    try
+                    {
+                        downloaded = DownloadWindowsSITLFiles(baseUri, filename, image, files, cancellation.Token)
+                            .GetAwaiter().GetResult();
+                    }
+                    catch (OperationCanceledException) when (cancellation.IsCancellationRequested)
+                    {
+                    }
+                    finally
+                    {
+                        sender.doWorkArgs.CancelAcknowledged = cancellation.IsCancellationRequested;
+                    }
+                };
+                ThemeManager.ApplyThemeTo(progress);
+                progress.RunBackgroundOperationAsync();
+                if (cancellation.IsCancellationRequested)
+                    return null;
+                return downloaded ? image : "";
+            }
+        }
+
+        private async Task<bool> DownloadWindowsSITLFiles(Uri baseUri, string filename, string image, string[] dependencies,
+            CancellationToken cancellationToken)
+        {
+            var binary = Download.getFilefromNetAsync(new Uri(baseUri, filename).AbsoluteUri, image, cancellationToken);
+            using (var slots = new SemaphoreSlim(2))
+            {
+                var runtime = dependencies.Select(async name =>
+                {
+                    await slots.WaitAsync(cancellationToken).ConfigureAwait(false);
+                    try
+                    {
+                        var path = sitldirectory + name;
+                        return await Download.getFilefromNetAsync(new Uri(baseUri, name).AbsoluteUri, path,
+                            cancellationToken).ConfigureAwait(false) || File.Exists(path);
+                    }
+                    finally
+                    {
+                        slots.Release();
+                    }
+                }).ToArray();
+                var results = await Task.WhenAll(new[] { binary }.Concat(runtime)).ConfigureAwait(false);
+                return results.All(ok => ok);
+            }
         }
 
         private async Task<string> GetLegacyDefaultConfig(string model)
@@ -1352,7 +1397,7 @@ namespace MissionPlanner.GCSViews
             catch
             {
             }
-            Task<string> exepath;
+            string exepath;
             string model = "";
             if (firmware == Firmwares.ArduPlane)
             {
@@ -1368,6 +1413,14 @@ namespace MissionPlanner.GCSViews
             {
                 exepath = CheckandGetSITLImage("ArduCopter.elf");
                 model = "+";
+            }
+
+            if (exepath == null)
+                return;
+            if (!File.Exists(exepath))
+            {
+                CustomMessageBox.Show(Strings.Failed_to_download_the_SITL_image, Strings.ERROR);
+                return;
             }
 
             var config = await GetDefaultConfig(model);
@@ -1423,7 +1476,7 @@ SIM_DRIFT_TIME=0
                 Environment.SetEnvironmentVariable("HOME", simdir, EnvironmentVariableTarget.Process);
 
                 ProcessStartInfo exestart = new ProcessStartInfo();
-                exestart.FileName = await exepath;
+                exestart.FileName = exepath;
                 exestart.Arguments = extra;
                 exestart.WorkingDirectory = simdir;
                 exestart.WindowStyle = ProcessWindowStyle.Minimized;
@@ -1523,6 +1576,14 @@ SIM_DRIFT_TIME=0
             var exepath = CheckandGetSITLImage("ArduCopter.elf");
             var model = "+";
 
+            if (exepath == null)
+                return;
+            if (!File.Exists(exepath))
+            {
+                CustomMessageBox.Show(Strings.Failed_to_download_the_SITL_image, Strings.ERROR);
+                return;
+            }
+
             var config= await GetDefaultConfig(model);
             max--;
 
@@ -1575,18 +1636,18 @@ SIM_DRIFT_TIME=0
                 Environment.SetEnvironmentVariable("HOME", simdir, EnvironmentVariableTarget.Process);
 
                 ProcessStartInfo exestart = new ProcessStartInfo();
-                exestart.FileName = await exepath;
+                exestart.FileName = exepath;
                 exestart.Arguments = extra;
                 exestart.WorkingDirectory = simdir;
                 exestart.WindowStyle = ProcessWindowStyle.Minimized;
                 exestart.UseShellExecute = true;
 
                 File.AppendAllText(Settings.GetUserDataDirectory() + "sitl.bat",
-                    "mkdir " + (a + 1) + "\ncd " + (a + 1) + "\n" + @"""" + await exepath + @"""" + " " + extra + " &\n");
+                    "mkdir " + (a + 1) + "\ncd " + (a + 1) + "\n" + @"""" + exepath + @"""" + " " + extra + " &\n");
 
                 File.AppendAllText(Settings.GetUserDataDirectory() + "sitl1.sh",
                     "mkdir " + (a + 1) + "\ncd " + (a + 1) + "\n" + @"""../" +
-                    Path.GetFileName(await exepath).Replace("C:", "/mnt/c").Replace("\\", "/").Replace(".exe", ".elf") + @"""" + " " +
+                    Path.GetFileName(exepath).Replace("C:", "/mnt/c").Replace("\\", "/").Replace(".exe", ".elf") + @"""" + " " +
                     extra.Replace("C:", "/mnt/c").Replace("\\", "/") + " &\nsleep .3\ncd ..\n");
 
                 log.InfoFormat("sitl: {0} {1} {2}", exestart.WorkingDirectory, exestart.FileName, exestart.Arguments);

@@ -362,6 +362,8 @@ Behaviour that differs from upstream because the fork fixed it:
 
 - The 3D map doesn't hit the intermittent `Destination array was not long enough` crash
 - Connecting or loading params doesn't crash when the progress dialog closes before it finishes
+- The Windows SITL download dialog can cancel an in-progress download and retry after failure
+- A silent TCP connection reports that no MAVLink heartbeat arrived
 - HUD text always draws the right characters; upstream's OpenGL HUD can show "FAILSAFE" as "FAI AFE" or an altitude as "SS"
 - SITL starts with home at the ground height of the chosen point, so terrain readings match ([#28](https://github.com/Titan-Dynamics/TitanPlanner/issues/28))
 - The Messages tab keeps updating on long flights, keeps your place when scrolled up, and has a right-click **Clear Messages** ([#23](https://github.com/Titan-Dynamics/TitanPlanner/issues/23))
