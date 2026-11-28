@@ -10616,6 +10616,54 @@
       "recordSha256": "39ca0d19036c1e425fd50866ce8987f92a83d94f425ba832094ed4e74e277e33",
       "english": "Vertical position on screen",
       "chinese": "设置 OSD 第 4 屏上第二个气压计温度的垂直位置。"
+    },
+    {
+      "family": "Rover",
+      "parameter": "CRUISE_SPEED",
+      "field": "Description",
+      "versions": [
+        "4.6.3"
+      ],
+      "englishSha256": "42cbe6ae1b6d04e7181ff5de2d3681c05d8483d99d4e270b36a2a48256da9bd3",
+      "recordSha256": "cd91b957cf02a3efe48dd6969714de31d179f3b7ed45d805974cc2fe0c1b5c97",
+      "english": "The target speed in auto missions.",
+      "chinese": "自动任务的目标速度，单位为米/秒。"
+    },
+    {
+      "family": "Rover",
+      "parameter": "TURN_RADIUS",
+      "field": "Description",
+      "versions": [
+        "4.6.3"
+      ],
+      "englishSha256": "120f827f2cd452bda4e9fb24038619663f504a968f65578f1ede83f707640177",
+      "recordSha256": "422b7a309e6f1d8f342dcf5481f747dcf37dafac3586dc3edc64b5196b90f242",
+      "english": "Turn radius of vehicle in meters while at low speeds.  Lower values produce tighter turns in steering mode",
+      "chinese": "低速时载具的转弯半径，单位为米。在 Steering（转向）模式下，较小的值对应更小的转弯半径。"
+    },
+    {
+      "family": "Rover",
+      "parameter": "WP_SPEED",
+      "field": "Description",
+      "versions": [
+        "4.6.3"
+      ],
+      "englishSha256": "82d3b9e00de474ca97cb20d62462a8c6a3d43d92d73cada6beab8ee0287647aa",
+      "recordSha256": "49a238fa5e8c213f9527a2cff568c311a45b2d5245f0ac46ca508d64879f48eb",
+      "english": "Waypoint speed default",
+      "chinese": "航点导航的默认速度，单位为米/秒。"
+    },
+    {
+      "family": "Rover",
+      "parameter": "WP_RADIUS",
+      "field": "Description",
+      "versions": [
+        "4.6.3"
+      ],
+      "englishSha256": "3379487e040843c1986a8d26fcef356986c8d91a2f39dd67525ef19fd70e168d",
+      "recordSha256": "cfc1ebd169c7b61046dd7df0e90e54a6d5b4647e63c56cd7d4e78f6cc6ab9a8e",
+      "english": "The distance in meters from a waypoint when we consider the waypoint has been reached. This determines when the vehicle will turn toward the next waypoint.",
+      "chinese": "判定航点到达的距离阈值，单位为米；它决定载具何时转向下一航点。"
     }
   ]
 }

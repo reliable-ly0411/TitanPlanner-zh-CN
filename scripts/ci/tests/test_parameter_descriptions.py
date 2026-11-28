@@ -60,12 +60,26 @@ class ParameterCatalogTests(unittest.TestCase):
     def test_scope_counts_and_held_versions(self):
         notes = self.catalog['translations']
         descriptions = {(n['family'], v, n['parameter']) for n in notes if n['field'] == 'Description' for v in n['versions']}
-        self.assertEqual(1496, len(descriptions))
-        self.assertEqual(671, len({(f, p) for f, v, p in descriptions}))
+        self.assertEqual(1500, len(descriptions))
+        self.assertEqual(675, len({(f, p) for f, v, p in descriptions}))
         self.assertFalse(any(v == '4.7.2' for f, v, p in descriptions))
         excluded_copter = {'RTL_CONE_SLOPE', 'LAND_SPEED', 'LAND_SPD_MS', 'FS_GCS_ENABLE'}
         excluded_plane = {'TECS_CLMB_MAX', 'TECS_SINK_MIN', 'ROLL_LIMIT_DEG'}
         self.assertFalse(any(p in (excluded_copter if f == 'Copter' else excluded_plane) for f, v, p in descriptions))
+
+    def test_rover_descriptions_are_limited_to_one_pinned_release(self):
+        rover = [n for n in self.catalog['translations'] if n['family'] == 'Rover']
+        self.assertEqual({'CRUISE_SPEED', 'TURN_RADIUS', 'WP_SPEED', 'WP_RADIUS'}, {n['parameter'] for n in rover})
+        self.assertEqual(4, len(rover))
+        self.assertTrue(all(n['versions'] == ['4.6.3'] and n['field'] == 'Description' and 'code' not in n for n in rover))
+        snapshots = [release for release in self.bundle if release.get('family') == 'Rover']
+        self.assertEqual(1, len(snapshots))
+        sources = json.loads((ROOT / 'localization/parameters/sources.json').read_text(encoding='utf-8'))
+        [source] = [r for r in sources['releases'] if r['family'] == 'Rover']
+        for field in ('version', 'sourceUrl', 'sourceSha256', 'gitSha'):
+            self.assertEqual(snapshots[0].get(field), source[field])
+        self.assertEqual(source['gitSha'], snapshots[0].find('paramfile/firmware').get('git_sha'))
+        self.assertEqual(4, source['parameters'])
 
     def test_copter_catalog_additions_are_version_exact_read_only_descriptions(self):
         # Snapshot of the original accepted coverage per version. This assertion
@@ -147,9 +161,12 @@ class ParameterCatalogTests(unittest.TestCase):
             self.assertEqual((['4.7.1'], 'Description', catalog_module.record_fingerprint(record)),
                              (notes[0]['versions'], notes[0]['field'], notes[0]['recordSha256']))
 
+    def original_display_catalog_releases(self):
+        return [release for release in self.bundle if release.get("family") in ("Copter", "Plane", "Sub")]
+
     def test_osd_sidebar_geometry_positions_preserve_spacing_direction(self):
         selected = {'OSD_SB_H_OFS':('0 20','列','右侧'), 'OSD_SB_V_EXT':('0 10','行','等量')}
-        for release in self.bundle:
+        for release in self.original_display_catalog_releases():
             f,v = release.get('family'),release.get('version')
             records = {r.get('name'):r for r in release.iter('param') if r.get('name') in selected}
             self.assertEqual(set() if f=='Tracker' or v=='4.5.7' else set(selected),set(records))
@@ -166,7 +183,7 @@ class ParameterCatalogTests(unittest.TestCase):
 
     def test_imu_logging_help_keeps_diagnostic_sampling_semantics(self):
         keys = {'INS_LOG_BAT_CNT', 'INS_LOG_BAT_LGIN', 'INS_LOG_BAT_LGCT'}
-        for release in self.bundle:
+        for release in self.original_display_catalog_releases():
             f, v = release.get('family'), release.get('version')
             records = {r.get('name'): r for r in release.iter('param') if r.get('name') in keys}
             self.assertEqual(keys, set(records))
@@ -183,7 +200,7 @@ class ParameterCatalogTests(unittest.TestCase):
                     self.assertIn('INS_LOG_BAT_LGIN', hints[0]['chinese'])
 
     def test_osd_message_time_help_preserves_range_and_source_metadata(self):
-        for release in self.bundle:
+        for release in self.original_display_catalog_releases():
             family, version = release.get('family'), release.get('version')
             rows = [r for r in release.iter('param') if r.get('name') in OSD_MESSAGE_TIME_HELP_KEYS]
             self.assertEqual(1, len(rows))
@@ -203,7 +220,7 @@ class ParameterCatalogTests(unittest.TestCase):
     def test_storage_help_does_not_collapse_identical_text_with_different_range(self):
         names = {'LOG_MAX_FILES','LOG_FILE_MB_FREE'}
         seen = set()
-        for release in self.bundle:
+        for release in self.original_display_catalog_releases():
             f, v = release.get('family'), release.get('version')
             rows = {r.get('name'): r for r in release.iter('param') if r.get('name') in names}
             self.assertEqual(names, set(rows))
@@ -221,7 +238,7 @@ class ParameterCatalogTests(unittest.TestCase):
 
     def test_logger_descriptions_preserve_bitmask_formats_and_zero_rate_meanings(self):
         bits = [('0', 'File'), ('1', 'MAVLink'), ('2', 'Block')]
-        for release in self.bundle:
+        for release in self.original_display_catalog_releases():
             family, version = release.get('family'), release.get('version')
             with self.subTest(family=family, version=version):
                 notes = [n for n in self.catalog['translations'] if n['family'] == family
@@ -253,7 +270,7 @@ class ParameterCatalogTests(unittest.TestCase):
             '4.7.1': ('KiB', 'kibibytes', '4 200', '以 KiB 计'),
         }
         signatures = {}
-        for release in self.bundle:
+        for release in self.original_display_catalog_releases():
             family, version = release.get('family'), release.get('version')
             with self.subTest(family=family, version=version):
                 row = release.find("paramfile/libraries/parameters[@name='LOG']/param[@name='LOG_FILE_BUFSIZE']")
@@ -291,7 +308,7 @@ class ParameterCatalogTests(unittest.TestCase):
                     self.assertIn(condition, note['chinese'])
 
     def test_onboard_display_help_preserves_four_choices_and_documented_default(self):
-        for release in self.bundle:
+        for release in self.original_display_catalog_releases():
             family, version = release.get('family'), release.get('version')
             rows = [r for r in release.iter('param') if r.get('name') in ONBOARD_DISPLAY_HELP_KEYS]
             self.assertEqual(1, len(rows))
@@ -308,7 +325,7 @@ class ParameterCatalogTests(unittest.TestCase):
             self.assertEqual('选择板载 I²C 显示屏的类型。默认禁用。', notes[0]['chinese'])
 
     def test_osd_fonts_keep_each_screen_and_its_backend(self):
-        for release in self.bundle:
+        for release in self.original_display_catalog_releases():
             family, version = release.get('family'), release.get('version')
             notes = [n for n in self.catalog['translations'] if n['family'] == family
                      and version in n['versions'] and n['parameter'] in OSD_FONT_KEYS]
@@ -329,7 +346,7 @@ class ParameterCatalogTests(unittest.TestCase):
                 self.assertIn('仅适用于 MSP DisplayPort', chinese[key])
 
     def test_scheduler_debug_reports_only_exact_diagnostic_modes(self):
-        for release in self.bundle.findall('release'):
+        for release in self.original_display_catalog_releases():
             family, version = release.get('family'), release.get('version')
             matches = [row for row in release.iter('param') if row.get('name') == 'SCHED_DEBUG']
             self.assertEqual(1, len(matches))
