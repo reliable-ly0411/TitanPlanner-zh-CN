@@ -88,6 +88,29 @@ namespace MissionPlanner.Controls.BackstageView
             base.OnResize(e);
         }
 
+        private int VisiblePaintWidth => FitToViewport && Parent != null
+            ? Math.Max(0, Math.Min(Width, Parent.ClientSize.Width - Left))
+            : Width;
+
+        private int CaptionWidth(int paintWidth) => paintWidth - 5 - (HasChildren ? 22 : IsSelected ? 9 : 1);
+
+        internal bool NeedsCaptionToolTip(Graphics graphics)
+        {
+            int available = CaptionWidth(VisiblePaintWidth);
+            if (!FitToViewport || available <= 0 || Height <= 6 || string.IsNullOrWhiteSpace(Text))
+                return false;
+
+            var family = IsSelected ? FontFamily.GenericSansSerif : Font.FontFamily;
+            using (var font = new Font(family, 10 * (100 / graphics.DpiX), FontStyle.Bold))
+            {
+                foreach (var line in Text.Split('\n'))
+                    if (graphics.MeasureString(line, font).Width > available)
+                        return true;
+            }
+
+            return false;
+        }
+
         private void DrawCaption(Graphics graphics, FontFamily family, Color color, int paintWidth)
         {
             using (var font = new Font(family, 10 * (100 / graphics.DpiX), FontStyle.Bold))
@@ -99,7 +122,7 @@ namespace MissionPlanner.Controls.BackstageView
                     return;
                 }
 
-                int available = paintWidth - 5 - (HasChildren ? 22 : IsSelected ? 9 : 1);
+                int available = CaptionWidth(paintWidth);
                 if (available <= 0 || Height <= 6)
                     return;
 
@@ -121,9 +144,7 @@ namespace MissionPlanner.Controls.BackstageView
            Graphics g = pevent.Graphics;
            // A vertical scrollbar occupies non-client width. Keep the row and
            // its handlers intact, but paint inside the visible viewport.
-           int paintWidth = FitToViewport && Parent != null
-               ? Math.Max(0, Math.Min(Width, Parent.ClientSize.Width - Left))
-               : Width;
+           int paintWidth = VisiblePaintWidth;
            if (paintWidth == 0 || Height == 0)
                return;
 
