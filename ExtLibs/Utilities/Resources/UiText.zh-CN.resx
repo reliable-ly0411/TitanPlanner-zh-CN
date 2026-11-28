@@ -1044,6 +1044,10 @@
     <value>应用比例系数和偏移以转换单位。</value>
     <comment>"Apply scale and offset to convert units."</comment>
   </data>
+  <data name="84e5948475c6e8f605fdab43796284eb6764c4f01d5ecd60c92b4fb77374e817" xml:space="preserve">
+    <value>设置缩放和偏移：{0}</value>
+    <comment>"Apply scaler and offset to {0}"</comment>
+  </data>
   <data name="8c00e96a8a1af5d4a8543b1d0988a6dc7455ee0c5962d50df0c02a1286b3572f" xml:space="preserve">
     <value>ArduPlane 固件版本 4.4.4（16b78382）</value>
     <comment>"ArduPlane V4.4.4 (16b78382)"</comment>
@@ -3415,6 +3419,11 @@ Ctrl+O 从文件加载</value>
     <value>输入要拆分的份数</value>
     <comment>"Enter how many pieces to split into"</comment>
   </data>
+  <data name="507d1e72cd33a0669726b5df3cdf9970a6ba35af85a16d41b02dab6ec1d3cc1b" xml:space="preserve">
+    <value>先输入运算符，再输入数值；按输入顺序计算。运算符：x + - /
+</value>
+    <comment>"Enter modifer then value, they are applied in the order you provide. Modifiers are x + - /\n"</comment>
+  </data>
   <data name="e39685c70f7ce2fb2c474c94bdaaeb08a1668efd19a38bfadd7d44851a8c6502" xml:space="preserve">
     <value>输入新主题名称（不含扩展名）</value>
     <comment>"Enter nem theme name (without extension)"</comment>
@@ -3637,6 +3646,10 @@ Ctrl+O 从文件加载</value>
   <data name="8d14f6e72de8f18ab1ee5c5330f00653c0c3ce099e63024454f80af97e72d333" xml:space="preserve">
     <value>事件</value>
     <comment>"Events"</comment>
+  </data>
+  <data name="1001254aeb35b7e1fa709908582abacd0af7a1887bd3b3e5e9f6992c3f2ac82a" xml:space="preserve">
+    <value>例如，将厘米换算为米后再加 50：/100 +50、x0.01 +50 或 *0.01,+50</value>
+    <comment>"Example: Convert cm to to m with an offset of 50: '/100 +50' or 'x0.01 +50' or '*0.01,+50'"</comment>
   </data>
   <data name="a60840a12d42f0edd31b590a24c5bc3be2e3cd3ed64d137e35d82315032c45f5" xml:space="preserve">
     <value>离开时退出 SLCAN？</value>

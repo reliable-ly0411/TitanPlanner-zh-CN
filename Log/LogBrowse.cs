@@ -3076,11 +3076,11 @@ main()
                     dataModifer_str = initialDataModifier.commandString;
             }
 
-            string title = "Apply scaler and offset to " + nodeName;
+            string title = UiText.Format($"Apply scaler and offset to {nodeName}");
             string instructions =
-                "Enter modifer then value, they are applied in the order you provide. Modifiers are x + - /\n";
+                UiText.Translate("Enter modifer then value, they are applied in the order you provide. Modifiers are x + - /\n");
             instructions +=
-                "Example: Convert cm to to m with an offset of 50: '/100 +50' or 'x0.01 +50' or '*0.01,+50'";
+                UiText.Translate("Example: Convert cm to to m with an offset of 50: '/100 +50' or 'x0.01 +50' or '*0.01,+50'");
             InputBox.Show(title, instructions, ref dataModifer_str);
 
             // if it's already there, remove it.
