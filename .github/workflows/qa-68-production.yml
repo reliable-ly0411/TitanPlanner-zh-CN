@@ -1,0 +1,68 @@
+name: 'QA #68 exact Windows speech candidate'
+on:
+  push:
+    branches: [ci/titanplanner-68-windows-9eded480]
+    paths: [.github/workflows/qa-68-production.yml]
+permissions:
+  contents: read
+jobs:
+  speech:
+    runs-on: windows-2022
+    timeout-minutes: 45
+    env:
+      CI: 'true'
+      DOTNET_CLI_TELEMETRY_OPTOUT: '1'
+      PRODUCT_SHA: '9eded480390cef5cbb33ca2833ca2fce74a5d83c'
+      PRODUCT_TREE: 'd6d9b706a4da3348fe1c3e9e1e3379fb9a6dc899'
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ env.PRODUCT_SHA }}
+          submodules: true
+          fetch-depth: 1
+          persist-credentials: false
+      - name: Verify product identity
+        shell: pwsh
+        run: |
+          if ((git rev-parse HEAD) -ne $env:PRODUCT_SHA) { throw 'Unexpected product commit' }
+          if ((git rev-parse 'HEAD^{tree}') -ne $env:PRODUCT_TREE) { throw 'Unexpected product tree' }
+          if (git status --porcelain) { throw 'Product checkout is dirty' }
+          Write-Host "Product SHA=$env:PRODUCT_SHA tree=$env:PRODUCT_TREE"
+      - uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68
+        with:
+          dotnet-version: '8.0.428'
+      - name: Build full Release
+        shell: pwsh
+        run: ./scripts/localization/build_windows.ps1 -OutputDirectory "$env:RUNNER_TEMP\TitanPlanner-qa"
+      - name: Run offline regression and Windows UI tests
+        shell: pwsh
+        run: ./scripts/ci/test_windows.ps1 -BuildDirectory "$env:RUNNER_TEMP\TitanPlanner-qa" -ResultsDirectory "$env:RUNNER_TEMP\qa-results"
+      - name: Verify speech regression discovery and results
+        shell: pwsh
+        run: |
+          $report = [xml](Get-Content (Join-Path $env:RUNNER_TEMP 'qa-results\windows-tests.trx') -Raw)
+          $passed = @($report.SelectNodes("//*[local-name()='UnitTestResult' and @outcome='Passed']") | ForEach-Object { $_.testName })
+          $speechTests = @(
+            'ResolvesPinnedTextAndPreservesParameters',
+            'LeavesUnverifiedTextsForTheExistingSpeechRoute',
+            'RequiresTheExactFirmwareAndEnhancedCatalog',
+            'SpokenModeUsesKnownVocabularyAndVehicleContext',
+            'AcceptedAlertIsSharedByReceiveAndHudReadback',
+            'RejectedAlertCanBeRetriedByHudReadback',
+            'IncompleteStatustextNeverReturnsPartialSpeechText',
+            'OutOfOrderOrCrossVehicleChunksAreNotAssembled'
+          )
+          foreach ($test in $speechTests) {
+            if ($test -notin $passed) { throw "Speech test did not pass: $test" }
+          }
+          Write-Host "Passed all $($speechTests.Count) named speech tests."
+      - name: Compile native speech probe
+        shell: pwsh
+        run: dotnet build MissionPlannerTests/WindowsSpeechProbe/WindowsSpeechProbe.csproj -c Release
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        if: always()
+        with:
+          name: qa-68-windows-results
+          path: ${{ runner.temp }}/qa-results
+          if-no-files-found: warn
+          retention-days: 7
