@@ -7945,6 +7945,10 @@ Ctrl+O 从文件加载</value>
     <value>米（m）</value>
     <comment>"Meters"</comment>
   </data>
+  <data name="ae0d8fffd51f7d571707efe4d6746b9f92f5257134fb7efe468612d5db3c6d2b" xml:space="preserve">
+    <value>微软晓晓（离线音色包）</value>
+    <comment>"Microsoft Xiaoxiao (offline pack)"</comment>
+  </data>
   <data name="76df0c6db32d4e04e0ef6a3a6a1e1686677e34308d9435892b1ab5713e57d470" xml:space="preserve">
     <value>中</value>
     <comment>"Mid"</comment>
@@ -9668,6 +9672,14 @@ Ctrl+O 从文件加载</value>
   <data name="ccdfca6d0c039e3760c1ea5e4a902f2444db2183cfe4c980b1197e30b9d316e7" xml:space="preserve">
     <value>离线地图</value>
     <comment>"Offline Maps"</comment>
+  </data>
+  <data name="950e64ab7581d03e29b568151d5d9f4e48dccc5f639f2188be3cadce67539461" xml:space="preserve">
+    <value>离线晓晓语音包缺失或无效，将改用 Windows 语音。</value>
+    <comment>"Offline Xiaoxiao audio pack is missing or invalid. Windows speech will be used instead."</comment>
+  </data>
+  <data name="094a263f73a28a1a5120b13df0fac3973064999547a0d8b7314fcb604a4e427c" xml:space="preserve">
+    <value>离线晓晓语音包已就绪。</value>
+    <comment>"Offline Xiaoxiao audio pack is ready."</comment>
   </data>
   <data name="d2aec11c34ad40cbff565dd6992f50c04fa0f0bcb492e45b978f212ed14cb7f4" xml:space="preserve">
     <value>离线高程清单</value>
