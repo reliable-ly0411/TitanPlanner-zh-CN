@@ -80,6 +80,9 @@ namespace MissionPlanner
         private static bool BinaryPrefix(byte[] hash, byte b3, byte b4, byte b5, byte b6, byte b7)
             => hash[3] == b3 && hash[4] == b4 && hash[5] == b5 && hash[6] == b6 && hash[7] == b7;
 
+        // ArduPlane 4.6.3 (3fc7011a), AP_NavEKF3_Control.cpp sends INFO with the active IMU index.
+        private const string Plane463Imu1OriginText = "EKF3 IMU1 origin set";
+
         private static string Px4BatteryText(int version) => version == 9 ? "Battery 1 disconnected\t" : "Battery 1 missing\t";
 
         // Fixed official release banners only. The preexisting version proof must
@@ -144,6 +147,8 @@ namespace MissionPlanner
                 ? row.message == Px4BatteryText(s.Version) && row.severity == 2
                 : (row.message == "EKF3 IMU0 origin set" && (s.Version == 1 || row.severity == 6)) ||
                   (s.Version == 1 && row.message == "GPS 1: detected u-blox") ||
+                  (s.Version == 4 && row.severity == (byte)MAVLink.MAV_SEVERITY.INFO &&
+                   row.message == Plane463Imu1OriginText) ||
                   (s.Version == 7 && row.severity == 5 && row.message == Plane444CrashDumpSaved) ||
                   IsPlaneReleaseBanner(s.Version, row.message, row.severity);
             if (!known && !diagnostic && !gps2Detection && !pinnedPlaneInfo) return;
@@ -203,6 +208,7 @@ namespace MissionPlanner
                 }
                 if (row.message == "GPS 1: detected u-blox") return "检测到 GPS 1：u-blox";
                 if (row.message == "EKF3 IMU0 origin set") return "EKF3 IMU0 原点已设置";
+                if (s.Version == 4 && row.message == Plane463Imu1OriginText) return "EKF3 IMU1 原点已设置";
                 return null;
             }
         }
