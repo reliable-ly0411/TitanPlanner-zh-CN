@@ -1743,6 +1743,10 @@
     <value>浏览视频</value>
     <comment>"Browse Video"</comment>
   </data>
+  <data name="8bd19a142d80ba81435a22b5a8d8e9684bccf0d0cbde7203a41f92e837340575" xml:space="preserve">
+    <value>内置启动图片不可用，已回退默认图片。</value>
+    <comment>"Built-in startup image unavailable; using default."</comment>
+  </data>
   <data name="bb3d83ff198b139d1037d5db0fddf97b2e0129f7ce67dc9d16fdeb56f4ee00d8" xml:space="preserve">
     <value>总线</value>
     <comment>"Bus"</comment>
@@ -13948,6 +13952,10 @@ http://www.magnetic-declination.com/</value>
   <data name="680e0d1fb096f045c3d144856ebc424c295799760bb59b6923de9dc13ffaddf1" xml:space="preserve">
     <value>窗口图标与启动画面</value>
     <comment>"Window icon and startup image"</comment>
+  </data>
+  <data name="cb67693da76ce587447244109d90a5682c89f8a2647b63f1e65d7593171adaa6" xml:space="preserve">
+    <value>窗口图标不可用，已回退默认图标。</value>
+    <comment>"Window icon unavailable; using default."</comment>
   </data>
   <data name="915142ae5637fa9c6aa02da8e3b176a1aa95ccbe67f4074eaf52b05771b715a2" xml:space="preserve">
     <value>窗口图标 · 即时生效</value>

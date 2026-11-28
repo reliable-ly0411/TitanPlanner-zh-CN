@@ -220,14 +220,30 @@ internal static class AppearanceIsolatedHost
                     var startupPreset = (ComboBox)embedded.Controls.Find("StartupImagePreset", true).Single();
                     Check(iconPreset.Items.Count == 5 && startupPreset.Items.Count == 4, "preset count changed");
                     var manifest = Path.Combine(Settings.UserDirectory, "appearance", "settings.xml");
+                    var builtInIcons = new[] { AppearanceAssetStore.BuiltInMissionPlanner,
+                        AppearanceAssetStore.BuiltInTitanPlanner, AppearanceAssetStore.BuiltInMfe };
+                    for (var choice = 0; choice < builtInIcons.Length; choice++)
+                    {
+                        iconPreset.SelectedIndex = choice + 1;
+                        Check(DesktopAppearance.Store.CurrentPreset(AppearanceAsset.WindowIcon) == builtInIcons[choice],
+                            "built-in window icon did not activate");
+                        Check(DesktopAppearance.Store.CurrentPreset(AppearanceAsset.StartupImage) == "default",
+                            "selecting an icon changed the startup choice");
+                        Check(((PictureBox)embedded.Controls.Find("WindowIconPreview", true).Single()).Image != null,
+                            "built-in icon preview missing");
+                    }
+                    startupPreset.SelectedIndex = 2;
+                    Check(DesktopAppearance.Store.CurrentPreset(AppearanceAsset.StartupImage) == AppearanceAssetStore.BuiltInMfe,
+                        "built-in MakeFlyEasy startup did not activate");
+                    using (var image = DesktopAppearance.LoadSelectedStartupImage(out var warning))
+                        Check(warning == null && image != null && image.Size == new Size(600, 333), "wrong embedded startup image");
+                    Check(DesktopAppearance.Store.CurrentPreset(AppearanceAsset.WindowIcon) == AppearanceAssetStore.BuiltInMfe,
+                        "selecting a startup image changed the window icon");
+                    startupPreset.SelectedIndex = 0;
+                    iconPreset.SelectedIndex = 0;
                     string before = File.ReadAllText(manifest);
-                    iconPreset.SelectedIndex = 1;
-                    Check(DesktopAppearance.Store.CurrentPreset(AppearanceAsset.WindowIcon) == "default", "missing vendor icon activated");
-                    Check(File.ReadAllText(manifest) == before, "missing vendor icon persisted");
-                    Check(Descendants(embedded).OfType<Label>().Any(l => l.Text.Contains(enhanced ? "尚未导入" : "has no local file")),
-                        "missing vendor icon not reported");
                     Check(iconPreset.AccessibleDescription == iconPreset.GetItemText(iconPreset.SelectedItem),
-                        "pending selection must expose its full display caption");
+                        "selection must expose its full display caption");
                     var details = (ToolTip)embedded.GetType().GetField("details", BindingFlags.Instance | BindingFlags.NonPublic)
                         .GetValue(embedded);
                     Check(details.GetToolTip(iconPreset) == iconPreset.AccessibleDescription,

@@ -23,6 +23,10 @@ namespace MissionPlanner.Utilities
         public const int MaxIconBytes = 4 * 1024 * 1024;
         public const int MaxImageBytes = 16 * 1024 * 1024;
         public const int MaxImageDimension = 4096;
+        internal const string BuiltInMissionPlanner = "built-in-mission-planner";
+        internal const string BuiltInTitanPlanner = "built-in-titan-planner";
+        internal const string BuiltInMfe = "built-in-mfe";
+        internal const string MissionPlannerStartup = "mission-planner";
         private readonly string directory;
 
         public AppearanceAssetStore(string directory)
@@ -40,7 +44,16 @@ namespace MissionPlanner.Utilities
 
         public Icon LoadIcon(out string warning)
         {
-            var bytes = Load(AppearanceAsset.WindowIcon, out warning);
+            return LoadIcon(null, out warning);
+        }
+
+        internal Icon LoadIcon(Func<string, Icon> loadBuiltIn, out string warning)
+        {
+            var selection = ReadSelection(out warning);
+            if (IsBuiltInIcon(selection.IconPreset))
+                return LoadBuiltIn(selection.IconPreset, loadBuiltIn,
+                    "Window icon unavailable; using default.", ref warning);
+            var bytes = LoadSelectedAsset(AppearanceAsset.WindowIcon, selection, ref warning);
             if (bytes == null) return null;
             try { return DecodeIcon(bytes); }
             catch (Exception) { warning = "Custom icon unavailable; using default."; return null; }
@@ -51,30 +64,41 @@ namespace MissionPlanner.Utilities
             return LoadStartupImage(null, out warning);
         }
 
-        internal Bitmap LoadStartupImage(Func<Bitmap> loadMissionPlanner, out string warning)
+        internal Bitmap LoadStartupImage(Func<string, Bitmap> loadBuiltIn, out string warning)
         {
             var selection = ReadSelection(out warning);
-            if (loadMissionPlanner != null && selection.StartupPreset == "mission-planner")
-            {
-                try
-                {
-                    var preset = loadMissionPlanner();
-                    if (preset != null) return preset;
-                }
-                catch (Exception) { }
-                warning = "Built-in startup image unavailable; using default.";
-                return null;
-            }
+            if (selection.StartupPreset == BuiltInMfe ||
+                (loadBuiltIn != null && selection.StartupPreset == MissionPlannerStartup))
+                return LoadBuiltIn(selection.StartupPreset, loadBuiltIn,
+                    "Built-in startup image unavailable; using default.", ref warning);
             var bytes = LoadSelectedAsset(AppearanceAsset.StartupImage, selection, ref warning);
             if (bytes == null) return null;
             try { return DecodeImage(bytes); }
             catch (Exception) { warning = "Custom startup image unavailable; using default."; return null; }
         }
 
-        private byte[] Load(AppearanceAsset kind, out string warning)
+        private static T LoadBuiltIn<T>(string preset, Func<string, T> loader, string fallback, ref string warning)
+            where T : class
         {
-            var selection = ReadSelection(out warning);
-            return LoadSelectedAsset(kind, selection, ref warning);
+            try
+            {
+                var asset = loader?.Invoke(preset);
+                if (asset != null) return asset;
+            }
+            catch (Exception) { }
+            warning = fallback;
+            return null;
+        }
+
+        private static bool IsBuiltInIcon(string preset)
+        {
+            return preset == BuiltInMissionPlanner || preset == BuiltInTitanPlanner || preset == BuiltInMfe;
+        }
+
+        private static bool SaveCustomSeparately(AppearanceAsset kind, string preset)
+        {
+            return preset == "default" ||
+                (kind == AppearanceAsset.WindowIcon ? IsBuiltInIcon(preset) : preset == BuiltInMfe);
         }
 
         private byte[] LoadSelectedAsset(AppearanceAsset kind, Selection selection, ref string warning)
@@ -173,9 +197,12 @@ namespace MissionPlanner.Utilities
             return preset.Length != 0 ? preset : custom.Length != 0 ? "custom" : "default";
         }
 
-        internal void SelectMissionPlannerStartup()
+        internal void SelectBuiltInPreset(AppearanceAsset kind, string preset)
         {
-            Save(AppearanceAsset.StartupImage, null, "", "mission-planner");
+            bool valid = kind == AppearanceAsset.WindowIcon ? IsBuiltInIcon(preset) :
+                preset == MissionPlannerStartup || preset == BuiltInMfe;
+            if (!valid) throw new ArgumentOutOfRangeException(nameof(preset));
+            Save(kind, null, "", preset);
         }
 
         internal void SelectSavedStartupImage()
@@ -253,12 +280,14 @@ namespace MissionPlanner.Utilities
                         {
                             writer.WriteStartElement("appearance");
                             writer.WriteAttributeString("version", "1");
-                            // Older versions ignore the optional saved attributes and still see the default.
-                            writer.WriteAttributeString("icon", selection.IconPreset == "default" ? "" : selection.Icon);
-                            writer.WriteAttributeString("image", selection.StartupPreset == "default" ? "" : selection.Image);
-                            if (selection.IconPreset == "default" && selection.Icon.Length != 0)
+                            // Older readers fall back to the default for presets they do not recognize.
+                            bool separateIcon = SaveCustomSeparately(AppearanceAsset.WindowIcon, selection.IconPreset);
+                            bool separateImage = SaveCustomSeparately(AppearanceAsset.StartupImage, selection.StartupPreset);
+                            writer.WriteAttributeString("icon", separateIcon ? "" : selection.Icon);
+                            writer.WriteAttributeString("image", separateImage ? "" : selection.Image);
+                            if (separateIcon && selection.Icon.Length != 0)
                                 writer.WriteAttributeString("savedIcon", selection.Icon);
-                            if (selection.StartupPreset == "default" && selection.Image.Length != 0)
+                            if (separateImage && selection.Image.Length != 0)
                                 writer.WriteAttributeString("savedImage", selection.Image);
                             if (selection.IconPreset.Length != 0) writer.WriteAttributeString("iconPreset", selection.IconPreset);
                             if (selection.MissionPlannerIcon.Length != 0) writer.WriteAttributeString("missionPlannerIcon", selection.MissionPlannerIcon);
@@ -308,12 +337,12 @@ namespace MissionPlanner.Utilities
                 var savedIcon = root.GetAttribute("savedIcon");
                 var savedImage = root.GetAttribute("savedImage");
                 return new Selection {
-                    Icon = iconPreset == "default" && ValidName(savedIcon, "ico") ? savedIcon : icon,
-                    Image = startupPreset == "default" && ValidName(savedImage, @"png|jpg|bmp") ? savedImage : image,
-                    StartupPreset = startupPreset == "mission-planner" || startupPreset == "mfe" ||
-                        startupPreset == "default" ? startupPreset : "",
+                    Icon = SaveCustomSeparately(AppearanceAsset.WindowIcon, iconPreset) && ValidName(savedIcon, "ico") ? savedIcon : icon,
+                    Image = SaveCustomSeparately(AppearanceAsset.StartupImage, startupPreset) && ValidName(savedImage, @"png|jpg|bmp") ? savedImage : image,
+                    StartupPreset = startupPreset == MissionPlannerStartup || startupPreset == "mfe" ||
+                        startupPreset == "default" || startupPreset == BuiltInMfe ? startupPreset : "",
                     IconPreset = iconPreset == "mfe" || iconPreset == "mission-planner" ||
-                        iconPreset == "titan-planner" || iconPreset == "default" ? iconPreset : "",
+                        iconPreset == "titan-planner" || iconPreset == "default" || IsBuiltInIcon(iconPreset) ? iconPreset : "",
                     MissionPlannerIcon = ReadOptionalIcon(root, "missionPlannerIcon"),
                     TitanPlannerIcon = ReadOptionalIcon(root, "titanPlannerIcon"),
                     MfeIcon = ValidName(root.GetAttribute("mfeIcon"), @"ico") ? root.GetAttribute("mfeIcon") : "",
@@ -382,7 +411,7 @@ namespace MissionPlanner.Utilities
             }
         }
 
-        private static Icon DecodeIcon(byte[] bytes)
+        internal static Icon DecodeIcon(byte[] bytes)
         {
             bool windows = Environment.OSVersion.Platform == PlatformID.Win32NT;
             // Mono's Icon decoder needs an in-memory DIB copy; the stored ICO stays intact.
@@ -517,7 +546,7 @@ namespace MissionPlanner.Utilities
             return bitmap;
         }
 
-        private static Bitmap DecodeImage(byte[] bytes)
+        internal static Bitmap DecodeImage(byte[] bytes)
         {
             using (var stream = new MemoryStream(bytes))
             using (var image = Image.FromStream(stream, false, true))

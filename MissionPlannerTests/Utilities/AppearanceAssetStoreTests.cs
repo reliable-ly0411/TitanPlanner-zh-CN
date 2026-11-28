@@ -467,6 +467,58 @@ namespace MissionPlannerTests.Utilities
         }
 
         [TestMethod]
+        public void BuiltInPresetsUseEmbeddedArtworkAndKeepOlderImports()
+        {
+            InDirectory((root, store) =>
+            {
+                const string builtInMfe = "built-in-mfe";
+                var iconFile = IconFile(root);
+                var imageFile = ImageFile(root, ".png", Color.Magenta);
+                store.Import(AppearanceAsset.WindowIcon, iconFile);
+                store.Import(AppearanceAsset.StartupImage, imageFile);
+                VendorIconCall(store, "ImportVendorIcon", "TitanPlanner", iconFile);
+                CallAppearanceStore(store, "ImportMfe", AppearanceAsset.StartupImage, imageFile);
+
+                var directory = Path.Combine(root, "appearance");
+                var desktop = typeof(AppearanceAssetStore).Assembly.GetType("MissionPlanner.Utilities.DesktopAppearance", true);
+                var flags = System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static;
+                var loadIcon = (Func<string, Icon>)Delegate.CreateDelegate(typeof(Func<string, Icon>), desktop.GetMethod("LoadBuiltInIcon", flags));
+                var loadImage = (Func<string, Bitmap>)Delegate.CreateDelegate(typeof(Func<string, Bitmap>), desktop.GetMethod("LoadBuiltInStartup", flags));
+                foreach (var preset in new[] { "built-in-mission-planner", "built-in-titan-planner", builtInMfe })
+                {
+                    CallAppearanceStore(store, "SelectBuiltInPreset", AppearanceAsset.WindowIcon, preset);
+                    store = new AppearanceAssetStore(directory);
+                    Assert.AreEqual(preset, CallAppearanceStore(store, "CurrentPreset", AppearanceAsset.WindowIcon));
+                    using (var icon = (Icon)CallAppearanceStore(store, "LoadIcon", loadIcon, null))
+                    using (var bitmap = icon.ToBitmap())
+                        Assert.IsTrue(bitmap.Width > 0 && bitmap.Height > 0);
+                    Assert.AreEqual("mfe", CallAppearanceStore(store, "CurrentPreset", AppearanceAsset.StartupImage));
+                }
+
+                CallAppearanceStore(store, "SelectBuiltInPreset", AppearanceAsset.StartupImage, builtInMfe);
+                store = new AppearanceAssetStore(directory);
+                using (var image = (Bitmap)CallAppearanceStore(store, "LoadStartupImage", loadImage, null))
+                    Assert.AreEqual(new Size(600, 333), image.Size);
+                Assert.AreEqual(builtInMfe, CallAppearanceStore(store, "CurrentPreset", AppearanceAsset.WindowIcon));
+                Assert.AreEqual(2, Directory.GetFiles(directory, "*.ico").Length);
+                Assert.AreEqual(2, Directory.GetFiles(directory, "*.png").Length);
+
+                store.RestoreDefault(AppearanceAsset.WindowIcon);
+                Assert.AreEqual(builtInMfe, CallAppearanceStore(store, "CurrentPreset", AppearanceAsset.StartupImage));
+                CallAppearanceStore(store, "SelectSavedIcon");
+                Assert.AreEqual("custom", CallAppearanceStore(store, "CurrentPreset", AppearanceAsset.WindowIcon));
+                VendorIconCall(store, "SelectVendorIcon", "TitanPlanner");
+                using (var icon = store.LoadIcon(out _)) Assert.IsNotNull(icon);
+                CallAppearanceStore(store, "SelectSavedStartupImage");
+                using (var image = store.LoadStartupImage(out _))
+                    Assert.AreEqual(Color.Magenta.ToArgb(), image.GetPixel(40, 20).ToArgb());
+                CallAppearanceStore(store, "SelectMfe", AppearanceAsset.StartupImage);
+                using (var image = store.LoadStartupImage(out _))
+                    Assert.AreEqual(Color.Magenta.ToArgb(), image.GetPixel(40, 20).ToArgb());
+            });
+        }
+
+        [TestMethod]
         public void SeparateInstancesPreserveTheOtherSelection()
         {
             InDirectory((root, store) =>

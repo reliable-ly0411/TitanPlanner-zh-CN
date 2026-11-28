@@ -2,17 +2,17 @@
 
 在“配置/调试 → 地面站设置”内的“窗口图标与启动画面”分组，选择文件后立即校验并保存；取消文件选择不更改设置。窗口图标和启动图各有一个预设下拉框、一个相邻的本地文件按钮和各自的缩略预览。分组使用与连接和遥测设置相同的单列布局；格式和生效限制可将鼠标移到标题上查看。可在两个下拉框分别选回默认，也可重新选用上一次导入的自定义素材。该分组随“地面站设置”入口显示，未连接飞控时也可使用。此功能只修改桌面外观，不涉及飞控命令。
 
-Mission Planner、TitanPlanner 和奋斗者的窗口图标预设分别保存用户自己导入的本地 ICO；未导入的选项不会改变当前图标，界面会显示仍在使用的图标；选中该项再使用旁边的文件按钮即可导入该预设。“包内默认图标”无需导入，和“TitanPlanner（本地）”是两个独立选项。启动图的奋斗者预设同样支持独立导入；选中默认项或内置启动图时，本地文件按钮导入为自定义素材。只导入有权使用的图标，应用不附带或下载这些 ICO，也不会核验厂商来源。当前默认不变，既有自定义图标仍可换回，三个预设与所有启动图选择互相独立。
+窗口图标下拉提供包内默认、Mission Planner、TitanPlanner、奋斗者和自定义。开屏下拉提供 TitanPlanner 默认、Mission Planner、奋斗者和自定义。选内置项立即保存对应预设，另一项和已导入素材保留。文件按钮可导入自定义；已有的厂商本地导入会以独立选项继续提供，选中这类选项后可更换对应文件。原件与许可证出处见 [随包素材说明](../Resources/Appearance/NOTICE.txt)。
 
 ## 实际生效范围
 
 | 对象 | 当前实现与入口 | 本功能的生效方式 |
 | --- | --- | --- |
 | EXE 的内嵌图标、资源管理器中的 EXE | `MissionPlanner.csproj` 的 `ApplicationIcon=mpdesktop.ico` | 设置不会改写 EXE。替换内嵌图标必须另行更换构建输入并重新编译；资源管理器还可能缓存旧图标。 |
-| 已打开的应用窗口、通常由窗口表示的任务栏图标 | `ThemeManager.FormIcon`，已有 `Program.IconFile` 来源为安装目录 `icon.png` 或内嵌 `mpdesktop` | 导入后向当前进程已打开窗体赋值；后续经过主题入口的窗体读取同一图标。重启保留。FixedDialog、插件自行覆盖图标等不承诺统一。Windows 固定项、分组及缓存可能继续显示快捷方式图标，须原生验证。 |
+| 已打开的应用窗口、通常由窗口表示的任务栏图标 | `ThemeManager.FormIcon`，已有 `Program.IconFile` 来源为安装目录 `icon.png` 或内嵌 `mpdesktop` | 选择预设或导入后向当前进程已打开窗体赋值；后续经过主题入口的窗体读取同一图标。重启保留。FixedDialog、插件自行覆盖图标等不承诺统一。Windows 固定项、分组及缓存可能继续显示快捷方式图标，须原生验证。 |
 | 中文 MSI 在“应用和功能”及开始菜单的图标 | `scripts/ci/package_msi.py` 从 EXE 提取 `AppIcon`，快捷方式引用该资源 | 设置不会修改安装器或已安装资源；需要重建并正常安装新版安装器。 |
 | 旧 WiX 安装器快捷方式、用户自行创建的快捷方式、固定任务栏项 | 旧 `wix/Program.cs` 指向 EXE；快捷方式可另存自身图标 | 不自动修改。用户可在快捷方式属性中另选自己的 ICO；或在构建/安装变更后重新创建、重新固定。单纯重建快捷方式仍指向同一 EXE 时，不会自动采用此运行时设置。 |
-| 启动画面 | `Splash.Designer.cs` 的 `titanLogo.Image` 为默认图，非 `Program.SplashBG` | 导入 PNG / JPEG / BMP 后下次创建启动窗体时读取。保持比例，完整缩放，不裁切；不会在当前会话重新弹出启动页。 |
+| 启动画面 | `Splash.Designer.cs` 的 `titanLogo.Image` 为默认图，非 `Program.SplashBG` | 下次创建启动窗体时读取所选预设或已导入的 PNG / JPEG / BMP。保持比例，完整缩放，不裁切；不会在当前会话重新弹出启动页。 |
 
 Windows 的 `Form.Icon` 决定窗体在控制框及任务栏中的表示，但并不等于改写 Shell 的快捷方式/固定项资源，见 [Microsoft Form.Icon 文档](https://learn.microsoft.com/en-us/dotnet/api/system.windows.forms.form.icon?view=netframework-4.7.2)。实际任务栏表现仍以该候选的原生操作为准。
 
@@ -39,7 +39,7 @@ Windows 的 `Form.Icon` 决定窗体在控制框及任务栏中的表示，但�
 
 启动页仅将本次修改者明确为用户要求的 `lyy0405`。已存在的作者 Michael Oborne 保留，另外一行标明上游 TitanPlanner 的 Mohammad Adib；不新增或推断版权持有人。署名等文字直接叠在启动图上，用浅色粗体和深色描边保证可读性，不加遮挡图片的底色。
 
-`Splash.Designer.cs`、`Splash.resx`、`mpdesktop.ico`、`Properties/Resources*`、原版 `zh-Hans` 资源和 `COPYING.txt` 均保留。可见署名在构造启动页时设置，不改写上游原图片或既有历史署名文本。用户导入素材的使用权限由其自身来源决定；不会将用户素材纳入本仓上游资源或改换原有许可。
+`Splash.Designer.cs`、`Splash.resx`、`mpdesktop.ico`、`Properties/Resources*`、原版 `zh-Hans` 资源和 `COPYING.txt` 均保留。内置预设使用经核对的上游原件；安装包附带素材出处、上游署名及 GPL-3.0 许可证。可见署名在构造启动页时设置，不改写上游原图片或既有历史署名文本。用户导入素材的使用权限由其自身来源决定；不会将用户素材纳入本仓上游资源或改换原有许可。
 
 ## 实施和验证
 

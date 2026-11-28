@@ -810,6 +810,16 @@
     <Content Include="mavextra.py">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="Resources\Appearance\built-in-mission-planner.ico;Resources\Appearance\built-in-titan-planner.ico;Resources\Appearance\built-in-mfe.ico;Resources\Appearance\built-in-mfe.jpg">
+      <LogicalName>MissionPlanner.Appearance.%(Filename)%(Extension)</LogicalName>
+    </EmbeddedResource>
+    <Content Include="Resources\Appearance\NOTICE.txt">
+      <TargetPath>Appearance-NOTICE.txt</TargetPath>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="COPYING.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="mpdesktop.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

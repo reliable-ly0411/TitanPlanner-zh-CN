@@ -50,9 +50,11 @@ def main():
     if args.desktop_appearance_source:
         sources[1] = str(Path(args.desktop_appearance_source).resolve())
     executable = output / 'AppearanceIsolated.exe'
+    artwork = sorted((ROOT / 'Resources' / 'Appearance').glob('built-in-*'))
+    embedded = ['-resource:' + str(path) + ',MissionPlanner.Appearance.' + path.name for path in artwork]
     compile('-out:' + str(executable), neutral,
             '-resource:' + str(output / 'Splash.resources') + ',MissionPlanner.Splash.resources', shim,
-            *[ROOT / source for source in sources])
+            *embedded, *[ROOT / source for source in sources])
     # New desktop-only files must also compile to an empty library under LIB.
     compile('-target:library', '-define:LIB', '-out:' + str(output / 'AppearanceLibGuard.dll'),
             *[ROOT / source for source in sources[:3]])

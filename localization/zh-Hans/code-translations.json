@@ -2254,6 +2254,8 @@
   "Mission command: MAV_CMD_NAV_ATTITUDE_TIME": "定时姿态",
   "Ground station settings": "地面站设置",
   "Appearance preview unavailable.": "外观预览不可用。",
+  "Built-in startup image unavailable; using default.": "内置启动图片不可用，已回退默认图片。",
+  "Window icon unavailable; using default.": "窗口图标不可用，已回退默认图标。",
   "Alt Hold": "定高",
   "Autorotate": "直升机自转降落",
   "Fly By Wire A": "固定翼增稳 A",

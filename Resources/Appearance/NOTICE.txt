@@ -1,0 +1,22 @@
+TitanPlanner-zh-CN desktop appearance presets
+The original upstream artwork is included under the GPL version 3 license in
+COPYING.txt. These optional appearance presets identify their upstream sources.
+
+Mission Planner (ArduPilot)
+  Revision 82dd96dfb44bccc51a6e77fcc7c309553b794f39
+  mpdesktop.ico is embedded as built-in-mission-planner.ico.
+  Resources/splashdark.jpg uses the existing startup resource.
+  https://github.com/ArduPilot/MissionPlanner/tree/82dd96dfb44bccc51a6e77fcc7c309553b794f39
+  https://ardupilot.org/dev/docs/trademark.html
+
+TitanPlanner (Titan Dynamics)
+  Revision 399939a98eaf9f31ee2ae1d003f918419838025b
+  mpdesktop.ico is embedded as built-in-titan-planner.ico.
+  Splash.resx (titanLogo.Image) uses the existing default startup resource.
+  https://github.com/Titan-Dynamics/TitanPlanner/tree/399939a98eaf9f31ee2ae1d003f918419838025b
+
+MakeFlyEasy VTOL Survey
+  Revision 0778602583a7993ca531a85eff8c1135dec68ae6
+  favicon-20191227021935316.ico is embedded as built-in-mfe.ico.
+  Resources/splashdark.jpg is embedded as built-in-mfe.jpg.
+  https://github.com/makeflyeasy/Mission_Planner_VTOL_Survey/tree/0778602583a7993ca531a85eff8c1135dec68ae6

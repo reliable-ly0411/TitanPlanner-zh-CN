@@ -71,8 +71,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             details.SetToolTip(iconTitle, UiText.Translate("ICO: up to 4 MiB, 1-256 pixels per frame (up to 64 frames). Window icons apply now and on restart.") +
                 "\n" + UiText.Translate("EXE, installer and Explorer icons require a rebuild. Existing or pinned shortcuts keep their own icons; change or recreate them separately. Windows may retain a cached taskbar icon."));
             details.SetToolTip(startupTitle, UiText.Translate("PNG, JPEG or BMP: up to 16 MiB, 4096 pixels per side. The full image is fitted without cropping. Applies on next startup."));
-            details.SetToolTip(status, UiText.Translate("Choosing a file beside a built-in image or default imports it as custom. Vendor icons are not bundled or downloaded.") +
-                "\n" + UiText.Translate("Use images you have permission to use. Restoring defaults preserves imported copies and preference backups."));
+            details.SetToolTip(status, UiText.Translate("Use images you have permission to use. Restoring defaults preserves imported copies and preference backups."));
             layout.Controls.Add(status);
             Controls.Add(layout);
             layout.SizeChanged += (sender, args) => WrapLabels(layout);
@@ -117,11 +116,13 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                 DropDownWidth = 260, Anchor = AnchorStyles.Left | AnchorStyles.Right
             };
             menu.Items.Add(new Preset("default", icon ? UiText.Translate("Packaged default icon") : UiText.Translate("TitanPlanner artwork (default)")));
-            menu.Items.Add(new Preset("mission-planner", icon ? UiText.Translate("Mission Planner (local)") : UiText.Translate("Mission Planner artwork")));
+            menu.Items.Add(new Preset(icon ? AppearanceAssetStore.BuiltInMissionPlanner : AppearanceAssetStore.MissionPlannerStartup,
+                icon ? "Mission Planner" : UiText.Translate("Mission Planner artwork")));
             if (icon)
-                menu.Items.Add(new Preset("titan-planner", UiText.Translate("TitanPlanner (local)")));
-            menu.Items.Add(new Preset("mfe", UiText.Translate("MakeFlyEasy")));
+                menu.Items.Add(new Preset(AppearanceAssetStore.BuiltInTitanPlanner, "TitanPlanner"));
+            menu.Items.Add(new Preset(AppearanceAssetStore.BuiltInMfe, UiText.Translate("MakeFlyEasy")));
             menu.Items.Add(new Preset("custom", UiText.Translate("Custom")));
+            AddImportedVendorPresets(kind, menu);
             menu.SelectedIndex = 0;
             UpdatePresetCaption(menu);
             menu.DropDown += (sender, args) => OpenPresetPopup(menu);
@@ -221,6 +222,21 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             return row;
         }
 
+        private static void AddImportedVendorPresets(AppearanceAsset kind, ComboBox menu)
+        {
+            var store = DesktopAppearance.Store;
+            var current = store.CurrentPreset(kind);
+            if (kind == AppearanceAsset.WindowIcon)
+            {
+                if (current == "mission-planner" || store.CanSelectVendorIcon(ImportedVendorIcon.MissionPlanner))
+                    menu.Items.Add(new Preset("mission-planner", UiText.Translate("Mission Planner (local)")));
+                if (current == "titan-planner" || store.CanSelectVendorIcon(ImportedVendorIcon.TitanPlanner))
+                    menu.Items.Add(new Preset("titan-planner", UiText.Translate("TitanPlanner (local)")));
+            }
+            if (current == "mfe" || store.CanSelectMfe(kind))
+                menu.Items.Add(new Preset("mfe", UiText.Translate("MakeFlyEasy") + " · " + UiText.Translate("Custom")));
+        }
+
         private void UpdatePresetCaption(ComboBox menu)
         {
             string caption = menu.GetItemText(menu.SelectedItem);
@@ -316,9 +332,15 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                     select = () => DesktopAppearance.RestoreDefault(kind);
                     available = true;
                     break;
-                case "mission-planner":
+                case AppearanceAssetStore.BuiltInMissionPlanner:
+                case AppearanceAssetStore.BuiltInTitanPlanner:
+                case AppearanceAssetStore.BuiltInMfe:
+                    select = () => DesktopAppearance.SelectBuiltInPreset(kind, preset.Id);
+                    available = true;
+                    break;
+                case AppearanceAssetStore.MissionPlannerStartup:
                     select = icon ? (Action)(() => DesktopAppearance.SelectVendorIcon(ImportedVendorIcon.MissionPlanner))
-                        : DesktopAppearance.SelectMissionPlannerStartup;
+                        : () => DesktopAppearance.SelectBuiltInPreset(kind, preset.Id);
                     available = !icon || store.CanSelectVendorIcon(ImportedVendorIcon.MissionPlanner);
                     break;
                 case "titan-planner":
@@ -430,6 +452,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             // can contain file paths and implementation-specific details.
             switch (message)
             {
+                case "Window icon unavailable; using default.":
                 case "Built-in startup image unavailable; using default.":
                 case "Choose a PNG, JPEG or BMP image (up to 16 MiB and 4096 pixels per side).":
                 case "Choose a valid ICO file with frames from 1 to 256 pixels.":

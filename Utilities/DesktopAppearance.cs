@@ -30,7 +30,7 @@ namespace MissionPlanner.Utilities
         private static void ReloadIcon()
         {
             string warning;
-            windowIcon = Store.LoadIcon(out warning);
+            windowIcon = Store.LoadIcon(LoadBuiltInIcon, out warning);
             IconWarning = warning;
             iconLoaded = true;
             // Forms can still reference the preceding shared Icon. It is collected when their final reference
@@ -102,22 +102,50 @@ namespace MissionPlanner.Utilities
             }
         }
 
-        internal static void SelectMissionPlannerStartup()
+        internal static void SelectBuiltInPreset(AppearanceAsset kind, string preset)
         {
-            using (var image = LoadMissionPlannerStartup())
-                if (image == null) throw new InvalidDataException("Built-in startup image unavailable; using default.");
-            Store.SelectMissionPlannerStartup();
+            bool windowIcon = kind == AppearanceAsset.WindowIcon;
+            using (IDisposable asset = windowIcon ? (IDisposable)LoadBuiltInIcon(preset) : LoadBuiltInStartup(preset))
+                if (asset == null)
+                    throw new InvalidDataException(windowIcon ? "Window icon unavailable; using default." :
+                        "Built-in startup image unavailable; using default.");
+            Store.SelectBuiltInPreset(kind, preset);
+            if (windowIcon) RefreshWindowIcons();
         }
 
-        private static Bitmap LoadMissionPlannerStartup()
+        private static Icon LoadBuiltInIcon(string preset)
         {
-            var image = global::MissionPlanner.Properties.Resources.splashdark;
-            return image == null ? null : new Bitmap(image);
+            var bytes = ReadBuiltInResource(preset + ".ico");
+            return bytes == null ? null : AppearanceAssetStore.DecodeIcon(bytes);
+        }
+
+        private static Bitmap LoadBuiltInStartup(string preset)
+        {
+            if (preset == AppearanceAssetStore.MissionPlannerStartup)
+            {
+                var image = global::MissionPlanner.Properties.Resources.splashdark;
+                return image == null ? null : new Bitmap(image);
+            }
+            var bytes = ReadBuiltInResource(preset + ".jpg");
+            return bytes == null ? null : AppearanceAssetStore.DecodeImage(bytes);
+        }
+
+        private static byte[] ReadBuiltInResource(string filename)
+        {
+            using (var stream = typeof(DesktopAppearance).Assembly.GetManifestResourceStream("MissionPlanner.Appearance." + filename))
+            {
+                if (stream == null) return null;
+                using (var bytes = new MemoryStream())
+                {
+                    stream.CopyTo(bytes);
+                    return bytes.ToArray();
+                }
+            }
         }
 
         internal static Bitmap LoadSelectedStartupImage(out string warning)
         {
-            return Store.LoadStartupImage(LoadMissionPlannerStartup, out warning);
+            return Store.LoadStartupImage(LoadBuiltInStartup, out warning);
         }
 
         public static Bitmap CreateStartupPreview(out string warning)
