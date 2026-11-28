@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Compile scoped Chinese parameter notes. No network and no automatic source reapproval."""
 import argparse
+from collections import defaultdict
 import hashlib
 import json
 from pathlib import Path
@@ -33,7 +34,12 @@ def record_fingerprint(param):
 
 def resource(catalog, bundle):
     result = ET.Element('parameterTranslations', schemaVersion='1', locale='zh-CN', license='GPL-3.0-or-later')
-    releases = {(release.get('family'), release.get('version')): release for release in bundle}
+    releases = {}
+    for release in bundle:
+        records = defaultdict(list)
+        for record in release.iter('param'):
+            records[record.get('name', '').rsplit(':', 1)[-1]].append(record)
+        releases[release.get('family'), release.get('version')] = records
     seen = set()
     for note in catalog['translations']:
         if note['field'] not in ('Description', 'Value', 'Bitmask'):
@@ -45,8 +51,7 @@ def resource(catalog, bundle):
             if key in seen:
                 raise ValueError('Duplicate translation scope: ' + repr(key))
             seen.add(key)
-            release = releases[(note['family'], version)]
-            params = [p for p in release.iter('param') if p.get('name', '').split(':')[-1] == note['parameter']]
+            params = releases[note['family'], version].get(note['parameter'], ())
             if len(params) != 1 or note['recordSha256'] != record_fingerprint(params[0]):
                 raise ValueError('Changed/ambiguous source record requires manual review: ' + repr(key))
             param = params[0]

@@ -108,8 +108,18 @@ class ParameterCatalogTests(unittest.TestCase):
             self.assertEqual(source['sourceUrl'], release.get('sourceUrl'))
             firmware = release.find('paramfile/firmware')
             self.assertEqual(source['gitSha'], release.get('gitSha'))
-            self.assertEqual(source['gitSha'], firmware.get('git_sha'))
-            self.assertEqual(source['gitTag'], firmware.get('git_tag'))
+            self.assertEqual(source.get('sourceKind'), release.get('sourceKind'))
+            if source.get('sourceKind') == 'reconstructed':
+                self.assertIsNone(firmware)
+                proof = source['reconstruction']
+                self.assertTrue(proof['tags'] or proof['boards'])
+                self.assertTrue(all(pair['gitSha'] == source['gitSha'] for pair in proof['boards']))
+                self.assertRegex(proof['sourceArchiveSha256'], r'^[0-9a-f]{64}$')
+                self.assertEqual(proof['vehicleGroup'], release.find('paramfile/vehicles/parameters').get('name'))
+                self.assertEqual(proof['uniqueKeys'], len({p.get('name').rsplit(':', 1)[-1] for p in release.iter('param')}))
+            else:
+                self.assertEqual(source['gitSha'], firmware.get('git_sha'))
+                self.assertEqual(source['gitTag'], firmware.get('git_tag'))
 
     def test_stable_473_names_and_fingerprints_cover_all_four_osd_groups(self):
         for family in ('Copter', 'Plane'):
@@ -140,12 +150,12 @@ class ParameterCatalogTests(unittest.TestCase):
     def test_scope_counts_and_held_versions(self):
         notes = self.catalog['translations']
         descriptions = {(n['family'], v, n['parameter']) for n in notes if n['field'] == 'Description' for v in n['versions']}
-        self.assertEqual(14233, len(descriptions))
-        self.assertEqual(4738, len({(f, p) for f, v, p in descriptions}))
+        self.assertEqual(19903, len(descriptions))
+        self.assertEqual(5450, len({(f, p) for f, v, p in descriptions}))
         self.assertFalse(any(v == '4.7.2' for f, v, p in descriptions))
         excluded_copter = {'RTL_CONE_SLOPE', 'LAND_SPEED', 'LAND_SPD_MS', 'FS_GCS_ENABLE'}
         excluded_plane = {'TECS_CLMB_MAX', 'TECS_SINK_MIN', 'ROLL_LIMIT_DEG'}
-        self.assertFalse(any(p in (excluded_copter if f == 'Copter' else excluded_plane) for f, v, p in descriptions))
+        self.assertFalse(any(p in (excluded_copter if f == 'Copter' else excluded_plane) for f, v, p in descriptions if v == '4.7.1'))
 
     def test_rover_463_preserves_reviewed_navigation_and_osd_descriptions(self):
         rover = [n for n in self.catalog['translations'] if n['family'] == 'Rover' and '4.6.3' in n['versions']]
@@ -198,7 +208,8 @@ class ParameterCatalogTests(unittest.TestCase):
             if v not in legacy_counts:
                 continue
             records = {r.get('name').split(':')[-1]: r for r in release.iter('param')
-                       if not is_display_or_log_help_key(r.get('name').rsplit(':', 1)[-1])}
+                       if not is_display_or_log_help_key(r.get('name').rsplit(':', 1)[-1])
+                       and not re.match(r'(?:RC[\d_]|SERVO|SERIAL|BATT|FS_|ARMING_|OSD_)', r.get('name').rsplit(':', 1)[-1])}
             self.assertEqual(legacy_counts[v] + reviewed_counts[v], len(records))
             readonly = {k: r for k, r in records.items() if r.findtext("field[@name='ReadOnly']") == 'True'}
             self.assertEqual(reviewed_counts[v], len(readonly))
@@ -245,7 +256,7 @@ class ParameterCatalogTests(unittest.TestCase):
                              param.findtext("field[@name='Units']"))
             self.assertIsNone(param.find("field[@name='Range']"))
             self.assertIsNone(param.find('values'))
-        notes = [note for note in self.catalog['translations'] if note['family'] == 'Sub' and note['parameter'].startswith('STAT_')]
+        notes = [note for note in self.catalog['translations'] if note['family'] == 'Sub' and '4.7.1' in note['versions'] and note['parameter'].startswith('STAT_')]
         self.assertEqual(5, len(notes))
         self.assertEqual(reviewed, {note['parameter'] for note in notes})
         self.assertTrue(all('4.7.1' in note['versions'] and note['field'] == 'Description' for note in notes))

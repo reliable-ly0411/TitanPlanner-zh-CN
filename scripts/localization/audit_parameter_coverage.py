@@ -1,24 +1,54 @@
 #!/usr/bin/env python3
-"""Report exact description coverage against a locally supplied, pinned official PDEF."""
+"""Report exact description coverage against a locally supplied, pinned release PDEF."""
 import argparse
 from collections import defaultdict
 import hashlib
 import json
 from pathlib import Path
+import re
 import xml.etree.ElementTree as ET
 
 from build_parameter_catalog import ROOT, record_fingerprint, sha
 
 
 def audit(raw, family, version, source, notes, groups=()):
+    if (source['family'], source['version']) != (family, version):
+        raise ValueError('Registry entry belongs to another release')
     if hashlib.sha256(raw).hexdigest() != source['sourceSha256']:
-        raise ValueError('Official XML SHA-256 does not match the pinned release')
-    stamp = source.get('legacySourceStamp', f"Generated from git tag {source['gitTag']} ({source['gitSha']})")
-    stamp = f"<!-- {stamp} -->".encode()
-    if stamp not in raw:
-        raise ValueError('Missing exact release/build source stamp')
-    official = defaultdict(list)
+        raise ValueError('PDEF SHA-256 does not match the pinned release')
     root = ET.fromstring(raw)
+    if source.get('sourceKind') == 'reconstructed':
+        commit = source['gitSha']
+        archive = 'https://codeload.github.com/ArduPilot/ardupilot/tar.gz/'
+        evidence = source['reconstruction']
+        if (not re.fullmatch(r'[0-9a-f]{40}', commit)
+                or source['sourceUrl'] != archive + commit
+                or not re.fullmatch(r'[0-9a-f]{64}', evidence['sourceArchiveSha256'])):
+            raise ValueError('Invalid pinned reconstruction archive')
+        prefix = 'https://firmware.ardupilot.org/'
+        directory = 'AntennaTracker' if family == 'Tracker' else family
+        prefix += f'{directory}/stable-{version}/'
+        board_pairs = evidence['boards']
+        tags = evidence['tags']
+        names = {family, {'Copter': 'ArduCopter', 'Plane': 'ArduPlane', 'Rover': 'APMrover2',
+                          'Sub': 'ArduSub', 'Tracker': 'AntennaTracker'}[family]}
+        if (not (tags or board_pairs)
+                or any(tag not in {f'{name}-{version}' for name in names} for tag in tags)
+                or any(pair['gitSha'] != commit
+                       or pair['releaseUrl'] != prefix + pair['board'] + '/firmware-version.txt'
+                       or pair['commitUrl'] != prefix + pair['board'] + '/git-version.txt'
+                       for pair in board_pairs)):
+            raise ValueError('Missing or inconsistent reconstruction release evidence')
+        groups_in_file = [g.get('name') for g in root.findall('./vehicles/parameters')]
+        if groups_in_file != [evidence['vehicleGroup']] or root.find('firmware') is not None:
+            raise ValueError('Reconstructed PDEF vehicle group or release marker changed')
+    else:
+        if source.get('sourceKind') is not None:
+            raise ValueError('Unknown metadata source kind')
+        stamp = source.get('legacySourceStamp', f"Generated from git tag {source['gitTag']} ({source['gitSha']})")
+        if f"<!-- {stamp} -->".encode() not in raw:
+            raise ValueError('Missing exact release/build source stamp')
+    official = defaultdict(list)
     for record in root.iter('param'):
         official[record.attrib['name'].rsplit(':', 1)[-1]].append(record)
     reviewed = set()
@@ -34,10 +64,13 @@ def audit(raw, family, version, source, notes, groups=()):
                 or sha(note['english']) != note['englishSha256']):
             raise ValueError(f'Unverified/ambiguous translation claim: {key}')
         reviewed.add(key)
+    if source.get('sourceKind') == 'reconstructed' and len(official) != source['reconstruction']['uniqueKeys']:
+        raise ValueError('Reconstructed unique parameter count changed')
     duplicates = [k for k, records in official.items() if len(records) > 1]
     conflicts = [k for k in duplicates if len({record_fingerprint(r) for r in official[k]}) > 1]
     report = dict(
         family=family, version=version, source_sha256=source['sourceSha256'],
+        source_kind=source.get('sourceKind', 'official'),
         official_parameter_keys=len(official), exact_descriptions=len(reviewed),
         not_localized=len(official) - len(reviewed), duplicate_keys=len(duplicates),
         conflicting_record_keys=len(conflicts),

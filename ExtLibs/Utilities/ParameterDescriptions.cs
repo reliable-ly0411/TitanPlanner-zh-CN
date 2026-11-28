@@ -99,6 +99,8 @@ namespace MissionPlanner.Utilities
         public bool HasReleaseProvenance { get { return !string.IsNullOrEmpty(ReleaseTag) && !string.IsNullOrEmpty(GitSha); } }
         public bool Partial { get; private set; }
         public bool MatchesReportedBuild { get; private set; }
+        internal bool IsReconstructed { get; set; }
+        public bool MatchesFirmware { get { return IsReconstructed || MatchesReportedBuild; } }
         public string Origin { get; internal set; }
         public int Count { get { return records.Count; } }
 
@@ -119,14 +121,21 @@ namespace MissionPlanner.Utilities
         {
             if (context == null) throw new ArgumentNullException("context");
             var doc = ReadXml(bytes);
-            if (doc.Root == null || doc.Root.Name != "paramfile") throw new InvalidDataException("Expected ArduPilot paramfile metadata.");
-            var group = doc.Root.Element("vehicles");
-            if (group == null || !group.Elements("parameters").Any(p => (string)p.Attribute("name") == context.VehicleName))
+            return Parse(doc.Root, doc.Nodes().OfType<XComment>(), context, context.VehicleName, partial,
+                sourceSha ?? ParameterDescriptionCatalog.Hash(bytes), bundledGitSha);
+        }
+
+        internal static ParameterDescriptionSnapshot Parse(XElement root, IEnumerable<XComment> comments,
+            ParameterDescriptionContext context, string vehicleName, bool partial, string sourceSha, string bundledGitSha)
+        {
+            if (root == null || root.Name != "paramfile") throw new InvalidDataException("Expected ArduPilot paramfile metadata.");
+            var group = root.Element("vehicles");
+            if (group == null || !group.Elements("parameters").Any(p => (string)p.Attribute("name") == vehicleName))
                 throw new InvalidDataException("Parameter metadata belongs to another vehicle.");
-            var firmware = doc.Root.Element("firmware");
+            var firmware = root.Element("firmware");
             var gitSha = (string)firmware?.Attribute("git_sha") ?? bundledGitSha ?? "";
             var gitTag = (string)firmware?.Attribute("git_tag") ?? "";
-            foreach (var comment in doc.Nodes().OfType<XComment>())
+            foreach (var comment in comments)
             {
                 var provenance = Regex.Match(comment.Value, @"Generated from git tag (\S+) \(([0-9a-fA-F]{7,40})\)");
                 if (provenance.Success) { gitTag = provenance.Groups[1].Value; gitSha = provenance.Groups[2].Value; }
@@ -136,13 +145,15 @@ namespace MissionPlanner.Utilities
             if (gitSha.Length > 0 && !Regex.IsMatch(gitSha, "^[0-9a-fA-F]{7,40}$")) throw new InvalidDataException("Invalid metadata source commit.");
             var records = new Dictionary<string, ParameterDescriptionRecord>(StringComparer.Ordinal);
             var definitions = new Dictionary<string, List<XElement>>(StringComparer.Ordinal);
-            foreach (var p in doc.Root.Elements().Where(e => e.Name == "vehicles" || e.Name == "libraries").Elements("parameters").Elements("param"))
+            var vehicleGroups = group.Elements("parameters").Where(p => (string)p.Attribute("name") == vehicleName);
+            var libraryGroups = root.Elements("libraries").Elements("parameters");
+            foreach (var p in vehicleGroups.Concat(libraryGroups).Elements("param"))
             {
                 var name = (string)p.Attribute("name") ?? "";
                 if (name.Contains(":"))
                 {
-                    if (!name.StartsWith(context.VehicleName + ":", StringComparison.Ordinal)) continue;
-                    name = name.Substring(context.VehicleName.Length + 1);
+                    if (!name.StartsWith(vehicleName + ":", StringComparison.Ordinal)) continue;
+                    name = name.Substring(vehicleName.Length + 1);
                 }
                 if (name.Length == 0) continue;
                 List<XElement> entries;
@@ -176,7 +187,7 @@ namespace MissionPlanner.Utilities
             return new ParameterDescriptionSnapshot(context, records)
             {
                 Partial = partial, GitSha = gitSha, ReleaseTag = gitTag, SourceUri = context.SourceUri,
-                SourceSha256 = sourceSha ?? ParameterDescriptionCatalog.Hash(bytes),
+                SourceSha256 = sourceSha,
                 MatchesReportedBuild = context.ReportedGitSha.Length == 0 || (gitSha.Length >= context.ReportedGitSha.Length && gitSha.StartsWith(context.ReportedGitSha, StringComparison.OrdinalIgnoreCase))
             };
         }
@@ -265,7 +276,7 @@ namespace MissionPlanner.Utilities
         public ParameterDescriptionText Present(ParameterDescriptionSnapshot snapshot, string name, bool chinese)
         {
             var record = snapshot?.Find(name);
-            if (record == null || !snapshot.MatchesReportedBuild) return null;
+            if (record == null || !snapshot.MatchesFirmware) return null;
             var desc = record.English;
             if (chinese && record.Ambiguous) desc += "\n\n[官方含多个定义，需核对适用机型或后端]";
             else if (chinese)
@@ -292,7 +303,7 @@ namespace MissionPlanner.Utilities
     public sealed class ParameterDescriptionStore
     {
         private readonly string directory;
-        private readonly byte[] bundle;
+        private readonly Lazy<XElement> bundle;
         private readonly Func<Uri, CancellationToken, Task<byte[]>> fetch;
         private readonly Func<DateTime> utcNow;
         private readonly SemaphoreSlim gate = new SemaphoreSlim(1, 1);
@@ -301,7 +312,7 @@ namespace MissionPlanner.Utilities
         public ParameterDescriptionStore(string directory, byte[] bundle, Func<Uri, CancellationToken, Task<byte[]>> fetch = null, Func<DateTime> utcNow = null)
         {
             this.directory = directory;
-            this.bundle = bundle;
+            this.bundle = new Lazy<XElement>(() => bundle == null ? null : ParameterDescriptionSnapshot.ReadXml(bundle).Root);
             this.fetch = fetch ?? Download;
             this.utcNow = utcNow ?? (() => DateTime.UtcNow);
         }
@@ -326,23 +337,58 @@ namespace MissionPlanner.Utilities
             }
         }
 
+        private XElement FindRelease(ParameterDescriptionContext context)
+        {
+            return context == null ? null : bundle.Value?.Elements("release").FirstOrDefault(r =>
+                (string)r.Attribute("family") == context.Family && (string)r.Attribute("version") == context.Version);
+        }
+
         public ParameterDescriptionSnapshot Bundled(ParameterDescriptionContext context)
         {
-            if (context == null || bundle == null) return null;
-            var release = ParameterDescriptionSnapshot.ReadXml(bundle).Root?.Elements("release").FirstOrDefault(r => (string)r.Attribute("family") == context.Family && (string)r.Attribute("version") == context.Version);
-            if (release == null || release.Element("paramfile") == null) return null;
-            var bytes = Encoding.UTF8.GetBytes(release.Element("paramfile").ToString(SaveOptions.DisableFormatting));
-            var snapshot = ParameterDescriptionSnapshot.Parse(bytes, context, true, (string)release.Attribute("sourceSha256"), (string)release.Attribute("gitSha"));
+            return ReadBundled(context, FindRelease(context));
+        }
+
+        private static ParameterDescriptionSnapshot ReadBundled(ParameterDescriptionContext context, XElement release)
+        {
+            var paramfile = release?.Element("paramfile");
+            if (paramfile == null) return null;
             var sourceUri = new Uri((string)release.Attribute("sourceUrl"));
-            if (!context.SourceUris.Contains(sourceUri)) throw new InvalidDataException("Unrecognized bundled metadata source.");
+            var digest = (string)release.Attribute("sourceSha256");
+            var gitSha = (string)release.Attribute("gitSha");
+            var sourceKind = (string)release.Attribute("sourceKind");
+            var vehicleName = context.VehicleName;
+
+            if (sourceKind == "reconstructed")
+            {
+                const string archive = "https://codeload.github.com/ArduPilot/ardupilot/tar.gz/";
+                if (!Regex.IsMatch(gitSha ?? "", "^[0-9a-f]{40}$") || sourceUri.AbsoluteUri != archive + gitSha
+                    || !Regex.IsMatch(digest ?? "", "^[0-9a-f]{64}$") || paramfile.Element("firmware") != null)
+                    throw new InvalidDataException("Invalid reconstructed metadata identity.");
+
+                // Historical PDEF is scoped to the exact family and stable version selected by FindRelease.
+                // Its source commit documents the reconstruction, while firmware can omit its build hash.
+                if (context.Family == "Rover" && paramfile.Element("vehicles")?.Elements("parameters")
+                    .Any(p => (string)p.Attribute("name") == "APMrover2") == true)
+                    vehicleName = "APMrover2";
+            }
+            else if (sourceKind != null || !context.SourceUris.Contains(sourceUri))
+            {
+                throw new InvalidDataException("Unrecognized bundled metadata source.");
+            }
+
+            var snapshot = ParameterDescriptionSnapshot.Parse(paramfile, Enumerable.Empty<XComment>(),
+                context, vehicleName, sourceKind == null, digest, gitSha);
             snapshot.SourceUri = sourceUri;
-            snapshot.Origin = "bundled";
+            snapshot.IsReconstructed = sourceKind == "reconstructed";
+            snapshot.Origin = sourceKind ?? "bundled";
             return snapshot;
         }
 
         public async Task<ParameterDescriptionSnapshot> LoadAsync(ParameterDescriptionContext context)
         {
             if (context == null) return null;
+            var release = FindRelease(context);
+            if ((string)release?.Attribute("sourceKind") == "reconstructed") return ReadBundled(context, release);
             await gate.WaitAsync().ConfigureAwait(false);
             try
             {
@@ -390,7 +436,7 @@ namespace MissionPlanner.Utilities
                     catch (Exception ex) when (ex is HttpRequestException || ex is OperationCanceledException || ex is IOException || ex is UnauthorizedAccessException || ex is XmlException || ex is InvalidDataException) { }
                 }
                 if (cached != null) cached.Origin = "cache; refresh unavailable";
-                var bundled = Bundled(context);
+                var bundled = ReadBundled(context, release);
                 if (cached != null && cached.MatchesReportedBuild) return cached;
                 if (bundled != null && bundled.MatchesReportedBuild) return bundled;
                 return mismatched ?? cached ?? bundled;
@@ -414,10 +460,10 @@ namespace MissionPlanner.Utilities
         {
             // Older official files omit the commit SHA. Only supplement it when their complete bytes
             // match a bundled, pinned source digest whose release tag was independently resolved.
-            var pinned = Bundled(context);
+            var pinned = FindRelease(context);
             var digest = ParameterDescriptionCatalog.Hash(bytes);
             var snapshot = ParameterDescriptionSnapshot.Parse(bytes, context, false, digest,
-                pinned != null && pinned.SourceSha256 == digest ? pinned.GitSha : null);
+                (string)pinned?.Attribute("sourceSha256") == digest ? (string)pinned.Attribute("gitSha") : null);
             // The firmware-server fallback must identify its release/build in the document itself.
             // A version-looking URL alone is insufficient, including when a server redirects it.
             if (sourceUri != context.SourceUri && !snapshot.HasReleaseProvenance)

@@ -11,7 +11,7 @@
       "sourceSha256": "61599e773eadeba781d69c124aff3acfbeea884b2a159d9ca6f7891f379513c9",
       "gitTag": "Copter-4.5.7",
       "gitSha": "2a3dc4b7bf2507120f7378a7b2fde73185e0c325",
-      "parameters": 994,
+      "parameters": 1199,
       "legacySourceStamp": "Generated from git tag Copter-4.5.7 on 2025-05-26 19:05:40"
     },
     {
@@ -21,7 +21,7 @@
       "sourceSha256": "e6375727b7a05a0c820b7b5c3e28c755d52c1e6da6b4506682d1dd3b19552190",
       "gitTag": "Copter-4.6.3",
       "gitSha": "92b0cd788ec29406f26c6f9c31d5ceedbd1cc538",
-      "parameters": 1005
+      "parameters": 1224
     },
     {
       "family": "Copter",
@@ -39,7 +39,7 @@
       "sourceSha256": "4abf0156f5c68d61fe0efef5f24daefc31754ee1ddf6cd8e70b01aff300bfa83",
       "gitTag": "Plane-4.5.7",
       "gitSha": "0358a9c210bc6c965006f5d6029239b7033616df",
-      "parameters": 1004,
+      "parameters": 1285,
       "legacySourceStamp": "Generated from git tag Plane-4.5.7 on 2025-05-26 19:19:51"
     },
     {
@@ -49,7 +49,7 @@
       "sourceSha256": "154e7bd4c38a75cc09e7109a4b7cfaa7f7a6fbf03125cfe6a849032f3b8389aa",
       "gitTag": "Plane-4.6.3",
       "gitSha": "3fc7011a7d3dc047cbb17d8bd98ee94577d144c6",
-      "parameters": 1016
+      "parameters": 1301
     },
     {
       "family": "Plane",
@@ -97,7 +97,7 @@
       "sourceSha256": "4d6971176bce63c53a7ad40ceb71c9ac4998f801c4b7ed1f1e4a1f45853599fc",
       "gitTag": "Copter-4.7.3",
       "gitSha": "d9c5097c3d8333435712ffed86bca8ce00c4bb46",
-      "parameters": 1293
+      "parameters": 1587
     },
     {
       "family": "Plane",
@@ -106,7 +106,7 @@
       "sourceSha256": "d7304d0a6aa9f4d2fd8a57adfcc09b55743abb2fb9fb24e5decf8b1bbf3d4286",
       "gitTag": "Plane-4.7.3",
       "gitSha": "d9c5097c3d8333435712ffed86bca8ce00c4bb46",
-      "parameters": 1305
+      "parameters": 1714
     },
     {
       "family": "Copter",
@@ -116,7 +116,7 @@
       "gitTag": "Copter-4.4.4",
       "gitSha": "db53a28f321dc8233ee49d3cc6b395b5835c768b",
       "legacySourceStamp": "Generated from git tag Copter-4.4.4 on 2025-05-26 19:05:36",
-      "parameters": 421
+      "parameters": 621
     },
     {
       "family": "Copter",
@@ -126,7 +126,7 @@
       "gitTag": "Copter-4.3.8",
       "gitSha": "60ebf6fbb91543912da34bb2513421477f428752",
       "legacySourceStamp": "Generated from git tag Copter-4.3.8 on 2025-05-26 19:05:35",
-      "parameters": 402
+      "parameters": 599
     },
     {
       "family": "Copter",
@@ -136,7 +136,7 @@
       "gitTag": "Copter-4.2.4",
       "gitSha": "245996c8609e683ad4bb988473df288314bb2599",
       "legacySourceStamp": "Generated from git tag Copter-4.2.4 on 2025-05-26 19:05:32",
-      "parameters": 392
+      "parameters": 507
     },
     {
       "family": "Copter",
@@ -146,7 +146,7 @@
       "gitTag": "Copter-4.1.6",
       "gitSha": "7898097b0c71b5fce361e33b5847b89a923c369d",
       "legacySourceStamp": "Generated from git tag Copter-4.1.6 on 2025-05-26 19:05:31",
-      "parameters": 374
+      "parameters": 486
     },
     {
       "family": "Plane",
@@ -156,7 +156,7 @@
       "gitTag": "Plane-4.4.4",
       "gitSha": "16b783822905668b160b0eb1ef5599ce0d3a0231",
       "legacySourceStamp": "Generated from git tag Plane-4.4.4 on 2024-10-28 13:21:25",
-      "parameters": 418
+      "parameters": 668
     },
     {
       "family": "Plane",
@@ -166,7 +166,7 @@
       "gitTag": "Plane-4.3.8",
       "gitSha": "68249e1d07dfb6a9c5b4d5d1e3bdbed1a88ea1a9",
       "legacySourceStamp": "Generated from git tag Plane-4.3.8 on 2025-05-26 19:05:51",
-      "parameters": 398
+      "parameters": 640
     },
     {
       "family": "Plane",
@@ -176,7 +176,7 @@
       "gitTag": "Plane-4.1.7",
       "gitSha": "f9db02a376a0abc407276ee4155e5540a3bb383e",
       "legacySourceStamp": "Generated from git tag Plane-4.1.7 on 2025-05-26 19:05:48",
-      "parameters": 372
+      "parameters": 531
     },
     {
       "family": "Rover",
@@ -283,6 +283,706 @@
       "gitSha": "a6c06e8b1d605afacb25c82fa5069b8990a372c8",
       "legacySourceStamp": "Generated from git tag Tracker-4.5.7 on 2024-10-28 13:21:49",
       "parameters": 65
+    },
+    {
+      "family": "Copter",
+      "version": "3.1.5",
+      "sourceKind": "reconstructed",
+      "sourceUrl": "https://codeload.github.com/ArduPilot/ardupilot/tar.gz/ee63c88b553f3da71e41de9cee22ccad8f162a54",
+      "sourceSha256": "55b6e9b66776964989d724ba40cee4f1b25418b2e124bab204216fb4da301774",
+      "gitSha": "ee63c88b553f3da71e41de9cee22ccad8f162a54",
+      "parameters": 437,
+      "reconstruction": {
+        "tags": [
+          "ArduCopter-3.1.5"
+        ],
+        "boards": [],
+        "sourceArchiveSha256": "b637beba7b3be5b2e87e04d622669fb56ca736926685475057f0e0d56a13c515",
+        "vehicleGroup": "ArduCopter",
+        "vehicleArgument": "ArduCopter",
+        "generator": "Tools/autotest/param_metadata/param_parse.py",
+        "interpreter": "Python 2.7.18",
+        "uniqueKeys": 412
+      }
+    },
+    {
+      "family": "Copter",
+      "version": "3.2.1",
+      "sourceKind": "reconstructed",
+      "sourceUrl": "https://codeload.github.com/ArduPilot/ardupilot/tar.gz/36b405fb0b2b3ef77952e8c9f170dbcf1976cb30",
+      "sourceSha256": "b7472c2029e1b08841ef39af4ead15cdc8d4aaac0fdf560c8e9e651a13c3d962",
+      "gitSha": "36b405fb0b2b3ef77952e8c9f170dbcf1976cb30",
+      "parameters": 512,
+      "reconstruction": {
+        "tags": [],
+        "boards": [
+          {
+            "board": "apm1-heli",
+            "gitSha": "36b405fb0b2b3ef77952e8c9f170dbcf1976cb30",
+            "releaseUrl": "https://firmware.ardupilot.org/Copter/stable-3.2.1/apm1-heli/firmware-version.txt",
+            "commitUrl": "https://firmware.ardupilot.org/Copter/stable-3.2.1/apm1-heli/git-version.txt"
+          },
+          {
+            "board": "apm1-hexa",
+            "gitSha": "36b405fb0b2b3ef77952e8c9f170dbcf1976cb30",
+            "releaseUrl": "https://firmware.ardupilot.org/Copter/stable-3.2.1/apm1-hexa/firmware-version.txt",
+            "commitUrl": "https://firmware.ardupilot.org/Copter/stable-3.2.1/apm1-hexa/git-version.txt"
+          }
+        ],
+        "sourceArchiveSha256": "95254245bae7d227a841cda5a608e19c9c22da4e08a0c2bc821ec6414a2384de",
+        "vehicleGroup": "ArduCopter",
+        "vehicleArgument": "ArduCopter",
+        "generator": "Tools/autotest/param_metadata/param_parse.py",
+        "interpreter": "Python 2.7.18",
+        "uniqueKeys": 511
+      }
+    },
+    {
+      "family": "Copter",
+      "version": "3.4.6",
+      "sourceKind": "reconstructed",
+      "sourceUrl": "https://codeload.github.com/ArduPilot/ardupilot/tar.gz/e707341b730173483b8d100245b6406723128164",
+      "sourceSha256": "58f194d259514946b4b1e31882076949caa736456bbec4696c75390d48499171",
+      "gitSha": "e707341b730173483b8d100245b6406723128164",
+      "parameters": 752,
+      "reconstruction": {
+        "tags": [
+          "Copter-3.4.6"
+        ],
+        "boards": [
+          {
+            "board": "PX4-heli",
+            "gitSha": "e707341b730173483b8d100245b6406723128164",
+            "releaseUrl": "https://firmware.ardupilot.org/Copter/stable-3.4.6/PX4-heli/firmware-version.txt",
+            "commitUrl": "https://firmware.ardupilot.org/Copter/stable-3.4.6/PX4-heli/git-version.txt"
+          },
+          {
+            "board": "PX4-hexa",
+            "gitSha": "e707341b730173483b8d100245b6406723128164",
+            "releaseUrl": "https://firmware.ardupilot.org/Copter/stable-3.4.6/PX4-hexa/firmware-version.txt",
+            "commitUrl": "https://firmware.ardupilot.org/Copter/stable-3.4.6/PX4-hexa/git-version.txt"
+          }
+        ],
+        "sourceArchiveSha256": "7e50de706b12fc649da37f2ef0150ea2e38aea809b373cf5833f87bcce7ec967",
+        "vehicleGroup": "ArduCopter",
+        "vehicleArgument": "ArduCopter",
+        "generator": "Tools/autotest/param_metadata/param_parse.py",
+        "interpreter": "Python 2.7.18",
+        "uniqueKeys": 749
+      }
+    },
+    {
+      "family": "Copter",
+      "version": "3.5.7",
+      "sourceKind": "reconstructed",
+      "sourceUrl": "https://codeload.github.com/ArduPilot/ardupilot/tar.gz/b11c6af3e1e7c460010f5076352a0635e925b134",
+      "sourceSha256": "b2bf4efcc1ab70f96f5e09b2711bcd839370f2ad43ed84436ae0b91575783d6b",
+      "gitSha": "b11c6af3e1e7c460010f5076352a0635e925b134",
+      "parameters": 1020,
+      "reconstruction": {
+        "tags": [
+          "Copter-3.5.7"
+        ],
+        "boards": [],
+        "sourceArchiveSha256": "51ff9c7a8fc700da31ce208ea1a51eb334f14ed6a2526d3a83bf0b02291ade93",
+        "vehicleGroup": "ArduCopter",
+        "vehicleArgument": "ArduCopter",
+        "generator": "Tools/autotest/param_metadata/param_parse.py",
+        "interpreter": "Python 2.7.18",
+        "uniqueKeys": 999
+      }
+    },
+    {
+      "family": "Copter",
+      "version": "3.6.12",
+      "sourceKind": "reconstructed",
+      "sourceUrl": "https://codeload.github.com/ArduPilot/ardupilot/tar.gz/cb570c06ec522567e527e45c99d8c1078d25beaf",
+      "sourceSha256": "2566bba7f78b8bb2bab28705d5e401aae95c38bac39e733699b66f6e9b084955",
+      "gitSha": "cb570c06ec522567e527e45c99d8c1078d25beaf",
+      "parameters": 1480,
+      "reconstruction": {
+        "tags": [
+          "Copter-3.6.12"
+        ],
+        "boards": [
+          {
+            "board": "Pixhawk1",
+            "gitSha": "cb570c06ec522567e527e45c99d8c1078d25beaf",
+            "releaseUrl": "https://firmware.ardupilot.org/Copter/stable-3.6.12/Pixhawk1/firmware-version.txt",
+            "commitUrl": "https://firmware.ardupilot.org/Copter/stable-3.6.12/Pixhawk1/git-version.txt"
+          },
+          {
+            "board": "fmuv3",
+            "gitSha": "cb570c06ec522567e527e45c99d8c1078d25beaf",
+            "releaseUrl": "https://firmware.ardupilot.org/Copter/stable-3.6.12/fmuv3/firmware-version.txt",
+            "commitUrl": "https://firmware.ardupilot.org/Copter/stable-3.6.12/fmuv3/git-version.txt"
+          }
+        ],
+        "sourceArchiveSha256": "f5206538857fdc9eb7dc0489c66ba0b2f18b079b8b2a456f11fd3edf43cad07b",
+        "vehicleGroup": "ArduCopter",
+        "vehicleArgument": "ArduCopter",
+        "generator": "Tools/autotest/param_metadata/param_parse.py",
+        "interpreter": "Python 2.7.18",
+        "uniqueKeys": 1457
+      }
+    },
+    {
+      "family": "Copter",
+      "version": "4.0.8",
+      "sourceKind": "reconstructed",
+      "sourceUrl": "https://codeload.github.com/ArduPilot/ardupilot/tar.gz/f5f73769fe473f23d5f087f3296cb0d1e09b1622",
+      "sourceSha256": "a33d73b0a880b6ba97d9b345bcc338180f37176c0a566d0930a7b3a1a3cbfd0a",
+      "gitSha": "f5f73769fe473f23d5f087f3296cb0d1e09b1622",
+      "parameters": 2192,
+      "reconstruction": {
+        "tags": [],
+        "boards": [
+          {
+            "board": "CUAV-Nora-heli",
+            "gitSha": "f5f73769fe473f23d5f087f3296cb0d1e09b1622",
+            "releaseUrl": "https://firmware.ardupilot.org/Copter/stable-4.0.8/CUAV-Nora-heli/firmware-version.txt",
+            "commitUrl": "https://firmware.ardupilot.org/Copter/stable-4.0.8/CUAV-Nora-heli/git-version.txt"
+          },
+          {
+            "board": "CUAV-X7-heli",
+            "gitSha": "f5f73769fe473f23d5f087f3296cb0d1e09b1622",
+            "releaseUrl": "https://firmware.ardupilot.org/Copter/stable-4.0.8/CUAV-X7-heli/firmware-version.txt",
+            "commitUrl": "https://firmware.ardupilot.org/Copter/stable-4.0.8/CUAV-X7-heli/git-version.txt"
+          }
+        ],
+        "sourceArchiveSha256": "fb2ae9677c52382460b77c3b95559c04c583746be12f7c2bbad848687c07d52a",
+        "vehicleGroup": "ArduCopter",
+        "vehicleArgument": "ArduCopter",
+        "generator": "Tools/autotest/param_metadata/param_parse.py",
+        "interpreter": "Python 3.12",
+        "uniqueKeys": 2163
+      }
+    },
+    {
+      "family": "Plane",
+      "version": "3.0.3",
+      "sourceKind": "reconstructed",
+      "sourceUrl": "https://codeload.github.com/ArduPilot/ardupilot/tar.gz/8c5226a17a57bf10fa73373c8a2f4941a7df75f3",
+      "sourceSha256": "f331086e804f66a8059b2b3438e8969d102a8db98c9962998a5976dd14df3e46",
+      "gitSha": "8c5226a17a57bf10fa73373c8a2f4941a7df75f3",
+      "parameters": 411,
+      "reconstruction": {
+        "tags": [
+          "ArduPlane-3.0.3"
+        ],
+        "boards": [],
+        "sourceArchiveSha256": "7c6bee605de71edde920734666a715d396eb6dcd13d38a62a9337bcb47622354",
+        "vehicleGroup": "ArduPlane",
+        "vehicleArgument": "ArduPlane",
+        "generator": "Tools/autotest/param_metadata/param_parse.py",
+        "interpreter": "Python 2.7.18",
+        "uniqueKeys": 410
+      }
+    },
+    {
+      "family": "Plane",
+      "version": "3.1.0",
+      "sourceKind": "reconstructed",
+      "sourceUrl": "https://codeload.github.com/ArduPilot/ardupilot/tar.gz/e880de67edc83ea60f0e32b0dc83240f6a1e2efe",
+      "sourceSha256": "121505a71e64c1e5a948ce5552196cc3a934bb309f63a70d4f594e7d3eb59607",
+      "gitSha": "e880de67edc83ea60f0e32b0dc83240f6a1e2efe",
+      "parameters": 460,
+      "reconstruction": {
+        "tags": [
+          "ArduPlane-3.1.0"
+        ],
+        "boards": [],
+        "sourceArchiveSha256": "e63cb7629fac10f5fb5917a82f3e63c66f96f2820ad719361fce6ee981f18b66",
+        "vehicleGroup": "ArduPlane",
+        "vehicleArgument": "ArduPlane",
+        "generator": "Tools/autotest/param_metadata/param_parse.py",
+        "interpreter": "Python 2.7.18",
+        "uniqueKeys": 460
+      }
+    },
+    {
+      "family": "Plane",
+      "version": "3.2.2",
+      "sourceKind": "reconstructed",
+      "sourceUrl": "https://codeload.github.com/ArduPilot/ardupilot/tar.gz/7cd0ce6713525f5e3566b644c154a7f47bed4af3",
+      "sourceSha256": "ddef88f540564f2694fb010c8eeac7e6ac90bf66c4a26ff126676ce3ff18cd70",
+      "gitSha": "7cd0ce6713525f5e3566b644c154a7f47bed4af3",
+      "parameters": 528,
+      "reconstruction": {
+        "tags": [
+          "ArduPlane-3.2.2"
+        ],
+        "boards": [],
+        "sourceArchiveSha256": "210355181b451871d7e4bf49c5567e29096c7cca2174c22ab8d299aa1738c312",
+        "vehicleGroup": "ArduPlane",
+        "vehicleArgument": "ArduPlane",
+        "generator": "Tools/autotest/param_metadata/param_parse.py",
+        "interpreter": "Python 2.7.18",
+        "uniqueKeys": 528
+      }
+    },
+    {
+      "family": "Plane",
+      "version": "3.3.0",
+      "sourceKind": "reconstructed",
+      "sourceUrl": "https://codeload.github.com/ArduPilot/ardupilot/tar.gz/6be0932d82d21893738ea36b245f9109e1a09542",
+      "sourceSha256": "e28f0508b5e21ee185c23bcfae52099da78beb0af3766e8ec6a5267b2656ee93",
+      "gitSha": "6be0932d82d21893738ea36b245f9109e1a09542",
+      "parameters": 565,
+      "reconstruction": {
+        "tags": [
+          "ArduPlane-3.3.0"
+        ],
+        "boards": [],
+        "sourceArchiveSha256": "f808004282ccd1dcf491dbef6da7f1075e74a9b12ba82daa544750eaa1461698",
+        "vehicleGroup": "ArduPlane",
+        "vehicleArgument": "ArduPlane",
+        "generator": "Tools/autotest/param_metadata/param_parse.py",
+        "interpreter": "Python 2.7.18",
+        "uniqueKeys": 565
+      }
+    },
+    {
+      "family": "Plane",
+      "version": "3.5.3",
+      "sourceKind": "reconstructed",
+      "sourceUrl": "https://codeload.github.com/ArduPilot/ardupilot/tar.gz/b8461671034bac7950fbd5549a436a71a6481f59",
+      "sourceSha256": "3514f10048580882dd6599b8bb97951727ea883eebb01b932b8d0167bdfdeef0",
+      "gitSha": "b8461671034bac7950fbd5549a436a71a6481f59",
+      "parameters": 750,
+      "reconstruction": {
+        "tags": [
+          "ArduPlane-3.5.3"
+        ],
+        "boards": [],
+        "sourceArchiveSha256": "fcc120b1ff8a95fcab8545c5f2fd8b095d624ef9928801d56dfb87e505480091",
+        "vehicleGroup": "ArduPlane",
+        "vehicleArgument": "ArduPlane",
+        "generator": "Tools/autotest/param_metadata/param_parse.py",
+        "interpreter": "Python 2.7.18",
+        "uniqueKeys": 750
+      }
+    },
+    {
+      "family": "Plane",
+      "version": "3.6.0",
+      "sourceKind": "reconstructed",
+      "sourceUrl": "https://codeload.github.com/ArduPilot/ardupilot/tar.gz/f8e0e91cbd7dc1d585690d858cf2d65eee076923",
+      "sourceSha256": "19cf78e97dd74bb56890c6890b435884d8d114b948b672442297e4097e6f882b",
+      "gitSha": "f8e0e91cbd7dc1d585690d858cf2d65eee076923",
+      "parameters": 799,
+      "reconstruction": {
+        "tags": [
+          "ArduPlane-3.6.0"
+        ],
+        "boards": [],
+        "sourceArchiveSha256": "bc2103c92d3f687e4a4ffac9866b87549de0a9c574ebb349556c10943dfa9dcd",
+        "vehicleGroup": "ArduPlane",
+        "vehicleArgument": "ArduPlane",
+        "generator": "Tools/autotest/param_metadata/param_parse.py",
+        "interpreter": "Python 2.7.18",
+        "uniqueKeys": 799
+      }
+    },
+    {
+      "family": "Plane",
+      "version": "3.7.1",
+      "sourceKind": "reconstructed",
+      "sourceUrl": "https://codeload.github.com/ArduPilot/ardupilot/tar.gz/22b5c4155c2cbcf7ae528942c21d16ab73dbae18",
+      "sourceSha256": "e281271029397391a5081a26e0f0cd16855a4e4d598e184976e059d4a3ee0227",
+      "gitSha": "22b5c4155c2cbcf7ae528942c21d16ab73dbae18",
+      "parameters": 848,
+      "reconstruction": {
+        "tags": [
+          "ArduPlane-3.7.1"
+        ],
+        "boards": [],
+        "sourceArchiveSha256": "60525f6a3b3a39fd54d802db7041ed445d85a93732199867d1fcf05d86a9813c",
+        "vehicleGroup": "ArduPlane",
+        "vehicleArgument": "ArduPlane",
+        "generator": "Tools/autotest/param_metadata/param_parse.py",
+        "interpreter": "Python 2.7.18",
+        "uniqueKeys": 848
+      }
+    },
+    {
+      "family": "Plane",
+      "version": "3.8.5",
+      "sourceKind": "reconstructed",
+      "sourceUrl": "https://codeload.github.com/ArduPilot/ardupilot/tar.gz/7dc5e040e1770941f573469f92fef215c9ed6fb2",
+      "sourceSha256": "c30e0093f58ead0e5a9bd4d036bced22f8177b0e32614b0ec874f5f8060c5746",
+      "gitSha": "7dc5e040e1770941f573469f92fef215c9ed6fb2",
+      "parameters": 1137,
+      "reconstruction": {
+        "tags": [
+          "ArduPlane-3.8.5"
+        ],
+        "boards": [],
+        "sourceArchiveSha256": "dd160b0c3e55a48da63d2728f206664c9cfdba00c4ddef4e5a96c31dd5d6d682",
+        "vehicleGroup": "ArduPlane",
+        "vehicleArgument": "ArduPlane",
+        "generator": "Tools/autotest/param_metadata/param_parse.py",
+        "interpreter": "Python 2.7.18",
+        "uniqueKeys": 1137
+      }
+    },
+    {
+      "family": "Plane",
+      "version": "3.9.11",
+      "sourceKind": "reconstructed",
+      "sourceUrl": "https://codeload.github.com/ArduPilot/ardupilot/tar.gz/a23329b223ae05f27d95a2416fabbbf48761fab5",
+      "sourceSha256": "a7a7afa86e1b89a9ce66e0863e5cf82bbaa7398871bee08312b355d2d8513a29",
+      "gitSha": "a23329b223ae05f27d95a2416fabbbf48761fab5",
+      "parameters": 1600,
+      "reconstruction": {
+        "tags": [
+          "ArduPlane-3.9.11"
+        ],
+        "boards": [
+          {
+            "board": "Pixhawk1",
+            "gitSha": "a23329b223ae05f27d95a2416fabbbf48761fab5",
+            "releaseUrl": "https://firmware.ardupilot.org/Plane/stable-3.9.11/Pixhawk1/firmware-version.txt",
+            "commitUrl": "https://firmware.ardupilot.org/Plane/stable-3.9.11/Pixhawk1/git-version.txt"
+          },
+          {
+            "board": "fmuv3",
+            "gitSha": "a23329b223ae05f27d95a2416fabbbf48761fab5",
+            "releaseUrl": "https://firmware.ardupilot.org/Plane/stable-3.9.11/fmuv3/firmware-version.txt",
+            "commitUrl": "https://firmware.ardupilot.org/Plane/stable-3.9.11/fmuv3/git-version.txt"
+          }
+        ],
+        "sourceArchiveSha256": "c8ef26663150b85dfcec79031b577e67ba50511fa60d93a401f32753483baf92",
+        "vehicleGroup": "ArduPlane",
+        "vehicleArgument": "ArduPlane",
+        "generator": "Tools/autotest/param_metadata/param_parse.py",
+        "interpreter": "Python 2.7.18",
+        "uniqueKeys": 1600
+      }
+    },
+    {
+      "family": "Plane",
+      "version": "4.0.9",
+      "sourceKind": "reconstructed",
+      "sourceUrl": "https://codeload.github.com/ArduPilot/ardupilot/tar.gz/a632c813bcee309bcf80ddf65bf097b738e349c0",
+      "sourceSha256": "e349e19261d99ffe59edc12604aa0cc155921d4c3bf506000ad4d5f2095ef6f8",
+      "gitSha": "a632c813bcee309bcf80ddf65bf097b738e349c0",
+      "parameters": 2201,
+      "reconstruction": {
+        "tags": [
+          "ArduPlane-4.0.9"
+        ],
+        "boards": [
+          {
+            "board": "CubeOrange",
+            "gitSha": "a632c813bcee309bcf80ddf65bf097b738e349c0",
+            "releaseUrl": "https://firmware.ardupilot.org/Plane/stable-4.0.9/CubeOrange/firmware-version.txt",
+            "commitUrl": "https://firmware.ardupilot.org/Plane/stable-4.0.9/CubeOrange/git-version.txt"
+          },
+          {
+            "board": "Pixhawk1",
+            "gitSha": "a632c813bcee309bcf80ddf65bf097b738e349c0",
+            "releaseUrl": "https://firmware.ardupilot.org/Plane/stable-4.0.9/Pixhawk1/firmware-version.txt",
+            "commitUrl": "https://firmware.ardupilot.org/Plane/stable-4.0.9/Pixhawk1/git-version.txt"
+          }
+        ],
+        "sourceArchiveSha256": "1c75edf537ffa82b15b4f51acdfe4c62269bd851649da732d736b1a2aced7086",
+        "vehicleGroup": "ArduPlane",
+        "vehicleArgument": "ArduPlane",
+        "generator": "Tools/autotest/param_metadata/param_parse.py",
+        "interpreter": "Python 3.12",
+        "uniqueKeys": 2201
+      }
+    },
+    {
+      "family": "Plane",
+      "version": "4.2.3",
+      "sourceKind": "reconstructed",
+      "sourceUrl": "https://codeload.github.com/ArduPilot/ardupilot/tar.gz/55685c43ac88a54273ee6ab518bfe4a8dcf626df",
+      "sourceSha256": "924f0ce1e65e6381db9be124b4dcbecc5dd52bdc7344e498c382f522d34ff8ad",
+      "gitSha": "55685c43ac88a54273ee6ab518bfe4a8dcf626df",
+      "parameters": 3055,
+      "reconstruction": {
+        "tags": [],
+        "boards": [
+          {
+            "board": "CubeOrange",
+            "gitSha": "55685c43ac88a54273ee6ab518bfe4a8dcf626df",
+            "releaseUrl": "https://firmware.ardupilot.org/Plane/stable-4.2.3/CubeOrange/firmware-version.txt",
+            "commitUrl": "https://firmware.ardupilot.org/Plane/stable-4.2.3/CubeOrange/git-version.txt"
+          },
+          {
+            "board": "Pixhawk1",
+            "gitSha": "55685c43ac88a54273ee6ab518bfe4a8dcf626df",
+            "releaseUrl": "https://firmware.ardupilot.org/Plane/stable-4.2.3/Pixhawk1/firmware-version.txt",
+            "commitUrl": "https://firmware.ardupilot.org/Plane/stable-4.2.3/Pixhawk1/git-version.txt"
+          }
+        ],
+        "sourceArchiveSha256": "7d94b18d79e9d5da2ee5c64b4de17c112c52cb2e9bdfeacd48c8a16b5f8abd0e",
+        "vehicleGroup": "ArduPlane",
+        "vehicleArgument": "ArduPlane",
+        "generator": "Tools/autotest/param_metadata/param_parse.py",
+        "interpreter": "Python 3.12",
+        "uniqueKeys": 3055
+      }
+    },
+    {
+      "family": "Rover",
+      "version": "3.2.3",
+      "sourceKind": "reconstructed",
+      "sourceUrl": "https://codeload.github.com/ArduPilot/ardupilot/tar.gz/261f998fe08713b40353ed6974d00e038a2db30b",
+      "sourceSha256": "fd26d3c8da5ca9a630114b4e9c5946dd9f85a10a26fcf59f86c54d6e6645aa5c",
+      "gitSha": "261f998fe08713b40353ed6974d00e038a2db30b",
+      "parameters": 811,
+      "reconstruction": {
+        "tags": [
+          "Rover-3.2.3"
+        ],
+        "boards": [],
+        "sourceArchiveSha256": "5c9e5b8f2ad9a77e9bf19f8115dbc2a13709eab046a3b5c256cce58126d7b0ed",
+        "vehicleGroup": "APMrover2",
+        "vehicleArgument": "APMrover2",
+        "generator": "Tools/autotest/param_metadata/param_parse.py",
+        "interpreter": "Python 2.7.18",
+        "uniqueKeys": 811
+      }
+    },
+    {
+      "family": "Rover",
+      "version": "3.3.0",
+      "sourceKind": "reconstructed",
+      "sourceUrl": "https://codeload.github.com/ArduPilot/ardupilot/tar.gz/2e0a474a00043b6cf6d72f0edc3e1aac51e9d1e2",
+      "sourceSha256": "9eeeb9f3b665b4f784502e936afedf5817f834b2fa923672df25ee7128410f5f",
+      "gitSha": "2e0a474a00043b6cf6d72f0edc3e1aac51e9d1e2",
+      "parameters": 900,
+      "reconstruction": {
+        "tags": [
+          "Rover-3.3.0"
+        ],
+        "boards": [],
+        "sourceArchiveSha256": "ceff35f4ed0c5d14f332d53009136b22714eb803fb066ac6cb7fb7499161825e",
+        "vehicleGroup": "APMrover2",
+        "vehicleArgument": "APMrover2",
+        "generator": "Tools/autotest/param_metadata/param_parse.py",
+        "interpreter": "Python 2.7.18",
+        "uniqueKeys": 900
+      }
+    },
+    {
+      "family": "Rover",
+      "version": "3.4.2",
+      "sourceKind": "reconstructed",
+      "sourceUrl": "https://codeload.github.com/ArduPilot/ardupilot/tar.gz/318a941d15c9d5e4a76b73541eac15cd0f3d50f9",
+      "sourceSha256": "545f87317f8224059f6abafec4ffe749259d7bf0984352c1301f2dd75abd502c",
+      "gitSha": "318a941d15c9d5e4a76b73541eac15cd0f3d50f9",
+      "parameters": 937,
+      "reconstruction": {
+        "tags": [
+          "Rover-3.4.2"
+        ],
+        "boards": [
+          {
+            "board": "fmuv3",
+            "gitSha": "318a941d15c9d5e4a76b73541eac15cd0f3d50f9",
+            "releaseUrl": "https://firmware.ardupilot.org/Rover/stable-3.4.2/fmuv3/firmware-version.txt",
+            "commitUrl": "https://firmware.ardupilot.org/Rover/stable-3.4.2/fmuv3/git-version.txt"
+          },
+          {
+            "board": "fmuv2",
+            "gitSha": "318a941d15c9d5e4a76b73541eac15cd0f3d50f9",
+            "releaseUrl": "https://firmware.ardupilot.org/Rover/stable-3.4.2/fmuv2/firmware-version.txt",
+            "commitUrl": "https://firmware.ardupilot.org/Rover/stable-3.4.2/fmuv2/git-version.txt"
+          }
+        ],
+        "sourceArchiveSha256": "f3b07e120abaf5145b2263c7dfc5ceddc0d6b87c1b4e70de31db9622e12f9390",
+        "vehicleGroup": "APMrover2",
+        "vehicleArgument": "APMrover2",
+        "generator": "Tools/autotest/param_metadata/param_parse.py",
+        "interpreter": "Python 2.7.18",
+        "uniqueKeys": 937
+      }
+    },
+    {
+      "family": "Rover",
+      "version": "3.5.2",
+      "sourceKind": "reconstructed",
+      "sourceUrl": "https://codeload.github.com/ArduPilot/ardupilot/tar.gz/16a1b5fc413610cd7adc73cc12df5b378b0d9e93",
+      "sourceSha256": "580f97d0d2e5eca7c108582c7cb269a61b1f65d83eb6e9b4bfe64880184d9ad6",
+      "gitSha": "16a1b5fc413610cd7adc73cc12df5b378b0d9e93",
+      "parameters": 1631,
+      "reconstruction": {
+        "tags": [
+          "Rover-3.5.2"
+        ],
+        "boards": [
+          {
+            "board": "Pixhawk1",
+            "gitSha": "16a1b5fc413610cd7adc73cc12df5b378b0d9e93",
+            "releaseUrl": "https://firmware.ardupilot.org/Rover/stable-3.5.2/Pixhawk1/firmware-version.txt",
+            "commitUrl": "https://firmware.ardupilot.org/Rover/stable-3.5.2/Pixhawk1/git-version.txt"
+          },
+          {
+            "board": "fmuv3",
+            "gitSha": "16a1b5fc413610cd7adc73cc12df5b378b0d9e93",
+            "releaseUrl": "https://firmware.ardupilot.org/Rover/stable-3.5.2/fmuv3/firmware-version.txt",
+            "commitUrl": "https://firmware.ardupilot.org/Rover/stable-3.5.2/fmuv3/git-version.txt"
+          }
+        ],
+        "sourceArchiveSha256": "c7ae93f9761f0eb8d021272ae0d4d6f5b579a5201164ceb62194e7d3a3b33215",
+        "vehicleGroup": "APMrover2",
+        "vehicleArgument": "APMrover2",
+        "generator": "Tools/autotest/param_metadata/param_parse.py",
+        "interpreter": "Python 3.12",
+        "uniqueKeys": 1631
+      }
+    },
+    {
+      "family": "Rover",
+      "version": "4.0.0",
+      "sourceKind": "reconstructed",
+      "sourceUrl": "https://codeload.github.com/ArduPilot/ardupilot/tar.gz/0e52bafa531940033a92d49a77160086742f8edc",
+      "sourceSha256": "bba0dee7f5306213c246920c9895b56c641611288215d46a0aa7fcfaf1f683df",
+      "gitSha": "0e52bafa531940033a92d49a77160086742f8edc",
+      "parameters": 1955,
+      "reconstruction": {
+        "tags": [
+          "Rover-4.0.0"
+        ],
+        "boards": [
+          {
+            "board": "CubeOrange",
+            "gitSha": "0e52bafa531940033a92d49a77160086742f8edc",
+            "releaseUrl": "https://firmware.ardupilot.org/Rover/stable-4.0.0/CubeOrange/firmware-version.txt",
+            "commitUrl": "https://firmware.ardupilot.org/Rover/stable-4.0.0/CubeOrange/git-version.txt"
+          },
+          {
+            "board": "Pixhawk1",
+            "gitSha": "0e52bafa531940033a92d49a77160086742f8edc",
+            "releaseUrl": "https://firmware.ardupilot.org/Rover/stable-4.0.0/Pixhawk1/firmware-version.txt",
+            "commitUrl": "https://firmware.ardupilot.org/Rover/stable-4.0.0/Pixhawk1/git-version.txt"
+          }
+        ],
+        "sourceArchiveSha256": "d4c294918312c5477efc61a3289e88a40e91b05b1ae6b2967318fb824771dae4",
+        "vehicleGroup": "APMrover2",
+        "vehicleArgument": "APMrover2",
+        "generator": "Tools/autotest/param_metadata/param_parse.py",
+        "interpreter": "Python 3.12",
+        "uniqueKeys": 1955
+      }
+    },
+    {
+      "family": "Sub",
+      "version": "3.5.4",
+      "sourceKind": "reconstructed",
+      "sourceUrl": "https://codeload.github.com/ArduPilot/ardupilot/tar.gz/05fed49b8ee1db3c6bca924e0b334b2e0ece980d",
+      "sourceSha256": "77a339d1326e9e9fede152970181f1f589a1fe94417e5c789b6c3f22f7cbc84e",
+      "gitSha": "05fed49b8ee1db3c6bca924e0b334b2e0ece980d",
+      "parameters": 863,
+      "reconstruction": {
+        "tags": [
+          "ArduSub-3.5.4"
+        ],
+        "boards": [
+          {
+            "board": "navio2",
+            "gitSha": "05fed49b8ee1db3c6bca924e0b334b2e0ece980d",
+            "releaseUrl": "https://firmware.ardupilot.org/Sub/stable-3.5.4/navio2/firmware-version.txt",
+            "commitUrl": "https://firmware.ardupilot.org/Sub/stable-3.5.4/navio2/git-version.txt"
+          }
+        ],
+        "sourceArchiveSha256": "b34d15503f86c53a49688bc4472f54494068c277f9ce08ef9dfb09c95e8dd9b7",
+        "vehicleGroup": "ArduSub",
+        "vehicleArgument": "ArduSub",
+        "generator": "Tools/autotest/param_metadata/param_parse.py",
+        "interpreter": "Python 2.7.18",
+        "uniqueKeys": 863
+      }
+    },
+    {
+      "family": "Tracker",
+      "version": "0.7.2",
+      "sourceKind": "reconstructed",
+      "sourceUrl": "https://codeload.github.com/ArduPilot/ardupilot/tar.gz/705d3d567abfe8d86cbc5f3120bc6b09b879476f",
+      "sourceSha256": "63b6ca1455562d6e4ddf83e2bead5aebe71bd20dc627bdaa8a712e59fb1df084",
+      "gitSha": "705d3d567abfe8d86cbc5f3120bc6b09b879476f",
+      "parameters": 178,
+      "reconstruction": {
+        "tags": [],
+        "boards": [
+          {
+            "board": "apm2",
+            "gitSha": "705d3d567abfe8d86cbc5f3120bc6b09b879476f",
+            "releaseUrl": "https://firmware.ardupilot.org/AntennaTracker/stable-0.7.2/apm2/firmware-version.txt",
+            "commitUrl": "https://firmware.ardupilot.org/AntennaTracker/stable-0.7.2/apm2/git-version.txt"
+          }
+        ],
+        "sourceArchiveSha256": "bef44fa0cd4694faa3d6788dff06233d94e3f6039c1d13541dcf21643965c1c4",
+        "vehicleGroup": "AntennaTracker",
+        "vehicleArgument": "AntennaTracker",
+        "generator": "Tools/autotest/param_metadata/param_parse.py",
+        "interpreter": "Python 2.7.18",
+        "uniqueKeys": 178
+      }
+    },
+    {
+      "family": "Tracker",
+      "version": "1.0.0",
+      "sourceKind": "reconstructed",
+      "sourceUrl": "https://codeload.github.com/ArduPilot/ardupilot/tar.gz/cdf3ba839b38956da8cc8bc0639977a36432aefd",
+      "sourceSha256": "1ce33e8ee353f7726292c8429ac350c0a4fad786f07ce2ff579de7fd0d9d310f",
+      "gitSha": "cdf3ba839b38956da8cc8bc0639977a36432aefd",
+      "parameters": 230,
+      "reconstruction": {
+        "tags": [],
+        "boards": [
+          {
+            "board": "navio2",
+            "gitSha": "cdf3ba839b38956da8cc8bc0639977a36432aefd",
+            "releaseUrl": "https://firmware.ardupilot.org/AntennaTracker/stable-1.0.0/navio2/firmware-version.txt",
+            "commitUrl": "https://firmware.ardupilot.org/AntennaTracker/stable-1.0.0/navio2/git-version.txt"
+          }
+        ],
+        "sourceArchiveSha256": "752bb5c35960d9f71b3bbd1fec6e5a946391dc1385690c315b51c21a0e0f81a8",
+        "vehicleGroup": "AntennaTracker",
+        "vehicleArgument": "AntennaTracker",
+        "generator": "Tools/autotest/param_metadata/param_parse.py",
+        "interpreter": "Python 2.7.18",
+        "uniqueKeys": 230
+      }
+    },
+    {
+      "family": "Tracker",
+      "version": "1.1.0",
+      "sourceKind": "reconstructed",
+      "sourceUrl": "https://codeload.github.com/ArduPilot/ardupilot/tar.gz/e22170628d5a03a18c0445c5af2d3f3688c37ed4",
+      "sourceSha256": "9d57dc6207650d97a13a223806d300444a310aaa5c80025e70dc7c34e28779d7",
+      "gitSha": "e22170628d5a03a18c0445c5af2d3f3688c37ed4",
+      "parameters": 551,
+      "reconstruction": {
+        "tags": [
+          "AntennaTracker-1.1.0"
+        ],
+        "boards": [
+          {
+            "board": "CubeOrange",
+            "gitSha": "e22170628d5a03a18c0445c5af2d3f3688c37ed4",
+            "releaseUrl": "https://firmware.ardupilot.org/AntennaTracker/stable-1.1.0/CubeOrange/firmware-version.txt",
+            "commitUrl": "https://firmware.ardupilot.org/AntennaTracker/stable-1.1.0/CubeOrange/git-version.txt"
+          },
+          {
+            "board": "Pixhawk1",
+            "gitSha": "e22170628d5a03a18c0445c5af2d3f3688c37ed4",
+            "releaseUrl": "https://firmware.ardupilot.org/AntennaTracker/stable-1.1.0/Pixhawk1/firmware-version.txt",
+            "commitUrl": "https://firmware.ardupilot.org/AntennaTracker/stable-1.1.0/Pixhawk1/git-version.txt"
+          }
+        ],
+        "sourceArchiveSha256": "535208f4a3e565f0fe1200b8a3a3124525e31793241dba81f9a2189bf31fda59",
+        "vehicleGroup": "AntennaTracker",
+        "vehicleArgument": "AntennaTracker",
+        "generator": "Tools/autotest/param_metadata/param_parse.py",
+        "interpreter": "Python 3.12",
+        "uniqueKeys": 551
+      }
     }
   ]
 }
