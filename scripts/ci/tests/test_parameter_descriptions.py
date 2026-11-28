@@ -60,8 +60,8 @@ class ParameterCatalogTests(unittest.TestCase):
     def test_scope_counts_and_held_versions(self):
         notes = self.catalog['translations']
         descriptions = {(n['family'], v, n['parameter']) for n in notes if n['field'] == 'Description' for v in n['versions']}
-        self.assertEqual(1500, len(descriptions))
-        self.assertEqual(675, len({(f, p) for f, v, p in descriptions}))
+        self.assertEqual(1502, len(descriptions))
+        self.assertEqual(677, len({(f, p) for f, v, p in descriptions}))
         self.assertFalse(any(v == '4.7.2' for f, v, p in descriptions))
         excluded_copter = {'RTL_CONE_SLOPE', 'LAND_SPEED', 'LAND_SPD_MS', 'FS_GCS_ENABLE'}
         excluded_plane = {'TECS_CLMB_MAX', 'TECS_SINK_MIN', 'ROLL_LIMIT_DEG'}
@@ -80,6 +80,26 @@ class ParameterCatalogTests(unittest.TestCase):
             self.assertEqual(snapshots[0].get(field), source[field])
         self.assertEqual(source['gitSha'], snapshots[0].find('paramfile/firmware').get('git_sha'))
         self.assertEqual(4, source['parameters'])
+
+    def test_tracker_slice_is_pinned_and_contains_only_two_read_only_statistics(self):
+        release = self.bundle.find("release[@family='Tracker']")
+        self.assertEqual('4.7.1', release.get('version'))
+        self.assertEqual('143350e5806885fd34cd9c710cfbe6f9b758bee0260c5e081bfef6eab05e91fc', release.get('sourceSha256'))
+        self.assertEqual('dbe792162d06cab66c3475fd5556bf7a120f119e', release.get('gitSha'))
+        params = {p.get('name'): p for p in release.iter('param')}
+        self.assertEqual({'STAT_BOOTCNT', 'STAT_RUNTIME'}, set(params))
+        for name, units in [('STAT_BOOTCNT', None), ('STAT_RUNTIME', 's')]:
+            self.assertEqual('True', params[name].findtext("field[@name='ReadOnly']"))
+            self.assertEqual(units, params[name].findtext("field[@name='Units']"))
+            self.assertIsNone(params[name].find('values'))
+        notes = [t for t in self.catalog['translations'] if t['family'] == 'Tracker']
+        self.assertEqual(2, len(notes))
+        self.assertEqual(set(params), {t['parameter'] for t in notes})
+        self.assertTrue(all(t['versions'] == ['4.7.1'] and t['field'] == 'Description' for t in notes))
+        altered = copy.deepcopy(self.bundle)
+        altered.find("release[@family='Tracker']//param/field[@name='ReadOnly']").text = 'False'
+        with self.assertRaises(ValueError):
+            catalog_module.resource(self.catalog, altered)
 
     def test_copter_catalog_additions_are_version_exact_read_only_descriptions(self):
         # Snapshot of the original accepted coverage per version. This assertion
