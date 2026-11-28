@@ -1067,6 +1067,33 @@
         },
         "uniqueKeys": 173
       }
+    },
+    {
+      "family": "Rover",
+      "version": "4.7.2",
+      "sourceUrl": "https://firmware.ardupilot.org/Rover/stable-4.7.2/__METADATA__/apm.pdef.xml",
+      "sourceSha256": "92e9b6bf663ce0397cdb3fcf7a21588bb6ebbd4d61258f58d52ec12002501ab3",
+      "gitTag": "Rover-4.7.2",
+      "gitSha": "fb773567896014da007bca58358704d4a0d8516f",
+      "parameters": 636
+    },
+    {
+      "family": "Sub",
+      "version": "4.7.2",
+      "sourceUrl": "https://firmware.ardupilot.org/Sub/stable-4.7.2/__METADATA__/apm.pdef.xml",
+      "sourceSha256": "208a9d39de71985556f3fd37b6f69f7f145b484d281cba6c2249a97cd0f02926",
+      "gitTag": "Sub-4.7.2",
+      "gitSha": "fb773567896014da007bca58358704d4a0d8516f",
+      "parameters": 1271
+    },
+    {
+      "family": "Tracker",
+      "version": "4.7.2",
+      "sourceUrl": "https://firmware.ardupilot.org/AntennaTracker/stable-4.7.2/__METADATA__/apm.pdef.xml",
+      "sourceSha256": "98213dc4c796176399eeb3b860cd55bb9952ad094d4ec04125773694554492a3",
+      "gitTag": "Tracker-4.7.2",
+      "gitSha": "fb773567896014da007bca58358704d4a0d8516f",
+      "parameters": 355
     }
   ]
 }

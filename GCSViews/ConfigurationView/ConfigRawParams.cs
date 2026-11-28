@@ -1145,6 +1145,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             _filterTimer.Stop();
             Invoke((Action)delegate
            {
+               PrepareParameterDescriptions();
                filterList(txt_search.Text);
                optionsControlUpateBounds();
                ScheduleVisibleMetadataLoad();
