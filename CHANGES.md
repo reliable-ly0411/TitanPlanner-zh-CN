@@ -70,6 +70,10 @@ The Copter x simulation preset uses its own catalog defaults. If a required defa
 
 The top-right transparent logo preserves the supplied artwork and offers independent ArduPilot and GitHub links with keyboard access. Keyboard focus is indicated below the active half, keeping the artwork continuous during interaction. It stays visible as pages, menu visibility and window sizes change. Dark toolbar backgrounds use a thin neutral contour around the original black ink, with proportional gaps beside the connection button and window edge. Narrow windows keep the logo together in the menu overflow and retain the connection controls on the toolbar.
 
+## Tuning localization
+
+The enhanced Simplified Chinese basic and extended tuning screens localize the slider help, Copter TUNE choices and parameter rename warnings.
+
 ## Titan Dynamics System Theme
 The localized edition defaults to Mission Planner’s green `BurntKermit` theme for new installs. The bundled Titan Dynamics theme remains selectable; existing theme preferences are preserved. Theming also covers controls upstream leaves unthemed — `ListBox`, `PropertyGrid`, `MessagesList`, status tab, menu-bar icons, the Splash form, and toast notifications.
 

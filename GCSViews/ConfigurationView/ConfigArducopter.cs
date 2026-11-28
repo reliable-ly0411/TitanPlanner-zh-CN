@@ -23,6 +23,13 @@ namespace MissionPlanner.GCSViews.ConfigurationView
         public ConfigArducopter()
         {
             InitializeComponent();
+            ConfigureOptionDisplay(TUNE, index =>
+            {
+                string raw = TUNE.GetItemText(TUNE.Items[index]);
+                return TUNE.ParamName == "TUNE" && canPresentRcOption?.Invoke("TUNE") == true &&
+                    rcOptionFirmware == "ArduCopter2" ? FormatCopterTuneOption(raw) : raw;
+            });
+            ClientSizeChanged += (sender, args) => FitUnitWarning();
             ConfigureRcOptionDisplay(CH6_OPTION, "RC6_OPTION");
             ConfigureRcOptionDisplay(CH7_OPTION, "RC7_OPTION");
             ConfigureRcOptionDisplay(CH8_OPTION, "RC8_OPTION");
@@ -48,7 +55,21 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             return FlightDataActions.FormatAuxiliaryOption(rcOptionFirmware, pair.Key, raw, true);
         }
 
+        internal static string FormatCopterTuneOption(string label)
+        {
+            string key = "Copter TUNE: " + label;
+            string translated = UiText.Translate(key);
+            if (translated == key)
+                return label;
+            return label == "None" ? translated : translated + " (" + label + ")";
+        }
+
         private void ConfigureRcOptionDisplay(MavlinkComboBox combo, string modernKey)
+        {
+            ConfigureOptionDisplay(combo, index => GetRcOptionText(combo, index, modernKey));
+        }
+
+        private void ConfigureOptionDisplay(MavlinkComboBox combo, Func<int, string> getText)
         {
             if (CultureInfo.CurrentUICulture.Name != "zh-CN")
                 return;
@@ -61,13 +82,19 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             {
                 args.DrawBackground();
                 if (args.Index >= 0 && args.Index < combo.Items.Count)
-                    TextRenderer.DrawText(args.Graphics, GetRcOptionText(combo, args.Index, modernKey),
+                    TextRenderer.DrawText(args.Graphics, getText(args.Index),
                         combo.Font, args.Bounds, args.ForeColor,
                         flags | TextFormatFlags.VerticalCenter | TextFormatFlags.EndEllipsis);
                 args.DrawFocusRectangle();
             };
             string originalDescription = combo.AccessibleDescription;
-            Action refreshCaption = () => UpdateRcOptionCaption(combo, modernKey, originalDescription);
+            Action refreshCaption = () =>
+            {
+                int index = combo.SelectedIndex;
+                string caption = index >= 0 && index < combo.Items.Count ? getText(index) : null;
+                combo.AccessibleDescription = caption ?? originalDescription;
+                toolTip1.SetToolTip(combo, caption);
+            };
             combo.MouseEnter += (sender, args) => refreshCaption();
             combo.GotFocus += (sender, args) => refreshCaption();
             // Observe the standard UI event, not MavlinkComboBox's separate parameter event.
@@ -83,19 +110,11 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                 using (var graphics = combo.CreateGraphics())
                     for (int i = 0; i < combo.Items.Count; i++)
                         width = Math.Max(width, TextRenderer.MeasureText(graphics,
-                            GetRcOptionText(combo, i, modernKey), combo.Font,
+                            getText(i), combo.Font,
                             new Size(int.MaxValue, int.MaxValue), flags).Width +
                             SystemInformation.VerticalScrollBarWidth + 10);
                 combo.DropDownWidth = Math.Min(width, Screen.FromControl(combo).WorkingArea.Width);
             };
-        }
-
-        private void UpdateRcOptionCaption(MavlinkComboBox combo, string modernKey, string originalDescription)
-        {
-            int index = combo.SelectedIndex;
-            string caption = index >= 0 && index < combo.Items.Count ? GetRcOptionText(combo, index, modernKey) : null;
-            combo.AccessibleDescription = caption ?? originalDescription;
-            toolTip1.SetToolTip(combo, caption);
         }
 
         private void UpdateFilterCaptions(Func<string, bool> hasParameter)
@@ -184,12 +203,6 @@ namespace MissionPlanner.GCSViews.ConfigurationView
 
             changes.Clear();
 
-            // ensure the fields are populated before setting them
-            TUNE.setup(
-                ParameterMetaDataRepository
-                    .GetParameterOptionsInt("TUNE", MainV2.comPort.MAV.cs.firmware.ToString())
-                    .ToList(), "TUNE", MainV2.comPort.MAV.param);
-
             var owner = MainV2.comPort.MAV;
             var parameters = owner.param;
             rcOptionOwner = owner;
@@ -197,6 +210,9 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             canPresentRcOption = key => ReferenceEquals(MainV2.comPort.MAV, rcOptionOwner) &&
                 ReferenceEquals(owner.param, parameters) && owner.cs.firmware.ToString() == rcOptionFirmware &&
                 parameters.ContainsKey(key);
+
+            TUNE.setup(ParameterMetaDataRepository.GetParameterOptionsInt("TUNE", rcOptionFirmware),
+                "TUNE", parameters);
 
             CH6_OPTION.setup(new[] { "CH6_OPT", "CH6_OPTION", "RC6_OPTION", "RC6_OPTION" }, MainV2.comPort.MAV.param);
             CH7_OPTION.setup(new[] {"CH7_OPT", "CH7_OPTION", "RC7_OPTION", "RC7_OPTION"}, MainV2.comPort.MAV.param);
@@ -657,6 +673,22 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             EEPROM_View_float_TextChanged(sender, e);
         }
 
+        private void FitUnitWarning()
+        {
+            int left = lblUnitWarning.Left - AutoScrollPosition.X;
+            lblUnitWarning.MaximumSize = new Size(Math.Max(1, ClientSize.Width - left - 8), 0);
+        }
+
+        internal static string FormatUnitChangeWarning(string warning)
+        {
+            int separator = warning.IndexOf(": ", StringComparison.Ordinal);
+            if (separator < 0)
+                return warning;
+
+            int start = separator + 2;
+            return warning.Substring(0, start) + UiText.Translate(warning.Substring(start));
+        }
+
         private void OnEnter_NumUpDown(object sender, EventArgs e)
         {
             // show unit change warning for Copter 4.7 renamed parameters
@@ -666,7 +698,8 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                 var warning = ParamChanges47.changedByNewParamWarning(mnud.ParamName);
                 if (warning != null)
                 {
-                    lblUnitWarning.Text = UiText.Translate("Change in 4.7: ") + warning;
+                    FitUnitWarning();
+                    lblUnitWarning.Text = UiText.Translate("Change in 4.7: ") + FormatUnitChangeWarning(warning);
                     lblUnitWarning.Visible = true;
                     lblUnitWarning.ForeColor = Color.Red;
                     return;

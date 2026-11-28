@@ -25,6 +25,25 @@ namespace MissionPlanner.Controls
         public string DescriptionText;
 
         private int measuredDescriptionHeight;
+        private int fittedTitleHeight;
+        private int fittedDescriptionHeight;
+
+        public void FitTextAboveInputs()
+        {
+            int available = Math.Max(1, ClientSize.Width - 6);
+            using (var graphics = CreateGraphics())
+            {
+                fittedTitleHeight = (int)Math.Ceiling(graphics.MeasureString(LabelText, FontLabel, available).Height);
+                fittedDescriptionHeight = (int)Math.Ceiling(graphics.MeasureString(DescriptionText, Font, available).Height);
+            }
+
+            // The inputs are bottom-anchored. Change only the space above them.
+            int textBottom = fittedTitleHeight + fittedDescriptionHeight + 4;
+            int defaultTop = (int)Math.Ceiling(58 * DeviceDpi / 96.0);
+            int targetTop = Math.Max(defaultTop, textBottom);
+            Height += targetTop - trackBar1.Top;
+            Invalidate();
+        }
 
         // Opt-in GDI+ measurement for ADS-B; the input controls remain bottom-anchored.
         public void SetMeasuredDescription(string text)
@@ -175,11 +194,23 @@ namespace MissionPlanner.Controls
                 numericUpDown1.Visible = true;
             base.OnPaint(e);
 
-            e.Graphics.DrawString(LabelText, FontLabel, new SolidBrush(this.Parent.ForeColor), 3, 0);
-
-            e.Graphics.DrawString(DescriptionText, this.Font, new SolidBrush(this.Parent.ForeColor),
-                new RectangleF(3, 15, measuredDescriptionHeight == 0 ? Width : Math.Max(1, ClientSize.Width - 6),
-                    measuredDescriptionHeight == 0 ? 39 : measuredDescriptionHeight));
+            using (var brush = new SolidBrush(Parent.ForeColor))
+            {
+                if (fittedTitleHeight > 0)
+                {
+                    int available = Math.Max(1, ClientSize.Width - 6);
+                    e.Graphics.DrawString(LabelText, FontLabel, brush, new RectangleF(3, 0, available, fittedTitleHeight));
+                    e.Graphics.DrawString(DescriptionText, Font, brush,
+                        new RectangleF(3, fittedTitleHeight, available, fittedDescriptionHeight));
+                }
+                else
+                {
+                    e.Graphics.DrawString(LabelText, FontLabel, brush, 3, 0);
+                    e.Graphics.DrawString(DescriptionText, Font, brush,
+                        new RectangleF(3, 15, measuredDescriptionHeight == 0 ? Width : Math.Max(1, ClientSize.Width - 6),
+                            measuredDescriptionHeight == 0 ? 39 : measuredDescriptionHeight));
+                }
+            }
             /*
             e.Graphics.DrawString(LBL_min, this.Font, new SolidBrush(this.Parent.ForeColor),
                 new RectangleF(trackBar1.Left, trackBar1.Bottom - this.Font.Height, 100, this.Font.Height));

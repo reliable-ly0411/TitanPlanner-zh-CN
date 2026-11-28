@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
+using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 using System.Xml;
@@ -15,23 +16,21 @@ namespace MissionPlanner.GCSViews.ConfigurationView
     {
         internal static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private List<configitem> piditems = new List<configitem>();
-        private int y = 10;
+        private bool arrangingRanges;
 
         public ConfigSimplePids()
         {
             InitializeComponent();
+            panel1.AutoScroll = true;
+            panel1.ClientSizeChanged += (sender, args) => ArrangeRanges();
         }
 
         public void Activate()
         {
-            // prevent memory leak
-            foreach (Control ctl in panel1.Controls)
-            {
-                ctl.Dispose();
-            }
+            foreach (Control control in panel1.Controls.Cast<Control>().ToArray())
+                control.Dispose();
 
-            y = 10;
-
+            panel1.AutoScrollPosition = Point.Empty;
             LoadXML(Settings.GetRunningDirectory() + "acsimplepids.xml");
         }
 
@@ -117,6 +116,38 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                     }
                 }
             }
+
+            ArrangeRanges();
+        }
+
+        private void ArrangeRanges()
+        {
+            if (arrangingRanges)
+                return;
+
+            arrangingRanges = true;
+            panel1.SuspendLayout();
+            try
+            {
+                const int margin = 10;
+                // Reserve scrollbar space whether or not all rows fit at the current size.
+                int width = Math.Max(180, panel1.ClientSize.Width - 2 * margin -
+                    (panel1.VerticalScroll.Visible ? 0 : SystemInformation.VerticalScrollBarWidth));
+                int x = margin + panel1.AutoScrollPosition.X;
+                int y = margin + panel1.AutoScrollPosition.Y;
+                foreach (var range in panel1.Controls.OfType<RangeControl>())
+                {
+                    range.Location = new Point(x, y);
+                    range.Width = width;
+                    range.FitTextAboveInputs();
+                    y += range.Height;
+                }
+            }
+            finally
+            {
+                panel1.ResumeLayout();
+                arrangingRanges = false;
+            }
         }
 
         private void ProcessItem(configitem item)
@@ -150,12 +181,10 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                 if (increment.Length > 0)
                     float.TryParse(increment, NumberStyles.Float, CultureInfo.InvariantCulture, out incrementf);
 
-                var title = item.title == "Roll/Pitch Sensitivity:" ? UiText.Translate(item.title) : item.title;
-                var RNG = new RangeControl(item.paramname, item.desc, title, incrementf, 1, item.min, item.max,
-                    value.ToString());
+                var RNG = new RangeControl(item.paramname, UiText.Translate(item.desc ?? string.Empty),
+                    UiText.Translate(item.title ?? string.Empty), incrementf, 1, item.min, item.max, value.ToString());
                 RNG.Tag = item;
-
-                RNG.Location = new Point(10, y);
+                RNG.FontChanged += (sender, args) => ArrangeRanges();
 
                 RNG.AttachEvents();
 
@@ -164,8 +193,6 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                 ThemeManager.ApplyThemeTo(RNG);
 
                 panel1.Controls.Add(RNG);
-
-                y += RNG.Height;
             }
             catch (Exception ex)
             {
