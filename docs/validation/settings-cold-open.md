@@ -1,0 +1,25 @@
+# 首次打开地面站设置的只读测量设计
+
+从顶栏点「配置／调试」，到「地面站」内容首次绘出和界面恢复处理消息，各用了多久？测量对象是完整 Windows 应用的这一次导航。下列位置已在开发线 `cf8ae263` 核对，尚无本设计的 Windows 耗时样本。[问题和已有原窗口记录](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/issues/190)
+
+## 选取同一次导航
+
+- 用新进程记录第一次进入，保留隔离配置、窗口尺寸、实际 DPI、语言、主题和是否已有视频来源设置。顶栏入口是 `MenuTuning_Click`。若页面需要再点「地面站」，单记这次选择的时刻，剔出人为等候。直接选中和需手动选择的样本分别统计。[顶栏入口](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/blob/cf8ae263a885dd954a75db38973e8ead0f067deb/MainV2.cs#L1457)
+- 同一进程离开再进入，单列为热进程。`SWConfig` 注册为非持久页面，离开时切换器会关闭、释放并清掉旧控件。用每个页面实例的临时序号确认它是否重新构造。比较时同时注明进程是否冷启动、页面实例是否新建。操作系统文件缓存保留当时状态。[页面注册](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/blob/cf8ae263a885dd954a75db38973e8ead0f067deb/MainV2.cs#L3425) · [页面释放和重新创建](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/blob/cf8ae263a885dd954a75db38973e8ead0f067deb/ExtLibs/Controls/MainSwitcher.cs#L117)
+- 在同一进程、同一单调时钟上记录事件。每条只需导航序号、页面实例序号、阶段、开始或结束、线程号和相对时间。采集器只观察自然发生的调用。读取 `PageType`、`isPageCreated` 即可判断类型和创建状态，主动求值 `Page` 会创建控件并触发主题。以已有句柄标识实际目标，保留缺测标志。[懒创建属性](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/blob/cf8ae263a885dd954a75db38973e8ead0f067deb/ExtLibs/Controls/BackstageView/BackstageViewPage.cs#L46)
+
+## 采样位置
+
+| 需要回答的问题 | 采样边界 |
+| --- | --- |
+| 顶栏时间花在旧页、新宿主还是设置页？ | 在 `ShowScreen("SWConfig")` 入口记起点，分记旧页退出、新 `SoftwareConfig` 构造、外层 `ApplyTheme`、加入主容器并恢复布局、`ScreenShown`。注册后真正添加配置页的是 `SoftwareConfig_Load`。它在加载中还调用一次主题；用调用栈区分每次主题的对象与父阶段。 [主切换器](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/blob/cf8ae263a885dd954a75db38973e8ead0f067deb/ExtLibs/Controls/MainSwitcher.cs#L156) · [设置宿主 Load](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/blob/cf8ae263a885dd954a75db38973e8ead0f067deb/GCSViews/SoftwareConfig.cs#L158) · [加载中的主题](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/blob/cf8ae263a885dd954a75db38973e8ead0f067deb/GCSViews/SoftwareConfig.cs#L303) |
+| 谁首次构造了地面站设置？ | 在 `BackstageViewPage.Page` 已经进入创建分支时记录 `Activator.CreateInstance` 前后，另记该页主题回调前后。保留调用来源。`BackstageView_Load → UpdateDisplay` 可在选择之前取页并将其加到容器；`ActivatePage` 的跟踪回调也会访问该属性。程序启动时已注册跟踪，现有的切页调试计时在它之后才开始。 [首次创建和主题](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/blob/cf8ae263a885dd954a75db38973e8ead0f067deb/ExtLibs/Controls/BackstageView/BackstageViewPage.cs#L55) · [预先挂载](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/blob/cf8ae263a885dd954a75db38973e8ead0f067deb/ExtLibs/Controls/BackstageView/BackstageView.cs#L138) · [计时起点](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/blob/cf8ae263a885dd954a75db38973e8ead0f067deb/ExtLibs/Controls/BackstageView/BackstageView.cs#L528) · [跟踪注册](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/blob/cf8ae263a885dd954a75db38973e8ead0f067deb/Program.cs#L380) |
+| 构造、首次挂载和激活各用了多久？ | 在 `ConfigPlanner` 构造内分别圈出 `InitializeComponent` 和整个 `BuildLayout`，后者包含恢复布局的开销。在预先挂载及选择时的两个 `pnlPages.Controls.Add` 位置记录实际执行的一处；已挂载就记为已存在。用该实例 `IActivate.Activate()` 的进出界定业务激活。 [构造](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/blob/cf8ae263a885dd954a75db38973e8ead0f067deb/GCSViews/ConfigurationView/ConfigPlanner.cs#L29) · [预先加入](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/blob/cf8ae263a885dd954a75db38973e8ead0f067deb/ExtLibs/Controls/BackstageView/BackstageView.cs#L152) · [选择时加入与激活](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/blob/cf8ae263a885dd954a75db38973e8ead0f067deb/ExtLibs/Controls/BackstageView/BackstageView.cs#L574) |
+| 视频枚举是否占了这次激活？ | 对自然进入的 `Capture.getDevices()`、给视频来源赋 `DataSource`、`SelectedIndexChanged` 内枚举设备及格式分别计时。已保存来源可在 `Activate` 早段触发刷新，空列表可在 `EnsureVideoSourcesLoaded` 再次触发。以实际次数记账。只记录耗时、次数和成功／失败，省去设备名称、路径及配置值。 [早段恢复](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/blob/cf8ae263a885dd954a75db38973e8ead0f067deb/GCSViews/ConfigurationView/ConfigPlanner.cs#L948) · [空列表分支](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/blob/cf8ae263a885dd954a75db38973e8ead0f067deb/GCSViews/ConfigurationView/ConfigPlanner.cs#L996) · [列表绑定](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/blob/cf8ae263a885dd954a75db38973e8ead0f067deb/GCSViews/ConfigurationView/ConfigPlanner.cs#L1592) · [格式枚举](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/blob/cf8ae263a885dd954a75db38973e8ead0f067deb/GCSViews/ConfigurationView/ConfigPlanner.cs#L1063) |
+| 首绘与消息恢复在何时发生？ | 记录目标设置实例可见、已挂载后，首个有效绘制区域的 `WM_PAINT` 进入和返回。另记一次由现有宿主投递的轻量 UI 回调的投递、执行时刻，并核对两者属于同次导航。报告「首次绘制处理完成」和「消息队列可响应」各自的时间。宿主刷新、`ScreenShown` 和截图观察时刻都单列。实际呈现若只能从原窗口采样观察，报告末次未显示到首次已显示的区间。 [显示顺序](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/blob/cf8ae263a885dd954a75db38973e8ead0f067deb/ExtLibs/Controls/MainSwitcher.cs#L196) · [设置控件的绘制基类](https://github.com/reliable-ly0411/TitanPlanner-zh-CN/blob/cf8ae263a885dd954a75db38973e8ead0f067deb/ExtLibs/Controls/MyUserControl.cs#L37) |
+
+## 如何读一次记录
+
+同一 UI 线程的阶段可能嵌套。例如给视频列表赋数据源时可能同步触发选项事件，首次挂载也可能触发子控件加载。保留每一段的起止时刻。计算父阶段自身用时时，从总时长扣掉直接子区间的并集。跨回调的消息等待单列，阶段总数不能直接相加。收集器宜在内存暂存时间戳，导航结束后输出；用无采集器的同条件样本核对观测开销。
+
+先交一条可关联到具体页面实例的完整冷开时间线，再按同一提交、设备、DPI、配置及进入方式分别汇总冷开和热进入的样本数、中位数、P95（最近秩）和最大值。未捕到首绘时报告区间或缺测，结束事件缺失的阶段不填零。长阻塞可另附仅含方法名的 UI 线程采样栈。最大化还原有单独的复现入口和结论，继续在 #190 分开记录。
