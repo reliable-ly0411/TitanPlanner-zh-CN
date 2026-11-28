@@ -1,6 +1,7 @@
 import copy
 import importlib.util
 import json
+import re
 from pathlib import Path
 import unittest
 import xml.etree.ElementTree as ET
@@ -85,6 +86,7 @@ EXTENDED_DISPLAY_AND_LOG_KEYS = {
 
 def is_display_or_log_help_key(key):
     return (key in DISPLAY_AND_LOG_HELP_KEYS or key in EXTENDED_DISPLAY_AND_LOG_KEYS
+            or re.fullmatch(r'(?:MAV|SR)\d+_.+', key)
             or key.startswith(('OSD1_', 'OSD2_', 'OSD3_', 'OSD4_', 'SR0_', 'SR1_', 'SR2_', 'SR3_', 'SR4_', 'SR5_', 'SR6_', 'SR7_', 'SR8_', 'SR9_')))
 
 
@@ -123,18 +125,30 @@ class ParameterCatalogTests(unittest.TestCase):
                     self.assertEqual(note['english'], record.get('documentation'))
                     self.assertEqual(note['recordSha256'], catalog_module.record_fingerprint(record))
 
+    def test_latest_plane_and_copter_have_all_channel_telemetry_descriptions(self):
+        kinds = ('RAW_SENS', 'EXT_STAT', 'RC_CHAN', 'RAW_CTRL', 'POSITION', 'EXTRA1', 'EXTRA2', 'EXTRA3',
+                 'PARAMS', 'ADSB', 'OPTIONS')
+        expected = {f'MAV{channel}_{kind}' for channel in range(1, 33) for kind in kinds}
+        for family in ('Copter', 'Plane'):
+            notes = {n['parameter']: n for n in self.catalog['translations']
+                     if n['family'] == family and '4.7.3' in n['versions'] and n['field'] == 'Description'}
+            self.assertTrue(expected <= notes.keys())
+            self.assertIn('GLOBAL_POSITION_INT', notes['MAV32_POSITION']['chinese'])
+            self.assertIn('LOCAL_POSITION_NED', notes['MAV32_POSITION']['chinese'])
+            self.assertIn('遥测选项', notes['MAV32_OPTIONS']['chinese'])
+
     def test_scope_counts_and_held_versions(self):
         notes = self.catalog['translations']
         descriptions = {(n['family'], v, n['parameter']) for n in notes if n['field'] == 'Description' for v in n['versions']}
-        self.assertEqual(7278, len(descriptions))
-        self.assertEqual(2869, len({(f, p) for f, v, p in descriptions}))
+        self.assertEqual(14233, len(descriptions))
+        self.assertEqual(4738, len({(f, p) for f, v, p in descriptions}))
         self.assertFalse(any(v == '4.7.2' for f, v, p in descriptions))
         excluded_copter = {'RTL_CONE_SLOPE', 'LAND_SPEED', 'LAND_SPD_MS', 'FS_GCS_ENABLE'}
         excluded_plane = {'TECS_CLMB_MAX', 'TECS_SINK_MIN', 'ROLL_LIMIT_DEG'}
         self.assertFalse(any(p in (excluded_copter if f == 'Copter' else excluded_plane) for f, v, p in descriptions))
 
-    def test_rover_descriptions_are_limited_to_one_pinned_release(self):
-        rover = [n for n in self.catalog['translations'] if n['family'] == 'Rover']
+    def test_rover_463_preserves_reviewed_navigation_and_osd_descriptions(self):
+        rover = [n for n in self.catalog['translations'] if n['family'] == 'Rover' and '4.6.3' in n['versions']]
         expected = {'CRUISE_SPEED', 'TURN_RADIUS', 'WP_SPEED', 'WP_RADIUS'}
         expected.update(
             f'OSD{screen}_{item}_{field}'
@@ -142,19 +156,19 @@ class ParameterCatalogTests(unittest.TestCase):
             for item in ('ATEMP', 'BATUSED', 'BAT2USED')
             for field in ('EN', 'X', 'Y')
         )
-        self.assertCountEqual(expected, [n['parameter'] for n in rover])
-        self.assertTrue(all(n['versions'] == ['4.6.3'] and n['field'] == 'Description' and 'code' not in n for n in rover))
-        snapshots = [release for release in self.bundle if release.get('family') == 'Rover']
-        self.assertEqual(1, len(snapshots))
+        preserved = [n for n in rover if not re.fullmatch(r'(?:MAV|SR)\d+_.+', n['parameter'])]
+        self.assertCountEqual(expected, [n['parameter'] for n in preserved])
+        self.assertTrue(all(n['field'] == 'Description' and 'code' not in n for n in rover))
+        snapshot = self.bundle.find("release[@family='Rover'][@version='4.6.3']")
         sources = json.loads((ROOT / 'localization/parameters/sources.json').read_text(encoding='utf-8'))
-        [source] = [r for r in sources['releases'] if r['family'] == 'Rover']
+        [source] = [r for r in sources['releases'] if (r['family'], r['version']) == ('Rover', '4.6.3')]
         for field in ('version', 'sourceUrl', 'sourceSha256', 'gitSha'):
-            self.assertEqual(snapshots[0].get(field), source[field])
-        self.assertEqual(source['gitSha'], snapshots[0].find('paramfile/firmware').get('git_sha'))
-        self.assertEqual(len(expected), source['parameters'])
+            self.assertEqual(snapshot.get(field), source[field])
+        self.assertEqual(source['gitSha'], snapshot.find('paramfile/firmware').get('git_sha'))
+        self.assertEqual(len(rover), source['parameters'])
 
     def test_tracker_slice_is_pinned_and_contains_only_two_read_only_statistics(self):
-        release = self.bundle.find("release[@family='Tracker']")
+        release = self.bundle.find("release[@family='Tracker'][@version='4.7.1']")
         self.assertEqual('4.7.1', release.get('version'))
         self.assertEqual('143350e5806885fd34cd9c710cfbe6f9b758bee0260c5e081bfef6eab05e91fc', release.get('sourceSha256'))
         self.assertEqual('dbe792162d06cab66c3475fd5556bf7a120f119e', release.get('gitSha'))
@@ -164,10 +178,10 @@ class ParameterCatalogTests(unittest.TestCase):
             self.assertEqual('True', params[name].findtext("field[@name='ReadOnly']"))
             self.assertEqual(units, params[name].findtext("field[@name='Units']"))
             self.assertIsNone(params[name].find('values'))
-        notes = [t for t in self.catalog['translations'] if t['family'] == 'Tracker']
+        notes = [t for t in self.catalog['translations'] if t['family'] == 'Tracker' and '4.7.1' in t['versions']]
         self.assertEqual(2, len(notes))
         self.assertEqual(set(params), {t['parameter'] for t in notes})
-        self.assertTrue(all(t['versions'] == ['4.7.1'] and t['field'] == 'Description' for t in notes))
+        self.assertTrue(all(t['field'] == 'Description' for t in notes))
         altered = copy.deepcopy(self.bundle)
         altered.find("release[@family='Tracker']//param/field[@name='ReadOnly']").text = 'False'
         with self.assertRaises(ValueError):
@@ -234,7 +248,7 @@ class ParameterCatalogTests(unittest.TestCase):
         notes = [note for note in self.catalog['translations'] if note['family'] == 'Sub' and note['parameter'].startswith('STAT_')]
         self.assertEqual(5, len(notes))
         self.assertEqual(reviewed, {note['parameter'] for note in notes})
-        self.assertTrue(all(note['versions'] == ['4.7.1'] and note['field'] == 'Description' for note in notes))
+        self.assertTrue(all('4.7.1' in note['versions'] and note['field'] == 'Description' for note in notes))
 
         altered = copy.deepcopy(self.bundle)
         altered.find("release[@family='Sub']//param/field[@name='ReadOnly']").text = 'False'
@@ -255,8 +269,9 @@ class ParameterCatalogTests(unittest.TestCase):
             notes = [n for n in self.catalog['translations'] if n['family'] == 'Sub' and n['parameter'] == key]
             self.assertEqual(1, len(notes))
             self.assertEqual('True', record.findtext("field[@name='ReadOnly']"))
-            self.assertEqual((['4.7.1'], 'Description', catalog_module.record_fingerprint(record)),
-                             (notes[0]['versions'], notes[0]['field'], notes[0]['recordSha256']))
+            self.assertEqual(('Description', catalog_module.record_fingerprint(record)),
+                             (notes[0]['field'], notes[0]['recordSha256']))
+            self.assertIn('4.7.1', notes[0]['versions'])
 
     def original_display_catalog_releases(self):
         return [release for release in self.bundle if release.get("family") in ("Copter", "Plane", "Sub")
@@ -398,9 +413,10 @@ class ParameterCatalogTests(unittest.TestCase):
         for key, (options, conditions) in expected.items():
             with self.subTest(key=key):
                 row = group.find(f"param[@name='{key}']")
-                note, = [n for n in self.catalog['translations'] if n['family'] == 'Sub' and n['parameter'] == key]
-                self.assertEqual((['4.7.1'], 'Description', row.get('documentation'), catalog_module.record_fingerprint(row)),
-                                 (note['versions'], note['field'], note['english'], note['recordSha256']))
+                note, = [n for n in self.catalog['translations']
+                         if n['family'] == 'Sub' and '4.7.1' in n['versions'] and n['parameter'] == key]
+                self.assertEqual(('Description', row.get('documentation'), catalog_module.record_fingerprint(row)),
+                                 (note['field'], note['english'], note['recordSha256']))
                 self.assertEqual(options, [(v.get('code'), v.text) for v in row.findall('values/value')])
                 for condition in conditions:
                     self.assertIn(condition, note['chinese'])

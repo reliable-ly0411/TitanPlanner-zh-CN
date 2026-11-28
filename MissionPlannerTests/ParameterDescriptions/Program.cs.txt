@@ -485,19 +485,43 @@ internal static class Program
         Check(catalog.Present(bundled.Bundled(Context("Rover", "4.6.3", "deadbeef12345678")), "WP_RADIUS", true) == null, "Rover custom build remains untranslated");
         var expectedCounts = new Dictionary<string, int>
         {
-            ["Copter-4.5.7"] = 714,
-            ["Copter-4.6.3"] = 725,
+            ["Copter-4.5.7"] = 994,
+            ["Copter-4.6.3"] = 1005,
             ["Copter-4.7.1"] = 781,
-            ["Plane-4.5.7"] = 723,
-            ["Plane-4.6.3"] = 735,
+            ["Plane-4.5.7"] = 1004,
+            ["Plane-4.6.3"] = 1016,
             ["Plane-4.7.1"] = 793,
             ["Sub-4.7.1"] = 743,
-            ["Rover-4.6.3"] = 40,
+            ["Rover-4.6.3"] = 110,
             ["Tracker-4.7.1"] = 2,
-            ["Copter-4.7.3"] = 1005,
-            ["Plane-4.7.3"] = 1017
+            ["Copter-4.7.3"] = 1293,
+            ["Plane-4.7.3"] = 1305,
+            ["Copter-4.4.4"] = 421,
+            ["Copter-4.3.8"] = 402,
+            ["Copter-4.2.4"] = 392,
+            ["Copter-4.1.6"] = 374,
+            ["Plane-4.4.4"] = 418,
+            ["Plane-4.3.8"] = 398,
+            ["Plane-4.1.7"] = 372,
+            ["Rover-4.7.3"] = 392,
+            ["Rover-4.5.7"] = 110,
+            ["Rover-4.4.0"] = 86,
+            ["Rover-4.2.3"] = 86,
+            ["Rover-4.1.5"] = 86,
+            ["Sub-4.7.3"] = 1031,
+            ["Sub-4.1.2"] = 86,
+            ["Sub-4.0.3"] = 49,
+            ["Tracker-4.7.3"] = 354,
+            ["Tracker-4.6.3"] = 65,
+            ["Tracker-4.5.7"] = 65
         };
         Check(releases.Length == expectedCounts.Count, "pinned release subsets");
+        var osdTemperatureBatteryScopes = new HashSet<string>
+        {
+            "Copter-4.5.7", "Copter-4.6.3", "Copter-4.7.1", "Plane-4.5.7",
+            "Plane-4.6.3", "Plane-4.7.1", "Sub-4.7.1", "Rover-4.6.3",
+            "Copter-4.7.3", "Plane-4.7.3",
+        };
         foreach (var release in releases)
         {
             var family = (string)release.Attribute("family"); var version = (string)release.Attribute("version");
@@ -506,7 +530,7 @@ internal static class Program
             var snapshot = bundled.Bundled(context);
             Check(snapshot != null && snapshot.Partial && snapshot.MatchesReportedBuild, "offline bundle matches the reported release/build");
             Check(snapshot.Count == expectedCounts[family + "-" + version], "reviewed exact-version record count");
-            if (family != "Tracker")
+            if (osdTemperatureBatteryScopes.Contains(family + "-" + version))
                 CheckOsdTemperatureAndBatterySearch(snapshot, catalog, true);
             foreach (var p in release.Descendants("param"))
             {
@@ -625,12 +649,18 @@ internal static class Program
         Check(catalog.Present(bundled.Bundled(Context("Copter", "4.7.1")), "LOIT_BRK_JRK_M", true).Description.Contains("米/秒³"), "new jerk name uses meters not centimeters");
         Check(bundled.Bundled(null) == null, "unknown context has no offline Chinese bundle");
         Check(bundled.Bundled(Context("Copter", "4.7.2")) == null && bundled.Bundled(Context("Plane", "4.7.2")) == null, "unverified 4.7.2 remains held");
-        Check(bundled.Bundled(Context("Copter", "4.4.4")) == null, "unsupported version has no invented bundle");
+        Check(bundled.Bundled(Context("Copter", "4.4.3")) == null, "unsupported version has no invented bundle");
         foreach (var family in new[] { "Copter", "Plane" })
         {
             var stable = bundled.Bundled(Context(family, "4.7.3", "d9c5097c3d8333435712ffed86bca8ce00c4bb46"));
             Check(stable.Context.Version == "4.7.3" && stable.MatchesReportedBuild && stable.SourceUri.AbsoluteUri.Contains("/stable-4.7.3/"),
                 "4.7.3 uses only the exact stable build for " + family);
+            const string lastChannel = "MAV32_POSITION";
+            var position = stable.Find(lastChannel);
+            var telemetry = catalog.Present(stable, lastChannel, true);
+            Check(position != null && telemetry.Description.StartsWith(position.English, StringComparison.Ordinal)
+                && telemetry.SearchText.Contains("位置") && telemetry.SearchText.Contains("GLOBAL_POSITION_INT"),
+                "exact release exposes Chinese search and preserves named MAVLink messages for " + family);
             var fallbackSource = new XElement(releases.Single(r => (string)r.Attribute("family") == family
                 && (string)r.Attribute("version") == "4.7.3").Element("paramfile"));
             fallbackSource.Element("firmware").Remove();
@@ -676,7 +706,7 @@ internal static class Program
             Check(ParameterDescriptionCatalog.Hash(File.ReadAllBytes(path)) == goodHash, "invalid response never replaces good XML");
             Check((await offline.LoadAsync(plane)).Partial, "cold offline Plane uses its own subset");
             Check(await offline.LoadAsync(null) == null, "unknown firmware does not fetch");
-            Check(await offline.LoadAsync(Context("Copter", "4.4.4")) == null, "unsupported cold offline version remains English");
+            Check(await offline.LoadAsync(Context("Copter", "4.4.3")) == null, "unsupported cold offline version remains English");
             var reported473 = Context("Copter", "4.7.3");
             var wrongStable = new ParameterDescriptionStore(temp, null, (uri, token) =>
             {
