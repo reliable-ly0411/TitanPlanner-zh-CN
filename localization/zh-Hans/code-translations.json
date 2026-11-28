@@ -1,4 +1,7 @@
 {
+  "Apply scaler and offset to {0}": "设置缩放和偏移：{0}",
+  "Enter modifer then value, they are applied in the order you provide. Modifiers are x + - /\n": "先输入运算符，再输入数值；按输入顺序计算。运算符：x + - /\n",
+  "Example: Convert cm to to m with an offset of 50: '/100 +50' or 'x0.01 +50' or '*0.01,+50'": "例如，将厘米换算为米后再加 50：/100 +50、x0.01 +50 或 *0.01,+50",
   "Heading to Waypoint {wpn}": "前往航点 {wpn}",
   "Heading to Waypoint {wpn}, altitude is {alt}, Ground speed is {gsp} ": "正在前往航点 {wpn}，高度 {alt}，地速 {gsp} ",
   "Lost Copter Sound": "多旋翼寻机提示音",
