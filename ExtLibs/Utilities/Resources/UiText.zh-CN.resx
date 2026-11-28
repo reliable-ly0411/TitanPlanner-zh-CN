@@ -4728,6 +4728,10 @@ Ctrl+O 从文件加载</value>
     <value>云台视频</value>
     <comment>"Gimbal Video"</comment>
   </data>
+  <data name="30161c693e53da20b6b2b366cbb1d55830c66ac1ef6d158b60f8a5299de38fc7" xml:space="preserve">
+    <value>云台俯仰角（°）</value>
+    <comment>"Gimbal pitch angle (°)"</comment>
+  </data>
   <data name="84a2458903a1f9140b37cf3b51ed87d7b4bf35555c3c15a8d18b0f82806930d6" xml:space="preserve">
     <value>云台指向点纬度（°）</value>
     <comment>"Gimbal point latitude (°)"</comment>
@@ -4735,6 +4739,14 @@ Ctrl+O 从文件加载</value>
   <data name="7e2fe17c5631d720d2435d42939916ef8365f33b93d67a37a6616fe20c6c5eaa" xml:space="preserve">
     <value>云台指向点经度（°）</value>
     <comment>"Gimbal point longitude (°)"</comment>
+  </data>
+  <data name="5b054db5a032e0e503bc6da91e9972582dab8997c9f1a360718e56b619a9a23c" xml:space="preserve">
+    <value>云台横滚角（°）</value>
+    <comment>"Gimbal roll angle (°)"</comment>
+  </data>
+  <data name="485fb6aa6349fd3f0f854aadacfdaec61222f6d47e65f9f35a6b6d8b9753a2e2" xml:space="preserve">
+    <value>云台偏航角（°）</value>
+    <comment>"Gimbal yaw angle (°)"</comment>
   </data>
   <data name="5da97b5d47088bd556ebad83010a125a53568c38327aa7efcb8c600b6ffa127d" xml:space="preserve">
     <value>云台视频控制设置</value>

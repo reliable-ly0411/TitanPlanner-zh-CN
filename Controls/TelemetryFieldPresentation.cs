@@ -99,6 +99,10 @@ namespace MissionPlanner.Controls
                 case "vehicleClass": return UiText.Translate("Ground station vehicle class");
                 case "gimballat": return UiText.Translate("Gimbal point latitude (°)");
                 case "gimballng": return UiText.Translate("Gimbal point longitude (°)");
+                // Both MOUNT_STATUS and GIMBAL_DEVICE_ATTITUDE_STATUS store degrees here.
+                case "campointa": return UiText.Translate("Gimbal pitch angle (°)");
+                case "campointb": return UiText.Translate("Gimbal roll angle (°)");
+                case "campointc": return UiText.Translate("Gimbal yaw angle (°)");
                 case "timesincelastshot": return UiText.Translate("Interval between camera trigger records (s)");
                 case "linkqualitygcs": return UiText.Translate("Ground station packet reception quality (%)");
                 case "groundspeed2": return UiText.Translate("Secondary GPS ground speed (m/s)");

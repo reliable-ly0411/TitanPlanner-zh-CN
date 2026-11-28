@@ -484,7 +484,41 @@ namespace MissionPlannerTests.Controls
                         if (locale == "zh-CN")
                             Assert.IsTrue(TelemetryFieldPresentation.Matches(pair.Item2, label));
                     }
-                    foreach (var key in new[] { "landed", "campointa", "GimbalPointFuture" })
+                    foreach (var key in new[] { "landed", "GimbalPointFuture" })
+                        Assert.AreEqual(key, TelemetryFieldPresentation.FieldLabel(key));
+                }
+            }
+            finally { CultureInfo.CurrentUICulture = previous; }
+        }
+
+        [TestMethod]
+        public void GimbalAngleLabelsPreserveExactAxesAndBilingualSearch()
+        {
+            var previous = CultureInfo.CurrentUICulture;
+            try
+            {
+                var axes = new[] {
+                    Tuple.Create("campointa", "云台俯仰角（°）", "俯仰角"),
+                    Tuple.Create("campointb", "云台横滚角（°）", "横滚角"),
+                    Tuple.Create("campointc", "云台偏航角（°）", "偏航角"),
+                };
+                foreach (var locale in new[] { "zh-CN", "zh-Hans", "en-US", "fr-FR" })
+                {
+                    CultureInfo.CurrentUICulture = new CultureInfo(locale);
+                    foreach (var axis in axes)
+                    {
+                        var property = typeof(CurrentState).GetProperty(axis.Item1);
+                        Assert.IsNotNull(property, axis.Item1);
+                        Assert.AreEqual(typeof(float), property.PropertyType, axis.Item1);
+                        Assert.AreEqual("Mount", CurrentState.GetGroupText(axis.Item1), axis.Item1);
+                        var label = TelemetryFieldPresentation.FieldLabel(axis.Item1);
+                        Assert.AreEqual(locale == "zh-CN" ? axis.Item1 + " (" + axis.Item2 + ")" : axis.Item1, label);
+                        Assert.IsTrue(TelemetryFieldPresentation.Matches(axis.Item1.ToUpperInvariant(), label), label);
+                        foreach (var search in axes)
+                            Assert.AreEqual(locale == "zh-CN" && search.Item1 == axis.Item1,
+                                TelemetryFieldPresentation.Matches(search.Item3, label), label);
+                    }
+                    foreach (var key in new[] { "campointd", "campointa_future" })
                         Assert.AreEqual(key, TelemetryFieldPresentation.FieldLabel(key));
                 }
             }
@@ -517,7 +551,7 @@ namespace MissionPlannerTests.Controls
                         if (locale == "zh-CN")
                             Assert.IsTrue(TelemetryFieldPresentation.Matches(pair.Item2, label));
                     }
-                    foreach (var key in new[] { "campointa", "press_temp2", "targetaltd1000", "ch3percent" })
+                    foreach (var key in new[] { "press_temp2", "targetaltd1000", "ch3percent" })
                         Assert.AreEqual(key, TelemetryFieldPresentation.FieldLabel(key));
                 }
             }

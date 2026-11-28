@@ -46,6 +46,30 @@ class TelemetryDisplayTest(unittest.TestCase):
         for label in ('Delay (ms)', 'Shutter lag (ms)', 'Max Window (ms)'):
             self.assertIn('(ms)', catalogs[label])
 
+    def test_gimbal_caption_axes_match_both_telemetry_sources(self):
+        definitions = ROOT / 'ExtLibs/Mavlink/message_definitions'
+        mount = ET.parse(definitions / 'ardupilotmega.xml').find("./messages/message[@name='MOUNT_STATUS']")
+        self.assertIsNotNone(mount)
+        state = (ROOT / 'ExtLibs/ArduPilot/CurrentState.cs').read_text(encoding='utf-8-sig')
+        code = (ROOT / 'Controls/TelemetryFieldPresentation.cs').read_text()
+        catalog = json.loads((ROOT / 'localization/zh-Hans/code-translations.json').read_text())
+
+        def case(name):
+            start = state.index('case (uint)MAVLink.MAVLINK_MSG_ID.' + name + ':')
+            return state[start:state.index('case (uint)MAVLink.MAVLINK_MSG_ID.', start + 1)]
+
+        for suffix, axis, zh_axis in (('a', 'pitch', '俯仰'), ('b', 'roll', '横滚'), ('c', 'yaw', '偏航')):
+            key = 'campoint' + suffix
+            legacy_field = mount.find("./field[@name='pointing_" + suffix + "']")
+            self.assertIsNotNone(legacy_field)
+            self.assertEqual(('cdeg', axis), (legacy_field.get('units'), legacy_field.text.strip('.').lower()))
+            self.assertIn(key + ' = status.pointing_' + suffix + ' / 100.0f;', case('MOUNT_STATUS'))
+            self.assertIn(key + ' = (float)(q.get_euler_' + axis + '() * (180.0 / Math.PI));',
+                          case('GIMBAL_DEVICE_ATTITUDE_STATUS'))
+            label = 'Gimbal ' + axis + ' angle (°)'
+            self.assertIn('case "' + key + '": return UiText.Translate("' + label + '");', code)
+            self.assertEqual('云台' + zh_axis + '角（°）', catalog[label])
+
     def test_binding_and_selection_stay_on_original_key(self):
         status = (ROOT / 'Controls/StatusControl.cs').read_text()
         chart = (ROOT / 'Controls/DisplayThisForm.cs').read_text()

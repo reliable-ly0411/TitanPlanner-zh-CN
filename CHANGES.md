@@ -13,6 +13,8 @@ Field picker group headings and numeric values now use readable text colors on b
 
 The field-selection dialog keeps compact name/value columns fully inside the available width, scrolls extra fields vertically, and provides full-text tips for abbreviated labels. Selection callbacks retain the original field keys.
 
+Enhanced Chinese field selection describes the three gimbal angles in degrees while keeping their original field keys.
+
 ## SD card formatting confirmation
 
 Formatting the flight controller SD card requires explicit confirmation, with Cancel selected by default.
