@@ -117,7 +117,10 @@ namespace MissionPlanner.Controls
                 CMB_Source.SelectedValue = variable_name;
             _displaySourceKey = (CMB_Source.SelectedItem as Tuple<string, string>)?.Item1;
             if (CMB_Source.DrawMode == DrawMode.OwnerDrawFixed)
+            {
                 SizeSourceDropDown(CMB_Source, EventArgs.Empty);
+                UpdateConfirmedSourceCaption(CMB_Source.SelectedItem as Tuple<string, string>);
+            }
 
             // Initialize precision field, check if _qv.numberformat is in the form "0" or "0.00" etc.
             // and count the zeros after the decimal if it is
@@ -506,6 +509,18 @@ namespace MissionPlanner.Controls
             CMB_Source.SelectionStart = cursor_pos;
         }
 
+        private void UpdateConfirmedSourceCaption(Tuple<string, string> field)
+        {
+            if (CMB_Source.DrawMode != DrawMode.OwnerDrawFixed)
+                return;
+
+            // Preserve the full existing caption when the compact display has to ellipsize.
+            // Filtered items are transient; only ever describe the confirmed item.
+            string caption = field == null ? null : CMB_Source.GetItemText(field);
+            toolTip1.SetToolTip(CMB_Source, caption);
+            CMB_Source.AccessibleDescription = caption;
+        }
+
         private Tuple<string, string> ConfirmedDisplaySource()
         {
             return _displaySourceKey == null ? null :
@@ -523,6 +538,7 @@ namespace MissionPlanner.Controls
             TXT_scale.Text = "1.0";
             TXT_offset.Text = "0.0";
             _displaySourceKey = field.Item1;
+            UpdateConfirmedSourceCaption(field);
         }
 
         private void CMB_Source_DropDownClosed(object sender, EventArgs e)
