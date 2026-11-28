@@ -772,6 +772,10 @@
     <value>地址</value>
     <comment>"Address"</comment>
   </data>
+  <data name="6fefde8f3507c38d2f29294690cd28466345ea2827c6dd14261e56487d024fbb" xml:space="preserve">
+    <value>原生快速调参：调整 {0}，从 {1} 到 {2}</value>
+    <comment>"Adjusting {0} {1} -&gt; {2}"</comment>
+  </data>
   <data name="9f088dbebd6c3c70a5ddbc2c943b11e4ca9acea5757b0b4f2b32479f0dbb747e" xml:space="preserve">
     <value>高级</value>
     <comment>"Advanced"</comment>
@@ -1123,6 +1127,10 @@
   <data name="b65bdb2a7d8428e0a286f416741a3946f1275391503108958afeb596423ed75a" xml:space="preserve">
     <value>已解锁</value>
     <comment>"Armed"</comment>
+  </data>
+  <data name="b3f7644610a781ade3935239161f2131437a834ef308401632dadb94dc77b17b" xml:space="preserve">
+    <value>解锁状态控制 RUNCAM 录像</value>
+    <comment>"Arming controls RUNCAM recording"</comment>
   </data>
   <data name="6899933ad963b5a6883e6437211c2565bbab8b4bcfcbe4d6c5de166b4f87e1d3" xml:space="preserve">
     <value>当前位置</value>
@@ -1763,6 +1771,10 @@
     <value>CAM 消息</value>
     <comment>"CAM Message"</comment>
   </data>
+  <data name="37f47c70ae4789373e07601ef715a85db8ec6e8a8fb500ab2d92b41e8a2aa60e" xml:space="preserve">
+    <value>缺少 CAM_RC 参数，无法通过解锁自动控制相机</value>
+    <comment>"CAM_RC_* parameters missing; camera autoarming unavailable"</comment>
+  </data>
   <data name="1b5b83c62630f732d19e74de7b7f23be75109efb850de292a37137b8287139b1" xml:space="preserve">
     <value>CAN GPS 顺序</value>
     <comment>"CAN GPS Order"</comment>
@@ -1810,6 +1822,10 @@
   <data name="d68a82cde97b1e6709435d9686a502cb1384388c78bc88e4bdd0b1db4a2bf294" xml:space="preserve">
     <value>计算值</value>
     <comment>"Calculated Values"</comment>
+  </data>
+  <data name="615fbad804758520ab9e00e8607b3f7709535e54b85c781ba37cc722221edbb1" xml:space="preserve">
+    <value>时间戳已计算</value>
+    <comment>"Calculated timestamps"</comment>
   </data>
   <data name="9604ba0ce10c90df1001baea412c52904798bbe0e53bb4b87079f39741e61d0a" xml:space="preserve">
     <value>校准</value>
@@ -2472,6 +2488,54 @@ Ctrl+O 从文件加载</value>
     <value>覆盖率</value>
     <comment>"Coverage"</comment>
   </data>
+  <data name="75b82c5ae2e27aa5af5259c95f04de4ee357010649c7a606184dd1a2098e82ce" xml:space="preserve">
+    <value>坠机动作：CRASH_DETECT 已禁用</value>
+    <comment>"Crash Actions: CRASH_DETECT is disabled"</comment>
+  </data>
+  <data name="faab41a70d5e0b94111b6cac99e6fc5b36a7f31b3eefcb698b5f5357cbbb3a8c" xml:space="preserve">
+    <value>坠机动作：正在上锁</value>
+    <comment>"Crash Actions: Disarming"</comment>
+  </data>
+  <data name="65b2597eb85a849399f4e25d09e70272c178bf98dd644d550b15fa40d8e5c706" xml:space="preserve">
+    <value>坠机动作：正在执行坠机动作</value>
+    <comment>"Crash Actions: Executing..."</comment>
+  </data>
+  <data name="7fae849f6c4e133001ed07a25b36e11b902c5a11cddbfdbb0dd8d40c98b7231b" xml:space="preserve">
+    <value>坠机动作：FS_CRASH_CHECK 已禁用</value>
+    <comment>"Crash Actions: FS_CRASH_CHECK is disabled"</comment>
+  </data>
+  <data name="9ad51b876a9b3eb4a5a14985addc3fff5756357096b58c979466ddf431757fe8" xml:space="preserve">
+    <value>坠机动作：读取 SERVO{0}_{1}失败</value>
+    <comment>"Crash Actions: Failed to get SERVO{0}_{1}"</comment>
+  </data>
+  <data name="3cfda64c337cff3cdfb958db553dfa942acfe82d8fe72e18c2e2a8ab404d58cc" xml:space="preserve">
+    <value>坠机动作：RELAY{0} 未配置</value>
+    <comment>"Crash Actions: RELAY{0} not configured"</comment>
+  </data>
+  <data name="8a4e6845ca220770178f30b471c25bdfb5d52f627501bee0efd4e3cd53aae90c" xml:space="preserve">
+    <value>坠机动作：已恢复</value>
+    <comment>"Crash Actions: Recovered"</comment>
+  </data>
+  <data name="6fb3e485189372f1439d9c000d6bef9692f601f3428125769b68e6d0b11c00b1" xml:space="preserve">
+    <value>坠机动作：SERVO{0} 未配置</value>
+    <comment>"Crash Actions: SERVO{0} not configured"</comment>
+  </data>
+  <data name="a9723e0433ebde1459f1c149b389ad93fa2256b4ecf99e810a1bf62a0a95b371" xml:space="preserve">
+    <value>坠机动作：坠机动作脚本已加载</value>
+    <comment>"Crash Actions: Script loaded"</comment>
+  </data>
+  <data name="708a992c5d3a899c12a99063f7294cc30a496303d943213a8bdd0417d4692e10" xml:space="preserve">
+    <value>坠机动作：设置 RELAY{0} 为 {1}</value>
+    <comment>"Crash Actions: Setting RELAY{0} {1}"</comment>
+  </data>
+  <data name="28273807881751b8210a599b063d7b815e7b3b46668e53d78afffc485a0fd19e" xml:space="preserve">
+    <value>坠机动作：设置 SERVO{0} {1}</value>
+    <comment>"Crash Actions: Setting SERVO{0} {1}"</comment>
+  </data>
+  <data name="5743bd62fcec6d309f93ba7247f1986efd7f74d85679ba94a632b097185f5731" xml:space="preserve">
+    <value>坠机动作：未知动作 {0}</value>
+    <comment>"Crash Actions: Unknown action {0}"</comment>
+  </data>
   <data name="559dd6c207b74eb06a538187b5e6dc6382c8573ae5d55b8cfff92e9d13c36f7d" xml:space="preserve">
     <value>创建圆形测绘任务</value>
     <comment>"Create Circle Survey"</comment>
@@ -2939,6 +3003,10 @@ Ctrl+O 从文件加载</value>
   <data name="304e98d8402f4a68ee275edbca0e83946a1cad08ec7415151eafc4b5327898fc" xml:space="preserve">
     <value>正在执行命令 RTI5</value>
     <comment>"Doing Command RTI5"</comment>
+  </data>
+  <data name="8727e341b18d6104126e5f9cb473bafad9afbbc3e056510edbc4d9bb6d7a7263" xml:space="preserve">
+    <value>正在转向，初始航向 {0}，航点航向 {1}</value>
+    <comment>"Doing turnaround! iyaw={0} wyaw={1}"</comment>
   </data>
   <data name="11a6767d5674c7e45f7e00dc525762275b3a48491ad6045427d2609cc496c516" xml:space="preserve">
     <value>完成</value>
@@ -4202,6 +4270,18 @@ Ctrl+O 从文件加载</value>
   <data name="7fca0e2b2ea8447fbfcc8cacf58135ea4acf8990af230417f0abda92a60941cf" xml:space="preserve">
     <value>请先完成当前的计划编辑。</value>
     <comment>"Finish the current plan edit before opening a preview."</comment>
+  </data>
+  <data name="17c91e46e2687bedf8a03dcb68a848579c80824eb309eea4b5bd48c4355b554e" xml:space="preserve">
+    <value>四点横滚完成</value>
+    <comment>"Finished 4 pt Roll"</comment>
+  </data>
+  <data name="cd3a23be5cfb7429762974d89b0dd4a7f02a09434fe17e81da1a32ac08e90b88" xml:space="preserve">
+    <value>刀刃飞行完成</value>
+    <comment>"Finished Knife Edge"</comment>
+  </data>
+  <data name="56bab936e25460d0f556754476bd352592e6e294730f16edbd5414ef34dcfc9d" xml:space="preserve">
+    <value>刀刃圆周飞行完成</value>
+    <comment>"Finished KnifeEdge Circle"</comment>
   </data>
   <data name="6454b34f9289b585282a0b07c3e6a851b59c36e55943d0be53f5ec9654aebc15" xml:space="preserve">
     <value>第 {0} 次筋斗完成</value>
@@ -6948,6 +7028,10 @@ Ctrl+O 从文件加载</value>
     <value>端口号无效。</value>
     <comment>"Invalid port number."</comment>
   </data>
+  <data name="04156648e6e2129238c1789c7bdbdc77cfd3ca1d59c0f3950a3759bf75087b0c" xml:space="preserve">
+    <value>无效的特技动作编号 {0}</value>
+    <comment>"Invalid trick ID {0}"</comment>
+  </data>
   <data name="433644d05fbfcd7aeefaa98c6bccbae2e945dab969ebe6c5d5032548233ba29f" xml:space="preserve">
     <value>无效值 "</value>
     <comment>"Invalid value \""</comment>
@@ -7080,6 +7164,38 @@ Ctrl+O 从文件加载</value>
     <value>悬停/盘旋</value>
     <comment>"LOITER"</comment>
   </data>
+  <data name="7d372bff5765533894f949c2f2e80a8ed7cc764892c00a138b749b953fb431a8" xml:space="preserve">
+    <value>读取总距参数 {0} 失败</value>
+    <comment>"LUA: Failed get {0}"</comment>
+  </data>
+  <data name="685d9901bb1523015058a7186226b0124fbbaf7fad4bd4aaf651dfe796fca05d" xml:space="preserve">
+    <value>云台相机模式：自动</value>
+    <comment>"LUA: Gimbal-Cam mode auto"</comment>
+  </data>
+  <data name="406e32c7d84f4219e93928f0b7013e58217d1f4c48366271f9e5b4552592d930" xml:space="preserve">
+    <value>云台相机模式：自动与手动</value>
+    <comment>"LUA: Gimbal-Cam mode auto/manual"</comment>
+  </data>
+  <data name="61e1ba3b812d8f2187cfb79bf98118d1baf364369ec40a748e69ddde7d7c4a13" xml:space="preserve">
+    <value>云台相机模式：手动</value>
+    <comment>"LUA: Gimbal-Cam mode manual"</comment>
+  </data>
+  <data name="ccfdf87ab867ab6fd005ca71dc1c5e2cb733b87a6004c7410dc0afe28392088b" xml:space="preserve">
+    <value>云台相机模式脚本已启动</value>
+    <comment>"LUA: Gimbal-Cam mode started"</comment>
+  </data>
+  <data name="95ef62392eb56e5ba8f71a35420b05bb873dc63901f529827bf01be5037159e3" xml:space="preserve">
+    <value>直升机总距设置已停止</value>
+    <comment>"LUA: IM_COL setter stopped"</comment>
+  </data>
+  <data name="3fc33877f04b8128637ec5b7eb47998b4331a9521dcd5ffea8f309028bc807f4" xml:space="preserve">
+    <value>直升机总距调参完成</value>
+    <comment>"LUA: IM_COL tune complete"</comment>
+  </data>
+  <data name="139087780f5dee8d3d1a8ae1009eb0e4bdbc3df6c910dfeebe6e74827cf24bb0" xml:space="preserve">
+    <value>总距参数 {0} 等于 {1}</value>
+    <comment>"LUA: {0} = {1}"</comment>
+  </data>
   <data name="0e66373f45dcf3dd656151e519f7ee5e3d558d9c22cb87df339bbdd2b6c6a3c1" xml:space="preserve">
     <value>标签</value>
     <comment>"Label"</comment>
@@ -7164,6 +7280,10 @@ Ctrl+O 从文件加载</value>
     <value>将飞控水平放置，为水平飞行设置默认的加速度计比例系数（1 轴）。
 必须将飞控平放并保持水平。</value>
     <comment>"Level your Autopilot to set default accelerometer scale factors for level flight (1 axis).\nThis requires you to place your autopilot flat and level."</comment>
+  </data>
+  <data name="6b66e7f0c38a712ff7040fc4fff78b864e91700429694e5e798159f005a429fa" xml:space="preserve">
+    <value>原生快速调参：限制 {0}，从 {1} 到 {2}</value>
+    <comment>"Limiting {0} {1} -&gt; {2}"</comment>
   </data>
   <data name="a8fee4c90dbcc3b2cc0c90e476af9a59b7e6270abcfe8926de7a5ea0325bb836" xml:space="preserve">
     <value>航线不存在</value>
@@ -7277,6 +7397,10 @@ Ctrl+O 从文件加载</value>
     <value>已加载 </value>
     <comment>"Loaded "</comment>
   </data>
+  <data name="7a826129e8fbe9e5520c9239d1999f081b8f36578a136224c9fffc7d2b7db268" xml:space="preserve">
+    <value>电池估算脚本已加载，电池数量 {0}</value>
+    <comment>"Loaded BattEstimate for {0} batteries"</comment>
+  </data>
   <data name="701701fa9922a3a0d9e3ecaccb5537ed3e09a7977d62eb74e7d33d5a3f635a60" xml:space="preserve">
     <value>已加载配置：</value>
     <comment>"Loaded Config for"</comment>
@@ -7284,6 +7408,10 @@ Ctrl+O 从文件加载</value>
   <data name="6197b999571ec75175b246a37e69a735c9b254e02a5cdd5040aacc7c675f8f76" xml:space="preserve">
     <value>已加载现有译文</value>
     <comment>"Loaded Existing"</comment>
+  </data>
+  <data name="1d2661ce606d6e512163b8d717a057ebdc50090c21cace992007174c94efc25b" xml:space="preserve">
+    <value>航线选择脚本已加载</value>
+    <comment>"Loaded MissionSelector.lua"</comment>
   </data>
   <data name="42b5f8fcd55c13089b337a664e1526379bdb2af79297a5312ec77b9e873e1d0b" xml:space="preserve">
     <value>参数已加载！</value>
@@ -9802,6 +9930,30 @@ Mission Planner 需要收到 2 个有效心跳包后才会连接。</value>
     <value>请务必阅读！</value>
     <comment>"PLEASE READ IT !"</comment>
   </data>
+  <data name="84909e9339cf06fc1ba9bdaa5b6567f8fd11c0a2ff39725f5732f8c4ef868455" xml:space="preserve">
+    <value>精确降落脚本已禁用</value>
+    <comment>"PLND: Disabled"</comment>
+  </data>
+  <data name="375145dd3b9e72f0de08f39cce5309341396da0b7e8d32c150ac0824dea094da" xml:space="preserve">
+    <value>精确降落脚本已加载</value>
+    <comment>"PLND: Loaded"</comment>
+  </data>
+  <data name="4853212661ed5d99ace19632d803a1ec5c0ff1522df9010cd6d023a6f6a39c7b" xml:space="preserve">
+    <value>精确盘旋已禁用</value>
+    <comment>"PLND: PrecLoiter disabled"</comment>
+  </data>
+  <data name="29ad05bde18ed8e70ecadb0595b558d3ddd97a9e3a2161e4e7ce793360e57402" xml:space="preserve">
+    <value>精确盘旋已启用</value>
+    <comment>"PLND: PrecLoiter enabled"</comment>
+  </data>
+  <data name="19e92038b2406ccd04e4b3480c7b6c161a05619f9c861f78ca4976e1dcce7f0a" xml:space="preserve">
+    <value>已捕获降落目标</value>
+    <comment>"PLND: Target Acquired"</comment>
+  </data>
+  <data name="2771fdb6d41515d6e6fc6e4f487b144eef104f07d4d9db59c9524829c7e3b8d8" xml:space="preserve">
+    <value>降落目标已丢失</value>
+    <comment>"PLND: Target Lost"</comment>
+  </data>
   <data name="7c27ea2fcd2ae11dc2c768c07919c27a56bc5ca365f3dd220ee29e438ef310d2" xml:space="preserve">
     <value>PNG、JPEG 或 BMP：最大 16 MiB，每边最多 4096 像素。完整显示图片，保持比例，不裁切；下次启动生效。</value>
     <comment>"PNG, JPEG or BMP: up to 16 MiB, 4096 pixels per side. The full image is fitted without cropping. Applies on next startup."</comment>
@@ -9958,9 +10110,17 @@ Mission Planner 需要收到 2 个有效心跳包后才会连接。</value>
     <value>密码强度： </value>
     <comment>"Password Strength: "</comment>
   </data>
+  <data name="350d79d181dcc94dfb47562cd3833643bc6eda168d9f52f799c8aaeaead43163" xml:space="preserve">
+    <value>路径数据无效，已中止</value>
+    <comment>"Path NaN - aborting"</comment>
+  </data>
   <data name="858e4ba7a29fd38b630ed73a79e2738333b3fc6778fafa90252f5556c1262fdc" xml:space="preserve">
     <value>暂停</value>
     <comment>"Pause"</comment>
+  </data>
+  <data name="321b5509c4da5081f3e8031b249599c7b1b6cf63d8acb26c8fb21480f1634092" xml:space="preserve">
+    <value>暂停结束</value>
+    <comment>"Pause Over"</comment>
   </data>
   <data name="99733344956dde482674bdb7ee44a5a2f203569c8a0a5c7a10284f97cd5d65c8" xml:space="preserve">
     <value>载荷</value>
@@ -10592,6 +10752,10 @@ VLAN 标记</value>
     <value>QuadPlane 快速调参脚本已加载</value>
     <comment>"Quicktune for quadplane loaded"</comment>
   </data>
+  <data name="7689ef222b9f0f13a196f25a8df5af4bcdd6630f21054a0500a3a7fbd025ae9a" xml:space="preserve">
+    <value>快速调参无法识别飞行器类型</value>
+    <comment>"Quicktune unknown vehicle"</comment>
+  </data>
   <data name="b99c7e8f5cb309c43eae380f7a6662c6c6904f2549d15907660a1490f80fe281" xml:space="preserve">
     <value>原生快速调参已完成</value>
     <comment>"Quicktune: DONE"</comment>
@@ -10751,6 +10915,14 @@ VLAN 标记</value>
   <data name="595c4418f488eb3402f57127b442f8c2d40505ed7e255a93a9f1f1e4e6247a55" xml:space="preserve">
     <value>{0} 调参完成 {1}%</value>
     <comment>"RTun: {0} {1}% complete"</comment>
+  </data>
+  <data name="d0d1e4273ecc2cd647cab5810c2af972cceb142310fed9bf1604b3a9b54b3fd3" xml:space="preserve">
+    <value>RUNCAM 已关闭</value>
+    <comment>"RUNCAM off"</comment>
+  </data>
+  <data name="ad89c5b606c653dd438e8b342d32b141ac02bdaa6eb03c5678236519f829ffa2" xml:space="preserve">
+    <value>RUNCAM 已开启</value>
+    <comment>"RUNCAM on"</comment>
   </data>
   <data name="f9b19f0378dfd0ab4e8639651517d25b5b551d9375aae5bc27dcff658cb3bb9c" xml:space="preserve">
     <value>接收信号强度 (RSSI)</value>
@@ -12281,6 +12453,10 @@ gps_point：跟踪单个地面点</value>
     <value>阶段 1</value>
     <comment>"Stage 1"</comment>
   </data>
+  <data name="a8eddb32e8175316462bc8df4fdf3049c6fd0c8e180ce86746e6e17dd6b6ffaa" xml:space="preserve">
+    <value>开始刀刃圆周飞行</value>
+    <comment>"Staring KnifeEdge Circle"</comment>
+  </data>
   <data name="e4bb9f1ece9af9264a3b9e3913bbdb2cf497457167b14ced5f85688bfde74644" xml:space="preserve">
     <value>开始</value>
     <comment>"Start"</comment>
@@ -12321,6 +12497,10 @@ gps_point：跟踪单个地面点</value>
     <value>起始位置</value>
     <comment>"StartFrom"</comment>
   </data>
+  <data name="241c6615f185bdffd2a4e6e840e9183eaa43d97ba67d804acc874f0f2cd5b140" xml:space="preserve">
+    <value>开始四点横滚</value>
+    <comment>"Starting 4pt Roll"</comment>
+  </data>
   <data name="eebd5ec197a0fd36c66a2e9bbf3500e7039503ad5970a4f87953956045b94997" xml:space="preserve">
     <value>开始滚转盘旋</value>
     <comment>"Starting Rolling Circle"</comment>
@@ -12336,6 +12516,10 @@ gps_point：跟踪单个地面点</value>
   <data name="4a79b9d775330f258fd03f5068da5ba76476c68a76ca70bf1a0a28f2499db473" xml:space="preserve">
     <value>正在启动更新程序</value>
     <comment>"Starting Updater"</comment>
+  </data>
+  <data name="3711ae86d08636b77f891616800c3f5cb3cb0f9e9d4690ec2cb9640470120a83" xml:space="preserve">
+    <value>开始 {0} 刀刃飞行</value>
+    <comment>"Starting {0} Knife Edge"</comment>
   </data>
   <data name="f7adc11f281b5572436f0691cb1e635f863d930b441c80b589fbe929b408e23c" xml:space="preserve">
     <value>开始 {0} 次筋斗</value>
@@ -12564,6 +12748,18 @@ Acc：当前测定位置的精度
     <value>起飞俯仰角</value>
     <comment>"Takeoff Pitch"</comment>
   </data>
+  <data name="a163bc658dc789584e35d59342fc39744ca4f6b567179060e0b9d41e0fc75502" xml:space="preserve">
+    <value>起飞完成，距离 {0}</value>
+    <comment>"Takeoff complete dist={0}"</comment>
+  </data>
+  <data name="969f12e949b83119cfcea1eab4d77fca35f2e7b9aaae59d08f513c8ecf37e913" xml:space="preserve">
+    <value>起飞初始化</value>
+    <comment>"Takeoff init"</comment>
+  </data>
+  <data name="ec78e4ca60f18c4d26f3e0e4e03ba24b7aab36231fd650512d2153f4f3324967" xml:space="preserve">
+    <value>起飞开始</value>
+    <comment>"Takeoff start"</comment>
+  </data>
   <data name="03e93af61d4fefdbfe89fdf2de25b7637de8b294977425a4135698dd26c732cf" xml:space="preserve">
     <value>目标高度百位分量（含小数）</value>
     <comment>"Target altitude hundreds component (fractional)"</comment>
@@ -12688,6 +12884,130 @@ Acc：当前测定位置的精度
     <value>终止飞行</value>
     <comment>"Terminate_Flight"</comment>
   </data>
+  <data name="cf70b0a3dbb37d825e6a7b46340ad36fdca2fe94ee106cb730dfc0f56347eb29" xml:space="preserve">
+    <value>地形避障：CMTC 完成，高度 {0}</value>
+    <comment>"TerrAvoid: CMTC Done alt: {0}"</comment>
+  </data>
+  <data name="a047d9d18955b25308f0b342395507c820a753a75d50cbfddb14fe1596cff321" xml:space="preserve">
+    <value>地形避障：CMTC 停止，当前高度 {0}，目标 {1}，最大 {2}</value>
+    <comment>"TerrAvoid: CMTC STOP alt curr {0} trg {1} max {2}"</comment>
+  </data>
+  <data name="ea59a76ee984b385427204da0d90139eff4b404c8a00f599b4345dc17190ee79" xml:space="preserve">
+    <value>地形避障：CMTC 向 {0} 盘旋至高度 {1}</value>
+    <comment>"TerrAvoid: CMTC loiter {0} to {1} alt"</comment>
+  </data>
+  <data name="03ea7452acd4a6e6d1388c31106166162b07d9e5840f162ee73d7c97912d7d0a" xml:space="preserve">
+    <value>地形避障：CMTC 已激活，目标高度 {0}</value>
+    <comment>"TerrAvoid: CMTC to ALREADY ACTIVE: {0}"</comment>
+  </data>
+  <data name="db4da505689b1caaa2fcf8d5fb95fe465897024a9c1aa1edc3ec5c7ce50a5057" xml:space="preserve">
+    <value>地形避障：需要在启用地形跟随的 QuadPlane 上运行</value>
+    <comment>"TerrAvoid: Must run on QuadPlane with terrain follow"</comment>
+  </data>
+  <data name="9611a13d9e0490a55c904090f7c130e606eb5efb2dc2722b6f16f3ae0dcb2f5c" xml:space="preserve">
+    <value>地形避障：下方障碍物距离 {0} 米</value>
+    <comment>"TerrAvoid: Obstacle down: {0} m"</comment>
+  </data>
+  <data name="e52e7656f283235a867743afc341ab154cbe960840a6dcc2491cf1d126b16b32" xml:space="preserve">
+    <value>地形避障：前方障碍物距离 {0} 米</value>
+    <comment>"TerrAvoid: Obstacle forward: {0} m"</comment>
+  </data>
+  <data name="d5d28e63934c34d3d12afd5f6d60abb633cea4a1a92297065376d04f8901f559" xml:space="preserve">
+    <value>地形避障：爬升避障已完成</value>
+    <comment>"TerrAvoid: Pitching DONE"</comment>
+  </data>
+  <data name="b45ad9d962b43b5dcf2d64fc16350b46a5a86fe92d66ee9460a22466cc61eb30" xml:space="preserve">
+    <value>地形避障：爬升避障已开始</value>
+    <comment>"TerrAvoid: Pitching started"</comment>
+  </data>
+  <data name="7ca070693361d1107942882fb1591f2bd4deac99701a455c93b6d08401f19be2" xml:space="preserve">
+    <value>地形避障：多旋翼避障已完成</value>
+    <comment>"TerrAvoid: Quading DONE"</comment>
+  </data>
+  <data name="257f11d6918667f43e69c1b6033fb55e7f8194b6a87fd01d2c7f8119584b2cb4" xml:space="preserve">
+    <value>地形避障：多旋翼避障覆盖 CMTC，目标高度 {0}</value>
+    <comment>"TerrAvoid: Quading overrides CMTC: {0}"</comment>
+  </data>
+  <data name="1c516ba680d4555b650d7ae67496d44b6e7a9231e8859c8759f6102b584a0fd5" xml:space="preserve">
+    <value>地形避障：重复多旋翼避障，容差 {0}</value>
+    <comment>"TerrAvoid: Quading repeat: {0}"</comment>
+  </data>
+  <data name="ef8916c5447ec2bd7132be3220b86aac9a7299b00f894078ac214dbd406c8d9c" xml:space="preserve">
+    <value>地形避障：多旋翼避障已开始</value>
+    <comment>"TerrAvoid: Quading started"</comment>
+  </data>
+  <data name="25a10cbfa34ca4a9192b66e6315047065a29d508e4de4cbd1f4a257a421abd3a" xml:space="preserve">
+    <value>地形避障：停止爬升避障</value>
+    <comment>"TerrAvoid: Stop Pitching"</comment>
+  </data>
+  <data name="89335ca87d201c158b197b0cde2db8e4701ef2d2550e5c1bfed7ed21fa68ce7e" xml:space="preserve">
+    <value>地形避障：已启用</value>
+    <comment>"TerrAvoid: activated"</comment>
+  </data>
+  <data name="034d4040d8e50926788676a4e08886b7a3ef9d18f759008b8bb93e8c9d6ecf56" xml:space="preserve">
+    <value>地形避障：制动当前速度 {0}，误差 {1}，新速度 {2}</value>
+    <comment>"TerrAvoid: airbrake current {0} error {1} new {2}"</comment>
+  </data>
+  <data name="5388fa5f69e98c14fe2b8a3e8a4fc1663343f58180547f5e77bcd99b6eb499cb" xml:space="preserve">
+    <value>地形避障：空中制动正在开始</value>
+    <comment>"TerrAvoid: airbraking Starting"</comment>
+  </data>
+  <data name="ac73556cbfac21a19539f2968720c5db3080596bb8a43365573ad804586fadc6" xml:space="preserve">
+    <value>地形避障：空中制动正在停止</value>
+    <comment>"TerrAvoid: airbraking stopping"</comment>
+  </data>
+  <data name="bdf7d728eae1b86a00f692fa4684c74a188d7d8a86b9b3312975073205f74b14" xml:space="preserve">
+    <value>地形避障：地形避障缺少当前位置</value>
+    <comment>"TerrAvoid: avoid_terrain no current_location"</comment>
+  </data>
+  <data name="45233a085ebdca7d93d1e0108b9fb30c1b0e05f7a3b5fc4628737bf38c030d69" xml:space="preserve">
+    <value>地形避障：远离返航点</value>
+    <comment>"TerrAvoid: away from home"</comment>
+  </data>
+  <data name="e880bb8748cec21bf23be1a0d379b15248a3b198ee0e7058c329e7e15008ba87" xml:space="preserve">
+    <value>地形避障：靠近返航点</value>
+    <comment>"TerrAvoid: close to home"</comment>
+  </data>
+  <data name="b32a2e6739462aecd33569703b0ffaac4b91e873d9aa7ffe4c7176962031bb6b" xml:space="preserve">
+    <value>地形避障：当前位置不可用</value>
+    <comment>"TerrAvoid: current_location NIL"</comment>
+  </data>
+  <data name="b7526fcfdadffa9dd0c8bc8f1b634a911313433f355c827f6f0d59fe8d49f957" xml:space="preserve">
+    <value>地形避障：已停用</value>
+    <comment>"TerrAvoid: deactivated"</comment>
+  </data>
+  <data name="55a314b0392e9952e025c9d98e37e73d6937aa548b0e3bff1410d68e150db3d8" xml:space="preserve">
+    <value>地形避障：退出多旋翼避障，当前不是 QLoiter 模式</value>
+    <comment>"TerrAvoid: exit Quading NOT QLoiter"</comment>
+  </data>
+  <data name="85589142561116a91afb8c6123c6aeecb8d6ded5ced229b31aef97f898d937f4" xml:space="preserve">
+    <value>地形避障：设置高度失败 {0}</value>
+    <comment>"TerrAvoid: failed to set alt: {0}"</comment>
+  </data>
+  <data name="73126507bffc70720cda63d701ea43aa0054985a9edaedd2cb6fd57a816a989a" xml:space="preserve">
+    <value>地形避障：设置高度 {0} 失败，目标坐标系 {1}，当前坐标系 {2}</value>
+    <comment>"TerrAvoid: failed to set alt: {0} frame: {1} current frame: {2}"</comment>
+  </data>
+  <data name="ee138dc9a078532bc1a15e1c1d1cf1da0dc55f05166f8777219cf21a48d48bcf" xml:space="preserve">
+    <value>地形避障：检测到高地形</value>
+    <comment>"TerrAvoid: high terrain detected"</comment>
+  </data>
+  <data name="54d5be3533cc6441479d8493805d62035ee233eae888b83eca2c858625c19912" xml:space="preserve">
+    <value>地形避障：恢复目标高度 {0}</value>
+    <comment>"TerrAvoid: reset Alt: {0}"</comment>
+  </data>
+  <data name="6274c3d2d130ec27ed78cde5b6405568fca783728dea5adf40bd593cd0e1ef31" xml:space="preserve">
+    <value>地形避障：地形已恢复安全</value>
+    <comment>"TerrAvoid: terrain Ok"</comment>
+  </data>
+  <data name="6b1c0ea24bfc6119dcba9ec22aa7c2c2354768efb70175901b3da98c3455c52c" xml:space="preserve">
+    <value>地形避障：航点距离不可用</value>
+    <comment>"TerrAvoid: wp_distance NIL"</comment>
+  </data>
+  <data name="5fe75a5ad00588ce7f40394aa191f8516d469de37e2222eae4573dfe3221dae2" xml:space="preserve">
+    <value>地形避障：{0} 高度 {1} 超过 {2}</value>
+    <comment>"TerrAvoid: {0} {1} above: {2}"</comment>
+  </data>
   <data name="5dd6e0396c9df27d3535f32afe0049cfbe0108aefcd2b5bbd745ed5170f7aa6e" xml:space="preserve">
     <value>离地高度</value>
     <comment>"Terrain"</comment>
@@ -12695,6 +13015,10 @@ Acc：当前测定位置的精度
   <data name="291d977a8b7335b4ca3ae615a4a77e45256847897f7be3f88990e95830337496" xml:space="preserve">
     <value>离地高度（AGL）</value>
     <comment>"Terrain AGL"</comment>
+  </data>
+  <data name="771bd1aaa69d88e5a53aba49ad2bc96fd84bf2faad3c310b9dcba45ef2552638" xml:space="preserve">
+    <value>地形避障脚本 4.6.0-023 已加载</value>
+    <comment>"Terrain Avoid 4.6.0-023 script loaded"</comment>
   </data>
   <data name="88799774ff511658a6c9102d307d7654cec56e55cbf2a8d0752d8c44800375f5" xml:space="preserve">
     <value>地面高程（GL）</value>
@@ -13258,9 +13582,25 @@ Acc：当前测定位置的精度
     <value>找不到特技动作 {0}</value>
     <comment>"Trick {0} not found"</comment>
   </data>
+  <data name="f34912312523dccc21305cc0b76dfd73d8a1908949421ce52113395eb79a90dc" xml:space="preserve">
+    <value>特技动作 {0} 未配置</value>
+    <comment>"Trick {0} not setup"</comment>
+  </data>
+  <data name="bb05694e696b01f0c715a5795b0f78d887cb8a61acad786ee04316116c50d14c" xml:space="preserve">
+    <value>已选择特技动作 {0}（{1}）</value>
+    <comment>"Trick {0} selected ({1})"</comment>
+  </data>
   <data name="cb7b67335fee9bc8fa6d88d97fd4f82df5a136d16f3c106f43e3ccc58b63ce5f" xml:space="preserve">
     <value>特技动作 {0} 已开始（{1}）</value>
     <comment>"Trick {0} started ({1})"</comment>
+  </data>
+  <data name="26c69b439df0cc58dd8097aff8e708990515e2d5fbed6cf2b386af13f6b0366e" xml:space="preserve">
+    <value>当前模式不能使用特技动作</value>
+    <comment>"Tricks not available in mode"</comment>
+  </data>
+  <data name="80de8df6fb6bddeb1a7a5ef2d3e4c71240d9c2dd2ff9c44caa84c730d2242d3f" xml:space="preserve">
+    <value>当前模式不能使用特技动作</value>
+    <comment>"Tricks not available in this mode"</comment>
   </data>
   <data name="8b9c643731c941195b61d1f3de78fda81ac490ee73f420bb7543df59d6a92206" xml:space="preserve">
     <value>触发</value>
@@ -14233,6 +14573,10 @@ http://www.magnetic-declination.com/</value>
     <value>调整海平面气压 QNH</value>
     <comment>"adjust the qnh"</comment>
   </data>
+  <data name="6a591c32243090b6d4c9a2b69a6f14d80ced3ee72078d01a8ab09f2712615008" xml:space="preserve">
+    <value>快速调参：调整 {0}，从 {1} 到 {2}</value>
+    <comment>"adjusting {0} {1} -&gt; {2}"</comment>
+  </data>
   <data name="7224719eee07a5cd384ff4d6ac5708167143cddc52de04605a8132bd281dd786" xml:space="preserve">
     <value>高度间隔</value>
     <comment>"alt seperation"</comment>
@@ -14493,9 +14837,17 @@ http://www.magnetic-declination.com/</value>
     <value>千米/小时（km/h）</value>
     <comment>"kph"</comment>
   </data>
+  <data name="f0134a84ff8d6fd94115da441538bc73b5504654df3910272c9164ffe6a1d3c1" xml:space="preserve">
+    <value>快速调参：限制 {0}，从 {1} 到 {2}</value>
+    <comment>"limiting {0} {1} -&gt; {2}"</comment>
+  </data>
   <data name="70dc800f443cf042a608c01791d42c5d3bd384d09909309ae6504055a7c5fe01" xml:space="preserve">
     <value>通过 GDAL 加载自定义地图瓦片源</value>
     <comment>"load a custom map tile source via GDAL"</comment>
+  </data>
+  <data name="b91f408676446b6bc5dfe0ccb0dac1fef1ff386efee08a6929a2384e49a4cba6" xml:space="preserve">
+    <value>已加载航线文件：{0}</value>
+    <comment>"loaded mission: {0}"</comment>
   </data>
   <data name="d07595dc9e3dd2fa48215c03d0abe6b605bc108ecda434636aa6cc55275107c7" xml:space="preserve">
     <value>通过 SCP 下载日志</value>
@@ -14656,6 +15008,14 @@ http://www.magnetic-declination.com/</value>
   <data name="a0af9f865bf637e6736817f4ce552e4cdf7b8c36ea75bc254c1d1f0af744b5bf" xml:space="preserve">
     <value>路径</value>
     <comment>"path"</comment>
+  </data>
+  <data name="b6c36a60ba09845bebc16e4c2cb9f795ad88a34341b260d519aeafee1b67d87a" xml:space="preserve">
+    <value>路径未前进，值 {0}</value>
+    <comment>"path not advancing {0}"</comment>
+  </data>
+  <data name="42eeef6de0ff9c535caa93bcf759716f2a9c3b6c45af8a44efb75f4c4d1c310b" xml:space="preserve">
+    <value>路径角速度无效</value>
+    <comment>"path_rate_ef_rads: NaN"</comment>
   </data>
   <data name="84a6dae49cf0481203aa97872cc3301b73c406b8ac099ee36d2f849365cec06b" xml:space="preserve">
     <value>照片</value>
@@ -14922,6 +15282,10 @@ http://www.magnetic-declination.com/</value>
   <data name="f0a220c816cc527b5dbd16c1dfcc8da87331c3abddb6454c4cda3542adf304e9" xml:space="preserve">
     <value>{0}，位于航程 {1} 处</value>
     <comment>"{0} at {1}"</comment>
+  </data>
+  <data name="384221c1cbb3ea87e192b5abe8b8d17cc9bb9ce5469924f79c883210b148f232" xml:space="preserve">
+    <value>暂停 {0} 秒</value>
+    <comment>"{0} sec Pause"</comment>
   </data>
   <data name="82b5325728316d7379c85de67184a1b8831d0337b76f74a6b6862e2a3f44fbd8" xml:space="preserve">
     <value>{0}已复制 {1:N0} 个瓦片，{2:N0} 个已存在。

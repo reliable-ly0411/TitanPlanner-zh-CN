@@ -9,7 +9,7 @@ using Vehicle = MAVLink.MAV_TYPE;
 
 namespace MissionPlanner
 {
-    internal static class FirmwareScriptSpeech
+    internal static partial class FirmwareScriptSpeech
     {
         private sealed class Rule
         {
@@ -28,6 +28,11 @@ namespace MissionPlanner
         // ArduPilot 4.7.3, d9c5097c. Keep script and native QuickTune's exact spelling and severity.
         private static readonly Rule[] Tune =
         {
+            new Rule(Severity.EMERGENCY, @"Quicktune\ unknown\ vehicle", @"Quicktune unknown vehicle"),
+            new Rule(Severity.INFO, @"adjusting ((?:RLL|PIT|YAW)_[PID]) (-?[0-9]+\.[0-9]{3}) -> (-?[0-9]+\.[0-9]{3})", @"adjusting {0} {1} -> {2}"),
+            new Rule(Severity.INFO, @"limiting ((?:RLL|PIT|YAW)_[PID]) (-?[0-9]+\.[0-9]{3}) -> (-?[0-9]+\.[0-9]{3})", @"limiting {0} {1} -> {2}"),
+            new Rule(Severity.INFO, @"Adjusting ((?:Roll|Pitch|Yaw) [PID]) (-?[0-9]+\.[0-9]{3}) -> (-?[0-9]+\.[0-9]{3})", @"Adjusting {0} {1} -> {2}"),
+            new Rule(Severity.INFO, @"Limiting ((?:Roll|Pitch|Yaw) [PID]) (-?[0-9]+\.[0-9]{3}) -> (-?[0-9]+\.[0-9]{3})", @"Limiting {0} {1} -> {2}"),
             new Rule(Severity.EMERGENCY, @"Quicktune for quadplane loaded", @"Quicktune for quadplane loaded"),
             new Rule(Severity.EMERGENCY, @"Quicktune for multicopter loaded", @"Quicktune for multicopter loaded"),
             new Rule(Severity.EMERGENCY, @"Tuning: Must be flying to tune", @"Tuning: Must be flying to tune"),
@@ -37,8 +42,8 @@ namespace MissionPlanner
             new Rule(Severity.NOTICE, @"Tuning: saved", @"Tuning: saved"),
             new Rule(Severity.NOTICE, @"Tuning: DONE", @"Tuning: DONE"),
             new Rule(Severity.NOTICE, @"Tuning: (RLL|PIT|YAW) done", @"Tuning: {0} done"),
-            new Rule(Severity.INFO, @"Starting (RLL|PIT|YAW) tune", @"Starting {0} tune"),
-            new Rule(Severity.INFO, @"Tuning: ((?:ATC|Q_A)_RAT_(?:RLL|PIT|YAW)_[DP]) done", @"Tuning: {0} done"),
+            new Rule(Severity.INFO, @"Starting (RLL|PIT|YAW|Roll|Pitch|Yaw) tune", @"Starting {0} tune"),
+            new Rule(Severity.INFO, @"Tuning: ((?:RLL|PIT|YAW)_[DP]) done", @"Tuning: {0} done"),
             new Rule(Severity.WARNING, @"QuickTune disabled", @"QuickTune disabled"),
             new Rule(Severity.CRITICAL, @"QuickTune aborted", @"QuickTune aborted"),
             new Rule(Severity.CRITICAL, @"Quicktune: attitude error (-?[0-9]+\.[0-9])deg - ABORTING", @"Quicktune: attitude error {0}deg - ABORTING"),
@@ -47,8 +52,8 @@ namespace MissionPlanner
             new Rule(Severity.NOTICE, @"Quicktune: Starting tune", @"Quicktune: Starting tune"),
             new Rule(Severity.NOTICE, @"Quicktune: DONE", @"Quicktune: DONE"),
             new Rule(Severity.NOTICE, @"Quicktune: Saved", @"Quicktune: Saved"),
-            new Rule(Severity.NOTICE, @"Quicktune: (RLL|PIT|YAW) done", @"Quicktune: {0} done"),
-            new Rule(Severity.INFO, @"Quicktune: ((?:ATC|Q_A)_RAT_(?:RLL|PIT|YAW)_[DP]) done", @"Quicktune: {0} done"),
+            new Rule(Severity.NOTICE, @"Quicktune: (Roll|Pitch|Yaw) done", @"Quicktune: {0} done"),
+            new Rule(Severity.INFO, @"Quicktune: ((?:Roll|Pitch|Yaw) [DP]) done", @"Quicktune: {0} done"),
         };
 
         private static readonly Rule[] Rover =
@@ -61,20 +66,43 @@ namespace MissionPlanner
             new Rule(Severity.NOTICE, @"RTun: (ATC_STR_RAT_FF|ATC_SPEED_FF) tuning done", @"RTun: {0} tuning done"),
             new Rule(Severity.NOTICE, @"RTun: Tuning DONE", @"RTun: Tuning DONE"),
             new Rule(Severity.NOTICE, @"RTun: tuning gains saved", @"RTun: tuning gains saved"),
-            new Rule(Severity.INFO, @"RTun: adjusted ((?:ATC_STR_RAT|ATC_SPEED)_[PID]) (-?[0-9]+\.[0-9]{3}) -> (-?[0-9]+\.[0-9]{3})", @"RTun: adjusted {0} {1} -> {2}"),
-            new Rule(Severity.WARNING, @"RTun: increase steering \(([0-9]+)% < ([0-9]+)%\)", @"RTun: increase steering ({0}% < {1}%)"),
+            new Rule(Severity.INFO, @"RTun: adjusted ((?:ATC_STR_RAT_(?:FF|P|I|FLTT|FLTD)|ATC_SPEED_(?:FF|P|I)|CRUISE_SPEED|CRUISE_THROTTLE)) (-?[0-9]+\.[0-9]{3}) -> (-?[0-9]+\.[0-9]{3})", @"RTun: adjusted {0} {1} -> {2}"),
+            new Rule(Severity.WARNING, @"RTun: increase steering \((-?[0-9]+)% < (-?[0-9]+)%\)", @"RTun: increase steering ({0}% < {1}%)"),
             new Rule(Severity.WARNING, @"RTun: increase turn rate \(([0-9]+) deg/s < ([0-9]+)\)", @"RTun: increase turn rate ({0} deg/s < {1})"),
-            new Rule(Severity.WARNING, @"RTun: increase throttle \(([0-9]+) < ([0-9]+)\)", @"RTun: increase throttle ({0} < {1})"),
+            new Rule(Severity.WARNING, @"RTun: increase throttle \((-?[0-9]+) < (-?[0-9]+)\)", @"RTun: increase throttle ({0} < {1})"),
             new Rule(Severity.WARNING, @"RTun: increase speed \((-?[0-9]+\.[0-9]) < (-?[0-9]+\.[0-9])\)", @"RTun: increase speed ({0} < {1})"),
         };
 
         private static readonly Rule[] Plane =
         {
+            new Rule(Severity.NOTICE, @"Starting\ 4pt\ Roll", @"Starting 4pt Roll"),
+            new Rule(Severity.NOTICE, @"Finished\ 4\ pt\ Roll", @"Finished 4 pt Roll"),
+            new Rule(Severity.NOTICE, @"Finished\ Knife\ Edge", @"Finished Knife Edge"),
+            new Rule(Severity.NOTICE, @"Pause\ Over", @"Pause Over"),
+            new Rule(Severity.NOTICE, @"Staring\ KnifeEdge\ Circle", @"Staring KnifeEdge Circle"),
+            new Rule(Severity.NOTICE, @"Finished\ KnifeEdge\ Circle", @"Finished KnifeEdge Circle"),
+            new Rule(Severity.EMERGENCY, @"Tricks\ not\ available\ in\ this\ mode", @"Tricks not available in this mode"),
+            new Rule(Severity.ALERT, @"Tricks\ not\ available\ in\ mode", @"Tricks not available in mode"),
+            new Rule(Severity.INFO, @"Takeoff\ init", @"Takeoff init"),
+            new Rule(Severity.INFO, @"Takeoff\ start", @"Takeoff start"),
+            new Rule(Severity.INFO, @"Calculated\ timestamps", @"Calculated timestamps"),
+            new Rule(Severity.EMERGENCY, @"path_rate_ef_rads:\ NaN", @"path_rate_ef_rads: NaN"),
+            new Rule(Severity.EMERGENCY, @"Path\ NaN\ \-\ aborting", @"Path NaN - aborting"),
+            new Rule(Severity.NOTICE, @"Starting (-?[0-9]+) Knife Edge", @"Starting {0} Knife Edge"),
+            new Rule(Severity.NOTICE, @"(-?[0-9]+) sec Pause", @"{0} sec Pause"),
+            new Rule(Severity.INFO, @"Takeoff complete dist=(-?[0-9]+\.[0-9])", @"Takeoff complete dist={0}"),
+            new Rule(Severity.EMERGENCY, @"path not advancing (-?[0-9]+\.[0-9]{6})", @"path not advancing {0}"),
+            new Rule(Severity.INFO, @"Doing turnaround! iyaw=(-?[0-9]+\.[0-9]) wyaw=(-?[0-9]+\.[0-9])", @"Doing turnaround! iyaw={0} wyaw={1}"),
+            new Rule(Severity.ALERT, @"Invalid trick ID ([0-9]+)", @"Invalid trick ID {0}"),
+            new Rule(Severity.ALERT, @"Trick ([0-9]+) not setup", @"Trick {0} not setup"),
+            new Rule(Severity.ERROR, @"Trick ([0-9]+) not setup", @"Trick {0} not setup"),
+            new Rule(Severity.NOTICE, @"Trick ([0-9]+) selected \((Roll\(s\)|Loop\(s\)/Turnaround|Rolling Circle|Straight Hold|Pause|Knife Edge Circle|4pt Roll|Split-S)\)", @"Trick {0} selected ({1})"),
+            new Rule(Severity.INFO, @"Trick ([0-9]+) selected \(([A-Za-z][A-Za-z0-9 _-]{0,31})\)", @"Trick {0} selected ({1})"),
             new Rule(Severity.INFO, @"Loaded plane_aerobatics\.lua", @"Loaded plane_aerobatics.lua"),
             new Rule(Severity.NOTICE, @"Loaded sport_aerobatics\.lua", @"Loaded sport_aerobatics.lua"),
             new Rule(Severity.ALERT, @"Enabled ([0-9]+) aerobatic tricks", @"Enabled {0} aerobatic tricks"),
             new Rule(Severity.NOTICE, @"Enabled ([0-9]+) aerobatic tricks", @"Enabled {0} aerobatic tricks"),
-            new Rule(Severity.NOTICE, @"Starting ([0-9]+) Roll\(s\)", @"Starting {0} Roll(s)"),
+            new Rule(Severity.NOTICE, @"Starting (-?[0-9]+) Roll\(s\)", @"Starting {0} Roll(s)"),
             new Rule(Severity.NOTICE, @"Finished Roll ([0-9]+)", @"Finished Roll {0}"),
             new Rule(Severity.NOTICE, @"Starting ([0-9]+) Loop\(s\)", @"Starting {0} Loop(s)"),
             new Rule(Severity.NOTICE, @"Finished Loop ([0-9]+)", @"Finished Loop {0}"),
@@ -100,6 +128,9 @@ namespace MissionPlanner
                 flightHash?.Length != 8 || Encoding.ASCII.GetString(flightHash) != "d9c5097c" ||
                 string.IsNullOrEmpty(completeRawText) || completeRawText.Length > 150)
                 return null;
+
+            var applet = MatchOfficialApplets(vehicle, severity, completeRawText);
+            if (applet != null) return applet;
 
             switch (vehicle)
             {

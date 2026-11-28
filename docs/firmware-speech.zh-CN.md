@@ -6,15 +6,18 @@
 
 | 固件／机型 | 中文播报覆盖 | 验证入口 |
 | --- | --- | --- |
-| ArduPilot 4.7.3 Copter | VTOL QuickTune 脚本及原生 QuickTune 的已核对状态 | 固定消息、轴名及含小数的中止消息夹具 |
-| ArduPilot 4.7.3 Plane / QuadPlane | 日志芯片已满、已核对的快速调参状态、轨迹及速率特技脚本消息 | 固定告警、状态、次数及带参数消息夹具 |
+| ArduPilot 4.7.3 Copter / Heli | VTOL QuickTune 脚本与原生 QuickTune、Heli IM_COL 调参 | Lua 参数短名、原生参数名、限幅／调整、中止、总距参数 |
+| ArduPilot 4.7.3 Plane / QuadPlane | 日志芯片已满、两种 QuickTune、轨迹与速率特技、精准降落、地形避障 | 起飞／特技阶段、目标状态、地形高度和告警 |
 | ArduPilot 4.7.3 Rover / Boat | Rover QuickTune 启动、进度、参数、错误与完成状态 | 百分比、负数、小数和单位夹具 |
+| ArduPilot 4.7.3 已适用机型 | 航线选择、云台相机模式、RUNCAM 录像、电池估算、坠机动作 | 任务文件名、电池数量、继电器编号、飞控来源 |
 | ArduPilot 4.7.3 Sub / Tracker 及其他版本 | 地面站遥测播报。未列入规则的固件报文沿用原文和原播报条件 | 原文回退 |
 | PX4 1.15.4、1.16.2、1.17.0、1.18.0 | 匹配正式构建的电池 STATUSTEXT。1.17.0 四旋翼另有 EKF2 磁力计参数告警 | 报文来源证明与播报去重夹具 |
 | PX4 Events | 待接入事件元数据与译文。已有 STATUSTEXT 播报继续可用 | 传统消息回放 |
 
-ArduPilot 脚本规则固定到 4.7.3 的八字节构建标识，并要求同一接收环境下的主飞控心跳、版本、机型、消息级别和完整文本匹配。固件脚本与原生 QuickTune 的文字分别审核。脚本 NOTICE/INFO 仅在增强简中且符合语音开关和仅解锁时播报条件时追加到语音路径，原始级别和日志保留。
+ArduPilot 脚本规则固定到 4.7.3 的八字节构建标识，并核对同一链路中的主飞控心跳、版本、机型、原始严重度和完整文本。飞控上的 Lua 文件可独立替换，译文以与官方源码匹配的正文为依据。Lua 的 “Tuning: RLL_D done” 与原生的 “Quicktune: Roll D done” 各用对应规则。重组按 MAVLink 上游语义处理，完整消息进入原来的 HUD 和播报门槛，日志保留原始报文。默认告警门槛为 WARNING。INFO／NOTICE 继续遵从门槛和上游的 Tuning、PreArm、Arm 前缀规则。缺片超时、无法证明来源的通用或自由文本、未列入规则的版本按原文处理。
 
 官方来源均固定到 4.7.3 的同一提交。[VTOL QuickTune](https://github.com/ArduPilot/ardupilot/blob/d9c5097c3d8333435712ffed86bca8ce00c4bb46/libraries/AP_Scripting/applets/VTOL-quicktune.lua) · [Rover QuickTune](https://github.com/ArduPilot/ardupilot/blob/d9c5097c3d8333435712ffed86bca8ce00c4bb46/libraries/AP_Scripting/applets/rover-quicktune.lua) · [Plane 轨迹特技](https://github.com/ArduPilot/ardupilot/blob/d9c5097c3d8333435712ffed86bca8ce00c4bb46/libraries/AP_Scripting/applets/Aerobatics/FixedWing/plane_aerobatics.lua) · [Plane 速率特技](https://github.com/ArduPilot/ardupilot/blob/d9c5097c3d8333435712ffed86bca8ce00c4bb46/libraries/AP_Scripting/applets/Aerobatics/FixedWing/RateBased/sport_aerobatics.lua) · [原生 QuickTune](https://github.com/ArduPilot/ardupilot/blob/d9c5097c3d8333435712ffed86bca8ce00c4bb46/libraries/AP_Quicktune/AP_Quicktune.cpp)
+
+新增 applet 来源。[MissionSelector.lua](https://github.com/ArduPilot/ardupilot/blob/d9c5097c3d8333435712ffed86bca8ce00c4bb46/libraries/AP_Scripting/applets/MissionSelector.lua) · [plane_precland.lua](https://github.com/ArduPilot/ardupilot/blob/d9c5097c3d8333435712ffed86bca8ce00c4bb46/libraries/AP_Scripting/applets/plane_precland.lua) · [Heli_IM_COL_Tune.lua](https://github.com/ArduPilot/ardupilot/blob/d9c5097c3d8333435712ffed86bca8ce00c4bb46/libraries/AP_Scripting/applets/Heli_IM_COL_Tune.lua) · [quadplane_terrain_avoid.lua](https://github.com/ArduPilot/ardupilot/blob/d9c5097c3d8333435712ffed86bca8ce00c4bb46/libraries/AP_Scripting/applets/quadplane_terrain_avoid.lua) · [Gimbal_Camera_Mode.lua](https://github.com/ArduPilot/ardupilot/blob/d9c5097c3d8333435712ffed86bca8ce00c4bb46/libraries/AP_Scripting/applets/Gimbal_Camera_Mode.lua) · [runcam_on_arm.lua](https://github.com/ArduPilot/ardupilot/blob/d9c5097c3d8333435712ffed86bca8ce00c4bb46/libraries/AP_Scripting/applets/runcam_on_arm.lua) · [BattEstimate.lua](https://github.com/ArduPilot/ardupilot/blob/d9c5097c3d8333435712ffed86bca8ce00c4bb46/libraries/AP_Scripting/applets/BattEstimate.lua) · [crash-actions.lua](https://github.com/ArduPilot/ardupilot/blob/d9c5097c3d8333435712ffed86bca8ce00c4bb46/libraries/AP_Scripting/applets/crash-actions.lua)
 
 Windows 独立语音回归用 [WindowsSpeechProbe](../MissionPlannerTests/WindowsSpeechProbe/README.zh-CN.md)。完整应用的原生设置控件由 Windows 回归脚本加载。第二种中文音色、实际卸载音色包和操作员听感需要相应 Windows 环境。

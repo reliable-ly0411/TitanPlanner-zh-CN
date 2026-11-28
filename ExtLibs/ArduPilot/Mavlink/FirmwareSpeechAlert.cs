@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Text;
 using MissionPlanner.Utilities;
 
@@ -104,13 +106,21 @@ namespace MissionPlanner
             }
         }
 
+        internal bool HasConsistentIdentity(uint sysid)
+        {
+            lock (gate)
+                return systems.TryGetValue(sysid, out var proof) && IsConsistent(proof);
+        }
+
+        private static bool IsConsistent(Proof proof) =>
+            proof.HasHeartbeat && proof.HasVersion && !proof.Conflict && proof.FlightHash != null;
+
         internal string TranslateScript(uint sysid, byte severity, string completeRawText)
         {
             if (string.IsNullOrEmpty(completeRawText)) return null;
             lock (gate)
             {
-                if (!systems.TryGetValue(sysid, out var proof) || proof.Conflict ||
-                    !proof.HasHeartbeat || !proof.HasVersion || proof.FlightHash == null) return null;
+                if (!systems.TryGetValue(sysid, out var proof) || !IsConsistent(proof)) return null;
                 return FirmwareScriptSpeech.Translate(proof.Autopilot, proof.Vehicle,
                     proof.FlightVersion, (byte[])proof.FlightHash.Clone(), severity, completeRawText);
             }
@@ -125,106 +135,118 @@ namespace MissionPlanner
         }
     }
 
-    // Speech-only STATUSTEXT reassembly. Display rows and logs remain the original
-    // packet chunks; incomplete, reordered, oversized or invalid UTF-8 text is never translated.
+    // Mirrors ArduPilot/MissionPlanner's StatusTextAssembler at 1a361220. Keep
+    // display/HUD/audio decisions downstream of complete logical STATUSTEXT.
     internal sealed class SpeechStatusTextAssembler
     {
-        private struct Key : IEquatable<Key>
+        internal const int ChunkSize = 50;
+        internal static readonly TimeSpan Timeout = TimeSpan.FromSeconds(1);
+        private static readonly byte[] Gap = Encoding.UTF8.GetBytes(" ... ");
+
+        private sealed class Pending
         {
-            internal uint System;
-            internal byte Component;
-            internal ushort Id;
-            public bool Equals(Key other) => System == other.System && Component == other.Component && Id == other.Id;
-            public override bool Equals(object obj) => obj is Key other && Equals(other);
-            public override int GetHashCode() => unchecked(((int)System * 397) ^ (Component << 16) ^ Id);
+            internal byte Severity;
+            internal bool MixedSeverity;
+            internal DateTime LastChunk;
+            internal int Expected = -1;
+            internal readonly SortedDictionary<byte, byte[]> Chunks = new SortedDictionary<byte, byte[]>();
         }
 
-        private sealed class Partial
+        private readonly Dictionary<(uint sysid, byte compid, ushort id), Pending> pending =
+            new Dictionary<(uint sysid, byte compid, ushort id), Pending>();
+        private volatile bool hasPending;
+        internal bool HasPending => hasPending;
+
+        internal string Add(uint sysid, byte compid, MAVLink.mavlink_statustext_t msg)
         {
-            internal byte Severity, NextSequence;
-            internal DateTime Updated;
-            internal readonly List<byte> Bytes = new List<byte>();
+            return Add(sysid, compid, msg, out _);
         }
 
-        private const int MaxActive = 8;
-        private const int MaxBytes = 2048;
-        private const int MaxChunks = 40;
-        private static readonly UTF8Encoding StrictUtf8 = new UTF8Encoding(false, true);
-        private readonly object gate = new object();
-        private readonly Dictionary<Key, Partial> partials = new Dictionary<Key, Partial>();
-
-        internal bool TryAppend(uint system, byte component, MAVLink.mavlink_statustext_t packet,
-            out string completeText)
+        internal string Add(uint sysid, byte compid, MAVLink.mavlink_statustext_t msg, out bool consistent)
         {
-            completeText = null;
-            var source = packet.text ?? Array.Empty<byte>();
-            int end = Array.IndexOf(source, (byte)0);
-            int length = end < 0 ? source.Length : end;
-            if (length > 50) return false;
+            return Add(sysid, compid, msg, DateTime.UtcNow, out consistent);
+        }
 
-            lock (gate)
+        internal string Add(uint sysid, byte compid, MAVLink.mavlink_statustext_t msg, DateTime now)
+        {
+            return Add(sysid, compid, msg, now, out _);
+        }
+
+        private string Add(uint sysid, byte compid, MAVLink.mavlink_statustext_t msg, DateTime now, out bool consistent)
+        {
+            byte[] text = TrimAtNull(msg.text);
+            consistent = msg.id == 0;
+            if (consistent) return Encoding.UTF8.GetString(text);
+
+            lock (pending)
             {
-                var now = DateTime.UtcNow;
-                foreach (var expired in new List<Key>(partials.Keys))
-                    if (now - partials[expired].Updated > TimeSpan.FromSeconds(2)) partials.Remove(expired);
-
-                if (packet.id == 0)
+                var key = (sysid, compid, msg.id);
+                if (!pending.TryGetValue(key, out var item))
+                    pending[key] = item = new Pending();
+                if (item.Chunks.Count != 0 && item.Severity != msg.severity)
+                    item.MixedSeverity = true;
+                item.Severity = msg.severity;
+                item.LastChunk = now;
+                item.Chunks[msg.chunk_seq] = text;
+                if (text.Length < ChunkSize) item.Expected = msg.chunk_seq + 1;
+                if (item.Chunks.Count != item.Expected)
                 {
-                    if (packet.chunk_seq != 0) return false;
-                    try { completeText = StrictUtf8.GetString(source, 0, length); return true; }
-                    catch (DecoderFallbackException) { return false; }
+                    hasPending = true;
+                    return null;
                 }
-
-                var key = new Key { System = system, Component = component, Id = packet.id };
-                if (packet.chunk_seq == 0)
-                {
-                    partials.Remove(key);
-                    if (partials.Count >= MaxActive)
-                    {
-                        Key oldest = default(Key);
-                        DateTime time = DateTime.MaxValue;
-                        foreach (var pair in partials)
-                            if (pair.Value.Updated < time) { oldest = pair.Key; time = pair.Value.Updated; }
-                        partials.Remove(oldest);
-                    }
-                    var current = new Partial { Severity = packet.severity, NextSequence = 1, Updated = now };
-                    AddBytes(current.Bytes, source, length);
-                    if (current.Bytes.Count > MaxBytes) return false;
-                    if (length < source.Length)
-                        return Decode(current, out completeText);
-                    partials[key] = current;
-                    return false;
-                }
-
-                if (!partials.TryGetValue(key, out var partial) || packet.chunk_seq != partial.NextSequence ||
-                    packet.severity != partial.Severity || packet.chunk_seq >= MaxChunks)
-                {
-                    partials.Remove(key);
-                    return false;
-                }
-                partial.Updated = now;
-                if (partial.Bytes.Count + length > MaxBytes)
-                {
-                    partials.Remove(key);
-                    return false;
-                }
-                AddBytes(partial.Bytes, source, length);
-                partial.NextSequence++;
-                if (length == source.Length) return false;
-                partials.Remove(key);
-                return Decode(partial, out completeText);
+                pending.Remove(key);
+                hasPending = pending.Count > 0;
+                // The original assembled text and severity still feed the upstream route.
+                consistent = !item.MixedSeverity && item.Chunks.Keys.First() == 0 &&
+                    item.Chunks.Keys.Last() == item.Expected - 1;
+                return Join(item);
             }
         }
 
-        private static bool Decode(Partial value, out string text)
+        internal List<(uint sysid, byte compid, byte severity, string text)> TakeExpired()
         {
-            try { text = StrictUtf8.GetString(value.Bytes.ToArray()); return true; }
-            catch (DecoderFallbackException) { text = null; return false; }
+            return TakeExpired(DateTime.UtcNow);
         }
 
-        private static void AddBytes(List<byte> target, byte[] source, int length)
+        internal List<(uint sysid, byte compid, byte severity, string text)> TakeExpired(DateTime now)
         {
-            for (int i = 0; i < length; i++) target.Add(source[i]);
+            var expired = new List<(uint sysid, byte compid, byte severity, string text)>();
+            lock (pending)
+            {
+                foreach (var item in pending.Where(a => now - a.Value.LastChunk > Timeout)
+                             .OrderBy(a => a.Value.LastChunk).ToList())
+                {
+                    pending.Remove(item.Key);
+                    expired.Add((item.Key.sysid, item.Key.compid, item.Value.Severity, Join(item.Value)));
+                }
+                hasPending = pending.Count > 0;
+            }
+            return expired;
+        }
+
+        private static string Join(Pending item)
+        {
+            using (var data = new MemoryStream())
+            {
+                int next = 0;
+                foreach (var chunk in item.Chunks)
+                {
+                    if (chunk.Key != next) data.Write(Gap, 0, Gap.Length);
+                    data.Write(chunk.Value, 0, chunk.Value.Length);
+                    next = chunk.Key + 1;
+                }
+                return Encoding.UTF8.GetString(data.ToArray());
+            }
+        }
+
+        private static byte[] TrimAtNull(byte[] text)
+        {
+            if (text == null) return new byte[0];
+            int length = Array.IndexOf(text, (byte)0);
+            if (length == -1) length = text.Length;
+            var ans = new byte[length];
+            Array.Copy(text, ans, length);
+            return ans;
         }
     }
 
