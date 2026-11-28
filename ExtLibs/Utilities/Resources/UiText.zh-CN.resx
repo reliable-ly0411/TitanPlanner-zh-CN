@@ -143,6 +143,10 @@
     <value> 六旋翼</value>
     <comment>" Hexa"</comment>
   </data>
+  <data name="e4cc5124f29f4070012f9735fc46984a7eb10b370962b8e890bbaba0b7dc8a49" xml:space="preserve">
+    <value>保持稳定悬停所需的油门量。</value>
+    <comment>" How much throttle is needed to maintain a steady hover. "</comment>
+  </data>
   <data name="5dbafcb1d77a2c2a27c945e11fe95c27410d31200a7dce8a3f2ddd44a413e680" xml:space="preserve">
     <value> 端口无效</value>
     <comment>" Invalid port"</comment>
@@ -2375,6 +2379,10 @@
     <value>客户端模式</value>
     <comment>"Client Mode"</comment>
   </data>
+  <data name="71c141b4c3a6f960ff4e9ec84d7ff57d9ad3a96f7341d1214a5cd1a233feb4df" xml:space="preserve">
+    <value>爬升灵敏度</value>
+    <comment>"Climb Sensitivity:"</comment>
+  </data>
   <data name="dd816ce0b873aac9440c5d5876aa164f55bcef214e335a611530a592ca13712d" xml:space="preserve">
     <value>爬升率 (speed)</value>
     <comment>"ClimbRate (speed)"</comment>
@@ -2620,6 +2628,166 @@ Ctrl+O 从文件加载</value>
   <data name="563849f6dc3d933f18d24e12805eefb7f42d44ed30595841ae3edeec29c37656" xml:space="preserve">
     <value>多旋翼集群 - 单链路</value>
     <comment>"Copter Swarm - Single link"</comment>
+  </data>
+  <data name="45b26bbcae389dfe6dc83f713d2ee93bc6aa7115b4cb0692bfde905910dfc05a" xml:space="preserve">
+    <value>特技横滚/俯仰角速度 (deg/s)</value>
+    <comment>"Copter TUNE: Acro Roll/Pitch deg/s"</comment>
+  </data>
+  <data name="4005a9162b1850cc55cc0464cce107324f64dd341184bc7688ce79771e314e4f" xml:space="preserve">
+    <value>特技横滚／俯仰 P 增益</value>
+    <comment>"Copter TUNE: Acro RollPitch kP"</comment>
+  </data>
+  <data name="452678d9e656416d933c5bca21c06854af704a017d684eb6b8244d5b6620c911" xml:space="preserve">
+    <value>特技偏航角速度 (deg/s)</value>
+    <comment>"Copter TUNE: Acro Yaw deg/s"</comment>
+  </data>
+  <data name="87946ef1c2e7dcf26fadb2dc752eccc996aede0ca8484d6fca2499d329f289b8" xml:space="preserve">
+    <value>特技偏航 P 增益</value>
+    <comment>"Copter TUNE: Acro Yaw kP"</comment>
+  </data>
+  <data name="b1eeae8a5ed2b4c73f90700089d74887b5aec5de87cc6cba077567d1fc663f7e" xml:space="preserve">
+    <value>定高 P 增益</value>
+    <comment>"Copter TUNE: AltHold kP"</comment>
+  </data>
+  <data name="f7cf879a7fdbec9fd364abebb189c6516fb159a5863913f9bce63a9fbce04341" xml:space="preserve">
+    <value>定高 P 增益</value>
+    <comment>"Copter TUNE: Altitude Hold kP"</comment>
+  </data>
+  <data name="c8814b3021be0a2c6ab70347fed368bee8c07675c6ad4f3ed665976b3d565a13" xml:space="preserve">
+    <value>绕圈角速度</value>
+    <comment>"Copter TUNE: Circle Rate"</comment>
+  </data>
+  <data name="c8942a0a488142c8bb7753f56857582b519bd4f5786050c587ebf7925a29e00f" xml:space="preserve">
+    <value>磁偏角</value>
+    <comment>"Copter TUNE: Declination"</comment>
+  </data>
+  <data name="b9da21ca07d17779b377d6e9bfb6fe17d57b45e792c7adce50752bd88567adbb" xml:space="preserve">
+    <value>直升机外置陀螺仪</value>
+    <comment>"Copter TUNE: Heli Ext Gyro"</comment>
+  </data>
+  <data name="145a4dd0e249333392dd688a9e05f483e7b2bb68e07c59f4da6e9f5d0697f81f" xml:space="preserve">
+    <value>悬停位置 P 增益</value>
+    <comment>"Copter TUNE: Loiter Pos kP"</comment>
+  </data>
+  <data name="8fc7b7c0ecb4dca123d7112895ae4e0cfa88db537720c103a98332a8cf7a4fac" xml:space="preserve">
+    <value>电机偏航控制余量</value>
+    <comment>"Copter TUNE: Motor Yaw Headroom"</comment>
+  </data>
+  <data name="e1c83d18581a7c6f2b5a0b88fe7ddd66616b85051e6a054e189789a91d3e6391" xml:space="preserve">
+    <value>无</value>
+    <comment>"Copter TUNE: None"</comment>
+  </data>
+  <data name="5886962ef8e560b3e2e09ba9d20c8e28fa441dceabbf658f8fae018336acd270" xml:space="preserve">
+    <value>遥控操纵手感</value>
+    <comment>"Copter TUNE: RC Feel"</comment>
+  </data>
+  <data name="28052c3a86e1676f15c9ac3d66c97b98692a9e6c5824e4b7dc25aa8daf3e1a01" xml:space="preserve">
+    <value>测距仪增益</value>
+    <comment>"Copter TUNE: RangeFinder Gain"</comment>
+  </data>
+  <data name="155dfdd377a61e40d20b9d1fee451d40db594d96ec1909a9dc3a6941ba9e10c7" xml:space="preserve">
+    <value>俯仰角速度前馈</value>
+    <comment>"Copter TUNE: Rate Pitch FF"</comment>
+  </data>
+  <data name="9b8c2732996b59ac7e9f60003fd2fe655e9ca921fff867754d47f4d722a5d94f" xml:space="preserve">
+    <value>俯仰角速度 D 增益</value>
+    <comment>"Copter TUNE: Rate Pitch kD"</comment>
+  </data>
+  <data name="936cace4fbe3e543078e3996f1fbf91cdc669334ba1fc3da4821ee585d131f14" xml:space="preserve">
+    <value>俯仰角速度 I 增益</value>
+    <comment>"Copter TUNE: Rate Pitch kI"</comment>
+  </data>
+  <data name="796779ff2af48d492b25599a82fb73a888e59542f53af85c5c21d8a3133fe0b1" xml:space="preserve">
+    <value>俯仰角速度 P 增益</value>
+    <comment>"Copter TUNE: Rate Pitch kP"</comment>
+  </data>
+  <data name="a824c6b2169b1bccbdea821526e102c2413756c308ebb8de58fccd3de36acda2" xml:space="preserve">
+    <value>横滚角速度前馈</value>
+    <comment>"Copter TUNE: Rate Roll FF"</comment>
+  </data>
+  <data name="f315fd01cf3ee280370dd9eb1abf83fbb0c4906952da517c9b2ccc782b7bcfef" xml:space="preserve">
+    <value>横滚角速度 D 增益</value>
+    <comment>"Copter TUNE: Rate Roll kD"</comment>
+  </data>
+  <data name="e911719789943e763ab9c51079f8e6f2a58314d7e5dcaac7551d3fc2d9a6c47a" xml:space="preserve">
+    <value>横滚角速度 I 增益</value>
+    <comment>"Copter TUNE: Rate Roll kI"</comment>
+  </data>
+  <data name="18ecbfc82cb37edb90469079ba0ea64f8457d8bb52979c82f0e95a1e1fb7dfdd" xml:space="preserve">
+    <value>横滚角速度 P 增益</value>
+    <comment>"Copter TUNE: Rate Roll kP"</comment>
+  </data>
+  <data name="4cf0fb004c4e679f270daf37c45206fe5fb0d271e2b26ba1a08debdfd85c77c0" xml:space="preserve">
+    <value>横滚/俯仰角速度 D 增益</value>
+    <comment>"Copter TUNE: Rate Roll/Pitch kD"</comment>
+  </data>
+  <data name="d773fdf1176c479288d244a687bb3aefc62d32a0877489b1f383b45b10bed1fe" xml:space="preserve">
+    <value>横滚/俯仰角速度 I 增益</value>
+    <comment>"Copter TUNE: Rate Roll/Pitch kI"</comment>
+  </data>
+  <data name="7b8740f40de98ee556fcec2e214ac852ba1b95ffd62b4187edaf3ada6f94ece9" xml:space="preserve">
+    <value>横滚/俯仰角速度 P 增益</value>
+    <comment>"Copter TUNE: Rate Roll/Pitch kP"</comment>
+  </data>
+  <data name="b6e9e555b33f91252854043c5cde67b7dc0134b28a1a01ef67bc3235cfffcde9" xml:space="preserve">
+    <value>偏航角速度前馈</value>
+    <comment>"Copter TUNE: Rate Yaw FF"</comment>
+  </data>
+  <data name="5c90ca397ab76ae4981abb82346ac7ef3d0f58c2791794aa57b450024f2fa7c1" xml:space="preserve">
+    <value>偏航角速度滤波</value>
+    <comment>"Copter TUNE: Rate Yaw Filter"</comment>
+  </data>
+  <data name="a0ef34e3fcd365b3382f717b70f72f03717256111f5fadf69e7b72bb7785ea6d" xml:space="preserve">
+    <value>偏航角速度 D 增益</value>
+    <comment>"Copter TUNE: Rate Yaw kD"</comment>
+  </data>
+  <data name="844ee8d00c8cd8c90de5e97486c4688f3635d0b7884146e0e67a5c80746eeeb1" xml:space="preserve">
+    <value>偏航角速度 P 增益</value>
+    <comment>"Copter TUNE: Rate Yaw kP"</comment>
+  </data>
+  <data name="ed9520bc3086952def5cd56acab1709ecd78c5cea31a91f0c1c00e82a3470148" xml:space="preserve">
+    <value>横滚/俯仰姿态 P 增益</value>
+    <comment>"Copter TUNE: Stab Roll/Pitch kP"</comment>
+  </data>
+  <data name="0845a825f97d7c607336021c77dc157eda801533ca45390867d9fe92c2c380c5" xml:space="preserve">
+    <value>偏航姿态 P 增益</value>
+    <comment>"Copter TUNE: Stab Yaw kP"</comment>
+  </data>
+  <data name="0ef9aa17519b6ee41e2a40a07f83764637255ae9220fef25809d55ca80abbb5c" xml:space="preserve">
+    <value>系统辨识激励幅度</value>
+    <comment>"Copter TUNE: SysID Magnitude"</comment>
+  </data>
+  <data name="6a63657a7af91591cfd9d67002df6e1eaa27d07aea8f3101991f23c5cdcd0a54" xml:space="preserve">
+    <value>垂直加速度 D 增益</value>
+    <comment>"Copter TUNE: Throttle Accel kD"</comment>
+  </data>
+  <data name="a8a7a666d278be533148f84a1d04d1284580569fdda9c4aeedd9f69ad7af59f5" xml:space="preserve">
+    <value>垂直加速度 I 增益</value>
+    <comment>"Copter TUNE: Throttle Accel kI"</comment>
+  </data>
+  <data name="994943f2f082582d0bd65805c08b047b4b3fb4f873bc8d3fa34b66abdc858637" xml:space="preserve">
+    <value>垂直加速度 P 增益</value>
+    <comment>"Copter TUNE: Throttle Accel kP"</comment>
+  </data>
+  <data name="e4e611eee0ffc812e6c8eb375d2c6f96de20d0c10e5eb1f569dc45d4000dfb0a" xml:space="preserve">
+    <value>垂直速度 P 增益</value>
+    <comment>"Copter TUNE: Throttle Rate kP"</comment>
+  </data>
+  <data name="f074ea7d9cb3e781bcd9892928f606bd0409bf5edd3741102592ddbc241d8251" xml:space="preserve">
+    <value>水平速度 I 增益</value>
+    <comment>"Copter TUNE: Velocity XY kI"</comment>
+  </data>
+  <data name="0b5cf5fc5e22a522bf2a06c1d5bbaafc34e55e362b65e3b32af45833a3f8a2a7" xml:space="preserve">
+    <value>水平速度 P 增益</value>
+    <comment>"Copter TUNE: Velocity XY kP"</comment>
+  </data>
+  <data name="74944704b7b88c34c5fc98cda3e93120fed7d1a3e47b16afcf680c2253404576" xml:space="preserve">
+    <value>航点飞行速度</value>
+    <comment>"Copter TUNE: WP Speed"</comment>
+  </data>
+  <data name="5622bb4c45d73d5d6ab858c23197dc7563fdfe58ab1a45c472ad2cb98d84d9a1" xml:space="preserve">
+    <value>绞盘</value>
+    <comment>"Copter TUNE: Winch"</comment>
   </data>
   <data name="e21f935f11d7e966dbbae78da9daa378fe8142a14e7c0cd7434183005faa6c5c" xml:space="preserve">
     <value>复制</value>
@@ -11528,6 +11696,10 @@ VLAN 标记</value>
     <value>遥控失联保护</value>
     <comment>"RC Failsafe"</comment>
   </data>
+  <data name="815fbf7245e4c08d2313e71a6b4290f7299a8bd6ccdf24346288c29630f8524f" xml:space="preserve">
+    <value>横滚/俯仰操纵手感 (RC Feel)</value>
+    <comment>"RC Feel Roll/Pitch"</comment>
+  </data>
   <data name="de51238730c165f5f27e7e67e0c45b192864378cd7cbda849e0ab010ce338fef" xml:space="preserve">
     <value>遥控长时失联保护已解除</value>
     <comment>"RC Long Failsafe Cleared"</comment>
@@ -13121,6 +13293,18 @@ gps_point：跟踪单个地面点</value>
     <value>已跳过无效命令 #{0}</value>
     <comment>"Skipping invalid cmd #{0}"</comment>
   </data>
+  <data name="81965b7921dcfc368a002f0dd77f985a3009390e33a773fa08bbb24e60bf02e4" xml:space="preserve">
+    <value>向左滑动可使遥控响应更柔和，向右滑动可使响应更直接。</value>
+    <comment>"Slide to the left for softer response to user RC input or slide to the right for crisper response."</comment>
+  </data>
+  <data name="27c72e6d103316403ad7ec59706904f72d9b6ecc9c1aac430ea4bc34c8c12bd3" xml:space="preserve">
+    <value>响应迟缓时向右调；响应过于敏感时向左调。</value>
+    <comment>"Slide to the right if the copter is sluggish or slide to the left if the copter is twitchy."</comment>
+  </data>
+  <data name="0db1ed3fdf9f301c771c20cdd711a52f92522914a61b3d63912a10c91a5f6860" xml:space="preserve">
+    <value>向右调可使爬升响应更强，向左调可使爬升更柔和。</value>
+    <comment>"Slide to the right to climb more aggressively or slide to the left to climb more gently."</comment>
+  </data>
   <data name="4ba4f150a1a1c36107d3dccc6ca9e53484f9fe9b3bb308edff1bb1df2ad23e5e" xml:space="preserve">
     <value>智能分配</value>
     <comment>"Smart Assign"</comment>
@@ -14234,6 +14418,10 @@ Acc：当前测定位置的精度
   <data name="60b459e536fc45c909b3f36e22aeee9129972bbf5edf7109cf06ebccf425d7a5" xml:space="preserve">
     <value>油门 %</value>
     <comment>"Throttle %"</comment>
+  </data>
+  <data name="e60ae0d4c3c43618bd05203ff130047df43fade2dc521e222a305c669c5ff444" xml:space="preserve">
+    <value>悬停油门</value>
+    <comment>"Throttle Hover:"</comment>
   </data>
   <data name="ab26dbc4be5f4f6102808075995c714c986d32ed8d54684d91e993c33d49f83a" xml:space="preserve">
     <value>油门输出</value>
@@ -15929,6 +16117,10 @@ http://www.magnetic-declination.com/</value>
     <value>多飞行器集群界面</value>
     <comment>"multi mav swarm interface"</comment>
   </data>
+  <data name="528f277b76e3c5185714871e29972b34c256647bc82d6efda3b37fe29b7c254c" xml:space="preserve">
+    <value>仅更名，数值比例不变</value>
+    <comment>"no scaling change, name only"</comment>
+  </data>
   <data name="0192d20b2cfdb38e5de2c9703110736ce6b56905ff2fd7d674cbbd9e0e09d654" xml:space="preserve">
     <value>已 {0} 秒未收到视频</value>
     <comment>"no video for {0} s"</comment>
@@ -16209,6 +16401,30 @@ http://www.magnetic-declination.com/</value>
     <value>u-blox 支持 L5 频段</value>
     <comment>"u-blox supports L5 Band"</comment>
   </data>
+  <data name="284a22bd294ecadec059d3ea7deefb3656894d46543afa8637ce6bef3d7b15b8" xml:space="preserve">
+    <value>单位由 cd 改为 deg</value>
+    <comment>"units changed from cd to deg"</comment>
+  </data>
+  <data name="9976fa92f5911bf5d48cd79ebf2454654f3228f4ac1a329f8c891b85327b4fd1" xml:space="preserve">
+    <value>单位由 cdeg/s 改为 deg/s</value>
+    <comment>"units changed from cdeg/s to deg/s"</comment>
+  </data>
+  <data name="dd16f7269e56192cd1b16e0da5e950d408eb639972d4151edf77487f31a97c90" xml:space="preserve">
+    <value>单位由 cm 改为 m</value>
+    <comment>"units changed from cm to m"</comment>
+  </data>
+  <data name="79dd25e66ad037fd67af46aa8a52be58b614df3692db9e6ddc7930078359a82f" xml:space="preserve">
+    <value>单位由 cm/s 改为 m/s</value>
+    <comment>"units changed from cm/s to m/s"</comment>
+  </data>
+  <data name="56a923039ffdc8ee11337e442172fe92957eef085115dfbc849f53e161b98ec3" xml:space="preserve">
+    <value>单位由 cm/s/s 改为 m/s/s</value>
+    <comment>"units changed from cm/s/s to m/s/s"</comment>
+  </data>
+  <data name="0f3dd2f32f81ae886751f2f5ef4bfcd6caa6e8aa4be2c252ded76fb811fb491e" xml:space="preserve">
+    <value>单位由 cm/s/s/s 改为 m/s/s/s</value>
+    <comment>"units changed from cm/s/s/s to m/s/s/s"</comment>
+  </data>
   <data name="38dee2f0439c2d7fb946e1e986fae4dc52142a3ab288877dee8cc3fd68455cdd" xml:space="preserve">
     <value>更新引导程序</value>
     <comment>"update the bootloader"</comment>
@@ -16220,6 +16436,14 @@ http://www.magnetic-declination.com/</value>
   <data name="2e8c1c87cce5cc827a941bc6f1c16cd922b8ae77af85cdef40d4be2d65e33524" xml:space="preserve">
     <value>请自行承担使用风险！</value>
     <comment>"use at your own risk!!!"</comment>
+  </data>
+  <data name="a3b896d3ddd3e9619b35f6e5b188d349c3184df5423f498dd9728d2c07ca36f2" xml:space="preserve">
+    <value>新参数的数值为原值的 1/100</value>
+    <comment>"value is now 100x smaller"</comment>
+  </data>
+  <data name="99a4f56c31aa2e1238ba9831975930d7d6739ed05333da75b5269e84ead629a9" xml:space="preserve">
+    <value>新参数的数值为原值的 1/10</value>
+    <comment>"value is now 10x smaller"</comment>
   </data>
   <data name="b1ee2cf33aa077312b24e17ffac8bb22c0e09d35e5af311c3f28366c9a4c6650" xml:space="preserve">
     <value>速度方差</value>
