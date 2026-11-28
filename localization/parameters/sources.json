@@ -11,7 +11,7 @@
       "sourceSha256": "61599e773eadeba781d69c124aff3acfbeea884b2a159d9ca6f7891f379513c9",
       "gitTag": "Copter-4.5.7",
       "gitSha": "2a3dc4b7bf2507120f7378a7b2fde73185e0c325",
-      "parameters": 1396,
+      "parameters": 1498,
       "legacySourceStamp": "Generated from git tag Copter-4.5.7 on 2025-05-26 19:05:40"
     },
     {
@@ -21,7 +21,7 @@
       "sourceSha256": "e6375727b7a05a0c820b7b5c3e28c755d52c1e6da6b4506682d1dd3b19552190",
       "gitTag": "Copter-4.6.3",
       "gitSha": "92b0cd788ec29406f26c6f9c31d5ceedbd1cc538",
-      "parameters": 1475
+      "parameters": 1577
     },
     {
       "family": "Copter",
@@ -39,7 +39,7 @@
       "sourceSha256": "4abf0156f5c68d61fe0efef5f24daefc31754ee1ddf6cd8e70b01aff300bfa83",
       "gitTag": "Plane-4.5.7",
       "gitSha": "0358a9c210bc6c965006f5d6029239b7033616df",
-      "parameters": 1482,
+      "parameters": 1502,
       "legacySourceStamp": "Generated from git tag Plane-4.5.7 on 2025-05-26 19:19:51"
     },
     {
@@ -49,7 +49,7 @@
       "sourceSha256": "154e7bd4c38a75cc09e7109a4b7cfaa7f7a6fbf03125cfe6a849032f3b8389aa",
       "gitTag": "Plane-4.6.3",
       "gitSha": "3fc7011a7d3dc047cbb17d8bd98ee94577d144c6",
-      "parameters": 1552
+      "parameters": 1579
     },
     {
       "family": "Plane",
@@ -77,7 +77,7 @@
       "sourceSha256": "0c009e0a35c0ab8f3455f1bb323c29f6a59152dc54cb5e0edcc95afd48127de5",
       "gitTag": "Rover-4.6.3",
       "gitSha": "3fc7011a7d3dc047cbb17d8bd98ee94577d144c6",
-      "parameters": 280,
+      "parameters": 1488,
       "retrievedUtc": "2026-11-26"
     },
     {
@@ -97,7 +97,7 @@
       "sourceSha256": "4d6971176bce63c53a7ad40ceb71c9ac4998f801c4b7ed1f1e4a1f45853599fc",
       "gitTag": "Copter-4.7.3",
       "gitSha": "d9c5097c3d8333435712ffed86bca8ce00c4bb46",
-      "parameters": 1962
+      "parameters": 2123
     },
     {
       "family": "Plane",
@@ -106,7 +106,7 @@
       "sourceSha256": "d7304d0a6aa9f4d2fd8a57adfcc09b55743abb2fb9fb24e5decf8b1bbf3d4286",
       "gitTag": "Plane-4.7.3",
       "gitSha": "d9c5097c3d8333435712ffed86bca8ce00c4bb46",
-      "parameters": 2089
+      "parameters": 2142
     },
     {
       "family": "Copter",
@@ -116,7 +116,7 @@
       "gitTag": "Copter-4.4.4",
       "gitSha": "db53a28f321dc8233ee49d3cc6b395b5835c768b",
       "legacySourceStamp": "Generated from git tag Copter-4.4.4 on 2025-05-26 19:05:36",
-      "parameters": 798
+      "parameters": 871
     },
     {
       "family": "Copter",
@@ -126,7 +126,7 @@
       "gitTag": "Copter-4.3.8",
       "gitSha": "60ebf6fbb91543912da34bb2513421477f428752",
       "legacySourceStamp": "Generated from git tag Copter-4.3.8 on 2025-05-26 19:05:35",
-      "parameters": 749
+      "parameters": 814
     },
     {
       "family": "Copter",
@@ -136,7 +136,7 @@
       "gitTag": "Copter-4.2.4",
       "gitSha": "245996c8609e683ad4bb988473df288314bb2599",
       "legacySourceStamp": "Generated from git tag Copter-4.2.4 on 2025-05-26 19:05:32",
-      "parameters": 657
+      "parameters": 722
     },
     {
       "family": "Copter",
@@ -146,7 +146,7 @@
       "gitTag": "Copter-4.1.6",
       "gitSha": "7898097b0c71b5fce361e33b5847b89a923c369d",
       "legacySourceStamp": "Generated from git tag Copter-4.1.6 on 2025-05-26 19:05:31",
-      "parameters": 616
+      "parameters": 681
     },
     {
       "family": "Plane",
@@ -156,7 +156,7 @@
       "gitTag": "Plane-4.4.4",
       "gitSha": "16b783822905668b160b0eb1ef5599ce0d3a0231",
       "legacySourceStamp": "Generated from git tag Plane-4.4.4 on 2024-10-28 13:21:25",
-      "parameters": 845
+      "parameters": 862
     },
     {
       "family": "Plane",
@@ -166,7 +166,7 @@
       "gitTag": "Plane-4.3.8",
       "gitSha": "68249e1d07dfb6a9c5b4d5d1e3bdbed1a88ea1a9",
       "legacySourceStamp": "Generated from git tag Plane-4.3.8 on 2025-05-26 19:05:51",
-      "parameters": 790
+      "parameters": 804
     },
     {
       "family": "Plane",
@@ -176,7 +176,7 @@
       "gitTag": "Plane-4.1.7",
       "gitSha": "f9db02a376a0abc407276ee4155e5540a3bb383e",
       "legacySourceStamp": "Generated from git tag Plane-4.1.7 on 2025-05-26 19:05:48",
-      "parameters": 661
+      "parameters": 674
     },
     {
       "family": "Rover",
@@ -185,7 +185,7 @@
       "sourceSha256": "02802f8ace1268b11503111d6bbf80bcf96cbeafcbd2b2268a7f22131f447925",
       "gitTag": "Rover-4.7.3",
       "gitSha": "d9c5097c3d8333435712ffed86bca8ce00c4bb46",
-      "parameters": 632
+      "parameters": 1988
     },
     {
       "family": "Rover",
@@ -195,7 +195,7 @@
       "gitTag": "Rover-4.5.7",
       "gitSha": "52bed8d542003c4767fea21b0f5a78fe864a377f",
       "legacySourceStamp": "Generated from git tag Rover-4.5.7 on 2024-10-28 13:21:38",
-      "parameters": 280
+      "parameters": 1411
     },
     {
       "family": "Rover",
@@ -205,7 +205,7 @@
       "gitTag": "Rover-4.4.0",
       "gitSha": "9279df6191a772c098b2e4797c95ac954f258d88",
       "legacySourceStamp": "Generated from git tag Rover-4.4.0 on 2024-10-28 13:21:34",
-      "parameters": 236
+      "parameters": 784
     },
     {
       "family": "Rover",
@@ -215,7 +215,7 @@
       "gitTag": "Rover-4.2.3",
       "gitSha": "2172cfb39ad8f0bcdcd343d74512414f7cb1f6a6",
       "legacySourceStamp": "Generated from git tag Rover-4.2.3 on 2024-10-28 13:21:34",
-      "parameters": 236
+      "parameters": 642
     },
     {
       "family": "Rover",
@@ -225,7 +225,7 @@
       "gitTag": "Rover-4.1.5",
       "gitSha": "3ef2b3f48ad485a2a964aeaa2126f2bd97fd5646",
       "legacySourceStamp": "Generated from git tag Rover-4.1.5 on 2024-10-28 13:21:32",
-      "parameters": 216
+      "parameters": 610
     },
     {
       "family": "Sub",
@@ -234,7 +234,7 @@
       "sourceSha256": "ba68f45e1820c494608cc4db7f6d3675652b278eb8d6366d5e8ef7bc3534a3d2",
       "gitTag": "Sub-4.7.3",
       "gitSha": "d9c5097c3d8333435712ffed86bca8ce00c4bb46",
-      "parameters": 1271
+      "parameters": 2002
     },
     {
       "family": "Sub",
@@ -244,7 +244,7 @@
       "gitTag": "ArduSub-4.1.2",
       "gitSha": "2dd0bb7d4c85ac48437f139d66df648fc0e1d4ae",
       "legacySourceStamp": "Generated from git tag ArduSub-4.1.2 on 2024-10-28 13:21:43",
-      "parameters": 216
+      "parameters": 361
     },
     {
       "family": "Sub",
@@ -254,7 +254,7 @@
       "gitTag": "ArduSub-4.0.3",
       "gitSha": "96882ed0aeeb822dd80575312b782fe47c352b25",
       "legacySourceStamp": "Generated from git tag ArduSub-4.0.3 on 2024-10-28 13:21:42",
-      "parameters": 139
+      "parameters": 270
     },
     {
       "family": "Tracker",
@@ -263,7 +263,7 @@
       "sourceSha256": "374e831409bc76b5581604a1f01ac62f69c27500a5814b74e7bd3b74da873946",
       "gitTag": "Tracker-4.7.3",
       "gitSha": "d9c5097c3d8333435712ffed86bca8ce00c4bb46",
-      "parameters": 354
+      "parameters": 907
     },
     {
       "family": "Tracker",
@@ -272,7 +272,7 @@
       "sourceSha256": "f0a1f63400e02974b715c7773ff255b3c722ed4f5d25af2e696072448e27a0d5",
       "gitTag": "Tracker-4.6.3",
       "gitSha": "3fc7011a7d3dc047cbb17d8bd98ee94577d144c6",
-      "parameters": 65
+      "parameters": 473
     },
     {
       "family": "Tracker",
@@ -282,7 +282,7 @@
       "gitTag": "Tracker-4.5.7",
       "gitSha": "a6c06e8b1d605afacb25c82fa5069b8990a372c8",
       "legacySourceStamp": "Generated from git tag Tracker-4.5.7 on 2024-10-28 13:21:49",
-      "parameters": 65
+      "parameters": 400
     },
     {
       "family": "Copter",

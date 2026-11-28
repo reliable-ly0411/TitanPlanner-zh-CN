@@ -445,8 +445,8 @@ internal static class Program
             var matchingBuild = store.Bundled(Context(family, version, reportedBuild));
             Check(matchingBuild.MatchesFirmware, "the matching build prefix can use the exact reconstruction");
             var differentBuild = store.Bundled(Context(family, version, "deadbeef0123456789"));
-            Check(!differentBuild.MatchesFirmware && !differentBuild.MatchesReportedBuild,
-                "a different build hash cannot use version-scoped reconstruction");
+            Check(differentBuild.MatchesFirmware && !differentBuild.MatchesReportedBuild,
+                "a different build hash still uses the version-scoped reconstruction");
             foreach (var key in keys)
             {
                 var expected = string.Join("\n\n", key.Select(r => (string)r.Attribute("documentation") ?? "").Distinct());
@@ -454,7 +454,8 @@ internal static class Program
                 var english = catalog.Present(snapshot, key.Key, false);
                 Check(record != null && english != null && english.Description == expected, "archived English preserved: " + key.Key);
                 Check(record.Fingerprint == matchingBuild.Find(key.Key).Fingerprint, "the matching build preserves the recovered record");
-                Check(catalog.Present(differentBuild, key.Key, true) == null, "mismatched builds use the UI fallback: " + key.Key);
+                Check(catalog.Present(differentBuild, key.Key, false).Description == expected,
+                    "the historical English follows the same exact version: " + key.Key);
             }
             if (sourceDirectory != null)
             {
@@ -481,8 +482,8 @@ internal static class Program
                 && !untranslated.Description.Contains("中文说明："), "untranslated words fall back to exact historical English");
         }
         var contradicted = await store.LoadAsync(Context("Plane", "4.2.3", "deadbeef"));
-        Check(catalog.Present(contradicted, "SCHED_DEBUG", true) == null,
-            "async lookup for a different build cannot reintroduce historical Chinese");
+        Check(catalog.Present(contradicted, "SCHED_DEBUG", true).SearchText.Contains("调度器调试消息"),
+            "async lookup for an exact historical version can use the translation with a different build hash");
         var packetVersion = new Version(4, 2, 3, 255);
         var packetMatch = ParameterDescriptionContext.TryCreateWithBuild("ArduPlane",
             "ArduPlane V4.2.3 (55685c4)", packetVersion, Bytes("55685C43"));
@@ -491,6 +492,17 @@ internal static class Program
         Check(packetOnly?.ReportedGitSha == "55685c43", "a stable version packet also supplies the build without the banner");
         Check(ParameterDescriptionContext.TryCreateWithBuild("ArduPlane", "ArduPlane V4.2.3 (55685c43)",
             packetVersion, Bytes("deadbeef")) == null, "conflicting version packet build requires the UI fallback");
+        var historicalIdentity = store.IdentifyFirmware("ArduPlane", "ArduPlane V4.2.3 (55685c43)",
+            packetVersion, Bytes("deadbeef"));
+        Check(historicalIdentity?.Version == "4.2.3" && store.Bundled(historicalIdentity).MatchesFirmware,
+            "reconstructed metadata is selected by the stable version when build reports differ");
+        Check(store.IdentifyFirmware("ArduPlane", "ArduPlane V4.7.3 (d9c5097c)",
+            new Version(4, 7, 3, 255), Bytes("deadbeef")) == null,
+            "the official PDEF still checks conflicting reported build information");
+        Check(store.IdentifyFirmware("ArduPlane", "ArduPlane V4.2.3 (55685c43)",
+            new Version(4, 2, 2, 255), Bytes("deadbeef")) == null,
+            "disagreeing numeric version signals cannot identify a reconstruction");
+
         Check(ParameterDescriptionContext.TryCreateWithBuild("ArduPlane", "ArduPlane V4.2.3",
             packetVersion, new byte[8])?.ReportedGitSha == "", "an empty packet build preserves the version-only context");
         Check(ParameterDescriptionContext.TryCreateWithBuild("ArduPlane", null,
@@ -571,42 +583,57 @@ internal static class Program
         Check(catalog.Present(bundled.Bundled(Context("Rover", "4.6.3", "deadbeef12345678")), "WP_RADIUS", true) == null, "Rover custom build remains untranslated");
         var expectedCounts = new Dictionary<string, int>
         {
-            ["Copter-4.5.7"] = 1396,
-            ["Copter-4.6.3"] = 1475,
+            ["Copter-4.5.7"] = 1498,
+            ["Copter-4.6.3"] = 1577,
             ["Copter-4.7.1"] = 781,
-            ["Plane-4.5.7"] = 1482,
-            ["Plane-4.6.3"] = 1552,
+            ["Plane-4.5.7"] = 1502,
+            ["Plane-4.6.3"] = 1579,
             ["Plane-4.7.1"] = 793,
             ["Sub-4.7.1"] = 743,
-            ["Rover-4.6.3"] = 280,
+            ["Rover-4.6.3"] = 1488,
             ["Tracker-4.7.1"] = 2,
-            ["Copter-4.7.3"] = 1962,
-            ["Plane-4.7.3"] = 2089,
-            ["Copter-4.4.4"] = 798,
-            ["Copter-4.3.8"] = 749,
-            ["Copter-4.2.4"] = 657,
-            ["Copter-4.1.6"] = 616,
-            ["Plane-4.4.4"] = 845,
-            ["Plane-4.3.8"] = 790,
-            ["Plane-4.1.7"] = 661,
+            ["Copter-4.7.3"] = 2123,
+            ["Plane-4.7.3"] = 2142,
+            ["Copter-4.4.4"] = 871,
+            ["Copter-4.3.8"] = 814,
+            ["Copter-4.2.4"] = 722,
+            ["Copter-4.1.6"] = 681,
+            ["Plane-4.4.4"] = 862,
+            ["Plane-4.3.8"] = 804,
+            ["Plane-4.1.7"] = 674,
             ["Rover-4.7.2"] = 636,
-            ["Rover-4.7.3"] = 632,
-            ["Rover-4.5.7"] = 280,
-            ["Rover-4.4.0"] = 236,
-            ["Rover-4.2.3"] = 236,
-            ["Rover-4.1.5"] = 216,
+            ["Rover-4.7.3"] = 1988,
+            ["Rover-4.5.7"] = 1411,
+            ["Rover-4.4.0"] = 784,
+            ["Rover-4.2.3"] = 642,
+            ["Rover-4.1.5"] = 610,
             ["Sub-4.7.2"] = 1271,
-            ["Sub-4.7.3"] = 1271,
-            ["Sub-4.1.2"] = 216,
-            ["Sub-4.0.3"] = 139,
+            ["Sub-4.7.3"] = 2002,
+            ["Sub-4.1.2"] = 361,
+            ["Sub-4.0.3"] = 270,
             ["Tracker-4.7.2"] = 355,
-            ["Tracker-4.7.3"] = 354,
-            ["Tracker-4.6.3"] = 65,
-            ["Tracker-4.5.7"] = 65
+            ["Tracker-4.7.3"] = 907,
+            ["Tracker-4.6.3"] = 473,
+            ["Tracker-4.5.7"] = 400
         };
         Check(releases.Length == expectedCounts.Count, "pinned release subsets");
         await CheckReconstructed(allReleases.Where(r => (string)r.Attribute("sourceKind") == "reconstructed").ToArray(),
             bundled, catalog, args.Length == 2 && args[0] == "--source-directory" ? args[1] : null);
+        var reusedPlane = bundled.Bundled(Context("Plane", "4.7.3"));
+        var serial = catalog.Present(reusedPlane, "SERIAL1_PROTOCOL", true);
+        Check(serial.Description.Contains("Telem1 port") && serial.SearchText.Contains("Telem1 端口使用的协议"),
+            "Plane can search a reviewed description reused from the shared Copter serial library");
+        var reusedCopter = bundled.Bundled(Context("Copter", "4.7.3"));
+        var minimumPwm = catalog.Present(reusedCopter, "RC10_MIN", true);
+        Check(minimumPwm.Description.Contains("RC minimum PWM") && minimumPwm.SearchText.Contains("遥控通道最小 PWM 脉宽"),
+            "Copter can search the reviewed Plane description held for this exact RC channel");
+        var unregisteredReuseVersion = Context("Copter", "4.7.2");
+        Check(catalog.Chinese(unregisteredReuseVersion, "RC10_MIN", "Description", null, reusedCopter.Find("RC10_MIN").English,
+            out bool reusedNeedsReview, reusedCopter.Find("RC10_MIN").Fingerprint) == null && !reusedNeedsReview,
+            "a different patch cannot inherit a reused translation even with the same English and fingerprint");
+
+
+
 
         foreach (var family in new[] { "Rover", "Sub", "Tracker" })
         {
