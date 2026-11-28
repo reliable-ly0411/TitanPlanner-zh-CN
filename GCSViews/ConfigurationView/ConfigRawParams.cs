@@ -627,6 +627,10 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                         continue;
 
                     var row = new DataGridViewRow() { Height = 36 };
+#if !LIB
+                    if (!UseEnhancedParameterDescriptions)
+                        row.MinimumHeight = row.Height;
+#endif
                     row.CreateCells(Params);
                     row.Cells[Command.Index].Value = value;
                     row.Cells[Value.Index].Value = MainV2.comPort.MAV.param[value].ToString();

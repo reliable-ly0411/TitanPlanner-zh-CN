@@ -10,7 +10,7 @@
 
 Windows 紧凑窗口中的飞行数据操作页可使用内部滚动条查看下方控件。
 
-两套简体中文界面的规划航点表会随表头文字调整高度，窄列可显示完整的换行标签。
+全部参数页按可见参数的说明和选项调整行高，规划航点表按显示缩放和换行文字调整表头高度。
 
 Enhanced Chinese includes an initial set of bilingual Copter and Plane/QuadPlane parameter descriptions, version-scoped offline metadata, and Chinese search. See [scope, sources and validation](docs/parameter-descriptions.zh-CN.md); unsupported or changed descriptions retain English.
 

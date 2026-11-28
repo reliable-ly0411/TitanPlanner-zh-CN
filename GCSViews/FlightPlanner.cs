@@ -64,10 +64,7 @@ namespace MissionPlanner.GCSViews
         public FlightPlanner()
         {
             InitializeComponent();
-            var language = CultureInfo.CurrentUICulture.Name;
-            if (string.Equals(language, "zh-CN", StringComparison.Ordinal) ||
-                string.Equals(language, "zh-Hans", StringComparison.Ordinal))
-                Commands.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            Commands.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             // Configure the column before its first data source. Items.Count caches a
             // CurrencyManager on the template; setting members again after that can
             // dereference the template's missing DataGridView during startup/reload.
@@ -76,8 +73,35 @@ namespace MissionPlanner.GCSViews
             Init();
 #if !LIB
             InitializeLocalPlanPreview();
+            Commands.DpiChangedAfterParent += (sender, args) => FitCompactEnglishHeaders();
 #endif
         }
+
+#if !LIB
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+            BeginInvoke((MethodInvoker)FitCompactEnglishHeaders);
+        }
+
+        private void FitCompactEnglishHeaders()
+        {
+            if (CultureInfo.CurrentUICulture.TwoLetterISOLanguageName != "en" || Commands.IsDisposed)
+                return;
+
+            using (var graphics = Commands.CreateGraphics())
+            {
+                foreach (var column in new DataGridViewColumn[] { Delete, Grad, Angle, Dist, AZ })
+                {
+                    var style = column.HeaderCell.InheritedStyle;
+                    int textWidth = TextRenderer.MeasureText(graphics, column.HeaderText,
+                        style.Font ?? Commands.Font, Size.Empty,
+                        TextFormatFlags.SingleLine | TextFormatFlags.NoPrefix).Width;
+                    column.MinimumWidth = Math.Max(column.MinimumWidth, textWidth + style.Padding.Horizontal + 4);
+                }
+            }
+        }
+#endif
 
 
         private void but_mincommands_Click(object sender, System.EventArgs e)

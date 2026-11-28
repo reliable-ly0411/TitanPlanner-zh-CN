@@ -45,10 +45,9 @@ namespace MissionPlanner.GCSViews.ConfigurationView
 
         private void InitializeParameterDescriptions()
         {
-            // Displayed rows resize for the complete bilingual text, including after column resizing.
 #if !LIB
-            if (!UseEnhancedParameterDescriptions) return;
             Params.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.DisplayedCellsExceptHeaders;
+            if (!UseEnhancedParameterDescriptions) return;
             Desc.HeaderText += "（双击或 F1 展开）";
             Params.CellDoubleClick += (sender, e) =>
             {
