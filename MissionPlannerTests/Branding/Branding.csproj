@@ -6,6 +6,7 @@
     <GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="../../Utilities/TopBarBrand.cs" Link="TopBarBrand.cs" />
     <Compile Include="../../Utilities/BrandLogoLinks.cs" Link="BrandLogoLinks.cs" />
     <Compile Include="../Utilities/BrandLogoLinksTests.cs" Link="BrandLogoLinksTests.cs" />
     <Compile Include="../Utilities/BrandLogoPaintTests.cs" Link="BrandLogoPaintTests.cs" />

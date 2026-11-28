@@ -10,12 +10,27 @@ namespace MissionPlanner.Utilities
     public static class BrandLogoLinks
     {
         private static readonly object LogoMarker = new object();
+        private static event Action RefreshUserBrand;
+
+        public static void NotifyUserBrandChanged() => RefreshUserBrand?.Invoke();
 
         public const string ArduPilotUrl = "https://ardupilot.org";
         public const string GitHubUrl = "https://github.com/reliable-ly0411";
 
         public static ToolStripControlHost Configure(ToolStrip menu, ToolStripButton original,
             Action<string> open, params ToolStripItem[] connectionItems)
+        {
+            return ConfigureCore(menu, original, open, null, null, connectionItems);
+        }
+
+        public static ToolStripControlHost ConfigureUserBrand(ToolStrip menu, ToolStripButton original,
+            Action<string> open, Func<string> readPreset, Func<string> dataDirectory, params ToolStripItem[] connectionItems)
+        {
+            return ConfigureCore(menu, original, open, readPreset, dataDirectory, connectionItems);
+        }
+
+        private static ToolStripControlHost ConfigureCore(ToolStrip menu, ToolStripButton original,
+            Action<string> open, Func<string> readPreset, Func<string> dataDirectory, ToolStripItem[] connectionItems)
         {
             BrandLogoControl links;
             using (var stream = typeof(BrandLogoLinks).Assembly.GetManifestResourceStream(
@@ -35,6 +50,38 @@ namespace MissionPlanner.Utilities
                 AccessibleRole = AccessibleRole.Grouping,
                 Tag = LogoMarker
             };
+
+            if (readPreset != null)
+            {
+                Action refresh = () =>
+                {
+                    var id = readPreset();
+                    links.UpdateBrand(TopBarBrand.FromId(id), string.IsNullOrEmpty(id) ? null : dataDirectory());
+                    host.AccessibleName = links.AccessibleName;
+                };
+                EventHandler refreshTheme = (sender, args) =>
+                {
+                    links.RefreshTheme();
+                    host.AccessibleName = links.AccessibleName;
+                    links.Invalidate(true);
+                };
+                refresh();
+                RefreshUserBrand += refresh;
+                menu.BackColorChanged += refreshTheme;
+                menu.BackgroundImageChanged += refreshTheme;
+                menu.BackgroundImageLayoutChanged += refreshTheme;
+                links.ParentChanged += refreshTheme;
+                links.SizeChanged += refreshTheme;
+                host.Disposed += (sender, args) =>
+                {
+                    RefreshUserBrand -= refresh;
+                    menu.BackColorChanged -= refreshTheme;
+                    menu.BackgroundImageChanged -= refreshTheme;
+                    menu.BackgroundImageLayoutChanged -= refreshTheme;
+                    links.ParentChanged -= refreshTheme;
+                    links.SizeChanged -= refreshTheme;
+                };
+            }
 
             menu.SuspendLayout();
             try
@@ -104,6 +151,8 @@ namespace MissionPlanner.Utilities
         {
             private readonly Bitmap source;
             private readonly Bitmap inkSupport;
+            private Bitmap lightAsset, darkAsset, neutralAsset;
+            private TopBarBrand brand = TopBarBrand.Localized;
             private readonly Button left;
             private readonly Button right;
             private readonly ToolTip toolTip = new ToolTip();
@@ -145,12 +194,39 @@ namespace MissionPlanner.Utilities
                     Padding = Padding.Empty
                 };
                 button.FlatAppearance.BorderSize = 0;
-                button.Click += (sender, args) => open(url);
+                button.Click += (sender, args) => open(button.AccessibleDescription);
                 // ToolStripControlHost forwards the UserControl's leave event. Relay
                 // leaves from the child hit regions too, for the menu's auto-hide mode.
                 button.MouseLeave += (sender, args) => OnMouseLeave(args);
                 toolTip.SetToolTip(button, text + "\n" + url);
                 return button;
+            }
+
+            public void UpdateBrand(TopBarBrand preset, string directory)
+            {
+                lightAsset?.Dispose();
+                darkAsset?.Dispose();
+                neutralAsset?.Dispose();
+                brand = preset;
+                lightAsset = brand.TryLoadAsset(directory, false);
+                darkAsset = brand.TryLoadAsset(directory, true);
+                neutralAsset = brand.TryLoadAsset(directory, null);
+                RefreshTheme();
+                Invalidate(true);
+            }
+
+            public void RefreshTheme()
+            {
+                if (left == null || IsDisposed) return;
+                bool hasAsset = neutralAsset != null || ((lightAsset != null || darkAsset != null) &&
+                    (NeedsInkSupport() ? darkAsset : lightAsset) != null);
+                var url = hasAsset ? brand.Url : ArduPilotUrl;
+                var name = hasAsset ? brand.TargetName : "ArduPilot";
+                if (url == left.AccessibleDescription && name == left.AccessibleName) return;
+                left.Text = left.AccessibleName = name;
+                left.AccessibleDescription = url;
+                AccessibleName = left.AccessibleName + " / " + right.AccessibleName;
+                toolTip.SetToolTip(left, left.AccessibleName + "\n" + left.AccessibleDescription);
             }
 
             public Size SizeForToolbar(int height)
@@ -237,6 +313,7 @@ namespace MissionPlanner.Utilities
 
             private bool NeedsInkSupport()
             {
+                if (Width < 1 || Height < 1) return false;
                 // BackColor alone can be light while the toolbar's tiled image is dark.
                 // Sample the backdrop that is actually composited under the black text.
                 using (var sample = new Bitmap(1, 1))
@@ -262,11 +339,15 @@ namespace MissionPlanner.Utilities
 
             private void PaintLogo(Graphics graphics)
             {
-                int imageHeight = Math.Max(1, (int)Math.Round(Width * (double)source.Height / source.Width));
-                var imageBounds = new Rectangle(0, (Height - imageHeight) / 2, Width, imageHeight);
+                bool dark = NeedsInkSupport();
+                var selected = (dark ? darkAsset : lightAsset) ?? neutralAsset ?? source;
+                int maxHeight = Math.Max(1, Height * 2 / 3);
+                double ratio = Math.Min(Width / (double)selected.Width, maxHeight / (double)selected.Height);
+                var imageBounds = new Rectangle(0, 0, Math.Max(1, (int)Math.Round(selected.Width * ratio)), Math.Max(1, (int)Math.Round(selected.Height * ratio)));
+                imageBounds.Offset((Width - imageBounds.Width) / 2, (Height - imageBounds.Height) / 2);
                 graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
                 graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
-                if (NeedsInkSupport())
+                if (dark && ReferenceEquals(selected, source))
                 {
                     const int radius = 1;
                     for (int y = -radius; y <= radius; y++)
@@ -279,7 +360,7 @@ namespace MissionPlanner.Utilities
                     }
                 }
                 // The exact original RGBA image is always the final foreground layer.
-                graphics.DrawImage(source, imageBounds);
+                graphics.DrawImage(selected, imageBounds);
             }
 
             public void PaintLinkSurface(Graphics graphics, Point location)
@@ -295,6 +376,9 @@ namespace MissionPlanner.Utilities
             {
                 if (disposing)
                 {
+                    lightAsset?.Dispose();
+                    darkAsset?.Dispose();
+                    neutralAsset?.Dispose();
                     toolTip.Dispose();
                     inkSupport.Dispose();
                     source.Dispose();

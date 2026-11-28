@@ -32,7 +32,7 @@ Enhanced Chinese adds a Messages-only annotation for the EKF3 IMU1 origin notice
 
 ## Desktop appearance preferences
 
-The settings include a separate window icon and startup image page with previews, independent default resets, and persistent per-user imports. Window icons update during the session; startup images appear on the next launch. The startup footer identifies the modifier as lyy0405 and retains Michael Oborne and the TitanPlanner upstream credit. EXE, installer and existing shortcut icons retain their build-time identity.
+The settings provide separate dropdowns for window icons and startup images, each beside a single local-file picker and with its own preview, independent default resets, and persistent per-user imports. Window icons update during the session; startup images appear on the next launch. The startup footer identifies the modifier as lyy0405 and retains Michael Oborne and the TitanPlanner upstream credit. EXE, installer and existing shortcut icons retain their build-time identity. The Mission Planner, TitanPlanner, and MakeFlyEasy window icon presets keep independent local ICO imports without bundling vendor icons.
 
 ## Bilingual parameter descriptions
 

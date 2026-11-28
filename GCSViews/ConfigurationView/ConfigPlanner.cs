@@ -130,6 +130,10 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             layoutRoot.Controls.Add(CreateConfigurationGroup());
 #if !LIB
             layoutRoot.Controls.Add(CreateDesktopAppearanceGroup());
+            var toolbarBrand = CreateGroupBox(CultureInfo.CurrentUICulture.Name.StartsWith("zh-", StringComparison.Ordinal)
+                ? "顶栏品牌标志" : "Toolbar brand");
+            toolbarBrand.Controls.Add(new ConfigToolbarBrand());
+            layoutRoot.Controls.Add(toolbarBrand);
 #endif
             layoutRoot.Controls.Add(CreateKeyboardShortcutsGroup());
 
