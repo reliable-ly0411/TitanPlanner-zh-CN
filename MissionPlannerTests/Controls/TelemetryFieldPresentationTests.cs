@@ -452,7 +452,7 @@ namespace MissionPlannerTests.Controls
                         if (locale == "zh-CN")
                             Assert.IsTrue(TelemetryFieldPresentation.Matches(pair.Item2, label));
                     }
-                    foreach (var key in new[] { "landed", "packetdropremote_future", "rpm3" })
+                    foreach (var key in new[] { "packetdropremote_future", "rpm3" })
                         Assert.AreEqual(key, TelemetryFieldPresentation.FieldLabel(key));
                 }
             }
@@ -471,6 +471,7 @@ namespace MissionPlannerTests.Controls
                     foreach (var pair in new[] {
                         Tuple.Create("capabilities", "上报的 MAVLink 协议能力标志位"),
                         Tuple.Create("connected", "链路已打开或正在回放日志"),
+                        Tuple.Create("landed", "地面站在地面状态标志"),
                         Tuple.Create("vehicleClass", "地面站识别的机型类别"),
                         Tuple.Create("gimballat", "云台指向点纬度（°）"),
                         Tuple.Create("gimballng", "云台指向点经度（°）"),
@@ -484,8 +485,7 @@ namespace MissionPlannerTests.Controls
                         if (locale == "zh-CN")
                             Assert.IsTrue(TelemetryFieldPresentation.Matches(pair.Item2, label));
                     }
-                    foreach (var key in new[] { "landed", "GimbalPointFuture" })
-                        Assert.AreEqual(key, TelemetryFieldPresentation.FieldLabel(key));
+                    Assert.AreEqual("GimbalPointFuture", TelemetryFieldPresentation.FieldLabel("GimbalPointFuture"));
                 }
             }
             finally { CultureInfo.CurrentUICulture = previous; }

@@ -1,3 +1,4 @@
+using System;
 using System.Globalization;
 using System.Reflection;
 using System.Text;
@@ -31,33 +32,41 @@ namespace MissionPlannerTests.Utilities
             }
         }
 
-        [DataTestMethod]
-        [DataRow(Vehicle.QUADROTOR, Severity.NOTICE, "Tuning: RLL done", "快速调参已完成，轴 RLL")]
-        [DataRow(Vehicle.FIXED_WING, Severity.CRITICAL, "Tuning: attitude error -1.3deg - ABORTING", "姿态误差 -1.3deg，快速调参已中止")]
-        [DataRow(Vehicle.VTOL_QUADROTOR, Severity.NOTICE, "Quicktune: DONE", "原生快速调参已完成")]
-        [DataRow(Vehicle.GROUND_ROVER, Severity.INFO, "RTun: ATC_STR_RAT_FF 38% complete", "ATC_STR_RAT_FF 调参完成 38%")]
-        [DataRow(Vehicle.SURFACE_BOAT, Severity.INFO, "RTun: adjusted ATC_SPEED_I -0.143 -> 0.024", "已调整 ATC_SPEED_I，从 -0.143 到 0.024")]
-        [DataRow(Vehicle.GROUND_ROVER, Severity.WARNING, "RTun: increase turn rate (6 deg/s < 12)", "增大转向速率，6 deg/s 小于 12")]
-        [DataRow(Vehicle.FIXED_WING, Severity.NOTICE, "Starting 3 Roll(s)", "开始 3 次横滚")]
-        [DataRow(Vehicle.FIXED_WING, Severity.NOTICE, "Finished Turnaround ", "转向返回完成")]
-        [DataRow(Vehicle.FIXED_WING, Severity.INFO, "Trick 12 started (Roll)", "特技动作 12 已开始（Roll）")]
-        public void ResolvesPinnedTextAndPreservesParameters(Vehicle vehicle, Severity severity, string raw, string expected)
+        [TestMethod]
+        public void ResolvesPinnedTextAndPreservesParameters()
         {
-            Assert.AreEqual(expected, Resolve(vehicle, severity, raw));
+            var fixtures = new[]
+            {
+                Tuple.Create(Vehicle.QUADROTOR, Severity.NOTICE, "Tuning: RLL done", "快速调参已完成，轴 RLL"),
+                Tuple.Create(Vehicle.FIXED_WING, Severity.CRITICAL, "Tuning: attitude error -1.3deg - ABORTING", "姿态误差 -1.3deg，快速调参已中止"),
+                Tuple.Create(Vehicle.VTOL_QUADROTOR, Severity.NOTICE, "Quicktune: DONE", "原生快速调参已完成"),
+                Tuple.Create(Vehicle.GROUND_ROVER, Severity.INFO, "RTun: ATC_STR_RAT_FF 38% complete", "ATC_STR_RAT_FF 调参完成 38%"),
+                Tuple.Create(Vehicle.SURFACE_BOAT, Severity.INFO, "RTun: adjusted ATC_SPEED_I -0.143 -> 0.024", "已调整 ATC_SPEED_I，从 -0.143 到 0.024"),
+                Tuple.Create(Vehicle.GROUND_ROVER, Severity.WARNING, "RTun: increase turn rate (6 deg/s < 12)", "增大转向速率，6 deg/s 小于 12"),
+                Tuple.Create(Vehicle.FIXED_WING, Severity.NOTICE, "Starting 3 Roll(s)", "开始 3 次横滚"),
+                Tuple.Create(Vehicle.FIXED_WING, Severity.NOTICE, "Finished Turnaround ", "转向返回完成"),
+                Tuple.Create(Vehicle.FIXED_WING, Severity.INFO, "Trick 12 started (Roll)", "特技动作 12 已开始（Roll）"),
+            };
+            foreach (var fixture in fixtures)
+                Assert.AreEqual(fixture.Item4, Resolve(fixture.Item1, fixture.Item2, fixture.Item3), fixture.Item3);
         }
 
-        [DataTestMethod]
-        [DataRow(Vehicle.QUADROTOR, Severity.NOTICE, "Tuning: RLL done\r\nnext")]
-        [DataRow(Vehicle.QUADROTOR, Severity.NOTICE, "Tuning: PITCH done")]
-        [DataRow(Vehicle.QUADROTOR, Severity.INFO, "Tuning: RLL done")]
-        [DataRow(Vehicle.QUADROTOR, Severity.NOTICE, "Starting 3 Roll(s)")]
-        [DataRow(Vehicle.GROUND_ROVER, Severity.INFO, "RTun: ATC_UNKNOWN_FF 38% complete")]
-        [DataRow(Vehicle.GROUND_ROVER, Severity.INFO, "RTun: ATC_STR_RAT_FF % complete")]
-        [DataRow(Vehicle.GROUND_ROVER, Severity.INFO, @"RTun: adjusted ATC_SPEED_I \-0.143 -> 0.024")]
-        [DataRow(Vehicle.SUBMARINE, Severity.NOTICE, "Tuning: RLL done")]
-        public void LeavesUnverifiedTextsForTheExistingSpeechRoute(Vehicle vehicle, Severity severity, string raw)
+        [TestMethod]
+        public void LeavesUnverifiedTextsForTheExistingSpeechRoute()
         {
-            Assert.IsNull(Resolve(vehicle, severity, raw));
+            var fixtures = new[]
+            {
+                Tuple.Create(Vehicle.QUADROTOR, Severity.NOTICE, "Tuning: RLL done\r\nnext"),
+                Tuple.Create(Vehicle.QUADROTOR, Severity.NOTICE, "Tuning: PITCH done"),
+                Tuple.Create(Vehicle.QUADROTOR, Severity.INFO, "Tuning: RLL done"),
+                Tuple.Create(Vehicle.QUADROTOR, Severity.NOTICE, "Starting 3 Roll(s)"),
+                Tuple.Create(Vehicle.GROUND_ROVER, Severity.INFO, "RTun: ATC_UNKNOWN_FF 38% complete"),
+                Tuple.Create(Vehicle.GROUND_ROVER, Severity.INFO, "RTun: ATC_STR_RAT_FF % complete"),
+                Tuple.Create(Vehicle.GROUND_ROVER, Severity.INFO, @"RTun: adjusted ATC_SPEED_I \-0.143 -> 0.024"),
+                Tuple.Create(Vehicle.SUBMARINE, Severity.NOTICE, "Tuning: RLL done"),
+            };
+            foreach (var fixture in fixtures)
+                Assert.IsNull(Resolve(fixture.Item1, fixture.Item2, fixture.Item3), fixture.Item3);
         }
 
         [TestMethod]
