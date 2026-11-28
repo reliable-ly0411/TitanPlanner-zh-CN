@@ -5559,7 +5559,7 @@ Mission Planner waits for 2 valid heartbeat packets before connecting
             if (!ReferenceEquals(displayGeneration, Volatile.Read(ref messageDisplay))) return;
             foreach (var late in assembler.TakeExpired())
                 ProcessStatusText(late.sysid, late.compid, late.severity, late.text, displayGeneration,
-                    speechProofGeneration, null, null, false);
+                    speechProofGeneration, null, default, false);
         }
 
         private void ProcessStatusText(uint sysid, byte compid, byte severity, string logdata,
