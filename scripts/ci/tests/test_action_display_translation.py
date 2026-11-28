@@ -72,7 +72,8 @@ class ActionDisplayTranslationTest(unittest.TestCase):
 
     def test_download_and_dynamic_button_labels(self):
         sitl = (ROOT / 'GCSViews/SITL.cs').read_text()
-        self.assertIn('Common.LoadingBox(UiText.Translate("Downloading"), UiText.Translate("Downloading sitl software"))', sitl)
+        self.assertIn('Text = UiText.Translate("Downloading")', sitl)
+        self.assertIn('progress.UpdateProgressAndStatus(-1, UiText.Translate("Downloading sitl software"))', sitl)
         designer = (ROOT / 'Controls/FlightDataActions.Designer.cs').read_text()
         for term in ('Apply', 'Aux Functions', 'Servos', 'Relays'):
             self.assertNotIn('= "' + term + '";', designer)
