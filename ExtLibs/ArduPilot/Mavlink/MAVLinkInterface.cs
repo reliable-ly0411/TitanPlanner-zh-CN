@@ -5640,7 +5640,6 @@ Mission Planner waits for 2 valid heartbeat packets before connecting
                     ReferenceEquals(displayGeneration, Volatile.Read(ref messageDisplay))
                     ? scriptTranslation : null;
             else if (displayPrimary && sourcePacket != null && sourceText.chunk_seq == 0 &&
-                (logdata == "Battery 1 missing\t" || logdata == "Battery 1 disconnected\t") &&
                 displayGeneration.Suffix(messages, row) != null)
                 verifiedHudSuffix = () => ReferenceEquals(messages, hudState.messages)
                     ? MessagesDisplaySuffix(messages, row) : null;
