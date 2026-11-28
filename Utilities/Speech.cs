@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 
 namespace MissionPlanner.Utilities
 {
-    public class Speech : IDisposable, ISpeech
+    public partial class Speech : IDisposable, ISpeech, ISpeechSubmission
     {
         private static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
@@ -33,14 +33,18 @@ namespace MissionPlanner.Utilities
                 {
                     try
                     {
-                        if (_speechwindows != null)
-                            return _speechwindows.State == SynthesizerState.Ready;
+#if !LIB
+                        lock (windowsSpeechLock)
+                            return _speechwindows != null && (_speechwindows.State == SynthesizerState.Ready ||
+                                (previewPrompt != null && pendingSpeech.Count == 0));
+#else
+                        return _speechwindows != null && _speechwindows.State == SynthesizerState.Ready;
+#endif
                     }
                     catch
                     {
                         return false;
                     }
-                    return false;
                 }
             }
         }
@@ -62,13 +66,14 @@ namespace MissionPlanner.Utilities
             }
         }
 
-        public void SpeakAsync(string text)
-        {
-            if (!MainV2.speechEnabled())
-                return;
+        public void SpeakAsync(string text) => TrySpeakAsync(text);
 
-            if (text == null || String.IsNullOrWhiteSpace(text))
-                return;
+        public bool TrySpeakAsync(string text)
+        {
+            if (!MainV2.speechEnabled() || String.IsNullOrWhiteSpace(text))
+                return false;
+
+            bool submitted = false;
 
             text = Regex.Replace(text, @"\bPreArm\b", "Pre Arm", RegexOptions.IgnoreCase);
             text = Regex.Replace(text, @"\bdist\b", "distance", RegexOptions.IgnoreCase);
@@ -102,6 +107,7 @@ namespace MissionPlanner.Utilities
                     _state = SynthesizerState.Speaking;
                     _speechlinux.StandardInput.WriteLine("(SayText \"" + text + "\")");
                     _speechlinux.StandardInput.WriteLine("(quit)");
+                    submitted = true;
 
                     _speechlinux.Close();
                 }
@@ -112,22 +118,30 @@ namespace MissionPlanner.Utilities
             }
             else
             {
-                try
+#if !LIB
+                if (EnhancedSpeechLanguage || HasVoicePreview())
                 {
-                    if (_speechwindows != null)
-                    {
-                        PromptBuilder pb = new PromptBuilder(CultureInfo.CurrentUICulture);
-                        pb.AppendText(text);
-                        _speechwindows.SpeakAsync(pb);
-                    }
+                    submitted = QueueWindowsSpeech(text, false);
                 }
-                catch (COMException)
+                else
+#endif
                 {
-
+                    try
+                    {
+                        if (_speechwindows != null)
+                        {
+                            var builder = new PromptBuilder(CultureInfo.CurrentUICulture);
+                            builder.AppendText(text);
+                            _speechwindows.SpeakAsync(builder);
+                            submitted = true;
+                        }
+                    }
+                    catch (COMException) { }
                 }
             }
 
             log.Info("TTS: say " + text);
+            return submitted;
         }
 
         void _speechlinux_Exited(object sender, EventArgs e)
@@ -152,8 +166,16 @@ namespace MissionPlanner.Utilities
             {
                 try
                 {
+#if !LIB
+                    lock (windowsSpeechLock)
+                    {
+                        _speechwindows?.SpeakAsyncCancelAll();
+                        previewPrompt = null;
+                    }
+#else
                     if (_speechwindows != null)
                         _speechwindows.SpeakAsyncCancelAll();
+#endif
                 }
                 catch (System.PlatformNotSupportedException)
                 {

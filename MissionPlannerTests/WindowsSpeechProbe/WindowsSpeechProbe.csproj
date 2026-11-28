@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <PlatformTarget>x64</PlatformTarget>
+    <AssemblyName>WindowsSpeechProbe</AssemblyName>
+    <EnableDefaultItems>false</EnableDefaultItems>
+    <LangVersion>7.3</LangVersion>
+    <DebugType Condition="'$(Configuration)' == 'Release'">none</DebugType>
+    <RepositoryRoot Condition="'$(RepositoryRoot)' == ''">$(MSBuildThisFileDirectory)../..</RepositoryRoot>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="System.Speech">
+      <Private>false</Private>
+    </Reference>
+
+    <!-- Text extensions keep the standalone test sources out of MissionPlannerTests' compile glob. -->
+    <Compile Include="Host.cs.txt;Probe.cs.txt;NativeOutput.cs.txt" />
+    <Compile Include="$(RepositoryRoot)/Utilities/Speech.cs" Link="Production/Speech.cs" />
+    <Compile Include="$(RepositoryRoot)/Utilities/Speech.Windows.cs" Link="Production/Speech.Windows.cs" />
+    <Compile Include="$(RepositoryRoot)/ExtLibs/Utilities/ISpeech.cs" Link="Production/ISpeech.cs" />
+    <Compile Include="$(RepositoryRoot)/ExtLibs/Utilities/Settings.cs" Link="Production/Settings.cs" />
+    <Compile Include="$(RepositoryRoot)/ExtLibs/Utilities/UiText.cs" Link="Production/UiText.cs" />
+
+    <EmbeddedResource Include="$(RepositoryRoot)/ExtLibs/Utilities/Resources/UiText.resx;
+                               $(RepositoryRoot)/ExtLibs/Utilities/Resources/UiText.zh-CN.resx;
+                               $(RepositoryRoot)/ExtLibs/Utilities/Resources/UiText.zh-Hans.resx">
+      <ManifestResourceName>MissionPlanner.Utilities.Resources.%(Filename)</ManifestResourceName>
+    </EmbeddedResource>
+  </ItemGroup>
+</Project>

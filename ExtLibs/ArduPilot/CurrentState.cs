@@ -1388,6 +1388,7 @@ namespace MissionPlanner
         /// </summary>
         private readonly object messageHudLock = new object();
         private Func<string> messageHudSuffix;
+        private FirmwareSpeechAlert messageSpeechAlert;
 
         private string RawHudText() =>
             DateTime.Now > _messageHighTime.AddSeconds(10) ? "" : _messagehigh.TrimUnPrintable();
@@ -1396,6 +1397,24 @@ namespace MissionPlanner
         {
             get { lock (messageHudLock) return RawHudText(); }
             set { SetHudText(value, null); }
+        }
+
+        internal string SpeakHighMessageIfChanged(ISpeech speaker, string previous)
+        {
+            string raw;
+            FirmwareSpeechAlert alert;
+            lock (messageHudLock)
+            {
+                raw = RawHudText();
+                alert = messageSpeechAlert;
+            }
+            if (raw == previous) return previous;
+            if (raw.StartsWith("PX4v2 ") || raw.StartsWith("PreArm:"))
+                return previous;
+            if (raw.Length == 0) return previous;
+            if (alert != null) return alert.Speak(speaker, raw) ? raw : previous;
+            speaker.SpeakAsync(raw);
+            return raw;
         }
 
         [JsonIgnore]
@@ -1414,11 +1433,15 @@ namespace MissionPlanner
             }
         }
 
-        internal void SetHudText(string value, Func<string> verifiedSuffix)
+        internal void SetHudText(string value, Func<string> verifiedSuffix) =>
+            SetFirmwareHudText(value, verifiedSuffix, null);
+
+        internal void SetFirmwareHudText(string value, Func<string> verifiedSuffix, FirmwareSpeechAlert speechAlert)
         {
             if (string.IsNullOrEmpty(value)) return;
             lock (messageHudLock)
             {
+                messageSpeechAlert = speechAlert;
                 // An identical local report removes the display lease, not the stock HUD value or expiry.
                 if (verifiedSuffix == null) messageHudSuffix = null;
                 if (RawHudText() == value) return;
@@ -3135,7 +3158,7 @@ namespace MissionPlanner
                                         parent?.parent?.MAV?.cs == this &&
                                         Settings.Instance.GetBoolean("speechmodeenabled") &&
                                         (armed || !Settings.Instance.GetBoolean("speech_armed_only")))
-                                        Speech.SpeakAsync(Common.speechConversion(parent,
+                                        Speech.SpeakAsync(Common.SpeechConversionForPlayback(parent,
                                             "" + Settings.Instance["speechmode"]));
                                 }
                                 catch (Exception ex)
@@ -3641,7 +3664,7 @@ namespace MissionPlanner
                                     parent.parent.MAV.cs == this &&
                                     Settings.Instance.GetBoolean("speechwaypointenabled") &&
                                     (armed || !Settings.Instance.GetBoolean("speech_armed_only")))
-                                    Speech.SpeakAsync(Common.speechConversion(parent,
+                                    Speech.SpeakAsync(Common.SpeechConversionForPlayback(parent,
                                         "" + Settings.Instance["speechwaypoint"]));
                             }
                             catch (Exception ex)

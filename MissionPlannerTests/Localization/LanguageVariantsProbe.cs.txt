@@ -84,6 +84,16 @@ class SettingsUiProbe {
     Control layout=Find(view,"layoutRoot");
     Check(layout!=null,"layout root missing");
     Check(layout is ScrollableControl && ((ScrollableControl)layout).AutoScroll,"settings layout must support scrolling");
+    ComboBox voice=(ComboBox)Find(view,"CMB_speechVoice");
+    Control preview=Find(view,"BUT_previewVoice");
+    if(enhanced) {
+     Check(voice!=null && preview!=null,"Windows enhanced speech controls missing");
+     Check(voice.DropDownStyle==ComboBoxStyle.DropDownList && voice.Items.Count>0 &&
+      (string)voice.Items[0]=="自动（系统默认）","system voice choice missing");
+     Check(!preview.Enabled,"speech preview must be disabled without a speech engine");
+    } else {
+     Check(voice==null && preview==null,"ordinary Simplified Chinese settings must hide enhanced Windows voices");
+    }
     string[] titles=enhanced ? new[]{"连接与数据","地图与显示","单位与测量","更新","配置"} : new[]{"Connection && Data","Map & Display","Units & Measurement","Updates","Configuration"};
     foreach(string title in titles) Check(layout.Controls.Cast<Control>().Any(c=>c.Text==title),"untranslated group "+title);
     Check(Find(view,"label102").Text==(enhanced?"姿态":"高度"),"Attitude must not mean altitude");

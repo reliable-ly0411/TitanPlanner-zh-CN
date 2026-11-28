@@ -1209,6 +1209,10 @@
     <value>自动着陆</value>
     <comment>"Autoland"</comment>
   </data>
+  <data name="a1a2eeea61c506fdd7bb57599c764e4e6fc1bed92441aa252539413fb78a48f3" xml:space="preserve">
+    <value>自动（系统默认）</value>
+    <comment>"Automatic (system default)"</comment>
+  </data>
   <data name="f99d77250d1e272cd5234c81611e4795970b161ed5f95ea4e17a0d0b61d6d21f" xml:space="preserve">
     <value>自动配置选项</value>
     <comment>"Automatic Config Options"</comment>
@@ -3261,6 +3265,10 @@ Ctrl+O 从文件加载</value>
     <value>启用</value>
     <comment>"Enabled"</comment>
   </data>
+  <data name="1238c3f177606c63268c726c353d1a03bcd3e02be936a0f3a0ef4563385b82ef" xml:space="preserve">
+    <value>已启用 {0} 个特技动作</value>
+    <comment>"Enabled {0} aerobatic tricks"</comment>
+  </data>
   <data name="da86282a2e2d677cb051227e0c53cba06f402fd799e9c8bb4de8f263a0303237" xml:space="preserve">
     <value>加密密钥不是有效的十六进制数，长度上限为 </value>
     <comment>"Encryption key not valid hex number &lt;= "</comment>
@@ -4194,6 +4202,26 @@ Ctrl+O 从文件加载</value>
   <data name="7fca0e2b2ea8447fbfcc8cacf58135ea4acf8990af230417f0abda92a60941cf" xml:space="preserve">
     <value>请先完成当前的计划编辑。</value>
     <comment>"Finish the current plan edit before opening a preview."</comment>
+  </data>
+  <data name="6454b34f9289b585282a0b07c3e6a851b59c36e55943d0be53f5ec9654aebc15" xml:space="preserve">
+    <value>第 {0} 次筋斗完成</value>
+    <comment>"Finished Loop {0}"</comment>
+  </data>
+  <data name="873aefb8e100bc2c2317b21ed14be6e876d121c650b83324fcac53ade159e5f4" xml:space="preserve">
+    <value>第 {0} 次横滚完成</value>
+    <comment>"Finished Roll {0}"</comment>
+  </data>
+  <data name="775c792eda6ddedefd76f6beef90bf3b87ee0bec26615d47cb019b07b9a81415" xml:space="preserve">
+    <value>滚转盘旋完成</value>
+    <comment>"Finished Rolling Circle"</comment>
+  </data>
+  <data name="e8b36e04b900d075c7f4637ff06e46f90a022d590f889deedcde40f8c7ef5730" xml:space="preserve">
+    <value>Split-S 完成</value>
+    <comment>"Finished Split-S "</comment>
+  </data>
+  <data name="86819d0da181893ba130bf2949a936e434c9ad74e3f80098987749b8ee0e8f89" xml:space="preserve">
+    <value>转向返回完成</value>
+    <comment>"Finished Turnaround "</comment>
   </data>
   <data name="c2a314c3b32b319cf5f868d620f96245f593dc7c401acd8b5a566fac88bb40f4" xml:space="preserve">
     <value>固件</value>
@@ -7261,6 +7289,14 @@ Ctrl+O 从文件加载</value>
     <value>参数已加载！</value>
     <comment>"Loaded parameters!"</comment>
   </data>
+  <data name="a372125a2fbbfe8521e8d9af6aa5dc13890605e07878040fa5a7020449ee6289" xml:space="preserve">
+    <value>固定翼轨迹特技脚本 plane_aerobatics.lua 已加载</value>
+    <comment>"Loaded plane_aerobatics.lua"</comment>
+  </data>
+  <data name="c6ad1a61441c140f2a9417189c4742c33c8fdeb8a0cb45564d68df937189a2d1" xml:space="preserve">
+    <value>固定翼速率特技脚本 sport_aerobatics.lua 已加载</value>
+    <comment>"Loaded sport_aerobatics.lua"</comment>
+  </data>
   <data name="dc380888c4e2c7762212480ff86eb39150ec70b45009c33bc6adcbd0041384b1" xml:space="preserve">
     <value>正在加载</value>
     <comment>"Loading"</comment>
@@ -9209,6 +9245,10 @@ Ctrl+O 从文件加载</value>
     <value>未检测到游戏杆</value>
     <comment>"No Joystick"</comment>
   </data>
+  <data name="d6a6006b03fe68be4580ce1211fb4011ecbc7ad8a854949f7c1f7b7eff03eca6" xml:space="preserve">
+    <value>未找到可用的微软中文音色，请检查 Windows 中文语音包。</value>
+    <comment>"No Microsoft Chinese voice is available. Check the Windows speech language pack."</comment>
+  </data>
   <data name="ba2b217b917cb79ab2e8c2db941e1ee1bedaf7545928d650e67c34be3b309099" xml:space="preserve">
     <value>未检测到遥控接收机</value>
     <comment>"No RC Receiver"</comment>
@@ -9327,6 +9367,10 @@ Ctrl+O 从文件加载</value>
   <data name="ca890c045c4a5fba5da3ea267f9268db55beae644071d1c793482be66bb0066e" xml:space="preserve">
     <value>此区域尚无缓存瓦片</value>
     <comment>"No tiles on disk for this area yet"</comment>
+  </data>
+  <data name="bd8a7dc27aa4b5afeaef6dea69efe5699a31b5d904542502e1bcba4ce882c34e" xml:space="preserve">
+    <value>尚未选择特技动作</value>
+    <comment>"No trick selected"</comment>
   </data>
   <data name="ef5e097a00f1488a42591b119f1b65979a06b01fc920c787427b4b7ff72a306a" xml:space="preserve">
     <value>GPS 尚未确定有效的基站位置</value>
@@ -10432,6 +10476,10 @@ VLAN 标记</value>
     <value>无法预览：未安装地图源</value>
     <comment>"Preview unavailable: map source not installed"</comment>
   </data>
+  <data name="959f75ecb532205f28a1426e6012d9294ccc9b753886be299475007940b78724" xml:space="preserve">
+    <value>试听</value>
+    <comment>"Preview voice"</comment>
+  </data>
   <data name="efe10c80ec8a9f38624cbb47103010a8cf32488a503e4b4bfe4f92307a9cefa7" xml:space="preserve">
     <value>主用</value>
     <comment>"Primary"</comment>
@@ -10528,6 +10576,50 @@ VLAN 标记</value>
     <value>快速面板着色</value>
     <comment>"QuickPanel Coloring"</comment>
   </data>
+  <data name="fcd178ce657caa14cda344bad1b1dbd74ce40331fce55677b3ee180f01e33f22" xml:space="preserve">
+    <value>原生快速调参已中止</value>
+    <comment>"QuickTune aborted"</comment>
+  </data>
+  <data name="5205250f8e9cc97b7b66d4d2fdb9e48b17f7e0f77d09749ba9c209515c9e974a" xml:space="preserve">
+    <value>原生快速调参已禁用</value>
+    <comment>"QuickTune disabled"</comment>
+  </data>
+  <data name="f30a3cf42ba61e6e92aaedab9e984aaf7507888e3b85deee082071669dc0b094" xml:space="preserve">
+    <value>多旋翼快速调参脚本已加载</value>
+    <comment>"Quicktune for multicopter loaded"</comment>
+  </data>
+  <data name="f2ebc82377e113287945d1de18ad88d250b16e4acaec78193bad6178c098b83f" xml:space="preserve">
+    <value>QuadPlane 快速调参脚本已加载</value>
+    <comment>"Quicktune for quadplane loaded"</comment>
+  </data>
+  <data name="b99c7e8f5cb309c43eae380f7a6662c6c6904f2549d15907660a1490f80fe281" xml:space="preserve">
+    <value>原生快速调参已完成</value>
+    <comment>"Quicktune: DONE"</comment>
+  </data>
+  <data name="520ac65903409883e81a268dbeabc59b3570921c1e3d2637391afbdeab7eebfb" xml:space="preserve">
+    <value>必须在飞行中才能进行原生快速调参</value>
+    <comment>"Quicktune: Must be flying to tune"</comment>
+  </data>
+  <data name="60e095d98eb03cdaa5cf84bf04b0cf90eab0e2f575d522b0373f76600eeeec17" xml:space="preserve">
+    <value>原生快速调参参数已恢复</value>
+    <comment>"Quicktune: Reverted"</comment>
+  </data>
+  <data name="b164136e84ddf41bde8319e6c9ccc67a837ef3cfe1b073199938ea5c1f5f1eaa" xml:space="preserve">
+    <value>原生快速调参参数已保存</value>
+    <comment>"Quicktune: Saved"</comment>
+  </data>
+  <data name="daaf3cf48bb728453195f8b89f72d16d51c7d13b231905c3fb261b4f01dd4745" xml:space="preserve">
+    <value>开始原生快速调参</value>
+    <comment>"Quicktune: Starting tune"</comment>
+  </data>
+  <data name="f5955f7e91257e9f0cfc7eeb64873e4c2364a518c06dcadb9699abd5e366e586" xml:space="preserve">
+    <value>姿态误差 {0}deg，原生快速调参已中止</value>
+    <comment>"Quicktune: attitude error {0}deg - ABORTING"</comment>
+  </data>
+  <data name="9d9186ba7e04eb75c6c1825f6049f17061e0da910efddbc3aabee986598cc3f0" xml:space="preserve">
+    <value>原生快速调参已完成，轴 {0}</value>
+    <comment>"Quicktune: {0} done"</comment>
+  </data>
   <data name="39b90f44d18e299d34165fdd6363d190daef6736de86618012eedd2e0fe09270" xml:space="preserve">
     <value>集结点 (RALLY)</value>
     <comment>"RALLY"</comment>
@@ -10611,6 +10703,54 @@ VLAN 标记</value>
   <data name="8cd62cca5acf3e924ebab51c5251afb2795fcdc74c5d7a5f293b79ca786d3a0c" xml:space="preserve">
     <value>RTSP 视频流</value>
     <comment>"RTSP stream"</comment>
+  </data>
+  <data name="1312c7fe0e8af9617a32554062ea2d4ec036e35576830b1e99408dd6176c59fa" xml:space="preserve">
+    <value>Rover 快速调参已完成</value>
+    <comment>"RTun: Tuning DONE"</comment>
+  </data>
+  <data name="1581f0afed4eb422ba692b9fb0502b01d5124e055057d9398df304d1e673e0e3" xml:space="preserve">
+    <value>已调整 {0}，从 {1} 到 {2}</value>
+    <comment>"RTun: adjusted {0} {1} -&gt; {2}"</comment>
+  </data>
+  <data name="52442322be56667fff46172f4e8a93d51440e722670a9d3a777094670f87a191" xml:space="preserve">
+    <value>Rover 快速调参增益已恢复</value>
+    <comment>"RTun: gains reverted"</comment>
+  </data>
+  <data name="4faa5567f0b275f3c527f950a191e1b6a1d730f5aa6a365e19519a1ea62f307d" xml:space="preserve">
+    <value>提高车速，{0} 小于 {1}</value>
+    <comment>"RTun: increase speed ({0} &lt; {1})"</comment>
+  </data>
+  <data name="107cf4deb1c5129d3af6402f3b088fa1bfa20d72a178889fb5f53cf85694e90b" xml:space="preserve">
+    <value>增大转向量，{0}% 小于 {1}%</value>
+    <comment>"RTun: increase steering ({0}% &lt; {1}%)"</comment>
+  </data>
+  <data name="2978dde7bb29e773fcfe6865c72609cc3f9767549edbd761b23b8221bd679cf9" xml:space="preserve">
+    <value>增大油门，{0} 小于 {1}</value>
+    <comment>"RTun: increase throttle ({0} &lt; {1})"</comment>
+  </data>
+  <data name="36109c99b5d23f22957148097b2ca6c1faf3fb8cbbe355f3a1b7971d126f2bed" xml:space="preserve">
+    <value>增大转向速率，{0} deg/s 小于 {1}</value>
+    <comment>"RTun: increase turn rate ({0} deg/s &lt; {1})"</comment>
+  </data>
+  <data name="6cf508b4f8a9ce5840529d963312e3ead0adba1d988d18e8ef5dc9a0e3fa1c50" xml:space="preserve">
+    <value>快速调参要求车辆已解锁且在移动</value>
+    <comment>"RTun: must be armed and moving to tune"</comment>
+  </data>
+  <data name="f5bc955b95b4e0cec80d8f7ead06ed9dd10e2b8e019d47e3cd33439f7d7e7d2d" xml:space="preserve">
+    <value>开始调参 {0}</value>
+    <comment>"RTun: starting {0} tune"</comment>
+  </data>
+  <data name="528facd5fa4e327e4a1fead8be53321c4ad845afc03182dbd135611c42f6b5fe" xml:space="preserve">
+    <value>Rover 快速调参增益已保存</value>
+    <comment>"RTun: tuning gains saved"</comment>
+  </data>
+  <data name="c898cedb435882b56efa3f94a32b91bab5a97b3629b3e21c5b80900803627202" xml:space="preserve">
+    <value>{0} 调参已完成</value>
+    <comment>"RTun: {0} tuning done"</comment>
+  </data>
+  <data name="595c4418f488eb3402f57127b442f8c2d40505ed7e255a93a9f1f1e4e6247a55" xml:space="preserve">
+    <value>{0} 调参完成 {1}%</value>
+    <comment>"RTun: {0} {1}% complete"</comment>
   </data>
   <data name="f9b19f0378dfd0ab4e8639651517d25b5b551d9375aae5bc27dcff658cb3bb9c" xml:space="preserve">
     <value>接收信号强度 (RSSI)</value>
@@ -11149,6 +11289,10 @@ gps_point：跟踪单个地面点</value>
   <data name="b7e8fd4026566a36ff5f1a09b936ac169c062b82d02000f3dcf244a16c8a388d" xml:space="preserve">
     <value>无人车集群 - 多链路</value>
     <comment>"Rover Swarm - Multilink"</comment>
+  </data>
+  <data name="14c83b2af72425f758c4ce3584fcdc821b7ccea4e072f3a17b83e85a2bacd253" xml:space="preserve">
+    <value>Rover 快速调参脚本已加载</value>
+    <comment>"Rover quiktune loaded"</comment>
   </data>
   <data name="6f93789855feb0db6154bb53a4b28e9d16f868c4f756ab1d7106b3872e04ece8" xml:space="preserve">
     <value>行数据错误</value>
@@ -12177,9 +12321,33 @@ gps_point：跟踪单个地面点</value>
     <value>起始位置</value>
     <comment>"StartFrom"</comment>
   </data>
+  <data name="eebd5ec197a0fd36c66a2e9bbf3500e7039503ad5970a4f87953956045b94997" xml:space="preserve">
+    <value>开始滚转盘旋</value>
+    <comment>"Starting Rolling Circle"</comment>
+  </data>
+  <data name="0e0ab136c8a7226a50ea85f4ce1297c9ee0d071a5c882532d201f8dda1cb50aa" xml:space="preserve">
+    <value>开始 Split-S</value>
+    <comment>"Starting Split-S"</comment>
+  </data>
+  <data name="7f4dd43f5604bc8ba98aefc1ae46f93ace641dfec4ebe78b9cd47d3453e27731" xml:space="preserve">
+    <value>开始转向返回</value>
+    <comment>"Starting Turnaround"</comment>
+  </data>
   <data name="4a79b9d775330f258fd03f5068da5ba76476c68a76ca70bf1a0a28f2499db473" xml:space="preserve">
     <value>正在启动更新程序</value>
     <comment>"Starting Updater"</comment>
+  </data>
+  <data name="f7adc11f281b5572436f0691cb1e635f863d930b441c80b589fbe929b408e23c" xml:space="preserve">
+    <value>开始 {0} 次筋斗</value>
+    <comment>"Starting {0} Loop(s)"</comment>
+  </data>
+  <data name="276e8496fdc3f5d7c962d426d1b74ff190110051a06c873b31e72af0418cbe93" xml:space="preserve">
+    <value>开始 {0} 次横滚</value>
+    <comment>"Starting {0} Roll(s)"</comment>
+  </data>
+  <data name="9ae4e500f5bc6deebf21295981f53eaa956a2a2e0cc9b5fcdc283e6bbf23c4ed" xml:space="preserve">
+    <value>开始调参，轴 {0}</value>
+    <comment>"Starting {0} tune"</comment>
   </data>
   <data name="48de4126d94c7cb586337dec63db010b352cebf0219dee71622f35305b95b302" xml:space="preserve">
     <value>启动图</value>
@@ -12685,6 +12853,10 @@ Acc：当前测定位置的精度
     <value>远端电台显示的范围和选项可能不准确。为确保准确，请让本地与远端电台使用相同版本的固件</value>
     <comment>"The ranges and options shown for the remote modem may not be accurate.  To ensure accurate, use the same firmware version in both the local and remote modems"</comment>
   </data>
+  <data name="79325913c452758ec7be92c73a2a0caf151f3a93f0605fd0a60b16a0694bc700" xml:space="preserve">
+    <value>上次选择的音色已不可用，播报将使用系统默认音色。</value>
+    <comment>"The saved voice is unavailable. Speech will use the system default."</comment>
+  </data>
   <data name="a1f64e6a13e5f178208822f39984c07737408ed067c5780b92bd6d36047976bc" xml:space="preserve">
     <value>地形瓦片与清单的校验值不匹配。</value>
     <comment>"The terrain tile does not match the manifest checksum."</comment>
@@ -12817,6 +12989,10 @@ Acc：当前测定位置的精度
   <data name="266a18f4e32df195c4d3b4d1fcac417f49e4438bb4bd5ac3c7afaaa6f3f5ebb1" xml:space="preserve">
     <value>这是测试版，请检查输出文件</value>
     <comment>"This is beta, please confirm the output file"</comment>
+  </data>
+  <data name="1884913c187ffaeaec57f58e7a6cb795522e7dcd4004c0a5e241048ac3dc8f23" xml:space="preserve">
+    <value>这是地面站语音试听。</value>
+    <comment>"This is the ground station voice preview."</comment>
   </data>
   <data name="35bb782b222e909bb83baa0a9e7b95b950bde918027d2f215289ba60c9f567e4" xml:space="preserve">
     <value>这是最后一个支持 Windows XP 的版本，请升级操作系统</value>
@@ -13002,6 +13178,10 @@ Acc：当前测定位置的精度
     <value>容差</value>
     <comment>"Tolerance"</comment>
   </data>
+  <data name="8b4f38a810a217c7ecfbeff5984096c0f63edbd39713d1082e1b32017eb47ce6" xml:space="preserve">
+    <value>高度过低，特技动作已中止</value>
+    <comment>"Too low altitude, aborting"</comment>
+  </data>
   <data name="b92ca58d746d632212685cd006ea14ab5b358ed6ed49b02805fc678b930b161e" xml:space="preserve">
     <value>匹配项过多（{0}），请增加筛选条件</value>
     <comment>"Too many matches ({0}) - apply more filters"</comment>
@@ -13070,6 +13250,18 @@ Acc：当前测定位置的精度
     <value>三旋翼</value>
     <comment>"Tri"</comment>
   </data>
+  <data name="f598366462754e5f8b4340d7dd20665c7761678150befff9d20f8ebf28fad2b6" xml:space="preserve">
+    <value>特技动作已中止</value>
+    <comment>"Trick aborted"</comment>
+  </data>
+  <data name="7244617a06849aa616857e82053cff7d6b6181a3efbbd5741ff46126d7e03f7b" xml:space="preserve">
+    <value>找不到特技动作 {0}</value>
+    <comment>"Trick {0} not found"</comment>
+  </data>
+  <data name="cb7b67335fee9bc8fa6d88d97fd4f82df5a136d16f3c106f43e3ccc58b63ce5f" xml:space="preserve">
+    <value>特技动作 {0} 已开始（{1}）</value>
+    <comment>"Trick {0} started ({1})"</comment>
+  </data>
   <data name="8b9c643731c941195b61d1f3de78fda81ac490ee73f420bb7543df59d6a92206" xml:space="preserve">
     <value>触发</value>
     <comment>"Trigger"</comment>
@@ -13106,6 +13298,34 @@ Acc：当前测定位置的精度
   <data name="b19411d88c017bc12d30f4aab6bdd9596dc7d64dea18bdca663bbfe0f99dc981" xml:space="preserve">
     <value>调参 - 双击更改项目</value>
     <comment>"Tuning - Double click to change items"</comment>
+  </data>
+  <data name="9822103b5d7126664489e86fcbaebab3f042722403d61ea4fdb6965c5d1135a5" xml:space="preserve">
+    <value>快速调参已完成</value>
+    <comment>"Tuning: DONE"</comment>
+  </data>
+  <data name="fc15c334a0936c5a93f566a578193c39254bb2703a21c1e05d4140b0fb3a799d" xml:space="preserve">
+    <value>必须在飞行中才能进行快速调参</value>
+    <comment>"Tuning: Must be flying to tune"</comment>
+  </data>
+  <data name="010f4d45aee841244a855266f32c93fe6d5e6ddac558a914c8cb2a429a1b3db8" xml:space="preserve">
+    <value>姿态误差 {0}deg，快速调参已中止</value>
+    <comment>"Tuning: attitude error {0}deg - ABORTING"</comment>
+  </data>
+  <data name="a88b5ddddfdfa5205dba1beea32e1ffbef98a4cfa0e930075b93c4109227cd9b" xml:space="preserve">
+    <value>快速调参参数已恢复</value>
+    <comment>"Tuning: reverted"</comment>
+  </data>
+  <data name="a5319bf0429ecb05953a0afe416047b2391e1a64b3361b15c00f1dce09f3b7a1" xml:space="preserve">
+    <value>快速调参参数已保存</value>
+    <comment>"Tuning: saved"</comment>
+  </data>
+  <data name="84cb22df2e757fb6bcaf58ca3d5fd2973be2d784319504ab7926cd67cdb5c701" xml:space="preserve">
+    <value>开始快速调参</value>
+    <comment>"Tuning: starting tune"</comment>
+  </data>
+  <data name="a17ac840ed4eefb01c1497539867d0f7112f55b4912ff9aa080587b7465c0113" xml:space="preserve">
+    <value>快速调参已完成，轴 {0}</value>
+    <comment>"Tuning: {0} done"</comment>
   </data>
   <data name="42451242dcab506de4cdd06093a94bab34e6cb045abcf86a6d4608f9f1b8d004" xml:space="preserve">
     <value>转弯直径（45 度倾斜）：</value>
@@ -13572,6 +13792,10 @@ Acc：当前测定位置的精度
     <value>查看 360 度激光雷达数据</value>
     <comment>"View the data from a 360 lidar"</comment>
   </data>
+  <data name="f25be60938ef5cb76d21e4b726b99dd357697649b96dc7a89afe5b66c04730f4" xml:space="preserve">
+    <value>暂时无法试听，请在播报空闲时重试。</value>
+    <comment>"Voice preview is unavailable. Try again when speech is idle."</comment>
+  </data>
   <data name="4d7cfa73270cdf1c8e2ec86ad496bd2411ba1e8a30027e632a366462a70a2fd5" xml:space="preserve">
     <value>电压引脚：</value>
     <comment>"Volt Pin:"</comment>
@@ -13579,6 +13803,18 @@ Acc：当前测定位置的精度
   <data name="6f42cd107d6797d4817eddcea56243ceb36df6ad15b43b15f3399e65156f1c43" xml:space="preserve">
     <value>电源状态标志</value>
     <comment>"Voltage Flags"</comment>
+  </data>
+  <data name="2ed92313344acc4705b50c03df7cce4e54b195525a49d4d6582c9e22f26e60d6" xml:space="preserve">
+    <value>警告，已连续 {0} 秒未收到数据</value>
+    <comment>"WARNING No Data for {0} Seconds"</comment>
+  </data>
+  <data name="96d94a4e00aa63a5dd0c9ae2c292eb71abd681228c52af4a48acff36e0630076" xml:space="preserve">
+    <value>警告，电池电压 {batv} 伏，剩余百分之 {batp}</value>
+    <comment>"WARNING, Battery at {batv} Volt, {batp} percent"</comment>
+  </data>
+  <data name="855156e4331aabfd51a40097647285ad7ef5322284719c0e5e147220c7432a6e" xml:space="preserve">
+    <value>警告，高度过低，当前 {alt}</value>
+    <comment>"WARNING, low altitude {alt}"</comment>
   </data>
   <data name="d0fb73a0a88f7e2a4d3883418f1d76c41a30017510fd0aed70225725f1f764b6" xml:space="preserve">
     <value>警告：{name} 为 {value}</value>
@@ -13716,6 +13952,10 @@ http://www.magnetic-declination.com/</value>
   <data name="915142ae5637fa9c6aa02da8e3b176a1aa95ccbe67f4074eaf52b05771b715a2" xml:space="preserve">
     <value>窗口图标 · 即时生效</value>
     <comment>"Window icon · applies now"</comment>
+  </data>
+  <data name="dd7589c5e69d3d1998fc25baeed58b78bf1710be29820e01c74c69183d8efc46" xml:space="preserve">
+    <value>Windows 播报音色</value>
+    <comment>"Windows speech voice"</comment>
   </data>
   <data name="3404644e01177ee996b69247aa3967e7a3f66702c5ff0f7270591e8d9622183b" xml:space="preserve">
     <value>清除</value>

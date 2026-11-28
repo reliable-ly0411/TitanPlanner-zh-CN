@@ -19,6 +19,10 @@ Enhanced Chinese field selection describes the three gimbal angles in degrees wh
 
 Formatting the flight controller SD card requires explicit confirmation, with Cancel selected by default.
 
+## Enhanced Chinese speech
+
+Windows ground station settings offer installed Microsoft Chinese voices, automatic fallback, and a preview that yields to alerts. Enhanced Chinese speech uses localized mode vocabulary and telemetry templates, with source-matched firmware announcements and the original MAVLink message retained in the log.
+
 ## Enhanced Chinese display
 
 The HUD and toolbar show the current flight mode in Chinese above a smaller original English line in enhanced Simplified Chinese. Long labels fit their reserved area; unknown modes retain their source text. Turtle is labelled 翻正自救, separately from Flip; Plane Autoland is labelled 自动着陆 and Rover Dock is labelled 自动停靠.

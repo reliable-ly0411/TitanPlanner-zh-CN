@@ -292,11 +292,32 @@ union px4_custom_mode {
             return mav.aptype.ToString().StartsWith("VTOL_");
         }
 
-        public static string speechConversion(MAVState MAV, string input)
+        private static ModeMenuPresentation SpeechModePresentation(MAVState mav)
+        {
+            switch (mav.cs.firmware)
+            {
+                case Firmwares.ArduCopter2: return ModeMenuPresentation.Hover;
+                case Firmwares.ArduPlane: return ModeMenuPresentation.Circle;
+                case Firmwares.ArduRover: return ModeMenuPresentation.Rover;
+                case Firmwares.ArduTracker: return ModeMenuPresentation.Tracker;
+                default: return ModeMenuPresentation.Unspecified;
+            }
+        }
+
+        public static bool UseEnhancedSpeech =>
+            CultureInfo.CurrentUICulture.Name == "zh-CN";
+
+        public static string SpeechConversionForPlayback(MAVState mav, string input) =>
+            SpeechConversion(mav, input, UseEnhancedSpeech);
+
+        public static string speechConversion(MAVState MAV, string input) =>
+            SpeechConversion(MAV, input, false);
+
+        private static string SpeechConversion(MAVState MAV, string input, bool localize)
         {
             if (MAV.cs.wpno == 0)
             {
-                input = input.Replace("{wpn}", "Home");
+                input = input.Replace("{wpn}", localize ? UiText.Translate("Home") : "Home");
             }
             else
             {
@@ -315,7 +336,8 @@ union px4_custom_mode {
 
             input = input.Replace("{gsp}", MAV.cs.groundspeed.ToString("0"));
 
-            input = input.Replace("{mode}", MAV.cs.mode.ToString());
+            string mode = MAV.cs.mode.ToString();
+            input = input.Replace("{mode}", localize ? FlightModeDisplay.ForSpeech(mode, SpeechModePresentation(MAV)) : mode);
 
             input = input.Replace("{batv}", MAV.cs.battery_voltage.ToString("0.00", CultureInfo.InstalledUICulture));
 
