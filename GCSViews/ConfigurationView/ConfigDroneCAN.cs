@@ -30,8 +30,26 @@ namespace MissionPlanner.GCSViews.ConfigurationView
         public ConfigDroneCAN()
         {
             InitializeComponent();
+            SetLogLevelCaption();
 
             uAVCANModelBindingSource.DataSource = allnodes;
+        }
+
+        private void SetLogLevelCaption()
+        {
+            if (System.Globalization.CultureInfo.CurrentUICulture.Name != "zh-CN")
+                return;
+
+            const string key = "DroneCAN log column: Level";
+            var caption = UiText.Translate(key);
+            if (caption == key)
+                return;
+
+            Level.HeaderText = caption;
+            var font = DGDebug.ColumnHeadersDefaultCellStyle.Font ?? DGDebug.Font;
+            // Keep this a normal resizable column; reserve room for the header's sort glyph.
+            int width = TextRenderer.MeasureText(caption + "  ▼", font).Width;
+            Level.Width = Math.Max(Level.Width, width);
         }
 
         List<DroneCANModel> allnodes = new List<DroneCANModel>();

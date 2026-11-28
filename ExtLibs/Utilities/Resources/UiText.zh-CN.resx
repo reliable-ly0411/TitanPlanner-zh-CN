@@ -3016,6 +3016,10 @@ Ctrl+O 从文件加载</value>
     <value>DroneCAN 消息</value>
     <comment>"DroneCAN Messages"</comment>
   </data>
+  <data name="ac56da231699e25552c95a7618b41a12eca7dd646676bea89c61b385034ec716" xml:space="preserve">
+    <value>日志级别</value>
+    <comment>"DroneCAN log column: Level"</comment>
+  </data>
   <data name="92a3e174752da22e8174c83ebf1fab27f5229a936c839db1eb1c71d0b1f94cf4" xml:space="preserve">
     <value>在终点拍照</value>
     <comment>"Drop image at end"</comment>
