@@ -30,7 +30,7 @@ try {
     }
 
     # 每一组都是新进程；只有本次生成的临时配置在组选音与重新读取之间共享。
-    foreach ($scenario in @('auto', 'choose', 'reload', 'missing', 'neutral', 'priority')) {
+    foreach ($scenario in @('auto', 'choose', 'reload', 'missing', 'neutral', 'priority', 'azure-wave', 'azure-preemption')) {
         $variant = if ($scenario -eq 'neutral') { 'neutral' } else { 'full' }
         $bin = Join-Path $runRoot $variant
         Write-Host "[$scenario]"

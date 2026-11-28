@@ -2,6 +2,11 @@
 
 在 Windows 的「地面站设置 → 语音播报」可选实际后端枚举到的微软中文音色。自动模式优先匹配简体中文语言，缺少可用音色时回退为系统默认。开启语音后可在空闲时试听。正式播报进入语音后端时会取消当前试听。已保存的音色随地面站设置读写。普通简中和英文沿用其原有声音。Linux/Mono 沿用 Festival。
 
+### Windows 上的微软晓晓
+
+在地面站进程环境中配置 `TITANPLANNER_AZURE_SPEECH_REGION` 和 `TITANPLANNER_AZURE_SPEECH_KEY`，分别填 Azure Speech 资源所在区域和密钥，重启后在语音设置选择「微软晓晓（Azure 神经语音）」。仅在选中音色时向 Azure 提交要朗读的文字。密钥从进程环境读取。配置缺失、请求失败或合成超时后使用 Windows 本机语音。正式告警可取消正在合成或播放的试听。[Microsoft Azure Speech REST](https://learn.microsoft.com/zh-cn/azure/ai-services/speech-service/rest-text-to-speech)
+
+
 「中文(简体)2」的 {mode} 和 Home 航点使用已审核词汇。航点、模式、周期、电池及低高度首次编辑时提供中文模板。已保存模板保留原文和变量展开顺序。链路超时的原始 HUD 文字与播报分开。
 
 | 固件／机型 | 中文播报覆盖 | 验证入口 |

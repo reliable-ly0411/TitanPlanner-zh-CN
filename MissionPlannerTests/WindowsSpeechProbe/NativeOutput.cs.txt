@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Reflection;
 using System.Speech.Synthesis;
 using System.Text;
@@ -53,9 +54,10 @@ internal sealed class NativeOutput : IDisposable
     private readonly object gate = new object();
     private int completed, completedAtReady, expectedCount;
 
-    internal NativeOutput()
+    internal NativeOutput(HttpClient client = null)
     {
-        Speech = new Speech { speechEnable = true };
+        Speech = client == null ? new Speech() : new Speech(client);
+        Speech.speechEnable = true;
         try
         {
             // 仅为重定向和观察取得产品使用的同一个后端。重定向失败时不能提交任何提示。

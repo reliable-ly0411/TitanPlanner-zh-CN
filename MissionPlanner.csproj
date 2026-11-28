@@ -114,6 +114,7 @@
       <Private>true</Private>
     </Reference>
     <Reference Include="System.Configuration" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.IO.Compression">
       <Private>True</Private>

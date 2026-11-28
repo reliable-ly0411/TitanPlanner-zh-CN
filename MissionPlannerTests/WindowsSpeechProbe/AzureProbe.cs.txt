@@ -1,0 +1,134 @@
+using System;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Xml.Linq;
+using MissionPlanner.Utilities;
+
+internal static partial class Probe
+{
+    private sealed class AzureProbeHandler : HttpMessageHandler
+    {
+        private readonly bool fail;
+        internal int Requests;
+        internal readonly ManualResetEventSlim PreviewStarted = new ManualResetEventSlim();
+        internal readonly ManualResetEventSlim PreviewCancelled = new ManualResetEventSlim();
+        internal readonly ManualResetEventSlim SendFailure = new ManualResetEventSlim();
+
+        internal AzureProbeHandler(bool fail) => this.fail = fail;
+
+        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken token)
+        {
+            var index = Interlocked.Increment(ref Requests);
+            Require(request.Method == HttpMethod.Post && request.RequestUri.Host == "eastus.tts.speech.microsoft.com" &&
+                request.RequestUri.AbsolutePath == "/cognitiveservices/v1", "Azure 请求路径错误。");
+            Require(request.Headers.GetValues("Ocp-Apim-Subscription-Key").Single() == "probe-key" &&
+                request.Headers.GetValues("X-Microsoft-OutputFormat").Single() == "riff-24khz-16bit-mono-pcm" &&
+                request.Content.Headers.ContentType.MediaType == "application/ssml+xml", "Azure 请求头错误。");
+            XNamespace ssml = "http://www.w3.org/2001/10/synthesis";
+            var voice = XElement.Parse(await request.Content.ReadAsStringAsync().ConfigureAwait(false)).Element(ssml + "voice");
+            Require(voice?.Attribute("name")?.Value == "zh-CN-XiaoxiaoNeural" &&
+                voice.Value == (fail && index == 2 ? AlertText + " <测试&>" : ChinesePreview), "Azure SSML 音色或正文错误。");
+            if (!fail)
+                return new HttpResponseMessage(HttpStatusCode.OK) { Content = new ByteArrayContent(SignalWave()) };
+            if (index == 1)
+            {
+                PreviewStarted.Set();
+                try { await Task.Delay(Timeout.Infinite, token).ConfigureAwait(false); }
+                catch (OperationCanceledException) { PreviewCancelled.Set(); throw; }
+            }
+            Require(SendFailure.Wait(TimeSpan.FromSeconds(5), token), "未释放告警模拟响应。");
+            return new HttpResponseMessage(HttpStatusCode.ServiceUnavailable);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                PreviewStarted.Dispose();
+                PreviewCancelled.Dispose();
+                SendFailure.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+    }
+
+    private static byte[] SignalWave()
+    {
+        const int rate = 24000;
+        const int samples = rate;
+        using (var buffer = new MemoryStream())
+        using (var writer = new BinaryWriter(buffer))
+        {
+            writer.Write(Encoding.ASCII.GetBytes("RIFF"));
+            writer.Write(36 + samples * 2);
+            writer.Write(Encoding.ASCII.GetBytes("WAVEfmt "));
+            writer.Write(16);
+            writer.Write((short)1);
+            writer.Write((short)1);
+            writer.Write(rate);
+            writer.Write(rate * 2);
+            writer.Write((short)2);
+            writer.Write((short)16);
+            writer.Write(Encoding.ASCII.GetBytes("data"));
+            writer.Write(samples * 2);
+            for (int sample = 0; sample < samples; sample++)
+                writer.Write((short)(Math.Sin(sample * 2 * Math.PI * 440 / rate) * 4096));
+            writer.Flush();
+            return buffer.ToArray();
+        }
+    }
+
+    private static void SetProbeAzureVariables()
+    {
+        // Process-only values reach the fake transport on this isolated invocation.
+        Environment.SetEnvironmentVariable("TITANPLANNER_AZURE_SPEECH_REGION", "eastus");
+        Environment.SetEnvironmentVariable("TITANPLANNER_AZURE_SPEECH_KEY", "probe-key");
+        Settings.Instance[Speech.ChineseVoiceSetting] = Speech.XiaoxiaoVoiceSetting;
+    }
+
+    private static void CheckAzureWave()
+    {
+        SetProbeAzureVariables();
+        using (var handler = new AzureProbeHandler(false))
+        using (var client = new HttpClient(handler))
+        using (var output = new NativeOutput(client))
+        {
+            Require(output.Speech.TryPreviewChineseVoice(), "晓晓试听未获准。");
+            var preview = output.Finished(1).Single();
+            preview.RequireSuccess();
+            Require(preview.CheckPromptText(""), "试听没有提交 Azure WAV 提示。");
+            output.CheckWave();
+            Require(handler.Requests == 1, "Azure 试听的请求数不符。");
+            Console.WriteLine("Azure WAV  已验证 SSML、响应格式和 Windows WAV 播放。");
+        }
+    }
+
+    private static void CheckAzurePreemption()
+    {
+        SetProbeAzureVariables();
+        using (var handler = new AzureProbeHandler(true))
+        using (var client = new HttpClient(handler))
+        using (var output = new NativeOutput(client))
+        {
+            Require(output.Speech.TryPreviewChineseVoice(), "晓晓试听未获准。");
+            Require(handler.PreviewStarted.Wait(TimeSpan.FromSeconds(5)), "未进入云试听请求。");
+            Require(output.Speech.IsReady, "云试听挡住正式告警。");
+            string escapedAlert = AlertText + " <测试&>";
+            Require(output.Speech.TrySpeakAsync(escapedAlert), "晓晓正式告警未入队。");
+            Require(!output.Speech.IsReady, "等待云响应期间正式告警就绪状态不正确。");
+            Require(handler.PreviewCancelled.Wait(TimeSpan.FromSeconds(5)), "试听请求未被取消。");
+            handler.SendFailure.Set();
+            var alert = output.Finished(1).Single();
+            alert.RequireSuccess();
+            CheckSpokenText(alert, escapedAlert);
+            output.CheckWave();
+            Require(handler.Requests == 2, "告警重试或试听误提交。");
+            Console.WriteLine("Azure 优先级  已取消试听，云端 503 后本机只播报一次正式告警。");
+        }
+    }
+}

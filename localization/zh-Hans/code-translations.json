@@ -2959,5 +2959,8 @@
   "Doing turnaround! iyaw={0} wyaw={1}": "正在转向，初始航向 {0}，航点航向 {1}",
   "Invalid trick ID {0}": "无效的特技动作编号 {0}",
   "Trick {0} not setup": "特技动作 {0} 未配置",
-  "Trick {0} selected ({1})": "已选择特技动作 {0}（{1}）"
+  "Trick {0} selected ({1})": "已选择特技动作 {0}（{1}）",
+  "Microsoft Xiaoxiao (Azure Neural)": "微软晓晓（Azure 神经语音）",
+  "Azure synthesizes spoken text online. Windows speech is used if the service is unavailable.": "播报文字将发送至 Azure 在线合成。服务不可用时使用 Windows 本机语音。",
+  "Azure speech is unconfigured. Windows speech is used instead.": "尚未配置 Azure 语音，将使用 Windows 本机语音。"
 }

@@ -1273,6 +1273,14 @@
     <value>方位角步长</value>
     <comment>"Azimuth Step"</comment>
   </data>
+  <data name="ae4535712641332099c8f1dc47b6c527d6d5da2bfd5c50e6601ebbc9a40bbe50" xml:space="preserve">
+    <value>尚未配置 Azure 语音，将使用 Windows 本机语音。</value>
+    <comment>"Azure speech is unconfigured. Windows speech is used instead."</comment>
+  </data>
+  <data name="2750f2def9550b63ecdec2cb63e55cc4ec7685aa4e92446cbffe8c6dfdaee4d1" xml:space="preserve">
+    <value>播报文字将发送至 Azure 在线合成。服务不可用时使用 Windows 本机语音。</value>
+    <comment>"Azure synthesizes spoken text online. Windows speech is used if the service is unavailable."</comment>
+  </data>
   <data name="a44447335b5362f19ce8fda06001322e8ca533b341d073666dc82d8d01df4830" xml:space="preserve">
     <value>更新引导程序</value>
     <comment>"BL Update"</comment>
@@ -7944,6 +7952,10 @@ Ctrl+O 从文件加载</value>
   <data name="efd2ff93442f3220c980f7ce416e689ffd3b2553600cd9cf907fd90bbaac14c2" xml:space="preserve">
     <value>米（m）</value>
     <comment>"Meters"</comment>
+  </data>
+  <data name="c7a5696543df40cf73517f2fe24aaa36e5c35169c4ca4e7f8a834d3614043449" xml:space="preserve">
+    <value>微软晓晓（Azure 神经语音）</value>
+    <comment>"Microsoft Xiaoxiao (Azure Neural)"</comment>
   </data>
   <data name="76df0c6db32d4e04e0ef6a3a6a1e1686677e34308d9435892b1ab5713e57d470" xml:space="preserve">
     <value>中</value>

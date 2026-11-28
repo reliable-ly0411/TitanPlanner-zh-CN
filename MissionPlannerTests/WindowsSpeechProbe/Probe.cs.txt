@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading;
 using MissionPlanner.Utilities;
 
-internal static class Probe
+internal static partial class Probe
 {
     private const string PreviewKey = "This is the ground station voice preview.";
     private const string ChinesePreview = "这是地面站语音试听。";
@@ -94,6 +94,8 @@ internal static class Probe
                 case "missing":
                 case "neutral": Render(scenario, expected); break;
                 case "priority": CheckPriority(); break;
+                case "azure-wave": CheckAzureWave(); break;
+                case "azure-preemption": CheckAzurePreemption(); break;
                 default: throw new ArgumentException("未知验证项。");
             }
             Console.WriteLine(result == 0 ? "通过  " + scenario : "部分待验  " + scenario);

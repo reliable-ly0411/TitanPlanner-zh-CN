@@ -35,7 +35,7 @@ namespace MissionPlanner.Utilities
                     {
 #if !LIB
                         lock (windowsSpeechLock)
-                            return _speechwindows != null && (_speechwindows.State == SynthesizerState.Ready ||
+                            return _speechwindows != null && !HasQueuedAzureAlert() && (_speechwindows.State == SynthesizerState.Ready ||
                                 (previewPrompt != null && pendingSpeech.Count == 0));
 #else
                         return _speechwindows != null && _speechwindows.State == SynthesizerState.Ready;
@@ -169,6 +169,7 @@ namespace MissionPlanner.Utilities
 #if !LIB
                     lock (windowsSpeechLock)
                     {
+                        CancelAzureSpeech();
                         _speechwindows?.SpeakAsyncCancelAll();
                         previewPrompt = null;
                     }
@@ -187,8 +188,24 @@ namespace MissionPlanner.Utilities
 
         public void Dispose()
         {
-            if (_speechwindows != null)
-                _speechwindows.Dispose();
+#if !LIB
+            SpeechSynthesizer synthesizer;
+            lock (windowsSpeechLock)
+            {
+                CancelAzureSpeech();
+                synthesizer = _speechwindows;
+                _speechwindows = null;
+            }
+            synthesizer?.Dispose();
+            lock (windowsSpeechLock)
+            {
+                foreach (var path in azureSpeechFiles.Values)
+                    DeleteSpeechWave(path);
+                azureSpeechFiles.Clear();
+            }
+#else
+            _speechwindows?.Dispose();
+#endif
             if (_speechlinux != null)
                 _speechlinux.Dispose();
 

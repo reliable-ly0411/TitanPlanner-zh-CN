@@ -55,7 +55,7 @@ namespace MissionPlanner.Utilities
 
         private bool HasVoicePreview()
         {
-            lock (windowsSpeechLock) return previewPrompt != null;
+            lock (windowsSpeechLock) return previewPrompt != null || azurePreview != null;
         }
 
         internal bool TryPreviewChineseVoice()
@@ -72,13 +72,15 @@ namespace MissionPlanner.Utilities
                 try
                 {
                     if (preview && (!EnhancedSpeechLanguage || !speechEnable || previewPrompt != null || pendingSpeech.Count != 0 ||
-                                    _speechwindows.State != SynthesizerState.Ready))
+                                    HasQueuedAzureSpeech() || _speechwindows.State != SynthesizerState.Ready))
                         return false;
                     if (!watchCompletion)
                     {
                         _speechwindows.SpeakCompleted += WindowsSpeechCompleted;
                         watchCompletion = true;
                     }
+                    if (!preview)
+                        CancelAzurePreview();
                     if (!preview && previewPrompt != null)
                     {
                         var interrupted = previewPrompt;
@@ -89,33 +91,9 @@ namespace MissionPlanner.Utilities
 
                     bool enhanced = EnhancedSpeechLanguage;
                     string selected = enhanced ? Settings.Instance[ChineseVoiceSetting] : null;
-                    if (enhanced && chineseVoices == null)
-                        RefreshChineseVoiceNames();
-                    if (!string.IsNullOrEmpty(selected) && chineseVoices.Contains(selected, StringComparer.Ordinal))
-                    {
-                        try
-                        {
-                            QueueWindowsPrompt(text, selected, preview);
-                            return true;
-                        }
-                        catch (Exception ex)
-                        {
-                            log.Warn("TTS: selected voice unavailable, using system default", ex);
-                            chineseVoices = null;
-                        }
-                    }
-                    try
-                    {
-                        var preferredCulture = enhanced && hasMainlandChineseVoice
-                            ? CultureInfo.CurrentUICulture : _speechwindows.Voice.Culture;
-                        QueueWindowsPrompt(text, null, preview, preferredCulture);
-                    }
-                    catch (Exception) when (enhanced && hasMainlandChineseVoice)
-                    {
-                        // A voice can disappear after enumeration. Retry with the synthesizer default.
-                        chineseVoices = null;
-                        QueueWindowsPrompt(text, null, preview, _speechwindows.Voice.Culture);
-                    }
+                    if (QueueAzureSpeech(text, selected, preview))
+                        return true;
+                    QueueLocalWindowsSpeech(text, selected, preview, enhanced);
                     return true;
                 }
                 catch (Exception ex)
@@ -123,6 +101,37 @@ namespace MissionPlanner.Utilities
                     log.Warn("TTS: could not queue speech", ex);
                     return false;
                 }
+            }
+        }
+
+        private void QueueLocalWindowsSpeech(string text, string selected, bool preview, bool enhanced)
+        {
+            if (enhanced && chineseVoices == null)
+                RefreshChineseVoiceNames();
+            if (!string.IsNullOrEmpty(selected) && chineseVoices.Contains(selected, StringComparer.Ordinal))
+            {
+                try
+                {
+                    QueueWindowsPrompt(text, selected, preview);
+                    return;
+                }
+                catch (Exception ex)
+                {
+                    log.Warn("TTS: selected voice unavailable, using system default", ex);
+                    chineseVoices = null;
+                }
+            }
+            try
+            {
+                var preferredCulture = enhanced && hasMainlandChineseVoice
+                    ? CultureInfo.CurrentUICulture : _speechwindows.Voice.Culture;
+                QueueWindowsPrompt(text, null, preview, preferredCulture);
+            }
+            catch (Exception) when (enhanced && hasMainlandChineseVoice)
+            {
+                // A voice can disappear after enumeration. Retry with the synthesizer default.
+                chineseVoices = null;
+                QueueWindowsPrompt(text, null, preview, _speechwindows.Voice.Culture);
             }
         }
 
@@ -134,7 +143,12 @@ namespace MissionPlanner.Utilities
             if (name != null) builder.EndVoice();
 
             // Specify the voice on this prompt so queued speech keeps its original voice.
-            var prompt = new Prompt(builder);
+            QueueWindowsPrompt(new Prompt(builder), preview);
+        }
+
+        private void QueueWindowsPrompt(Prompt prompt, bool preview, string path = null)
+        {
+            if (path != null) azureSpeechFiles.Add(prompt, path);
             if (preview) previewPrompt = prompt;
             else pendingSpeech.Add(prompt);
             try
@@ -157,6 +171,11 @@ namespace MissionPlanner.Utilities
         {
             if (ReferenceEquals(previewPrompt, prompt)) previewPrompt = null;
             pendingSpeech.Remove(prompt);
+            if (azureSpeechFiles.TryGetValue(prompt, out var path))
+            {
+                azureSpeechFiles.Remove(prompt);
+                DeleteSpeechWave(path);
+            }
         }
     }
 }

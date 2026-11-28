@@ -38,8 +38,9 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             };
             voiceNames.SelectionChangeCommitted += (sender, args) =>
             {
-                Settings.Instance[Speech.ChineseVoiceSetting] = voiceNames.SelectedIndex > 0 ?
-                    (string)voiceNames.SelectedItem : "";
+                Settings.Instance[Speech.ChineseVoiceSetting] = voiceNames.SelectedIndex <= 0 ? "" :
+                    voiceNames.SelectedIndex == voiceNames.Items.Count - 1 ? Speech.XiaoxiaoVoiceSetting :
+                    (string)voiceNames.SelectedItem;
                 RefreshChineseVoiceSettings();
             };
             voicePreview.Click += (sender, args) =>
@@ -58,7 +59,8 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             var speech = MainV2.speechEngine as Speech;
             var names = speech?.RefreshChineseVoiceNames() ?? Array.Empty<string>();
             string saved = Settings.Instance[Speech.ChineseVoiceSetting];
-            int index = Array.IndexOf(names, saved);
+            bool xiaoxiao = saved == Speech.XiaoxiaoVoiceSetting;
+            int index = xiaoxiao ? names.Length : Array.IndexOf(names, saved);
 
             voiceNames.BeginUpdate();
             try
@@ -66,13 +68,18 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                 voiceNames.Items.Clear();
                 voiceNames.Items.Add(UiText.Translate("Automatic (system default)"));
                 voiceNames.Items.AddRange(names);
+                voiceNames.Items.Add(UiText.Translate(Speech.XiaoxiaoVoiceLabel));
                 voiceNames.SelectedIndex = index + 1;
             }
             finally { voiceNames.EndUpdate(); }
             voicePreview.Enabled = CHK_enablespeech.Checked && speech != null;
 
             string hint = "";
-            if (!string.IsNullOrEmpty(saved) && index < 0)
+            if (xiaoxiao)
+                hint = Speech.IsXiaoxiaoConfigured
+                    ? UiText.Translate("Azure synthesizes spoken text online. Windows speech is used if the service is unavailable.")
+                    : UiText.Translate("Azure speech is unconfigured. Windows speech is used instead.");
+            else if (!string.IsNullOrEmpty(saved) && index < 0)
                 hint = UiText.Translate("The saved voice is unavailable. Speech will use the system default.");
             else if (names.Length == 0)
                 hint = UiText.Translate("No Microsoft Chinese voice is available. Check the Windows speech language pack.");

@@ -11,13 +11,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Speech">
       <Private>false</Private>
     </Reference>
 
     <!-- Text extensions keep the standalone test sources out of MissionPlannerTests' compile glob. -->
-    <Compile Include="Host.cs.txt;Probe.cs.txt;NativeOutput.cs.txt" />
+    <Compile Include="Host.cs.txt;Probe.cs.txt;NativeOutput.cs.txt;AzureProbe.cs.txt" />
     <Compile Include="$(RepositoryRoot)/Utilities/Speech.cs" Link="Production/Speech.cs" />
+    <Compile Include="$(RepositoryRoot)/Utilities/Speech.Azure.cs" Link="Production/Speech.Azure.cs" />
     <Compile Include="$(RepositoryRoot)/Utilities/Speech.Windows.cs" Link="Production/Speech.Windows.cs" />
     <Compile Include="$(RepositoryRoot)/ExtLibs/Utilities/ISpeech.cs" Link="Production/ISpeech.cs" />
     <Compile Include="$(RepositoryRoot)/ExtLibs/Utilities/Settings.cs" Link="Production/Settings.cs" />
