@@ -115,14 +115,16 @@ namespace MissionPlanner
         private static bool IsConsistent(Proof proof) =>
             proof.HasHeartbeat && proof.HasVersion && !proof.Conflict && proof.FlightHash != null;
 
-        internal string TranslateScript(uint sysid, byte severity, string completeRawText)
+        internal string TranslateStatusText(uint sysid, byte severity, string completeRawText)
         {
             if (string.IsNullOrEmpty(completeRawText)) return null;
             lock (gate)
             {
                 if (!systems.TryGetValue(sysid, out var proof) || !IsConsistent(proof)) return null;
                 return FirmwareScriptSpeech.Translate(proof.Autopilot, proof.Vehicle,
-                    proof.FlightVersion, (byte[])proof.FlightHash.Clone(), severity, completeRawText);
+                    proof.FlightVersion, proof.FlightHash, severity, completeRawText) ??
+                    ArduPilotStatusTextCatalog.Translate(proof.Autopilot, proof.Vehicle,
+                        proof.FlightVersion, proof.FlightHash, severity, completeRawText);
             }
         }
 

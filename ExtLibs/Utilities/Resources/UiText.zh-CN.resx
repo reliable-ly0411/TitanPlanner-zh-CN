@@ -357,6 +357,14 @@
     <value>通道数</value>
     <comment>"# of Channels"</comment>
   </data>
+  <data name="7e44fc97b2d7466cbcff5ea621c787612849c9a74f5e093ffe570446a191d788" xml:space="preserve">
+    <value>当前增益为 {0}%</value>
+    <comment>"#Gain is {0}%"</comment>
+  </data>
+  <data name="ebe90a7662b1e3c5ecf441fb262cefd98b1ade449c36fbb2c8a3a34ee5e53129" xml:space="preserve">
+    <value>增益：{0}%</value>
+    <comment>"#Gain: {0}%"</comment>
+  </data>
   <data name="1510f005556e1994f6b4dbe66d318f3e91e8a061605190f2804ce8956717212f" xml:space="preserve">
     <value>删除(&amp;D)</value>
     <comment>"&amp;Delete"</comment>
@@ -417,6 +425,10 @@
     <value>1. 确保发射机已开启，接收机已供电并连接
 </value>
     <comment>"1. Ensure your transmitter is on and receiver is powered and connected\n"</comment>
+  </data>
+  <data name="03232deb6f53229ac80e997e103bd86f88a0df8d1a23ddef9590219cc51e2bfa" xml:space="preserve">
+    <value>电机测试后需要冷却 10 秒</value>
+    <comment>"10 second cooldown required after motor test"</comment>
   </data>
   <data name="f597ebd4f9800f2507793ef6b4d227d22af08f955d3742397028b2d4181691e2" xml:space="preserve">
     <value>1090ES ADS-B 输出</value>
@@ -869,6 +881,10 @@
     <value>全部选项</value>
     <comment>"All Options"</comment>
   </data>
+  <data name="97d55bd20b7cc0c80d1dd8f64a901f474f08e1a3222955dd316b2fea0a4d9e64" xml:space="preserve">
+    <value>所有参数已重置，请重启飞控</value>
+    <comment>"All parameters reset, reboot board"</comment>
+  </data>
   <data name="54c3c79d59ff2d83edc8dc305d118104115f8719177a7350e733e6f95fd95f07" xml:space="preserve">
     <value>是否同时从磁盘删除 {0:N0} 个缓存瓦片（{1}）？
 
@@ -906,6 +922,18 @@
   <data name="fe25fbec60b9bc8b7715c5cd20b91115b899157fbd6dca03f4e4b96f9e52786a" xml:space="preserve">
     <value>高度单位</value>
     <comment>"Alt Units"</comment>
+  </data>
+  <data name="3d0c7f06609b60ad4a137880dbb886220fece2b8276de624c15f263df61650f0" xml:space="preserve">
+    <value>相对返航点高度必须为负值</value>
+    <comment>"Alt above home must be negative"</comment>
+  </data>
+  <data name="caa1bc17e45c9a3526e5ed1ec46e7939d09cee85a8e36e823653b9ea37b31c69" xml:space="preserve">
+    <value>相对地形高度必须为正值</value>
+    <comment>"Alt above terrain must be positive"</comment>
+  </data>
+  <data name="3644ef596e5ff9106a8ff7c8991a715efe9379ac33e738f96d301fe362d72faf" xml:space="preserve">
+    <value>高度辅助 {0} 米</value>
+    <comment>"Alt assist {0}m"</comment>
   </data>
   <data name="36c9eade5f95fa67ad2a0cf4f1a2054415ba54641aa4b4a782ba5acab205de36" xml:space="preserve">
     <value>高度偏移</value>
@@ -999,6 +1027,10 @@
   <data name="42a8d7b22aa562e537a5b61c7a69c00f834a3f187521d8b4b6376a2d10390dff" xml:space="preserve">
     <value>角度 [deg]</value>
     <comment>"Angle [deg]"</comment>
+  </data>
+  <data name="fd015dea0e81f40211b6acdb5ddfb5a346bb31b224413b49343c592d683c209b" xml:space="preserve">
+    <value>姿态辅助，横滚 {0}，俯仰 {1}</value>
+    <comment>"Angle assist r={0} p={1}"</comment>
   </data>
   <data name="75aa850b560ea0e7b698fbfa9abc800219577b5a06f128c289f223c00e158058" xml:space="preserve">
     <value>第一个点的角度（整数度）</value>
@@ -1124,6 +1156,90 @@
     <value>解锁飞行器</value>
     <comment>"Arm Vehicle"</comment>
   </data>
+  <data name="51ac5d5a233409af9f30c4b789d888157378f9fa2d368aaae19424ed2f45d39a" xml:space="preserve">
+    <value>测试电机前请解锁电机。</value>
+    <comment>"Arm motors before testing motors."</comment>
+  </data>
+  <data name="bc70606dc44fff96e8454688ce50f6331124849ccd8620bb1dac0d16eb5520ce" xml:space="preserve">
+    <value>解锁：检测到 ADS-B 冲突风险</value>
+    <comment>"Arm: ADSB threat detected"</comment>
+  </data>
+  <data name="f842341d7137233c2fc89b6bc14ca7e8fb41f2ce1ec8e1c0b466f3636199696a" xml:space="preserve">
+    <value>解锁：姿态航向参考系统状态异常</value>
+    <comment>"Arm: AHRS not healthy"</comment>
+  </data>
+  <data name="b891c83e6ac86b451cd4c3a39d81710dffd8d44d94b4f10272248cf4389fecb0" xml:space="preserve">
+    <value>解锁：加速度计读数不一致</value>
+    <comment>"Arm: Accels inconsistent"</comment>
+  </data>
+  <data name="7679b28db417e90299488fe6a132cdadb4b2b086d9ba7960d55f20cfe475d867" xml:space="preserve">
+    <value>解锁：电池失效保护已触发</value>
+    <comment>"Arm: Battery failsafe"</comment>
+  </data>
+  <data name="01b141ace63604fb5bcb7d1054d8d6a39172b5800a165ca1632d15056a014922" xml:space="preserve">
+    <value>解锁：罗盘偏移量过大</value>
+    <comment>"Arm: Compass offsets too high"</comment>
+  </data>
+  <data name="fb5d915d16b1f3f2dd4e8932c4d56801ec56eb8a9fde7c940cc69747d8e4cc96" xml:space="preserve">
+    <value>解锁：罗盘读数不一致</value>
+    <comment>"Arm: Compasses inconsistent"</comment>
+  </data>
+  <data name="a49cf690bffd47a332b6906a3894fae3a22795766ab9254aff99c0a69b72f67a" xml:space="preserve">
+    <value>解锁：围栏已启用，需要位置估计</value>
+    <comment>"Arm: Fence enabled, need position estimate"</comment>
+  </data>
+  <data name="e4ec6699da55d8c129071224c717507268d8fe18fce5f9aa939a4efa87d2d097" xml:space="preserve">
+    <value>解锁：地面站失联保护已触发</value>
+    <comment>"Arm: GCS failsafe on"</comment>
+  </data>
+  <data name="d970d216076cc578a52f6da9df2d8318f4e3a5a74ef14e0c8ec4a70ca5b6a971" xml:space="preserve">
+    <value>解锁：GPS 信号异常</value>
+    <comment>"Arm: GPS glitching"</comment>
+  </data>
+  <data name="1c80dce18e656db50c760101338ec4b40840cde4e54f280e71d2ceab2639548d" xml:space="preserve">
+    <value>解锁：陀螺仪读数不一致</value>
+    <comment>"Arm: Gyros inconsistent"</comment>
+  </data>
+  <data name="0f2a8522383dae3dbfef32718602e291b99e873309630ce3531942ee41c8d53a" xml:space="preserve">
+    <value>解锁：硬件安全开关未释放</value>
+    <comment>"Arm: Hardware safety switch"</comment>
+  </data>
+  <data name="9788e41b11cb50346b0168840063149576482aed5d7280b85fc2b9e2e6cf1198" xml:space="preserve">
+    <value>解锁：电机联锁与紧急停止设置冲突</value>
+    <comment>"Arm: Interlock/E-Stop Conflict"</comment>
+  </data>
+  <data name="699bd706fcd876e1fa3770f749155cd8a4844af90562c1bbfb21f1e37b9ba417" xml:space="preserve">
+    <value>解锁：日志记录失败</value>
+    <comment>"Arm: Logging failed"</comment>
+  </data>
+  <data name="754798a796d2b263cf5ff27eb4c0b15dc8004eb1ef90479b9135180e96f6c3e7" xml:space="preserve">
+    <value>解锁：日志记录尚未启动</value>
+    <comment>"Arm: Logging not started"</comment>
+  </data>
+  <data name="1a1f4a4db65169b29f66cd23695a6be194b6f6eed12896e14acca3a448d9ab0d" xml:space="preserve">
+    <value>解锁：电机联锁已开启</value>
+    <comment>"Arm: Motor Interlock Enabled"</comment>
+  </data>
+  <data name="d9baa827ff91a57dc3ffb6f3059557bd202074092ca292f31d9e43d8f02e3962" xml:space="preserve">
+    <value>解锁：需要高度估计</value>
+    <comment>"Arm: Need Alt Estimate"</comment>
+  </data>
+  <data name="6f2ecd49498df60e2e3305c55a5ca93cc15c6838b7d3d01ee1273ce54e55fdb7" xml:space="preserve">
+    <value>解锁：需要位置估计</value>
+    <comment>"Arm: Need Position Estimate"</comment>
+  </data>
+  <data name="7af84807caa4947ba43417b076041f28f3563f0466286f91249736f11898a834" xml:space="preserve">
+    <value>解锁：遥控失联保护已触发</value>
+    <comment>"Arm: Radio failsafe on"</comment>
+  </data>
+  <data name="3fdf324da570e9f2a77d3d6a321c014cf404d3d2e93f44118ba2fc187f652999" xml:space="preserve">
+    <value>解锁：系统尚未初始化</value>
+    <comment>"Arm: System not initialised"</comment>
+  </data>
+  <data name="43f4c1af39994c1802e8b8b55f48b5ad2c905bf93973d1980e4d6cae0fe071c6" xml:space="preserve">
+    <value>解锁：正在等待遥控信号</value>
+    <comment>"Arm: Waiting for RC"</comment>
+  </data>
   <data name="b65bdb2a7d8428e0a286f416741a3946f1275391503108958afeb596423ed75a" xml:space="preserve">
     <value>已解锁</value>
     <comment>"Armed"</comment>
@@ -1156,6 +1272,10 @@
   <data name="b7c4389b808ebde9e4cb029df91fdd4f46dfcfe94e21ad5c83c7cab15e5c8697" xml:space="preserve">
     <value>高度 (WGS84)</value>
     <comment>"Atitude (WGS84)"</comment>
+  </data>
+  <data name="fd25050b12a3900467e6be5901d3c695be6f4ba3af27f8dfa16dc01a81f8face" xml:space="preserve">
+    <value>正在尝试自动失效保护恢复</value>
+    <comment>"Attempting auto failsafe recovery"</comment>
   </data>
   <data name="1201a8d9c29928f41b5b288c6d308a9aa4c609a82f03b6e3cf53107ac375e23c" xml:space="preserve">
     <value>衰减</value>
@@ -1193,6 +1313,14 @@
     <value>任务返航</value>
     <comment>"Auto RTL"</comment>
   </data>
+  <data name="8d65f55b62a17b0329c3d99f743040958f9ab3746a104e353d2427b3a9954b0c" xml:space="preserve">
+    <value>自动航线已改变，当前命令重启失败</value>
+    <comment>"Auto mission changed but failed to restart command"</comment>
+  </data>
+  <data name="fb7359f5c4c83eab3679b5171b11bd7aa2b77fe04f1f0f4927c62b2a285cec39" xml:space="preserve">
+    <value>自动航线已改变，当前命令已重新开始</value>
+    <comment>"Auto mission changed, restarted command"</comment>
+  </data>
   <data name="f57d0bc5a719a7301dd0aa191d62b50aa7d63381713d8c8d8c3622653b388134" xml:space="preserve">
     <value>离开时自动写入</value>
     <comment>"Auto write on leaving"</comment>
@@ -1200,6 +1328,10 @@
   <data name="3b525eea03c6b01ae914a092171d91d664af09435166719faa223d1cbc018ef6" xml:space="preserve">
     <value>自动：降落</value>
     <comment>"Auto: Landing"</comment>
+  </data>
+  <data name="b675285bc878ee044dec67d44ac8fa3623e1fdc906de5b2980d15413867deda7" xml:space="preserve">
+    <value>自动模式缺少起飞命令</value>
+    <comment>"Auto: Missing Takeoff Cmd"</comment>
   </data>
   <data name="6cd9107075a2a7d1260cac163160f3f2d942a5909942a82e876b64eff94940cb" xml:space="preserve">
     <value>自动：就绪</value>
@@ -1268,6 +1400,10 @@
   <data name="e623f88f600fa2744c95d795febc04e0b1f04a13e1df6c57ab211d0855b36aca" xml:space="preserve">
     <value>ADS-B 避碰</value>
     <comment>"Avoid Adsb"</comment>
+  </data>
+  <data name="33132ef081d6e5091d4b00f666c7619e98597ffd0d452a3752a5b048db1be7f5" xml:space="preserve">
+    <value>避让正在执行动作 {0}</value>
+    <comment>"Avoid: Performing action: {0}"</comment>
   </data>
   <data name="b4b4e212d79625881ef1c8630d3f7757956c3ddd599c920f10d585c8a0c94c5a" xml:space="preserve">
     <value>方位角步长</value>
@@ -1393,6 +1529,10 @@
     <value>视觉定位异常</value>
     <comment>"Bad Vision Position"</comment>
   </data>
+  <data name="2cf18bc5c4b889a6ba26f2366af00f67803a0baad72363f92273c6863c6a3b43" xml:space="preserve">
+    <value>高度坐标系无效</value>
+    <comment>"Bad alt frame"</comment>
+  </data>
   <data name="a6a4750e6cc34969b04914efcdab32a4863da590fbf7bb22a77891c27dff9f83" xml:space="preserve">
     <value>高度步长无效</value>
     <comment>"Bad alt step"</comment>
@@ -1414,6 +1554,10 @@
 </value>
     <comment>"Bad input options, please try again\n"</comment>
   </data>
+  <data name="e5e31ccde6a978dd2e135fcc784a16a7f900fc959d177d25bc7c5edc3a45f309" xml:space="preserve">
+    <value>自动起飞抛射异常</value>
+    <comment>"Bad launch AUTO"</comment>
+  </data>
   <data name="c896445166bf6c3108cd39a6cd28dea41d81695b55c15c78fdd54af8400c6b12" xml:space="preserve">
     <value>最大高度无效</value>
     <comment>"Bad maxalt"</comment>
@@ -1425,6 +1569,14 @@
   <data name="5ad8da2504b2db54dbc8cf68d3d9fd9136e7c5c9f05f304ede5f493c7f715d66" xml:space="preserve">
     <value>地形数据无效或缺失</value>
     <comment>"Bad or No Terrain Data"</comment>
+  </data>
+  <data name="cb635e582313dba1282c198718e7bb35685fa86ea9d3d95d144c1d54dbac8d90" xml:space="preserve">
+    <value>备降点编号无效</value>
+    <comment>"Bad rally point ID"</comment>
+  </data>
+  <data name="fdecc2090d46e676be09874391b3c16dffc6cffddb0ecd2bf209d3d3b429eccb" xml:space="preserve">
+    <value>备降点数量无效</value>
+    <comment>"Bad rally point count"</comment>
   </data>
   <data name="4e566d5900448aff57deda9fd75b54704b6f680ef4dc3d61e373f2b47e577de8" xml:space="preserve">
     <value>起始角度无效</value>
@@ -1441,6 +1593,14 @@
   <data name="ce2c876cd934ef57af899b3d2f7439fdee04fbe88aa1245a20e5b04eef7f6f56" xml:space="preserve">
     <value>1 号气压计校准完成</value>
     <comment>"Barometer 1 calibration complete"</comment>
+  </data>
+  <data name="1e5df8e297770625c17fc6234d77016c178b1d62791a534757f039b7f08a813c" xml:space="preserve">
+    <value>气压计校准完成</value>
+    <comment>"Barometer calibration complete"</comment>
+  </data>
+  <data name="39d4525156df76d9d7661fd177b7016988da8a80137109145ea3f1a3f078167c" xml:space="preserve">
+    <value>气压计 {0} 校准完成</value>
+    <comment>"Barometer {0} calibration complete"</comment>
   </data>
   <data name="7b47361aad19bb483aeab081a7df0a55f7cb0fdb3327efe6dd016e6353a17880" xml:space="preserve">
     <value>基站</value>
@@ -1562,6 +1722,18 @@
     <value>电池化学类型</value>
     <comment>"Battery Chemistry"</comment>
   </data>
+  <data name="6c242a816e4a197a23dc1b5e884936a7c2fbf3f41d42791e47dbebd512d24526" xml:space="preserve">
+    <value>电池失效保护</value>
+    <comment>"Battery Failsafe"</comment>
+  </data>
+  <data name="22d58a6cac619a7cd51983757925d13ce8ff61a0657981dd64e5f5f8ebe71c11" xml:space="preserve">
+    <value>电池失效保护：继续降落</value>
+    <comment>"Battery Failsafe - Continuing Landing"</comment>
+  </data>
+  <data name="72b2f7cff47d43960bac5fd1b72efa20be4192070aed4a326cea780194743dc9" xml:space="preserve">
+    <value>电池失效保护：正在上锁</value>
+    <comment>"Battery Failsafe - Disarming"</comment>
+  </data>
   <data name="9447d6347746d2cccf6d9271f28937ec36ee8f099bc3f046b73d5db05f05edcd" xml:space="preserve">
     <value>电池 ID {0} 预计剩余时间 (分钟)</value>
     <comment>"Battery ID {0} estimated time remaining (min)"</comment>
@@ -1590,6 +1762,18 @@
     <value>电池节数：</value>
     <comment>"Battery cellcount:"</comment>
   </data>
+  <data name="e3c973ba5c30d3e04c6bdaa1d934b1b60c623b98996cb2dc6b1f7e419c0496c4" xml:space="preserve">
+    <value>电池 {0}电量危急，电压 {1} 伏，已用 {2} 毫安时</value>
+    <comment>"Battery {0} is critical {1}V used {2} mAh"</comment>
+  </data>
+  <data name="b171479833c6c6d17dcd4b685fc47301ad44b0488314d5603ca1e5375a468406" xml:space="preserve">
+    <value>电池 {0}电量低，电压 {1} 伏，已用 {2} 毫安时</value>
+    <comment>"Battery {0} is low {1}V used {2} mAh"</comment>
+  </data>
+  <data name="3349d172381aa7c8be1d3b5f9b8514927e519156cb8b32a23f97c75359c56465" xml:space="preserve">
+    <value>电池 {0}未检测到，上次记录，电压 {1} 伏，已用 {2} 毫安时</value>
+    <comment>"Battery {0} is missing, last: {1}V used {2} mAh"</comment>
+  </data>
   <data name="c91aa07ca9cd8e4fcae827cac655ca0e9ba9a7c76bb88eda447839df6a96995c" xml:space="preserve">
     <value>重置电池</value>
     <comment>"Battery_Reset"</comment>
@@ -1613,6 +1797,10 @@
   <data name="62bd363686ddbb74851aea768a94631e9faa49949fe0969bf187256788937625" xml:space="preserve">
     <value>飞行器方位角 (°)</value>
     <comment>"Bearing to Mav (°)"</comment>
+  </data>
+  <data name="9170e843cc02124c704f4578cee7994be1358e54604dc2cb16092208dfdaa260" xml:space="preserve">
+    <value>开始惯性传感器校准，请保持飞机静止</value>
+    <comment>"Beginning INS calibration. Do not move plane"</comment>
   </data>
   <data name="59516d894d486292116d438d5f47560698450c66ae31da5365e38d63fdc55c64" xml:space="preserve">
     <value>北斗</value>
@@ -1649,6 +1837,14 @@
   <data name="eedf3216f00aefe908205c488fbfa1833ddb9261f883904e5492295d11bc57cc" xml:space="preserve">
     <value>幂次</value>
     <comment>"Bins"</comment>
+  </data>
+  <data name="448fd26c991c6b2153c1afc48477a3ad24ceafb50d7d2a799f8fa729e3eeaaf7" xml:space="preserve">
+    <value>记录器：在 {0} 米每秒时解锁</value>
+    <comment>"BlackBox: arming at {0} m/s"</comment>
+  </data>
+  <data name="7f00975fce7c04835a135ecbd5d50b18ff5de30d16aa65c3173dc2899a3db4f4" xml:space="preserve">
+    <value>记录器：在 {0} 米每秒时上锁</value>
+    <comment>"BlackBox: disarming at {0} m/s"</comment>
   </data>
   <data name="265357c31740bc688bc41cd076a6044bd8100c40b4e0bb88d4817849f6b78f86" xml:space="preserve">
     <value>板卡 ID</value>
@@ -1839,6 +2035,10 @@
     <value>校准水平（1 轴 / AHRS 微调）</value>
     <comment>"Calibrate Level (1 Axis / AHRS Trims)"</comment>
   </data>
+  <data name="30d2a2379b52d74ca90e8ed43eb1a0ec44c7b5b9f88f9144810fd7dbc942e690" xml:space="preserve">
+    <value>正在校准气压计</value>
+    <comment>"Calibrating barometer"</comment>
+  </data>
   <data name="eb45ed0d3b678fbc63cb55c0ee0e5f1056593e74a7339f6e36a7ed589aa0a07a" xml:space="preserve">
     <value>呼号/航班标识</value>
     <comment>"Callsign/Flight ID"</comment>
@@ -2018,6 +2218,10 @@
   <data name="ce4683e7013a18cdf3d224bfcb4e9594ea8f559e946a837c633defe7d3c32172" xml:space="preserve">
     <value>通道</value>
     <comment>"Channel"</comment>
+  </data>
+  <data name="a3440b69c4eee0e6989fd1114de1883ee8dbf414ea659c63e1b7dfde4f490c98" xml:space="preserve">
+    <value>请检查罗盘</value>
+    <comment>"Check compass"</comment>
   </data>
   <data name="9ed79ee9b2129b5dc855c5dcd9537fe2343827b4bbf565b81be08579342179d0" xml:space="preserve">
     <value>检查更新</value>
@@ -2267,6 +2471,14 @@
   <data name="9601ac4c36fe17580cfd53e42bee3b9ae3c3e256bf6a72b3929e51e93caf91ec" xml:space="preserve">
     <value>罗盘优先级</value>
     <comment>"Compass Priority"</comment>
+  </data>
+  <data name="ba8a4e8fccca9b18e0b99d1d0d403ef9a59967d83c46e2e0e4af4a491dbb27c3" xml:space="preserve">
+    <value>罗盘已禁用</value>
+    <comment>"Compass disabled"</comment>
+  </data>
+  <data name="6630632e2cab3e836c09df18a808bfc7394d3bc6f902e6dea7e6c74e3d62447f" xml:space="preserve">
+    <value>罗盘性能下降</value>
+    <comment>"Compass performance degraded"</comment>
   </data>
   <data name="80a60315acf7eff072eb142ea4c8d2d824564dc2fc29fc1c932dcfc8dfe08a0f" xml:space="preserve">
     <value>罗盘电机干扰校准需要 AC 3.2 或更新版本</value>
@@ -2536,6 +2748,18 @@ Ctrl+O 从文件加载</value>
     <value>坠机动作：未知动作 {0}</value>
     <comment>"Crash Actions: Unknown action {0}"</comment>
   </data>
+  <data name="f498f3ef393ca9811f37798e5d8e2cf2a02e75394c4eaea908e13728b506b278" xml:space="preserve">
+    <value>检测到碰撞</value>
+    <comment>"Crash detected"</comment>
+  </data>
+  <data name="11b2f5888581ed75b0443b33b8ab63d3396fa5e2b31df00d285560c71307b23b" xml:space="preserve">
+    <value>检测到坠机，正在上锁。角度误差 {0} 大于 {1}，加速度 {2} 小于 {3}</value>
+    <comment>"Crash: Disarming: AngErr={0}&gt;{1}, Accel={2}&lt;{3}"</comment>
+  </data>
+  <data name="c31902bce6fb7cbd41c4782e9bc16df35b1703682d537e4c7452e6f578d02c53" xml:space="preserve">
+    <value>检测到崩溃转储数据</value>
+    <comment>"CrashDump data detected"</comment>
+  </data>
   <data name="559dd6c207b74eb06a538187b5e6dc6382c8573ae5d55b8cfff92e9d13c36f7d" xml:space="preserve">
     <value>创建圆形测绘任务</value>
     <comment>"Create Circle Survey"</comment>
@@ -2720,6 +2944,10 @@ Ctrl+O 从文件加载</value>
     <value>航点停留时间（秒）</value>
     <comment>"Delay at WP (sec)"</comment>
   </data>
+  <data name="6ed4d352136117332057bcab30dc1b66a2d602f8bb558ed81e50862f3a8370a4" xml:space="preserve">
+    <value>正在等待 {0} 秒</value>
+    <comment>"Delaying {0} sec"</comment>
+  </data>
   <data name="e2d0a54968ead24efc0dffa6ac78fc606dceec34a0f586177a74a54cc2272cf8" xml:space="preserve">
     <value>删除</value>
     <comment>"Delete"</comment>
@@ -2743,6 +2971,18 @@ Ctrl+O 从文件加载</value>
   <data name="0c63941e4f92af98092123200463d6bbcf4e448bec4a22715dd9222d784cb82f" xml:space="preserve">
     <value>正在删除缓存瓦片</value>
     <comment>"Deleting cached tiles"</comment>
+  </data>
+  <data name="9b0ff76d73fd67695de1ae086399afb84be22c0a63db3c7acc572f21adbbaed8" xml:space="preserve">
+    <value>深度传感器故障！</value>
+    <comment>"Depth sensor error!"</comment>
+  </data>
+  <data name="1a2b19aad879f184d849b26fed0387cfd81c5ea345dd1f6daec7ef437d7b7bfb" xml:space="preserve">
+    <value>深度传感器故障。</value>
+    <comment>"Depth sensor error."</comment>
+  </data>
+  <data name="0a55c13ef426bd0501d83cbd5edc121221cb82be43c5dcdf8ff066f45ce48d56" xml:space="preserve">
+    <value>深度传感器未连接。</value>
+    <comment>"Depth sensor is not connected."</comment>
   </data>
   <data name="a2e08869d18b298367d16558b1add31a1dd4199e0a2b139628a050e95cf02877" xml:space="preserve">
     <value>说明 / 数值</value>
@@ -2831,6 +3071,18 @@ Ctrl+O 从文件加载</value>
   <data name="4cb5f837873e8a00085ab384176bf09a17138764db91f3567525c1ec50b8a880" xml:space="preserve">
     <value>锁定（领航机除外）</value>
     <comment>"Disarm (exl leader)"</comment>
+  </data>
+  <data name="cf5c4a642d35219e2568893f373faf2f0d3f6d4c672ab3f9b58e5f0f6a7195e1" xml:space="preserve">
+    <value>请先上锁再下载日志</value>
+    <comment>"Disarm for log download"</comment>
+  </data>
+  <data name="bb90779bac81340e39580901e78c4ec75edfad93fcbccf78ecf61e17aa5c2301" xml:space="preserve">
+    <value>测试电机前请解除硬件安全开关。</value>
+    <comment>"Disarm hardware safety switch before testing motors."</comment>
+  </data>
+  <data name="54e351bcbbc3dff8cb3b49f3e41a74657b4e34a8751496f5763d047268a4003f" xml:space="preserve">
+    <value>上锁：方向舵上锁功能已禁用</value>
+    <comment>"Disarm: rudder disarm disabled"</comment>
   </data>
   <data name="0556143cca89bea0571336946c662038b8ce74a74126869966c0f723206103be" xml:space="preserve">
     <value>已锁定</value>
@@ -3189,9 +3441,21 @@ Ctrl+O 从文件加载</value>
     <value>EFI 转速</value>
     <comment>"EFI rpm"</comment>
   </data>
+  <data name="8addcf629574422d97404cf2f2b2f54ac09c52fbd0720f995711aa6fa64d0f09" xml:space="preserve">
+    <value>EKF 失效保护已触发</value>
+    <comment>"EKF Failsafe"</comment>
+  </data>
+  <data name="1f4b8f1a2b71001d6677ed106049d8a55a0c791c043e139c14f2a458b6eb6fbf" xml:space="preserve">
+    <value>EKF 失效保护已解除</value>
+    <comment>"EKF Failsafe Cleared"</comment>
+  </data>
   <data name="3fbec57b9279aa9b49392f9c95ff9703efcf0f54f6bfed1bddbe9edd163599fb" xml:space="preserve">
     <value>EKF 状态</value>
     <comment>"EKF Status"</comment>
+  </data>
+  <data name="68180396f41886361dc7fb5f92ea3ec9a121d04131faeafdebebacc49b2998c7" xml:space="preserve">
+    <value>EKF 状态异常</value>
+    <comment>"EKF bad"</comment>
   </data>
   <data name="af73615b563a7b608da3ca0abf671c2c857a4483accf5669a4c2e4281fb6ba12" xml:space="preserve">
     <value>EKF 罗盘方差指标</value>
@@ -3201,6 +3465,10 @@ Ctrl+O 从文件加载</value>
     <value>EKF 水平位置方差指标</value>
     <comment>"EKF horizontal position variance indicator"</comment>
   </data>
+  <data name="072d25095385869306a91869a0cfa7eeb858718dcb276d7f6a3b97a1ad3c73a0" xml:space="preserve">
+    <value>主 EKF 已切换至 {0}</value>
+    <comment>"EKF primary changed:{0}"</comment>
+  </data>
   <data name="76ae9f88f32e9b08c389fab50f59d661a21acdca3b2a9602eb237c632d4758b4" xml:space="preserve">
     <value>EKF 状态标志位</value>
     <comment>"EKF status flags"</comment>
@@ -3208,6 +3476,10 @@ Ctrl+O 从文件加载</value>
   <data name="6125e7fb8d01b5b88002e8d40ffb24662520dd03d06a8bf771974cbd5fcebb37" xml:space="preserve">
     <value>EKF 地形高度方差指标</value>
     <comment>"EKF terrain altitude variance indicator"</comment>
+  </data>
+  <data name="cb854c6380b1c0407ddd7b14470ece3dce60e23b7311f76a14c9f9685e6366f0" xml:space="preserve">
+    <value>EKF 方差异常</value>
+    <comment>"EKF variance"</comment>
   </data>
   <data name="c48929a79a2a60fc45492ec6bb9fd8694a034b1a5afb9a4dd227b93bf676b7b6" xml:space="preserve">
     <value>EKF 速度方差指标</value>
@@ -3221,6 +3493,130 @@ Ctrl+O 从文件加载</value>
     <value>EKF2_MAG_TYPE 无效，正在恢复默认值</value>
     <comment>"EKF2_MAG_TYPE invalid, resetting to default"</comment>
   </data>
+  <data name="dc06da0718245d755d507c745d83ac3e6636fe5bdd65dc13cdf5cfe27003f6ce" xml:space="preserve">
+    <value>EKF3 IMU{0} GSF 内存不足</value>
+    <comment>"EKF3 IMU{0} GSF: not enough memory"</comment>
+  </data>
+  <data name="3e793e31ea97cc23d8a95f8072066d15341bd7dc6f8991e2df1968e0c1bb765b" xml:space="preserve">
+    <value>EKF3 IMU{0} MAG{1} 检测到地面磁场异常，已重新对准偏航</value>
+    <comment>"EKF3 IMU{0} MAG{1} ground mag anomaly, yaw re-aligned"</comment>
+  </data>
+  <data name="b8027f205f494f6a36ee0b6ac36bcbeefbfd1b96e2e58eafb93b4f6bd5348105" xml:space="preserve">
+    <value>EKF3 IMU{0} MAG{1} 飞行中偏航对准完成</value>
+    <comment>"EKF3 IMU{0} MAG{1} in-flight yaw alignment complete"</comment>
+  </data>
+  <data name="3b2cf78f5f0bf446f284985344bd2cf5b98b450ce3460d7e49d0968ebfdd1159" xml:space="preserve">
+    <value>EKF3 IMU{0} MAG{1} 初始偏航对准完成</value>
+    <comment>"EKF3 IMU{0} MAG{1} initial yaw alignment complete"</comment>
+  </data>
+  <data name="1405aee0c06f63fab731d2a65eccb90a3949d028c25bdf1bd0b89dbb6961d7be" xml:space="preserve">
+    <value>EKF3 IMU{0} 紧急重置偏航</value>
+    <comment>"EKF3 IMU{0} emergency yaw reset"</comment>
+  </data>
+  <data name="d2ae44d70e4b432b13825c453309785e629b5194f38b9fe997f51c9694477571" xml:space="preserve">
+    <value>EKF3 IMU{0} 已强制重置</value>
+    <comment>"EKF3 IMU{0} forced reset"</comment>
+  </data>
+  <data name="4cf2c96580947941469e7cdd08e79e824c6e2f3d0928616d72894c8bbf650970" xml:space="preserve">
+    <value>EKF3 IMU{0} 正在融合里程计数据</value>
+    <comment>"EKF3 IMU{0} fusing odometry"</comment>
+  </data>
+  <data name="49a3d7729c3674289ffe524b865aa3c697f3cd0f6c49f0324d0492bb7ba317bb" xml:space="preserve">
+    <value>EKF3 IMU{0} 正在融合光流数据</value>
+    <comment>"EKF3 IMU{0} fusing optical flow"</comment>
+  </data>
+  <data name="718bdbe2c1df47268ba542f617f32c3ba18824fb498c5d1b1197832764d738da" xml:space="preserve">
+    <value>EKF3 IMU{0} 初始信标向下偏移 {1} 米</value>
+    <comment>"EKF3 IMU{0} initial beacon pos D offset = {1} (m)"</comment>
+  </data>
+  <data name="2e65a78638b74cc45d186df7f2eca0614694ee80496d6ffc8c6365ef2d184e8c" xml:space="preserve">
+    <value>EKF3 IMU{0} 初始北、东位置为 {1}、{2} 米</value>
+    <comment>"EKF3 IMU{0} initial pos NE = {1},{2} (m)"</comment>
+  </data>
+  <data name="b24cf18c1a3b0b7c0d571d6a94d6fb78f6049bc436f1afcef56168b1032f2cab" xml:space="preserve">
+    <value>EKF3 IMU{0} 初始北、东、地位置为 {1}、{2}、{3} 米</value>
+    <comment>"EKF3 IMU{0} initial pos NED = {1},{2},{3} (m)"</comment>
+  </data>
+  <data name="32be929aee0c28af827048e2e827ede205ce3badb7797c9ad4adff2a58915a8e" xml:space="preserve">
+    <value>EKF3 IMU{0} 初始北、东、地速度为 {1}、{2}、{3} 米每秒</value>
+    <comment>"EKF3 IMU{0} initial vel NED = {1},{2},{3} (m/s)"</comment>
+  </data>
+  <data name="1fc73e94ddc5157c0978704ab03766b7ae9c0cf9230b873ef8a4997d04ccb818" xml:space="preserve">
+    <value>EKF3 IMU{0} 已初始化</value>
+    <comment>"EKF3 IMU{0} initialised"</comment>
+  </data>
+  <data name="a6e6bcd9ab7394ce885d6924f9fab855c05a8637f222e62c5b5a7af4a421b48b" xml:space="preserve">
+    <value>EKF3 IMU{0} 正在使用 GPS</value>
+    <comment>"EKF3 IMU{0} is using GPS"</comment>
+  </data>
+  <data name="4d6b2fe97849a97ac70f34a5b06a0f32123ee743e6d4253323dd49cf543d932a" xml:space="preserve">
+    <value>EKF3 IMU{0} 正在使用外部导航数据</value>
+    <comment>"EKF3 IMU{0} is using external nav data"</comment>
+  </data>
+  <data name="fe3ebb915e19c82a10e5e73e60aa3be5f6197b1533a7b41894fe0297243c17ea" xml:space="preserve">
+    <value>EKF3 IMU{0} 正在使用测距信标</value>
+    <comment>"EKF3 IMU{0} is using range beacons"</comment>
+  </data>
+  <data name="265ba25ec2808dbe5eca00911f38954dde7fa9f0b6f1b64ba40749b0117d245c" xml:space="preserve">
+    <value>EKF3 IMU{0} 原点已设置</value>
+    <comment>"EKF3 IMU{0} origin set"</comment>
+  </data>
+  <data name="69766bc6fd05b5558d65d58a5edd891f9acada1589b231ba56d870658f7a1ae2" xml:space="preserve">
+    <value>EKF3 IMU{0} 已开始相对辅助</value>
+    <comment>"EKF3 IMU{0} started relative aiding"</comment>
+  </data>
+  <data name="2164d5651e401e1ba6bcb2acfdc0418f5245f60d73c2cb8068d8125597572fd4" xml:space="preserve">
+    <value>EKF3 IMU{0} 已停止辅助</value>
+    <comment>"EKF3 IMU{0} stopped aiding"</comment>
+  </data>
+  <data name="02797832d7e93ccec57638d34eed4eb7ef08461a99e61e77724f20948847d608" xml:space="preserve">
+    <value>EKF3 IMU{0} 正在切换到罗盘 {1}</value>
+    <comment>"EKF3 IMU{0} switching to compass {1}"</comment>
+  </data>
+  <data name="1b57a19847530144ef218a663d75c7dc4bfceec52a68b25defa42314ced367f0" xml:space="preserve">
+    <value>EKF3 IMU{0} 倾斜对准完成</value>
+    <comment>"EKF3 IMU{0} tilt alignment complete"</comment>
+  </data>
+  <data name="83e872f34aacc033240129bd909d3661f009b77cf2930da9aef8d98ee5259c7b" xml:space="preserve">
+    <value>EKF3 IMU{0} 偏航已对准</value>
+    <comment>"EKF3 IMU{0} yaw aligned"</comment>
+  </data>
+  <data name="76e34519c8589ea1847ae859899e2575c7fbcce29282bafe6f491057de64bc3e" xml:space="preserve">
+    <value>EKF3 IMU{0} 已按 GPS 速度对准偏航</value>
+    <comment>"EKF3 IMU{0} yaw aligned to GPS velocity"</comment>
+  </data>
+  <data name="e54a97c54cffdee98f84dbda755bd98b940220d59c74115a76b425b656ea084b" xml:space="preserve">
+    <value>EKF3 IMU{0} 已使用 GPS 对准偏航</value>
+    <comment>"EKF3 IMU{0} yaw aligned using GPS"</comment>
+  </data>
+  <data name="1bd8f6a971ab7db9889899ea52aebdcb1af566dbaaf71412471fd544a25ed618" xml:space="preserve">
+    <value>EKF3 IMU{0} 正在使用外部偏航</value>
+    <comment>"EKF3 IMU{0} yaw external"</comment>
+  </data>
+  <data name="7e2e08cdf3b99d2e4a9be2d0851808d6cadcbb391ca6afc42feab54d66d436e0" xml:space="preserve">
+    <value>EKF3 IMU{0} 已启用备用偏航来源</value>
+    <comment>"EKF3 IMU{0} yaw fallback active"</comment>
+  </data>
+  <data name="ffa704523f31bab3d197f387d050e450f33883bf57d511d411f3e9d48428de7b" xml:space="preserve">
+    <value>EKF3 IMU{0} GSF 内存分配失败</value>
+    <comment>"EKF3 IMU{0}GSF: allocation failed"</comment>
+  </data>
+  <data name="2944fc0c1f43ca7d16c36fd307f66d1a536d5aa9083c5e5c31cd8e957fee851f" xml:space="preserve">
+    <value>EKF3 内存分配失败</value>
+    <comment>"EKF3 allocation failed"</comment>
+  </data>
+  <data name="495cd480b6f9dccd8c9edafbfad7b720c429872dd14441b773ab857653953908" xml:space="preserve">
+    <value>EKF3 切换到通道 {0}</value>
+    <comment>"EKF3 lane switch {0}"</comment>
+  </data>
+  <data name="c2cb636f789610427701bfcb485eaa64fd7978a4b9de4a5030ef16282e24b0f2" xml:space="preserve">
+    <value>EKF3 内存不足</value>
+    <comment>"EKF3 not enough memory"</comment>
+  </data>
+  <data name="458571e0e768c367153b4f500f5c8ef18e65cc6ab3cc93103122883e4ac7ec9b" xml:space="preserve">
+    <value>EKF3 原点已设置</value>
+    <comment>"EKF3: origin already set"</comment>
+  </data>
   <data name="d98ee0e5f9399db9381014c9f890f896d3fcb272c2a7a521d0a13aa23085a284" xml:space="preserve">
     <value>错误</value>
     <comment>"ERROR"</comment>
@@ -3229,6 +3625,14 @@ Ctrl+O 从文件加载</value>
     <value>错误！</value>
     <comment>"ERROR!"</comment>
   </data>
+  <data name="bdc82a6dfcdb330c988cb219890e40eec86a634ce16259bdb51481230721fb5a" xml:space="preserve">
+    <value>错误：机架类别无效。</value>
+    <comment>"ERROR: Bad frame class."</comment>
+  </data>
+  <data name="8c2c90a4b2b497bdaad810fa55135d01924de358e36e9b9d29d95bae9a53ef3a" xml:space="preserve">
+    <value>错误：机架类别无效，电机未初始化。</value>
+    <comment>"ERROR: Bad frame class. Motors not initialised."</comment>
+  </data>
   <data name="82b82af2f74bcc2f30b99e12c241757da4eb5b24361d7307faf05adcc739e2c0" xml:space="preserve">
     <value>电调校准</value>
     <comment>"ESC Calibration"</comment>
@@ -3236,6 +3640,10 @@ Ctrl+O 从文件加载</value>
   <data name="69dd129ca5f32c87eacb205528e9aeaa7f00e9100e22539b5cb1a7fae89e5b78" xml:space="preserve">
     <value>电调类型：</value>
     <comment>"ESC Type:"</comment>
+  </data>
+  <data name="e013b8ca93ff010f0e9bf80564bb03717db977aa36fdee12b13213241b23bdd4" xml:space="preserve">
+    <value>电调校准需要重启飞控</value>
+    <comment>"ESC calibration: Restart board"</comment>
   </data>
   <data name="c6e846081c2b2532f02ae96175fcd7c707ec727c505aa670bb3b22f83e729afa" xml:space="preserve">
     <value>电调 {0} 电流 (A)</value>
@@ -3719,9 +4127,17 @@ Ctrl+O 从文件加载</value>
     <value>读取数据失败</value>
     <comment>"Error reading data"</comment>
   </data>
+  <data name="09a76017a5afa6aaef9eda2088921fd34ce9aa1738173ed915d3de84a98e88f0" xml:space="preserve">
+    <value>替换项目 {0} 失败</value>
+    <comment>"Error replacing item ({0})"</comment>
+  </data>
   <data name="131323ee6f83a25d831865821d05c308dd7f6935dcde73a8ee1932f4aa149104" xml:space="preserve">
     <value>运行脚本失败： </value>
     <comment>"Error running script "</comment>
+  </data>
+  <data name="4ec8817082d62186b68b0bbb5c42248ede1c65f95912f3a9e0afa49b848bd13c" xml:space="preserve">
+    <value>设置备降点失败</value>
+    <comment>"Error setting rally point"</comment>
   </data>
   <data name="c56ce635a0c84fd0a7554fcc2510a43501cf603c52a803ca149154bf75bd026e" xml:space="preserve">
     <value>数传已纠错的数据包数</value>
@@ -3817,6 +4233,10 @@ Ctrl+O 从文件加载</value>
     <value>固定翼增稳 A</value>
     <comment>"FBWA"</comment>
   </data>
+  <data name="57e3812d342fc72f2e36f876ad91f18ca5d1ccd75fc9179471e40156a144aef2" xml:space="preserve">
+    <value>FBWA 已进入尾轮起飞模式</value>
+    <comment>"FBWA tdrag mode"</comment>
+  </data>
   <data name="b0bb1cb32962b724e4bb4b5117a78e47fc66c8ded108ae67a0aa253fc1ae8ed3" xml:space="preserve">
     <value>固定翼增稳 B</value>
     <comment>"FBWB"</comment>
@@ -3896,6 +4316,14 @@ Ctrl+O 从文件加载</value>
   <data name="48542b443c7ceb60f61d340cceebbfe3fe79a0104f956e8b468bb99c81811523" xml:space="preserve">
     <value>清除 {0} 失败： </value>
     <comment>"Failed to clear {0}: "</comment>
+  </data>
+  <data name="1e4a3e427f5d5e1a6a7f533c80d662db54c704804ecff2064690a0adc583a442" xml:space="preserve">
+    <value>未在规定时间内完成起飞</value>
+    <comment>"Failed to complete takeoff within time limit"</comment>
+  </data>
+  <data name="792bf721f1130d2313114f02cee6bc31fdf1d03398fd666f80bf4af436066b1a" xml:space="preserve">
+    <value>风力过大，起飞未完成</value>
+    <comment>"Failed to complete takeoff, excessive wind"</comment>
   </data>
   <data name="186f358e7619b42e5ccf986e61538055beca80ff61ff8d53244a43a24a87eab3" xml:space="preserve">
     <value>连接并发送重启命令失败</value>
@@ -4159,13 +4587,37 @@ Ctrl+O 从文件加载</value>
     <value>写入集结点文件失败</value>
     <comment>"Failed to write rally file"</comment>
   </data>
+  <data name="8b4b4f8c4d718a741f41a70e51d6f508b343b0e94f52b9ece79049b5f4a57c68" xml:space="preserve">
+    <value>检测失败！请检查推进器 {0} 和机架设置！</value>
+    <comment>"Failed! Please check Thruster {0} and frame setup!"</comment>
+  </data>
   <data name="5cd1ac966aa4977836bb32a431e20a8c907b8baec04099c09a8349cd237ff375" xml:space="preserve">
     <value>失控保护</value>
     <comment>"Failsafe"</comment>
   </data>
+  <data name="4549068837d7c23e92e89efc2077576ea67abf32601b6fd43d1a8035b240ccd9" xml:space="preserve">
+    <value>失效保护：继续自动模式</value>
+    <comment>"Failsafe - Continuing Auto Mode"</comment>
+  </data>
   <data name="ee29f9d05ccb5a85d9dc8a00b9c192635780c05aa87d2c06ea6a2f0cdb54a8cc" xml:space="preserve">
     <value>丢帧失控保护</value>
     <comment>"Failsafe Frame Loss"</comment>
+  </data>
+  <data name="82fb80eea9f1e09e17ed2ce5e5d26b0a50a526ade6af77432d8e65f5959cbe2e" xml:space="preserve">
+    <value>地形失效保护已触发</value>
+    <comment>"Failsafe terrain triggered"</comment>
+  </data>
+  <data name="4c100a74580093a0d280d60dac59cc7c1136d1e2d92559040b0f2cce4a9d2bc4" xml:space="preserve">
+    <value>地形失效保护：测距仪状态异常</value>
+    <comment>"Failsafe: Terrain Rangefinder Unhealthy"</comment>
+  </data>
+  <data name="04a31fdebbeb2cc5a1841cadc20af6a40d81c6d36d1461a1270f2c675adfbade" xml:space="preserve">
+    <value>地形失效保护：地形不可用</value>
+    <comment>"Failsafe: Terrain Unavailable"</comment>
+  </data>
+  <data name="093cbad9d6297952c6d89d25daf60437ab55c36b8176758082b47d86f7503f7a" xml:space="preserve">
+    <value>地形失效保护：缺少地形数据</value>
+    <comment>"Failsafe: Terrain data missing"</comment>
   </data>
   <data name="4bede8ceb84d5c9ec76f9c2bc3d3614d4f79c982b01e3c3d4b33682c87b7e041" xml:space="preserve">
     <value>收藏</value>
@@ -4194,6 +4646,10 @@ Ctrl+O 从文件加载</value>
   <data name="5626e3457a703498345be691e0f9e5a417cd8e787d8c7df924d7ac6d3f0efc4b" xml:space="preserve">
     <value>下拉无选项</value>
     <comment>"Fence type list has no options"</comment>
+  </data>
+  <data name="4565fa8053be7b998e8d3b654ac69801e7fe4886391125c540ecbce3c1638447" xml:space="preserve">
+    <value>围栏上传超时</value>
+    <comment>"Fence upload timeout"</comment>
   </data>
   <data name="dea92d2a7b06d0f8c08aa1b2a6b68cc55e38809cc78c27fb3217b13761fccc14" xml:space="preserve">
     <value>正在获取参数名称</value>
@@ -4440,9 +4896,21 @@ Ctrl+O 从文件加载</value>
     <value>预计飞行时间：</value>
     <comment>"Flight Time (est):"</comment>
   </data>
+  <data name="8a473b566962369ceabb35c6c6af1a77e955f0e12024461a6b5914f0010128bd" xml:space="preserve">
+    <value>飞行模式切换失败</value>
+    <comment>"Flight mode change failed"</comment>
+  </data>
+  <data name="bc8d03dd00d57098114069d67b6ae597e7d8b790c5c2828851f413272283c85f" xml:space="preserve">
+    <value>切换至 {0} 模式失败</value>
+    <comment>"Flight mode change failed {0}"</comment>
+  </data>
   <data name="f2e7ab699dbf890dc30059b120e348e0b6dbc1e3a9a78dab03762109ec65fd68" xml:space="preserve">
     <value>飞行模式</value>
     <comment>"Flight modes"</comment>
+  </data>
+  <data name="291107c0581bc830ac47370d9ebd6df913b8a93d51d87cd70944a2b90dfd26f2" xml:space="preserve">
+    <value>已收到飞行计划</value>
+    <comment>"Flight plan received"</comment>
   </data>
   <data name="8f5db72113b195a7bd38702154c27f07961dcdbdf38a675cba748d9b04bd7a73" xml:space="preserve">
     <value>航班标识</value>
@@ -4620,6 +5088,10 @@ Ctrl+O 从文件加载</value>
     <value>固件 SHA</value>
     <comment>"Fw SHA"</comment>
   </data>
+  <data name="1ea1e92ad8afccd3b466691fef0aa501e1d099fe900991f8c4162affa6790a56" xml:space="preserve">
+    <value>地面站失联保护已解除</value>
+    <comment>"GCS Failsafe Cleared"</comment>
+  </data>
   <data name="520264569e89b0270a85a358d8e27e06e87b5f1bf6db4a706fcf67cdac564928" xml:space="preserve">
     <value>地面站 ID</value>
     <comment>"GCS ID"</comment>
@@ -4639,6 +5111,18 @@ Ctrl+O 从文件加载</value>
   <data name="8264bf809b441943ea748bbb29d126277559b7689826f3734e03e653c38e26f6" xml:space="preserve">
     <value>检测到 GPS 2：u-blox</value>
     <comment>"GPS 2: detected u-blox"</comment>
+  </data>
+  <data name="86df94368f2287b5d977e48067c3e5dcfaa1544dc8d0c92aced16e8a1cb9d1e7" xml:space="preserve">
+    <value>GPS 信号异常</value>
+    <comment>"GPS Glitch"</comment>
+  </data>
+  <data name="d7815b270fc58cfd6411fbee5b3d1ed00d10bdf6fd594db9fdac780d9fe58140" xml:space="preserve">
+    <value>GPS 信号已恢复</value>
+    <comment>"GPS Glitch cleared"</comment>
+  </data>
+  <data name="f91bc0cb9fa5597ed1aa07b057f4bc676340a7d28659d594ef991a46d7004fb9" xml:space="preserve">
+    <value>GPS 信号异常或罗盘故障</value>
+    <comment>"GPS Glitch or Compass error"</comment>
   </data>
   <data name="4fa0c6beb5bcd1d80d2a4c53432fdc0137f211aa536787d6010788db10dde409" xml:space="preserve">
     <value>GPS 航向 (°)</value>
@@ -4731,6 +5215,10 @@ Ctrl+O 从文件加载</value>
   <data name="dbb81579f50c1e7a853948d6bad1e9cd696d81c1f62396e3a23d1481575770ab" xml:space="preserve">
     <value>静态固定定位</value>
     <comment>"GPS fix: STATIC"</comment>
+  </data>
+  <data name="ebc01ec42a0ef25257ead102e95c606564da6740edb2cbea6f4d18d8ff3baa12" xml:space="preserve">
+    <value>GPS {0}：检测到 u-blox</value>
+    <comment>"GPS {0}: detected u-blox"</comment>
   </data>
   <data name="79e32f0972b95f41b74801a61d1330a4fb63b4342105ff5fb02b38ed5b5b2d98" xml:space="preserve">
     <value>GPS1：{0} 颗卫星，{1}</value>
@@ -4895,6 +5383,10 @@ Ctrl+O 从文件加载</value>
   <data name="bf8ed0f5b2f3f10f1794049a1eae4f39961f6229d93a3693bcd966ee5b2e0e2c" xml:space="preserve">
     <value>滑翔比</value>
     <comment>"Glide Ratio"</comment>
+  </data>
+  <data name="b49d385d545a4e8998ff348e01f3ae504801eec70d0d32e34dd3398763bb87ae" xml:space="preserve">
+    <value>信号异常已恢复</value>
+    <comment>"Glitch cleared"</comment>
   </data>
   <data name="35a515fe5226232b21048d9b29a9286f35f5442b18908e4b6d9aaf87b35abe50" xml:space="preserve">
     <value>全局重试次数</value>
@@ -6520,6 +7012,10 @@ Ctrl+O 从文件加载</value>
     <value>硬件电压</value>
     <comment>"HW Voltage"</comment>
   </data>
+  <data name="63e4ff84845edc4dff33392db1c7a596be91f0f1871395ae3603afbaaea544cc" xml:space="preserve">
+    <value>检测到重着陆</value>
+    <comment>"Hard landing detected"</comment>
+  </data>
   <data name="4823a2dff6c25927575270bbec485d8269b2999c5eb8ed1e6d0664b14d703cb1" xml:space="preserve">
     <value>硬件版本/UID</value>
     <comment>"Hardware version/UID"</comment>
@@ -6777,6 +7273,14 @@ Ctrl+O 从文件加载</value>
     <value>在飞行场地时，请连接飞控并等待 GPS 定位，然后点击“起飞点位置”链接，将起飞点设为当前位置</value>
     <comment>"If you're at the field, connect to your APM and wait for GPS lock. Then click 'Home Location' link to set home to your location"</comment>
   </data>
+  <data name="853f6291ec9f56cac32bf2c5f4cda7b6a3a3575dcf234c6fef009a8b0998aa72" xml:space="preserve">
+    <value>正在忽略命令 {0}</value>
+    <comment>"Ignoring command {0}"</comment>
+  </data>
+  <data name="91842f310fa29a0c297753b5ad8c4ff39416adc573621f8d394976828f61fd0c" xml:space="preserve">
+    <value>已忽略无效的 START_LATITUDE 或 START_LONGITUDE 参数</value>
+    <comment>"Ignoring invalid START_LATITUDE or START_LONGITUDE parameter"</comment>
+  </data>
   <data name="875c8b4f7f123d962e6f494a0f27597a2bec52e633154e27514d09b19657dc94" xml:space="preserve">
     <value>影像高度 [像素]</value>
     <comment>"Image Height [Pixels]"</comment>
@@ -6940,6 +7444,14 @@ Ctrl+O 从文件加载</value>
     <value>内部</value>
     <comment>"Internal"</comment>
   </data>
+  <data name="0f34de870251a49d20f1756cd74c1783e7353ac8aa9a22daac6cb60dad132aad" xml:space="preserve">
+    <value>内部压力危急！</value>
+    <comment>"Internal pressure critical!"</comment>
+  </data>
+  <data name="4d4918485aed64a11be3173bcb168963a8d01b7e265fb6f65e61eebf9f1788bd" xml:space="preserve">
+    <value>内部温度危急！</value>
+    <comment>"Internal temperature critical!"</comment>
+  </data>
   <data name="8ee13d4db83efdfbbac448bcb5ce08512b5c05b6613b52ce449350fee01e1b57" xml:space="preserve">
     <value>内部状态</value>
     <comment>"Internals"</comment>
@@ -7011,6 +7523,10 @@ Ctrl+O 从文件加载</value>
   <data name="8fdf5edab0e66a188e3a79fb72c384a4dae0ce28833df29a3e560caf07a6c8de" xml:space="preserve">
     <value>命令无效</value>
     <comment>"Invalid command"</comment>
+  </data>
+  <data name="16b779425c39e47f6d2e3418e65bb552c3433ccc3796f6ef76f0d3b4b6de760b" xml:space="preserve">
+    <value>SET_POSITION_TARGET_GLOBAL_INT 使用了无效坐标系</value>
+    <comment>"Invalid coord frame in SET_POSITION_TARGET_GLOBAL_INT"</comment>
   </data>
   <data name="cf82ef3ef95efa026bf8cf7cd4d3814ee5d3e864fa1d52b483f47d1187eca137" xml:space="preserve">
     <value>坐标无效，请检查输入</value>
@@ -7264,6 +7780,18 @@ Ctrl+O 从文件加载</value>
     <value>引入段 [m]</value>
     <comment>"LeadIn [m]"</comment>
   </data>
+  <data name="00ba5095a005a9447a505e8be6180adac97d076ce775728f8394302cbfae47b4" xml:space="preserve">
+    <value>检测到渗漏</value>
+    <comment>"Leak Detected"</comment>
+  </data>
+  <data name="8d9bbd9fcffab71674d90c9261b002e7a7add6fe3a6a035d79377b8d787aeaea" xml:space="preserve">
+    <value>漏水传感器 {0} 故障，请将 SERVO{1}_FUNCTION 设为 GPIO</value>
+    <comment>"Leak detector {0} error. Please set SERVO{1}_FUNCTION to GPIO"</comment>
+  </data>
+  <data name="fd06da86995b6b5b65bae83aea2155a1ba86ed6fe3744f17ed1361681c168d76" xml:space="preserve">
+    <value>漏水传感器 {0} 的引脚（舵机 {1}）已自动设为 GPIO</value>
+    <comment>"Leak detector {0} pin (servo {1}) auto-set to GPIO"</comment>
+  </data>
   <data name="9fe2e7ca2afc52d99fda8cdd7607094fd5cf7a48818eb2c463a1ae01144628c6" xml:space="preserve">
     <value>保留为 0 时使用接收机输入范围</value>
     <comment>"Leave as 0 to use RX input range"</comment>
@@ -7513,6 +8041,10 @@ Ctrl+O 从文件加载</value>
     <value>日志数据不足</value>
     <comment>"Log does not contain enough data"</comment>
   </data>
+  <data name="924229da149a78ec518f4d568d9fe878ea5b331905d3f3102330640ddffb1d2e" xml:space="preserve">
+    <value>正在下载日志</value>
+    <comment>"Log download in progress"</comment>
+  </data>
   <data name="b94c6c0acea2208e2e5db1549b1ec15d52cf09005c0088a2df49db0bb327f198" xml:space="preserve">
     <value>日志文件：</value>
     <comment>"Log files:"</comment>
@@ -7597,6 +8129,10 @@ Ctrl+O 从文件加载</value>
     <value>车船寻回提示音</value>
     <comment>"Lost Rover Sound"</comment>
   </data>
+  <data name="cc22c641373e7ea6e6ebfb1bded69f631e54b07280f6a0e81b51eb3f8cc75949" xml:space="preserve">
+    <value>手动控制信号丢失</value>
+    <comment>"Lost manual control"</comment>
+  </data>
   <data name="f793de205ead5ac302c4a1627829dea41f176b1068b993a32373fc869918374b" xml:space="preserve">
     <value>低</value>
     <comment>"Low"</comment>
@@ -7644,6 +8180,10 @@ Ctrl+O 从文件加载</value>
   <data name="c832c830609ee882f3cb772ba9aec0e0d4784a109fbb733740b00623bad8d207" xml:space="preserve">
     <value>消息 ID</value>
     <comment>"MSG ID"</comment>
+  </data>
+  <data name="2257c4fd809a6c4c4e303e3da72a6b970ad6e89e2f9ce6cb0553c9f0537b5886" xml:space="preserve">
+    <value>地面站心跳丢失</value>
+    <comment>"MYGCS: heartbeat lost"</comment>
   </data>
   <data name="d30d669aa36d3e404d7b307ff9adca557a97c39467dca8309237404400b00bbb" xml:space="preserve">
     <value>罗盘</value>
@@ -9055,6 +9595,10 @@ Ctrl+O 从文件加载</value>
     <value>绞盘编号</value>
     <comment>"Mission parameter: winch no"</comment>
   </data>
+  <data name="2584042fa1a5572a11d371cb90ebcd44726b9625df790148bb722417b30f37bc" xml:space="preserve">
+    <value>航线上传超时</value>
+    <comment>"Mission upload timeout"</comment>
+  </data>
   <data name="b12c7045eb12866afa145e5b0d71547f523fc8f913446a6fe634d01729e656da" xml:space="preserve">
     <value>开始任务</value>
     <comment>"Mission_Start"</comment>
@@ -9086,6 +9630,26 @@ Ctrl+O 从文件加载</value>
   <data name="fa19560c0a2ef7e6defd1836a2eecc84e99abd1ddcc4b44e2fc4f1432f5f398b" xml:space="preserve">
     <value>模式 S</value>
     <comment>"Mode S"</comment>
+  </data>
+  <data name="03091fa67d66afe4dc6adf87f717d92f0916c8201e8d4f0f3ab713ef6b992eef" xml:space="preserve">
+    <value>模式切换失败，{0} 需要高度估计</value>
+    <comment>"Mode change failed: {0} need alt estimate"</comment>
+  </data>
+  <data name="2fb7e4a39a673e8bb9f052ccdb01da0ea8549b54c019758dd550ec1e71db68fb" xml:space="preserve">
+    <value>模式切换失败，{0} 需要位置估计</value>
+    <comment>"Mode change failed: {0} requires position"</comment>
+  </data>
+  <data name="0bfcc95a6371be87a209386e59ae30f8c6fc0cbcd20304aa738b99a4b7687deb" xml:space="preserve">
+    <value>切换至自动返航模式失败，未找到降落序列</value>
+    <comment>"Mode change to AUTO RTL failed: No landing sequence found"</comment>
+  </data>
+  <data name="067ef36dcb2521bff61ddf00d422660a6a56adb90f59f9bfa5eec09a231de21d" xml:space="preserve">
+    <value>切换至自动返航模式失败，未找到返航路径</value>
+    <comment>"Mode change to AUTO RTL failed: No return path found"</comment>
+  </data>
+  <data name="43cc3ca70952944350516345364c1766a1edf19b9db37760a132e283d35b86dd" xml:space="preserve">
+    <value>切换至自动返航模式失败，未找到返航路径或降落序列</value>
+    <comment>"Mode change to AUTO RTL failed: No return path or landing sequence found"</comment>
   </data>
   <data name="5f1879c76973fb3989667cb17d9955a55a7806a2f9bf0ded402d7da54e2163ab" xml:space="preserve">
     <value>当前飞行模式：{mode}</value>
@@ -9123,9 +9687,45 @@ Ctrl+O 从文件加载</value>
     <value>多个固件与此飞控匹配。请使用筛选条件缩小范围，选择所需固件。</value>
     <comment>"More than one firmware matches this board. Use the filters to narrow it down to the one you want."</comment>
   </data>
+  <data name="cde673bf11c8342f228bc30dd81bd38607905211d5307556e333125c946fb86c" xml:space="preserve">
+    <value>电机测试：飞控正在初始化</value>
+    <comment>"Motor Test: Board initialising"</comment>
+  </data>
+  <data name="3934bd8650730e2f80f2666802b3e376461ca4c3c76523faa32041b06a4e6b46" xml:space="preserve">
+    <value>电机测试：遥控未校准</value>
+    <comment>"Motor Test: RC not calibrated"</comment>
+  </data>
+  <data name="7ec2673fdde9d5f2cf2dab5639d38439469bb90daf5a53a0ea6a739bad78983a" xml:space="preserve">
+    <value>电机测试：安全开关限制</value>
+    <comment>"Motor Test: Safety switch"</comment>
+  </data>
+  <data name="6764e4adffe57bbbeb6d7aa4a72effc29457211c968544d787ce19f723e8e349" xml:space="preserve">
+    <value>电机测试：电机编号 {0} 无效</value>
+    <comment>"Motor Test: invalid motor ({0})"</comment>
+  </data>
+  <data name="e6c7941b168502c166cc2f65186cf6353528f0ac4870bdff9ad2abb04d812525" xml:space="preserve">
+    <value>电机测试：油门类型 {0} 无效</value>
+    <comment>"Motor Test: invalid throttle type: {0}"</comment>
+  </data>
+  <data name="33cf2f21e684c242023781aa961037fab8e84d716dec0bc018e6abc371820843" xml:space="preserve">
+    <value>电机测试：百分比 {0} 过高</value>
+    <comment>"Motor Test: percentage ({0}) too high"</comment>
+  </data>
+  <data name="454cbb06ef220cd7da92b5683cccc0035608069484c16ffb83d639d9e180ba75" xml:space="preserve">
+    <value>电机测试：PWM 值 {0} 过高</value>
+    <comment>"Motor Test: pwm ({0}) too high"</comment>
+  </data>
   <data name="71064d15d676c2b045f8f8b31fa70e58b5c0042a4672fbbeb3b694f0237344e1" xml:space="preserve">
     <value>电机类型</value>
     <comment>"Motor Type"</comment>
+  </data>
+  <data name="e0d4d6973e2517d11758eaeb0db26226cfcc17884a8a085cdd28c082b8995b68" xml:space="preserve">
+    <value>电机转向检测完成。</value>
+    <comment>"Motor direction detection is complete."</comment>
+  </data>
+  <data name="63b91c7c6ca659db6e874484d160763a5027e9d86fefbd1de22d40a079b70a2a" xml:space="preserve">
+    <value>电机测试超时！</value>
+    <comment>"Motor test timed out!"</comment>
   </data>
   <data name="df227717e962b940eab25733b09fda601cd3fba0f2d407bdc7c9f977b9d233a9" xml:space="preserve">
     <value>电机 {0}</value>
@@ -9186,6 +9786,10 @@ Ctrl+O 从文件加载</value>
   <data name="57ae30a8ea13ccc588ec208176cacb8d23b7a131135139f99f1b1407c27ca2e8" xml:space="preserve">
     <value>多旋翼</value>
     <comment>"Multirotor"</comment>
+  </data>
+  <data name="1ab42f1d7e4d7f09935de8e86b29770809ab1cb916ea75789d4ce790c5854100" xml:space="preserve">
+    <value>飞行器必须已在飞行中！</value>
+    <comment>"Must already be flying!"</comment>
   </data>
   <data name="94c9c0fb5a96329eeb0f128179fe2c1050b1ab66c4b15c6872783d17931a3a9f" xml:space="preserve">
     <value>导航位置精度类别（NACp）</value>
@@ -9292,6 +9896,10 @@ Ctrl+O 从文件加载</value>
   <data name="c75ba8074400aff6427cb4467c118ea6f06a2affa1e502352b3d0818f6ccac76" xml:space="preserve">
     <value>新建目录</value>
     <comment>"New Folder"</comment>
+  </data>
+  <data name="62090c04adfacdda69a341eba62e3396a45f1d07852c06a06651ba6172ba2356" xml:space="preserve">
+    <value>已收到新的返航点</value>
+    <comment>"New HOME received"</comment>
   </data>
   <data name="bf0d151fcab9eeb990393ab34988d79f3667f5d2e67678b541b2a460bfdb0c06" xml:space="preserve">
     <value>新建编队布局</value>
@@ -9571,6 +10179,10 @@ Ctrl+O 从文件加载</value>
   <data name="4a9f820cd6ec32c9386b97c53509b8f30ffcf1af3a6c060ebb44597e48aeea7e" xml:space="preserve">
     <value>作为 Windows 商店应用运行时不可用</value>
     <comment>"Not available when used as a windows store app"</comment>
+  </data>
+  <data name="2663036f0ba5658367e953ea04c36600b81b242ee869195f1ba6a2ca9dc19434" xml:space="preserve">
+    <value>尚未降落</value>
+    <comment>"Not landed"</comment>
   </data>
   <data name="b7ad10e0282fc8523e67d29de3f183815b3232e3ecf35baa942d064ce483df50" xml:space="preserve">
     <value>注意：串口设置更改将在飞控重启后生效。</value>
@@ -10009,6 +10621,26 @@ Mission Planner 需要收到 2 个有效心跳包后才会连接。</value>
   <data name="fd92d952db92eff57586865ef7b6ae62897642d1abedbe203d56e2d4ced964ed" xml:space="preserve">
     <value>平摇</value>
     <comment>"Pan"</comment>
+  </data>
+  <data name="bd1e95453d46d949cf5113d17ddb02866c945274291871a8bceb8aff5c6136ea" xml:space="preserve">
+    <value>降落伞已释放</value>
+    <comment>"Parachute already released"</comment>
+  </data>
+  <data name="af475dd78031e57827ba3bcb146d4ba1767a0d434e7f6370b25979af63e3ae5a" xml:space="preserve">
+    <value>降落伞未启用</value>
+    <comment>"Parachute not enabled"</comment>
+  </data>
+  <data name="42631627edebfd5c7707134a8eb4822ae81b0fd135e7c164e72a5a124ae014c3" xml:space="preserve">
+    <value>降落伞已释放</value>
+    <comment>"Parachute: Released"</comment>
+  </data>
+  <data name="2b051ab7b1f813cfabe55a8402465cb594a9db78c3e00035ad40a92e3c6d3f1b" xml:space="preserve">
+    <value>降落伞已再次释放</value>
+    <comment>"Parachute: Released again"</comment>
+  </data>
+  <data name="044e0b34c09bdd0eebb8f17623356f14dd243b622ce1d3419efcba26a6d0a327" xml:space="preserve">
+    <value>高度过低，无法使用降落伞</value>
+    <comment>"Parachute: Too low"</comment>
   </data>
   <data name="67abb6ba91923470e1163f3227bde5eaf2c3677585051586b2fea12ebb8a5d5d" xml:space="preserve">
     <value>释放降落伞</value>
@@ -10596,9 +11228,97 @@ VLAN 标记</value>
     <value>位置有效</value>
     <comment>"Postion is valid"</comment>
   </data>
+  <data name="af1ce5be1cca34d3dba1847e7d58145093a240814350c9f816709bb2527ebd2f" xml:space="preserve">
+    <value>可能出现推力损失（{0}）</value>
+    <comment>"Potential Thrust Loss ({0})"</comment>
+  </data>
+  <data name="81a8709734a1bf2d5925c9b49d18ff65e43a55c324c45a8be30ee32aa7736c88" xml:space="preserve">
+    <value>可能出现垂直起降推力损失（{0}）</value>
+    <comment>"Potential VTOL Thrust Loss ({0})"</comment>
+  </data>
   <data name="15c2a3231c8932d3d99e3008cc1174aaf8e33772cbe14a46aae7b016e5b04ab4" xml:space="preserve">
     <value>预处理</value>
     <comment>"Pre-process"</comment>
+  </data>
+  <data name="700d29bcd1baae3fab4ddb4f36465314ea82ea84d848ca66213e71e56e29d725" xml:space="preserve">
+    <value>解锁前：检测到 ADS-B 冲突风险</value>
+    <comment>"PreArm: ADSB threat detected"</comment>
+  </data>
+  <data name="52c4c9101f7282e4e9a5435cdd1f5b4d52b25a1e0cf7ce13cca759b173f1c183" xml:space="preserve">
+    <value>解锁前：姿态航向参考系统状态异常</value>
+    <comment>"PreArm: AHRS not healthy"</comment>
+  </data>
+  <data name="8dcc32159c2dade7aa9537d4f2037980e847ae0292e9d3383e2052b9a3105c85" xml:space="preserve">
+    <value>解锁前：加速度计读数不一致</value>
+    <comment>"PreArm: Accels inconsistent"</comment>
+  </data>
+  <data name="7ff740a93b5512dc99a8bb73c54e07197002a7257d0eb39f2880ea7449e4d368" xml:space="preserve">
+    <value>解锁前：电池失效保护已触发</value>
+    <comment>"PreArm: Battery failsafe"</comment>
+  </data>
+  <data name="aa8d99fdd0ea104137d96722b8630fee366c40080b7d96aba470e442da45871e" xml:space="preserve">
+    <value>解锁前：罗盘偏移量过大</value>
+    <comment>"PreArm: Compass offsets too high"</comment>
+  </data>
+  <data name="ba1ab155dc0f0e78993ae6ba93fe2cf2db96e66afd0745e700bf8e3b2e681b4c" xml:space="preserve">
+    <value>解锁前：罗盘读数不一致</value>
+    <comment>"PreArm: Compasses inconsistent"</comment>
+  </data>
+  <data name="4a795bae0f21a589ebb6a83b845e5397b3bd64240c409b13bcc81b010a55f32e" xml:space="preserve">
+    <value>解锁前：围栏已启用，需要位置估计</value>
+    <comment>"PreArm: Fence enabled, need position estimate"</comment>
+  </data>
+  <data name="6e9ca6e762aa36871304d70413576dc2d76aa4853d43ea9b8aa505cb12bed25d" xml:space="preserve">
+    <value>解锁前：地面站失联保护已触发</value>
+    <comment>"PreArm: GCS failsafe on"</comment>
+  </data>
+  <data name="3242e9fb152da56106203c8e7bd5ecdfbbaa0aae3ef241e323f27a0c75ffb025" xml:space="preserve">
+    <value>解锁前：GPS 信号异常</value>
+    <comment>"PreArm: GPS glitching"</comment>
+  </data>
+  <data name="64d0874fe5a17c9a5946a0401af73a2614efe2156933175c7631ac1c46704f39" xml:space="preserve">
+    <value>解锁前：陀螺仪读数不一致</value>
+    <comment>"PreArm: Gyros inconsistent"</comment>
+  </data>
+  <data name="66c7bc52d8377c7530bf714edf9d5124929965cf653db444269ae2ca1169943d" xml:space="preserve">
+    <value>解锁前：硬件安全开关未释放</value>
+    <comment>"PreArm: Hardware safety switch"</comment>
+  </data>
+  <data name="360e61f441ae7c627041f3e14bee06f81cd6c3cc01504201b0e95bdee2f5ac13" xml:space="preserve">
+    <value>解锁前：电机联锁与紧急停止设置冲突</value>
+    <comment>"PreArm: Interlock/E-Stop Conflict"</comment>
+  </data>
+  <data name="bc791e657d2801aa6ee9d7715127d3d6da51a808117ba2ef1e4112cbe412e711" xml:space="preserve">
+    <value>解锁前：日志记录失败</value>
+    <comment>"PreArm: Logging failed"</comment>
+  </data>
+  <data name="5b1bb8d358e5811b5694b562aec302cb34d8ecaff4b2a00e10a5ab92cfe98a28" xml:space="preserve">
+    <value>解锁前：日志记录尚未启动</value>
+    <comment>"PreArm: Logging not started"</comment>
+  </data>
+  <data name="9b016e5e5eb6b5a5224845d8dd8b355b63ed011c2ccdad2fde624a298a6f0adf" xml:space="preserve">
+    <value>解锁前：电机联锁已开启</value>
+    <comment>"PreArm: Motor Interlock Enabled"</comment>
+  </data>
+  <data name="a16339129e319b9408e0a0da7028763659ab3c31742476e333051b4dd6839813" xml:space="preserve">
+    <value>解锁前：需要高度估计</value>
+    <comment>"PreArm: Need Alt Estimate"</comment>
+  </data>
+  <data name="faf9329f4650fa419ae7e45235cf0d73fb06f7b046b578506ade52ab0130da23" xml:space="preserve">
+    <value>解锁前：需要位置估计</value>
+    <comment>"PreArm: Need Position Estimate"</comment>
+  </data>
+  <data name="38290f2d43d8e84925a11ef8c40c4cd517b2914ca213a54bfacbbad3de572961" xml:space="preserve">
+    <value>解锁前：遥控失联保护已触发</value>
+    <comment>"PreArm: Radio failsafe on"</comment>
+  </data>
+  <data name="ffa14ce1a5c37dcb596817b3c2fe898b7786043d44e91651847a3d51d417facf" xml:space="preserve">
+    <value>解锁前：系统尚未初始化</value>
+    <comment>"PreArm: System not initialised"</comment>
+  </data>
+  <data name="679dd127fad5282ac75e9b35cf62ce004212de1207d1dae150543ca0e41a82a6" xml:space="preserve">
+    <value>解锁前：正在等待遥控信号</value>
+    <comment>"PreArm: Waiting for RC"</comment>
   </data>
   <data name="f8c6e94225b3077b64e9538caf6bfe4b49873a69c28cfc96de7c09d4247fb7ec" xml:space="preserve">
     <value>飞行前检查表编辑器</value>
@@ -10804,13 +11524,33 @@ VLAN 标记</value>
     <value>遥控</value>
     <comment>"RC"</comment>
   </data>
+  <data name="21c63ae7477b79a5151a52edd31ca802ea43e2fad6d86c72615c547550a952b6" xml:space="preserve">
+    <value>遥控失联保护</value>
+    <comment>"RC Failsafe"</comment>
+  </data>
+  <data name="de51238730c165f5f27e7e67e0c45b192864378cd7cbda849e0ab010ce338fef" xml:space="preserve">
+    <value>遥控长时失联保护已解除</value>
+    <comment>"RC Long Failsafe Cleared"</comment>
+  </data>
   <data name="2309a9992c838137177e968df539541ea13b05d1d60393a6fa61a9640b82a3e8" xml:space="preserve">
     <value>遥控选项</value>
     <comment>"RC Options"</comment>
   </data>
+  <data name="4c2c8226ed4283ce2a995da415b0a67d556177240af6e32d7dec636e6f0b949d" xml:space="preserve">
+    <value>遥控短时失联保护已解除</value>
+    <comment>"RC Short Failsafe Cleared"</comment>
+  </data>
+  <data name="44d4aa813340d05536555e04b252c9021d69d256f4ffb4a4de1cc38b37bba9dc" xml:space="preserve">
+    <value>遥控短时失联保护已触发</value>
+    <comment>"RC Short Failsafe On"</comment>
+  </data>
   <data name="5ab611100467507a950e27b0fc00c7d783020b492c2e28a644ba4b3b0e1d87c0" xml:space="preserve">
     <value>遥控输入第 {0} 通道脉宽 (µs)</value>
     <comment>"RC input channel {0} pulse width (µs)"</comment>
+  </data>
+  <data name="ae7fee48bafe01702135835e5c37e6dfe0513bd237d9d37d63fbe56b7ff73b8d" xml:space="preserve">
+    <value>遥控未校准</value>
+    <comment>"RC not calibrated"</comment>
   </data>
   <data name="ee723d4466379c8cf4ebe0ee1bf47efcb8340306d0cb5c36f838bdb8d9c60acb" xml:space="preserve">
     <value>RC10 选项</value>
@@ -10875,6 +11615,22 @@ VLAN 标记</value>
   <data name="c7496a2378e2700777f146235b2f0cb42ea50af70cde4d99779cdd540b6aaa5f" xml:space="preserve">
     <value>返航（放弃任务）</value>
     <comment>"RTL (abandon mission)"</comment>
+  </data>
+  <data name="31e1d623084588257c45fcadf460c062096674fb52a71db6b979abbd8568c2b1" xml:space="preserve">
+    <value>返航缺少地形数据，改用相对返航点高度</value>
+    <comment>"RTL: no terrain data, using alt-above-home"</comment>
+  </data>
+  <data name="7bf4079bdf712cb1a9779944f81174eba79e741d388e685dce97026bd2c7341b" xml:space="preserve">
+    <value>返航测距仪异常，改用相对返航点高度</value>
+    <comment>"RTL: rangefinder unhealthy, using alt-above-home"</comment>
+  </data>
+  <data name="b13054d847a72299eb5d4b1885acec6e1eeaea010faf9d8aa38bf1e0832585d4" xml:space="preserve">
+    <value>计算返航目标高度时发生意外错误</value>
+    <comment>"RTL: unexpected error calculating target alt"</comment>
+  </data>
+  <data name="be23a7a7d67be2f5cc823525fa52f715f61cd430355e9c70b511ac9438a415b5" xml:space="preserve">
+    <value>返航爬升目标设置发生意外错误</value>
+    <comment>"RTL: unexpected error setting climb target"</comment>
   </data>
   <data name="8cd62cca5acf3e924ebab51c5251afb2795fcdc74c5d7a5f293b79ca786d3a0c" xml:space="preserve">
     <value>RTSP 视频流</value>
@@ -10944,6 +11700,10 @@ VLAN 标记</value>
     <value>遥控</value>
     <comment>"Radio"</comment>
   </data>
+  <data name="c359ca9e3298925e7428914c6d55a9d59221cf3b0a920010e76b3a1df4b91631" xml:space="preserve">
+    <value>遥控和电池失效保护：继续降落</value>
+    <comment>"Radio + Battery Failsafe - Continuing Landing"</comment>
+  </data>
   <data name="fd7d982c872a3a5e76dbb6698399bab37ce4930e1cf219f451891a364d226b08" xml:space="preserve">
     <value>遥控校准设置：
 
@@ -10953,6 +11713,22 @@ VLAN 标记</value>
   <data name="488e46c3ce978a92fb4f675066e24c4c7fc47bbfa6f2e2644dd0d489d3d32b8c" xml:space="preserve">
     <value>遥控通道</value>
     <comment>"Radio Channels"</comment>
+  </data>
+  <data name="8734b24d734e5242c05eb8ba3626f9b666e93df966a7976f2811c8149cad9007" xml:space="preserve">
+    <value>遥控失效保护</value>
+    <comment>"Radio Failsafe"</comment>
+  </data>
+  <data name="d023ddfd826f553dabd3b9ccc0c4bd09261d04018d7d4e98c7c4d3bdd7158357" xml:space="preserve">
+    <value>遥控失效保护：继续降落</value>
+    <comment>"Radio Failsafe - Continuing Landing"</comment>
+  </data>
+  <data name="90b633cf3038d36e83b8919a391ee0729cb2d639ae9cc6f8feefcf9096d66a31" xml:space="preserve">
+    <value>遥控失效保护：正在上锁</value>
+    <comment>"Radio Failsafe - Disarming"</comment>
+  </data>
+  <data name="12e8bc38668107d1c05fc1b1296d1e839d6e58d5b2b0c2fbc2aa385b5bebea0d" xml:space="preserve">
+    <value>遥控失联保护已解除</value>
+    <comment>"Radio Failsafe Cleared"</comment>
   </data>
   <data name="024f4fef3ea8abe8e67d7f45a353901704a4b8a7ef836225ddc06c4ef62467ee" xml:space="preserve">
     <value>数传接收错误次数</value>
@@ -10981,6 +11757,10 @@ VLAN 标记</value>
   <data name="eb8027371ca325be6ea6fb82d0a319c7fd7e8c153adafad1e9499060bbd9ad33" xml:space="preserve">
     <value>集结点：没有可下载的内容</value>
     <comment>"Rally points - Nothing to download"</comment>
+  </data>
+  <data name="60a6ec32c495ce5ce735d1ab82909edde578c022dd6dbf0b4f228dabda90b7b3" xml:space="preserve">
+    <value>备降点上传超时</value>
+    <comment>"Rally upload timeout"</comment>
   </data>
   <data name="67bc484430fe87babe3c35d2ba4827d029f1c7e415a92de44885a9c88536661f" xml:space="preserve">
     <value>随机</value>
@@ -11054,6 +11834,10 @@ VLAN 标记</value>
     <value>重新整理所有日志</value>
     <comment>"ReSort All logs"</comment>
   </data>
+  <data name="b13c2b2fd81c411cc5705b793fb195b3d48f05b7b992f096983b4da3314a7e14" xml:space="preserve">
+    <value>已到达命令 #{0}</value>
+    <comment>"Reached command #{0}"</comment>
+  </data>
   <data name="9d696bc71c2784e1633357428adab825b6529cd36c647a32fc374df234a7783e" xml:space="preserve">
     <value>只读</value>
     <comment>"ReadOnly"</comment>
@@ -11086,6 +11870,10 @@ VLAN 标记</value>
     <value>部分参数需要重启后生效。</value>
     <comment>"Reboot is required for some parameters to take effect."</comment>
   </data>
+  <data name="f8e65bc842ad76022528fcba787b1288974f575efbe9d2952a2af78b5ecdb593" xml:space="preserve">
+    <value>拒绝重启，下次重启将执行电调校准</value>
+    <comment>"Reboot rejected, ESC cal on reboot"</comment>
+  </data>
   <data name="c98281fa7ce655df11859ff496511d8a6ba20a682f3d0364adfbc5a030a597ba" xml:space="preserve">
     <value>需要重启</value>
     <comment>"Reboot required"</comment>
@@ -11101,6 +11889,10 @@ VLAN 标记</value>
   <data name="886e38932739c455549ac6051ef3e85708c4a92888d1f1761f40525a51d22962" xml:space="preserve">
     <value>重启至大容量存储模式</value>
     <comment>"Reboot_Mass_Storage"</comment>
+  </data>
+  <data name="09941e9f8873103685b2f3965fdd897caddbcb013ff3ee37a84a57eb2e43782d" xml:space="preserve">
+    <value>收到的消息 {0} 已弃用</value>
+    <comment>"Received message ({0}) is deprecated"</comment>
   </data>
   <data name="029747cbe0eb64bf6395ced20a347a4f5494c7b09409d65bb683fd58bc901306" xml:space="preserve">
     <value>正在接收航点</value>
@@ -11189,6 +11981,14 @@ VLAN 标记</value>
   <data name="d66fafd01c46341266908cec37f716413011d7669970714256713862b476e874" xml:space="preserve">
     <value>继电器编号</value>
     <comment>"Relay No#"</comment>
+  </data>
+  <data name="4b95467e3c7f42d037bee894b78d5378f067c8ede027e55b98c2a0985d2967d8" xml:space="preserve">
+    <value>继电器 {0} 故障，请将 SERVO{1}_FUNCTION 设为 GPIO</value>
+    <comment>"Relay {0} error. Please set SERVO{1}_FUNCTION to GPIO"</comment>
+  </data>
+  <data name="66507da547608e70b27db205f9f274a252c2cd8d9978b0a3b5fb6a8f67963fdb" xml:space="preserve">
+    <value>继电器 {0} 的引脚（舵机 {1}）已自动设为 GPIO</value>
+    <comment>"Relay {0} pin (servo {1}) auto-set to GPIO"</comment>
   </data>
   <data name="df8ebcd185dda2acd41f75c848de5fa0c3ba4ad0b45676a74b4f8e67d374837e" xml:space="preserve">
     <value>继电器</value>
@@ -11373,6 +12173,10 @@ VLAN 标记</value>
   <data name="55e8ba9f1653db6f7484bd2cd0887ef2faa987bd92ecbe13479341049dfa6667" xml:space="preserve">
     <value>重新开始任务</value>
     <comment>"Restart Mission"</comment>
+  </data>
+  <data name="a3a05c860e21e2bada0de4615370495d9cc0b34be401c895a2396ccacc288c43" xml:space="preserve">
+    <value>缺少地形数据，正在重新执行返航</value>
+    <comment>"Restarting RTL - Terrain data missing"</comment>
   </data>
   <data name="cf2038f04cff298148a3604eebe9f0132f7400762cc67111bc50ac04a5bc2397" xml:space="preserve">
     <value>恢复主题</value>
@@ -12161,6 +12965,14 @@ gps_point：跟踪单个地面点</value>
     <value>正在设置参数</value>
     <comment>"Setting params"</comment>
   </data>
+  <data name="8a61119fff6893950ddba8da4f765af840c43a1e2dae50dd876eebe3190ae0e3" xml:space="preserve">
+    <value>正在设置 FishBlimp。</value>
+    <comment>"Setting up FishBlimp."</comment>
+  </data>
+  <data name="f3784ebb5fa14d43b1371a6d21c29f38f1633e21892ea852474bf03d8f28e427" xml:space="preserve">
+    <value>正在设置四电机布局。</value>
+    <comment>"Setting up FourMotor."</comment>
+  </data>
   <data name="74a883a037bc227f91891ab654a753d3a99f31ab06ae5b5d2b6e594a692b41f8" xml:space="preserve">
     <value>设置</value>
     <comment>"Settings"</comment>
@@ -12301,6 +13113,14 @@ gps_point：跟踪单个地面点</value>
     <value>跳过下载</value>
     <comment>"Skip Download"</comment>
   </data>
+  <data name="0950953333f0176f415450cb7f526374da0daada1cec95c91b9bf5656eab137a" xml:space="preserve">
+    <value>已跳过惯性传感器校准</value>
+    <comment>"Skipping INS calibration"</comment>
+  </data>
+  <data name="674b1dd263f2b660f3796fa48a1e8d106ec28166c727d2364e60551eae10e9f7" xml:space="preserve">
+    <value>已跳过无效命令 #{0}</value>
+    <comment>"Skipping invalid cmd #{0}"</comment>
+  </data>
   <data name="4ba4f150a1a1c36107d3dccc6ca9e53484f9fe9b3bb308edff1bb1df2ad23e5e" xml:space="preserve">
     <value>智能分配</value>
     <comment>"Smart Assign"</comment>
@@ -12312,6 +13132,14 @@ gps_point：跟踪单个地面点</value>
   <data name="cb2548b348e775a57291d8fa5bd19dd8fa1a3c0cd0d0b7151eb52e8ba701969b" xml:space="preserve">
     <value>智能返航</value>
     <comment>"SmartRTL"</comment>
+  </data>
+  <data name="a9492005d7a17be2d46e3ee269b4528ab9acb630797a657072bf64f554150b1f" xml:space="preserve">
+    <value>智能返航不可用，正在尝试返航模式</value>
+    <comment>"SmartRTL Unavailable, Trying RTL Mode"</comment>
+  </data>
+  <data name="b8cb9357687160fb437e4e75aac2129214bd3f1da4c8e609e344023758f5fc6e" xml:space="preserve">
+    <value>智能返航不可用，正在使用降落模式</value>
+    <comment>"SmartRTL Unavailable, Using Land Mode"</comment>
   </data>
   <data name="f8abb4f05b6fee1c72cbce03963830a946f6c8fc0618378751bd8a5ceb0f6df7" xml:space="preserve">
     <value>智能返航</value>
@@ -12641,6 +13469,14 @@ gps_point：跟踪单个地面点</value>
     <value>上浮至水面</value>
     <comment>"Surface"</comment>
   </data>
+  <data name="810130e949690290870bc6f99bf7ebc4c6168acd914b4d94830f3413e5167e10" xml:space="preserve">
+    <value>地表跟随缺少朝下的测距仪</value>
+    <comment>"SurfaceTracking: no downward rangefinder"</comment>
+  </data>
+  <data name="937b0be9e6ad5ff052bed5e6ff274dc885828c76b196fb3e4b3556118d071bdd" xml:space="preserve">
+    <value>地表跟随缺少朝上的测距仪</value>
+    <comment>"SurfaceTracking: no upward rangefinder"</comment>
+  </data>
   <data name="6dc7d132e8f5574385e019d33e2b6b20691400a8f7e0ca54da9883477c2d820a" xml:space="preserve">
     <value>海底地形跟随</value>
     <comment>"Surftrak"</comment>
@@ -12768,9 +13604,21 @@ Acc：当前测定位置的精度
     <value>起飞初始化</value>
     <comment>"Takeoff init"</comment>
   </data>
+  <data name="a720c79152f2561b21bc8fdc45441a2fe252c70e8599d80c5102c6e72020e1a2" xml:space="preserve">
+    <value>尚未设置起飞初始方向</value>
+    <comment>"Takeoff initial direction not set"</comment>
+  </data>
   <data name="ec78e4ca60f18c4d26f3e0e4e03ba24b7aab36231fd650512d2153f4f3324967" xml:space="preserve">
     <value>起飞开始</value>
     <comment>"Takeoff start"</comment>
+  </data>
+  <data name="78f9e20a9e5182cc20db10df8dc5e080d61620464c0cda2264a84a7903c1ff16" xml:space="preserve">
+    <value>起飞正在等待方向舵回中</value>
+    <comment>"Takeoff waiting for rudder release"</comment>
+  </data>
+  <data name="ff149cb829d0f99bcb4ee81b640aea7d68986667eec86c99a6494b4c3eae5a36" xml:space="preserve">
+    <value>需要设置起飞航点</value>
+    <comment>"Takeoff waypoint required"</comment>
   </data>
   <data name="03e93af61d4fefdbfe89fdf2de25b7637de8b294977425a4135698dd26c732cf" xml:space="preserve">
     <value>目标高度百位分量（含小数）</value>
@@ -13043,6 +13891,22 @@ Acc：当前测定位置的精度
   <data name="13b84b0acb4f25ae4a022e3f4851ecd6df75ea7a16bb823ff95b192d4aa9e947" xml:space="preserve">
     <value>内存中已加载的地形块数</value>
     <comment>"Terrain blocks loaded in memory"</comment>
+  </data>
+  <data name="ea36d0b10c346c042837cc45c7597026c36dedad42cc714cf50ed2a2a6ddf41d" xml:space="preserve">
+    <value>地形数据（测距仪）不可用</value>
+    <comment>"Terrain data (rangefinder) not available"</comment>
+  </data>
+  <data name="65dbde1476de2a7b3ef8b0d80f1e035d62695330c82adaa9d18cc61a9c1f0fdf" xml:space="preserve">
+    <value>地形失效保护恢复失败：没有测距仪！</value>
+    <comment>"Terrain failsafe recovery failure: No Rangefinder!"</comment>
+  </data>
+  <data name="90e85c51bf2c5b4c0b28e04211f94a9df045308879f2d9e17fe4295f8b960b1e" xml:space="preserve">
+    <value>地形失效保护恢复成功！</value>
+    <comment>"Terrain failsafe recovery successful!"</comment>
+  </data>
+  <data name="a8800bf29ca65843f470d31d0917746b3d810cd67dfc5d548f567c146cff6b34" xml:space="preserve">
+    <value>地形失效保护恢复超时！</value>
+    <comment>"Terrain failsafe recovery timeout!"</comment>
   </data>
   <data name="fe3e64a5115620e97207a8090a6340731dda9c87dd8a6ad977758db4ba79d433" xml:space="preserve">
     <value>地形网格间距</value>
@@ -13379,9 +14243,21 @@ Acc：当前测定位置的精度
     <value>油门设置</value>
     <comment>"Throttle Settings"</comment>
   </data>
+  <data name="ab2915cc4c9098b6a084388f9316c633c496411f866f11ebf8a5957b46e4aecf" xml:space="preserve">
+    <value>油门未归零</value>
+    <comment>"Throttle not zero"</comment>
+  </data>
   <data name="c78054582e89a9a7d8cdf08a74f1b78f2f158a338703e9baf1ed56ef0104e738" xml:space="preserve">
     <value>抛投起飞</value>
     <comment>"Throw"</comment>
+  </data>
+  <data name="7db9aa51f50420576e3f556280a6d83fe7eaf631eee1a33381a7c3d0af6a445e" xml:space="preserve">
+    <value>推进器 {0} 正常！</value>
+    <comment>"Thruster {0} is ok!"</comment>
+  </data>
+  <data name="eb4cc27247276f366cd58102d1236ebe9983e4bc0eb19fec5852f18df4c21999" xml:space="preserve">
+    <value>推进器 {0} 反转，正在保存设置！</value>
+    <comment>"Thruster {0} is reversed! Saving it!"</comment>
   </data>
   <data name="4da22a362d386464986ac588eba5fd2fc7197f751e2c6aab248827c60201fdbc" xml:space="preserve">
     <value>瓦片</value>
@@ -13438,6 +14314,10 @@ Acc：当前测定位置的精度
   <data name="18b8dadf676d19de375d54f4583c20b738bfe341dd55aa2231bacbe8cb789a2f" xml:space="preserve">
     <value>飞行时间，秒</value>
     <comment>"TimeInAir, sec"</comment>
+  </data>
+  <data name="37bdceef1d1522d2b76d7b73cb7e1c3437bc9a61e3ec7473c4205a394138e640" xml:space="preserve">
+    <value>自动起飞超时</value>
+    <comment>"Timeout AUTO"</comment>
   </data>
   <data name="a2c2d1c470384a740feb5a5bc7fb62d3fc4438431ed34f8b1fda37d95bca3315" xml:space="preserve">
     <value>获取参数超时</value>
@@ -13546,6 +14426,26 @@ Acc：当前测定位置的精度
     <value>训练</value>
     <comment>"Training"</comment>
   </data>
+  <data name="f8f6f8917c3642842085d4fc77f2563719549e8170ce407eb58e53b2300640de" xml:space="preserve">
+    <value>已切换至固定翼飞行，横滚误差过大</value>
+    <comment>"Transition FW done, roll error"</comment>
+  </data>
+  <data name="14692a29be3aec4bb48e79e99a7b0b790a8ae1873cc5caf09e798183c390bc09" xml:space="preserve">
+    <value>已切换至固定翼飞行，过渡超时</value>
+    <comment>"Transition FW done, timeout"</comment>
+  </data>
+  <data name="ca6fa5d94bceb0be8ab370ec396ce5ea311bdc0697bbfd5833922fdb45b35897" xml:space="preserve">
+    <value>已切换至垂直飞行，横滚误差过大</value>
+    <comment>"Transition VTOL done, roll error"</comment>
+  </data>
+  <data name="4277fbbf920d933c5d051afb555a2e18a2198537388db02fd85e4210e1bcbe32" xml:space="preserve">
+    <value>已切换至垂直飞行，过渡超时</value>
+    <comment>"Transition VTOL done, timeout"</comment>
+  </data>
+  <data name="e8d6df3bd1045b6c87c7044257809dcad6d0b636a708652469a203f8f85eb73a" xml:space="preserve">
+    <value>模式过渡失败，已超时</value>
+    <comment>"Transition failed, exceeded time limit"</comment>
+  </data>
   <data name="2106af6f94acfcb0921ea3ad5defc1cddfec1ad30476f4db082ab95952462051" xml:space="preserve">
     <value>应答机</value>
     <comment>"Transponder"</comment>
@@ -13633,6 +14533,14 @@ Acc：当前测定位置的精度
   <data name="aaa5478b266f283fcab0c3616cdf2ddecde6f4a66b918356d53e05db16b7975a" xml:space="preserve">
     <value>微调</value>
     <comment>"Trim"</comment>
+  </data>
+  <data name="c8f638070cf4073b8efac26f14eedb9bc0027889e52a999d42cd2b345672cefa" xml:space="preserve">
+    <value>正在尝试切换至降落模式</value>
+    <comment>"Trying Land Mode"</comment>
+  </data>
+  <data name="e104bc72ed54b9494dbb7a8ad33bc65a25440587d4ad50a1794cacda00886f0f" xml:space="preserve">
+    <value>正在尝试切换至返航模式</value>
+    <comment>"Trying RTL Mode"</comment>
   </data>
   <data name="2447dfc5a93799c8aaf596a0ecdbd62b31836ed0badf5c255045e58d34d7d87b" xml:space="preserve">
     <value>正在尝试连接</value>
@@ -13851,6 +14759,10 @@ Acc：当前测定位置的精度
     <value>正在更新参数…</value>
     <comment>"Updating Parameters..."</comment>
   </data>
+  <data name="8b11589441cd4004f892fcb09df0a96d68812cdce56f6d20bc84949cc8e49fe2" xml:space="preserve">
+    <value>正在更新气压计校准</value>
+    <comment>"Updating barometer calibration"</comment>
+  </data>
   <data name="9bd6f8275d2d3a2352e8edefc0b697d788feee50e1e6c5373b2834953ff8906a" xml:space="preserve">
     <value>引导程序已升级</value>
     <comment>"Upgraded bootloader"</comment>
@@ -14048,6 +14960,10 @@ Acc：当前测定位置的精度
     <value>飞行器解锁状态</value>
     <comment>"Vehicle armed state"</comment>
   </data>
+  <data name="b7a8bd2c8d3f07037123c6f698f0a27b5123a5c3aeaf86da05388de2a0998cbb" xml:space="preserve">
+    <value>飞行器 {0} 的电池 {1} 正在关闭</value>
+    <comment>"Vehicle {0} battery {1} is powering off"</comment>
+  </data>
   <data name="8965cdc71634bfb3aee3598d2996bc72c78cbcb1c744076bcd2f9d2368bf0295" xml:space="preserve">
     <value>速度</value>
     <comment>"Velocity"</comment>
@@ -14107,6 +15023,14 @@ Acc：当前测定位置的精度
   <data name="59e1fd02f6c20f7e1cc84937c36e22ec9574fc3fba67ea9a88bd8df9c456fb34" xml:space="preserve">
     <value>振动</value>
     <comment>"Vibration"</comment>
+  </data>
+  <data name="0544caa9a8cbdff859fa6311e6c09f87294a2e86e331b448e55eeca90cb42618" xml:space="preserve">
+    <value>振动补偿已关闭</value>
+    <comment>"Vibration compensation OFF"</comment>
+  </data>
+  <data name="0055ebbc1c28e9c568ed46409235e7e9c25fc24c177fd85ed5fbf4c74cb37f99" xml:space="preserve">
+    <value>振动补偿已开启</value>
+    <comment>"Vibration compensation ON"</comment>
   </data>
   <data name="d534be829e32196b4d1e53b67103cf1e376b1d60071857572598c196abfefbc6" xml:space="preserve">
     <value>视频</value>
@@ -14235,6 +15159,10 @@ Acc：当前测定位置的精度
   <data name="18367f1c82eef06417d6956469a7ba05c8aa006a664ac1ecd2a20f360518ade9" xml:space="preserve">
     <value>警告：这将重新写入任务、解锁并发送起飞命令（多旋翼）</value>
     <comment>"Warning this will reprogram your mission, arm and issue a takeoff command (copter)"</comment>
+  </data>
+  <data name="49bc9b07537d223c1851f6b7dee87ea9a31f3cc02976dc1b676290efdd57461b" xml:space="preserve">
+    <value>警告：解锁检查已禁用</value>
+    <comment>"Warning: Arming Checks Disabled"</comment>
   </data>
   <data name="90522e57bba35fb397ad26f5f48d38528dab49b0dca4fd5a4a207c8152c75145" xml:space="preserve">
     <value>警告：本机未安装以下地图源：</value>
@@ -14376,6 +15304,10 @@ http://www.magnetic-declination.com/</value>
   <data name="3caaac470a4a589f5a397f70cfa97bb302188306f4c98acc63379783599f62e2" xml:space="preserve">
     <value>偏航增益</value>
     <comment>"Yaw Gain"</comment>
+  </data>
+  <data name="4ae040b9baec67da99d7ce1dc5aa64620e41825800a6355101abbe2a01655c2f" xml:space="preserve">
+    <value>偏航不平衡 {0}%</value>
+    <comment>"Yaw Imbalance {0}%"</comment>
   </data>
   <data name="15b8cc5945d1c9e4f64cd4d0afeef02e7c9728cb505b3ecf06ede7ace9b39625" xml:space="preserve">
     <value>偏航锁定</value>
@@ -14605,6 +15537,10 @@ http://www.magnetic-declination.com/</value>
     <value>解锁并起飞</value>
     <comment>"arm and takeoff"</comment>
   </data>
+  <data name="f163bf022c8f0b0044e83d0959c8e49fc84e8ed0fd5353cc57d845578f2e3d3c" xml:space="preserve">
+    <value>自动降落不可用</value>
+    <comment>"autoland not available"</comment>
+  </data>
   <data name="04e027e4990a203f4899f7e87c2d5ff6b9019e9565795619a59ce06c099560d4" xml:space="preserve">
     <value>总线</value>
     <comment>"bus"</comment>
@@ -14684,6 +15620,14 @@ http://www.magnetic-declination.com/</value>
   <data name="5c48f976e6d3c05621d3bcb680044c3582dff6af30edc28b6d61a9bbaf10efb9" xml:space="preserve">
     <value>相对于飞行器的角度</value>
     <comment>"degrees, relative to vehicle"</comment>
+  </data>
+  <data name="056840356bab89b93c9ba5091a11e34b6dd69096b1eaab08ff4594d891d77b19" xml:space="preserve">
+    <value>请下降到 {0} 米以下以保持距离</value>
+    <comment>"descend below {0} meters to hold range"</comment>
+  </data>
+  <data name="112164acd411d999567d5a2d999d2912e45f0187e1a201818b4b191fe64d99de" xml:space="preserve">
+    <value>请下降到 {0} 米以下以设置测距仪目标</value>
+    <comment>"descend below {0} meters to set rangefinder target"</comment>
   </data>
   <data name="d2912e2dd5e9aa92232d3a896709d53ad6a5d926762ecfe5cceba16209cbf358" xml:space="preserve">
     <value>显示输入的硬件 ID 信息</value>
@@ -14969,6 +15913,10 @@ http://www.magnetic-declination.com/</value>
     <value>修改气压高度的参考高度</value>
     <comment>"modify baro alt reference alt"</comment>
   </data>
+  <data name="a49f5e949f56edb59bfddad84da81f313d267c75f7be53201408be28ff221dfe" xml:space="preserve">
+    <value>电机测试初始化失败！</value>
+    <comment>"motor test initialization failed!"</comment>
+  </data>
   <data name="0b7ec5faa3095da747a8b963976971a65bccf6ab28ff5fa684b3b04e6811c44c" xml:space="preserve">
     <value>已移至数据闪存选项卡</value>
     <comment>"moved to dataflash tab"</comment>
@@ -15052,6 +16000,18 @@ http://www.magnetic-declination.com/</value>
   <data name="981979a22bad8c7cdc4484360aceb2f6a26979bba5fb0d73a1adb67a0ea69918" xml:space="preserve">
     <value>半径</value>
     <comment>"radius"</comment>
+  </data>
+  <data name="cd720ae446662e5a7f0066bffadb828ff04c0261ce576ce482faea4700e5bd0e" xml:space="preserve">
+    <value>测距仪目标高于最大值，已忽略</value>
+    <comment>"rangefinder target above maximum, ignored"</comment>
+  </data>
+  <data name="53074b861e4ef40139f949bb846afd9c86ecc0b1bd88fc7f2eca61ea64db8051" xml:space="preserve">
+    <value>测距仪目标低于最小值，已忽略</value>
+    <comment>"rangefinder target below minimum, ignored"</comment>
+  </data>
+  <data name="73d35542f7a586a022568cd0cfa2014a6c3f074b4f5e5c1c741c10bc15c811ef" xml:space="preserve">
+    <value>测距仪目标距离为 {0} 米</value>
+    <comment>"rangefinder target is {0} meters"</comment>
   </data>
   <data name="4209986a1daa1a2f866f7ae9e6f3575aac4be9e1b03f0129e3b3b8156525db16" xml:space="preserve">
     <value>重启飞控</value>
@@ -15177,6 +16137,14 @@ http://www.magnetic-declination.com/</value>
     <value>系统 ID</value>
     <comment>"sysid"</comment>
   </data>
+  <data name="d7769308ff892fdad58871608c34526cd76a16f52b493aa2c1eb6ca349c5e7dd" xml:space="preserve">
+    <value>目标偏航角 {0}，俯仰角 {1}</value>
+    <comment>"target_yaw={0} target_pitch={1}"</comment>
+  </data>
+  <data name="0acff2a25bc0d8f1ba8a8d66a87e3a7e2859f80ec0cb987343ecf2b983c6665b" xml:space="preserve">
+    <value>地形数据已过期，可能存在误差</value>
+    <comment>"terrain data expired, possible errors"</comment>
+  </data>
   <data name="9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08" xml:space="preserve">
     <value>测试</value>
     <comment>"test"</comment>
@@ -15225,6 +16193,18 @@ http://www.magnetic-declination.com/</value>
     <value>翻译语言编辑器</value>
     <comment>"translation language editor"</comment>
   </data>
+  <data name="6df096743da1fbe53a9983e822e4f2ec394c0344c8eded33836ef07b1c92fb5d" xml:space="preserve">
+    <value>机体运动过大，微调失败</value>
+    <comment>"trim failed, large movement"</comment>
+  </data>
+  <data name="401bb2fd40d1cb90cb9e11aa14f06149d2fabe7dac6306bb670e6c8c4eac386c" xml:space="preserve">
+    <value>横滚和俯仰输入过大，微调失败</value>
+    <comment>"trim failed, large roll and pitch input"</comment>
+  </data>
+  <data name="aafee159a899f7be1254611be042e0c8728833bc8997e17c99defa9710cd97cf" xml:space="preserve">
+    <value>当前不在手动模式，微调失败</value>
+    <comment>"trim failed, not in manual mode"</comment>
+  </data>
   <data name="bc174bf68fe12ad97027bccad001a73b47fdf76be94713e5185196c1fa1eb928" xml:space="preserve">
     <value>u-blox 支持 L5 频段</value>
     <comment>"u-blox supports L5 Band"</comment>
@@ -15272,6 +16252,10 @@ http://www.magnetic-declination.com/</value>
   <data name="c1251edd6b5f1f61282ea3c7406c5b0194ad3ea1078dc5ab6b2500d0a67f65e3" xml:space="preserve">
     <value>当前航点序号</value>
     <comment>"wpno"</comment>
+  </data>
+  <data name="bb2b29fc695261abbf3fd1d4a186b6bd3d1e7e6396c6df420548b2072464d93d" xml:space="preserve">
+    <value>模式不正确，未设置测距仪目标</value>
+    <comment>"wrong mode, rangefinder target not set"</comment>
   </data>
   <data name="8f17e33840aad772de36c4811e313805cc7dd619961490897600e3481c91d09d" xml:space="preserve">
     <value>{0:N0} / {1:N0}</value>

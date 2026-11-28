@@ -39,7 +39,7 @@ namespace MissionPlanner
             if (System.Globalization.CultureInfo.CurrentUICulture.Name != "zh-CN")
                 return null;
             var generation = Volatile.Read(ref messageDisplay);
-            var suffix = generation.Suffix(source, row);
+            var suffix = generation.Suffix(source, row) ?? generation.ReviewedSuffix(source, row);
             return ReferenceEquals(generation, Volatile.Read(ref messageDisplay)) ? suffix : null;
         }
 
@@ -5572,12 +5572,27 @@ Mission Planner waits for 2 valid heartbeat packets before connecting
             byte sev = severity;
             log.Info(DateTime.Now + " " + sev + " " + logdata);
 
-            var messages = MAVlist[sysid, compid].cs.messages;
+            var hudState = MAVlist[sysid, compid].cs;
+            var messages = hudState.messages;
+            bool enhancedChineseSpeech = MissionPlanner.ArduPilot.Common.UseEnhancedSpeech;
+            Func<string> reviewedSuffix = null;
+            if (enhancedChineseSpeech && displayPrimary && verifiedCompleteMessage)
+            {
+                string translation = speechProofGeneration.TranslateStatusText(sysid, sev, logdata);
+                if (translation != null)
+                    reviewedSuffix = () => ReferenceEquals(messages, hudState.messages) &&
+                        MissionPlanner.ArduPilot.Common.UseEnhancedSpeech &&
+                        ReferenceEquals(displayGeneration, Volatile.Read(ref messageDisplay)) &&
+                        speechProofGeneration.HasConsistentIdentity(sysid) ? translation : null;
+            }
+
             (DateTime time, string message, byte severity) row;
             lock (messages)
             {
                 row = (DateTime.Now, logdata, sev);
                 messages.Add(row);
+                if (reviewedSuffix != null)
+                    displayGeneration.RememberReviewed(messages, row, reviewedSuffix);
                 if (displayPrimary && sourcePacket != null && sourceText.chunk_seq == 0)
                     displayGeneration.Mark(messages, sourcePacket, sourceText, row);
                 while (messages.Count > 1000) messages.RemoveAt(0);
@@ -5587,7 +5602,12 @@ Mission Planner waits for 2 valid heartbeat packets before connecting
             {
                 var currentMessages = MAVlist[sysidcurrent, compidcurrent].cs.messages;
                 lock (currentMessages)
-                    currentMessages.Add((DateTime.Now, compid + " : " + logdata, sev));
+                {
+                    var mirrored = (DateTime.Now, compid + " : " + logdata, sev);
+                    currentMessages.Add(mirrored);
+                    if (reviewedSuffix != null)
+                        displayGeneration.RememberReviewed(currentMessages, mirrored, reviewedSuffix);
+                }
             }
 
             bool printit = false;
@@ -5602,22 +5622,7 @@ Mission Planner waits for 2 valid heartbeat packets before connecting
 
             bool selectedSpeechSource = sysid == sysidcurrent &&
                 (compid == compidcurrent || (compidcurrent != 1 && compid == 1));
-            bool scriptSource = selectedSpeechSource && compid == 1;
-            bool enhancedChineseSpeech = MissionPlanner.ArduPilot.Common.UseEnhancedSpeech;
-
             if (!printit) return;
-
-            var hudState = MAVlist[sysid, compid].cs;
-            Func<string> verifiedScript = null;
-            if (enhancedChineseSpeech && verifiedCompleteMessage && scriptSource)
-            {
-                string translation = speechProofGeneration.TranslateScript(sysid, sev, logdata);
-                if (translation != null)
-                    verifiedScript = () => sysid == sysidcurrent && ReferenceEquals(messages, hudState.messages) &&
-                        MissionPlanner.ArduPilot.Common.UseEnhancedSpeech &&
-                        ReferenceEquals(displayGeneration, Volatile.Read(ref messageDisplay)) &&
-                        speechProofGeneration.HasConsistentIdentity(sysid) ? translation : null;
-            }
 
             FirmwareSpeechAlert speechAlert = null;
             if (enhancedChineseSpeech && selectedSpeechSource)
@@ -5631,18 +5636,18 @@ Mission Planner waits for 2 valid heartbeat packets before connecting
                         var displayTranslation = displayGeneration.VoiceSuffix(messages, row);
                         if (!string.IsNullOrEmpty(displayTranslation)) return displayTranslation;
                     }
-                    return verifiedScript?.Invoke();
+                    return sysid == sysidcurrent ? reviewedSuffix?.Invoke() : null;
                 });
             }
 
             if (sysid == sysidcurrent && compid != compidcurrent)
             {
-                MAVlist[sysid, compidcurrent].cs.SetFirmwareHudText(compid + " : " + logdata, null, speechAlert);
+                MAVlist[sysid, compidcurrent].cs.SetFirmwareHudText(compid + " : " + logdata, reviewedSuffix, speechAlert);
                 MAVlist[sysid, compidcurrent].cs.messageHighSeverity = mavsev;
             }
 
-            Func<string> verifiedHudSuffix = verifiedScript;
-            if (verifiedHudSuffix == null && displayPrimary && sourcePacket != null && sourceText.chunk_seq == 0 &&
+            Func<string> verifiedHudSuffix = reviewedSuffix;
+            if (displayPrimary && sourcePacket != null && sourceText.chunk_seq == 0 &&
                 displayGeneration.Suffix(messages, row) != null)
                 verifiedHudSuffix = () => ReferenceEquals(messages, hudState.messages)
                     ? MessagesDisplaySuffix(messages, row) : null;
