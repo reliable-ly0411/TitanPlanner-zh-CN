@@ -419,7 +419,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             ["Open the tab at that place along the tabs (0 for the tenth)"] = "打开对应序号的标签页（0 对应第十项）",
             ["Swap the 3D map between FPV and the chase view"] = "在第一人称与跟随视角之间切换 3D 地图",
             ["Show or hide the HUD over the video (the Video tab's HUD Overlay)"] = "显示或隐藏视频上的抬头显示（视频页的 HUD 叠加）",
-            ["Take the plan as the vehicle's mission here, without writing it"] = "在本地将规划作为任务，不向飞行器写入",
+            ["Preview the local plan in 2D and 3D"] = "预览本地计划的二维与三维视图",
             ["Switch the maps' GDI drawing on or off"] = "切换地图 GDI 绘制",
             ["Load a mission file"] = "打开任务文件",
             ["Save the mission to a file"] = "将任务保存为文件",
