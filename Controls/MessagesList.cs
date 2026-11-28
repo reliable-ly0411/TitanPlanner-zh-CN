@@ -174,6 +174,28 @@ namespace MissionPlanner.Controls
             return string.IsNullOrEmpty(suffix) ? msg.message : msg.message + "  " + suffix;
         }
 
+        private static string LocalizedDiagnosticBadge(byte severity, string original)
+        {
+            if (!string.Equals(System.Globalization.CultureInfo.CurrentUICulture.Name, "zh-CN",
+                    StringComparison.Ordinal))
+                return original;
+
+            string key;
+            switch ((MAV_SEVERITY)severity)
+            {
+                case MAV_SEVERITY.EMERGENCY: key = "Emergency"; break;
+                case MAV_SEVERITY.ALERT: key = "Alert"; break;
+                case MAV_SEVERITY.CRITICAL: key = "Critical"; break;
+                case MAV_SEVERITY.ERROR: key = "Error"; break;
+                case MAV_SEVERITY.WARNING: key = "Warning"; break;
+                case MAV_SEVERITY.NOTICE: key = "Notice"; break;
+                default: return original;
+            }
+
+            var translated = UiText.Translate(key);
+            return string.Equals(translated, key, StringComparison.Ordinal) ? original : translated;
+        }
+
         private void CopyItem_Click(object sender, EventArgs e)
         {
             if (selectedIndex >= 0 && selectedIndex < messages.Count)
@@ -482,7 +504,7 @@ namespace MissionPlanner.Controls
             using (var brush = new SolidBrush(Color.White))
             {
                 var badgeRect = new RectangleF(severityX, y, 50, itemHeight);
-                g.DrawString(severityText, badgeFont, brush, badgeRect, centerFormat);
+                g.DrawString(LocalizedDiagnosticBadge(msg.severity, severityText), badgeFont, brush, badgeRect, centerFormat);
             }
 
             // Draw message
