@@ -211,6 +211,11 @@ namespace MissionPlanner.Controls
                     translation = "脚本功能 " + scriptNumber;
             }
 
+            // RC6_OPTION metadata in Copter/Plane 4.7.1 and Rover 4.6.3.
+            if (translation == null && id == 164 && raw == "Pause Stream Logging" &&
+                (firmware == "ArduCopter2" || firmware == "ArduRover" || firmware == "ArduPlane"))
+                translation = "暂停流式日志记录";
+
             if (translation == null)
                 AuxiliaryOptionLabels.TryGetValue((id, raw), out translation);
 
