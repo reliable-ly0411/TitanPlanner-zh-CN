@@ -1570,21 +1570,9 @@ namespace MissionPlanner.GCSViews.ConfigurationView
         {
         }
 
-        private static readonly string[] AdditionalHudColorCaptionKeys =
-        {
-            nameof(KnownColor.Black), nameof(KnownColor.White), nameof(KnownColor.Red), nameof(KnownColor.Blue),
-            nameof(KnownColor.Green), nameof(KnownColor.Yellow), nameof(KnownColor.Orange), nameof(KnownColor.Brown),
-            nameof(KnownColor.Snow), nameof(KnownColor.Ivory), nameof(KnownColor.Beige), nameof(KnownColor.Linen),
-            nameof(KnownColor.Wheat), nameof(KnownColor.Cornsilk),
-            nameof(KnownColor.CornflowerBlue), nameof(KnownColor.LightBlue), nameof(KnownColor.RoyalBlue),
-            nameof(KnownColor.SkyBlue), nameof(KnownColor.SlateBlue), nameof(KnownColor.SteelBlue)
-        };
-
         internal static void SizeHudColorDropDown(ComboBox combo)
         {
-            var width = new[] { nameof(KnownColor.ActiveBorder), nameof(KnownColor.AliceBlue),
-                    nameof(KnownColor.GradientInactiveCaption) }
-                .Concat(AdditionalHudColorCaptionKeys)
+            var width = Enum.GetNames(typeof(KnownColor))
                 .Select(key => TextRenderer.MeasureText(FormatHudColorCaption(key), combo.Font).Width)
                 .Max();
             combo.DropDownWidth = Math.Max(combo.Width, width + 35 + SystemInformation.VerticalScrollBarWidth);
@@ -1595,14 +1583,9 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             if (CultureInfo.CurrentUICulture.Name != "zh-CN")
                 return key;
 
-            switch (key)
-            {
-                case nameof(KnownColor.ActiveBorder): return UiText.Translate("HUD color: ActiveBorder");
-                case nameof(KnownColor.AliceBlue): return UiText.Translate("HUD color: AliceBlue");
-                case nameof(KnownColor.GradientInactiveCaption): return UiText.Translate("HUD color: GradientInactiveCaption");
-                default: return AdditionalHudColorCaptionKeys.Contains(key, StringComparer.Ordinal)
-                    ? UiText.Translate("HUD color: " + key) : key;
-            }
+            var resource = "HUD color: " + key;
+            var caption = UiText.Translate(resource);
+            return caption == resource ? key : caption;
         }
 
         internal static string CompactHudColorCaption(string key)
@@ -1610,13 +1593,9 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             if (CultureInfo.CurrentUICulture.Name != "zh-CN")
                 return null;
 
-            switch (key)
-            {
-                case nameof(KnownColor.AliceBlue): return UiText.Translate("HUD color compact: AliceBlue");
-                case nameof(KnownColor.GradientInactiveCaption): return UiText.Translate("HUD color compact: GradientInactiveCaption");
-                default: return AdditionalHudColorCaptionKeys.Contains(key, StringComparer.Ordinal)
-                    ? UiText.Translate("HUD color compact: " + key) : null;
-            }
+            var resource = "HUD color compact: " + key;
+            var caption = UiText.Translate(resource);
+            return caption == resource ? null : caption;
         }
 
         private void CMB_osdcolor_DrawItem(object sender, DrawItemEventArgs e)
