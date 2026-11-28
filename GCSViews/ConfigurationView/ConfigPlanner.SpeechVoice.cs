@@ -38,8 +38,10 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             };
             voiceNames.SelectionChangeCommitted += (sender, args) =>
             {
-                Settings.Instance[Speech.ChineseVoiceSetting] = voiceNames.SelectedIndex > 0 ?
-                    (string)voiceNames.SelectedItem : "";
+                Settings.Instance[Speech.ChineseVoiceSetting] =
+                    voiceNames.SelectedIndex == voiceNames.Items.Count - 1
+                        ? Speech.OfflineXiaoxiaoVoiceSetting
+                        : voiceNames.SelectedIndex > 0 ? (string)voiceNames.SelectedItem : "";
                 RefreshChineseVoiceSettings();
             };
             voicePreview.Click += (sender, args) =>
@@ -58,7 +60,8 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             var speech = MainV2.speechEngine as Speech;
             var names = speech?.RefreshChineseVoiceNames() ?? Array.Empty<string>();
             string saved = Settings.Instance[Speech.ChineseVoiceSetting];
-            int index = Array.IndexOf(names, saved);
+            bool offlineXiaoxiao = saved == Speech.OfflineXiaoxiaoVoiceSetting;
+            int index = offlineXiaoxiao ? names.Length : Array.IndexOf(names, saved);
 
             voiceNames.BeginUpdate();
             try
@@ -66,13 +69,19 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                 voiceNames.Items.Clear();
                 voiceNames.Items.Add(UiText.Translate("Automatic (system default)"));
                 voiceNames.Items.AddRange(names);
+                voiceNames.Items.Add(UiText.Translate(Speech.OfflineXiaoxiaoVoiceLabel));
                 voiceNames.SelectedIndex = index + 1;
             }
             finally { voiceNames.EndUpdate(); }
             voicePreview.Enabled = CHK_enablespeech.Checked && speech != null;
 
             string hint = "";
-            if (!string.IsNullOrEmpty(saved) && index < 0)
+            if (offlineXiaoxiao)
+                hint = Speech.HasOfflineXiaoxiaoWave(UiText.Translate("This is the ground station voice preview.")) &&
+                       Speech.HasOfflineXiaoxiaoWave(UiText.Translate("Chip full, logging stopped"))
+                    ? UiText.Translate("Offline Xiaoxiao audio pack is ready.")
+                    : UiText.Translate("Offline Xiaoxiao audio pack is missing or invalid. Windows speech will be used instead.");
+            else if (!string.IsNullOrEmpty(saved) && index < 0)
                 hint = UiText.Translate("The saved voice is unavailable. Speech will use the system default.");
             else if (names.Length == 0)
                 hint = UiText.Translate("No Microsoft Chinese voice is available. Check the Windows speech language pack.");

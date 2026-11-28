@@ -35,6 +35,7 @@ namespace log4net
     internal interface ILog
     {
         void Info(object message);
+        void Warn(object message);
         void Warn(object message, Exception exception);
         void Error(object message);
     }
@@ -46,6 +47,8 @@ namespace log4net
         private sealed class ProbeLogger : ILog
         {
             public void Info(object message) { }
+
+            public void Warn(object message) => Console.Error.WriteLine(message);
 
             public void Warn(object message, Exception exception) =>
                 Console.Error.WriteLine(message + ": " + exception);

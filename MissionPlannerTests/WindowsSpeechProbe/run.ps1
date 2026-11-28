@@ -1,5 +1,8 @@
 ﻿[CmdletBinding()]
-param([string]$BinaryDirectory = $PSScriptRoot)
+param(
+    [string]$BinaryDirectory = $PSScriptRoot,
+    [string]$OfflinePackDirectory = ''
+)
 
 $ErrorActionPreference = 'Stop'
 if ([Environment]::OSVersion.Platform -ne [PlatformID]::Win32NT -or
@@ -29,8 +32,31 @@ try {
         }
     }
 
+    $scenarios = @('auto', 'choose', 'reload', 'missing', 'neutral', 'priority')
+    if (-not [string]::IsNullOrWhiteSpace($OfflinePackDirectory)) {
+        $packSource = (Resolve-Path -LiteralPath $OfflinePackDirectory).ProviderPath
+        if (-not [IO.Directory]::Exists($packSource)) { throw '离线晓晓音色包路径必须是目录。' }
+        $utf8 = New-Object System.Text.UTF8Encoding -ArgumentList $false
+        $sha = [System.Security.Cryptography.SHA256]::Create()
+        try {
+            $offlineTexts = @('这是地面站语音试听。', '日志存储芯片已满，已停止记录日志')
+            $target = Join-Path $runRoot 'settings/SpeechProbe/Speech/zh-CN-XiaoxiaoNeural'
+            [void][IO.Directory]::CreateDirectory($target)
+            foreach ($text in $offlineTexts) {
+                $normalized = $text.Normalize([System.Text.NormalizationForm]::FormC)
+                $name = [BitConverter]::ToString($sha.ComputeHash($utf8.GetBytes($normalized))).Replace('-', '').ToLowerInvariant() + '.wav'
+                $sourceFile = Join-Path $packSource $name
+                if (-not [IO.File]::Exists($sourceFile)) { throw "离线音色包缺少 $name" }
+                [IO.File]::Copy($sourceFile, (Join-Path $target $name))
+            }
+        } finally {
+            $sha.Dispose()
+        }
+        $scenarios += 'offline'
+    }
+
     # 每一组都是新进程；只有本次生成的临时配置在组选音与重新读取之间共享。
-    foreach ($scenario in @('auto', 'choose', 'reload', 'missing', 'neutral', 'priority')) {
+    foreach ($scenario in $scenarios) {
         $variant = if ($scenario -eq 'neutral') { 'neutral' } else { 'full' }
         $bin = Join-Path $runRoot $variant
         Write-Host "[$scenario]"

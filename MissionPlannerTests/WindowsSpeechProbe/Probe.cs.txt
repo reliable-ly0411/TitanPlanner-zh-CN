@@ -13,6 +13,7 @@ internal static class Probe
     private const string PreviewKey = "This is the ground station voice preview.";
     private const string ChinesePreview = "这是地面站语音试听。";
     private const string AlertText = "日志存储芯片已满，已停止记录日志";
+    private const string OfflineFallbackText = "未登记的飞行状态消息";
     private const string MissingName = "TitanPlanner-Probe-absent-b64da0f3";
     private static string root;
     private static int result;
@@ -94,6 +95,7 @@ internal static class Probe
                 case "missing":
                 case "neutral": Render(scenario, expected); break;
                 case "priority": CheckPriority(); break;
+                case "offline": CheckOfflineXiaoxiao(); break;
                 default: throw new ArgumentException("未知验证项。");
             }
             Console.WriteLine(result == 0 ? "通过  " + scenario : "部分待验  " + scenario);
@@ -250,6 +252,38 @@ internal static class Probe
             if (signalFrames == 0) Unverified("未观察到可单独归于正式告警的非静音帧。");
             else Console.WriteLine("正式告警 P{0}  从 WAV 字节偏移 {1} 起有 {2} 个非静音 PCM 帧。",
                 alertEnd.Id, alertEnd.WaveLengthAtStart, signalFrames);
+        }
+    }
+
+    private static void CheckOfflineXiaoxiao()
+    {
+        var config = Settings.Instance;
+        config[Speech.ChineseVoiceSetting] = Speech.OfflineXiaoxiaoVoiceSetting;
+        string previewPath = Speech.GetOfflineXiaoxiaoWavePath(ChinesePreview);
+        string alertPath = Speech.GetOfflineXiaoxiaoWavePath(AlertText);
+        Require(File.Exists(previewPath) && File.Exists(alertPath), "隔离用户目录缺少两条离线晓晓 WAV。");
+
+        using (var output = new NativeOutput())
+        {
+            Require(output.Speech.TryPreviewChineseVoice(), "离线晓晓试听没有入队。");
+            var preview = output.Finished(1).Single();
+            preview.RequireSuccess();
+            Require(preview.CheckPromptAudio(previewPath), "试听提示没有引用对应的离线 WAV 文件。");
+
+            Require(output.Speech.TrySpeakAsync(AlertText), "离线晓晓正式告警没有入队。");
+            var alert = output.Finished(2).Single(item => !ReferenceEquals(item.Prompt, preview.Prompt));
+            alert.RequireSuccess();
+            Require(alert.CheckPromptAudio(alertPath), "正式告警没有引用对应的离线 WAV 文件。");
+
+            Require(output.Speech.TrySpeakAsync(OfflineFallbackText), "未知告警没有进入本机 SAPI 回退。");
+            var fallback = output.Finished(3).Single(item => !ReferenceEquals(item.Prompt, preview.Prompt) &&
+                !ReferenceEquals(item.Prompt, alert.Prompt));
+            fallback.RequireSuccess();
+            Require(!fallback.CheckPromptAudio(Speech.GetOfflineXiaoxiaoWavePath(OfflineFallbackText)) &&
+                    fallback.CheckPromptText(OfflineFallbackText), "未知告警没有回退为普通本机文字提示。");
+
+            output.CheckWave();
+            Console.WriteLine("离线晓晓  试听与登记告警引用用户数据 WAV，未登记文本回退本机 SAPI。");
         }
     }
 }

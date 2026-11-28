@@ -2959,5 +2959,8 @@
   "Doing turnaround! iyaw={0} wyaw={1}": "正在转向，初始航向 {0}，航点航向 {1}",
   "Invalid trick ID {0}": "无效的特技动作编号 {0}",
   "Trick {0} not setup": "特技动作 {0} 未配置",
-  "Trick {0} selected ({1})": "已选择特技动作 {0}（{1}）"
+  "Trick {0} selected ({1})": "已选择特技动作 {0}（{1}）",
+  "Microsoft Xiaoxiao (offline pack)": "微软晓晓（离线音色包）",
+  "Offline Xiaoxiao audio pack is ready.": "离线晓晓语音包已就绪。",
+  "Offline Xiaoxiao audio pack is missing or invalid. Windows speech will be used instead.": "离线晓晓语音包缺失或无效，将改用 Windows 语音。"
 }
