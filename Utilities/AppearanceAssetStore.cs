@@ -384,12 +384,33 @@ namespace MissionPlanner.Utilities
 
         private static Icon DecodeIcon(byte[] bytes)
         {
-            // Mono's Icon decoder rejects PNG-compressed ICO frames. Expand only in memory; the import remains
-            // byte-for-byte identical to the user's ICO, including every resolution and its SHA-256.
-            if (Environment.OSVersion.Platform != PlatformID.Win32NT) bytes = ExpandPngIconFrames(bytes);
+            bool windows = Environment.OSVersion.Platform == PlatformID.Win32NT;
+            // Mono's Icon decoder needs an in-memory DIB copy; the stored ICO stays intact.
+            if (!windows) bytes = ExpandPngIconFrames(bytes);
             using (var stream = new MemoryStream(bytes))
             using (var icon = new Icon(stream, new Size(32, 32)))
+            {
+                if (windows && HasPngIconFrame(bytes))
+                {
+                    // .NET Framework's managed ToBitmap path can interpret compressed frame bytes
+                    // as a DIB. Clone the decoded Windows icon handle to preserve the actual pixels.
+                    using (var nativeIcon = Icon.FromHandle(icon.Handle))
+                        return (Icon)nativeIcon.Clone();
+                }
                 return (Icon)icon.Clone();
+            }
+        }
+
+        private static bool HasPngIconFrame(byte[] bytes)
+        {
+            int count = BitConverter.ToUInt16(bytes, 4);
+            for (int i = 0; i < count; i++)
+            {
+                int frame = (int)BitConverter.ToUInt32(bytes, 6 + 16 * i + 12);
+                if (BitConverter.ToUInt64(bytes, frame) == 0x0a1a0a0d474e5089UL)
+                    return true;
+            }
+            return false;
         }
 
         private static byte[] ExpandPngIconFrames(byte[] bytes)
