@@ -26,6 +26,12 @@ Titan Dynamics fork; use these overrides when they differ from this fork's polic
   publication remains blocked until its exact released-source mapping is reviewed.
   Manual native builds and immutable-artifact promotion remain separate interfaces. Do not change repository access settings.
 
+### Windows 桌面界面验收范围
+
+- 物理桌面基线为 1920×1080，与 Acer、GPD 的实际屏幕分辨率一致。常规缩放为 100% 和 125%。150% 用于已有现场记录或 Issue 明确指定的用例。超出该范围的分辨率、缩放和极端视口不列入常规显示开发或合入验收。
+- 界面改动按受影响页面在完整程序中验收。需要验证窗口尺寸时，使用约 1230×710 的常用窗口和约 850×540 的紧凑窗口，并注明实测尺寸是外框还是客户区。
+- 记录物理桌面分辨率、Windows 缩放、应用实际窗口尺寸和 HWND DPI。以默认启动的界面作为验收依据；启用不同 DPI 感知模式的探针结果单独记录。
+
 ## What this is
 
 Mission Planner is the ArduPilot Ground Control Station (GCS): a large C# / .NET Framework
