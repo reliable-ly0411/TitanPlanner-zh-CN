@@ -2828,7 +2828,7 @@ namespace MissionPlanner
                         {
                             if (Settings.Instance.GetBoolean("speechcustomenabled"))
                             {
-                                MainV2.speechEngine.SpeakAsync(ArduPilot.Common.speechConversion(comPort.MAV,
+                                MainV2.speechEngine.SpeakAsync(ArduPilot.Common.SpeechConversionForPlayback(comPort.MAV,
                                     "" + Settings.Instance["speechcustom"]));
                             }
 
@@ -2846,7 +2846,7 @@ namespace MissionPlanner
                         {
                             if (MainV2.speechEngine.IsReady)
                             {
-                                MainV2.speechEngine.SpeakAsync(ArduPilot.Common.speechConversion(comPort.MAV,
+                                MainV2.speechEngine.SpeakAsync(ArduPilot.Common.SpeechConversionForPlayback(comPort.MAV,
                                     "" + Settings.Instance["speechbattery"]));
                             }
                         }
@@ -2858,7 +2858,7 @@ namespace MissionPlanner
                             if (MainV2.speechEngine.IsReady)
                             {
                                 MainV2.speechEngine.SpeakAsync(
-                                    ArduPilot.Common.speechConversion(comPort.MAV,
+                                    ArduPilot.Common.SpeechConversionForPlayback(comPort.MAV,
                                         "" + Settings.Instance["speechbattery"]));
                             }
                         }
@@ -2879,7 +2879,7 @@ namespace MissionPlanner
                                 if (MainV2.speechEngine.IsReady)
                                 {
                                     MainV2.speechEngine.SpeakAsync(
-                                        ArduPilot.Common.speechConversion(comPort.MAV,
+                                        ArduPilot.Common.SpeechConversionForPlayback(comPort.MAV,
                                             "" + Settings.Instance["speechlowairspeed"]));
                                     speechlowspeedtime = DateTime.UtcNow;
                                 }
@@ -2889,7 +2889,7 @@ namespace MissionPlanner
                                 if (MainV2.speechEngine.IsReady)
                                 {
                                     MainV2.speechEngine.SpeakAsync(
-                                        ArduPilot.Common.speechConversion(comPort.MAV,
+                                        ArduPilot.Common.SpeechConversionForPlayback(comPort.MAV,
                                             "" + Settings.Instance["speechlowgroundspeed"]));
                                     speechlowspeedtime = DateTime.UtcNow;
                                 }
@@ -2923,7 +2923,7 @@ namespace MissionPlanner
                                 {
                                     if (MainV2.speechEngine.IsReady)
                                         MainV2.speechEngine.SpeakAsync(
-                                            ArduPilot.Common.speechConversion(comPort.MAV,
+                                            ArduPilot.Common.SpeechConversionForPlayback(comPort.MAV,
                                                 "" + Settings.Instance["speechalt"]));
                                 }
                             }
@@ -2936,17 +2936,9 @@ namespace MissionPlanner
                         try
                         {
                             // say the latest high priority message
-                            if (MainV2.speechEngine.IsReady &&
-                                lastmessagehigh != MainV2.comPort.MAV.cs.messageHigh &&
-                                MainV2.comPort.MAV.cs.messageHigh != null)
-                            {
-                                if (!MainV2.comPort.MAV.cs.messageHigh.StartsWith("PX4v2 ") &&
-                                    !MainV2.comPort.MAV.cs.messageHigh.StartsWith("PreArm:")) // Supress audibly repeating PreArm messages
-                                {
-                                    MainV2.speechEngine.SpeakAsync(MainV2.comPort.MAV.cs.messageHigh);
-                                    lastmessagehigh = MainV2.comPort.MAV.cs.messageHigh;
-                                }
-                            }
+                            if (MainV2.speechEngine.IsReady)
+                                lastmessagehigh = MainV2.comPort.MAV.cs.SpeakHighMessageIfChanged(
+                                    MainV2.speechEngine, lastmessagehigh);
                         }
                         catch
                         {
@@ -2982,14 +2974,26 @@ namespace MissionPlanner
                         && (MainV2.comPort.logreadmode || comPort.BaseStream.IsOpen)
                         && MainV2.comPort.MAV.cs.armed)
                     {
-                        var msg = "WARNING No Data for " + (int)(DateTime.UtcNow - MainV2.comPort.MAV.lastvalidpacket).TotalSeconds + " Seconds";
+                        int seconds = (int)(DateTime.UtcNow - MainV2.comPort.MAV.lastvalidpacket).TotalSeconds;
+                        var msg = "WARNING No Data for " + seconds + " Seconds";
                         MainV2.comPort.MAV.cs.messageHigh = msg;
                         if (speechEnabled())
                         {
                             if (MainV2.speechEngine.IsReady)
                             {
-                                MainV2.speechEngine.SpeakAsync(msg);
-                                nodatawarning = DateTime.UtcNow;
+                                if (ArduPilot.Common.UseEnhancedSpeech && MainV2.speechEngine is ISpeechSubmission submission)
+                                {
+                                    if (submission.TrySpeakAsync(UiText.Format($"WARNING No Data for {seconds} Seconds")))
+                                    {
+                                        lastmessagehigh = msg;
+                                        nodatawarning = DateTime.UtcNow;
+                                    }
+                                }
+                                else
+                                {
+                                    MainV2.speechEngine.SpeakAsync(msg);
+                                    nodatawarning = DateTime.UtcNow;
+                                }
                             }
                         }
                     }
@@ -3042,7 +3046,7 @@ namespace MissionPlanner
                                 if (!string.IsNullOrEmpty(speech))
                                 {
                                     MainV2.speechEngine.SpeakAsync(
-                                        ArduPilot.Common.speechConversion(comPort.MAV, speech));
+                                        ArduPilot.Common.SpeechConversionForPlayback(comPort.MAV, speech));
                                 }
                             }
                         }

@@ -24,7 +24,7 @@ namespace MissionPlanner
             label1.ForeColor = ThemeManager.BannerColor2;
             label1.Text = UiText.Translate("by Michael Oborne | Modified by lyy0405");
 #if !LIB
-            InitializeAppearance();
+            InitializeAppearance(strVersion);
 #endif
 
             Console.WriteLine(strVersion);
@@ -38,7 +38,7 @@ namespace MissionPlanner
         internal const string MissionPlannerSource = "82dd96dfb44bccc51a6e77fcc7c309553b794f39";
         internal const string TitanPlannerSource = "399939a98eaf9f31ee2ae1d003f918419838025b";
 
-        private void InitializeAppearance()
+        private void InitializeAppearance(string buildVersion)
         {
             string warning;
             var custom = DesktopAppearance.LoadSelectedStartupImage(out warning);
@@ -52,20 +52,25 @@ namespace MissionPlanner
             TXT_version.Hide();
 
             bool enhancedChinese = string.Equals(System.Globalization.CultureInfo.CurrentUICulture.Name, "zh-CN", StringComparison.Ordinal);
-            string mission = MissionPlannerSource.Substring(0, 8);
-            string titan = TitanPlannerSource.Substring(0, 8);
-            var lines = enhancedChinese
-                ? new[] { "Mission Planner 上游基线 " + mission + " · Michael Oborne",
-                          "TitanPlanner 上游基线 " + titan + " · Michael Oborne、Mohammad Adib",
-                          "修改者：lyy0405" }
-                : new[] { "Mission Planner upstream " + mission + " · Michael Oborne",
-                          "TitanPlanner upstream " + titan + " · Michael Oborne & Mohammad Adib",
-                          "Modified by: lyy0405" };
+            var lines = CreditLines(buildVersion, enhancedChinese);
             titanLogo.AccessibleDescription = string.Join(Environment.NewLine, lines);
             titanLogo.Paint += (sender, args) =>
             {
                 DrawCredits(args.Graphics, titanLogo, lines, out _, out _);
             };
+        }
+
+        private static string[] CreditLines(string buildVersion, bool enhancedChinese)
+        {
+            string mission = MissionPlannerSource.Substring(0, 8);
+            string titan = TitanPlannerSource.Substring(0, 8);
+            return enhancedChinese
+                ? new[] { "Mission Planner 上游基线 " + mission + " · Michael Oborne",
+                          "TitanPlanner 上游基线 " + titan + " · Mohammad Adib",
+                          "构建基线 " + buildVersion + " · 修改者：lyy0405" }
+                : new[] { "Mission Planner upstream " + mission + " · Michael Oborne",
+                          "TitanPlanner upstream " + titan + " · Mohammad Adib",
+                          "Build baseline " + buildVersion + " · Modified by: lyy0405" };
         }
 
         private static Rectangle Fit(Size image, Rectangle canvas)
@@ -87,18 +92,21 @@ namespace MissionPlanner
             Rectangle image = Fit(picture.Image.Size, picture.ClientRectangle);
             int pad = Math.Max(5, (int)Math.Round(graphics.DpiY / 16.0));
             int stroke = Math.Max(1, Math.Min(3, (int)Math.Round(graphics.DpiY / 72.0)));
-            int maxWidth = image.Width - 2 * pad;
-            if (maxWidth <= 0 || image.Height <= 2 * pad) return Rectangle.Empty;
             const TextFormatFlags flags = TextFormatFlags.NoPadding | TextFormatFlags.NoPrefix |
                                           TextFormatFlags.WordBreak | TextFormatFlags.PreserveGraphicsClipping;
             FontStyle style = picture.Font.Style | FontStyle.Bold;
             if (!picture.Font.FontFamily.IsStyleAvailable(style)) style = picture.Font.Style;
             float preferred = picture.Font.SizeInPoints;
-            // Preserve the normal half-height limit. A very wide, letterboxed image can
-            // fit these credits inside the image but not its bottom half.
-            for (int pass = 0; pass < 2; pass++)
-            for (float points = preferred; points >= 6; points -= .5f)
+            // Prefer the lower half of the artwork, then its full height. Use the splash
+            // canvas only when the artwork cannot hold the credits at a readable size.
+            for (int pass = 0; pass < 3; pass++)
             {
+                Rectangle layout = pass == 2 ? picture.ClientRectangle : image;
+                int maxWidth = layout.Width - 2 * pad;
+                int maxHeight = pass == 0 ? layout.Height / 2 : layout.Height;
+                if (maxWidth <= 0 || maxHeight <= 2 * pad) continue;
+
+                for (float points = preferred; points >= 6; points -= .5f)
                 using (var font = new Font(picture.Font.FontFamily, points, style, GraphicsUnit.Point))
                 {
                     int width = 0, height = 2 * pad;
@@ -112,10 +120,9 @@ namespace MissionPlanner
                         height += measured.Height;
                     }
 
-                    int maxHeight = pass == 0 ? image.Height / 2 : image.Height;
                     if (width > maxWidth || height > maxHeight) continue;
                     fontPx = points;
-                    var bounds = new Rectangle(image.Left, image.Bottom - height, width + 2 * pad, height);
+                    var bounds = new Rectangle(layout.Left, layout.Bottom - height, width + 2 * pad, height);
                     rows = new Rectangle[lines.Length];
                     int y = bounds.Top + pad;
                     for (int i = 0; i < lines.Length; i++)

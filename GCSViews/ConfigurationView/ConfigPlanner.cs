@@ -552,9 +552,18 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             speechFlow.Controls.Add(CHK_speechadsb);
             table.Controls.Add(speechFlow, 0, 1);
 
+            int audioRow = 2;
+#if !LIB
+            if (Environment.OSVersion.Platform == PlatformID.Win32NT &&
+                Type.GetType("Mono.Runtime") == null && Speech.EnhancedSpeechLanguage)
+            {
+                AddChineseVoiceSettings(group, table);
+                audioRow = 4;
+            }
+#endif
             var audioFlow = CreateWrapFlow();
             audioFlow.Controls.Add(BUT_Vario);
-            table.Controls.Add(audioFlow, 0, 2);
+            table.Controls.Add(audioFlow, 0, audioRow);
 
             group.Controls.Add(table);
 
@@ -905,6 +914,9 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             SetCheckboxFromConfig("speecharmenabled", CHK_speecharmdisarm);
             SetCheckboxFromConfig("speechlowspeedenabled", CHK_speechlowspeed);
             SetCheckboxFromConfig("speechadsbenabled", CHK_speechadsb);
+#if !LIB
+            RefreshChineseVoiceSettings();
+#endif
             SetCheckboxFromConfig("beta_updates", CHK_beta);
             SetCheckboxFromConfig("password_protect", CHK_Password);
             SetCheckboxFromConfig("showairports", CHK_showairports);
@@ -1167,6 +1179,10 @@ namespace MissionPlanner.GCSViews.ConfigurationView
         private void CHK_enablespeech_CheckedChanged(object sender, EventArgs e)
         {
             MainV2.speechEnable = CHK_enablespeech.Checked;
+#if !LIB
+            if (voicePreview != null)
+                voicePreview.Enabled = CHK_enablespeech.Checked && MainV2.speechEngine is Speech;
+#endif
             Settings.Instance["speechenable"] = CHK_enablespeech.Checked.ToString();
             if (MainV2.speechEngine != null)
                 MainV2.speechEngine.SpeakAsyncCancelAll();
@@ -1365,7 +1381,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
 
             if (((CheckBox)sender).Checked)
             {
-                var speechstring = "WARNING, Battery at {batv} Volt, {batp} percent";
+                var speechstring = UiText.Translate("WARNING, Battery at {batv} Volt, {batp} percent");
                 if (Settings.Instance["speechbattery"] != null)
                     speechstring = Settings.Instance["speechbattery"].ToString();
                 if (DialogResult.Cancel ==
@@ -1527,7 +1543,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
 
             if (((CheckBox)sender).Checked)
             {
-                var speechstring = "WARNING, low altitude {alt}";
+                var speechstring = UiText.Translate("WARNING, low altitude {alt}");
                 if (Settings.Instance["speechalt"] != null)
                     speechstring = Settings.Instance["speechalt"].ToString();
                 if (DialogResult.Cancel ==
