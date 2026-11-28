@@ -1,0 +1,49 @@
+name: 'QA #68 exact Windows speech candidate'
+on:
+  push:
+    branches: [ci/titanplanner-68-windows-65203a14]
+    paths: [.github/workflows/qa-68-production.yml]
+permissions:
+  contents: read
+jobs:
+  speech:
+    runs-on: windows-2022
+    timeout-minutes: 45
+    env:
+      CI: 'true'
+      DOTNET_CLI_TELEMETRY_OPTOUT: '1'
+      PRODUCT_SHA: '65203a149977609f343f7c78fe36102aa7c6dc56'
+      PRODUCT_TREE: '3053552c1033d8853ee153ef6ccb8a9f6cec1178'
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ env.PRODUCT_SHA }}
+          submodules: true
+          fetch-depth: 1
+          persist-credentials: false
+      - name: Verify product identity
+        shell: pwsh
+        run: |
+          if ((git rev-parse HEAD) -ne $env:PRODUCT_SHA) { throw 'Unexpected product commit' }
+          if ((git rev-parse 'HEAD^{tree}') -ne $env:PRODUCT_TREE) { throw 'Unexpected product tree' }
+          if (git status --porcelain) { throw 'Product checkout is dirty' }
+          Write-Host "Product SHA=$env:PRODUCT_SHA tree=$env:PRODUCT_TREE"
+      - uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68
+        with:
+          dotnet-version: '8.0.428'
+      - name: Build full Release
+        shell: pwsh
+        run: ./scripts/localization/build_windows.ps1 -OutputDirectory "$env:RUNNER_TEMP\TitanPlanner-qa"
+      - name: Run offline regression and Windows UI tests
+        shell: pwsh
+        run: ./scripts/ci/test_windows.ps1 -BuildDirectory "$env:RUNNER_TEMP\TitanPlanner-qa" -ResultsDirectory "$env:RUNNER_TEMP\qa-results"
+      - name: Compile native speech probe
+        shell: pwsh
+        run: dotnet build MissionPlannerTests/WindowsSpeechProbe/WindowsSpeechProbe.csproj -c Release
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        if: always()
+        with:
+          name: qa-68-windows-results
+          path: ${{ runner.temp }}/qa-results
+          if-no-files-found: warn
+          retention-days: 7
