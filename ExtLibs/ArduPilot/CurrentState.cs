@@ -1442,14 +1442,13 @@ namespace MissionPlanner
             lock (messageHudLock)
             {
                 messageSpeechAlert = speechAlert;
-                // An identical local report removes the display lease, not the stock HUD value or expiry.
-                if (verifiedSuffix == null) messageHudSuffix = null;
+                // Refresh proof for a repeated report without extending its stock HUD expiry.
+                messageHudSuffix = verifiedSuffix;
                 if (RawHudText() == value) return;
                 log.Info("messageHigh " + value);
                 _messageHighTime = DateTime.Now;
                 _messagehigh = value;
                 messageHighSeverity = MAVLink.MAV_SEVERITY.EMERGENCY;
-                messageHudSuffix = verifiedSuffix;
             }
         }
 

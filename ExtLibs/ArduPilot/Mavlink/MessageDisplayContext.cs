@@ -18,11 +18,13 @@ namespace MissionPlanner
             internal bool UnconfirmedVoiceVendor;
             internal bool SawOtherPx4Vehicle;
             internal readonly ConditionalWeakTable<string, Row> Rows = new ConditionalWeakTable<string, Row>();
+            internal readonly ConditionalWeakTable<string, Row> ReviewedRows = new ConditionalWeakTable<string, Row>();
         }
         private sealed class Row
         {
             internal DateTime Time;
             internal byte Severity;
+            internal Func<string> Translation;
         }
         private const string Plane444CrashDumpSaved = "Saved crash_dump.bin";
         private const string PlaneGps2UbloxDetection = "GPS 2: detected u-blox";
@@ -176,6 +178,31 @@ namespace MissionPlanner
                 return;
             }
             s.Rows.Add(row.message, new Row { Time = row.time, Severity = row.severity });
+        }
+
+        internal void RememberReviewed(List<(DateTime time, string message, byte severity)> list,
+            (DateTime time, string message, byte severity) row, Func<string> translation)
+        {
+            lock (list)
+            {
+                var reviewed = states.GetValue(list, _ => new State()).ReviewedRows;
+                reviewed.Remove(row.message);
+                reviewed.Add(row.message, new Row { Time = row.time, Severity = row.severity, Translation = translation });
+            }
+        }
+
+        internal string ReviewedSuffix(List<(DateTime time, string message, byte severity)> list,
+            (DateTime time, string message, byte severity) row)
+        {
+            lock (list)
+            {
+                if (row.message == null || !states.TryGetValue(list, out var state) ||
+                    !state.ReviewedRows.TryGetValue(row.message, out var reviewed) ||
+                    reviewed.Time != row.time || reviewed.Severity != row.severity)
+                    return null;
+
+                return reviewed.Translation();
+            }
         }
 
         internal string VoiceSuffix(List<(DateTime time, string message, byte severity)> list,
