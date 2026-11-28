@@ -1,0 +1,103 @@
+using System;
+using System.Windows.Forms;
+using Plan29PreviewProbe;
+using D = Plan29PreviewProbe.OfflineDatumPair;
+using H = Plan29PreviewProbe.PairedPreviewHost;
+
+internal static class PairedPreviewHostProbe
+{
+    private sealed class Pane : Panel { internal void Recreate() => RecreateHandle(); }
+    private static int n;
+    private static void Check(bool result, string name)
+    {
+        if (!result) throw new Exception(name);
+        n++; Console.WriteLine("PASS " + name);
+    }
+    [STAThread]
+    private static void Main()
+    {
+        var plan = Plan(100);
+        var changed = Plan(110);
+        using (var form = new Form())
+        using (var map = new Pane { Width = 100, Height = 100 })
+        using (var scene = new Pane { Left = 105, Width = 100, Height = 100 })
+        using (var resolver = new D())
+        using (var host = new H(map, scene))
+        {
+            form.Controls.Add(map);
+            form.Controls.Add(scene);
+            form.Show();
+            Application.DoEvents();
+            var epoch = resolver.Switch(plan, null, Receipt(plan));
+            var r = host.AdoptFixture(epoch);
+            Check(!host.Stage(r,plan) && host.MarkReady(H.View.Map,r) == null &&
+                host.Read(map,r) == null, "initially disabled with real window handles");
+            Check(host.EnableFixtureOnly(resolver) && !host.EnableFixtureOnly(resolver), "explicit fixture enable once");
+            r = host.AdoptFixture(epoch);
+            Check(host.Stage(r,plan) && host.Read(map,r) == null &&
+                host.Read(scene,r) == null, "staging alone displays neither");
+            var rm = host.MarkReady(H.View.Map,r);
+            var rs = host.MarkReady(H.View.Scene,r);
+            Check(!host.Publish(r,rm,null) && !host.Publish(r,rs,rm) && host.Read(map,r) == null,
+                "both correctly identified leaves required");
+            Check(host.Stage(r,plan) && !host.Publish(r,rm,rs),
+                "readiness for replaced staged payload cannot authorize another");
+            Check(Commit(host,r) && host.Read(map,r)?.Scene[0].z == 100 &&
+                ReferenceEquals(host.Read(map,r),host.Read(scene,r)) && host.Read(form,r) == null && !host.Stage(r,plan),
+                "both leaves share one immutable payload; unrelated owner cannot read");
+            var retired = r;
+            var replacement = resolver.Switch(changed,null,Receipt(changed));
+            Check(host.Read(map,r) == null && host.Read(scene,r) == null,
+                "source invalidation revokes both even before adoption");
+            r = host.AdoptFixture(replacement);
+            Check(host.Stage(r,changed) && Commit(host,r) && r > retired, "new source and monotonic revision publish");
+            host.Error(retired);
+            Check(host.Read(map,r) != null && host.Read(scene,r) != null, "retired error cannot remove newer pair");
+            host.Error(r);
+            Check(host.Read(map,r) == null && host.Read(scene,r) == null && !host.Stage(r,changed),
+                "active error revokes both and cancels old work");
+            r = host.AdoptFixture(replacement);
+            Check(host.Stage(r,changed), "new stage for handle-recreation test");
+            rm = host.MarkReady(H.View.Map,r); rs = host.MarkReady(H.View.Scene,r);
+            scene.Recreate();
+            Check(!host.Publish(r,rm,rs) && host.Read(map,r) == null &&
+                host.Read(scene,r) == null && host.Revision > r,
+                "recreated scene HWND drops both previous readiness receipts");
+            r = host.AdoptFixture(replacement);
+            Check(host.Stage(r,changed) && Commit(host,r), "fresh generation may commit again");
+            scene.Width = 0;
+            scene.Width = 100;
+            Check(host.Read(map,r) == null && host.Read(scene,r) == null,
+                "transient zero-sized pane does not resurrect old pair on resize");
+            r = host.AdoptFixture(replacement);
+            Check(host.Stage(r,changed) && Commit(host,r), "fresh after resize loss");
+            map.Visible = false;
+            Check(host.Read(scene,r) == null && host.Read(map,r) == null, "one pane hiding removes both payloads");
+            map.Visible = true;
+            r = host.AdoptFixture(replacement);
+            Check(!host.Stage(r,plan) && host.Read(map,r) == null && host.Read(scene,r) == null,
+                "mismatching frozen PLAN never reaches either control");
+            replacement = resolver.Switch(changed,null,Receipt(changed));
+            r = host.AdoptFixture(replacement);
+            Check(host.Stage(r,changed) && Commit(host,r), "last stage before close");
+            form.Close();
+            Check(host.Read(map,r) == null && host.Read(scene,r) == null &&
+                !host.Stage(r,changed), "actual form close retires payload and queued callback");
+            host.Dispose();
+            Check(!host.EnableFixtureOnly(resolver) && host.Read(map,host.Revision) == null,
+                "disposed host cannot expose or re-enable payload");
+        }
+        Console.WriteLine(n + " checks passed");
+    }
+    private static bool Commit(H h, long r) =>
+        h.Publish(r, h.MarkReady(H.View.Map,r), h.MarkReady(H.View.Scene,r));
+    private static ReadOnlyPlanSnapshot Plan(double z)
+    {
+        var row = new[] {0d,0,0,0,10d,20d,z};
+        return new ReadOnlyPlanSnapshot(new PlanHome(0,10,20,0),
+            new[] {new PlanRow(1,"WAYPOINT",16,0,row,row)}, "fixture");
+    }
+    private static D.Receipt Receipt(ReadOnlyPlanSnapshot p) =>
+        new D.Receipt(p,D.HeightKind.Absolute,1,10,20,p.Rows[0].Values[6],
+            D.Vertical,D.Unit.Metres);
+}

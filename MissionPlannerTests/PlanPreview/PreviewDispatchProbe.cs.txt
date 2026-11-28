@@ -1,0 +1,91 @@
+using System;
+using System.Drawing;
+using System.Windows.Forms;
+using GMap.NET;
+using GMap.NET.WindowsForms;
+using OpenTK;
+using OpenTK.Graphics.ES20;
+
+internal static class PreviewDispatchProbe
+{
+    private sealed class RecreatedGl : GLControl { internal void ResetHandle() => RecreateHandle(); }
+    private static void Check(bool result, string label)
+    {
+        if (!result) throw new Exception(label);
+        Console.WriteLine("PASS " + label);
+    }
+    [STAThread]
+    static void Main()
+    {
+        GMaps.Instance.Mode = AccessMode.CacheOnly;
+        using (var form = new Form())
+        using (var map = new GMapControl { Bounds = new Rectangle(0, 0, 110, 110) })
+        using (var gl = new RecreatedGl { Bounds = new Rectangle(130, 0, 110, 110) })
+        using (var dispatch = new PreviewDispatch(form, map, gl))
+        {
+            form.Controls.AddRange(new Control[] { map, gl });
+            form.Show();
+            Application.DoEvents();
+            int delivered = 0;
+            object epoch = new object();
+            var revision = dispatch.Revision;
+            dispatch.Request(revision, () => delivered = -1);
+            dispatch.Request(revision, () => delivered += 1);
+            Application.DoEvents();
+            Check(delivered == 0, "real handles/repaints without a valid swap do not commit");
+            dispatch.FrameSwapped(map, revision, epoch);
+            dispatch.FrameSwapped(gl, revision, null);
+            Application.DoEvents();
+            Check(delivered == 0, "wrong GL owner or invalid scene cannot unlock publication");
+            Swap(gl);
+            dispatch.FrameSwapped(gl, revision, epoch);
+            dispatch.FrameSwapped(gl, revision, epoch);
+            Check(delivered == 0, "swap notification cannot commit reentrantly inside paint");
+            Application.DoEvents();
+            Check(delivered == 1, "once after first valid GL swap: latest coalesced request");
+            dispatch.Request(revision, () => delivered += 100);
+            dispatch.Retire(); // Simulated PLAN command/content revision.
+            Application.DoEvents();
+            Check(delivered == 1 && !dispatch.Request(revision, () => delivered += 100),
+                "retired PLAN content cannot publish or enqueue work");
+            revision = dispatch.Revision;
+            dispatch.Request(revision, () => delivered += 100);
+            Swap(gl);
+            dispatch.FrameSwapped(gl, revision, epoch);
+            gl.Visible = false;
+            Application.DoEvents();
+            Check(delivered == 1, "hide retires a queued callback even if the GL handle survives");
+            gl.Visible = true;
+            revision = dispatch.Revision;
+            dispatch.Request(revision, () => delivered += 100);
+            Swap(gl);
+            dispatch.FrameSwapped(gl, revision, epoch);
+            gl.ResetHandle();
+            Application.DoEvents();
+            Check(delivered == 1, "destroyed GL handle cannot publish into its replacement");
+            revision = dispatch.Revision;
+            dispatch.Request(revision, () => delivered += 10);
+            Swap(gl);
+            dispatch.FrameSwapped(gl, revision, new object());
+            Application.DoEvents();
+            Check(delivered == 11, "fresh GL generation publishes only after its own first completed swap");
+            dispatch.Request(revision, () => delivered += 100);
+            Swap(gl);
+            dispatch.FrameSwapped(gl, revision, new object());
+            Application.DoEvents();
+            Check(delivered == 11, "rebased frame drops pending geometry against previous scene");
+            revision = dispatch.Revision;
+            dispatch.Request(revision, () => delivered += 100);
+            form.Close();
+            Application.DoEvents();
+            Check(delivered == 11, "form close suppresses an already queued publication");
+        }
+    }
+    private static void Swap(GLControl gl)
+    {
+        gl.MakeCurrent();
+        GL.ClearColor(0.25f, 0.125f, 0.5f, 1.0f);
+        GL.Clear(ClearBufferMask.ColorBufferBit);
+        gl.SwapBuffers();
+    }
+}

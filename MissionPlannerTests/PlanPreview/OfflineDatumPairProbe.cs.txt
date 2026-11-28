@@ -1,0 +1,82 @@
+using System;
+using Plan29PreviewProbe;
+using F = Plan29PreviewProbe.OfflineDatumPair;
+
+internal static class OfflineDatumPairProbe
+{
+    private static int n;
+    private static void Check(bool ok, string name)
+    {
+        if (!ok) throw new Exception(name);
+        n++; Console.WriteLine("PASS " + name);
+    }
+    private static PlanRow Row(int seq, byte frame, double h, double lat=10.5, double lon=20.5)
+    {
+        var vals = new[] {0d,0,0,0,lat,lon,h};
+        return new PlanRow(seq, "WAYPOINT", 16, frame, vals, vals);
+    }
+    private static ReadOnlyPlanSnapshot Plan(params PlanRow[] rows) =>
+        new ReadOnlyPlanSnapshot(new PlanHome(3, 10, 20, 3.048), rows, "fixture");
+    private static F.FixtureGrid Grid(double?[,] values, string version="v1", string datum=F.Vertical,
+        string xy=F.Horizontal, string license="fixture:generated-for-test", F.Unit units=F.Unit.Feet) =>
+        new F.FixtureGrid("fixture:generated-grid", version, xy, datum, license, units, 10, 20, 1, values);
+    private static F.Receipt Abs(ReadOnlyPlanSnapshot p, int seq=1, string datum=F.Vertical,
+        double lat=10.5, F.Unit unit=F.Unit.Feet, double value=-10) =>
+        new F.Receipt(p, F.HeightKind.Absolute, seq, lat, 20.5, value, datum, unit);
+    private static F.Receipt Home(ReadOnlyPlanSnapshot p, double lat=10) =>
+        new F.Receipt(p, F.HeightKind.Home, 0, lat, 20, 10, F.Vertical, F.Unit.Feet);
+
+    private static void Main()
+    {
+        var p = Plan(Row(1,0,-3.048), Row(2,6,-2.048), Row(3,11,2));
+        var nodes = new double?[,] {{-10,10},{10,-10}};
+        var grid = Grid(nodes);
+        using (var f = new F())
+        {
+            var e = f.Switch(p, grid, Abs(p), Home(p));
+            nodes[0,0] = 1000;
+            Check(f.Publish(e,p) == F.Outcome.Ready && f.Published.Map.Count == 3 &&
+                f.Published.Scene.Count == 3 && f.Published.Scene[0].z == -3.048 &&
+                f.Published.Scene[1].z == 1 && f.Published.Scene[2].z == 2 &&
+                f.Published.SourceLabel.Contains("Synthetic"), "three references together, negative feet and known zero terrain; grid copied");
+            var first = f.Published;
+            var e2 = f.Switch(p, Grid(new double?[,] {{10,10},{10,10}}, "v2"), Abs(p), Home(p));
+            Check(f.Published == null && f.Publish(e2,p) == F.Outcome.Ready &&
+                Math.Abs(f.Published.Scene[2].z - 5.048) < 1e-9, "revision retires both, then fresh versions resolve");
+            var second = f.Published;
+            Check(f.Publish(e,p) == F.Outcome.Retired && ReferenceEquals(second,f.Published) &&
+                first.Scene[2].z == 2, "retired callback cannot clear new pair; old payload remains immutable");
+            foreach (var bad in new[]{Grid(nodes,datum:"fixture:wrong"),Grid(nodes,xy:"fixture:wrong"),
+                Grid(nodes,license:"unknown"),Grid(nodes,version:""),Grid(nodes,units:(F.Unit)4)})
+                Check(f.Switch(p,bad,Abs(p),Home(p)) == null && f.Published == null, "invalid grid manifest rejected");
+
+            Reject(f,p,grid,F.Outcome.MissingEvidence,Home(p));
+            Reject(f,p,grid,F.Outcome.MissingEvidence,Abs(p,seq:2),Home(p));
+            Reject(f,p,grid,F.Outcome.MissingEvidence,Abs(p,lat:10.6),Home(p));
+            Reject(f,p,grid,F.Outcome.MissingEvidence,Abs(p,datum:"fixture:wrong"),Home(p));
+            Reject(f,p,grid,F.Outcome.MissingEvidence,Abs(p,unit:(F.Unit)7),Home(p));
+            Reject(f,p,grid,F.Outcome.MissingEvidence,Abs(p,value:double.PositiveInfinity),Home(p));
+            Reject(f,p,grid,F.Outcome.MissingEvidence,Abs(p),Abs(p),Home(p));
+            Reject(f,p,grid,F.Outcome.MissingEvidence,Abs(p),Home(p,lat:11));
+            var identical = Plan(Row(1,0,-3.048), Row(2,6,-2.048), Row(3,11,2));
+            Reject(f,identical,grid,F.Outcome.MissingEvidence,Abs(p),Home(p));
+            Reject(f,p,Grid(new double?[,] {{0,null},{0,0}}),F.Outcome.OutsideOrMissing,Abs(p),Home(p));
+            Reject(f,p,Grid(new double?[,] {{0,double.NaN},{0,0}}),F.Outcome.OutsideOrMissing,Abs(p),Home(p));
+            var outside = Plan(Row(1,10,2,12));
+            Reject(f,outside,grid,F.Outcome.OutsideOrMissing);
+            Reject(f,p,null,F.Outcome.OutsideOrMissing,Abs(p),Home(p));
+            Reject(f,Plan(Row(1,99,2)),grid,F.Outcome.InvalidPlan);
+            var stale = f.Switch(p,grid,Abs(p),Home(p));
+            f.Dispose();
+            Check(f.Published == null && f.Publish(stale,p) == F.Outcome.Retired &&
+                f.Switch(p,grid,Abs(p),Home(p)) == null, "disposing prevents both callback reuse and new admission");
+        }
+        Console.WriteLine(n + " checks passed");
+    }
+    private static void Reject(F f, ReadOnlyPlanSnapshot p, F.FixtureGrid grid, F.Outcome expected, params F.Receipt[] rs)
+    {
+        var e = f.Switch(p,grid,rs);
+        Check(e != null && f.Publish(e,p) == expected && f.Published == null &&
+            f.Publish(e,p) == F.Outcome.Retired, "rejects " + expected + " without either payload; retires failing epoch");
+    }
+}

@@ -1,0 +1,97 @@
+using System;
+using System.Windows.Forms;
+
+// UI-thread-only. Host lifetime is independent from the PLAN content revision.
+// A request made before a real 3D frame must not publish a 2D-only result.
+internal sealed class PreviewDispatch : IDisposable
+{
+    internal sealed class Ticket { }
+    private readonly Control dispatcher, destination2D, destination3D;
+    private Ticket current = new Ticket();
+    private object completedFrame;
+    private Action pending;
+    private object post;
+    private bool disposed;
+
+    internal PreviewDispatch(Control dispatcher, Control destination2D, Control destination3D)
+    {
+        this.dispatcher = dispatcher;
+        this.destination2D = destination2D;
+        this.destination3D = destination3D;
+        foreach (var control in new[] { dispatcher, destination2D, destination3D })
+        {
+            control.HandleDestroyed += Retire;
+            control.Disposed += Retire;
+            control.VisibleChanged += Retire;
+        }
+    }
+    internal Ticket Revision { get { return current; } }
+    internal void Retire(object sender = null, EventArgs args = null)
+    {
+        current = new Ticket();
+        completedFrame = null;
+        pending = null;
+        post = null;
+    }
+    private static bool Ready(Control c) => c.IsHandleCreated && !c.IsDisposed &&
+        !c.Disposing && c.Visible && c.Width > 0 && c.Height > 0;
+    private bool Ready() => !disposed && Ready(dispatcher) && Ready(destination2D) && Ready(destination3D);
+    internal bool Request(Ticket ticket, Action complete)
+    {
+        if (disposed || !ReferenceEquals(ticket, current) || complete == null)
+            return false;
+        pending = complete; // Do not let an earlier queued callback carry obsolete content.
+        Schedule();
+        return true;
+    }
+    // Caller reports only a completed, nonblank swap with current view/scene stamp.
+    internal void FrameSwapped(Control owner, Ticket ticket, object sceneStamp)
+    {
+        if (!Ready() || !ReferenceEquals(owner, destination3D) ||
+            !ReferenceEquals(ticket, current) || sceneStamp == null)
+            return;
+        if (completedFrame != null && !ReferenceEquals(completedFrame, sceneStamp))
+        {
+            // Retire work derived from an older origin; require a new complete request.
+            Retire();
+        }
+        completedFrame = sceneStamp;
+        Schedule();
+    }
+    private void Schedule()
+    {
+        if (!Ready() || pending == null || completedFrame == null || post != null)
+            return;
+        var ticket = current;
+        var marker = post = new object();
+        try
+        {
+            dispatcher.BeginInvoke((MethodInvoker)(() =>
+            {
+                if (!ReferenceEquals(post, marker) || !ReferenceEquals(ticket, current))
+                    return;
+                post = null;
+                if (!Ready() || completedFrame == null)
+                    return;
+                var action = pending;
+                pending = null;
+                action?.Invoke();
+            }));
+        }
+        catch (InvalidOperationException)
+        {
+            Retire();
+        }
+    }
+    public void Dispose()
+    {
+        disposed = true;
+        Retire();
+        foreach (var control in new[] { dispatcher, destination2D, destination3D })
+        {
+            control.HandleDestroyed -= Retire;
+            control.Disposed -= Retire;
+            control.VisibleChanged -= Retire;
+        }
+    }
+}

@@ -1,0 +1,149 @@
+using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Threading;
+using System.Windows.Forms;
+using GMap.NET;
+using GMap.NET.MapProviders;
+using GMap.NET.WindowsForms;
+using Plan29PreviewProbe;
+
+internal static class ReadOnlyPlanOverlayProbe
+{
+    private const string Caption = "Local plan · read-only";
+    private static int count;
+
+    [STAThread]
+    public static void Main(string[] args)
+    {
+        GMaps.Instance.Mode = AccessMode.CacheOnly;
+        using (var form = new Form { ClientSize = new Size(440, 320) })
+        using (var map = new GMapControl { Dock = DockStyle.Fill, MapProvider = GMapProviders.EmptyProvider, RoutesEnabled = true, MaxZoom = 20, MinZoom = 1 })
+        using (var canonicalPen = new Pen(Color.DarkBlue, 3))
+        using (var preview = new ReadOnlyPlanOverlay(map))
+        {
+            form.Controls.Add(map);
+            form.Show();
+            map.Position = new PointLatLng(0, 0);
+            map.Zoom = 12;
+            Application.DoEvents();
+            var live = new GMapOverlay("device-stub");
+            live.Routes.Add(new GMapRoute(new[] { new PointLatLng(0.02, -0.025), new PointLatLng(-0.02, -0.025) }, "device-stub") { Stroke = canonicalPen });
+            map.Overlays.Add(live);
+            live.ForceUpdate();
+            var cache = new ConcurrentDictionary<int,int>();
+            cache[1] = 99;
+
+            var source = Points(3);
+            preview.Replace(new[] { source }, Caption);
+            var initial = Current(map);
+            Check("first completed snapshot", initial.Routes.Single().Points.Count == 3);
+            Check("source explicitly labelled", initial.Markers.Single().ToolTipText == Caption &&
+                initial.Markers.Single().ToolTipMode == MarkerTooltipMode.Always);
+            Check("no route or marker click target", initial.Markers.All(x => !x.IsHitTestVisible) &&
+                initial.Routes.All(x => !x.IsHitTestVisible));
+            source[1] = new PointLatLng(30, 40);
+            Check("copies captured geometry, no aliased input", initial.Routes.Single().Points[1] != source[1]);
+            Application.DoEvents();
+            if (args.Length > 0)
+            {
+                using (var frame = new Bitmap(map.Width, map.Height))
+                {
+                    map.DrawToBitmap(frame, new Rectangle(Point.Empty, frame.Size));
+                    frame.Save(args[0]);
+                    Check("rendered a purple route in GMap", CountPurple(frame) > 30);
+                    Check("rendered the independent canonical route in the same frame", CountDeviceBlue(frame) > 30);
+                }
+            }
+
+            preview.Replace(new[] { Points(2) }, Caption);
+            Check("long to short removes old overlay and vertices",
+                !map.Overlays.Contains(initial) && Current(map).Routes.Single().Points.Count == 2);
+            preview.Replace(new[] { Points(4) }, Caption);
+            Check("short to long", Current(map).Routes.Single().Points.Count == 4);
+            var moved = Points(4);
+            moved[0] = new PointLatLng(0.005, -0.005);
+            preview.Replace(new[] { moved }, Caption);
+            var complete = Current(map);
+            Check("same-size replacement updates geometry", complete.Routes.Single().Points[0] == moved[0]);
+            try { preview.Replace(FaultySegments(), Caption); throw new Exception("must reject invalid enumeration"); }
+            catch (ArgumentException) { }
+            Check("failed capture does not change complete prior overlay", ReferenceEquals(complete, Current(map)));
+
+            try { preview.Replace(new[] { new[] { new PointLatLng(double.NaN, 0) } }, Caption); throw new Exception("must reject nonfinite"); }
+            catch (ArgumentOutOfRangeException) { }
+            Check("invalid point does not clear prior local layer", ReferenceEquals(complete, Current(map)));
+
+            Exception wrongThread = null;
+            var writer = new Thread(() => { try { preview.Clear(); } catch(Exception e) { wrongThread = e; } });
+            writer.Start();
+            writer.Join();
+            Check("background thread cannot replace UI layer", wrongThread is InvalidOperationException &&
+                  ReferenceEquals(complete, Current(map)));
+
+            preview.Replace(new[] { Points(1), Points(2), Points(2) }, Caption);
+            Check("retains single point separately; no fake connections between segments",
+                Current(map).Markers.Count == 3 && Current(map).Routes.Count == 2);
+            preview.Replace(new PointLatLng[0][], Caption);
+            Check("empty removes old local layer", !map.Overlays.Any(x => x.Id == ReadOnlyPlanOverlay.OverlayId));
+            preview.Replace(new[] { Points(2) }, Caption);
+            preview.Clear();
+            Check("explicit clear is idempotent", !map.Overlays.Any(x => x.Id == ReadOnlyPlanOverlay.OverlayId));
+            preview.Clear();
+            Check("canonical layer object never replaced", ReferenceEquals(live, map.Overlays.Single(x => x.Id == "device-stub")));
+            Check("fake device cache untouched", cache.Count == 1 && cache[1] == 99);
+            preview.Replace(new[] { Points(2) }, Caption);
+            preview.Dispose();
+            Check("dispose removes preview but not canonical geometry",
+                  !map.Overlays.Any(x => x.Id == ReadOnlyPlanOverlay.OverlayId)
+                  && live.Routes.Single().Points.Count == 2);
+        }
+        Console.WriteLine(count + " checks passed");
+    }
+
+    private static void Check(string name, bool result)
+    {
+        if (!result) throw new Exception("Failed: " + name);
+        Console.WriteLine("PASS " + name);
+        count++;
+    }
+
+    private static PointLatLng[] Points(int n) =>
+        Enumerable.Range(0, n).Select(i => new PointLatLng(-0.024 + i * 0.017, -0.026 + i * 0.019)).ToArray();
+
+    private static IEnumerable<IEnumerable<PointLatLng>> FaultySegments()
+    {
+        yield return Points(2);
+        throw new ArgumentException("synthetic capture failure");
+    }
+
+    private static GMapOverlay Current(GMapControl map) =>
+        map.Overlays.Single(x => x.Id == ReadOnlyPlanOverlay.OverlayId);
+
+    private static int CountDeviceBlue(Bitmap image)
+    {
+        int result = 0;
+        for (int y = 90; y < 145; y++)
+        for (int x = 130; x < 165; x++)
+        {
+            var c = image.GetPixel(x, y);
+            if (c.B > 90 && c.R < 35 && c.G < 35) result++;
+        }
+        return result;
+    }
+
+    private static int CountPurple(Bitmap image)
+    {
+        int result = 0;
+        for (int y = 190; y < image.Height; y++)
+        for (int x = 0; x < image.Width / 2 - 15; x++)
+        {
+            var c = image.GetPixel(x, y);
+            if (c.B > c.R + 25 && c.R > c.G + 25) result++;
+        }
+        return result;
+    }
+}

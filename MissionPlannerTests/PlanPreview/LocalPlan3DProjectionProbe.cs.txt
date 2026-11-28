@@ -1,0 +1,97 @@
+using System;
+using System.Drawing;
+using System.Linq;
+using MissionPlanner.Controls.Scene3D;
+using Plan29PreviewProbe;
+
+internal static class LocalPlan3DProjectionProbe
+{
+    static int passed;
+    static void Main(string[] args)
+    {
+        // Entirely synthetic fixture. These are display points, not a flight plan handed to an autopilot.
+        var frame = new WorldFrame();
+        frame.Update(10.12, 2.1);
+        var input = Snapshot(Point(1, 0, 10.12, 2.10, 14.5), Point(2, 5, 10.124, 2.106, 43.75),
+                             Point(3, 0, 10.125, 2.111, -2.5));
+        Check("supports precise absolute altitude and global aliases",
+            Build(input, frame, out var model) == Local3DResult.Ready &&
+            model.Vertices.Select(v => v.MetresAmsl).SequenceEqual(new[] { 14.5, 43.75, -2.5 }));
+        Check("does not add planned Home or ground to explicit AMSL",
+            input.Home.AltitudeMetres == 973 && model.Vertices[0].MetresAmsl == 14.5);
+        Check("uses production WorldFrame easting/northing; does not divide display degrees twice",
+            Math.Abs(model.Vertices[0].EastMetres) < 0.001 && Math.Abs(model.Vertices[0].NorthMetres) < 0.001 &&
+            model.Vertices[1].EastMetres > 600 && model.Vertices[1].NorthMetres > 400);
+        Check("draw order follows source and does not invent linked Home",
+            model.Vertices.Select(v => v.Sequence).SequenceEqual(new[] { 1, 2, 3 }));
+        if (args.Length > 0) RenderSynthetic(model, args[0]);
+
+        foreach (byte unsupported in new byte[] { 1, 3, 6, 10, 11, 255 })
+            Check("no guessed heights/coordinate interpretation, frame " + unsupported,
+                Build(Snapshot(input.Rows[0], Point(2, unsupported, 10.124, 2.106, 123), input.Rows[2]),
+                    frame, out var blocked) == (unsupported == 1 || unsupported == 255
+                        ? Local3DResult.UnsupportedDatum : Local3DResult.MissingElevationEvidence) && blocked == null);
+        Check("unknown command cannot be silently bridged",
+            Build(Snapshot(input.Rows[0], Point(2, 0, 10.124, 2.106, 123, "UNKNOWN"), input.Rows[2]),
+                frame, out var missing) == Local3DResult.UnsupportedCommand && missing == null);
+        Check("spline/control point is not approximated as a straight route",
+            Build(Snapshot(Point(1, 0, 10.124, 2.106, 123, "SPLINE_WAYPOINT")), frame, out _) ==
+                Local3DResult.UnsupportedCommand);
+        Check("unresolved coordinate, out of UTM and zone spill refuse the whole route",
+            Build(Snapshot(Point(1, 0, 0, 0, 50)), frame, out _) == Local3DResult.UnresolvedPosition &&
+            Build(Snapshot(Point(1, 0, 85, 2, 50)), frame, out _) == Local3DResult.UnresolvedPosition &&
+            Build(Snapshot(Point(1, 0, 10, 8, 50)), frame, out _) == Local3DResult.UnresolvedPosition);
+        Check("invalid render frame and empty mission explicit",
+            Build(input, new WorldFrame(), out _) == Local3DResult.FrameUnavailable &&
+            Build(Snapshot(), frame, out _) == Local3DResult.Empty);
+        Check("single point stays one vertex, no synthetic leg",
+            Build(Snapshot(input.Rows[0]), frame, out var one) == Local3DResult.Ready && one.Vertices.Count == 1);
+        var otherFrame = new WorldFrame();
+        otherFrame.Update(10.12, 2.1);
+        Check("different scene owner cannot reuse even coincident origin version", model.IsCurrent(frame) && !model.IsCurrent(otherFrame));
+        frame.Update(10.25, 2.1);
+        Check("production frame rebase invalidates old coordinates; rebuilding preserves AMSL",
+            !model.IsCurrent(frame) && Build(input, frame, out var moved) == Local3DResult.Ready &&
+            moved.IsCurrent(frame) && moved.Vertices[1].MetresAmsl == model.Vertices[1].MetresAmsl);
+        Console.WriteLine(passed + " checks passed");
+    }
+
+    static Local3DResult Build(ReadOnlyPlanSnapshot p, WorldFrame frame, out LocalPlan3DProjection result) =>
+        LocalPlan3DProjectionBuilder.TryBuild(p, frame, out result);
+    static ReadOnlyPlanSnapshot Snapshot(params PlanRow[] rows) =>
+        new ReadOnlyPlanSnapshot(new PlanHome(3, 10.12, 2.1, 973), rows, "en-US");
+    static PlanRow Point(int sequence, byte frame, double lat, double lng, double alt, string key = "WAYPOINT")
+    {
+        var values = new double[] { 0, 0, 0, 0, lat, lng, alt };
+        return new PlanRow(sequence, key, 16, frame, values, values);
+    }
+    static void Check(string name, bool success)
+    {
+        if (!success) throw new Exception("Failed: " + name);
+        Console.WriteLine("PASS " + name);
+        passed++;
+    }
+    static void RenderSynthetic(LocalPlan3DProjection model, string path)
+    {
+        // Orthographic sketch of the projected geometry. This is deliberately not the program's OpenGL renderer.
+        using (var bitmap = new Bitmap(440, 270))
+        using (var graphics = Graphics.FromImage(bitmap))
+        using (var font = new Font(FontFamily.GenericSansSerif, 11))
+        using (var pen = new Pen(Color.MediumPurple, 4) { DashStyle = System.Drawing.Drawing2D.DashStyle.Dash })
+        {
+            graphics.Clear(Color.White);
+            graphics.DrawString("Local plan only | synthetic 3D feasibility sketch", font, Brushes.Black, 12, 10);
+            var screen = model.Vertices.Select(v => new PointF((float)(75 + 0.23 * v.EastMetres - 0.055 * v.NorthMetres),
+                (float)(230 - 0.09 * v.NorthMetres - 1.0 * v.MetresAmsl))).ToArray();
+            if (screen.Length > 1) graphics.DrawLines(pen, screen);
+            for (int i = 0; i < screen.Length; i++)
+            {
+                var p = screen[i];
+                graphics.FillEllipse(Brushes.MediumPurple, p.X - 3, p.Y - 3, 6, 6);
+                graphics.DrawString(model.Vertices[i].Sequence + " : " +
+                    model.Vertices[i].MetresAmsl + " m AMSL", font, Brushes.Black, p.X + 5, p.Y - 15);
+            }
+            bitmap.Save(path);
+        }
+    }
+}

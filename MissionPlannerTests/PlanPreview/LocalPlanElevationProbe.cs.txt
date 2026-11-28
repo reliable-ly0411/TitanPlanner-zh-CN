@@ -1,0 +1,175 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Windows.Forms;
+using OpenTK.Graphics.ES20;
+using MissionPlanner.Controls.Scene3D;
+using OpenTK;
+using Plan29PreviewProbe;
+
+internal static class LocalPlanElevationProbe
+{
+    static int passed;
+    [STAThread]
+    static void Main(string[] args)
+    {
+        var frame = new WorldFrame();
+        frame.Update(10.12, 2.1);
+        var route = MakePlan();
+        var alternate = MakePlan();  // same numbers, different source object
+        var home = Home(120);
+        var terrain = Terrain(90);
+        var evidence = Proof(route, home, terrain);
+        Check("relative Home and local terrain use independent verified sources",
+            Build(route, frame, evidence, out var model) == Local3DResult.Ready &&
+            model.Vertices.Select(v => v.MetresAmsl).SequenceEqual(new double[] { 135, 117, 32 }));
+        Check("absolute altitude unchanged in mixed plan", model.Vertices[2].MetresAmsl == 32);
+        Check("same numbers do not license a different plan snapshot",
+            Missing(alternate, frame, evidence));
+        Check("not enough to know planned Home numerically",
+            Missing(route, frame, Proof(route, null, terrain)) &&
+            Missing(route, frame, Proof(route, Home(120, PlanElevationDatum.Unverified), terrain)));
+        Check("missing, mismatched or stale Home receipt fail closed",
+            Missing(route, frame, null) && Missing(route, frame, Proof(route, Home(119), terrain)) &&
+            Missing(route, frame, Proof(route, Home(120, lat: 10.121), terrain)));
+        Check("require matching terrain point, explicit datum and verified source id",
+            Missing(route, frame, Proof(route, home, null)) && Missing(route, frame, Proof(route, home, Terrain(90, 10.1241))) &&
+            Missing(route, frame, Proof(route, home, Terrain(90, datum: PlanElevationDatum.Unverified))) &&
+            Missing(route, frame, Proof(route, home, Terrain(90, identity: ""))));
+        Check("reject duplicate receipts instead of choosing arbitrary terrain",
+            Missing(route, frame, new LocalPlanElevationEvidence(route, home,
+                new[] { Pair(2, terrain), Pair(2, terrain) })));
+        Check("unavailable and nonfinite terrain never become sea level",
+            Missing(route, frame, Proof(route, home, Terrain(double.NaN))));
+        Check("verified zero elevation is distinct from missing receipt",
+            Build(route, frame, Proof(route, home, Terrain(0)), out var sea) == Local3DResult.Ready &&
+            sea.Vertices[1].MetresAmsl == 27);
+        Check("refuse elevation not representable by native render vertices",
+            Build(route, frame, Proof(route, home, Terrain(1e100)), out var over) == Local3DResult.UnresolvedPosition && over == null);
+
+        var adapter = new LocalPlan3DLineAdapter();
+        Check("actual scene VertexList batch prepared independently of device",
+            adapter.Prepare(route, frame, evidence) == Local3DResult.Ready && adapter.Caption(route, frame) == LocalPlan3DLineAdapter.SourceCaption);
+        var batch = adapter.CopyGeometryForProbe(route, frame);
+        Check("native line vertex shape and source color; crosses plus dashed legs", batch.Length == (3 * 4 + 2 * 12) * 7 &&
+            batch[2] == 135 && batch[3] == 0.55f && batch[4] == 0.20f && batch[5] == 0.85f &&
+            batch[6] == 1 && batch[4 * 7 + 2] == 117);
+        batch[2] = -1;
+        Check("external reader gets a copy and cannot mutate active batch",
+            adapter.CopyGeometryForProbe(route, frame)[2] == 135);
+        var view = Matrix4.Identity;
+        var projection = Matrix4.Identity;
+        Check("stale source suppresses caption and real renderer pass before GL",
+            adapter.Caption(alternate, frame) == null && !adapter.Draw(null, alternate, frame, ref projection, ref view));
+        frame.Update(10.25, 2.1);
+        Check("frame rebase suppresses old batch until recomputed",
+            adapter.Caption(route, frame) == null && !adapter.Draw(null, route, frame, ref projection, ref view) &&
+            adapter.Prepare(route, frame, evidence) == Local3DResult.Ready);
+        Check("missing new proof clears an existing visible layer instead of leaving old geometry",
+            adapter.Prepare(alternate, frame, evidence) == Local3DResult.MissingElevationEvidence &&
+            adapter.Caption(route, frame) == null && !adapter.Draw(null, route, frame, ref projection, ref view));
+        adapter.Prepare(route, frame, evidence);
+        adapter.Invalidate();
+        Check("context switch/disconnect invalidation clears only local caption and batch",
+            adapter.Caption(route, frame) == null && adapter.CopyGeometryForProbe(route, frame).Length == 0);
+        Exception wrongOwner = null;
+        var thread = new Thread(() => { try { adapter.Invalidate(); } catch (Exception e) { wrongOwner = e; } });
+        thread.Start(); thread.Join();
+        Check("wrong thread cannot change local render cache", wrongOwner is InvalidOperationException);
+        if (args.Contains("--gl-smoke")) VerifyOpenGl(route, evidence);
+        Console.WriteLine(passed + " checks passed");
+    }
+
+    static void VerifyOpenGl(ReadOnlyPlanSnapshot route, LocalPlanElevationEvidence evidence)
+    {
+        const int size = 320;
+        using (var form = new Form { ClientSize = new System.Drawing.Size(size, size) })
+        using (var window = new GLControl { Dock = DockStyle.Fill })
+        using (var renderer = new LineRenderer())
+        {
+            form.Controls.Add(window);
+            form.Show();
+            Application.DoEvents();
+            window.MakeCurrent();
+            Console.WriteLine("OpenGL fixture renderer: " + GL.GetString(StringName.Renderer));
+            GL.Viewport(0, 0, size, size);
+            GL.ClearColor(0, 0, 0, 1);
+            GL.Clear(ClearBufferMask.ColorBufferBit);
+            var frame = new WorldFrame();
+            frame.Update(10.12, 2.1);
+            var adapter = new LocalPlan3DLineAdapter();
+            var projection = Matrix4.CreateOrthographicOffCenter(-120, 1500, -140, 1040, -250, 250);
+            var view = Matrix4.Identity;
+            bool ready = adapter.Prepare(route, frame, evidence) == Local3DResult.Ready;
+            // A neighboring simulated device pass, not any live renderer state.
+            var independent = new VertexList();
+            independent.AddColored(10, 880, 10, 1, 1, 0, 1);
+            independent.AddColored(1000, 880, 10, 1, 1, 0, 1);
+            renderer.Draw(independent, PrimitiveType.Lines, 2f, ref projection, ref view);
+            bool drew = adapter.Draw(renderer, route, frame, ref projection, ref view);
+            var first = ReadRoutePixels(size);
+            Check("actual production LineRenderer draws independent purple and simulated yellow batches",
+                ready && drew && first.purple > 20 && first.yellow > 20 && GL.GetError() == ErrorCode.NoError);
+            adapter.Invalidate();
+            GL.Clear(ClearBufferMask.ColorBufferBit);
+            renderer.Draw(independent, PrimitiveType.Lines, 2f, ref projection, ref view);
+            bool skipped = !adapter.Draw(renderer, route, frame, ref projection, ref view);
+            var cancelled = ReadRoutePixels(size);
+            Check("actual GL cancel removes only local pixels and preserves independent yellow route",
+                skipped && cancelled.purple == 0 && cancelled.yellow == first.yellow &&
+                GL.GetError() == ErrorCode.NoError);
+        }
+    }
+
+    static (int purple, int yellow) ReadRoutePixels(int size)
+    {
+        var rgba = new byte[size * size * 4];
+        GL.ReadPixels(0, 0, size, size, PixelFormat.Rgba, PixelType.UnsignedByte, rgba);
+        int purple = 0, yellow = 0;
+        for (int i = 0; i < rgba.Length; i += 4)
+        {
+            if (rgba[i + 2] > 170 && rgba[i] > 100 && rgba[i] < 170 && rgba[i + 1] < 90) purple++;
+            if (rgba[i] > 220 && rgba[i + 1] > 220 && rgba[i + 2] < 25) yellow++;
+        }
+        return (purple, yellow);
+    }
+
+    static bool Missing(ReadOnlyPlanSnapshot source, WorldFrame frame, LocalPlanElevationEvidence proof) =>
+        Build(source, frame, proof, out var p) == Local3DResult.MissingElevationEvidence && p == null;
+    static Local3DResult Build(ReadOnlyPlanSnapshot source, WorldFrame frame, LocalPlanElevationEvidence proof,
+        out LocalPlan3DProjection model) => LocalPlan3DProjectionBuilder.TryBuild(source, frame, proof, out model);
+    static ReadOnlyPlanSnapshot MakePlan() => new ReadOnlyPlanSnapshot(new PlanHome(3, 10.12, 2.1, 120),
+        new[] { Row(1,3,10.12,2.10,15), Row(2,11,10.124,2.106,27), Row(3,0,10.125,2.111,32) }, "en-US");
+    static PlanRow Row(int sequence,byte frame,double lat,double lng,double alt)
+    {
+        var values = new double[] { 0, 0, 0, 0, lat, lng, alt };
+        return new PlanRow(sequence, "WAYPOINT", 16, frame, values, values);
+    }
+    static LocalPlanElevationEvidence Proof(ReadOnlyPlanSnapshot source, PlanElevationReceipt home, PlanElevationReceipt terrain) =>
+        new LocalPlanElevationEvidence(source, home, new[] { Pair(2, terrain) });
+    static KeyValuePair<int, PlanElevationReceipt> Pair(int seq,PlanElevationReceipt receipt) =>
+        new KeyValuePair<int, PlanElevationReceipt>(seq, receipt);
+    static PlanElevationReceipt Terrain(double height,double lat = 10.124,
+        PlanElevationDatum datum = PlanElevationDatum.SceneCompatibleAmsl,string identity = "synthetic-terrain-fixture") =>
+        new PlanElevationReceipt(PlanElevationSource.VerifiedOfflineTerrain, datum, identity, lat, 2.106, height);
+    static PlanElevationReceipt Home(double height, PlanElevationDatum datum = PlanElevationDatum.SceneCompatibleAmsl,
+        double lat = 10.12) => new PlanElevationReceipt(PlanElevationSource.VerifiedPlanHome, datum,
+        "synthetic-planned-home-fixture", lat, 2.1, height);
+    static void Check(string name,bool okay)
+    {
+        if (!okay) throw new Exception("Failed: " + name);
+        passed++;
+        Console.WriteLine("PASS " + name);
+    }
+}
+
+// The scoped offline fixture excludes terrain and imagery; only native line resources are compiled.
+namespace MissionPlanner.Controls.Scene3D
+{
+    internal static class GMapImagerySource
+    {
+        internal static byte[] ToBgra(System.Drawing.Image image, out int width, out int height) =>
+            throw new System.InvalidOperationException("Imagery is prohibited in this line-only fixture.");
+    }
+}

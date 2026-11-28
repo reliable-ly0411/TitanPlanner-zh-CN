@@ -1,0 +1,149 @@
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+
+namespace Plan29PreviewProbe
+{
+    // Test-only capability: accepts in-memory fixtures, never files/URLs/device objects.
+    internal sealed class OfflineDatumPair : IDisposable
+    {
+        internal const string Horizontal = "fixture:degrees";
+        internal const string Vertical = "fixture:ellipsoid";
+        internal enum Unit { Metres, Feet }
+        internal enum Outcome { Ready, Retired, InvalidPlan, MissingEvidence, OutsideOrMissing }
+        internal enum HeightKind { Absolute, Home }
+        internal sealed class Receipt
+        {
+            internal readonly ReadOnlyPlanSnapshot Plan;
+            internal readonly HeightKind Kind;
+            internal readonly int Sequence;
+            internal readonly double Lat, Lon, Value;
+            internal readonly string Datum;
+            internal readonly Unit Units;
+            internal Receipt(ReadOnlyPlanSnapshot plan, HeightKind kind, int sequence, double lat, double lon, double value, string datum, Unit units)
+            { Plan = plan; Kind = kind; Sequence = sequence; Lat = lat; Lon = lon; Value = value; Datum = datum; Units = units; }
+        }
+        internal sealed class FixtureGrid
+        {
+            internal readonly string Identity, Revision, Xy, Z, License;
+            internal readonly Unit Units;
+            private readonly double?[,] nodes;
+            private readonly double south, west, step;
+            internal FixtureGrid(string identity, string revision, string xy, string z, string license, Unit units,
+                double south, double west, double step, double?[,] nodes)
+            {
+                Identity = identity; Revision = revision; Xy = xy; Z = z; License = license; Units = units;
+                this.south = south; this.west = west; this.step = step;
+                this.nodes = nodes == null ? null : (double?[,])nodes.Clone();
+            }
+            internal bool Admissible => Identity == "fixture:generated-grid" && !string.IsNullOrWhiteSpace(Revision) &&
+                Xy == Horizontal && Z == Vertical && License == "fixture:generated-for-test" && Known(Units) &&
+                Finite(south) && Finite(west) && Finite(step) && step > 0 && nodes != null &&
+                nodes.GetLength(0) >= 2 && nodes.GetLength(1) >= 2;
+            internal bool Sample(double lat, double lon, out double height)
+            {
+                height = 0;
+                if (!Admissible) return false;
+                var y = (lat - south) / step; var x = (lon - west) / step;
+                if (!Finite(x) || !Finite(y) || x < 0 || y < 0 ||
+                    x > nodes.GetLength(1) - 1 || y > nodes.GetLength(0) - 1) return false;
+                var i = Math.Min((int)x, nodes.GetLength(1) - 2);
+                var j = Math.Min((int)y, nodes.GetLength(0) - 2);
+                x -= i; y -= j;
+                var values = new[] { nodes[j,i], nodes[j,i+1], nodes[j+1,i], nodes[j+1,i+1] };
+                var weights = new[] { (1-x)*(1-y), x*(1-y), (1-x)*y, x*y };
+                for (var n = 0; n < 4; n++)
+                {
+                    if (weights[n] == 0) continue;
+                    if (!values[n].HasValue || !Finite(values[n].Value)) return false;
+                    height += weights[n] * Metres(values[n].Value, Units);
+                }
+                return Finite(height);
+            }
+        }
+        internal sealed class Epoch
+        {
+            internal readonly ReadOnlyPlanSnapshot Plan;
+            internal readonly FixtureGrid Grid;
+            internal readonly ReadOnlyCollection<Receipt> Receipts;
+            internal Epoch(ReadOnlyPlanSnapshot plan, FixtureGrid grid, Receipt[] receipts)
+            { Plan = plan; Grid = grid; Receipts = Array.AsReadOnly((Receipt[])receipts.Clone()); }
+        }
+        internal sealed class Payload
+        {
+            internal readonly ReadOnlyCollection<(double lat, double lon)> Map;
+            internal readonly ReadOnlyCollection<(double lat, double lon, double z)> Scene;
+            internal readonly string SourceLabel = "Synthetic fixture; not navigation or real data";
+            internal Payload(List<(double, double)> map, List<(double, double, double)> scene)
+            { Map = map.AsReadOnly(); Scene = scene.AsReadOnly(); }
+        }
+        private Epoch current;
+        private bool disposed;
+        internal Payload Published { get; private set; }
+        internal Payload GetPublished(ReadOnlyPlanSnapshot plan) =>
+            current != null && ReferenceEquals(current.Plan, plan) ? Published : null;
+
+        internal Epoch Switch(ReadOnlyPlanSnapshot plan, FixtureGrid grid, params Receipt[] receipts)
+        {
+            current = null; Published = null;
+            if (disposed || plan == null || (grid != null && !grid.Admissible) ||
+                receipts == null || receipts.Any(r => r == null)) return null;
+            return current = new Epoch(plan, grid, receipts);
+        }
+        internal Outcome Publish(Epoch epoch, ReadOnlyPlanSnapshot plan)
+        {
+            if (disposed || epoch == null || !ReferenceEquals(current, epoch)) return Outcome.Retired;
+            Published = null;
+            if (!ReferenceEquals(epoch.Plan, plan) || plan.Rows.Count == 0)
+                return Reject(Outcome.InvalidPlan);
+            var map = new List<(double,double)>();
+            var scene = new List<(double,double,double)>();
+            foreach (var row in plan.Rows)
+            {
+                var lat = row.Values[4]; var lon = row.Values[5]; var z = row.Values[6];
+                if (row.CommandId != 16 || row.CommandKey != "WAYPOINT" || row.Sequence != map.Count + 1 ||
+                    !Finite(lat) || !Finite(lon) || !Finite(z) || Math.Abs(lat) > 90 || Math.Abs(lon) > 180)
+                    return Reject(Outcome.InvalidPlan);
+                double basel;
+                switch (row.Frame)
+                {
+                    case 0: case 5:
+                        if (!Resolve(epoch, HeightKind.Absolute, row.Sequence, lat, lon, z, out z))
+                            return Reject(Outcome.MissingEvidence);
+                        break;
+                    case 3: case 6:
+                        if (!Resolve(epoch, HeightKind.Home, 0, plan.Home.Latitude, plan.Home.Longitude,
+                            plan.Home.AltitudeMetres, out basel)) return Reject(Outcome.MissingEvidence);
+                        z += basel;
+                        break;
+                    case 10: case 11:
+                        if (epoch.Grid == null || !epoch.Grid.Sample(lat, lon, out basel))
+                            return Reject(Outcome.OutsideOrMissing);
+                        z += basel;
+                        break;
+                    default: return Reject(Outcome.InvalidPlan);
+                }
+                if (!Finite(z)) return Reject(Outcome.InvalidPlan);
+                map.Add((lat, lon)); scene.Add((lat, lon, z));
+            }
+            Published = new Payload(map, scene);
+            return Outcome.Ready;
+        }
+        private Outcome Reject(Outcome reason) { current = null; Published = null; return reason; }
+        private static bool Resolve(Epoch epoch, HeightKind kind, int seq, double lat, double lon, double planMetres, out double z)
+        {
+            z = 0;
+            var found = epoch.Receipts.Where(x => x.Sequence == seq && x.Kind == kind).ToArray();
+            if (found.Length != 1) return false;
+            var item = found[0];
+            if (!ReferenceEquals(item.Plan, epoch.Plan) || item.Datum != Vertical || !Known(item.Units) || item.Lat != lat || item.Lon != lon) return false;
+            z = Metres(item.Value, item.Units);
+            return Finite(z) && z == planMetres; // Captured values are already normalized to metres.
+        }
+        private static double Metres(double d, Unit unit) => unit == Unit.Feet ? d * 0.3048 : d;
+        private static bool Known(Unit unit) => unit == Unit.Metres || unit == Unit.Feet;
+        private static bool Finite(double d) => !double.IsNaN(d) && !double.IsInfinity(d);
+        public void Dispose() { disposed = true; current = null; Published = null; }
+    }
+}

@@ -1,0 +1,102 @@
+using System;
+using System.Globalization;
+using System.Threading;
+
+namespace Plan29PreviewProbe
+{
+    public enum PlanAltitudeUnit { Unavailable, Metres, Feet }
+
+    // Candidate local-only UI boundary. A receipt describes an explicit attestation, not a survey.
+    // Host must create a new revision for any edit/input-unit/scope/vehicle-session change.
+    public sealed class PlanHomeDatumSession
+    {
+        public sealed class Ticket { internal Ticket() { } }
+
+        private readonly object owner;
+        private readonly int uiThread = Thread.CurrentThread.ManagedThreadId;
+        private Ticket ticket;
+        private ReadOnlyPlanSnapshot snapshot;
+        private PlanAltitudeUnit displayUnit;
+        private PlanElevationReceipt receipt;
+
+        public PlanHomeDatumSession(object plannerOwner)
+        {
+            owner = plannerOwner ?? throw new ArgumentNullException(nameof(plannerOwner));
+        }
+
+        public Ticket BeginRevision(object plannerOwner, PlanKind kind, ReadOnlyPlanSnapshot source,
+            PlanAltitudeUnit displayUnit)
+        {
+            CheckThread();
+            if (!ReferenceEquals(owner, plannerOwner)) return null;
+            Invalidate(plannerOwner);
+            if (kind != PlanKind.Mission || source == null || !ScaleMatches(source.Home.DisplayUnitsPerMetre, displayUnit))
+                return null;
+            snapshot = source;
+            this.displayUnit = displayUnit;
+            ticket = new Ticket();
+            return ticket;
+        }
+
+        // TextChanged, display unit changes and implicit/imported text assignment can reach only this path.
+        public void Invalidate(object plannerOwner)
+        {
+            CheckThread();
+            if (!ReferenceEquals(owner, plannerOwner)) return;
+            ticket = null; snapshot = null; receipt = null; displayUnit = PlanAltitudeUnit.Unavailable;
+        }
+
+        // Only an explicit, separate plan-only attestation event may call this method, never TextChanged,
+        // connection updates, geometry generation, or a file's media type alone.
+        public bool TryConfirmAmsl(object plannerOwner, Ticket change, ReadOnlyPlanSnapshot current,
+            PlanElevationDatum chosenDatum, PlanAltitudeUnit chosenUnit, string explicitAltitude,
+            double shownLatitude, double shownLongitude, string sourceNote)
+        {
+            CheckThread();
+            if (!Matches(plannerOwner, change, current))
+                return false;
+
+            receipt = null; // a rejected current attestation should not leave old proof available.
+            if (chosenDatum != PlanElevationDatum.SceneCompatibleAmsl || chosenUnit != displayUnit ||
+                string.IsNullOrWhiteSpace(sourceNote) || sourceNote.Length > 256)
+                return false;
+            if (shownLatitude != current.Home.Latitude || shownLongitude != current.Home.Longitude ||
+                !ReadOnlyPlanReader.IsFinite(shownLatitude) || !ReadOnlyPlanReader.IsFinite(shownLongitude) ||
+                Math.Abs(shownLatitude) > 90 || Math.Abs(shownLongitude) > 180 ||
+                (shownLatitude == 0 && shownLongitude == 0))
+                return false;
+
+            // Unambiguous explicit input. Use the same bytes-normalized display factor captured for this plan.
+            var culture = CultureInfo.GetCultureInfo(current.DisplayCulture);
+            if (!double.TryParse(explicitAltitude, NumberStyles.Float, culture, out double display) ||
+                !ReadOnlyPlanReader.IsFinite(display))
+                return false;
+            double amsl = display / current.Home.DisplayUnitsPerMetre;
+            if (!ReadOnlyPlanReader.IsFinite(amsl) || amsl != current.Home.AltitudeMetres)
+                return false;
+            receipt = new PlanElevationReceipt(PlanElevationSource.VerifiedPlanHome, chosenDatum,
+                "explicit local Home datum: " + sourceNote.Trim(), shownLatitude, shownLongitude, amsl);
+            return true;
+        }
+
+        public PlanElevationReceipt Proof(object plannerOwner, Ticket change, ReadOnlyPlanSnapshot current)
+        {
+            CheckThread();
+            return Matches(plannerOwner, change, current) ? receipt : null;
+        }
+
+        private bool Matches(object plannerOwner, Ticket change, ReadOnlyPlanSnapshot current) =>
+            ReferenceEquals(owner, plannerOwner) && change != null && ReferenceEquals(ticket, change) &&
+            ReferenceEquals(snapshot, current);
+
+        private static bool ScaleMatches(double stored, PlanAltitudeUnit unit) =>
+            unit == PlanAltitudeUnit.Metres && stored == 1 ||
+            unit == PlanAltitudeUnit.Feet && stored == (double)3.2808399f; // MainV2's existing display-unit scale.
+
+        private void CheckThread()
+        {
+            if (uiThread != Thread.CurrentThread.ManagedThreadId)
+                throw new InvalidOperationException("The current PLAN owner must issue or invalidate Home proof.");
+        }
+    }
+}

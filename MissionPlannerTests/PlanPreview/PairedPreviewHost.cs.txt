@@ -1,0 +1,144 @@
+using System;
+using System.Threading;
+using System.Windows.Forms;
+using Datum = Plan29PreviewProbe.OfflineDatumPair;
+
+namespace Plan29PreviewProbe
+{
+    // Test-only app-owned logical host. Never registers with the application.
+    internal sealed class PairedPreviewHost : IDisposable
+    {
+        internal enum View { Map, Scene }
+        internal sealed class Readiness
+        {
+            internal readonly long Revision;
+            internal readonly Control Control;
+            internal readonly Datum.Payload Candidate;
+            internal Readiness(long revision, Control control, Datum.Payload candidate)
+            { Revision = revision; Control = control; Candidate = candidate; }
+        }
+        private readonly int thread = Thread.CurrentThread.ManagedThreadId;
+        private readonly Control map, scene;
+        private Datum resolver;
+        private Datum.Epoch source;
+        private Datum.Payload staged, active;
+        private long revision;
+        private bool disposed;
+
+        internal PairedPreviewHost(Control map, Control scene)
+        {
+            if (map == null || scene == null || ReferenceEquals(map, scene))
+                throw new ArgumentException("Distinct owned presentation controls required.");
+            this.map = map; this.scene = scene;
+            foreach (var c in new[] { map, scene })
+            {
+                c.HandleDestroyed += OnLost;
+                c.VisibleChanged += OnLost;
+                c.SizeChanged += OnSizeChanged;
+                c.Disposed += OnLost;
+            }
+        }
+        internal long Revision => revision;
+        internal bool EnableFixtureOnly(Datum fixtureResolver)
+        {
+            CheckThread();
+            if (disposed || resolver != null || fixtureResolver == null) return false;
+            resolver = fixtureResolver;
+            return true;
+        }
+        internal long AdoptFixture(Datum.Epoch epoch)
+        {
+            CheckThread();
+            Retire();
+            if (!disposed && resolver != null && epoch != null)
+                source = epoch;
+            return revision;
+        }
+        internal bool Stage(long requested, ReadOnlyPlanSnapshot plan)
+        {
+            CheckThread();
+            if (disposed || requested != revision || source == null || active != null) return false;
+            staged = null;
+            if (resolver.Publish(source, plan) != Datum.Outcome.Ready)
+            { Retire(); return false; }
+            staged = resolver.Published;
+            return staged != null;
+        }
+        internal Readiness MarkReady(View view, long requested)
+        {
+            CheckThread();
+            Control leaf = Leaf(view);
+            return !disposed && requested == revision && staged != null && Ready(leaf)
+                ? new Readiness(revision, leaf, staged) : null;
+        }
+        internal bool Publish(long requested, Readiness readyMap, Readiness readyScene)
+        {
+            CheckThread();
+            if (disposed || requested != revision || staged == null) return false;
+            if (!ReferenceEquals(staged, resolver.Published))
+            { Retire(); return false; } // Resolver source changed or was disposed.
+            if (!Matches(readyMap, map) || !Matches(readyScene, scene)) return false;
+            // No leaf callback can publish half: each asks for the same one immutable logical pair.
+            active = staged;
+            staged = null;
+            return true;
+        }
+        internal Datum.Payload Read(Control view, long requested)
+        {
+            CheckThread();
+            if (disposed || requested != revision || (view != map && view != scene) || active == null)
+                return null;
+            if (!ReferenceEquals(resolver.Published, active) || !Ready(map) || !Ready(scene))
+            { Retire(); return null; }
+            return active;
+        }
+        internal void Error(long requested)
+        {
+            CheckThread();
+            if (!disposed && requested == revision) Retire();
+        }
+        private Control Leaf(View v) => v == View.Map ? map : v == View.Scene ? scene : null;
+        private bool Matches(Readiness proof, Control leaf) =>
+            proof != null && proof.Revision == revision && ReferenceEquals(proof.Control, leaf) &&
+            ReferenceEquals(proof.Candidate, staged) && Ready(leaf);
+        private static bool Ready(Control c) =>
+            c != null && c.IsHandleCreated && c.Visible && !c.Disposing && !c.IsDisposed && c.Width > 0 && c.Height > 0;
+        private void OnSizeChanged(object sender, EventArgs args)
+        {
+            var leaf = (Control)sender;
+            if (leaf.Width <= 0 || leaf.Height <= 0) OnLost(sender, args);
+        }
+        private void OnLost(object sender, EventArgs args)
+        {
+            CheckThread();
+            if (!disposed) Retire();
+        }
+        private void Retire()
+        {
+            checked { revision++; }
+            active = staged = null;
+            source = null;
+        }
+        private void CheckThread()
+        {
+            if (Thread.CurrentThread.ManagedThreadId != thread)
+                throw new InvalidOperationException("Preview lifetime belongs to its owning UI thread.");
+        }
+        public void Dispose()
+        {
+            CheckThread();
+            if (disposed) return;
+            disposed = true;
+            Retire();
+            foreach (var c in new[] { map, scene })
+            {
+                c.HandleDestroyed -= OnLost;
+                c.VisibleChanged -= OnLost;
+                c.SizeChanged -= OnSizeChanged;
+                c.Disposed -= OnLost;
+            }
+            resolver?.Dispose();
+            resolver = null;
+        }
+    }
+}

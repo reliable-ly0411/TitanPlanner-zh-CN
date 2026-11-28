@@ -1,0 +1,122 @@
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Linq;
+using System.Threading;
+using GMap.NET;
+using GMap.NET.WindowsForms;
+using GMap.NET.WindowsForms.Markers;
+
+// Isolated proof of concept. Not referenced or compiled by MissionPlanner.csproj.
+namespace Plan29PreviewProbe
+{
+    public sealed class ReadOnlyPlanOverlay : IDisposable
+    {
+        public const string OverlayId = "local-plan-read-only-probe";
+        private readonly GMapControl map;
+        private readonly int uiThread;
+        private readonly Pen stroke = new Pen(Color.MediumPurple, 3) { DashStyle = DashStyle.Dash };
+        private GMapOverlay installed;
+        private bool disposed;
+
+        public ReadOnlyPlanOverlay(GMapControl map)
+        {
+            this.map = map ?? throw new ArgumentNullException(nameof(map));
+            uiThread = Thread.CurrentThread.ManagedThreadId;
+        }
+
+        // Snapshot already-resolved PLAN display geometry; this is not a command decoder.
+        // Enumerate and validate every incoming segment before touching the displayed overlay.
+        public void Replace(IEnumerable<IEnumerable<PointLatLng>> segments, string sourceCaption)
+        {
+            CheckThread();
+            if (segments == null) throw new ArgumentNullException(nameof(segments));
+            if (string.IsNullOrWhiteSpace(sourceCaption)) throw new ArgumentException(nameof(sourceCaption));
+
+            var snapshot = segments.Select(segment => segment.ToArray()).Where(segment => segment.Length > 0).ToArray();
+            foreach (var point in snapshot.SelectMany(segment => segment))
+            {
+                if (double.IsNaN(point.Lat) || double.IsInfinity(point.Lat) || Math.Abs(point.Lat) > 90 ||
+                    double.IsNaN(point.Lng) || double.IsInfinity(point.Lng) || Math.Abs(point.Lng) > 180)
+                    throw new ArgumentOutOfRangeException(nameof(segments));
+            }
+
+            if (snapshot.Length == 0)
+            {
+                Clear();
+                return;
+            }
+
+            var candidate = new GMapOverlay(OverlayId);
+            try
+            {
+                foreach (var segment in snapshot)
+                {
+                    // A one-point route still gets its own visible marker; don't join disjoint segments.
+                    if (segment.Length > 1)
+                        candidate.Routes.Add(new GMapRoute(segment, OverlayId) { Stroke = stroke, IsHitTestVisible = false });
+                    candidate.Markers.Add(new GMarkerGoogle(segment[0], GMarkerGoogleType.purple_dot)
+                    {
+                        IsHitTestVisible = false,
+                        ToolTipText = sourceCaption,
+                        ToolTipMode = MarkerTooltipMode.Always
+                    });
+                }
+            }
+            catch
+            {
+                candidate.Dispose();
+                throw;
+            }
+
+            try
+            {
+                map.Overlays.Add(candidate);
+                candidate.ForceUpdate();
+            }
+            catch
+            {
+                map.Overlays.Remove(candidate);
+                candidate.Dispose();
+                throw;
+            }
+
+            var previous = installed;
+            installed = candidate;
+            Remove(previous);
+            map.Invalidate();
+        }
+
+        public void Clear()
+        {
+            CheckThread();
+            var previous = installed;
+            installed = null;
+            Remove(previous);
+            map.Invalidate();
+        }
+
+        private void Remove(GMapOverlay overlay)
+        {
+            if (overlay == null) return;
+            map.Overlays.Remove(overlay);
+            overlay.Dispose();
+        }
+
+        private void CheckThread()
+        {
+            if (Thread.CurrentThread.ManagedThreadId != uiThread)
+                throw new InvalidOperationException("Preview must be changed on the owning UI thread.");
+            if (disposed) throw new ObjectDisposedException(nameof(ReadOnlyPlanOverlay));
+        }
+
+        public void Dispose()
+        {
+            if (disposed) return;
+            Clear();
+            stroke.Dispose();
+            disposed = true;
+        }
+    }
+}

@@ -1,0 +1,159 @@
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Globalization;
+using System.Linq;
+using System.Threading;
+using System.Windows.Forms;
+using GMap.NET;
+using GMap.NET.MapProviders;
+using GMap.NET.WindowsForms;
+using Plan29PreviewProbe;
+
+internal static class LocalPlanPreviewSessionProbe
+{
+    static int passed;
+    static readonly CultureInfo Culture = CultureInfo.InvariantCulture;
+    static readonly PointLatLng[] FixturePoints =
+        { new PointLatLng(-0.023, -0.028), new PointLatLng(-0.008, -0.003), new PointLatLng(0.024, 0.024) };
+
+    [STAThread]
+    public static void Main()
+    {
+        GMaps.Instance.Mode = AccessMode.CacheOnly;
+        using (var host = new Form { ClientSize = new Size(860, 410) })
+        using (var planner = Map(new Point(0, 0)))
+        using (var flight = Map(new Point(424, 0)))
+        using (var grid = Grid())
+        using (var flow = new LocalPlanPreviewSession(planner, flight))
+        using (var anotherFlow = new LocalPlanPreviewSession(flight, planner))
+        {
+            host.Controls.Add(planner);
+            host.Controls.Add(flight);
+            host.Controls.Add(grid);
+            host.Show();
+            planner.Zoom = flight.Zoom = 12;
+            Application.DoEvents();
+
+            var live = new GMapOverlay("device-stub");
+            live.Routes.Add(new GMapRoute(new[] { FixturePoints[0], FixturePoints[1] }, "device-stub"));
+            flight.Overlays.Add(live);
+            var beforeLive = live.Routes[0].Points.ToArray();
+
+            LocalPlanPreviewSession.Ticket ticket = flow.EnterRevision(PlanKind.Mission);
+            var reader = new ReadOnlyPlanReader(grid, new PlanCommandCatalog(
+                new Dictionary<string, ushort> { ["WAYPOINT"] = 16 }, new Dictionary<string, double[]>(),
+                new ushort[] { 5000, 5100 }));
+            grid.Rows.Add("WAYPOINT", -5, 0, 0, 0, -0.023, -0.028, 42, 3);
+            grid.Rows.Add("WAYPOINT", 1, 0, 0, 0, 0.024, 0.024, 54, 3);
+
+            var canonicalPlanner = Route(planner, FixturePoints);
+            var rogue = Route(flight, FixturePoints);
+            Check("mismatched map cannot prove planner projection",
+                !flow.NoteProjection(ticket, Capture(reader), Capture(reader), rogue));
+            Check("foreign owner ticket is never accepted",
+                !flow.NoteProjection(anotherFlow.EnterRevision(PlanKind.Mission), Capture(reader), Capture(reader), canonicalPlanner));
+            Check("captured row data and completed planner overlay produce a local readonly route",
+                flow.NoteProjection(ticket, Capture(reader), Capture(reader), canonicalPlanner) &&
+                flow.Show(ticket, Capture(reader), "Local plan · read-only") &&
+                Local(flight).Routes[0].Points.SequenceEqual(FixturePoints));
+            Check("fresh capture still does not rewrite a negative delay cell",
+                grid.Rows[0].Cells["Param1"].Value.Equals(-5));
+            canonicalPlanner.Routes[0].Points[0] = new PointLatLng(8, 9);
+            Check("on-demand display uses captured points, not mutable planner route",
+                flow.Show(ticket, Capture(reader), "Local plan · read-only") &&
+                Local(flight).Routes[0].Points[0] == FixturePoints[0]);
+
+            // No generation bump here, exercising the independent content mismatch guard.
+            var beforeEdit = Capture(reader);
+            grid.Rows[0].Cells["Alt"].Value = 77;
+            var afterEdit = Capture(reader);
+            Check("cannot reuse stale geometry when a row changes without an event",
+                !flow.Show(ticket, afterEdit, "Local plan · read-only") && Local(flight) == null);
+            Check("rejects projection if normal renderer modified planner rows during projection",
+                !flow.NoteProjection(ticket, beforeEdit, afterEdit, canonicalPlanner));
+
+            // Real WinForms UI event changes clocks in the fixture; product events are not wired.
+            grid.CellValueChanged += (_, __) => { ticket = flow.EnterRevision(PlanKind.Mission); };
+            var retired = ticket;
+            grid.Rows[0].Cells["Alt"].Value = 88;
+            Check("committed grid event retires older projection ticket",
+                !ReferenceEquals(ticket, retired) && !flow.NoteProjection(retired, afterEdit, afterEdit, canonicalPlanner));
+            planner.Overlays.Remove(canonicalPlanner);
+            canonicalPlanner.Dispose();
+            canonicalPlanner = Route(planner, FixturePoints.Take(2).ToArray());
+            Check("new completed projection can show shorter path without old tail",
+                flow.NoteProjection(ticket, Capture(reader), Capture(reader), canonicalPlanner) &&
+                flow.Show(ticket, Capture(reader), "Local plan · read-only") && Local(flight).Routes[0].Points.Count == 2);
+
+            retired = ticket;
+            ticket = flow.EnterRevision(PlanKind.Fence);
+            Check("switching type clears layer and rejects stale UI callback",
+                ticket == null && Local(flight) == null && !flow.Show(retired, Capture(reader), "Local plan · read-only"));
+            ticket = flow.EnterRevision(PlanKind.Mission);
+            var local = Capture(reader);
+            Check("new source scope needs a projection even if rows match",
+                !flow.Show(ticket, local, "Local plan · read-only") && Local(flight) == null &&
+                !flow.NoteProjection(ticket, local, local, canonicalPlanner));
+            planner.Overlays.Remove(canonicalPlanner);
+            canonicalPlanner.Dispose();
+            canonicalPlanner = Route(planner, FixturePoints.Take(2).ToArray());
+            Check("new scope can show only a newly completed projection",
+                flow.NoteProjection(ticket, local, local, canonicalPlanner) && flow.Show(ticket, local, "Local plan · read-only"));
+            flow.Invalidate(); // disconnect / source replaced, no actual device
+            Check("disconnect clears layer and blocks a previously queued projection",
+                Local(flight) == null && !flow.NoteProjection(ticket, local, local, canonicalPlanner) &&
+                !flow.Show(ticket, local, "Local plan · read-only"));
+
+            ticket = flow.EnterRevision(PlanKind.Mission);
+            Check("reconnect with matching rows still does not show old route",
+                !flow.Show(ticket, local, "Local plan · read-only") && Local(flight) == null);
+            Check("old overlay object cannot be restamped even after reconnect",
+                !flow.NoteProjection(ticket, local, local, canonicalPlanner));
+            planner.Overlays.Remove(canonicalPlanner);
+            canonicalPlanner.Dispose();
+            canonicalPlanner = Route(planner, FixturePoints.Take(2).ToArray());
+            Check("reauthorized scope can show its own completed projection",
+                flow.NoteProjection(ticket, local, local, canonicalPlanner) && flow.Show(ticket, local, "Local plan · read-only"));
+            grid.Rows.Clear();
+            Check("Home-only request clears even without another rendered route",
+                flow.Show(ticket, Capture(reader), "Local plan · read-only") && Local(flight) == null);
+            Exception background = null;
+            var thread = new Thread(() => { try { flow.Invalidate(); } catch (Exception e) { background = e; } });
+            thread.Start(); thread.Join();
+            Check("wrong thread cannot mutate overlay lifetime", background is InvalidOperationException);
+            Check("device overlay/route and original planner overlay retain identity and coordinates",
+                flight.Overlays.Contains(live) && live.Routes[0].Points.SequenceEqual(beforeLive) &&
+                planner.Overlays.Contains(canonicalPlanner) && canonicalPlanner.Routes[0].Points.Count == 2);
+        }
+        Console.WriteLine(passed + " checks passed");
+    }
+
+    static GMapControl Map(Point location) => new GMapControl
+        { Location = location, Size = new Size(416, 264), MapProvider = GMapProviders.EmptyProvider,
+            RoutesEnabled = true, MinZoom = 1, MaxZoom = 20 };
+    static DataGridView Grid()
+    {
+        var g = new DataGridView { Location = new Point(0,270), Size = new Size(842,120), AllowUserToAddRows = false };
+        foreach (var key in new[] { "Command", "Param1", "Param2", "Param3", "Param4", "Lat", "Lon", "Alt", "Frame" })
+            g.Columns.Add(key, key);
+        return g;
+    }
+    static ReadOnlyPlanSnapshot Capture(ReadOnlyPlanReader reader) =>
+        reader.Capture(PlanKind.Mission, "-0.025", "-0.03", "3", 1.0, 3, Culture);
+    static GMapOverlay Route(GMapControl map, PointLatLng[] points)
+    {
+        var overlay = new GMapOverlay("WPOverlay");
+        overlay.Routes.Add(new GMapRoute(points, "planner-route"));
+        map.Overlays.Add(overlay);
+        overlay.ForceUpdate();
+        return overlay;
+    }
+    static GMapOverlay Local(GMapControl map) => map.Overlays.SingleOrDefault(x => x.Id == ReadOnlyPlanOverlay.OverlayId);
+    static void Check(string name, bool ok)
+    {
+        if (!ok) throw new Exception("Failed: " + name);
+        passed++;
+        Console.WriteLine("PASS " + name);
+    }
+}

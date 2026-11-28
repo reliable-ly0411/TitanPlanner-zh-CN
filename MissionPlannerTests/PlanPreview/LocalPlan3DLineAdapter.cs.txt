@@ -1,0 +1,99 @@
+using System;
+using System.Threading;
+using OpenTK;
+using OpenTK.Graphics.ES20;
+using MissionPlanner.Controls.Scene3D;
+
+namespace Plan29PreviewProbe
+{
+    // Candidate sibling of MissionOverlay. It never reads a vehicle's navigation target or reuses its line batch.
+    // All calls belong to the render owner; host must clear on source/session disposal/change.
+    public sealed class LocalPlan3DLineAdapter
+    {
+        public const string SourceCaption = "Local plan · read-only · AMSL";
+        private readonly VertexList batch = new VertexList();
+        private LocalPlan3DProjection projection;
+        private ReadOnlyPlanSnapshot preparedSource;
+        private readonly int ownerThread = Thread.CurrentThread.ManagedThreadId;
+
+        public Local3DResult Prepare(ReadOnlyPlanSnapshot source, WorldFrame frame, LocalPlanElevationEvidence evidence)
+        {
+            Invalidate();
+            var result = LocalPlan3DProjectionBuilder.TryBuild(source, frame, evidence, out var candidate);
+            if (result == Local3DResult.Ready) Load(source, candidate);
+            return result;
+        }
+
+        internal static LocalPlan3DLineAdapter FromProjection(ReadOnlyPlanSnapshot source,
+            LocalPlan3DProjection candidate)
+        {
+            var layer = new LocalPlan3DLineAdapter();
+            layer.Load(source, candidate);
+            return layer;
+        }
+
+        private void Load(ReadOnlyPlanSnapshot source, LocalPlan3DProjection candidate)
+        {
+            for (int i = 0; i < candidate.Vertices.Count; i++)
+            {
+                var v = candidate.Vertices[i];
+                // Visual point cross, not a target or interactive marker.
+                Add(v.EastMetres - 2, v.NorthMetres, v.HeightMetres);
+                Add(v.EastMetres + 2, v.NorthMetres, v.HeightMetres);
+                Add(v.EastMetres, v.NorthMetres - 2, v.HeightMetres);
+                Add(v.EastMetres, v.NorthMetres + 2, v.HeightMetres);
+                if (i == 0) continue;
+                var previous = candidate.Vertices[i - 1];
+                for (int dash = 0; dash < 6; dash++)
+                {
+                    Interpolate(previous, v, dash / 6.0);
+                    Interpolate(previous, v, (dash + 0.65) / 6.0);
+                }
+            }
+            projection = candidate;
+            preparedSource = source;
+        }
+
+        public void Invalidate()
+        {
+            CheckOwner();
+            projection = null; preparedSource = null; batch.Clear();
+        }
+
+        public string Caption(ReadOnlyPlanSnapshot active, WorldFrame frame) => HasGeometry(active, frame) ? SourceCaption : null;
+
+        public bool Draw(LineRenderer renderer, ReadOnlyPlanSnapshot active, WorldFrame frame, ref Matrix4 projectionMatrix, ref Matrix4 view)
+        {
+            if (!HasGeometry(active, frame)) return false;
+            renderer.Draw(batch, PrimitiveType.Lines, 2f, ref projectionMatrix, ref view);
+            return true;
+        }
+
+        // Kept off the production surface; lets the synthetic harness inspect exactly what Draw would send.
+        internal float[] CopyGeometryForProbe(ReadOnlyPlanSnapshot active, WorldFrame frame)
+        {
+            if (!HasGeometry(active, frame)) return System.Array.Empty<float>();
+            var copy = new float[batch.Count];
+            System.Array.Copy(batch.Data, copy, batch.Count);
+            return copy;
+        }
+
+        internal bool HasGeometry(ReadOnlyPlanSnapshot active, WorldFrame frame)
+        {
+            CheckOwner();
+            return projection != null && ReferenceEquals(preparedSource, active) &&
+                projection.IsCurrent(frame) && batch.Count > 0;
+        }
+
+        private void CheckOwner()
+        {
+            if (Thread.CurrentThread.ManagedThreadId != ownerThread)
+                throw new InvalidOperationException("Local plan rendering must stay on its render owner.");
+        }
+        private void Add(double x, double y, double z) => batch.AddColored(x, y, z, 0.55f, 0.20f, 0.85f, 1f);
+        private void Interpolate(Local3DVertex a, Local3DVertex b, double t) =>
+            Add(a.EastMetres + (b.EastMetres - a.EastMetres) * t,
+                a.NorthMetres + (b.NorthMetres - a.NorthMetres) * t,
+                a.HeightMetres + (b.HeightMetres - a.HeightMetres) * t);
+    }
+}

@@ -1,0 +1,116 @@
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using MissionPlanner.Controls.Scene3D;
+
+namespace Plan29PreviewProbe
+{
+    // Offline feasibility: only plain geographic waypoints with proven elevations are supported.
+    public enum Local3DResult { Ready, Empty, FrameUnavailable, UnsupportedCommand, UnsupportedDatum, MissingElevationEvidence, UnresolvedPosition }
+
+    public sealed class Local3DVertex
+    {
+        internal Local3DVertex(int sequence, double east, double north, double heightMetres)
+        { Sequence = sequence; EastMetres = east; NorthMetres = north; HeightMetres = heightMetres; }
+        public int Sequence { get; }
+        public double EastMetres { get; }
+        public double NorthMetres { get; }
+        public double HeightMetres { get; }
+        public double MetresAmsl => HeightMetres; // 供早期只使用 AMSL 的独立样本使用。
+    }
+
+    public sealed class LocalPlan3DProjection
+    {
+        private readonly WorldFrame frame;
+        private readonly int version;
+        internal LocalPlan3DProjection(WorldFrame frame, int version, Local3DVertex[] vertices)
+        {
+            this.frame = frame; this.version = version;
+            Vertices = Array.AsReadOnly((Local3DVertex[])vertices.Clone());
+        }
+        public ReadOnlyCollection<Local3DVertex> Vertices { get; }
+        public bool IsCurrent(WorldFrame current) =>
+            ReferenceEquals(frame, current) && current.Version == version;
+    }
+
+    public static class LocalPlan3DProjectionBuilder
+    {
+        // Accepts a detached local snapshot (post unit normalization), never a device mission or renderer cache.
+        // The output is a geometric preview, not a predicted or executable course.
+        public static Local3DResult TryBuild(ReadOnlyPlanSnapshot source, WorldFrame frame,
+            out LocalPlan3DProjection projection) => TryBuild(source, frame, null, out projection);
+
+        public static Local3DResult TryBuild(ReadOnlyPlanSnapshot source, WorldFrame frame,
+            LocalPlanElevationEvidence evidence, out LocalPlan3DProjection projection)
+        {
+            projection = null;
+            if (source == null) throw new ArgumentNullException(nameof(source));
+            if (source.Rows.Count == 0) return Local3DResult.Empty;
+            if (frame == null || !frame.IsValid) return Local3DResult.FrameUnavailable;
+
+            int version = frame.Version;
+            var vertices = new List<Local3DVertex>(source.Rows.Count);
+            foreach (var row in source.Rows)
+            {
+                // Keep the feasibility subset conservative. Do not draw across any unsupported command.
+                if (row.CommandKey != "WAYPOINT" || row.CommandId != 16)
+                    return Local3DResult.UnsupportedCommand;
+                // Lat/Lon are already degrees for every supported normalized PLAN frame.
+                double lat = row.Values[4], lng = row.Values[5], amsl = row.Values[6];
+                double baseline;
+                switch (row.Frame)
+                {
+                    case 0: case 5: break; // explicit AMSL
+                    case 3: case 6:
+                        if (evidence == null || !evidence.TryHome(source, out baseline))
+                            return Local3DResult.MissingElevationEvidence;
+                        amsl += baseline;
+                        break;
+                    case 10: case 11:
+                        if (evidence == null || !evidence.TryTerrain(source, row, out baseline))
+                            return Local3DResult.MissingElevationEvidence;
+                        amsl += baseline;
+                        break;
+                    default: return Local3DResult.UnsupportedDatum;
+                }
+                if (!TryProjectVertex(frame, row.Sequence, lat, lng, amsl, out var vertex))
+                    return Local3DResult.UnresolvedPosition;
+                vertices.Add(vertex);
+            }
+            if (version != frame.Version) return Local3DResult.FrameUnavailable;
+            projection = new LocalPlan3DProjection(frame, version, vertices.ToArray());
+            return Local3DResult.Ready;
+        }
+
+        // 高度已统一到本次离线场景的基准。此处只做水平投影，不再叠加 Home 或地形。
+        internal static LocalPlan3DProjection ProjectResolved(WorldFrame frame,
+            IReadOnlyList<(double lat, double lon, double z)> points)
+        {
+            if (frame == null || !frame.IsValid || points == null || points.Count == 0) return null;
+            int version = frame.Version;
+            var vertices = new Local3DVertex[points.Count];
+            for (int i = 0; i < points.Count; i++)
+            {
+                var point = points[i];
+                if (!TryProjectVertex(frame, i + 1, point.lat, point.lon, point.z, out vertices[i]))
+                    return null;
+            }
+            return frame.Version == version ? new LocalPlan3DProjection(frame, version, vertices) : null;
+        }
+
+        private static bool TryProjectVertex(WorldFrame frame, int sequence, double lat, double lng,
+            double height, out Local3DVertex vertex)
+        {
+            vertex = null;
+            if (!ReadOnlyPlanReader.IsFinite(lat) || !ReadOnlyPlanReader.IsFinite(lng) ||
+                !ReadOnlyPlanReader.IsFinite(height) || Math.Abs(height) > float.MaxValue ||
+                lat < -80 || lat > 84 || Math.Abs(lng) > 180 ||
+                (lat == 0 && lng == 0) || UtmProjection.ZoneFor(lat, lng) != frame.Zone)
+                return false;
+            frame.ToLocal(lat, lng, out double east, out double north);
+            if (!ReadOnlyPlanReader.IsFinite(east) || !ReadOnlyPlanReader.IsFinite(north)) return false;
+            vertex = new Local3DVertex(sequence, east, north, height);
+            return true;
+        }
+    }
+}
