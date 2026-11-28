@@ -1,0 +1,125 @@
+using System;
+using System.Drawing;
+using System.Globalization;
+using System.Linq;
+using System.Reflection;
+using System.Resources;
+using System.Xml;
+using System.Windows.Forms;
+using MissionPlanner.Controls.BackstageView;
+using MissionPlanner.Utilities;
+
+namespace MissionPlanner.Controls
+{
+    public class MyUserControl : UserControl { }
+    public interface IActivate { void Activate(); }
+    public interface IDeactivate { void Deactivate(); }
+}
+namespace log4net
+{
+    public interface ILog { void Error(object value); void DebugFormat(string format, params object[] args); }
+    public static class LogManager
+    {
+        private class FixtureLog : ILog
+        {
+            public void Error(object value) { Console.Error.WriteLine(value); }
+            public void DebugFormat(string format, params object[] args) { }
+        }
+        public static ILog GetLogger(Type type) => new FixtureLog();
+    }
+}
+
+partial class OptionalOsdProbe
+{
+    private static int assertions;
+    private static void Check(bool ok, string text)
+    {
+        assertions++;
+        if (!ok) throw new Exception(text);
+    }
+
+    private static BackstageViewButton Find(BackstageView view, BackstageViewPage page) =>
+        view.Controls.Find("pnlMenu", true).Single().Controls.OfType<BackstageViewButton>().Single(button => button.Tag == page);
+
+    private static void Run(string culture, int width)
+    {
+        CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo(culture);
+        const string raw = "OSD";
+        string expected = "      " + (culture == "zh-CN" ? "OSD 屏显" : raw);
+        using (var window = new Form { ClientSize = new Size(680, 460) })
+        using (var view = new BackstageView { Dock = DockStyle.Fill, WidthMenu = width })
+        {
+            var optional = view.AddPage(typeof(UserControl), "Optional", null, false);
+            // The fake page is intentionally inert. The actual OSD page is never created or activated.
+            var osd = view.AddPage(typeof(UserControl), raw, optional, false);
+            var unrelated = view.AddPage(typeof(UserControl), "<b>Other</b>", optional, false);
+            SetOptionalOsdMenuCaption(null); // disabled/not-created entry is ignored
+            SetOptionalOsdMenuCaption(osd);
+            string tracked = null;
+            BackstageView.TrackingEventHandler track = (type, identity) => tracked = identity;
+            BackstageView.Tracking += track;
+            try
+            {
+                window.Controls.Add(view);
+                window.Show();
+                view.ActivatePage(optional);
+                Application.DoEvents();
+                var button = Find(view, osd);
+                Check(button.Text == expected, "Incorrect sidebar caption in " + culture);
+                Check(Find(view, unrelated).Text == "      <b>Other</b>", "Unrelated raw caption/markup changed");
+                Check(osd.Parent == optional && osd.LinkText == raw && osd.Text == raw, "Page identity or parent changed");
+                Check(button.Width <= button.Parent.ClientSize.Width, "Sidebar row exceeds menu bounds");
+                using (var g = button.CreateGraphics())
+                using (var font = new Font(button.Font.FontFamily, 10 * (100 / g.DpiX), FontStyle.Bold))
+                    Check(g.MeasureString(button.Text, font).Width + 10 < button.Width, "Short caption no longer fits sidebar");
+                Check(button.Focus() && button.Focused, "Sidebar row lost keyboard focusability");
+
+                typeof(Control).GetMethod("OnClick", BindingFlags.Instance | BindingFlags.NonPublic)
+                    .Invoke(button, new object[] { EventArgs.Empty });
+                Application.DoEvents();
+                Check(ReferenceEquals(view.SelectedPage, osd) && Find(view, osd).IsSelected, "Sidebar click no longer selects the page");
+                Check(tracked == raw, "Tracking identity changed");
+                // InitialSetup stores LinkText across visits; use its unchanged lookup rule.
+                string saved = view.SelectedPage.LinkText;
+                Check(view.Pages.Cast<BackstageViewPage>().Single(page => page.LinkText == saved && page.Show) == osd,
+                    "OSD page cannot restore from the original LinkText");
+                view.WidthMenu = width + 50;
+                view.DrawMenu(osd, true);
+                Application.DoEvents();
+                Check(Find(view, osd).Text == expected, "Sidebar resize/rebuild lost the caption");
+            }
+            finally { BackstageView.Tracking -= track; }
+        }
+    }
+
+    [STAThread]
+    private static int Main()
+    {
+        try
+        {
+            Application.EnableVisualStyles();
+            foreach (string culture in new[] { "en-US", "zh-Hans", "zh-CN" })
+                foreach (int width in new[] { 172, 250 })
+                    Run(culture, width);
+            Console.WriteLine("Optional OSD sidebar: " + assertions + " assertions passed.");
+            return 0;
+        }
+        catch (Exception ex)
+        {
+            Console.Error.WriteLine(ex);
+            return 1;
+        }
+    }
+}
+
+internal static class ResourcesCompiler
+{
+    private static void Main(string[] args)
+    {
+        var xml = new XmlDocument();
+        xml.Load(args[0]);
+        using (var output = new ResourceWriter(args[1]))
+            foreach (XmlElement node in xml.SelectNodes("/root/data"))
+                output.AddResource(node.GetAttribute("name"), node["value"].InnerText);
+    }
+}

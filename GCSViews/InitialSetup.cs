@@ -313,7 +313,8 @@ namespace MissionPlanner.GCSViews
             }
             if (MainV2.DisplayConfiguration.displayOsd)
             {
-                AddBackstageViewPage(typeof(ConfigHWOSD), rm.GetString("backstageViewPageosd.Text"), isConnected && gotAllParams, opt);
+                var osd = AddBackstageViewPage(typeof(ConfigHWOSD), rm.GetString("backstageViewPageosd.Text"), isConnected && gotAllParams, opt);
+                SetOptionalOsdMenuCaption(osd);
             }
             if (MainV2.DisplayConfiguration.displayCameraGimbal)
             {
@@ -403,6 +404,16 @@ namespace MissionPlanner.GCSViews
             }
 
             ThemeManager.ApplyThemeTo(this);
+        }
+
+        private static void SetOptionalOsdMenuCaption(BackstageViewPage page)
+        {
+            if (page == null || !string.Equals(System.Globalization.CultureInfo.CurrentUICulture.Name, "zh-CN", StringComparison.Ordinal))
+                return;
+            const string key = "Optional hardware sidebar: OSD";
+            var text = UiText.Translate(key);
+            if (text != key)
+                page.MenuCaption = text;
         }
 
         private void HardwareConfig_FormClosing(object sender, FormClosingEventArgs e)

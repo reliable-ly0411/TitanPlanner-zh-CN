@@ -275,7 +275,7 @@ namespace MissionPlanner.Controls.BackstageView
             if (!page.Show)
                 return;
 
-            string label = page.LinkText;
+            string label = page.MenuCaption ?? page.LinkText;
             int heightextra = 0;
 
             if (child)

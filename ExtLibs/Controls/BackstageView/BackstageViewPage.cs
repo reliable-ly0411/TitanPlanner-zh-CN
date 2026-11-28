@@ -84,6 +84,11 @@ namespace MissionPlanner.Controls.BackstageView
         /// </summary>
         public string LinkText { get; set; }
 
+        /// <summary>Optional sidebar text; LinkText remains the page's selection/restore identity.</summary>
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string MenuCaption { get; set; }
+
         [EditorAttribute(
             "System.ComponentModel.Design.MultilineStringEditor, System.Design",
             "System.Drawing.Design.UITypeEditor"), Localizable(true)]

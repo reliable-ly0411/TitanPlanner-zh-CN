@@ -8306,6 +8306,10 @@ Mission Planner 需要收到 2 个有效心跳包后才会连接。</value>
     <value>选项</value>
     <comment>"OptionForm"</comment>
   </data>
+  <data name="49fadb754c3e9f9f8a5ee614e3b1154af4a286f31c44b42518ac75a4c61f3fb5" xml:space="preserve">
+    <value>OSD 屏显</value>
+    <comment>"Optional hardware sidebar: OSD"</comment>
+  </data>
   <data name="d0db8b5e364b6989e4b8f38a2b3846b87d99a51c1592ebf35d21cc66405a8e39" xml:space="preserve">
     <value>选项</value>
     <comment>"Options"</comment>
