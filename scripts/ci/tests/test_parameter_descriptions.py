@@ -36,6 +36,58 @@ catalog_module = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(catalog_module)
 
 
+LOCAL_DIAGNOSTIC_LOG_HELP_KEYS = {'INS_RAW_LOG_OPT','EK3_LOG_LEVEL','TEMP_LOG','PRX_LOG_RAW'}
+
+VFR_HUD_RATE_HELP_KEYS = {f"SR{i}_EXTRA2" for i in range(7)} | {f"MAV{i}_EXTRA2" for i in range(1, 33)}
+
+RAW_SENSOR_RATE_HELP_KEYS = {f"SR{i}_RAW_SENS" for i in range(7)} | {f"MAV{i}_RAW_SENS" for i in range(1, 33)}
+
+OSD_BATTERY_BAR_POSITION_KEYS = {f'OSD{screen}_BATTBAR_{axis}' for screen in range(1, 5) for axis in ('X', 'Y')}
+
+OSD_BATTERY_BAR_ENABLE_KEYS = {f'OSD{screen}_BATTBAR_EN' for screen in range(1, 5)}
+
+OSD_MSP_CELL_VOLTAGE_HELP_KEYS = {f'OSD{screen}_CELLVOLT_{field}' for screen in range(1, 5) for field in ('EN', 'X', 'Y')}
+
+OSD_BASIC_SPEED_HELP_KEYS = {f"OSD{i}_{kind}_{field}" for i in range(1, 5) for kind in ("GSPEED", "VSPEED", "ASPD1", "ASPD2") for field in ("EN", "X", "Y")}
+
+OSD_ATTITUDE_DISPLAY_HELP_KEYS = {
+    f'OSD{screen}_{item}_EN' for screen in range(1, 5)
+    for item in ('COMPASS', 'HORIZON', 'SIDEBARS', 'ROLL', 'PITCH')
+}
+
+OSD_GPS_DISPLAY_HELP_KEYS = {
+    f'OSD{screen}_{item}_EN' for screen in range(1, 5)
+    for item in ('GPSLAT', 'GPSLONG', 'SATS', 'HDOP')
+}
+
+OSD_POWER_DISPLAY_HELP_KEYS = {
+    f'OSD{screen}_{item}_EN' for screen in range(1, 5)
+    for item in ('BAT_VOLT', 'BAT2_VLT', 'RESTVOLT', 'CURRENT', 'CURRENT2', 'POWER')
+}
+
+EXTENDED_DISPLAY_AND_LOG_KEYS = {
+    'EK3_LOG_LEVEL', 'FORMAT_VERSION', 'INS_RAW_LOG_OPT', 'MAV10_EXTRA2', 'MAV10_RAW_SENS',
+    'MAV11_EXTRA2', 'MAV11_RAW_SENS', 'MAV12_EXTRA2', 'MAV12_RAW_SENS', 'MAV13_EXTRA2',
+    'MAV13_RAW_SENS', 'MAV14_EXTRA2', 'MAV14_RAW_SENS', 'MAV15_EXTRA2', 'MAV15_RAW_SENS',
+    'MAV16_EXTRA2', 'MAV16_RAW_SENS', 'MAV17_EXTRA2', 'MAV17_RAW_SENS', 'MAV18_EXTRA2',
+    'MAV18_RAW_SENS', 'MAV19_EXTRA2', 'MAV19_RAW_SENS', 'MAV1_EXTRA2', 'MAV1_RAW_SENS',
+    'MAV20_EXTRA2', 'MAV20_RAW_SENS', 'MAV21_EXTRA2', 'MAV21_RAW_SENS', 'MAV22_EXTRA2',
+    'MAV22_RAW_SENS', 'MAV23_EXTRA2', 'MAV23_RAW_SENS', 'MAV24_EXTRA2', 'MAV24_RAW_SENS',
+    'MAV25_EXTRA2', 'MAV25_RAW_SENS', 'MAV26_EXTRA2', 'MAV26_RAW_SENS', 'MAV27_EXTRA2',
+    'MAV27_RAW_SENS', 'MAV28_EXTRA2', 'MAV28_RAW_SENS', 'MAV29_EXTRA2', 'MAV29_RAW_SENS',
+    'MAV2_EXTRA2', 'MAV2_RAW_SENS', 'MAV30_EXTRA2', 'MAV30_RAW_SENS', 'MAV31_EXTRA2',
+    'MAV31_RAW_SENS', 'MAV32_EXTRA2', 'MAV32_RAW_SENS', 'MAV3_EXTRA2', 'MAV3_RAW_SENS',
+    'MAV4_EXTRA2', 'MAV4_RAW_SENS', 'MAV5_EXTRA2', 'MAV5_RAW_SENS', 'MAV6_EXTRA2',
+    'MAV6_RAW_SENS', 'MAV7_EXTRA2', 'MAV7_RAW_SENS', 'MAV8_EXTRA2', 'MAV8_RAW_SENS',
+    'MAV9_EXTRA2', 'MAV9_RAW_SENS', 'PRX_LOG_RAW', 'TEMP_LOG',
+}
+
+
+def is_display_or_log_help_key(key):
+    return (key in DISPLAY_AND_LOG_HELP_KEYS or key in EXTENDED_DISPLAY_AND_LOG_KEYS
+            or key.startswith(('OSD1_', 'OSD2_', 'OSD3_', 'OSD4_', 'SR0_', 'SR1_', 'SR2_', 'SR3_', 'SR4_', 'SR5_', 'SR6_', 'SR7_', 'SR8_', 'SR9_')))
+
+
 class ParameterCatalogTests(unittest.TestCase):
     def setUp(self):
         self.catalog = json.loads((ROOT / 'localization/zh-Hans/parameter-translations.json').read_text(encoding='utf-8'))
@@ -60,8 +112,8 @@ class ParameterCatalogTests(unittest.TestCase):
     def test_scope_counts_and_held_versions(self):
         notes = self.catalog['translations']
         descriptions = {(n['family'], v, n['parameter']) for n in notes if n['field'] == 'Description' for v in n['versions']}
-        self.assertEqual(1502, len(descriptions))
-        self.assertEqual(677, len({(f, p) for f, v, p in descriptions}))
+        self.assertEqual(4968, len(descriptions))
+        self.assertEqual(2277, len({(f, p) for f, v, p in descriptions}))
         self.assertFalse(any(v == '4.7.2' for f, v, p in descriptions))
         excluded_copter = {'RTL_CONE_SLOPE', 'LAND_SPEED', 'LAND_SPD_MS', 'FS_GCS_ENABLE'}
         excluded_plane = {'TECS_CLMB_MAX', 'TECS_SINK_MIN', 'ROLL_LIMIT_DEG'}
@@ -110,7 +162,7 @@ class ParameterCatalogTests(unittest.TestCase):
         for release in self.bundle.findall("release[@family='Copter']"):
             v = release.get('version')
             records = {r.get('name').split(':')[-1]: r for r in release.iter('param')
-                       if r.get('name').rsplit(':', 1)[-1] not in DISPLAY_AND_LOG_HELP_KEYS}
+                       if not is_display_or_log_help_key(r.get('name').rsplit(':', 1)[-1])}
             self.assertEqual(legacy_counts[v] + reviewed_counts[v], len(records))
             readonly = {k: r for k, r in records.items() if r.findtext("field[@name='ReadOnly']") == 'True'}
             self.assertEqual(reviewed_counts[v], len(readonly))
@@ -167,9 +219,10 @@ class ParameterCatalogTests(unittest.TestCase):
 
     def test_sub_narrow_expansion_adds_only_unique_read_only_records(self):
         scope = self.bundle.find("release[@family='Sub'][@version='4.7.1']")
-        help_keys = DISPLAY_AND_LOG_HELP_KEYS | {'LOG_DISARMED', 'LOG_REPLAY'}
+        replay_keys = {'LOG_DISARMED', 'LOG_REPLAY'}
         records = {p.get('name'): p for p in scope.iter('param')
-                   if not p.get('name').startswith('STAT_') and p.get('name').rsplit(':', 1)[-1] not in help_keys}
+                   if not p.get('name').startswith('STAT_') and not is_display_or_log_help_key(p.get('name').rsplit(':', 1)[-1])
+                   and p.get('name').rsplit(':', 1)[-1] not in replay_keys}
         self.assertEqual(34, len(records))
         self.assertEqual({'GPS1_CAN_NODEID','GPS2_CAN_NODEID'}, {key for key in records if key.startswith('GPS')})
         self.assertTrue({'MIS_TOTAL','VTX_FREQ'} <= records.keys())
@@ -430,6 +483,135 @@ class ParameterCatalogTests(unittest.TestCase):
                         expected.replace(b'  <translation', b' <translation')):
             self.assertFalse(catalog_module.generated_matches(changed, expected))
 
+
+    def test_local_diagnostic_log_help_preserves_each_version_fields(self):
+        count=0
+        for release in self.original_display_catalog_releases():
+            f,v=release.get('family'),release.get('version')
+            expected=LOCAL_DIAGNOSTIC_LOG_HELP_KEYS-({'PRX_LOG_RAW'} if f=='Plane' else set())
+            records={r.get('name'):r for r in release.iter('param') if r.get('name') in expected}
+            self.assertEqual(expected,records.keys())
+            for k,r in records.items():
+                [n]=[n for n in self.catalog['translations'] if n['family']==f and n['parameter']==k and v in n['versions']]
+                self.assertEqual(('Description',r.get('documentation'),catalog_module.record_fingerprint(r)),
+                                 (n['field'],n['english'],n['recordSha256']))
+                count+=1
+            options=[(x.get('code'),x.text) for x in records['TEMP_LOG'].findall('values/value')]
+            self.assertEqual(['0','1'] if v=='4.5.7' else ['0','1','2'],[k for k,_ in options])
+        self.assertEqual(25,count)
+        mutated=copy.deepcopy(self.bundle)
+        value=mutated.find(".//param[@name='TEMP_LOG']/values/value[@code='1']")
+        value.text='changed logging option'
+        with self.assertRaisesRegex(ValueError,'requires manual review'):
+            catalog_module.resource(self.catalog,mutated)
+
+    def test_osd_attitude_display_help_is_scoped_and_preserves_options(self):
+        expected = {'COMPASS': '显示罗盘方位刻度。', 'HORIZON': '显示人工地平线。', 'SIDEBARS': '显示人工地平线的两侧边栏。', 'ROLL': '显示相对水平面偏转的横滚角，单位为度。', 'PITCH': '显示相对水平面的俯仰角，单位为度。'}
+        for release in self.original_display_catalog_releases():
+            family, version = release.get('family'), release.get('version')
+            with self.subTest(family=family, version=version):
+                records = {p.get('name').rsplit(':', 1)[-1]: p for p in release.iter('param')
+                           if p.get('name').rsplit(':', 1)[-1] in OSD_ATTITUDE_DISPLAY_HELP_KEYS}
+                rows = [n for n in self.catalog['translations'] if n['family'] == family
+                        and version in n['versions'] and n['parameter'] in OSD_ATTITUDE_DISPLAY_HELP_KEYS]
+                self.assertEqual(OSD_ATTITUDE_DISPLAY_HELP_KEYS, records.keys())
+                self.assertCountEqual(OSD_ATTITUDE_DISPLAY_HELP_KEYS, [n['parameter'] for n in rows])
+                for note in rows:
+                    key = note['parameter']
+                    record = records[key]
+                    self.assertEqual('Description', note['field'])
+                    self.assertEqual(record.get('documentation'), note['english'])
+                    self.assertEqual(catalog_module.record_fingerprint(record), note['recordSha256'])
+                    self.assertEqual(expected[key.split('_', 1)[1][:-3]], note['chinese'])
+                    self.assertEqual([('0', 'Disabled'), ('1', 'Enabled')],
+                                     [(v.get('code'), v.text) for v in record.findall('./values/value')])
+
+    def test_osd_battery_usage_bar_enable_fails_closed_if_source_options_change(self):
+        for release in self.original_display_catalog_releases():
+            records = {r.get('name'): r for r in release.iter('param') if r.get('name') in OSD_BATTERY_BAR_ENABLE_KEYS}
+            self.assertEqual(OSD_BATTERY_BAR_ENABLE_KEYS, records.keys())
+            for r in records.values():
+                self.assertEqual('Displays battery usage bar (MSP OSD only)', r.get('documentation'))
+                self.assertEqual([('0', 'Disabled'), ('1', 'Enabled')],
+                                 [(a.get('code'), a.text) for a in r.findall('values/value')])
+        changed = copy.deepcopy(self.bundle)
+        changed.find(".//param[@name='OSD1_BATTBAR_EN']/values/value[@code='1']").text = 'Changed'
+        with self.assertRaisesRegex(ValueError, 'requires manual review'):
+            catalog_module.resource(self.catalog, changed)
+
+    def test_osd_battery_usage_bar_position_source(self):
+        for release in self.original_display_catalog_releases():
+            records = {r.get('name'): r for r in release.iter('param') if r.get('name') in OSD_BATTERY_BAR_POSITION_KEYS}
+            self.assertEqual(OSD_BATTERY_BAR_POSITION_KEYS, records.keys())
+            for k, r in records.items():
+                self.assertEqual('0 59' if k.endswith('_X') else '0 21', r.findtext("field[@name='Range']"))
+                self.assertFalse(r.findall('values'))
+                self.assertIsNone(r.find("field[@name='Units']"))
+
+    def test_osd_cellvolt_is_a_display_only_three_record_group(self):
+        for release in self.original_display_catalog_releases():
+            records = {p.get('name'): p for p in release.iter('param') if p.get('name') in OSD_MSP_CELL_VOLTAGE_HELP_KEYS}
+            self.assertEqual(OSD_MSP_CELL_VOLTAGE_HELP_KEYS, records.keys())
+            for key, record in records.items():
+                self.assertIsNone(record.find("field[@name='Units']"))
+                if key.endswith('_EN'):
+                    self.assertEqual('Displays average cell voltage (MSP OSD only)', record.get('documentation'))
+                    self.assertEqual([('0', 'Disabled'), ('1', 'Enabled')],
+                                     [(v.get('code'), v.text) for v in record.findall('values/value')])
+                else:
+                    self.assertEqual('0 59' if key.endswith('_X') else '0 21', record.findtext("field[@name='Range']"))
+                    self.assertFalse(record.findall('values'))
+        changed = copy.deepcopy(self.bundle)
+        changed.find(".//param[@name='OSD1_CELLVOLT_X']/field[@name='Range']").text = '0 60'
+        with self.assertRaisesRegex(ValueError, 'requires manual review'):
+            catalog_module.resource(self.catalog, changed)
+
+    def test_osd_gps_display_help_is_scoped_and_preserves_options(self):
+        expected = {'GPSLAT': '显示 GPS 纬度。', 'GPSLONG': '显示 GPS 经度。',
+                    'SATS': '显示已搜到的卫星数量。', 'HDOP': '显示水平精度因子（HDOP）。'}
+        for release in self.original_display_catalog_releases():
+            family, version = release.get('family'), release.get('version')
+            with self.subTest(family=family, version=version):
+                records = {p.get('name').rsplit(':', 1)[-1]: p for p in release.iter('param')
+                           if p.get('name').rsplit(':', 1)[-1] in OSD_GPS_DISPLAY_HELP_KEYS}
+                rows = [n for n in self.catalog['translations'] if n['family'] == family
+                        and version in n['versions'] and n['parameter'] in OSD_GPS_DISPLAY_HELP_KEYS]
+                self.assertEqual(OSD_GPS_DISPLAY_HELP_KEYS, records.keys())
+                self.assertCountEqual(OSD_GPS_DISPLAY_HELP_KEYS, [n['parameter'] for n in rows])
+                for note in rows:
+                    key = note['parameter']
+                    record = records[key]
+                    self.assertEqual('Description', note['field'])
+                    self.assertEqual(record.get('documentation'), note['english'])
+                    self.assertEqual(catalog_module.record_fingerprint(record), note['recordSha256'])
+                    self.assertEqual(expected[key.split('_')[1]], note['chinese'])
+                    self.assertEqual([('0', 'Disabled'), ('1', 'Enabled')],
+                                     [(v.get('code'), v.text) for v in record.findall('./values/value')])
+
+    def test_osd_power_display_help_is_scoped_and_preserves_options(self):
+        expected = {
+            'BAT_VOLT': '显示主电池电压。', 'BAT2_VLT': '显示第二块电池的电压。',
+            'RESTVOLT': '显示主电池的静置电压。', 'CURRENT': '显示主电池电流。',
+            'CURRENT2': '显示第二块电池的电流。', 'POWER': '显示功率（仅限 MSP OSD）。',
+        }
+        for release in self.original_display_catalog_releases():
+            family, version = release.get('family'), release.get('version')
+            with self.subTest(family=family, version=version):
+                records = {p.get('name').rsplit(':', 1)[-1]: p for p in release.iter('param')
+                           if p.get('name').rsplit(':', 1)[-1] in OSD_POWER_DISPLAY_HELP_KEYS}
+                rows = [n for n in self.catalog['translations'] if n['family'] == family
+                        and version in n['versions'] and n['parameter'] in OSD_POWER_DISPLAY_HELP_KEYS]
+                self.assertEqual(OSD_POWER_DISPLAY_HELP_KEYS, records.keys())
+                self.assertCountEqual(OSD_POWER_DISPLAY_HELP_KEYS, [n['parameter'] for n in rows])
+                for note in rows:
+                    key = note['parameter']
+                    record = records[key]
+                    self.assertEqual('Description', note['field'])
+                    self.assertEqual(record.get('documentation'), note['english'])
+                    self.assertEqual(catalog_module.record_fingerprint(record), note['recordSha256'])
+                    self.assertEqual(expected[key.split('_', 1)[1][:-3]], note['chinese'])
+                    self.assertEqual([('0', 'Disabled'), ('1', 'Enabled')],
+                                     [(v.get('code'), v.text) for v in record.findall('./values/value')])
 
 if __name__ == '__main__':
     unittest.main()

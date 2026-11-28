@@ -379,6 +379,26 @@ internal static class Program
         }
     }
 
+    private static void CheckMspCellVoltage(ParameterDescriptionStore store, ParameterDescriptionCatalog catalog)
+    {
+        var context = Context("Copter", "4.6.3", "92b0cd788ec29406f26c6f9c31d5ceedbd1cc538");
+        var snapshot = store.Bundled(context);
+        Check(snapshot.MatchesReportedBuild, "exact fixed release");
+        var expected = new[] {
+            new { Key = "OSD2_CELLVOLT_EN", Raw = "Displays average cell voltage (MSP OSD only)", Options = "0: Disabled\n1: Enabled", Zh = "显示第 2 屏的平均单体电压" },
+            new { Key = "OSD2_CELLVOLT_X", Raw = "Horizontal position on screen", Options = "0 59", Zh = "水平位置" },
+            new { Key = "OSD2_CELLVOLT_Y", Raw = "Vertical position on screen", Options = "0 21", Zh = "垂直位置" }
+        };
+        foreach (var row in expected)
+        {
+            var result = catalog.Present(snapshot, row.Key, true);
+            Check(result.Description.StartsWith(row.Raw, StringComparison.Ordinal) &&
+                  result.SearchText.Contains(row.Zh) && result.Description.Contains("仅适用于 MSP OSD"),
+                  "expanded description/search: " + row.Key);
+            Check(result.Options == row.Options && result.Units == "", "raw options and units remain: " + row.Key);
+        }
+    }
+
     private static async Task MainAsync(string[] args)
     {
         var bundle = Resource("official"); var catalog = new ParameterDescriptionCatalog(Resource("zh-CN"));
@@ -391,6 +411,12 @@ internal static class Program
             return;
         }
         CheckTrackerSlice(bundled, catalog);
+        if (args.Length == 1 && args[0] == "--osd-msp-cell-voltage")
+        {
+            CheckMspCellVoltage(bundled, catalog);
+            Console.WriteLine("MSP cell voltage: " + assertions + " assertions passed.");
+            return;
+        }
         if (args.Length == 1 && args[0] == "--osd-time-temperature")
         {
             CheckOsdTimeTemperature(releases, bundled, catalog);
@@ -431,13 +457,13 @@ internal static class Program
         Check(catalog.Present(bundled.Bundled(Context("Rover", "4.6.3", "deadbeef12345678")), "WP_RADIUS", true) == null, "Rover custom build remains untranslated");
         var expectedCounts = new Dictionary<string, int>
         {
-            ["Copter-4.5.7"] = 203,
-            ["Copter-4.6.3"] = 215,
-            ["Copter-4.7.1"] = 221,
-            ["Plane-4.5.7"] = 214,
-            ["Plane-4.6.3"] = 226,
-            ["Plane-4.7.1"] = 234,
-            ["Sub-4.7.1"] = 183,
+            ["Copter-4.5.7"] = 678,
+            ["Copter-4.6.3"] = 689,
+            ["Copter-4.7.1"] = 745,
+            ["Plane-4.5.7"] = 687,
+            ["Plane-4.6.3"] = 699,
+            ["Plane-4.7.1"] = 757,
+            ["Sub-4.7.1"] = 707,
             ["Rover-4.6.3"] = 4,
             ["Tracker-4.7.1"] = 2
         };
