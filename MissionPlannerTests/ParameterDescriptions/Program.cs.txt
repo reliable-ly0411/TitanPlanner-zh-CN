@@ -430,7 +430,7 @@ internal static class Program
     private static async Task CheckReconstructed(XElement[] releases, ParameterDescriptionStore store,
         ParameterDescriptionCatalog catalog, string sourceDirectory)
     {
-        Check(releases.Length == 26, "each registered archive is independently scoped");
+        Check(releases.Length == 29, "each registered archive is independently scoped");
         foreach (var release in releases)
         {
             var family = (string)release.Attribute("family");
@@ -481,6 +481,16 @@ internal static class Program
             Check(ParameterDescriptionContext.TryCreate("ArduPlane", text, null) == null, "different family or unstable identity");
         Check(ParameterDescriptionContext.TryCreate("ArduPlane", "ArduPlane V4.2.3", new Version(4, 2, 2, 255)) == null,
             "different MAVLink version signal rejects the archive");
+        Check(ParameterDescriptionContext.TryCreate("ArduPlane", null, new Version(4, 2, 3, 255)).Version == "4.2.3",
+            "an official MAVLink version can identify the archive without a startup banner");
+        Check(ParameterDescriptionContext.TryCreate("ArduPlane", null, new Version(4, 2, 3, 128)) == null,
+            "a prerelease protocol version requires English fallback");
+        Check(ParameterDescriptionContext.TryCreate("ArduTracker", "AntennaTracker V0.7.2", new Version(0, 7, 1, 255)) == null,
+            "disagreeing 0.x pre-stable versions also require English fallback");
+        var legacyRover = ParameterDescriptionContext.TryCreate("ArduRover", "APM:Rover V3.2.3", new Version());
+        Check(legacyRover != null && catalog.Present(store.Bundled(legacyRover), "SCHED_DEBUG", true)
+            .SearchText.Contains("调度器调试消息"), "the exact historical Rover banner can select its original vehicle group");
+
     }
 
     private static async Task MainAsync(string[] args)
@@ -542,32 +552,32 @@ internal static class Program
         Check(catalog.Present(bundled.Bundled(Context("Rover", "4.6.3", "deadbeef12345678")), "WP_RADIUS", true) == null, "Rover custom build remains untranslated");
         var expectedCounts = new Dictionary<string, int>
         {
-            ["Copter-4.5.7"] = 1199,
-            ["Copter-4.6.3"] = 1224,
+            ["Copter-4.5.7"] = 1396,
+            ["Copter-4.6.3"] = 1475,
             ["Copter-4.7.1"] = 781,
-            ["Plane-4.5.7"] = 1285,
-            ["Plane-4.6.3"] = 1301,
+            ["Plane-4.5.7"] = 1482,
+            ["Plane-4.6.3"] = 1552,
             ["Plane-4.7.1"] = 793,
             ["Sub-4.7.1"] = 743,
-            ["Rover-4.6.3"] = 110,
+            ["Rover-4.6.3"] = 280,
             ["Tracker-4.7.1"] = 2,
-            ["Copter-4.7.3"] = 1587,
-            ["Plane-4.7.3"] = 1714,
-            ["Copter-4.4.4"] = 621,
-            ["Copter-4.3.8"] = 599,
-            ["Copter-4.2.4"] = 507,
-            ["Copter-4.1.6"] = 486,
-            ["Plane-4.4.4"] = 668,
-            ["Plane-4.3.8"] = 640,
-            ["Plane-4.1.7"] = 531,
-            ["Rover-4.7.3"] = 392,
-            ["Rover-4.5.7"] = 110,
-            ["Rover-4.4.0"] = 86,
-            ["Rover-4.2.3"] = 86,
-            ["Rover-4.1.5"] = 86,
-            ["Sub-4.7.3"] = 1031,
-            ["Sub-4.1.2"] = 86,
-            ["Sub-4.0.3"] = 49,
+            ["Copter-4.7.3"] = 1962,
+            ["Plane-4.7.3"] = 2089,
+            ["Copter-4.4.4"] = 798,
+            ["Copter-4.3.8"] = 749,
+            ["Copter-4.2.4"] = 657,
+            ["Copter-4.1.6"] = 616,
+            ["Plane-4.4.4"] = 845,
+            ["Plane-4.3.8"] = 790,
+            ["Plane-4.1.7"] = 661,
+            ["Rover-4.7.3"] = 632,
+            ["Rover-4.5.7"] = 280,
+            ["Rover-4.4.0"] = 236,
+            ["Rover-4.2.3"] = 236,
+            ["Rover-4.1.5"] = 216,
+            ["Sub-4.7.3"] = 1271,
+            ["Sub-4.1.2"] = 216,
+            ["Sub-4.0.3"] = 139,
             ["Tracker-4.7.3"] = 354,
             ["Tracker-4.6.3"] = 65,
             ["Tracker-4.5.7"] = 65

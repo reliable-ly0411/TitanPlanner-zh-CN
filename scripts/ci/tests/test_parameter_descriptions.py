@@ -150,8 +150,8 @@ class ParameterCatalogTests(unittest.TestCase):
     def test_scope_counts_and_held_versions(self):
         notes = self.catalog['translations']
         descriptions = {(n['family'], v, n['parameter']) for n in notes if n['field'] == 'Description' for v in n['versions']}
-        self.assertEqual(19903, len(descriptions))
-        self.assertEqual(5450, len({(f, p) for f, v, p in descriptions}))
+        self.assertEqual(24657, len(descriptions))
+        self.assertEqual(6703, len({(f, p) for f, v, p in descriptions}))
         self.assertFalse(any(v == '4.7.2' for f, v, p in descriptions))
         excluded_copter = {'RTL_CONE_SLOPE', 'LAND_SPEED', 'LAND_SPD_MS', 'FS_GCS_ENABLE'}
         excluded_plane = {'TECS_CLMB_MAX', 'TECS_SINK_MIN', 'ROLL_LIMIT_DEG'}
@@ -166,7 +166,7 @@ class ParameterCatalogTests(unittest.TestCase):
             for item in ('ATEMP', 'BATUSED', 'BAT2USED')
             for field in ('EN', 'X', 'Y')
         )
-        preserved = [n for n in rover if not re.fullmatch(r'(?:MAV|SR)\d+_.+', n['parameter'])]
+        preserved = [n for n in rover if not re.fullmatch(r'(?:(?:MAV|SR)\d+|RNGFND[1-9A])_.+', n['parameter'])]
         self.assertCountEqual(expected, [n['parameter'] for n in preserved])
         self.assertTrue(all(n['field'] == 'Description' and 'code' not in n for n in rover))
         snapshot = self.bundle.find("release[@family='Rover'][@version='4.6.3']")
@@ -209,7 +209,7 @@ class ParameterCatalogTests(unittest.TestCase):
                 continue
             records = {r.get('name').split(':')[-1]: r for r in release.iter('param')
                        if not is_display_or_log_help_key(r.get('name').rsplit(':', 1)[-1])
-                       and not re.match(r'(?:RC[\d_]|SERVO|SERIAL|BATT|FS_|ARMING_|OSD_)', r.get('name').rsplit(':', 1)[-1])}
+                       and not re.match(r'(?:RC[\d_]|SERVO|SERIAL|BATT|FS_|ARMING_|OSD_|RNGFND|TEMP\d)', r.get('name').rsplit(':', 1)[-1])}
             self.assertEqual(legacy_counts[v] + reviewed_counts[v], len(records))
             readonly = {k: r for k, r in records.items() if r.findtext("field[@name='ReadOnly']") == 'True'}
             self.assertEqual(reviewed_counts[v], len(readonly))

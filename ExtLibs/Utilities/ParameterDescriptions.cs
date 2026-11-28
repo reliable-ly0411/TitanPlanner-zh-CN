@@ -50,23 +50,33 @@ namespace MissionPlanner.Utilities
         {
             string family;
             if (firmware == null || !Families.TryGetValue(firmware, out family)) return null;
-            // Do not turn dev, beta, rc or custom suffixes into an apparently exact stable release.
-            var match = Regex.Match(versionText ?? "", @"^(ArduCopter|ArduPlane|ArduRover|Rover|ArduSub|AntennaTracker) V([0-9]+\.[0-9]+\.[0-9]+)(?: \(([0-9a-fA-F]{7,40})\))?$");
-            if (!match.Success) return null;
-            var expectedName = family == "Rover" ? "ArduRover" : Names[family];
-            if (match.Groups[1].Value != expectedName && !(family == "Rover" && match.Groups[1].Value == "Rover")) return null;
+            var hasReportedVersion = reportedVersion != null && reportedVersion.Build >= 0
+                && (reportedVersion.Major != 0 || reportedVersion.Minor != 0 || reportedVersion.Build != 0);
+            if (hasReportedVersion && reportedVersion.Revision >= 0 && reportedVersion.Revision != 255)
+                return null;
+
             Version parsed;
-            if (!System.Version.TryParse(match.Groups[2].Value, out parsed)) return null;
-            if (reportedVersion != null && reportedVersion.Major > 0)
+            var gitSha = "";
+            if (string.IsNullOrEmpty(versionText))
             {
-                if (reportedVersion.Major != parsed.Major || reportedVersion.Minor != parsed.Minor || reportedVersion.Build != parsed.Build) return null;
-                // AUTOPILOT_VERSION packs the official release type as 255, separate from the patch number.
-                if (reportedVersion.Revision >= 0 && reportedVersion.Revision != 255) return null;
+                // Some vehicles only report the MAVLink version message. Its type must be explicitly official.
+                if (!hasReportedVersion || reportedVersion.Revision != 255) return null;
+                parsed = reportedVersion;
             }
-            return new ParameterDescriptionContext
+            else
             {
-                Family = family, Version = parsed.ToString(3), ReportedGitSha = match.Groups[3].Value.ToLowerInvariant()
-            };
+                // A development, prerelease or custom banner may not be promoted to an exact stable release.
+                var match = Regex.Match(versionText, @"^(ArduCopter|ArduPlane|ArduRover|APM:Rover|Rover|ArduSub|AntennaTracker) V([0-9]+\.[0-9]+\.[0-9]+)(?: \(([0-9a-fA-F]{7,40})\))?$");
+                if (!match.Success) return null;
+                var reportedName = match.Groups[1].Value;
+                if (reportedName != Names[family]
+                    && !(family == "Rover" && (reportedName == "ArduRover" || reportedName == "APM:Rover"))) return null;
+                if (!System.Version.TryParse(match.Groups[2].Value, out parsed)) return null;
+                if (hasReportedVersion && (reportedVersion.Major != parsed.Major
+                    || reportedVersion.Minor != parsed.Minor || reportedVersion.Build != parsed.Build)) return null;
+                gitSha = match.Groups[3].Value.ToLowerInvariant();
+            }
+            return new ParameterDescriptionContext { Family = family, Version = parsed.ToString(3), ReportedGitSha = gitSha };
         }
     }
 
