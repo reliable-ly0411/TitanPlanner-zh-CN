@@ -13,6 +13,8 @@ LABELS = {
     'ERROR': ('Error', '错误', 'ERROR'),
     'WARNING': ('Warning', '警告', 'WARN'),
     'NOTICE': ('Notice', '通知', 'NOTICE'),
+    'INFO': ('Info', '信息', 'INFO'),
+    'DEBUG': ('Debug', '调试', 'DEBUG'),
 }
 
 
@@ -20,7 +22,7 @@ class MessageDiagnosticBadgesTests(unittest.TestCase):
     def setUp(self):
         self.source = (ROOT / 'Controls/MessagesList.cs').read_text(encoding='utf-8-sig')
 
-    def test_six_badges_use_exact_resource_keys_with_fallbacks(self):
+    def test_badges_use_exact_resource_keys_with_fallbacks(self):
         method = self.source.split('static string LocalizedDiagnosticBadge(', 1)[1]
         method = method.split('private void CopyItem_Click(', 1)[0]
         options = re.findall(r'case MAV_SEVERITY\.(\w+): key = "(\w+)"; break;', method)

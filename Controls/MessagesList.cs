@@ -189,6 +189,8 @@ namespace MissionPlanner.Controls
                 case MAV_SEVERITY.ERROR: key = "Error"; break;
                 case MAV_SEVERITY.WARNING: key = "Warning"; break;
                 case MAV_SEVERITY.NOTICE: key = "Notice"; break;
+                case MAV_SEVERITY.INFO: key = "Info"; break;
+                case MAV_SEVERITY.DEBUG: key = "Debug"; break;
                 default: return original;
             }
 
