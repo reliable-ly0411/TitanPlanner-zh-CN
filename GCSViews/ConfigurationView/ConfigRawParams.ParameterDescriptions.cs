@@ -49,21 +49,42 @@ namespace MissionPlanner.GCSViews.ConfigurationView
 #if !LIB
             if (!UseEnhancedParameterDescriptions) return;
             Params.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.DisplayedCellsExceptHeaders;
-            Desc.HeaderText += "（双击展开）";
+            Desc.HeaderText += "（双击或 F1 展开）";
             Params.CellDoubleClick += (sender, e) =>
             {
-                if (!UseEnhancedParameterDescriptions || e.RowIndex < 0 || (e.ColumnIndex != Desc.Index && e.ColumnIndex != Options.Index)) return;
-                var owner = FindForm();
-                using (var details = CreateParameterDescriptionDetails(Params.Rows[e.RowIndex]))
-                {
-                    ConstrainParameterDescriptionDetails(details, Screen.FromControl(owner ?? (Control)this).WorkingArea);
-                    details.ShowDialog(owner);
-                }
+                if (CanShowParameterDescriptionDetails(e.RowIndex, e.ColumnIndex))
+                    ShowParameterDescriptionDetails(e.RowIndex);
+            };
+            Params.KeyDown += (sender, e) =>
+            {
+                var cell = Params.CurrentCell;
+                if (e.KeyData != Keys.F1 || cell == null || Params.IsCurrentCellInEditMode ||
+                    !CanShowParameterDescriptionDetails(cell.RowIndex, cell.ColumnIndex))
+                    return;
+
+                e.SuppressKeyPress = true;
+                ShowParameterDescriptionDetails(cell.RowIndex);
             };
 #endif
         }
 
 #if !LIB
+        private bool CanShowParameterDescriptionDetails(int rowIndex, int columnIndex)
+        {
+            return UseEnhancedParameterDescriptions && rowIndex >= 0 && rowIndex < Params.Rows.Count &&
+                rowIndex != Params.NewRowIndex && (columnIndex == Desc.Index || columnIndex == Options.Index);
+        }
+
+        private void ShowParameterDescriptionDetails(int rowIndex)
+        {
+            var owner = FindForm();
+            using (var details = CreateParameterDescriptionDetails(Params.Rows[rowIndex]))
+            {
+                ConstrainParameterDescriptionDetails(details, Screen.FromControl(owner ?? (Control)this).WorkingArea);
+                details.ShowDialog(owner);
+            }
+        }
+
         private static void ConstrainParameterDescriptionDetails(Form details, Rectangle workingArea)
         {
             var size = details.Size;
