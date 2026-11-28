@@ -66,12 +66,17 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                         flags | TextFormatFlags.VerticalCenter | TextFormatFlags.EndEllipsis);
                 args.DrawFocusRectangle();
             };
-            combo.MouseEnter += (sender, args) =>
+            string originalDescription = combo.AccessibleDescription;
+            Action refreshCaption = () => UpdateRcOptionCaption(combo, modernKey, originalDescription);
+            combo.MouseEnter += (sender, args) => refreshCaption();
+            combo.GotFocus += (sender, args) => refreshCaption();
+            // Observe the standard UI event, not MavlinkComboBox's separate parameter event.
+            ((ComboBox)combo).SelectedIndexChanged += (sender, args) =>
             {
-                int i = combo.SelectedIndex;
-                var label = i >= 0 && i < combo.Items.Count ? GetRcOptionText(combo, i, modernKey) : null;
-                toolTip1.SetToolTip(combo, label);
+                if (!combo.DroppedDown)
+                    refreshCaption();
             };
+            combo.DropDownClosed += (sender, args) => refreshCaption();
             combo.DropDown += (sender, args) =>
             {
                 int width = originalWidth;
@@ -83,6 +88,14 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                             SystemInformation.VerticalScrollBarWidth + 10);
                 combo.DropDownWidth = Math.Min(width, Screen.FromControl(combo).WorkingArea.Width);
             };
+        }
+
+        private void UpdateRcOptionCaption(MavlinkComboBox combo, string modernKey, string originalDescription)
+        {
+            int index = combo.SelectedIndex;
+            string caption = index >= 0 && index < combo.Items.Count ? GetRcOptionText(combo, index, modernKey) : null;
+            combo.AccessibleDescription = caption ?? originalDescription;
+            toolTip1.SetToolTip(combo, caption);
         }
 
         private void UpdateFilterCaptions(Func<string, bool> hasParameter)
