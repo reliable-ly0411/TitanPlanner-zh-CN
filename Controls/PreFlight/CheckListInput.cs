@@ -215,12 +215,18 @@ namespace MissionPlanner.Controls.PreFlight
                 case "Blue": return token + " · 蓝色";
                 case "Brown": return token + " · 棕色";
                 case "Cyan": return token + " · 青色";
+                case "DarkGreen": return token + " · 深绿色";
+                case "DarkRed": return token + " · 深红色";
+                case "Gold": return token + " · 金色";
                 case "Gray": return token + " · 灰色";
                 case "Green": return token + " · 绿色";
+                case "LightBlue": return token + " · 浅蓝色";
                 case "LightGray": return token + " · 浅灰色";
+                case "LightGreen": return token + " · 浅绿色";
                 case "Lime": return token + " · 亮绿色";
                 case "Magenta": return token + " · 品红";
                 case "Orange": return token + " · 橙色";
+                case "OrangeRed": return token + " · 橙红色";
                 case "Purple": return token + " · 紫色";
                 case "Red": return token + " · 红色";
                 case "Silver": return token + " · 银色";
