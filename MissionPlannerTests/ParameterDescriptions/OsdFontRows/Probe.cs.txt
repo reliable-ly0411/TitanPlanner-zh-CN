@@ -1,0 +1,134 @@
+using System;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Windows.Forms;
+using System.Xml.Linq;
+using MissionPlanner.Utilities;
+
+namespace MissionPlanner.GCSViews.ConfigurationView
+{
+    public partial class ConfigRawParams
+    {
+        private const string ProbeFirmware = "ArduCopter2";
+        private const string SourceDigest = "e6375727b7a05a0c820b7b5c3e28c755d52c1e6da6b4506682d1dd3b19552190";
+        private static readonly string[] FontKeys = { "OSD_FONT", "OSD1_FONT", "OSD2_FONT", "OSD3_FONT", "OSD4_FONT" };
+        private static readonly int[] SampleValues = { 0, 1, 7, 12, 21 };
+        private static int checks;
+
+        [STAThread]
+        internal static int Main()
+        {
+            Console.OutputEncoding = new UTF8Encoding(false);
+            try
+            {
+                CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+                CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo("zh-CN");
+                using (var view = new ConfigRawParams()) view.CheckFontRows();
+                Console.WriteLine("PASS {0} checks | Copter 4.6.3 | {1}", checks, string.Join(", ", FontKeys));
+                return 0;
+            }
+            catch (Exception error)
+            {
+                Console.Error.WriteLine("FAIL " + error);
+                return 1;
+            }
+        }
+
+        private static void Require(bool passed, string label)
+        {
+            if (!passed) throw new InvalidOperationException(label);
+            checks++;
+        }
+
+        private void CheckFontRows()
+        {
+            var context = ParameterDescriptionContext.TryCreate(ProbeFirmware, "ArduCopter V4.6.3 (92b0cd78)", new Version(4, 6, 3, 255));
+            var snapshot = DescriptionStore.Value.Bundled(context);
+            Require(snapshot != null && snapshot.MatchesReportedBuild && snapshot.SourceSha256 == SourceDigest,
+                "Copter 4.6.3 固定来源或构建不符");
+            _descriptionSession = new DescriptionSession { Chinese = true, Context = context, Snapshot = snapshot };
+            Params.ReadOnly = true;
+            Params.AllowUserToAddRows = false;
+            Params.Columns.AddRange(Command, Value, Units, Options, Desc);
+            Controls.Add(Params);
+            InitializeParameterDescriptions();
+
+            for (int screen = 0; screen < FontKeys.Length; screen++)
+            {
+                string key = FontKeys[screen];
+                Require(snapshot.Find(key) != null, key + " 缺少已登记的官方记录");
+                var row = Params.Rows[Params.Rows.Add()];
+                row.Cells[Command.Index].Value = key;
+                row.Cells[Value.Index].Value = SampleValues[screen];
+                var search = new Regex(screen == 0 ? "可用字体" : "第 " + screen + " 屏");
+                Require(row.Cells[Desc.Index].Value == null && MatchesParameterDescription(key, search), key + " 未显示行中文检索");
+
+                var text = ReadParameterDescription(key, ProbeFirmware, _descriptionSession);
+                ApplyParameterDescriptionToRow(row, text);
+                string english = screen == 0
+                    ? "This sets which OSD font to use. It is an integer from 0 to the number of fonts available"
+                    : "Sets the font index for this screen (MSP DisplayPort only)";
+                string chinese = screen == 0
+                    ? "选择 OSD 使用的字体。字体编号为从 0 开始的整数，可选范围取决于可用字体的数量。官方参数表标注此项需重启。"
+                    : "设置 OSD 第 " + screen + " 屏的字体编号，仅适用于 MSP DisplayPort。";
+                string description = (string)row.Cells[Desc.Index].Value;
+                Require(description.StartsWith(english, StringComparison.Ordinal) && description.EndsWith(chinese, StringComparison.Ordinal),
+                    key + " 完整英文与本屏中文");
+                Require(Equals(row.Cells[Command.Index].Value, key) && Equals(row.Cells[Value.Index].Value, SampleValues[screen]),
+                    key + " 原键与原始整数");
+                Require(Equals(row.Cells[Units.Index].Value, "") && Equals(row.Cells[Options.Index].Value, screen == 0 ? "" : "0 21"),
+                    key + " 原单位、范围和选项");
+                string tip = row.Cells[Command.Index].ToolTipText;
+                Require(tip.StartsWith(description, StringComparison.Ordinal) && tip.Contains(SourceDigest)
+                    && row.Cells[Desc.Index].ToolTipText == tip && row.Cells[Value.Index].ToolTipText == tip, key + " 完整提示和来源");
+                using (var details = CreateParameterDescriptionDetails(row))
+                {
+                    var body = details.Controls.OfType<RichTextBox>().Single();
+                    Require(details.Text == key && body.ReadOnly && body.Text.Contains(english) && body.Text.Contains(chinese),
+                        key + " 只读展开窗口");
+                }
+            }
+
+            // Keep the warm session to test the actual culture gate before its cached Chinese text.
+            foreach (var locale in new[] { "zh-Hans", "en-US" })
+            {
+                CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo(locale);
+                foreach (var key in FontKeys)
+                    Require(ExactDescription(key, _descriptionSession) == null && !MatchesParameterDescription(key, new Regex("字体")),
+                        locale + " " + key + " 不应命中增强说明");
+            }
+            CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo("zh-CN");
+            CheckChangedRange(context);
+
+            var unregistered = ParameterDescriptionContext.TryCreate(ProbeFirmware, "ArduCopter V4.7.2", new Version(4, 7, 2, 255));
+            _descriptionSession = new DescriptionSession { Chinese = true, Context = unregistered, Snapshot = DescriptionStore.Value.Bundled(unregistered) };
+            foreach (var key in FontKeys)
+                Require(ExactDescription(key, _descriptionSession) == null, "4.7.2 " + key + " 不应沿用已审译文");
+        }
+
+        private void CheckChangedRange(ParameterDescriptionContext context)
+        {
+            const string key = "OSD1_FONT";
+            using (var bytes = new MemoryStream(ReadDescriptionResource("ParameterDescriptions.official.xml")))
+            {
+                var release = XDocument.Load(bytes).Root.Elements("release").Single(r =>
+                    (string)r.Attribute("family") == "Copter" && (string)r.Attribute("version") == "4.6.3");
+                var xml = release.Element("paramfile");
+                var record = xml.Descendants("param").Single(p => (string)p.Attribute("name") == key);
+                record.Elements("field").Single(f => (string)f.Attribute("name") == "Range").Value = "0 20";
+                var changed = ParameterDescriptionSnapshot.Parse(Encoding.UTF8.GetBytes(xml.ToString()), context);
+                _descriptionSession = new DescriptionSession { Chinese = true, Context = context, Snapshot = changed };
+                var row = Params.Rows[1];
+                ApplyParameterDescriptionToRow(row, ReadParameterDescription(key, ProbeFirmware, _descriptionSession));
+                string desc = (string)row.Cells[Desc.Index].Value;
+                Require(desc.StartsWith((string)record.Attribute("documentation"), StringComparison.Ordinal) && desc.Contains("待复核")
+                    && !desc.Contains("第 1 屏") && !MatchesParameterDescription(key, new Regex("第 1 屏")), key + " 字段指纹变化后仍显示原英文");
+                Require(Equals(row.Cells[Options.Index].Value, "0 20") && Equals(row.Cells[Value.Index].Value, SampleValues[1]),
+                    key + " 仅内存对照范围改变");
+            }
+        }
+    }
+}
