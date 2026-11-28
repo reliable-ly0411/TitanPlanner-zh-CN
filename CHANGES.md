@@ -36,9 +36,9 @@ Enhanced Chinese adds a Messages-only annotation for the EKF3 IMU1 origin notice
 
 Ground Station Settings shows bilingual OSD color names in enhanced Simplified Chinese. Narrow selection fields show the Chinese name, and the list shows both names.
 
-## Planning table layout
+## Parameter and planning tables
 
-Waypoint table headers grow to fit wrapped labels in both Simplified Chinese interfaces.
+The full parameter list sizes visible rows to fit wrapped descriptions and options. Waypoint table headers fit wrapped labels at the current display scale.
 
 ## Desktop appearance preferences
 
