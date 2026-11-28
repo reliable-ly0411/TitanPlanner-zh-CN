@@ -37,6 +37,14 @@ namespace MissionPlannerTests.Utilities
         {
             var fixtures = new[]
             {
+                Tuple.Create(Vehicle.QUADROTOR, Severity.INFO, "Tuning: RLL_D done", "快速调参已完成，轴 RLL_D"),
+                Tuple.Create(Vehicle.QUADROTOR, Severity.INFO, "Quicktune: Roll D done", "原生快速调参已完成，轴 Roll D"),
+                Tuple.Create(Vehicle.QUADROTOR, Severity.INFO, "adjusting RLL_P 0.123 -> 0.045", "快速调参：调整 RLL_P，从 0.123 到 0.045"),
+                Tuple.Create(Vehicle.QUADROTOR, Severity.INFO, "Limiting Roll D 0.123 -> 0.045", "原生快速调参：限制 Roll D，从 0.123 到 0.045"),
+                Tuple.Create(Vehicle.GROUND_ROVER, Severity.INFO, "RTun: adjusted ATC_STR_RAT_FF 0.100 -> 0.200", "已调整 ATC_STR_RAT_FF，从 0.100 到 0.200"),
+                Tuple.Create(Vehicle.FIXED_WING, Severity.INFO, "Takeoff complete dist=12.3", "起飞完成，距离 12.3"),
+                Tuple.Create(Vehicle.FIXED_WING, Severity.NOTICE, "Staring KnifeEdge Circle", "开始刀刃圆周飞行"),
+                Tuple.Create(Vehicle.FIXED_WING, Severity.NOTICE, "Trick 2 selected (Loop(s)/Turnaround)", "已选择特技动作 2（Loop(s)/Turnaround）"),
                 Tuple.Create(Vehicle.QUADROTOR, Severity.NOTICE, "Tuning: RLL done", "快速调参已完成，轴 RLL"),
                 Tuple.Create(Vehicle.FIXED_WING, Severity.CRITICAL, "Tuning: attitude error -1.3deg - ABORTING", "姿态误差 -1.3deg，快速调参已中止"),
                 Tuple.Create(Vehicle.VTOL_QUADROTOR, Severity.NOTICE, "Quicktune: DONE", "原生快速调参已完成"),
@@ -56,8 +64,14 @@ namespace MissionPlannerTests.Utilities
         {
             var fixtures = new[]
             {
+                Tuple.Create(Vehicle.QUADROTOR, Severity.NOTICE, "Tuning: RLL_D done"),
+                Tuple.Create(Vehicle.QUADROTOR, Severity.INFO, "Quicktune: RLL_D done"),
+                Tuple.Create(Vehicle.QUADROTOR, Severity.INFO, "Tuning: ATC_RAT_RLL_D done"),
+                Tuple.Create(Vehicle.FIXED_WING, Severity.NOTICE, "Starting KnifeEdge Circle"),
+                Tuple.Create(Vehicle.FIXED_WING, Severity.NOTICE, "Finished Split-S"),
                 Tuple.Create(Vehicle.QUADROTOR, Severity.NOTICE, "Tuning: RLL done\r\nnext"),
                 Tuple.Create(Vehicle.QUADROTOR, Severity.NOTICE, "Tuning: PITCH done"),
+                Tuple.Create(Vehicle.QUADROTOR, Severity.NOTICE, "Tuning: unknown applet"),
                 Tuple.Create(Vehicle.QUADROTOR, Severity.INFO, "Tuning: RLL done"),
                 Tuple.Create(Vehicle.QUADROTOR, Severity.NOTICE, "Starting 3 Roll(s)"),
                 Tuple.Create(Vehicle.GROUND_ROVER, Severity.INFO, "RTun: ATC_UNKNOWN_FF 38% complete"),

@@ -5503,8 +5503,9 @@ Mission Planner waits for 2 valid heartbeat packets before connecting
 
                     bool displayPrimary = compid == 1 &&
                         ReferenceEquals(displayGeneration, Volatile.Read(ref messageDisplay));
-                    if (compid == 1 && (msgid == (uint)MAVLINK_MSG_ID.HEARTBEAT ||
-                                        msgid == (uint)MAVLINK_MSG_ID.AUTOPILOT_VERSION))
+                    if (compid == 1 && ReferenceEquals(displayGeneration, Volatile.Read(ref messageDisplay)) &&
+                        (msgid == (uint)MAVLINK_MSG_ID.HEARTBEAT ||
+                         msgid == (uint)MAVLINK_MSG_ID.AUTOPILOT_VERSION))
                         speechProofGeneration.Observe(sysid, compid, message);
                     if (displayPrimary && (msgid == (uint)MAVLINK_MSG_ID.HEARTBEAT ||
                                            msgid == (uint)MAVLINK_MSG_ID.AUTOPILOT_VERSION))
@@ -5513,127 +5514,14 @@ Mission Planner waits for 2 valid heartbeat packets before connecting
                     if (msgid == (byte)MAVLINK_MSG_ID.STATUSTEXT) // status text
                     {
                         var msg = message.ToStructure<mavlink_statustext_t>();
-
-                        byte sev = msg.severity;
-
-                        string logdata = Encoding.UTF8.GetString(msg.text);
-                        int ind = logdata.IndexOf('\0');
-                        if (ind != -1)
-                            logdata = logdata.Substring(0, ind);
-                        bool enhancedChineseSpeech = MissionPlanner.ArduPilot.Common.UseEnhancedSpeech;
-                        string completeSpeechText = logdata;
-                        bool completeSpeechMessage = !enhancedChineseSpeech ||
-                            speechAssemblerGeneration.TryAppend(sysid, compid, msg, out completeSpeechText);
-                        log.Info(DateTime.Now + " " + sev + " " + logdata);
-
-                        // The Messages tab copies these lists on the UI thread; it locks them the same way.
-                        var messages = MAVlist[sysid, compid].cs.messages;
-                        (DateTime time, string message, byte severity) row;
-                        lock (messages)
-                        {
-                            row = (DateTime.Now, logdata, sev);
-                            messages.Add(row);
-                            if (displayPrimary)
-                                displayGeneration.Mark(messages, message, msg, row);
-
-                            // cap list at 1000 element
-                            while (messages.Count > 1000)
-                                messages.RemoveAt(0);
-                        }
-
-                        // gymbals etc are a child/slave to the main sysid, this displays the children messages under the current displayed vehicle
-                        if (sysid == sysidcurrent && compid != compidcurrent)
-                        {
-                            var currentMessages = MAVlist[sysidcurrent, compidcurrent].cs.messages;
-                            lock (currentMessages)
-                                currentMessages.Add((DateTime.Now, compid + " : " + logdata, sev));
-                        }
-
-                        bool printit = false;
-
-                        MAV_SEVERITY mavsev = MAV_SEVERITY.EMERGENCY;
-                        if (sev <= (byte)Settings.Instance.GetInt32("severity", 4))
-                        {
-                            printit = true;
-                            mavsev = (MAV_SEVERITY)sev;
-                        }
-
-                        if (logdata.StartsWith("Tuning:") || logdata.StartsWith("PreArm:") ||
-                            logdata.StartsWith("Arm:"))
-                            printit = true;
-
-                        bool selectedSpeechSource = sysid == sysidcurrent &&
-                            (compid == compidcurrent || (compidcurrent != 1 && compid == 1));
-                        bool scriptSource = selectedSpeechSource && compid == 1;
-                        string scriptTranslation = enhancedChineseSpeech && completeSpeechMessage && scriptSource
-                            ? speechProofGeneration.TranslateScript(sysid, sev, completeSpeechText)
-                            : null;
-                        bool extraScriptSpeech = enhancedChineseSpeech && completeSpeechMessage && selectedSpeechSource &&
-                            !printit && scriptTranslation != null && !logdata.StartsWith("PreArm:") &&
-                            (!Settings.Instance.GetBoolean("speech_armed_only") || MAVlist[sysid, compid].cs.armed);
-
-                        if (printit)
-                        {
-                            FirmwareSpeechAlert speechAlert = null;
-                            if (enhancedChineseSpeech && selectedSpeechSource)
-                            {
-                                speechAlert = completeSpeechMessage
-                                    ? new FirmwareSpeechAlert(() =>
-                                    {
-                                        if (!MissionPlanner.ArduPilot.Common.UseEnhancedSpeech ||
-                                            !ReferenceEquals(displayGeneration, Volatile.Read(ref messageDisplay))) return null;
-                                        if (displayPrimary && completeSpeechText == logdata)
-                                        {
-                                            var displayTranslation = displayGeneration.VoiceSuffix(messages, row);
-                                            if (!string.IsNullOrEmpty(displayTranslation)) return displayTranslation;
-                                        }
-                                        return scriptSource
-                                            ? speechProofGeneration.TranslateScript(sysid, sev, completeSpeechText) ?? completeSpeechText
-                                            : completeSpeechText;
-                                    })
-                                    : new FirmwareSpeechAlert(null, suppress: true);
-                            }
-
-                            // high severity msg publish to current selected mav
-                            if (sysid == sysidcurrent && compid != compidcurrent)
-                            {
-                                MAVlist[sysid, compidcurrent].cs.SetFirmwareHudText(
-                                    compid + " : " + logdata, null, speechAlert);
-                                MAVlist[sysid, compidcurrent].cs.messageHighSeverity = mavsev;
-                            }
-
-                            var hudState = MAVlist[sysid, compid].cs;
-                            Func<string> verifiedHudSuffix = null;
-                            if (displayPrimary && (logdata == "Battery 1 missing\t" || logdata == "Battery 1 disconnected\t") &&
-                                displayGeneration.Suffix(messages, row) != null)
-                                verifiedHudSuffix = () => ReferenceEquals(messages, hudState.messages)
-                                    ? MessagesDisplaySuffix(messages, row) : null;
-                            hudState.SetFirmwareHudText(logdata, verifiedHudSuffix, speechAlert);
-                            MAVlist[sysid, compid].cs.messageHighSeverity = mavsev;
-
-                            if (Speech != null &&
-                                Speech.IsReady &&
-                                Settings.Instance["speechenable"] != null &&
-                                Settings.Instance["speechenable"].ToString() == "True")
-                            {
-                                if (speechenabled && !logdata.StartsWith("PreArm:")) // Suppress audible PreArm messages
-                                {
-                                    if (enhancedChineseSpeech)
-                                    {
-                                        if (selectedSpeechSource && speechAlert != null && completeSpeechMessage)
-                                            speechAlert.Speak(Speech, completeSpeechText);
-                                    }
-                                    else Speech.SpeakAsync(logdata);
-                                }
-                            }
-                        }
-
-                        if (extraScriptSpeech && Speech != null && Speech.IsReady && Speech.speechEnable &&
-                            speechenabled && Settings.Instance.GetBoolean("speechenable") &&
-                            MissionPlanner.ArduPilot.Common.UseEnhancedSpeech &&
-                            ReferenceEquals(displayGeneration, Volatile.Read(ref messageDisplay)))
-                            Speech.SpeakAsync(scriptTranslation);
+                        string completeText = speechAssemblerGeneration.Add(sysid, compid, msg);
+                        ProcessExpiredStatusText(displayGeneration, speechProofGeneration, speechAssemblerGeneration);
+                        if (completeText != null)
+                            ProcessStatusText(sysid, compid, msg.severity, completeText, displayGeneration,
+                                speechProofGeneration, message, msg, true);
                     }
+                    else if (speechAssemblerGeneration.HasPending)
+                        ProcessExpiredStatusText(displayGeneration, speechProofGeneration, speechAssemblerGeneration);
 
                     if (Settings.Instance["autoParamCommit"] == null ||
                         Settings.Instance.GetBoolean("autoParamCommit") == true)
@@ -5663,6 +5551,110 @@ Mission Planner waits for 2 valid heartbeat packets before connecting
             MAVlist[sysid, compid].lastvalidpacket = DateTime.UtcNow;
 
             return message;
+        }
+
+        private void ProcessExpiredStatusText(MessageDisplayContext displayGeneration,
+            FirmwareSpeechSourceProof speechProofGeneration, SpeechStatusTextAssembler assembler)
+        {
+            if (!ReferenceEquals(displayGeneration, Volatile.Read(ref messageDisplay))) return;
+            foreach (var late in assembler.TakeExpired())
+                ProcessStatusText(late.sysid, late.compid, late.severity, late.text, displayGeneration,
+                    speechProofGeneration, null, null, false);
+        }
+
+        private void ProcessStatusText(uint sysid, byte compid, byte severity, string logdata,
+            MessageDisplayContext displayGeneration, FirmwareSpeechSourceProof speechProofGeneration,
+            MAVLinkMessage sourcePacket, mavlink_statustext_t sourceText, bool completeMessage)
+        {
+            if (!ReferenceEquals(displayGeneration, Volatile.Read(ref messageDisplay))) return;
+            bool displayPrimary = compid == 1 &&
+                ReferenceEquals(displayGeneration, Volatile.Read(ref messageDisplay));
+            byte sev = severity;
+            log.Info(DateTime.Now + " " + sev + " " + logdata);
+
+            var messages = MAVlist[sysid, compid].cs.messages;
+            (DateTime time, string message, byte severity) row;
+            lock (messages)
+            {
+                row = (DateTime.Now, logdata, sev);
+                messages.Add(row);
+                if (displayPrimary && sourcePacket != null && sourceText.chunk_seq == 0)
+                    displayGeneration.Mark(messages, sourcePacket, sourceText, row);
+                while (messages.Count > 1000) messages.RemoveAt(0);
+            }
+
+            if (sysid == sysidcurrent && compid != compidcurrent)
+            {
+                var currentMessages = MAVlist[sysidcurrent, compidcurrent].cs.messages;
+                lock (currentMessages)
+                    currentMessages.Add((DateTime.Now, compid + " : " + logdata, sev));
+            }
+
+            bool printit = false;
+            MAV_SEVERITY mavsev = MAV_SEVERITY.EMERGENCY;
+            if (sev <= (byte)Settings.Instance.GetInt32("severity", 4))
+            {
+                printit = true;
+                mavsev = (MAV_SEVERITY)sev;
+            }
+            if (logdata.StartsWith("Tuning:") || logdata.StartsWith("PreArm:") || logdata.StartsWith("Arm:"))
+                printit = true;
+
+            bool selectedSpeechSource = sysid == sysidcurrent &&
+                (compid == compidcurrent || (compidcurrent != 1 && compid == 1));
+            bool scriptSource = selectedSpeechSource && compid == 1;
+            bool enhancedChineseSpeech = MissionPlanner.ArduPilot.Common.UseEnhancedSpeech;
+
+            if (!printit) return;
+
+            string scriptTranslation = null;
+            if (enhancedChineseSpeech && completeMessage && scriptSource)
+                scriptTranslation = speechProofGeneration.TranslateScript(sysid, sev, logdata);
+
+            FirmwareSpeechAlert speechAlert = null;
+            if (enhancedChineseSpeech && selectedSpeechSource)
+            {
+                speechAlert = new FirmwareSpeechAlert(() =>
+                {
+                    if (!MissionPlanner.ArduPilot.Common.UseEnhancedSpeech ||
+                        !ReferenceEquals(displayGeneration, Volatile.Read(ref messageDisplay))) return null;
+                    if (displayPrimary && sourcePacket != null && sourceText.chunk_seq == 0)
+                    {
+                        var displayTranslation = displayGeneration.VoiceSuffix(messages, row);
+                        if (!string.IsNullOrEmpty(displayTranslation)) return displayTranslation;
+                    }
+                    return scriptTranslation ?? logdata;
+                });
+            }
+
+            if (sysid == sysidcurrent && compid != compidcurrent)
+            {
+                MAVlist[sysid, compidcurrent].cs.SetFirmwareHudText(compid + " : " + logdata, null, speechAlert);
+                MAVlist[sysid, compidcurrent].cs.messageHighSeverity = mavsev;
+            }
+
+            var hudState = MAVlist[sysid, compid].cs;
+            Func<string> verifiedHudSuffix = null;
+            if (scriptTranslation != null)
+                verifiedHudSuffix = () => MissionPlanner.ArduPilot.Common.UseEnhancedSpeech &&
+                    ReferenceEquals(displayGeneration, Volatile.Read(ref messageDisplay))
+                    ? scriptTranslation : null;
+            else if (displayPrimary && sourcePacket != null && sourceText.chunk_seq == 0 &&
+                (logdata == "Battery 1 missing\t" || logdata == "Battery 1 disconnected\t") &&
+                displayGeneration.Suffix(messages, row) != null)
+                verifiedHudSuffix = () => ReferenceEquals(messages, hudState.messages)
+                    ? MessagesDisplaySuffix(messages, row) : null;
+            hudState.SetFirmwareHudText(logdata, verifiedHudSuffix, speechAlert);
+            hudState.messageHighSeverity = mavsev;
+
+            if (Speech == null || !Speech.IsReady || Settings.Instance["speechenable"] == null ||
+                Settings.Instance["speechenable"].ToString() != "True") return;
+            if (!speechenabled || logdata.StartsWith("PreArm:")) return;
+
+            if (speechAlert != null)
+                speechAlert.Speak(Speech, logdata);
+            else
+                Speech.SpeakAsync(logdata);
         }
 
         private void ProcessMirrorStream(byte[] buffer)
