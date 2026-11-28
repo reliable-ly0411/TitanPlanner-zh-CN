@@ -72,6 +72,9 @@ namespace MissionPlanner.GCSViews
             Command.DisplayMember = "Value";
             Command.ValueMember = "Key";
             Init();
+#if !LIB
+            InitializeLocalPlanPreview();
+#endif
         }
 
 
@@ -458,23 +461,6 @@ namespace MissionPlanner.GCSViews
         private void ShortcutGdi()
         {
             GMapControl.GDI = !GMapControl.GDI;
-        }
-
-        [KeyboardShortcut(Keys.Control | Keys.M, "Take the plan as the vehicle's mission here, without writing it")]
-        private void ShortcutPlanAsMission()
-        {
-            // get the command list from the datagrid
-            var commandlist = GetCommandList();
-            MainV2.comPort.MAV.wps[0] = new Locationwp().Set(MainV2.comPort.MAV.cs.PlannedHomeLocation.Lat,
-                MainV2.comPort.MAV.cs.PlannedHomeLocation.Lng, MainV2.comPort.MAV.cs.PlannedHomeLocation.Alt, 0);
-            int a = 1;
-            commandlist.ForEach(i =>
-            {
-                MAVLink.mavlink_mission_item_int_t item = i;
-                item.seq = (ushort) a;
-                MainV2.comPort.MAV.wps[a] = item;
-                a++;
-            });
         }
 
         // the write and read keys go on to the focused control too
@@ -5883,6 +5869,9 @@ namespace MissionPlanner.GCSViews
         /// </summary>
         private void processToScreen(List<Locationwp> cmds, bool append = false)
         {
+#if !LIB
+            InvalidateLocalPlanPreview();
+#endif
             quickadd = true;
 
 

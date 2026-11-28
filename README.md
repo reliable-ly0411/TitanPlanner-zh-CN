@@ -49,6 +49,8 @@ Enhanced Chinese includes an initial set of bilingual Copter and Plane/QuadPlane
 
 ## Enhancements
 
+In PLAN, Ctrl+M opens paired, read-only 2D and 3D views of the current plan. See the [offline elevation setup](docs/local-plan-preview.zh-CN.md).
+
 This fork implements every feature we've always yearned for with considerable UI/UX upgrades, a reworked HUD, a real-time 3D map with vehicle rendering (and ADSB), an overhauled parameter editor and tab layout, a Betaflight-style motor setup, USB auto-connect, offline map packs for air-gapped planning, and dozens of large improvements throughout the app.
 
 **See [CHANGES.md](CHANGES.md) for the full list of features and fixes added in this fork.**
