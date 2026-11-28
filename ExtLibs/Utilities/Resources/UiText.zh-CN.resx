@@ -9582,6 +9582,10 @@ VLAN 标记</value>
     <value>远端</value>
     <comment>"Remote"</comment>
   </data>
+  <data name="dd2fad09266cbee6e8c1c390df9da5a3706eb6f420dcf87654301a6a51283464" xml:space="preserve">
+    <value>远端上报的通信丢包率 (c%)</value>
+    <comment>"Remote-reported communication drop rate (c%)"</comment>
+  </data>
   <data name="c3812fc4acb861d5182fc2b8155f327f736fbe5e5eb86a7bd7afcb6dc5497282" xml:space="preserve">
     <value>移除</value>
     <comment>"Remove"</comment>
