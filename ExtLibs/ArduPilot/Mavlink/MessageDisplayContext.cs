@@ -114,6 +114,23 @@ namespace MissionPlanner
             version == 1 && severity == (byte)MAVLink.MAV_SEVERITY.INFO &&
             (raw == "Barometer 1 calibration complete" || raw == "u-blox supports L5 Band");
 
+        private static string Ekf3TiltAlignmentSuffix(int version, string message, byte severity)
+        {
+            // ArduPilot d9c5097c, AP_NavEKF3_Control.cpp, checkAttitudeAlignmentStatus():
+            // INFO, unsigned IMU index. Review only the exact spellings for indices 0-2.
+            if (version != 1 || severity != (byte)MAVLink.MAV_SEVERITY.INFO || message == null)
+                return null;
+            const string prefix = "EKF3 IMU";
+            const string suffix = " tilt alignment complete";
+            if (message.Length != prefix.Length + 1 + suffix.Length ||
+                !message.StartsWith(prefix, StringComparison.Ordinal) ||
+                !message.EndsWith(suffix, StringComparison.Ordinal))
+                return null;
+
+            char index = message[prefix.Length];
+            return index >= '0' && index <= '2' ? "EKF3 IMU" + index + " 倾斜对准完成" : null;
+        }
+
         internal void Mark(List<(DateTime time, string message, byte severity)> list, MAVLink.MAVLinkMessage packet,
             MAVLink.mavlink_statustext_t text, (DateTime time, string message, byte severity) row)
         {
@@ -147,6 +164,7 @@ namespace MissionPlanner
                 ? row.message == Px4BatteryText(s.Version) && row.severity == 2
                 : (row.message == "EKF3 IMU0 origin set" && (s.Version == 1 || row.severity == 6)) ||
                   (s.Version == 1 && row.message == "GPS 1: detected u-blox") ||
+                  Ekf3TiltAlignmentSuffix(s.Version, row.message, row.severity) != null ||
                   (s.Version == 4 && row.severity == (byte)MAVLink.MAV_SEVERITY.INFO &&
                    row.message == Plane463Imu1OriginText) ||
                   (s.Version == 7 && row.severity == 5 && row.message == Plane444CrashDumpSaved) ||
@@ -209,7 +227,7 @@ namespace MissionPlanner
                 if (row.message == "GPS 1: detected u-blox") return "检测到 GPS 1：u-blox";
                 if (row.message == "EKF3 IMU0 origin set") return "EKF3 IMU0 原点已设置";
                 if (s.Version == 4 && row.message == Plane463Imu1OriginText) return "EKF3 IMU1 原点已设置";
-                return null;
+                return Ekf3TiltAlignmentSuffix(s.Version, row.message, row.severity);
             }
         }
     }
