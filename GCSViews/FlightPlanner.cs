@@ -73,17 +73,22 @@ namespace MissionPlanner.GCSViews
             Init();
 #if !LIB
             InitializeLocalPlanPreview();
-            if (CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "en")
-            {
-                Commands.HandleCreated += (sender, args) => FitCompactEnglishHeaders();
-                Commands.DpiChangedAfterParent += (sender, args) => FitCompactEnglishHeaders();
-            }
+            Commands.DpiChangedAfterParent += (sender, args) => FitCompactEnglishHeaders();
 #endif
         }
 
 #if !LIB
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+            BeginInvoke((MethodInvoker)FitCompactEnglishHeaders);
+        }
+
         private void FitCompactEnglishHeaders()
         {
+            if (CultureInfo.CurrentUICulture.TwoLetterISOLanguageName != "en" || Commands.IsDisposed)
+                return;
+
             using (var graphics = Commands.CreateGraphics())
             {
                 foreach (var column in new DataGridViewColumn[] { Delete, Grad, Angle, Dist, AZ })
