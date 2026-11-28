@@ -763,6 +763,42 @@
           <param humanName="BTEMP_Y" name="OSD1_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="BAT2VLT_EN" name="OSD1_BAT2_VLT_EN" documentation="Displays battery2 voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="BATVOLT_EN" name="OSD1_BAT_VOLT_EN" documentation="Displays main battery voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CURRENT2_EN" name="OSD1_CURRENT2_EN" documentation="Displays 2nd battery current">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CURRENT_EN" name="OSD1_CURRENT_EN" documentation="Displays main battery current">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="POWER_EN" name="OSD1_POWER_EN" documentation="Displays power (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="RESTVOLT_EN" name="OSD1_RESTVOLT_EN" documentation="Displays main battery resting voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -851,6 +887,42 @@
           </param>
           <param humanName="BTEMP_Y" name="OSD2_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
+          </param>
+          <param humanName="BAT2VLT_EN" name="OSD2_BAT2_VLT_EN" documentation="Displays battery2 voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="BATVOLT_EN" name="OSD2_BAT_VOLT_EN" documentation="Displays main battery voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CURRENT2_EN" name="OSD2_CURRENT2_EN" documentation="Displays 2nd battery current">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CURRENT_EN" name="OSD2_CURRENT_EN" documentation="Displays main battery current">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="POWER_EN" name="OSD2_POWER_EN" documentation="Displays power (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="RESTVOLT_EN" name="OSD2_RESTVOLT_EN" documentation="Displays main battery resting voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
           </param>
         </parameters>
         <parameters name="OSD3_">
@@ -941,6 +1013,42 @@
           <param humanName="BTEMP_Y" name="OSD3_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="BAT2VLT_EN" name="OSD3_BAT2_VLT_EN" documentation="Displays battery2 voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="BATVOLT_EN" name="OSD3_BAT_VOLT_EN" documentation="Displays main battery voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CURRENT2_EN" name="OSD3_CURRENT2_EN" documentation="Displays 2nd battery current">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CURRENT_EN" name="OSD3_CURRENT_EN" documentation="Displays main battery current">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="POWER_EN" name="OSD3_POWER_EN" documentation="Displays power (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="RESTVOLT_EN" name="OSD3_RESTVOLT_EN" documentation="Displays main battery resting voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -1029,6 +1137,42 @@
           </param>
           <param humanName="BTEMP_Y" name="OSD4_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
+          </param>
+          <param humanName="BAT2VLT_EN" name="OSD4_BAT2_VLT_EN" documentation="Displays battery2 voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="BATVOLT_EN" name="OSD4_BAT_VOLT_EN" documentation="Displays main battery voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CURRENT2_EN" name="OSD4_CURRENT2_EN" documentation="Displays 2nd battery current">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CURRENT_EN" name="OSD4_CURRENT_EN" documentation="Displays main battery current">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="POWER_EN" name="OSD4_POWER_EN" documentation="Displays power (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="RESTVOLT_EN" name="OSD4_RESTVOLT_EN" documentation="Displays main battery resting voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
           </param>
         </parameters>
         <parameters name="NTF_">
@@ -1883,6 +2027,42 @@
           <param humanName="BTEMP_Y" name="OSD1_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="BAT2VLT_EN" name="OSD1_BAT2_VLT_EN" documentation="Displays battery2 voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="BATVOLT_EN" name="OSD1_BAT_VOLT_EN" documentation="Displays main battery voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CURRENT2_EN" name="OSD1_CURRENT2_EN" documentation="Displays 2nd battery current">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CURRENT_EN" name="OSD1_CURRENT_EN" documentation="Displays main battery current">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="POWER_EN" name="OSD1_POWER_EN" documentation="Displays power (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="RESTVOLT_EN" name="OSD1_RESTVOLT_EN" documentation="Displays main battery resting voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -1971,6 +2151,42 @@
           </param>
           <param humanName="BTEMP_Y" name="OSD2_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
+          </param>
+          <param humanName="BAT2VLT_EN" name="OSD2_BAT2_VLT_EN" documentation="Displays battery2 voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="BATVOLT_EN" name="OSD2_BAT_VOLT_EN" documentation="Displays main battery voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CURRENT2_EN" name="OSD2_CURRENT2_EN" documentation="Displays 2nd battery current">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CURRENT_EN" name="OSD2_CURRENT_EN" documentation="Displays main battery current">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="POWER_EN" name="OSD2_POWER_EN" documentation="Displays power (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="RESTVOLT_EN" name="OSD2_RESTVOLT_EN" documentation="Displays main battery resting voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
           </param>
         </parameters>
         <parameters name="OSD3_">
@@ -2061,6 +2277,42 @@
           <param humanName="BTEMP_Y" name="OSD3_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="BAT2VLT_EN" name="OSD3_BAT2_VLT_EN" documentation="Displays battery2 voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="BATVOLT_EN" name="OSD3_BAT_VOLT_EN" documentation="Displays main battery voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CURRENT2_EN" name="OSD3_CURRENT2_EN" documentation="Displays 2nd battery current">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CURRENT_EN" name="OSD3_CURRENT_EN" documentation="Displays main battery current">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="POWER_EN" name="OSD3_POWER_EN" documentation="Displays power (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="RESTVOLT_EN" name="OSD3_RESTVOLT_EN" documentation="Displays main battery resting voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -2149,6 +2401,42 @@
           </param>
           <param humanName="BTEMP_Y" name="OSD4_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
+          </param>
+          <param humanName="BAT2VLT_EN" name="OSD4_BAT2_VLT_EN" documentation="Displays battery2 voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="BATVOLT_EN" name="OSD4_BAT_VOLT_EN" documentation="Displays main battery voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CURRENT2_EN" name="OSD4_CURRENT2_EN" documentation="Displays 2nd battery current">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CURRENT_EN" name="OSD4_CURRENT_EN" documentation="Displays main battery current">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="POWER_EN" name="OSD4_POWER_EN" documentation="Displays power (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="RESTVOLT_EN" name="OSD4_RESTVOLT_EN" documentation="Displays main battery resting voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
           </param>
         </parameters>
         <parameters name="INS_LOG_">
@@ -3093,6 +3381,42 @@
           <param humanName="BTEMP_Y" name="OSD1_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="BAT2VLT_EN" name="OSD1_BAT2_VLT_EN" documentation="Displays battery2 voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="BATVOLT_EN" name="OSD1_BAT_VOLT_EN" documentation="Displays main battery voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CURRENT2_EN" name="OSD1_CURRENT2_EN" documentation="Displays 2nd battery current">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CURRENT_EN" name="OSD1_CURRENT_EN" documentation="Displays main battery current">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="POWER_EN" name="OSD1_POWER_EN" documentation="Displays power (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="RESTVOLT_EN" name="OSD1_RESTVOLT_EN" documentation="Displays main battery resting voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -3181,6 +3505,42 @@
           </param>
           <param humanName="BTEMP_Y" name="OSD2_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
+          </param>
+          <param humanName="BAT2VLT_EN" name="OSD2_BAT2_VLT_EN" documentation="Displays battery2 voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="BATVOLT_EN" name="OSD2_BAT_VOLT_EN" documentation="Displays main battery voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CURRENT2_EN" name="OSD2_CURRENT2_EN" documentation="Displays 2nd battery current">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CURRENT_EN" name="OSD2_CURRENT_EN" documentation="Displays main battery current">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="POWER_EN" name="OSD2_POWER_EN" documentation="Displays power (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="RESTVOLT_EN" name="OSD2_RESTVOLT_EN" documentation="Displays main battery resting voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
           </param>
         </parameters>
         <parameters name="OSD3_">
@@ -3271,6 +3631,42 @@
           <param humanName="BTEMP_Y" name="OSD3_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="BAT2VLT_EN" name="OSD3_BAT2_VLT_EN" documentation="Displays battery2 voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="BATVOLT_EN" name="OSD3_BAT_VOLT_EN" documentation="Displays main battery voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CURRENT2_EN" name="OSD3_CURRENT2_EN" documentation="Displays 2nd battery current">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CURRENT_EN" name="OSD3_CURRENT_EN" documentation="Displays main battery current">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="POWER_EN" name="OSD3_POWER_EN" documentation="Displays power (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="RESTVOLT_EN" name="OSD3_RESTVOLT_EN" documentation="Displays main battery resting voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -3359,6 +3755,42 @@
           </param>
           <param humanName="BTEMP_Y" name="OSD4_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
+          </param>
+          <param humanName="BAT2VLT_EN" name="OSD4_BAT2_VLT_EN" documentation="Displays battery2 voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="BATVOLT_EN" name="OSD4_BAT_VOLT_EN" documentation="Displays main battery voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CURRENT2_EN" name="OSD4_CURRENT2_EN" documentation="Displays 2nd battery current">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CURRENT_EN" name="OSD4_CURRENT_EN" documentation="Displays main battery current">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="POWER_EN" name="OSD4_POWER_EN" documentation="Displays power (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="RESTVOLT_EN" name="OSD4_RESTVOLT_EN" documentation="Displays main battery resting voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
           </param>
         </parameters>
         <parameters name="INS_LOG_">
@@ -4291,6 +4723,42 @@
           <param humanName="BTEMP_Y" name="OSD1_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="BAT2VLT_EN" name="OSD1_BAT2_VLT_EN" documentation="Displays battery2 voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="BATVOLT_EN" name="OSD1_BAT_VOLT_EN" documentation="Displays main battery voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CURRENT2_EN" name="OSD1_CURRENT2_EN" documentation="Displays 2nd battery current">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CURRENT_EN" name="OSD1_CURRENT_EN" documentation="Displays main battery current">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="POWER_EN" name="OSD1_POWER_EN" documentation="Displays power (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="RESTVOLT_EN" name="OSD1_RESTVOLT_EN" documentation="Displays main battery resting voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -4379,6 +4847,42 @@
           </param>
           <param humanName="BTEMP_Y" name="OSD2_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
+          </param>
+          <param humanName="BAT2VLT_EN" name="OSD2_BAT2_VLT_EN" documentation="Displays battery2 voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="BATVOLT_EN" name="OSD2_BAT_VOLT_EN" documentation="Displays main battery voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CURRENT2_EN" name="OSD2_CURRENT2_EN" documentation="Displays 2nd battery current">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CURRENT_EN" name="OSD2_CURRENT_EN" documentation="Displays main battery current">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="POWER_EN" name="OSD2_POWER_EN" documentation="Displays power (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="RESTVOLT_EN" name="OSD2_RESTVOLT_EN" documentation="Displays main battery resting voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
           </param>
         </parameters>
         <parameters name="OSD3_">
@@ -4469,6 +4973,42 @@
           <param humanName="BTEMP_Y" name="OSD3_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="BAT2VLT_EN" name="OSD3_BAT2_VLT_EN" documentation="Displays battery2 voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="BATVOLT_EN" name="OSD3_BAT_VOLT_EN" documentation="Displays main battery voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CURRENT2_EN" name="OSD3_CURRENT2_EN" documentation="Displays 2nd battery current">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CURRENT_EN" name="OSD3_CURRENT_EN" documentation="Displays main battery current">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="POWER_EN" name="OSD3_POWER_EN" documentation="Displays power (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="RESTVOLT_EN" name="OSD3_RESTVOLT_EN" documentation="Displays main battery resting voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -4557,6 +5097,42 @@
           </param>
           <param humanName="BTEMP_Y" name="OSD4_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
+          </param>
+          <param humanName="BAT2VLT_EN" name="OSD4_BAT2_VLT_EN" documentation="Displays battery2 voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="BATVOLT_EN" name="OSD4_BAT_VOLT_EN" documentation="Displays main battery voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CURRENT2_EN" name="OSD4_CURRENT2_EN" documentation="Displays 2nd battery current">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CURRENT_EN" name="OSD4_CURRENT_EN" documentation="Displays main battery current">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="POWER_EN" name="OSD4_POWER_EN" documentation="Displays power (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="RESTVOLT_EN" name="OSD4_RESTVOLT_EN" documentation="Displays main battery resting voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
           </param>
         </parameters>
         <parameters name="NTF_">
@@ -5466,6 +6042,42 @@
           <param humanName="BTEMP_Y" name="OSD1_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="BAT2VLT_EN" name="OSD1_BAT2_VLT_EN" documentation="Displays battery2 voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="BATVOLT_EN" name="OSD1_BAT_VOLT_EN" documentation="Displays main battery voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CURRENT2_EN" name="OSD1_CURRENT2_EN" documentation="Displays 2nd battery current">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CURRENT_EN" name="OSD1_CURRENT_EN" documentation="Displays main battery current">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="POWER_EN" name="OSD1_POWER_EN" documentation="Displays power (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="RESTVOLT_EN" name="OSD1_RESTVOLT_EN" documentation="Displays main battery resting voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -5554,6 +6166,42 @@
           </param>
           <param humanName="BTEMP_Y" name="OSD2_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
+          </param>
+          <param humanName="BAT2VLT_EN" name="OSD2_BAT2_VLT_EN" documentation="Displays battery2 voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="BATVOLT_EN" name="OSD2_BAT_VOLT_EN" documentation="Displays main battery voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CURRENT2_EN" name="OSD2_CURRENT2_EN" documentation="Displays 2nd battery current">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CURRENT_EN" name="OSD2_CURRENT_EN" documentation="Displays main battery current">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="POWER_EN" name="OSD2_POWER_EN" documentation="Displays power (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="RESTVOLT_EN" name="OSD2_RESTVOLT_EN" documentation="Displays main battery resting voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
           </param>
         </parameters>
         <parameters name="OSD3_">
@@ -5644,6 +6292,42 @@
           <param humanName="BTEMP_Y" name="OSD3_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="BAT2VLT_EN" name="OSD3_BAT2_VLT_EN" documentation="Displays battery2 voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="BATVOLT_EN" name="OSD3_BAT_VOLT_EN" documentation="Displays main battery voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CURRENT2_EN" name="OSD3_CURRENT2_EN" documentation="Displays 2nd battery current">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CURRENT_EN" name="OSD3_CURRENT_EN" documentation="Displays main battery current">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="POWER_EN" name="OSD3_POWER_EN" documentation="Displays power (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="RESTVOLT_EN" name="OSD3_RESTVOLT_EN" documentation="Displays main battery resting voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -5732,6 +6416,42 @@
           </param>
           <param humanName="BTEMP_Y" name="OSD4_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
+          </param>
+          <param humanName="BAT2VLT_EN" name="OSD4_BAT2_VLT_EN" documentation="Displays battery2 voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="BATVOLT_EN" name="OSD4_BAT_VOLT_EN" documentation="Displays main battery voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CURRENT2_EN" name="OSD4_CURRENT2_EN" documentation="Displays 2nd battery current">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CURRENT_EN" name="OSD4_CURRENT_EN" documentation="Displays main battery current">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="POWER_EN" name="OSD4_POWER_EN" documentation="Displays power (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="RESTVOLT_EN" name="OSD4_RESTVOLT_EN" documentation="Displays main battery resting voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
           </param>
         </parameters>
         <parameters name="INS_LOG_">
@@ -6740,6 +7460,42 @@
           <param humanName="BTEMP_Y" name="OSD1_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="BAT2VLT_EN" name="OSD1_BAT2_VLT_EN" documentation="Displays battery2 voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="BATVOLT_EN" name="OSD1_BAT_VOLT_EN" documentation="Displays main battery voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CURRENT2_EN" name="OSD1_CURRENT2_EN" documentation="Displays 2nd battery current">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CURRENT_EN" name="OSD1_CURRENT_EN" documentation="Displays main battery current">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="POWER_EN" name="OSD1_POWER_EN" documentation="Displays power (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="RESTVOLT_EN" name="OSD1_RESTVOLT_EN" documentation="Displays main battery resting voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -6828,6 +7584,42 @@
           </param>
           <param humanName="BTEMP_Y" name="OSD2_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
+          </param>
+          <param humanName="BAT2VLT_EN" name="OSD2_BAT2_VLT_EN" documentation="Displays battery2 voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="BATVOLT_EN" name="OSD2_BAT_VOLT_EN" documentation="Displays main battery voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CURRENT2_EN" name="OSD2_CURRENT2_EN" documentation="Displays 2nd battery current">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CURRENT_EN" name="OSD2_CURRENT_EN" documentation="Displays main battery current">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="POWER_EN" name="OSD2_POWER_EN" documentation="Displays power (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="RESTVOLT_EN" name="OSD2_RESTVOLT_EN" documentation="Displays main battery resting voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
           </param>
         </parameters>
         <parameters name="OSD3_">
@@ -6918,6 +7710,42 @@
           <param humanName="BTEMP_Y" name="OSD3_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="BAT2VLT_EN" name="OSD3_BAT2_VLT_EN" documentation="Displays battery2 voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="BATVOLT_EN" name="OSD3_BAT_VOLT_EN" documentation="Displays main battery voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CURRENT2_EN" name="OSD3_CURRENT2_EN" documentation="Displays 2nd battery current">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CURRENT_EN" name="OSD3_CURRENT_EN" documentation="Displays main battery current">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="POWER_EN" name="OSD3_POWER_EN" documentation="Displays power (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="RESTVOLT_EN" name="OSD3_RESTVOLT_EN" documentation="Displays main battery resting voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -7006,6 +7834,42 @@
           </param>
           <param humanName="BTEMP_Y" name="OSD4_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
+          </param>
+          <param humanName="BAT2VLT_EN" name="OSD4_BAT2_VLT_EN" documentation="Displays battery2 voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="BATVOLT_EN" name="OSD4_BAT_VOLT_EN" documentation="Displays main battery voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CURRENT2_EN" name="OSD4_CURRENT2_EN" documentation="Displays 2nd battery current">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CURRENT_EN" name="OSD4_CURRENT_EN" documentation="Displays main battery current">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="POWER_EN" name="OSD4_POWER_EN" documentation="Displays power (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="RESTVOLT_EN" name="OSD4_RESTVOLT_EN" documentation="Displays main battery resting voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
           </param>
         </parameters>
         <parameters name="INS_LOG_">
@@ -7486,6 +8350,42 @@
           <param humanName="BTEMP_Y" name="OSD1_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="BAT2VLT_EN" name="OSD1_BAT2_VLT_EN" documentation="Displays battery2 voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="BATVOLT_EN" name="OSD1_BAT_VOLT_EN" documentation="Displays main battery voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CURRENT2_EN" name="OSD1_CURRENT2_EN" documentation="Displays 2nd battery current">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CURRENT_EN" name="OSD1_CURRENT_EN" documentation="Displays main battery current">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="POWER_EN" name="OSD1_POWER_EN" documentation="Displays power (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="RESTVOLT_EN" name="OSD1_RESTVOLT_EN" documentation="Displays main battery resting voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
         </parameters>
         <parameters name="OSD2_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD2_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -7574,6 +8474,42 @@
           </param>
           <param humanName="BTEMP_Y" name="OSD2_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
+          </param>
+          <param humanName="BAT2VLT_EN" name="OSD2_BAT2_VLT_EN" documentation="Displays battery2 voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="BATVOLT_EN" name="OSD2_BAT_VOLT_EN" documentation="Displays main battery voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CURRENT2_EN" name="OSD2_CURRENT2_EN" documentation="Displays 2nd battery current">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CURRENT_EN" name="OSD2_CURRENT_EN" documentation="Displays main battery current">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="POWER_EN" name="OSD2_POWER_EN" documentation="Displays power (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="RESTVOLT_EN" name="OSD2_RESTVOLT_EN" documentation="Displays main battery resting voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
           </param>
         </parameters>
         <parameters name="OSD3_">
@@ -7664,6 +8600,42 @@
           <param humanName="BTEMP_Y" name="OSD3_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
           </param>
+          <param humanName="BAT2VLT_EN" name="OSD3_BAT2_VLT_EN" documentation="Displays battery2 voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="BATVOLT_EN" name="OSD3_BAT_VOLT_EN" documentation="Displays main battery voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CURRENT2_EN" name="OSD3_CURRENT2_EN" documentation="Displays 2nd battery current">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CURRENT_EN" name="OSD3_CURRENT_EN" documentation="Displays main battery current">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="POWER_EN" name="OSD3_POWER_EN" documentation="Displays power (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="RESTVOLT_EN" name="OSD3_RESTVOLT_EN" documentation="Displays main battery resting voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
         </parameters>
         <parameters name="OSD4_">
           <param humanName="Sets the font index for this screen (MSP DisplayPort only)" name="OSD4_FONT" documentation="Sets the font index for this screen (MSP DisplayPort only)" user="Standard">
@@ -7752,6 +8724,42 @@
           </param>
           <param humanName="BTEMP_Y" name="OSD4_BTEMP_Y" documentation="Vertical position on screen">
             <field name="Range">0 21</field>
+          </param>
+          <param humanName="BAT2VLT_EN" name="OSD4_BAT2_VLT_EN" documentation="Displays battery2 voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="BATVOLT_EN" name="OSD4_BAT_VOLT_EN" documentation="Displays main battery voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CURRENT2_EN" name="OSD4_CURRENT2_EN" documentation="Displays 2nd battery current">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="CURRENT_EN" name="OSD4_CURRENT_EN" documentation="Displays main battery current">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="POWER_EN" name="OSD4_POWER_EN" documentation="Displays power (MSP OSD only)">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
+          </param>
+          <param humanName="RESTVOLT_EN" name="OSD4_RESTVOLT_EN" documentation="Displays main battery resting voltage">
+            <values>
+              <value code="0">Disabled</value>
+              <value code="1">Enabled</value>
+            </values>
           </param>
         </parameters>
         <parameters name="INS_LOG_">

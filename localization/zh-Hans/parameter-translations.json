@@ -10616,6 +10616,966 @@
       "recordSha256": "39ca0d19036c1e425fd50866ce8987f92a83d94f425ba832094ed4e74e277e33",
       "english": "Vertical position on screen",
       "chinese": "设置 OSD 第 4 屏上第二个气压计温度的垂直位置。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD1_BAT2_VLT_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "bfc913bab1a5f5cb72c9237209184d6af665a1a94fc8c840956e2a860215df41",
+      "recordSha256": "c604731a84543973d26d59eca33455cd0ddeb152beb557a3104392b69c80928f",
+      "english": "Displays battery2 voltage",
+      "chinese": "显示第二块电池的电压。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD1_BAT_VOLT_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "6d366e1562016737fcd69a68524c959474eade5989a1a010b2e5cf25e0c197a5",
+      "recordSha256": "655f934f1c8b295a8afa3af8e7a0c84f585a0bb0942374b990fd9447975ceceb",
+      "english": "Displays main battery voltage",
+      "chinese": "显示主电池电压。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD1_CURRENT2_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "c655e407ac911bc1937141755a17bae20747eec6bfe6c695aa8c868d8ae4e688",
+      "recordSha256": "79bf4f45bfe2e0c5bfc2ef1cf6babe841978e7eaed168ddebb1227f32baeca09",
+      "english": "Displays 2nd battery current",
+      "chinese": "显示第二块电池的电流。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD1_CURRENT_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "9e1258e8454aac6fcf8c6d0bb09013216cce270805a3179996c5c4243ea9dc35",
+      "recordSha256": "00410b0c7a9e7901dc5b5b172ea9743c18abe7f23ad6de5ed8114d48b4967501",
+      "english": "Displays main battery current",
+      "chinese": "显示主电池电流。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD1_POWER_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "5eee4c242ff62a991252b9791b861fcb38327d6ee4116c4f7b2a856eba961eae",
+      "recordSha256": "a2b98ec2dba78cc493760467c71f918f15c9d56e95b04705090ffa6db10d5ef5",
+      "english": "Displays power (MSP OSD only)",
+      "chinese": "显示功率（仅限 MSP OSD）。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD1_RESTVOLT_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "ed2f06b440e3999623fa60fd4fd949ff2a939166f2c1d5be2ba65cfe62de8c64",
+      "recordSha256": "92e07ff0e5d7640d6e557e37912408a103f4ce960635876534d07a14d6afefc4",
+      "english": "Displays main battery resting voltage",
+      "chinese": "显示主电池的静置电压。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD2_BAT2_VLT_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "bfc913bab1a5f5cb72c9237209184d6af665a1a94fc8c840956e2a860215df41",
+      "recordSha256": "6577b9c15528683b7f4f533adc2b05fadb8461d2423f427ef91031d2a160d68b",
+      "english": "Displays battery2 voltage",
+      "chinese": "显示第二块电池的电压。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD2_BAT_VOLT_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "6d366e1562016737fcd69a68524c959474eade5989a1a010b2e5cf25e0c197a5",
+      "recordSha256": "6054e7046bfdd5f82086394e3378bf1eaa405949b8d81b24744233e457f1be62",
+      "english": "Displays main battery voltage",
+      "chinese": "显示主电池电压。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD2_CURRENT2_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "c655e407ac911bc1937141755a17bae20747eec6bfe6c695aa8c868d8ae4e688",
+      "recordSha256": "34c502c338ac33f43c11a03dc76079feb806503bcda7dc3c835b0515dc3ec3fa",
+      "english": "Displays 2nd battery current",
+      "chinese": "显示第二块电池的电流。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD2_CURRENT_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "9e1258e8454aac6fcf8c6d0bb09013216cce270805a3179996c5c4243ea9dc35",
+      "recordSha256": "8fa4ea34e55a244bd7b46d48757297a6f22b12615fca59304b89b2e8b13ffe1d",
+      "english": "Displays main battery current",
+      "chinese": "显示主电池电流。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD2_POWER_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "5eee4c242ff62a991252b9791b861fcb38327d6ee4116c4f7b2a856eba961eae",
+      "recordSha256": "efd5e4ae72678938abd0972efbfa8fa57157f65dc0d8aee8fd361a3115dcc7e5",
+      "english": "Displays power (MSP OSD only)",
+      "chinese": "显示功率（仅限 MSP OSD）。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD2_RESTVOLT_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "ed2f06b440e3999623fa60fd4fd949ff2a939166f2c1d5be2ba65cfe62de8c64",
+      "recordSha256": "c30b49e52b8e644b88ff64c2081b6ca6b068f874d509889d49187f4476b31c3c",
+      "english": "Displays main battery resting voltage",
+      "chinese": "显示主电池的静置电压。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD3_BAT2_VLT_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "bfc913bab1a5f5cb72c9237209184d6af665a1a94fc8c840956e2a860215df41",
+      "recordSha256": "68c50186b1afcc741b96a0051a2d4a4045e3bf5fbae5d9b9795fad8d51884819",
+      "english": "Displays battery2 voltage",
+      "chinese": "显示第二块电池的电压。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD3_BAT_VOLT_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "6d366e1562016737fcd69a68524c959474eade5989a1a010b2e5cf25e0c197a5",
+      "recordSha256": "9443b5cc79f7d5e01d0fd1fa408e7971e6d857c828513490d6315ddfd1dd1f53",
+      "english": "Displays main battery voltage",
+      "chinese": "显示主电池电压。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD3_CURRENT2_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "c655e407ac911bc1937141755a17bae20747eec6bfe6c695aa8c868d8ae4e688",
+      "recordSha256": "4d5b5142377e8999fad24e44c9f714716ef83da364d80fe6efe4eb62a8e54746",
+      "english": "Displays 2nd battery current",
+      "chinese": "显示第二块电池的电流。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD3_CURRENT_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "9e1258e8454aac6fcf8c6d0bb09013216cce270805a3179996c5c4243ea9dc35",
+      "recordSha256": "94dccd4323db1667597f19530b4ca081db3b1f7d566db86db92800ac7b966b90",
+      "english": "Displays main battery current",
+      "chinese": "显示主电池电流。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD3_POWER_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "5eee4c242ff62a991252b9791b861fcb38327d6ee4116c4f7b2a856eba961eae",
+      "recordSha256": "8846ca0218d77a87e5c3ab7a1370ff7be6592c13d475c94ccfd3cd1f0b1fabc9",
+      "english": "Displays power (MSP OSD only)",
+      "chinese": "显示功率（仅限 MSP OSD）。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD3_RESTVOLT_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "ed2f06b440e3999623fa60fd4fd949ff2a939166f2c1d5be2ba65cfe62de8c64",
+      "recordSha256": "92fe49b9149b45b9d4e0eafbda0622018d03df5035fa01d2c95db22f50f015e3",
+      "english": "Displays main battery resting voltage",
+      "chinese": "显示主电池的静置电压。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD4_BAT2_VLT_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "bfc913bab1a5f5cb72c9237209184d6af665a1a94fc8c840956e2a860215df41",
+      "recordSha256": "2fa43333dd761fc6331c83cfdc8a4ddb434fa1890877d99bdb0f45ae27bb2c63",
+      "english": "Displays battery2 voltage",
+      "chinese": "显示第二块电池的电压。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD4_BAT_VOLT_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "6d366e1562016737fcd69a68524c959474eade5989a1a010b2e5cf25e0c197a5",
+      "recordSha256": "fa7cc7489f4ab3d7f003cd26e8cac807a51e3377c31f279dc8fc2a696c215b8c",
+      "english": "Displays main battery voltage",
+      "chinese": "显示主电池电压。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD4_CURRENT2_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "c655e407ac911bc1937141755a17bae20747eec6bfe6c695aa8c868d8ae4e688",
+      "recordSha256": "e1ca722a6867a1e03eab442cbeddfdb963dfc90c94729bd0c3ecf335d128d398",
+      "english": "Displays 2nd battery current",
+      "chinese": "显示第二块电池的电流。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD4_CURRENT_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "9e1258e8454aac6fcf8c6d0bb09013216cce270805a3179996c5c4243ea9dc35",
+      "recordSha256": "ede4c8b10aa1ff283cad499f986f5adaf36365b7cf6b013c85fff473b1ae0d76",
+      "english": "Displays main battery current",
+      "chinese": "显示主电池电流。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD4_POWER_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "5eee4c242ff62a991252b9791b861fcb38327d6ee4116c4f7b2a856eba961eae",
+      "recordSha256": "4a6da79ff3320638ed90d5189fcf17122339de4e764537709c187b1c3d659755",
+      "english": "Displays power (MSP OSD only)",
+      "chinese": "显示功率（仅限 MSP OSD）。"
+    },
+    {
+      "family": "Copter",
+      "parameter": "OSD4_RESTVOLT_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "ed2f06b440e3999623fa60fd4fd949ff2a939166f2c1d5be2ba65cfe62de8c64",
+      "recordSha256": "7506838f1574c5206f3534dce41e91c769848aafe4013130d78801b8bf690711",
+      "english": "Displays main battery resting voltage",
+      "chinese": "显示主电池的静置电压。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD1_BAT2_VLT_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "bfc913bab1a5f5cb72c9237209184d6af665a1a94fc8c840956e2a860215df41",
+      "recordSha256": "c604731a84543973d26d59eca33455cd0ddeb152beb557a3104392b69c80928f",
+      "english": "Displays battery2 voltage",
+      "chinese": "显示第二块电池的电压。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD1_BAT_VOLT_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "6d366e1562016737fcd69a68524c959474eade5989a1a010b2e5cf25e0c197a5",
+      "recordSha256": "655f934f1c8b295a8afa3af8e7a0c84f585a0bb0942374b990fd9447975ceceb",
+      "english": "Displays main battery voltage",
+      "chinese": "显示主电池电压。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD1_CURRENT2_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "c655e407ac911bc1937141755a17bae20747eec6bfe6c695aa8c868d8ae4e688",
+      "recordSha256": "79bf4f45bfe2e0c5bfc2ef1cf6babe841978e7eaed168ddebb1227f32baeca09",
+      "english": "Displays 2nd battery current",
+      "chinese": "显示第二块电池的电流。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD1_CURRENT_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "9e1258e8454aac6fcf8c6d0bb09013216cce270805a3179996c5c4243ea9dc35",
+      "recordSha256": "00410b0c7a9e7901dc5b5b172ea9743c18abe7f23ad6de5ed8114d48b4967501",
+      "english": "Displays main battery current",
+      "chinese": "显示主电池电流。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD1_POWER_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "5eee4c242ff62a991252b9791b861fcb38327d6ee4116c4f7b2a856eba961eae",
+      "recordSha256": "a2b98ec2dba78cc493760467c71f918f15c9d56e95b04705090ffa6db10d5ef5",
+      "english": "Displays power (MSP OSD only)",
+      "chinese": "显示功率（仅限 MSP OSD）。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD1_RESTVOLT_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "ed2f06b440e3999623fa60fd4fd949ff2a939166f2c1d5be2ba65cfe62de8c64",
+      "recordSha256": "92e07ff0e5d7640d6e557e37912408a103f4ce960635876534d07a14d6afefc4",
+      "english": "Displays main battery resting voltage",
+      "chinese": "显示主电池的静置电压。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD2_BAT2_VLT_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "bfc913bab1a5f5cb72c9237209184d6af665a1a94fc8c840956e2a860215df41",
+      "recordSha256": "6577b9c15528683b7f4f533adc2b05fadb8461d2423f427ef91031d2a160d68b",
+      "english": "Displays battery2 voltage",
+      "chinese": "显示第二块电池的电压。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD2_BAT_VOLT_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "6d366e1562016737fcd69a68524c959474eade5989a1a010b2e5cf25e0c197a5",
+      "recordSha256": "6054e7046bfdd5f82086394e3378bf1eaa405949b8d81b24744233e457f1be62",
+      "english": "Displays main battery voltage",
+      "chinese": "显示主电池电压。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD2_CURRENT2_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "c655e407ac911bc1937141755a17bae20747eec6bfe6c695aa8c868d8ae4e688",
+      "recordSha256": "34c502c338ac33f43c11a03dc76079feb806503bcda7dc3c835b0515dc3ec3fa",
+      "english": "Displays 2nd battery current",
+      "chinese": "显示第二块电池的电流。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD2_CURRENT_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "9e1258e8454aac6fcf8c6d0bb09013216cce270805a3179996c5c4243ea9dc35",
+      "recordSha256": "8fa4ea34e55a244bd7b46d48757297a6f22b12615fca59304b89b2e8b13ffe1d",
+      "english": "Displays main battery current",
+      "chinese": "显示主电池电流。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD2_POWER_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "5eee4c242ff62a991252b9791b861fcb38327d6ee4116c4f7b2a856eba961eae",
+      "recordSha256": "efd5e4ae72678938abd0972efbfa8fa57157f65dc0d8aee8fd361a3115dcc7e5",
+      "english": "Displays power (MSP OSD only)",
+      "chinese": "显示功率（仅限 MSP OSD）。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD2_RESTVOLT_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "ed2f06b440e3999623fa60fd4fd949ff2a939166f2c1d5be2ba65cfe62de8c64",
+      "recordSha256": "c30b49e52b8e644b88ff64c2081b6ca6b068f874d509889d49187f4476b31c3c",
+      "english": "Displays main battery resting voltage",
+      "chinese": "显示主电池的静置电压。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD3_BAT2_VLT_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "bfc913bab1a5f5cb72c9237209184d6af665a1a94fc8c840956e2a860215df41",
+      "recordSha256": "68c50186b1afcc741b96a0051a2d4a4045e3bf5fbae5d9b9795fad8d51884819",
+      "english": "Displays battery2 voltage",
+      "chinese": "显示第二块电池的电压。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD3_BAT_VOLT_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "6d366e1562016737fcd69a68524c959474eade5989a1a010b2e5cf25e0c197a5",
+      "recordSha256": "9443b5cc79f7d5e01d0fd1fa408e7971e6d857c828513490d6315ddfd1dd1f53",
+      "english": "Displays main battery voltage",
+      "chinese": "显示主电池电压。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD3_CURRENT2_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "c655e407ac911bc1937141755a17bae20747eec6bfe6c695aa8c868d8ae4e688",
+      "recordSha256": "4d5b5142377e8999fad24e44c9f714716ef83da364d80fe6efe4eb62a8e54746",
+      "english": "Displays 2nd battery current",
+      "chinese": "显示第二块电池的电流。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD3_CURRENT_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "9e1258e8454aac6fcf8c6d0bb09013216cce270805a3179996c5c4243ea9dc35",
+      "recordSha256": "94dccd4323db1667597f19530b4ca081db3b1f7d566db86db92800ac7b966b90",
+      "english": "Displays main battery current",
+      "chinese": "显示主电池电流。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD3_POWER_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "5eee4c242ff62a991252b9791b861fcb38327d6ee4116c4f7b2a856eba961eae",
+      "recordSha256": "8846ca0218d77a87e5c3ab7a1370ff7be6592c13d475c94ccfd3cd1f0b1fabc9",
+      "english": "Displays power (MSP OSD only)",
+      "chinese": "显示功率（仅限 MSP OSD）。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD3_RESTVOLT_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "ed2f06b440e3999623fa60fd4fd949ff2a939166f2c1d5be2ba65cfe62de8c64",
+      "recordSha256": "92fe49b9149b45b9d4e0eafbda0622018d03df5035fa01d2c95db22f50f015e3",
+      "english": "Displays main battery resting voltage",
+      "chinese": "显示主电池的静置电压。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD4_BAT2_VLT_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "bfc913bab1a5f5cb72c9237209184d6af665a1a94fc8c840956e2a860215df41",
+      "recordSha256": "2fa43333dd761fc6331c83cfdc8a4ddb434fa1890877d99bdb0f45ae27bb2c63",
+      "english": "Displays battery2 voltage",
+      "chinese": "显示第二块电池的电压。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD4_BAT_VOLT_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "6d366e1562016737fcd69a68524c959474eade5989a1a010b2e5cf25e0c197a5",
+      "recordSha256": "fa7cc7489f4ab3d7f003cd26e8cac807a51e3377c31f279dc8fc2a696c215b8c",
+      "english": "Displays main battery voltage",
+      "chinese": "显示主电池电压。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD4_CURRENT2_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "c655e407ac911bc1937141755a17bae20747eec6bfe6c695aa8c868d8ae4e688",
+      "recordSha256": "e1ca722a6867a1e03eab442cbeddfdb963dfc90c94729bd0c3ecf335d128d398",
+      "english": "Displays 2nd battery current",
+      "chinese": "显示第二块电池的电流。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD4_CURRENT_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "9e1258e8454aac6fcf8c6d0bb09013216cce270805a3179996c5c4243ea9dc35",
+      "recordSha256": "ede4c8b10aa1ff283cad499f986f5adaf36365b7cf6b013c85fff473b1ae0d76",
+      "english": "Displays main battery current",
+      "chinese": "显示主电池电流。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD4_POWER_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "5eee4c242ff62a991252b9791b861fcb38327d6ee4116c4f7b2a856eba961eae",
+      "recordSha256": "4a6da79ff3320638ed90d5189fcf17122339de4e764537709c187b1c3d659755",
+      "english": "Displays power (MSP OSD only)",
+      "chinese": "显示功率（仅限 MSP OSD）。"
+    },
+    {
+      "family": "Plane",
+      "parameter": "OSD4_RESTVOLT_EN",
+      "field": "Description",
+      "versions": [
+        "4.5.7",
+        "4.6.3",
+        "4.7.1"
+      ],
+      "englishSha256": "ed2f06b440e3999623fa60fd4fd949ff2a939166f2c1d5be2ba65cfe62de8c64",
+      "recordSha256": "7506838f1574c5206f3534dce41e91c769848aafe4013130d78801b8bf690711",
+      "english": "Displays main battery resting voltage",
+      "chinese": "显示主电池的静置电压。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD1_BAT2_VLT_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "bfc913bab1a5f5cb72c9237209184d6af665a1a94fc8c840956e2a860215df41",
+      "recordSha256": "c604731a84543973d26d59eca33455cd0ddeb152beb557a3104392b69c80928f",
+      "english": "Displays battery2 voltage",
+      "chinese": "显示第二块电池的电压。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD1_BAT_VOLT_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "6d366e1562016737fcd69a68524c959474eade5989a1a010b2e5cf25e0c197a5",
+      "recordSha256": "655f934f1c8b295a8afa3af8e7a0c84f585a0bb0942374b990fd9447975ceceb",
+      "english": "Displays main battery voltage",
+      "chinese": "显示主电池电压。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD1_CURRENT2_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "c655e407ac911bc1937141755a17bae20747eec6bfe6c695aa8c868d8ae4e688",
+      "recordSha256": "79bf4f45bfe2e0c5bfc2ef1cf6babe841978e7eaed168ddebb1227f32baeca09",
+      "english": "Displays 2nd battery current",
+      "chinese": "显示第二块电池的电流。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD1_CURRENT_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "9e1258e8454aac6fcf8c6d0bb09013216cce270805a3179996c5c4243ea9dc35",
+      "recordSha256": "00410b0c7a9e7901dc5b5b172ea9743c18abe7f23ad6de5ed8114d48b4967501",
+      "english": "Displays main battery current",
+      "chinese": "显示主电池电流。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD1_POWER_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "5eee4c242ff62a991252b9791b861fcb38327d6ee4116c4f7b2a856eba961eae",
+      "recordSha256": "a2b98ec2dba78cc493760467c71f918f15c9d56e95b04705090ffa6db10d5ef5",
+      "english": "Displays power (MSP OSD only)",
+      "chinese": "显示功率（仅限 MSP OSD）。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD1_RESTVOLT_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "ed2f06b440e3999623fa60fd4fd949ff2a939166f2c1d5be2ba65cfe62de8c64",
+      "recordSha256": "92e07ff0e5d7640d6e557e37912408a103f4ce960635876534d07a14d6afefc4",
+      "english": "Displays main battery resting voltage",
+      "chinese": "显示主电池的静置电压。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD2_BAT2_VLT_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "bfc913bab1a5f5cb72c9237209184d6af665a1a94fc8c840956e2a860215df41",
+      "recordSha256": "6577b9c15528683b7f4f533adc2b05fadb8461d2423f427ef91031d2a160d68b",
+      "english": "Displays battery2 voltage",
+      "chinese": "显示第二块电池的电压。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD2_BAT_VOLT_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "6d366e1562016737fcd69a68524c959474eade5989a1a010b2e5cf25e0c197a5",
+      "recordSha256": "6054e7046bfdd5f82086394e3378bf1eaa405949b8d81b24744233e457f1be62",
+      "english": "Displays main battery voltage",
+      "chinese": "显示主电池电压。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD2_CURRENT2_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "c655e407ac911bc1937141755a17bae20747eec6bfe6c695aa8c868d8ae4e688",
+      "recordSha256": "34c502c338ac33f43c11a03dc76079feb806503bcda7dc3c835b0515dc3ec3fa",
+      "english": "Displays 2nd battery current",
+      "chinese": "显示第二块电池的电流。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD2_CURRENT_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "9e1258e8454aac6fcf8c6d0bb09013216cce270805a3179996c5c4243ea9dc35",
+      "recordSha256": "8fa4ea34e55a244bd7b46d48757297a6f22b12615fca59304b89b2e8b13ffe1d",
+      "english": "Displays main battery current",
+      "chinese": "显示主电池电流。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD2_POWER_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "5eee4c242ff62a991252b9791b861fcb38327d6ee4116c4f7b2a856eba961eae",
+      "recordSha256": "efd5e4ae72678938abd0972efbfa8fa57157f65dc0d8aee8fd361a3115dcc7e5",
+      "english": "Displays power (MSP OSD only)",
+      "chinese": "显示功率（仅限 MSP OSD）。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD2_RESTVOLT_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "ed2f06b440e3999623fa60fd4fd949ff2a939166f2c1d5be2ba65cfe62de8c64",
+      "recordSha256": "c30b49e52b8e644b88ff64c2081b6ca6b068f874d509889d49187f4476b31c3c",
+      "english": "Displays main battery resting voltage",
+      "chinese": "显示主电池的静置电压。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD3_BAT2_VLT_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "bfc913bab1a5f5cb72c9237209184d6af665a1a94fc8c840956e2a860215df41",
+      "recordSha256": "68c50186b1afcc741b96a0051a2d4a4045e3bf5fbae5d9b9795fad8d51884819",
+      "english": "Displays battery2 voltage",
+      "chinese": "显示第二块电池的电压。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD3_BAT_VOLT_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "6d366e1562016737fcd69a68524c959474eade5989a1a010b2e5cf25e0c197a5",
+      "recordSha256": "9443b5cc79f7d5e01d0fd1fa408e7971e6d857c828513490d6315ddfd1dd1f53",
+      "english": "Displays main battery voltage",
+      "chinese": "显示主电池电压。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD3_CURRENT2_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "c655e407ac911bc1937141755a17bae20747eec6bfe6c695aa8c868d8ae4e688",
+      "recordSha256": "4d5b5142377e8999fad24e44c9f714716ef83da364d80fe6efe4eb62a8e54746",
+      "english": "Displays 2nd battery current",
+      "chinese": "显示第二块电池的电流。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD3_CURRENT_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "9e1258e8454aac6fcf8c6d0bb09013216cce270805a3179996c5c4243ea9dc35",
+      "recordSha256": "94dccd4323db1667597f19530b4ca081db3b1f7d566db86db92800ac7b966b90",
+      "english": "Displays main battery current",
+      "chinese": "显示主电池电流。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD3_POWER_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "5eee4c242ff62a991252b9791b861fcb38327d6ee4116c4f7b2a856eba961eae",
+      "recordSha256": "8846ca0218d77a87e5c3ab7a1370ff7be6592c13d475c94ccfd3cd1f0b1fabc9",
+      "english": "Displays power (MSP OSD only)",
+      "chinese": "显示功率（仅限 MSP OSD）。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD3_RESTVOLT_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "ed2f06b440e3999623fa60fd4fd949ff2a939166f2c1d5be2ba65cfe62de8c64",
+      "recordSha256": "92fe49b9149b45b9d4e0eafbda0622018d03df5035fa01d2c95db22f50f015e3",
+      "english": "Displays main battery resting voltage",
+      "chinese": "显示主电池的静置电压。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD4_BAT2_VLT_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "bfc913bab1a5f5cb72c9237209184d6af665a1a94fc8c840956e2a860215df41",
+      "recordSha256": "2fa43333dd761fc6331c83cfdc8a4ddb434fa1890877d99bdb0f45ae27bb2c63",
+      "english": "Displays battery2 voltage",
+      "chinese": "显示第二块电池的电压。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD4_BAT_VOLT_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "6d366e1562016737fcd69a68524c959474eade5989a1a010b2e5cf25e0c197a5",
+      "recordSha256": "fa7cc7489f4ab3d7f003cd26e8cac807a51e3377c31f279dc8fc2a696c215b8c",
+      "english": "Displays main battery voltage",
+      "chinese": "显示主电池电压。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD4_CURRENT2_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "c655e407ac911bc1937141755a17bae20747eec6bfe6c695aa8c868d8ae4e688",
+      "recordSha256": "e1ca722a6867a1e03eab442cbeddfdb963dfc90c94729bd0c3ecf335d128d398",
+      "english": "Displays 2nd battery current",
+      "chinese": "显示第二块电池的电流。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD4_CURRENT_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "9e1258e8454aac6fcf8c6d0bb09013216cce270805a3179996c5c4243ea9dc35",
+      "recordSha256": "ede4c8b10aa1ff283cad499f986f5adaf36365b7cf6b013c85fff473b1ae0d76",
+      "english": "Displays main battery current",
+      "chinese": "显示主电池电流。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD4_POWER_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "5eee4c242ff62a991252b9791b861fcb38327d6ee4116c4f7b2a856eba961eae",
+      "recordSha256": "4a6da79ff3320638ed90d5189fcf17122339de4e764537709c187b1c3d659755",
+      "english": "Displays power (MSP OSD only)",
+      "chinese": "显示功率（仅限 MSP OSD）。"
+    },
+    {
+      "family": "Sub",
+      "parameter": "OSD4_RESTVOLT_EN",
+      "field": "Description",
+      "versions": [
+        "4.7.1"
+      ],
+      "englishSha256": "ed2f06b440e3999623fa60fd4fd949ff2a939166f2c1d5be2ba65cfe62de8c64",
+      "recordSha256": "7506838f1574c5206f3534dce41e91c769848aafe4013130d78801b8bf690711",
+      "english": "Displays main battery resting voltage",
+      "chinese": "显示主电池的静置电压。"
     }
   ]
 }
