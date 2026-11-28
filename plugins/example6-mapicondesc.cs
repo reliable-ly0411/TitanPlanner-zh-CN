@@ -45,7 +45,7 @@ namespace MapIconDesc
             if (Settings.Instance["mapicondesc"] != null && Settings.Instance["mapicondesc"] != "")
                     descstring = Settings.Instance["mapicondesc"].ToString();
                 if (DialogResult.Cancel ==
-                    InputBox.Show("Description", "What do you want it to show?", ref descstring))
+                    InputBox.ShowLocalized("Description", "What do you want it to show?", ref descstring))
                     return;
 
             //ArduPilot.Common.speechConversion(comPort.MAV, "" + Settings.Instance["mapicondesc"])
