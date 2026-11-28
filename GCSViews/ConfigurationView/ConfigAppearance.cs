@@ -163,6 +163,31 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                     }));
                 };
             }
+            else
+            {
+                Preset openedChoice = null;
+                bool committed = false;
+                int opening = 0;
+                menu.DropDown += (sender, args) =>
+                {
+                    opening++;
+                    openedChoice = menu.SelectedItem as Preset;
+                    committed = false;
+                };
+                menu.SelectionChangeCommitted += (sender, args) => committed = true;
+                menu.DropDownClosed += (sender, args) =>
+                {
+                    var closedOpening = opening;
+                    var previous = openedChoice;
+                    // Finish processing native notifications before restoring an unconfirmed highlight.
+                    menu.BeginInvoke((Action)(() =>
+                    {
+                        if (menu.IsDisposed || opening != closedOpening || committed || previous == null) return;
+                        SetChoice(kind, previous.Id);
+                        UpdatePresetCaption(menu);
+                    }));
+                };
+            }
             var choose = new Button
             {
                 Name = icon ? "ChooseLocalWindowIcon" : "ChooseLocalStartupImage",
