@@ -69,6 +69,16 @@
       "gitSha": "dbe792162d06cab66c3475fd5556bf7a120f119e",
       "parameters": 183,
       "retrievedUtc": "2026-11-27"
+    },
+    {
+      "family": "Rover",
+      "version": "4.6.3",
+      "sourceUrl": "https://autotest.ardupilot.org/Parameters/versioned/Rover/stable-4.6.3/apm.pdef.xml",
+      "sourceSha256": "0c009e0a35c0ab8f3455f1bb323c29f6a59152dc54cb5e0edcc95afd48127de5",
+      "gitTag": "Rover-4.6.3",
+      "gitSha": "3fc7011a7d3dc047cbb17d8bd98ee94577d144c6",
+      "parameters": 4,
+      "retrievedUtc": "2026-11-26"
     }
   ]
 }
