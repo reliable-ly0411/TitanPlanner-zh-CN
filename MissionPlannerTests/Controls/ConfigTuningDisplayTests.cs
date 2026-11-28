@@ -119,6 +119,35 @@ namespace MissionPlannerTests.Controls
             });
         }
 
+        [TestMethod]
+        public void BasicTuningRowFitsAHeightenedTrackBarAndKeepsItsLayoutOnRepeat()
+        {
+            RunOnSta(() =>
+            {
+                using (var host = new Form())
+                using (var range = new RangeControl("ATC_RAT_RLL_P", "Slider help", "Slider title",
+                    0.01f, 1, 0, 1, "0.25"))
+                {
+                    host.Controls.Add(range);
+                    host.Show();
+                    var trackBar = range.TrackBarControl;
+                    trackBar.AutoSize = false;
+                    trackBar.Height = range.ClientSize.Height - trackBar.Top + 18;
+                    Assert.IsTrue(trackBar.Bottom > range.ClientSize.Height);
+
+                    range.FitTextAboveInputs();
+                    Assert.IsTrue(trackBar.Bottom < range.ClientSize.Height);
+                    var rowSize = range.ClientSize;
+                    var trackBounds = trackBar.Bounds;
+
+                    range.FitTextAboveInputs();
+                    Assert.AreEqual(rowSize, range.ClientSize);
+                    Assert.AreEqual(trackBounds, trackBar.Bounds);
+                    Assert.AreEqual("0.25", range.Value);
+                }
+            });
+        }
+
         private static void RunOnSta(Action action)
         {
             Exception failure = null;

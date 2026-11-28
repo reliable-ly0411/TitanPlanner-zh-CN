@@ -37,11 +37,20 @@ namespace MissionPlanner.Controls
                 fittedDescriptionHeight = (int)Math.Ceiling(graphics.MeasureString(DescriptionText, Font, available).Height);
             }
 
-            // The inputs are bottom-anchored. Change only the space above them.
             int textBottom = fittedTitleHeight + fittedDescriptionHeight + 4;
             int defaultTop = (int)Math.Ceiling(58 * DeviceDpi / 96.0);
             int targetTop = Math.Max(defaultTop, textBottom);
-            Height += targetTop - trackBar1.Top;
+
+            // The native trackbar can grow beyond the original bottom anchor at high DPI.
+            trackBar1.CreateControl();
+            Control[] inputs = { trackBar1, numericUpDown1, LBL_min, LBL_max };
+            int offset = targetTop - trackBar1.Top;
+            int[] positions = inputs.Select(input => input.Top + offset).ToArray();
+            int inputBottom = inputs.Max(input => input.Bottom);
+            int padding = Math.Max(5, ClientSize.Height - inputBottom);
+            ClientSize = new Size(ClientSize.Width, inputBottom + offset + padding);
+            for (int i = 0; i < inputs.Length; i++)
+                inputs[i].Top = positions[i];
             Invalidate();
         }
 

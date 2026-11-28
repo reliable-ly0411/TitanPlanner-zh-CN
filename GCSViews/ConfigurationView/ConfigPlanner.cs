@@ -48,7 +48,19 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                 if (e.ListItem is string filename)
                     e.Value = FormatThemeCaption(filename);
             };
-            CMB_theme.DropDown += (sender, e) => OpenThemeDropDown(CMB_theme);
+            CMB_theme.DropDown += (sender, e) =>
+            {
+                SizeThemeDropDown(CMB_theme);
+                PlaceDropDownWithinWorkingArea(CMB_theme);
+            };
+            CMB_osdcolor.DropDown += (sender, e) =>
+            {
+                if (CultureInfo.CurrentUICulture.Name != "zh-CN")
+                    return;
+
+                SizeHudColorDropDown(CMB_osdcolor);
+                PlaceDropDownWithinWorkingArea(CMB_osdcolor);
+            };
             CMB_mapCache.Format += (sender, e) =>
             {
                 if (e.ListItem is string key)
@@ -1592,7 +1604,9 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             var width = Enum.GetNames(typeof(KnownColor))
                 .Select(key => TextRenderer.MeasureText(FormatHudColorCaption(key), combo.Font).Width)
                 .Max();
-            combo.DropDownWidth = Math.Max(combo.Width, width + 35 + SystemInformation.VerticalScrollBarWidth);
+            int desiredWidth = width + 35 + SystemInformation.VerticalScrollBarWidth;
+            int workingWidth = Screen.FromControl(combo).WorkingArea.Width;
+            combo.DropDownWidth = Math.Max(combo.Width, Math.Min(desiredWidth, workingWidth));
         }
 
         internal static string FormatHudColorCaption(string key)
@@ -1717,9 +1731,8 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             }
         }
 
-        private static void OpenThemeDropDown(ComboBox combo)
+        private static void PlaceDropDownWithinWorkingArea(ComboBox combo)
         {
-            SizeThemeDropDown(combo);
             if (Environment.OSVersion.Platform != PlatformID.Win32NT || !combo.IsHandleCreated)
                 return;
 
@@ -1730,13 +1743,13 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                 if (combo.IsDisposed || !combo.IsHandleCreated || combo.Handle != handle || !combo.DroppedDown)
                     return;
 
-                var info = new ThemeComboBoxInfo { Size = Marshal.SizeOf(typeof(ThemeComboBoxInfo)) };
+                var info = new NativeComboBoxInfo { Size = Marshal.SizeOf(typeof(NativeComboBoxInfo)) };
                 if (!GetComboBoxInfo(handle, ref info) || info.List == IntPtr.Zero ||
                     !GetWindowRect(info.List, out var list))
                     return;
 
                 var area = Screen.FromControl(combo).WorkingArea;
-                int x = FitThemePopupLeft(list.Left, list.Right, area.Left, area.Right);
+                int x = FitPopupLeft(list.Left, list.Right, area.Left, area.Right);
                 if (x != list.Left)
                 {
                     const uint moveOnly = 0x0001 | 0x0004 | 0x0010; // NOSIZE | NOZORDER | NOACTIVATE
@@ -1745,7 +1758,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             }));
         }
 
-        private static int FitThemePopupLeft(int left, int right, int areaLeft, int areaRight)
+        private static int FitPopupLeft(int left, int right, int areaLeft, int areaRight)
         {
             int width = right - left;
             if (width <= 0 || width > areaRight - areaLeft)
@@ -1755,24 +1768,24 @@ namespace MissionPlanner.GCSViews.ConfigurationView
         }
 
         [StructLayout(LayoutKind.Sequential)]
-        private struct ThemePopupRect
+        private struct NativePopupRect
         {
             internal int Left, Top, Right, Bottom;
         }
 
         [StructLayout(LayoutKind.Sequential)]
-        private struct ThemeComboBoxInfo
+        private struct NativeComboBoxInfo
         {
             internal int Size;
-            internal ThemePopupRect Item, Button;
+            internal NativePopupRect Item, Button;
             internal int ButtonState;
             internal IntPtr Combo, Edit, List;
         }
 
         [DllImport("user32.dll")]
-        private static extern bool GetComboBoxInfo(IntPtr combo, ref ThemeComboBoxInfo info);
+        private static extern bool GetComboBoxInfo(IntPtr combo, ref NativeComboBoxInfo info);
         [DllImport("user32.dll")]
-        private static extern bool GetWindowRect(IntPtr window, out ThemePopupRect rectangle);
+        private static extern bool GetWindowRect(IntPtr window, out NativePopupRect rectangle);
         [DllImport("user32.dll")]
         private static extern bool SetWindowPos(IntPtr window, IntPtr insertAfter, int x, int y, int width, int height, uint flags);
 

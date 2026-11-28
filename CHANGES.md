@@ -77,6 +77,7 @@ The top-right transparent logo preserves the supplied artwork and offers indepen
 ## Tuning localization
 
 The enhanced Simplified Chinese basic and extended tuning screens localize the slider help, Copter TUNE choices and parameter rename warnings.
+Basic tuning rows keep native sliders fully visible at higher display scaling, and bilingual OSD color lists stay inside the screen near its horizontal edges.
 
 ## Titan Dynamics System Theme
 The localized edition defaults to Mission Planner’s green `BurntKermit` theme for new installs. The bundled Titan Dynamics theme remains selectable; existing theme preferences are preserved. Theming also covers controls upstream leaves unthemed — `ListBox`, `PropertyGrid`, `MessagesList`, status tab, menu-bar icons, the Splash form, and toast notifications.
