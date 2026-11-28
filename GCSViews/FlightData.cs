@@ -4321,7 +4321,7 @@ namespace MissionPlanner.GCSViews
 
         private void hud_UserItem(object sender, EventArgs e)
         {
-            var form = global::MissionPlanner.Controls.DisplayThisForm.CreateHudChooser(
+            var form = MissionPlanner.Controls.DisplayThisForm.CreateHudChooser(
                 isChecked: fieldName => hud1.CustomItems.ContainsKey(fieldName),
                 checkChangedHandler: chk_box_hud_UserItem_CheckedChanged);
             form.ShowDialog(this);
@@ -7533,7 +7533,7 @@ namespace MissionPlanner.GCSViews
 
         private void zg1_DoubleClick(object sender, EventArgs e)
         {
-            var form = global::MissionPlanner.Controls.DisplayThisForm.CreateTuningChooser(
+            var form = MissionPlanner.Controls.DisplayThisForm.CreateTuningChooser(
                 isChecked: IsTuningItemChecked,
                 checkChangedHandler: chk_box_tunningCheckedChanged);
             form.Show();
