@@ -91,10 +91,12 @@ namespace MissionPlanner.Controls
         void DrawLegend(Graphics g, Rectangle button)
         {
             var labels = Entries.Select(e => (Text: MapGpsPresentation.LegendLabel(e.Text), Color: e.Color)).ToArray();
-            float textWidth = labels.Max(e => g.MeasureString(e.Text, LegendFont).Width);
-            float width = Pad + SwatchWidth + 8 + textWidth + Pad;
-            float height = 2 * Pad + Entries.Length * RowHeight - 4;
-            var panel = new RectangleF(button.Right - width, button.Top - Gap - height, width, height);
+            bool enhanced = MapGpsPresentation.Enhanced;
+            var layout = LegendLayout(g, button, labels, enhanced);
+            var panel = layout.panel;
+            if (panel.IsEmpty)
+                return;
+            float rowHeight = layout.rowHeight;
 
             using (var path = MapButton.RoundedRect(panel, 6))
             using (var fill = new SolidBrush(Color.FromArgb(214, 13, 15, 19)))
@@ -107,10 +109,16 @@ namespace MissionPlanner.Controls
             float x = panel.Left + Pad;
             float y = panel.Top + Pad - 2;
             using (var text = new SolidBrush(Color.FromArgb(232, 236, 241)))
+            using (var format = enhanced ? new StringFormat {
+                Alignment = StringAlignment.Near,
+                LineAlignment = StringAlignment.Center,
+                Trimming = StringTrimming.EllipsisCharacter,
+                FormatFlags = StringFormatFlags.NoWrap
+            } : null)
             {
                 foreach (var entry in labels)
                 {
-                    float mid = y + RowHeight / 2f;
+                    float mid = y + rowHeight / 2f;
 
                     // a short stroke of the line; the black one gets a light edge to show on the dark panel
                     if (entry.Color.R + entry.Color.G + entry.Color.B < 150)
@@ -122,11 +130,45 @@ namespace MissionPlanner.Controls
                     using (var line = new Pen(entry.Color, 3f))
                         g.DrawLine(line, x, mid, x + SwatchWidth, mid);
 
-                    var size = g.MeasureString(entry.Text, LegendFont);
-                    g.DrawString(entry.Text, LegendFont, text, x + SwatchWidth + 8, mid - size.Height / 2);
-                    y += RowHeight;
+                    var textX = x + SwatchWidth + 8;
+                    if (enhanced)
+                    {
+                        var cell = new RectangleF(textX, y, panel.Right - Pad - textX, rowHeight);
+                        g.DrawString(entry.Text, LegendFont, text, cell, format);
+                    }
+                    else
+                    {
+                        var size = g.MeasureString(entry.Text, LegendFont);
+                        g.DrawString(entry.Text, LegendFont, text, textX, mid - size.Height / 2);
+                    }
+                    y += rowHeight;
                 }
             }
+        }
+        private static (RectangleF panel, float rowHeight) LegendLayout(Graphics graphics, Rectangle button,
+            (string Text, Color Color)[] labels, bool enhanced)
+        {
+            float textWidth = 0;
+            float textHeight = 0;
+            foreach (var label in labels)
+            {
+                var measured = graphics.MeasureString(label.Text, LegendFont);
+                textWidth = System.Math.Max(textWidth, measured.Width);
+                textHeight = System.Math.Max(textHeight, measured.Height);
+            }
+            float chromeWidth = Pad + SwatchWidth + 8 + Pad;
+            float width = chromeWidth + textWidth;
+            float rowHeight = enhanced ? System.Math.Max(RowHeight, (float)System.Math.Ceiling(textHeight) + 4) : RowHeight;
+            float bottom = button.Top - Gap;
+            if (enhanced)
+            {
+                width = System.Math.Min(width, button.Right - Margin);
+                if (width <= chromeWidth || bottom <= 2 * Pad + labels.Length * 9 - 4)
+                    return (RectangleF.Empty, rowHeight); // there is no drawable space
+                rowHeight = System.Math.Min(rowHeight, (bottom - (2 * Pad - 4f)) / labels.Length);
+            }
+            float height = 2 * Pad + labels.Length * rowHeight - 4;
+            return (new RectangleF(button.Right - width, bottom - height, width, height), rowHeight);
         }
     }
 }
