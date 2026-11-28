@@ -2,6 +2,7 @@
 using System;
 using System.Drawing;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using MissionPlanner.Controls;
 using MissionPlanner.Utilities;
@@ -123,7 +124,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             menu.Items.Add(new Preset("custom", UiText.Translate("Custom")));
             menu.SelectedIndex = 0;
             UpdatePresetCaption(menu);
-            menu.DropDown += (sender, args) => SizePresetPopup(menu);
+            menu.DropDown += (sender, args) => OpenPresetPopup(menu);
             // Closed-list arrow keys can change the index without raising SelectionChangeCommitted
             // (in particular on Mono). Do not apply intermediate choices in an open list.
             menu.SelectedIndexChanged += (sender, args) =>
@@ -201,6 +202,65 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             details.SetToolTip(menu, caption);
             menu.AccessibleDescription = caption;
         }
+
+        private static void OpenPresetPopup(ComboBox menu)
+        {
+            SizePresetPopup(menu);
+            if (Environment.OSVersion.Platform != PlatformID.Win32NT || !menu.IsHandleCreated)
+                return;
+
+            // The native list gets its final rectangle after the DropDown event returns.
+            IntPtr handle = menu.Handle;
+            menu.BeginInvoke((Action)(() =>
+            {
+                if (menu.IsDisposed || !menu.IsHandleCreated || menu.Handle != handle || !menu.DroppedDown)
+                    return;
+
+                var info = new PresetComboBoxInfo { Size = Marshal.SizeOf(typeof(PresetComboBoxInfo)) };
+                if (!GetComboBoxInfo(handle, ref info) || info.List == IntPtr.Zero ||
+                    !GetWindowRect(info.List, out var list))
+                    return;
+
+                var area = Screen.FromControl(menu).WorkingArea;
+                int x = FitPresetPopupLeft(list.Left, list.Right, area.Left, area.Right);
+                if (x != list.Left)
+                {
+                    const uint moveOnly = 0x0001 | 0x0004 | 0x0010; // NOSIZE | NOZORDER | NOACTIVATE
+                    SetWindowPos(info.List, IntPtr.Zero, x, list.Top, 0, 0, moveOnly);
+                }
+            }));
+        }
+
+        private static int FitPresetPopupLeft(int left, int right, int areaLeft, int areaRight)
+        {
+            int width = right - left;
+            if (width <= 0 || width > areaRight - areaLeft)
+                return left;
+
+            return Math.Max(areaLeft, Math.Min(left, areaRight - width));
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        private struct PresetPopupRect
+        {
+            internal int Left, Top, Right, Bottom;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        private struct PresetComboBoxInfo
+        {
+            internal int Size;
+            internal PresetPopupRect Item, Button;
+            internal int ButtonState;
+            internal IntPtr Combo, Edit, List;
+        }
+
+        [DllImport("user32.dll")]
+        private static extern bool GetComboBoxInfo(IntPtr combo, ref PresetComboBoxInfo info);
+        [DllImport("user32.dll")]
+        private static extern bool GetWindowRect(IntPtr window, out PresetPopupRect rectangle);
+        [DllImport("user32.dll")]
+        private static extern bool SetWindowPos(IntPtr window, IntPtr insertAfter, int x, int y, int width, int height, uint flags);
 
         private static void SizePresetPopup(ComboBox menu)
         {
