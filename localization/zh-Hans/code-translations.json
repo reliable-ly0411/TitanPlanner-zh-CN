@@ -2771,5 +2771,12 @@
   "HUD color: WindowText": "窗口文字（WindowText）",
   "HUD color compact: WindowText": "窗口文字",
   "HUD color: YellowGreen": "黄绿色（YellowGreen）",
-  "HUD color compact: YellowGreen": "黄绿色"
+  "HUD color compact: YellowGreen": "黄绿色",
+  "Windows speech voice": "Windows 播报音色",
+  "Preview voice": "试听",
+  "Automatic (system default)": "自动（系统默认）",
+  "This is the ground station voice preview.": "这是地面站语音试听。",
+  "The saved voice is unavailable. Speech will use the system default.": "上次选择的音色已不可用，播报将使用系统默认音色。",
+  "No Microsoft Chinese voice is available. Check the Windows speech language pack.": "未找到可用的微软中文音色，请检查 Windows 中文语音包。",
+  "Voice preview is unavailable. Try again when speech is idle.": "暂时无法试听，请在播报空闲时重试。"
 }

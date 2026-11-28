@@ -21,6 +21,8 @@ Formatting the flight controller SD card requires explicit confirmation, with Ca
 
 ## Enhanced Chinese display
 
+「中文(简体)2」可在消息原文旁显示 ArduPlane 4.7.3 的日志芯片已满告警，以及 PX4 1.17.0 四旋翼的 EKF2 参数无效告警。符合原有播报条件时，语音使用同一译文。Windows 可选择并试听本机的微软中文音色。
+
 The HUD and toolbar show the current flight mode in Chinese above a smaller original English line in enhanced Simplified Chinese. Long labels fit their reserved area; unknown modes retain their source text. Turtle is labelled 翻正自救, separately from Flip; Plane Autoland is labelled 自动着陆 and Rover Dock is labelled 自动停靠.
 
 New Simplified Chinese profiles default to Bing Satellite. Saved map selections and provider coordinate projections are preserved.
