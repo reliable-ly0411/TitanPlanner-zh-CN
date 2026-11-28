@@ -44,6 +44,11 @@ partial class StockWidthChecks
                 var table = group.Controls.OfType<TableLayoutPanel>().Single();
                 var descriptions = table.Controls.OfType<Label>().Where(label => table.GetColumn(label) == 1).ToArray();
                 Check(descriptions.Length == KeyboardShortcuts.All.Length, "Missing shortcut descriptions");
+                const string planPreview = "Preview the local plan in 2D and 3D";
+                string expectedPreview = language == "zh-CN"
+                    ? "预览本地计划的二维与三维视图" + Environment.NewLine + planPreview
+                    : planPreview;
+                Check(descriptions.Any(label => label.Text == expectedPreview), "Missing local plan preview help");
                 int previous = -1;
                 foreach (int width in new[] { 1125, 667, 450, 667, 1125 })
                 {
